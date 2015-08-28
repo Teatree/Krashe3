@@ -1,0 +1,146 @@
+
+pack.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+background
+  rotate: false
+  xy: 2, 224
+  size: 1200, 786
+  orig: 1200, 786
+  offset: 0, 0
+  index: -1
+backnooff
+  rotate: false
+  xy: 224, 102
+  size: 121, 120
+  split: 26, 24, 24, 30
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+backshadow
+  rotate: false
+  xy: 2, 2
+  size: 220, 220
+  split: 89, 105, 80, 104
+  pad: 88, 106, 79, 105
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+buttonback
+  rotate: false
+  xy: 1204, 668
+  size: 121, 120
+  split: 17, 20, 17, 21
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonbackoff
+  rotate: false
+  xy: 1426, 890
+  size: 121, 120
+  split: 45, 58, 42, 68
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttoncameraoff
+  rotate: false
+  xy: 347, 102
+  size: 121, 120
+  split: 23, 18, 17, 29
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttoncameraon
+  rotate: false
+  xy: 1204, 546
+  size: 121, 120
+  split: 23, 17, 17, 29
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonnoAdsoff
+  rotate: false
+  xy: 1672, 890
+  size: 120, 120
+  split: 14, 18, 11, 13
+  pad: 11, 13, 16, 14
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonnoAdson
+  rotate: false
+  xy: 593, 102
+  size: 120, 120
+  split: 12, 15, 11, 14
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonnoon
+  rotate: false
+  xy: 1549, 890
+  size: 121, 120
+  split: 28, 23, 23, 28
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonpauseoff
+  rotate: false
+  xy: 470, 102
+  size: 121, 120
+  split: 14, 16, 16, 18
+  pad: 15, 16, 16, 18
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonpauseon
+  rotate: false
+  xy: 1204, 424
+  size: 121, 120
+  split: 14, 17, 14, 16
+  pad: 14, 17, 13, 16
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonsettingsoff
+  rotate: false
+  xy: 1204, 302
+  size: 120, 120
+  split: 18, 14, 15, 16
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonsettingson
+  rotate: false
+  xy: 1794, 890
+  size: 120, 120
+  split: 18, 14, 15, 17
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonshopoff
+  rotate: false
+  xy: 715, 102
+  size: 120, 120
+  split: 14, 16, 17, 17
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonshopon
+  rotate: false
+  xy: 1916, 890
+  size: 120, 120
+  split: 14, 15, 16, 19
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+pop-upback
+  rotate: false
+  xy: 1204, 790
+  size: 220, 220
+  split: 89, 103, 111, 101
+  pad: 89, 103, 111, 102
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
