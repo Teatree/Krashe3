@@ -2,8 +2,14 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.system.BugSystem;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -14,7 +20,8 @@ public class ShopScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper shopItem;
-    private SpriteAnimationComponent spriteAnimationComponent;
+    private int spawnCounter = 0;
+
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
@@ -26,7 +33,27 @@ public class ShopScreenScript implements IScript {
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity playBtn = shopItem.getChild("btn_shop").getEntity();
-        spriteAnimationComponent = stage.sceneLoader.loadFromLibrary("chargerAni").getComponent(SpriteAnimationComponent.class);
+
+        BugSystem bugSystem = new BugSystem();
+
+        stage.sceneLoader.getEngine().addSystem(bugSystem);
+
+        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
+        while(spawnCounter < 20){
+            spawnCounter++;
+            CompositeItemVO tempC = bugData.clone();
+            tempC.x = MathUtils.random(0, Gdx.graphics.getWidth()-100);
+            tempC.y = MathUtils.random(0, Gdx.graphics.getHeight()-100);
+            Entity tempEnty = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
+            stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), tempEnty, tempC.composite);
+            stage.sceneLoader.getEngine().addEntity(tempEnty);
+            System.out.println("Successfully spawned dude: " + spawnCounter);
+            BugComponent bc = new BugComponent();
+
+            tempEnty.add(bc);
+        }
+
+
 //        final Entity btnSettings = menuItem.getCompositeById("btn_settings");
 //        final Entity btnNoAds = menuItem.getCompositeById("btn_noAds");
 //        final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
@@ -36,12 +63,13 @@ public class ShopScreenScript implements IScript {
             @Override
             public void touchUp() {
 //                spriteAnimationComponent.playMode
-                System.out.println(spriteAnimationComponent.playMode);
+//                System.out.println(spriteAnimationComponent.playMode);
             }
 
             @Override
             public void touchDown() {
-                System.out.println("Poop");
+
+                stage.initMenu();
             }
 
             @Override

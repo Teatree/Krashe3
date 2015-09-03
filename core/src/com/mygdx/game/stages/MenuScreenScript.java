@@ -24,10 +24,11 @@ public class MenuScreenScript implements IScript {
         ir = stage.sceneLoader.getRm();
     }
 
+
     @Override
     public void init(Entity item) {
         menuItem = new ItemWrapper(item);
-
+//        stage.sceneLoader.getEngine()
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity playBtn = menuItem.getChild("btn_settings").getEntity();
 
