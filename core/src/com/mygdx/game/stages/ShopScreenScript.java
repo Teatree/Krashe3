@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.system.BugSystem;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -49,6 +50,8 @@ public class ShopScreenScript implements IScript {
             stage.sceneLoader.getEngine().addEntity(tempEnty);
             System.out.println("Successfully spawned dude: " + spawnCounter);
             BugComponent bc = new BugComponent();
+            bc.type = BugType.CHARGER;
+//            bc.type = BugType.SIMPLE;
 
             tempEnty.add(bc);
         }
