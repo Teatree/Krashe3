@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
+import com.mygdx.game.system.BugSpawnSystem;
 import com.mygdx.game.system.BugSystem;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -21,7 +22,7 @@ public class ShopScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper shopItem;
-    private int spawnCounter = 0;
+//    private int spawnCounter = 0;
 
 
     public ShopScreenScript(GameStage stage) {
@@ -38,23 +39,24 @@ public class ShopScreenScript implements IScript {
         BugSystem bugSystem = new BugSystem();
 
         stage.sceneLoader.getEngine().addSystem(bugSystem);
+        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
 
-        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
-        while(spawnCounter < 20){
-            spawnCounter++;
-            CompositeItemVO tempC = bugData.clone();
-            tempC.x = MathUtils.random(0, Gdx.graphics.getWidth()-100);
-            tempC.y = MathUtils.random(0, Gdx.graphics.getHeight()-100);
-            Entity tempEnty = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
-            stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), tempEnty, tempC.composite);
-            stage.sceneLoader.getEngine().addEntity(tempEnty);
-            System.out.println("Successfully spawned dude: " + spawnCounter);
-            BugComponent bc = new BugComponent();
-            bc.type = BugType.CHARGER;
-//            bc.type = BugType.SIMPLE;
-
-            tempEnty.add(bc);
-        }
+//        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
+//        while(spawnCounter < 20){
+//            spawnCounter++;
+//            CompositeItemVO tempC = bugData.clone();
+//            tempC.x = MathUtils.random(0, Gdx.graphics.getWidth()-100);
+//            tempC.y = MathUtils.random(0, Gdx.graphics.getHeight()-100);
+//            Entity tempEnty = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
+//            stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), tempEnty, tempC.composite);
+//            stage.sceneLoader.getEngine().addEntity(tempEnty);
+//            System.out.println("Successfully spawned dude: " + spawnCounter);
+//            BugComponent bc = new BugComponent();
+//            bc.type = BugType.CHARGER;
+////            bc.type = BugType.SIMPLE;
+//
+//            tempEnty.add(bc);
+//        }
 
 
 //        final Entity btnSettings = menuItem.getCompositeById("btn_settings");
