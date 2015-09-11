@@ -18,7 +18,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 public class GameStage extends Stage{
 
 //    public GameScreenScript game;
-    public Viewport viewport;
+//    public Viewport viewport;
     public SceneLoader sceneLoader;
 
     public GameStage getInstance() {
@@ -27,14 +27,14 @@ public class GameStage extends Stage{
 
     public GameStage() {
         sceneLoader = new SceneLoader();
-        viewport = new FillViewport(1200, 786);
+//        viewport = new FillViewport(1200, 786);
 
         initMenu();
     }
 
     public void initGame() {
         sceneLoader = new SceneLoader();
-        sceneLoader.loadScene("MainScene", viewport);
+        sceneLoader.loadScene("MainScene");
 //        GameScreenScript game = new GameScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 //        root.addScript(game);
@@ -44,7 +44,7 @@ public class GameStage extends Stage{
 
     public void initMenu(){
         sceneLoader = new SceneLoader();
-        sceneLoader.loadScene("MenuScene", viewport);
+        sceneLoader.loadScene("MenuScene");
         MenuScreenScript menu = new MenuScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(menu);
@@ -55,7 +55,7 @@ public class GameStage extends Stage{
 
     public void initShopMenu(){
         sceneLoader = new SceneLoader();
-        sceneLoader.loadScene("ShopScene", viewport);
+        sceneLoader.loadScene("ShopScene");
         ShopScreenScript shop = new ShopScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(shop);
