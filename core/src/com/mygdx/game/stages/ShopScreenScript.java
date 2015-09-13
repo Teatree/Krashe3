@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
-import com.mygdx.game.system.BugSpawnSystem;
+//import com.mygdx.game.system.BugSpawnSystem;
 import com.mygdx.game.system.BugSystem;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -39,7 +39,7 @@ public class ShopScreenScript implements IScript {
         BugSystem bugSystem = new BugSystem();
 
         stage.sceneLoader.getEngine().addSystem(bugSystem);
-        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
+//        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
 
 //        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
 //        while(spawnCounter < 20){
