@@ -26,11 +26,11 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MIN_Y = -200;
     private int SPAWN_MAX_Y = 700;
 
-    public static final String SIMPLE = "chargerAni";
-    public static final String DRUNK = "drunkbugAni";
-    public static final String CHARGER = "chargerAni";
-    public static final String BEE = "chargerAni";
-    public static final String QUEENBEE = "chargerAni";
+    public static final String SIMPLE = "chargerAniS";
+    public static final String DRUNK = "drunkbugAniS";
+    public static final String CHARGER = "chargerAniS";
+    public static final String BEE = "chargerAniS";
+    public static final String QUEENBEE = "chargerAniS";
 
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
     private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
