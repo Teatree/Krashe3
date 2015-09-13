@@ -20,17 +20,17 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-19" y="265" angle="322.761" scale_y="1"/>
+                    <object folder="0" file="0" x="-19" y="265" angle="322.761"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="1" x="195" y="166" angle="270" scale_y="1"/>
+                    <object folder="0" file="1" x="195" y="166" angle="270"/>
                 </key>
             </timeline>
             <timeline id="2" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="258" y="27" angle="234.494" scale_y="1"/>
+                    <object folder="0" file="2" x="258" y="27" angle="234.494"/>
                 </key>
             </timeline>
         </animation>
@@ -58,10 +58,10 @@
             </timeline>
             <timeline id="1" name="head_top_001">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="213.034179" y="-145.436613" angle="190.962801" scale_x="1"/>
+                    <object folder="0" file="2" x="213.034179" y="-145.436613" angle="190.962801"/>
                 </key>
                 <key id="1" time="399" spin="0">
-                    <object folder="0" file="2" x="215.711244" y="-150.884676" angle="190.962801" scale_x="1"/>
+                    <object folder="0" file="2" x="215.711244" y="-150.884676" angle="190.962801"/>
                 </key>
             </timeline>
             <timeline id="2" name="head_mid_000">
@@ -79,10 +79,10 @@
             </timeline>
             <timeline id="4" obj="1" name="bone_top_1" object_type="bone">
                 <key id="0">
-                    <bone x="2.380952" y="-14.285714" angle="43.531199" scale_x="1"/>
+                    <bone x="2.380952" y="-14.285714" angle="43.531199"/>
                 </key>
                 <key id="1" time="399" spin="-1">
-                    <bone x="7.142857" y="-14.285714" angle="75.141386" scale_x="1"/>
+                    <bone x="7.142857" y="-14.285714" angle="75.141386"/>
                 </key>
             </timeline>
         </animation>
