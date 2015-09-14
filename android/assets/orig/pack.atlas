@@ -158,3 +158,10 @@ pop-upback
   orig: 220, 220
   offset: 0, 0
   index: -1
+pot
+  rotate: false
+  xy: 147, 484
+  size: 62, 58
+  orig: 62, 58
+  offset: 0, 0
+  index: -1

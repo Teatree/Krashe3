@@ -34,12 +34,12 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity playBtn = shopItem.getChild("btn_shop").getEntity();
+        Entity menuBtn = shopItem.getChild("btn_shop").getEntity();
 
-        BugSystem bugSystem = new BugSystem();
+//        BugSystem bugSystem = new BugSystem();
 
-        stage.sceneLoader.getEngine().addSystem(bugSystem);
-        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
+//        stage.sceneLoader.getEngine().addSystem(bugSystem);
+//        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
 
 //        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
 //        while(spawnCounter < 20){
@@ -64,7 +64,7 @@ public class ShopScreenScript implements IScript {
 //        final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
 
         // Adding a Click listener to playButton so we can start game when clicked
-        playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        menuBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
 //                spriteAnimationComponent.playMode

@@ -45,6 +45,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
+                stage.initGame();
                 System.out.println("Poop");
             }
 

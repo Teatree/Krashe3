@@ -28,6 +28,8 @@ public class BugSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
+        transformComponent.scaleX = 0.6f;
+        transformComponent.scaleY = 0.6f;
         BugComponent bugComponent = mapper.get(entity);
 
         updateRect(bugComponent, transformComponent, dimensionsComponent);

@@ -1,216 +1,104 @@
-//package com.mygdx.game.stages;
-//
-//import com.badlogic.ashley.core.Entity;
-//import com.badlogic.gdx.Gdx;
-//import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
-//import com.uwsoft.editor.renderer.resources.IResourceRetriever;
-//import com.uwsoft.editor.renderer.scripts.IScript;
-//import com.uwsoft.editor.renderer.utils.ItemWrapper;
-//
-//import java.util.ArrayList;
-//import java.util.LinkedList;
-//import java.util.Random;
-//
-//import static game.utils.Animator.*;
-//
-///**
-// * Created by MainUser on 26/07/2015.
-// */
-//public class GameScreenScript implements IScript {
-//
-//    public static boolean GAME_OVER = false;
-//    public static boolean GAME_PAUSED = false;
-//
-//    private GameStage stage;
-//    private Entity gameItem;
-//    public IResourceRetriever ir;
-//
-//    public Flower flower;
-//    public static List<Bug> bugs = new LinkedList<>();
-//    private int spawnInterval = 200;
-//    public Random random = new Random();
-//
-//    private int timer;
-//    final MrSpawner spawner = new MrSpawner();
-//    public BugGenerator bugGenerator;
-//    public static boolean isAngeredBeesMode = false;
-//    public static int angeredBeesTimer = 0;
-//    public DandelionPowerUp dandelionPowerup;
-//    public UmbrellaPowerUp umbrellaPowerUp;
-//    public CocoonPowerUp cocoonPowerUp;
-//    public ButterflyPowerUp butterflyPowerUp;
-//    public int dandelionSpawnCounter;
-//    public int cacoonSpawnCounter;
-//    public ItemWrapper itemWrapper;
-//
-//    private Animator uiController = new Animator();
-//
-//    public GameScreenScript(GameStage stage) {
-//        this.stage = stage;
-//    }
-//
-//    @Override
-//    public void init(Entity item) {
-//        gameItem = item;
-//        ir = stage.sceneLoader.getRm();
-//
-//        itemWrapper = new ItemWrapper(item);
-//
-//        dandelionSpawnCounter = random.nextInt(GlobalConstants.DANDELION_SPAWN_CHANCE_MAX - GlobalConstants.DANDELION_SPAWN_CHANCE_MIN) + GlobalConstants.DANDELION_SPAWN_CHANCE_MIN;
-//        cacoonSpawnCounter = random.nextInt(GlobalConstants.COCOON_SPAWN_MAX - GlobalConstants.COCOON_SPAWN_MIN) + GlobalConstants.COCOON_SPAWN_MIN;
-//
-//        initPauseButton();
-//
-//        uiController.init(this);
-//        bugGenerator = new BugGenerator(stage.sceneLoader);
-//    }
-//
-//    public void initPauseButton() {
-//        final Entity btnPause = itemWrapper.getChild("btn_pause").getEntity();
-//
-//        btnPause.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//            @Override
-//            public void touchUp() {
-//                uiController.pouseGame();
-//            }
-//
-//            @Override
-//            public void touchDown() {
-//                uiController.showPausePopup();
-//            }
-//
-//            @Override
-//            public void clicked() {
-//
-//            }
-//            // Need to keep touch down in order for touch up to work normal (libGDX awkwardness)
-////            public boolean touchDown() {
-////                uiController.showPausePopup();
-////
-////                return true;
-////            }
-////
-////            public void touchUp(InputEvent event, float x, float y, int pointer,
-////                                int button) {
-////                uiController.pouseGame();
-////            }
-//        });
-//    }
-//
-//    @Override
-//    public void dispose() {
-////        SaveManager.saveProperties();
-//    }
-//
-//    @Override
-//    public void act(float delta) {
-//        uiController.update();
-//
-//        for (Bug bug : bugs) {
-//            if (bug.getController().isOutOfBounds() && flower.getCurHp() <= 0) {
-//                GAME_PAUSED = true;
-//            }
-//        }
-//
-//        if (flower.getCurHp() <= 0) {
-//            uiController.showGameOverPopup();
-//        }
-//
-//        if (flower.getCurHp() <= 0) {
-//            uiController.playGameOverTimer();
-//        }
-//
-//
-//        if (isGameAlive() && GlobalConstants.CUR_SCREEN == "GAME") {
-//            timer++;
-//            dandelionSpawnCounter--;
-//            cacoonSpawnCounter--;
-//
-//            if (timer >= spawnInterval) {
-//                bugs.add(spawner.spawn(bugGenerator.getBugSafe(stage), stage.getInstance()));
-//                timer = 0;
-//            }
-//            if (Gdx.input.isTouched() && isGameOver()) {
-//                stage.getActors().removeRange(2, stage.getActors().size - 1);
-//                reloadBugs();
-//                isAngeredBeesMode = false;
-//                Flower.pointsAmount += Flower.sessionPointsAmount;
-//            }
-//            if (isAngeredBeesMode) {
-//                isAngeredBeesMode = angeredBeesTimer-- >= 0;
-//                spawnInterval = isAngeredBeesMode ? GlobalConstants.BEE_SPAWN_INTERVAL_ANGERED : GlobalConstants.BEE_SPAWN_INTERVAL_REGULAR;
-//            }
-//
-//            if (dandelionSpawnCounter <= 0 && umbrellaPowerUp == null) {
-//                dandelionSpawnCounter = random.nextInt(GlobalConstants.DANDELION_SPAWN_CHANCE_MAX - GlobalConstants.DANDELION_SPAWN_CHANCE_MIN) + GlobalConstants.DANDELION_SPAWN_CHANCE_MIN;
-//                dandelionPowerup = new DandelionPowerUp(stage.sceneLoader, stage);
-//            }
-//
-//            CollisionChecker.checkCollisions(stage);
-//        }
-//    }
-//
-//    private void reloadBugs() {
-//        bugs = new ArrayList<>();
-//    }
-//
-//    public boolean isGameOver() {
-//        for (Bug bug : bugs) {
-//            if (bug.getController().isOutOfBounds() && flower.getCurHp() <= 0) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public static boolean isGameAlive() {
-//        return !GAME_PAUSED && !GAME_OVER;
-//    }
-//
-//    public List<Bug> getBugs() {
-//        return bugs;
-//    }
-//
-//    public void setBugs(List<Bug> bugs) {
-//        this.bugs = bugs;
-//    }
-//
-//    public int getTimer() {
-//        return timer;
-//    }
-//
-//    public void setTimer(int timer) {
-//        this.timer = timer;
-//    }
-//
-//    public MrSpawner getSpawner() {
-//        return spawner;
-//    }
-//
-//
-//    public Entity getGameItem() {
-//        return gameItem;
-//    }
-//
-//    public void setGameItem(Entity gameItem) {
-//        this.gameItem = gameItem;
-//    }
-//
-//    public GameStage getStage() {
-//        return stage;
-//    }
-//
-//    public void setStage(GameStage stage) {
-//        this.stage = stage;
-//    }
-//
-//    public Flower getFlower() {
-//        return flower;
-//    }
-//
-//    public void setFlower(Flower flower) {
-//        this.flower = flower;
-//    }
-//
-//
-//}
+package com.mygdx.game.stages;
+
+import com.badlogic.ashley.core.Entity;
+import com.mygdx.game.system.BugSpawnSystem;
+import com.mygdx.game.system.BugSystem;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.data.LayerItemVO;
+import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.LayerSystem;
+import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+/**
+ * Created by Teatree on 7/25/2015.
+ */
+public class GameScreenScript implements IScript {
+
+    private GameStage stage;
+    private ItemWrapper gameItem;
+//    private int spawnCounter = 0;
+
+
+    public GameScreenScript(GameStage stage) {
+        this.stage = stage;
+    }
+
+    @Override
+    public void init(Entity item) {
+        gameItem = new ItemWrapper(item);
+
+        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
+
+        BugSystem bugSystem = new BugSystem();
+
+        stage.sceneLoader.getEngine().addSystem(bugSystem);
+        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
+
+
+        //init Flower
+        CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLib");
+//        LayerItemVO tempL = tempC.
+        Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
+        stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
+        stage.sceneLoader.getEngine().addEntity(flowerEntity);
+
+        TransformComponent tc = new TransformComponent();
+        tc.x = 300;
+        tc.y = -400;
+        tc.scaleX = 0.6f;
+        tc.scaleY = 0.6f;
+        flowerEntity.add(tc);
+
+//        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
+//        lc.setLayers(tempC.composite.layers);
+//        flowerEntity.add(lc);
+
+//        LayerItemVO tempL = lc.getLayer("Layer1");
+
+//                tempC.composite.layers.get(0).isVisible = false;
+
+        SpriteAnimationComponent spriteAnimationComponent = new SpriteAnimationComponent();
+//        SpriteAnimationStateComponent spriteAnimationStateComponent = new SpriteAnimationStateComponent();
+//        stage.sceneLoader.getEngine().addSystem(new LayerSystem());
+
+//        tempL.isVisible = true;
+//        System.out.println(tempL.isVisible + " IS THE NAME");
+
+        // Adding a Click listener to playButton so we can start game when clicked
+        shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+//                spriteAnimationComponent.playMode
+//                System.out.println(spriteAnimationComponent.playMode);
+            }
+
+            @Override
+            public void touchDown() {
+
+                stage.initMenu();
+            }
+
+            @Override
+            public void clicked() {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void act(float delta) {
+//        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+    }
+}

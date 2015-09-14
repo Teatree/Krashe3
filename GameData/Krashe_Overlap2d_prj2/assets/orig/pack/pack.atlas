@@ -1,19 +1,19 @@
 
 pack.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 2, 224
+  xy: 2, 766
   size: 1200, 786
   orig: 1200, 786
   offset: 0, 0
   index: -1
 backnooff
   rotate: false
-  xy: 224, 102
+  xy: 224, 644
   size: 121, 120
   split: 26, 24, 24, 30
   orig: 121, 120
@@ -21,7 +21,7 @@ backnooff
   index: -1
 backshadow
   rotate: false
-  xy: 2, 2
+  xy: 2, 544
   size: 220, 220
   split: 89, 105, 80, 104
   pad: 88, 106, 79, 105
@@ -30,7 +30,7 @@ backshadow
   index: -1
 buttonback
   rotate: false
-  xy: 1204, 668
+  xy: 1269, 1210
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -38,7 +38,7 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1426, 890
+  xy: 1491, 1432
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
@@ -46,7 +46,7 @@ buttonbackoff
   index: -1
 buttoncameraoff
   rotate: false
-  xy: 347, 102
+  xy: 2, 270
   size: 121, 120
   split: 23, 18, 17, 29
   orig: 121, 120
@@ -54,7 +54,7 @@ buttoncameraoff
   index: -1
 buttoncameraon
   rotate: false
-  xy: 1204, 546
+  xy: 347, 644
   size: 121, 120
   split: 23, 17, 17, 29
   orig: 121, 120
@@ -62,7 +62,7 @@ buttoncameraon
   index: -1
 buttonnoAdsoff
   rotate: false
-  xy: 1672, 890
+  xy: 470, 644
   size: 120, 120
   split: 14, 18, 11, 13
   pad: 11, 13, 16, 14
@@ -71,7 +71,7 @@ buttonnoAdsoff
   index: -1
 buttonnoAdson
   rotate: false
-  xy: 593, 102
+  xy: 1269, 966
   size: 120, 120
   split: 12, 15, 11, 14
   orig: 120, 120
@@ -79,7 +79,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 1549, 890
+  xy: 1269, 1088
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -87,7 +87,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 470, 102
+  xy: 1614, 1432
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -96,7 +96,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 1204, 424
+  xy: 2, 148
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -105,7 +105,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 1204, 302
+  xy: 1737, 1432
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -113,7 +113,7 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 1794, 890
+  xy: 2, 26
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
@@ -121,7 +121,7 @@ buttonsettingson
   index: -1
 buttonshopoff
   rotate: false
-  xy: 715, 102
+  xy: 592, 644
   size: 120, 120
   split: 14, 16, 17, 17
   orig: 120, 120
@@ -129,18 +129,39 @@ buttonshopoff
   index: -1
 buttonshopon
   rotate: false
-  xy: 1916, 890
+  xy: 1269, 844
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120
   offset: 0, 0
   index: -1
+flowerhead
+  rotate: false
+  xy: 2, 392
+  size: 143, 150
+  orig: 143, 150
+  offset: 0, 0
+  index: -1
+flowerpeducle
+  rotate: false
+  xy: 1204, 2
+  size: 63, 1550
+  orig: 63, 1550
+  offset: 0, 0
+  index: -1
 pop-upback
   rotate: false
-  xy: 1204, 790
+  xy: 1269, 1332
   size: 220, 220
   split: 89, 103, 111, 101
   pad: 89, 103, 111, 102
   orig: 220, 220
+  offset: 0, 0
+  index: -1
+pot
+  rotate: false
+  xy: 147, 484
+  size: 62, 58
+  orig: 62, 58
   offset: 0, 0
   index: -1

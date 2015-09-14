@@ -19,4 +19,9 @@ public class FlowerComponent implements Component {
 
     private CompositeItemVO flowerLib;
 
+    private boolean isMovingUp = false;
+    private boolean isEating = false;
+
+    private int eatCounter;
+
 }
