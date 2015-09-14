@@ -1,0 +1,146 @@
+
+flowerBiteAni.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+flowerBiteAni01
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni15
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni08
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni09
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni11
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni12
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni13
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni03
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni05
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni17
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni18
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni14
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni06
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni19
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni04
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni02
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni07
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni10
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni20
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
+flowerBiteAni16
+  rotate: false
+  xy: 2, 65
+  size: 203, 140
+  orig: 203, 140
+  offset: 0, 0
+  index: -1
