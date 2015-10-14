@@ -7,6 +7,7 @@ import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.FrameRange;
@@ -41,7 +42,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     private int spawnInterval = 200;
 
-    public BugSpawnSystem( SceneLoader sl) {
+    public BugSpawnSystem(SceneLoader sl) {
         this.sl = sl;
         init();
     }
@@ -106,6 +107,8 @@ public class BugSpawnSystem extends EntitySystem {
             BugComponent bc = new BugComponent();
             bc.startYPosition = getPos().y;
             bc.type = tempType;
+            AnimationComponent animationComponent = new AnimationComponent();
+            bugEntity.add(animationComponent);
 //            SpriteAnimationStateComponent animationComponent = new SpriteAnimationStateComponent();
 //            animationComponent.set(new FrameRange("ani", 1, 5), 20, Animation.PlayMode.LOOP_REVERSED);
             bugEntity.add(bc);

@@ -4,9 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -32,8 +29,6 @@ public class FlowerSystem extends IteratingSystem {
         FlowerComponent flowerComponent = mapper.get(entity);
         moveFlower();
         updateRect(flowerComponent, transformComponent, dimensionsComponent);
-
-
     }
 
     public void moveFlower(){

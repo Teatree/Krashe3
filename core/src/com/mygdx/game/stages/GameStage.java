@@ -5,22 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.MainItemComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.LayerItemVO;
-import com.uwsoft.editor.renderer.resources.IResourceRetriever;
-import com.uwsoft.editor.renderer.systems.LayerSystem;
-import com.uwsoft.editor.renderer.systems.SpriteAnimationSystem;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import static com.mygdx.game.utils.SoundMgr.*;
+import static com.mygdx.game.utils.BackgroundMusicMgr.*;
 
 /**
  * Created by Teatree on 5/25/2015.
@@ -29,7 +20,7 @@ public class GameStage extends Stage{
 
 //    public GameScreenScript game;
     public Viewport viewport;
-    public SceneLoader sceneLoader;
+    public static SceneLoader sceneLoader;
 
     public GameStage getInstance() {
         return this;
@@ -38,6 +29,9 @@ public class GameStage extends Stage{
     public GameStage() {
         sceneLoader = new SceneLoader();
         viewport = new FillViewport(1200, 786);
+
+        getSoundMgr();
+        getBackgroundMusicMgr();
 
         initMenu();
     }
@@ -50,6 +44,9 @@ public class GameStage extends Stage{
         root.addScript(game);
 //        Flower.init(this, sceneLoader);
         GlobalConstants.CUR_SCREEN = "GAME";
+
+        backgroundMusicMgr.stop();
+//        soundMgr.play("tuturu");
 
 //        //init Flower
 //        CompositeItemVO tempC = sceneLoader.loadVoFromLibrary("flowerLib");
@@ -88,6 +85,7 @@ public class GameStage extends Stage{
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(menu);
         GlobalConstants.CUR_SCREEN = "MENU";
+//        backgroundMusicMgrInst.play();
 //
 //        GameScreenScript.isAngeredBeesMode = false;
     }
@@ -113,4 +111,6 @@ public class GameStage extends Stage{
             }
         }
     }
+
+
 }

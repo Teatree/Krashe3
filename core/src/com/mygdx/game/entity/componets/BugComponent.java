@@ -28,7 +28,8 @@ public class BugComponent implements Component {
     public static enum State {
         IDLE,
         PREPARING,
-        CHARGING
+        CHARGING,
+        DEAD
     }
 
 }

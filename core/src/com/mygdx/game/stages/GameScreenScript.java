@@ -1,8 +1,11 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.system.BugSpawnSystem;
 import com.mygdx.game.system.BugSystem;
+import com.mygdx.game.system.DandelionSystem;
+import com.mygdx.game.system.UmbrelaSystem;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -10,19 +13,28 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.LayerItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.systems.LayerSystem;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import java.util.Random;
+
+import static com.mygdx.game.utils.GlobalConstants.*;
+import static com.mygdx.game.stages.GameStage.*;
 
 /**
  * Created by Teatree on 7/25/2015.
  */
 public class GameScreenScript implements IScript {
 
+    public static boolean GAME_OVER = false;
+    public static boolean GAME_PAUSED = false;
+
     private GameStage stage;
     private ItemWrapper gameItem;
+    public Random random = new Random();
 //    private int spawnCounter = 0;
 
+    public int dandelionSpawnCounter;
 
     public GameScreenScript(GameStage stage) {
         this.stage = stage;
@@ -32,6 +44,8 @@ public class GameScreenScript implements IScript {
     public void init(Entity item) {
         gameItem = new ItemWrapper(item);
 
+        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
+
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
 
@@ -39,29 +53,32 @@ public class GameScreenScript implements IScript {
 
         stage.sceneLoader.getEngine().addSystem(bugSystem);
         stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
-
+        stage.sceneLoader.getEngine().addSystem(new DandelionSystem(sceneLoader));
+        stage.sceneLoader.getEngine().addSystem(new UmbrelaSystem());
 
         //init Flower
-        CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLib");
+        CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("layerTestTest2");
 //        LayerItemVO tempL = tempC.
         Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
         stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
         stage.sceneLoader.getEngine().addEntity(flowerEntity);
+//        flowerEntity.getComponent().composite.layers.get(1).isVisible = false;
+
 
         TransformComponent tc = new TransformComponent();
         tc.x = 300;
-        tc.y = -400;
+        tc.y = 300;
         tc.scaleX = 0.6f;
         tc.scaleY = 0.6f;
         flowerEntity.add(tc);
 
-//        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
-//        lc.setLayers(tempC.composite.layers);
-//        flowerEntity.add(lc);
+        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
+        lc.setLayers(tempC.composite.layers);
+        flowerEntity.add(lc);
 
-//        LayerItemVO tempL = lc.getLayer("Layer1");
-
-//                tempC.composite.layers.get(0).isVisible = false;
+        LayerItemVO tempL = lc.getLayer("Layer1");
+        tempL.isVisible = false;
+                tempC.composite.layers.get(0).isVisible = false;
 
         SpriteAnimationComponent spriteAnimationComponent = new SpriteAnimationComponent();
 //        SpriteAnimationStateComponent spriteAnimationStateComponent = new SpriteAnimationStateComponent();
@@ -80,7 +97,6 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-
                 stage.initMenu();
             }
 
@@ -99,6 +115,30 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-//        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+        dandelionSpawnCounter--;
+        //Spawn dandelion
+        if (dandelionSpawnCounter <= 0) {
+            dandelionSpawnCounter =
+                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
+
+            CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("simpleLib");
+            Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
+
+            TransformComponent transformComponent = new TransformComponent();
+            transformComponent.x = 200;
+            transformComponent.y = 110;
+            dandelionEntity.add(transformComponent);
+
+            DandelionComponent dc = new DandelionComponent();
+            dc.state = DandelionComponent.State.GROWING;
+            dandelionEntity.add(dc);
+
+            sceneLoader.getEngine().addEntity(dandelionEntity);
+        }
+    }
+
+    public static boolean isGameAlive() {
+        return !GAME_PAUSED && !GAME_OVER;
     }
 }

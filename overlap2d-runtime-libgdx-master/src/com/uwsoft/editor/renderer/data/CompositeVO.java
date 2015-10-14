@@ -83,7 +83,9 @@ public class CompositeVO {
 
         layers.clear();
         for (int i = 0; i < vo.layers.size(); i++) {
-            layers.add(new LayerItemVO(vo.layers.get(i)));
+            if (vo.layers.get(i).isVisible) {
+                layers.add(new LayerItemVO(vo.layers.get(i)));
+            }
         }
 
     }
