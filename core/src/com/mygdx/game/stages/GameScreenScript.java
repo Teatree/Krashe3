@@ -2,10 +2,8 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.DandelionComponent;
-import com.mygdx.game.system.BugSpawnSystem;
-import com.mygdx.game.system.BugSystem;
-import com.mygdx.game.system.DandelionSystem;
-import com.mygdx.game.system.UmbrelaSystem;
+import com.mygdx.game.entity.componets.FlowerComponent;
+import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -57,22 +55,24 @@ public class GameScreenScript implements IScript {
         stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
         stage.sceneLoader.getEngine().addSystem(new DandelionSystem(sceneLoader));
         stage.sceneLoader.getEngine().addSystem(new UmbrelaSystem());
+        stage.sceneLoader.getEngine().addSystem(new FlowerSystem());
 
         //init Flower
-        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("layerTestTest2");
+        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLibV2");
 //        LayerItemVO tempL = tempC.
         Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
         stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
         stage.sceneLoader.getEngine().addEntity(flowerEntity);
 //        flowerEntity.getComponent().composite.layers.get(1).isVisible = false;
 
-
+        FlowerComponent fc = new FlowerComponent();
         TransformComponent tc = new TransformComponent();
         tc.x = 300;
-        tc.y = 300;
+        tc.y = -600;
         tc.scaleX = 0.6f;
         tc.scaleY = 0.6f;
         flowerEntity.add(tc);
+        flowerEntity.add(fc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);

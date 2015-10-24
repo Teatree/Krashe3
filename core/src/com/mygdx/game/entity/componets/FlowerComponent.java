@@ -19,9 +19,17 @@ public class FlowerComponent implements Component {
 
     private CompositeItemVO flowerLib;
 
-    private boolean isMovingUp = false;
-    private boolean isEating = false;
+    public boolean isMovingUp = false;
+    public boolean isEating = false;
+    public State state = State.IDLE;
 
     private int eatCounter;
+
+    public enum State{
+        IDLE,
+        ATTACK,
+        IDLE_BITE,
+        ATTACK_BITE;
+    }
 
 }
