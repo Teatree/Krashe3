@@ -27,6 +27,7 @@ public class CompositeVO {
     public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<SpriterVO>(1);
 
     public ArrayList<LayerItemVO> layers = new ArrayList<LayerItemVO>();
+    public ArrayList<LayerItemVO> inVisibleLayers = new ArrayList<LayerItemVO>();
 
     public CompositeVO() {
 
@@ -80,12 +81,24 @@ public class CompositeVO {
         	sSpriterAnimations.add(new SpriterVO(vo.sSpriterAnimations.get(i)));
         }
 
+//        for (int j = 0; j < vo.inVisibleLayers.size(); j++){
+//            if (vo.inVisibleLayers.get(j).isVisible) {
+//                layers.add(new LayerItemVO(vo.layers.get(j)));
+//            }
+//        }
+//
+//        inVisibleLayers.clear();
+//        for (int i = 0; i < vo.layers.size(); i++) {
+//            if (vo.layers.get(i).isVisible) {
+//                layers.add(new LayerItemVO(vo.layers.get(i)));
+//            }else{
+//                inVisibleLayers.add(new LayerItemVO(vo.layers.get(i)));
+//            }
+//        }
 
         layers.clear();
         for (int i = 0; i < vo.layers.size(); i++) {
-            if (vo.layers.get(i).isVisible) {
-                layers.add(new LayerItemVO(vo.layers.get(i)));
-            }
+            layers.add(new LayerItemVO(vo.layers.get(i)));
         }
 
     }

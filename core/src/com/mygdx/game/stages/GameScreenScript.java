@@ -11,6 +11,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.data.CompositeVO;
 import com.uwsoft.editor.renderer.data.LayerItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -32,6 +33,7 @@ public class GameScreenScript implements IScript {
     private GameStage stage;
     private ItemWrapper gameItem;
     public Random random = new Random();
+//    CompositeVO
 //    private int spawnCounter = 0;
 
     public int dandelionSpawnCounter;
@@ -57,7 +59,7 @@ public class GameScreenScript implements IScript {
         stage.sceneLoader.getEngine().addSystem(new UmbrelaSystem());
 
         //init Flower
-        CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("layerTestTest2");
+        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("layerTestTest2");
 //        LayerItemVO tempL = tempC.
         Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
         stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
@@ -76,9 +78,8 @@ public class GameScreenScript implements IScript {
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
 
-        LayerItemVO tempL = lc.getLayer("Layer1");
-        tempL.isVisible = false;
-                tempC.composite.layers.get(0).isVisible = false;
+//        LayerItemVO tempL = lc.getLayer("Layer1");
+                tempC.composite.layers.get(0).isVisible = true;
 
         SpriteAnimationComponent spriteAnimationComponent = new SpriteAnimationComponent();
 //        SpriteAnimationStateComponent spriteAnimationStateComponent = new SpriteAnimationStateComponent();
@@ -91,18 +92,19 @@ public class GameScreenScript implements IScript {
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-//                spriteAnimationComponent.playMode
-//                System.out.println(spriteAnimationComponent.playMode);
+                tempC.composite.layers.get(0).isVisible = true;
+                System.out.println("isVisibleNow? =" + tempC.composite.layers.get(0).isVisible);
             }
 
             @Override
             public void touchDown() {
-                stage.initMenu();
+                tempC.composite.layers.get(0).isVisible = false;
+                System.out.println("isVisible? =" + tempC.composite.layers.get(0).isVisible);
             }
 
             @Override
             public void clicked() {
-
+//                tempC.composite.layers.get(0).isVisible = true;
             }
         });
 
