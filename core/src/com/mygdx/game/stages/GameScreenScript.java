@@ -58,7 +58,7 @@ public class GameScreenScript implements IScript {
         stage.sceneLoader.getEngine().addSystem(new FlowerSystem());
 
         //init Flower
-        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLibV2");
+        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLibV3");
 //        LayerItemVO tempL = tempC.
         Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
         stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);

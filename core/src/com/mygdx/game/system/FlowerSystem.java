@@ -68,11 +68,12 @@ public class FlowerSystem extends IteratingSystem {
         if (fc.state == FlowerComponent.State.IDLE){
             lc.getLayer("headIdle").isVisible = true;
             lc.getLayer("peduncleIdle").isVisible = true;
-            lc.getLayer("leafs").isVisible = true;
+            lc.getLayer("leavesDynamic").isVisible = true;
 
+            lc.getLayer("leavesStatic").isVisible = false;
             lc.getLayer("peduncleAttack").isVisible = false;
+            lc.getLayer("attackHeadIdleIdle").isVisible = false;
             lc.getLayer("attackHeadIdle").isVisible = false;
-            lc.getLayer("arrack_head_bite").isVisible = false;
             lc.getLayer("headBite").isVisible = false;
         }
             if (Gdx.input.justTouched() && !fc.isMovingUp && fc.boundsRect.getY() < 1000 ){
@@ -80,8 +81,9 @@ public class FlowerSystem extends IteratingSystem {
                 fc.isEating = false;
                 lc.getLayer("headIdle").isVisible = false;
                 lc.getLayer("peduncleIdle").isVisible = false;
-                lc.getLayer("leafs").isVisible = false;
+                lc.getLayer("leavesDynamic").isVisible = false;
 
+                lc.getLayer("leavesStatic").isVisible = true;
                 lc.getLayer("peduncleAttack").isVisible = true;
                 lc.getLayer("attackHeadIdle").isVisible = true;
 //                System.out.println("saHead get animations: " + saHead.getAnimations());
