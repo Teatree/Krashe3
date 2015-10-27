@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -21,6 +23,7 @@ import static com.mygdx.game.utils.SoundMgr.soundMgr;
 public class BugSystem extends IteratingSystem {
 
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
+    private ComponentMapper<FlowerCollisionComponent> fMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
 
     public BugSystem(){
 
@@ -33,18 +36,24 @@ public class BugSystem extends IteratingSystem {
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         transformComponent.scaleX = 0.6f;
         transformComponent.scaleY = 0.6f;
+        FlowerCollisionComponent fc = fMapper.get(entity);
         BugComponent bugComponent = mapper.get(entity);
 
         if (bugComponent.state != DEAD) {
             updateRect(bugComponent, transformComponent, dimensionsComponent);
 //        transformComponent.y = bugComponent.startYPosition + 0.5f;
             moveEntity(deltaTime, transformComponent, bugComponent);
-            if (isOutOfBounds(bugComponent)) {
+            if (isOutOfBounds(bugComponent) || checkFlowerCollision(fc, bugComponent)) {
                 soundMgr.play("eat");
                 bugComponent.state = DEAD;
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
             }
         }
+
+    }
+
+    private boolean checkFlowerCollision(FlowerCollisionComponent fc, BugComponent bc){
+        return fc.boundsRect.overlaps(bc.boundsRect);
     }
 
     private void moveEntity(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent){

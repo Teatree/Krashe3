@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.DandelionComponent;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -52,7 +53,6 @@ public class GameScreenScript implements IScript {
         BugSystem bugSystem = new BugSystem();
 
         stage.sceneLoader.getEngine().addSystem(bugSystem);
-        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
         stage.sceneLoader.getEngine().addSystem(new DandelionSystem(sceneLoader));
         stage.sceneLoader.getEngine().addSystem(new UmbrelaSystem());
         stage.sceneLoader.getEngine().addSystem(new FlowerSystem());
@@ -65,21 +65,27 @@ public class GameScreenScript implements IScript {
         stage.sceneLoader.getEngine().addEntity(flowerEntity);
 //        flowerEntity.getComponent().composite.layers.get(1).isVisible = false;
 
-        FlowerComponent fc = new FlowerComponent();
+
         TransformComponent tc = new TransformComponent();
-        tc.x = 300;
-        tc.y = -600;
+        tc.x = 970;
+        tc.y = -774;
         tc.scaleX = 0.6f;
         tc.scaleY = 0.6f;
         flowerEntity.add(tc);
+
+        FlowerComponent fc = new FlowerComponent();
         flowerEntity.add(fc);
+
+        FlowerCollisionComponent fcc = new FlowerCollisionComponent();
+        flowerEntity.add(fcc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
+        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader,fcc));
 
 //        LayerItemVO tempL = lc.getLayer("Layer1");
-                tempC.composite.layers.get(0).isVisible = true;
+//                tempC.composite.layers.get(0).isVisible = true;
 
         SpriteAnimationComponent spriteAnimationComponent = new SpriteAnimationComponent();
 //        SpriteAnimationStateComponent spriteAnimationStateComponent = new SpriteAnimationStateComponent();

@@ -15,21 +15,25 @@ public class FlowerComponent implements Component {
     private int maxHp = GlobalConstants.DEFAULT_MAX_HP;
     private int curHp = maxHp;
 
-    public Rectangle boundsRect = new Rectangle();
+//    public Rectangle boundsRect = new Rectangle();
 
     private CompositeItemVO flowerLib;
 
-    public boolean isMovingUp = false;
-    public boolean isEating = false;
     public State state = State.IDLE;
 
-    private int eatCounter;
+    public int eatCounter;
 
     public enum State{
         IDLE,
         ATTACK,
+        RETREAT,
         IDLE_BITE,
         ATTACK_BITE;
     }
+
+    public boolean isEating(){
+        return state == State.IDLE_BITE || state == State.ATTACK_BITE;
+    }
+
 
 }

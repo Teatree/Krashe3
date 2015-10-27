@@ -5,6 +5,8 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerComponent;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
@@ -33,7 +35,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static final String BEE = "simpleLib";
     public static final String QUEENBEE = "simpleLib";
 
-
+    public FlowerCollisionComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
     private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
 
@@ -42,8 +44,9 @@ public class BugSpawnSystem extends EntitySystem {
 
     private int spawnInterval = 200;
 
-    public BugSpawnSystem(SceneLoader sl) {
+    public BugSpawnSystem(SceneLoader sl, FlowerCollisionComponent fcc) {
         this.sl = sl;
+        this.fcc = fcc;
         init();
     }
 
@@ -112,6 +115,7 @@ public class BugSpawnSystem extends EntitySystem {
 //            SpriteAnimationStateComponent animationComponent = new SpriteAnimationStateComponent();
 //            animationComponent.set(new FrameRange("ani", 1, 5), 20, Animation.PlayMode.LOOP_REVERSED);
             bugEntity.add(bc);
+            bugEntity.add(fcc);
             bugEntity.add(getPos());
 
             spawnInterval = 100;
