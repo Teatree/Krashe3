@@ -36,24 +36,27 @@ public class BugSystem extends IteratingSystem {
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         transformComponent.scaleX = 0.6f;
         transformComponent.scaleY = 0.6f;
-        FlowerCollisionComponent fc = fMapper.get(entity);
+        FlowerCollisionComponent fcc = fMapper.get(entity);
         BugComponent bugComponent = mapper.get(entity);
 
         if (bugComponent.state != DEAD) {
             updateRect(bugComponent, transformComponent, dimensionsComponent);
 //        transformComponent.y = bugComponent.startYPosition + 0.5f;
             moveEntity(deltaTime, transformComponent, bugComponent);
-            if (isOutOfBounds(bugComponent) || checkFlowerCollision(fc, bugComponent)) {
+            if (isOutOfBounds(bugComponent) || checkFlowerCollision(fcc, bugComponent)) {
                 soundMgr.play("eat");
                 bugComponent.state = DEAD;
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
+                fcc.isCollision = true;
             }
         }
 
     }
 
-    private boolean checkFlowerCollision(FlowerCollisionComponent fc, BugComponent bc){
-        return fc.boundsRect.overlaps(bc.boundsRect);
+    private boolean checkFlowerCollision(FlowerCollisionComponent fcc, BugComponent bc){
+
+//        fcc.isCollision = fcc.boundsRect.overlaps(bc.boundsRect);
+        return fcc.boundsRect.overlaps(bc.boundsRect);
     }
 
     private void moveEntity(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent){
@@ -116,8 +119,8 @@ public class BugSystem extends IteratingSystem {
     public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
         bc.boundsRect.x = (int)tc.x;
         bc.boundsRect.y = (int)tc.y;
-        bc.boundsRect.width = (int)dc.width;
-        bc.boundsRect.height = (int)dc.height;
+        bc.boundsRect.width = (int)dc.width*tc.scaleX;
+        bc.boundsRect.height = (int)dc.height*tc.scaleY;
     }
 
 //    public boolean isOutOfBounds(BugComponent bc, FlowerComponent fc){

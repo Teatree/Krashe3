@@ -54,7 +54,7 @@ public class BugSpawnSystem extends EntitySystem {
         rand = new Random();
 
         SPAWN_MIN_X = -400;
-        SPAWN_MIN_Y = 300;
+        SPAWN_MIN_Y = 100;
         SPAWN_MAX_X = -200;
         SPAWN_MAX_Y = 700;
 

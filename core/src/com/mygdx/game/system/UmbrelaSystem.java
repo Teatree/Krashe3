@@ -75,8 +75,8 @@ public class UmbrelaSystem extends IteratingSystem {
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
         uc.boundsRect.x = (int)tc.x;
         uc.boundsRect.y = (int)tc.y;
-        uc.boundsRect.width = (int)dc.width;
-        uc.boundsRect.height = (int)dc.height;
+        uc.boundsRect.width = (int)dc.width * tc.scaleX;
+        uc.boundsRect.height = (int)dc.height * tc.scaleY;
     }
 
     public boolean isOutOfBounds(UmbrellaComponent uc){

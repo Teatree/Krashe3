@@ -9,6 +9,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -43,10 +44,12 @@ public class Overlap2dRenderer extends IteratingSystem {
 	//private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	
 	public Batch batch;
+	public ShapeRenderer sr;
 
 	public Overlap2dRenderer(Batch batch) {
 		super(Family.all(ViewPortComponent.class).get());
 		this.batch = batch;
+		sr = new ShapeRenderer();
 		drawableLogicMapper = new DrawableLogicMapper();
 	}
 
@@ -63,6 +66,9 @@ public class Overlap2dRenderer extends IteratingSystem {
 		batch.begin();
 		drawRecursively(entity);
 		batch.end();
+//		sr.begin(ShapeRenderer.ShapeType.Line);
+//		sr.rect(970,126,90,90);
+//		sr.end();
 
 		
 		//TODO kinda not cool (this should be done in separate lights renderer maybe?

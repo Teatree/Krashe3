@@ -8,4 +8,5 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class FlowerCollisionComponent implements Component {
     public Rectangle boundsRect = new Rectangle();
+    public boolean isCollision;
 }

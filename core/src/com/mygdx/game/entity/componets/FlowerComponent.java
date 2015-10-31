@@ -21,7 +21,7 @@ public class FlowerComponent implements Component {
 
     public State state = State.IDLE;
 
-    public int eatCounter;
+    public int eatCounter = 30;
 
     public enum State{
         IDLE,
