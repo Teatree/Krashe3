@@ -113,7 +113,6 @@ public class FlowerSystem extends IteratingSystem {
         if (fc.state == ATTACK_BITE || fc.state == IDLE_BITE) {
             fc.eatCounter--;
 
-            System.out.println(fc.eatCounter);
             if (fc.state == ATTACK_BITE && fc.eatCounter == 0) {
                 fc.state = FlowerComponent.State.RETREAT;
                 setAttackAnimation(lc);

@@ -48,8 +48,6 @@ public class DandelionSystem extends IteratingSystem {
         UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
         umbrellaComponent.state = UmbrellaComponent.State.PUSH;
         umbrellaEntity.add(umbrellaComponent);
-
-//        stage.addActor(((GameStage)stage).game.umbrellaPowerUp.getCompositeItem());
     }
 
     @Override
@@ -60,14 +58,12 @@ public class DandelionSystem extends IteratingSystem {
             counter++;
             if (dc.state == GROWING) {
                 if (counter >= GlobalConstants.DANDELION_GROWING_DURATION) {
-//                    spriterActor.setAnimation(1);
                     dc.state = IDLE;
                     counter = 0;
                 }
             }
             if (dc.state == IDLE) {
                 if (counter >= GlobalConstants.DANDELION_IDLE_DURATION) {
-//                    spriterActor.setAnimation(2);
                     dc.state = DYING;
                     counter = 0;
                 }
