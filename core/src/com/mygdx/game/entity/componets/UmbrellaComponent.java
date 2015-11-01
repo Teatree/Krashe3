@@ -2,7 +2,6 @@ package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 import java.util.Random;
 

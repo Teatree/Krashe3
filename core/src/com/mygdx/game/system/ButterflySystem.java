@@ -1,81 +1,97 @@
 package com.mygdx.game.system;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
+import com.mygdx.game.entity.componets.ButterflyComponent;
+import com.mygdx.game.entity.componets.CocoonComponent;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.stages.GameStage;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+
+import java.util.Random;
+
+import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
 
 /**
  * Created by Teatree on 9/3/2015.
  */
 public class ButterflySystem extends IteratingSystem {
 
-//    public void init(CompositeItem item) {
-//            this.item = item;
-//
-//            pushUmbrella(310, 400, 45, 55);
-//        }
+    private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
+    private ComponentMapper<FlowerCollisionComponent> collisionMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
 
-    public ButterflySystem(Family family) {
-        super(family);
+    public Random random = new Random();
+
+    public ButterflySystem() {
+        super(Family.all(ButterflyComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-//        @Override
-//        public void init(CompositeItem item) {
-//            this.item = item;
-//
-//            pushUmbrella(310, 400, 45, 55);
-//        }
-//
-//        @Override
-//        public void dispose() {
-//            item.dispose();
-//        }
-//
-//        public void pushUmbrella(int randXmin, int randXmax, int randYmin, int randYmax) {
-//            velocityX = ((random.nextInt(randXmax-randXmin)+randXmin)*-1)*speedIncrCoeficient;
-////        gravity *= speedIncrCoeficient/2;
-//            System.out.println("velocityX " + velocityX);
-//            if(item.getY()> Gdx.graphics.getHeight()/2){
-//                velocityY = (random.nextInt((randYmax-randYmin)+randYmin)*-1)*speedIncrCoeficient;
-//            }else {
-//                velocityY = (random.nextInt((randYmax - randYmin) + randYmin))*speedIncrCoeficient;
-//            }
-//            System.out.println("velocityY " + velocityY);
-////        speedIncrCoeficient += 0.5f;
-//            gravity = Math.abs(velocityX/(7-speedIncrCoeficient*gravityDecreaseMultiplier));
-//            speedIncrCoeficient += 0.1f;
-//            gravityDecreaseMultiplier -= 0.05f;
-//            System.out.println("gravity " + gravity);
-//        }
-//
-//        @Override
-//        public void act(float delta) {
-//            if(isGameAlive()) {
-//                velocityX += gravity * delta;
-//                item.setX(item.getX() + velocityX * delta);
-//                item.setY(item.getY() + velocityY * delta);
-//            }
-//        }
-//
-//        public void updateRect() {
-//            boundsRect.x = (int)item.getX();
-//            boundsRect.y = (int)item.getY();
-//            boundsRect.width = (int)item.getWidth();
-//            boundsRect.height = (int)item.getHeight();
-//        }
-//
-//        public Rectangle getBoundsRectangle() {
-//            updateRect();
-//            return boundsRect;
-//        }
-//
-//        public CompositeItem getCompositeItem(){
-//            return item;
-//        }
-//    }
+        FlowerCollisionComponent fcc = collisionMapper.get(entity);
+        ButterflyComponent bc = mapper.get(entity);
 
+        TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
+        DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+        LayerMapComponent lc = ComponentRetriever.get(entity, LayerMapComponent.class);
+
+        if (bc.state.equals(SPAWN)) {
+            push(bc, tc);
+            bc.state = FLY;
+        } else {
+            fly(bc, tc, deltaTime);
         }
+        updateRectangle(bc, tc, dc);
 
+        if (checkCollision(bc, fcc)) {
+            bc.state = DEAD;
+            GameStage.sceneLoader.getEngine().removeEntity(entity);
+        }
+    }
+
+    public void fly(ButterflyComponent bc, TransformComponent tc, float delta) {
+//            if(isGameAlive()) {
+        bc.velocityX += bc.gravity * delta;
+        tc.x = tc.x + bc.velocityX * delta;
+        tc.y = tc.y + +bc.velocityY * delta;
+//            }
+    }
+
+    public void updateRectangle(ButterflyComponent bc, TransformComponent tc, DimensionsComponent dc) {
+        bc.boundsRect.x = (int) tc.x;
+        bc.boundsRect.y = (int) tc.y;
+        bc.boundsRect.width = (int) dc.width * tc.scaleX;
+        bc.boundsRect.height = (int) dc.height * tc.scaleY;
+    }
+
+    public boolean isOutOfBounds(ButterflyComponent bc) {
+        return bc.boundsRect.getX() >= Gdx.graphics.getWidth();
+    }
+
+    public void push(ButterflyComponent bc, TransformComponent tc) {
+        bc.velocityX = ((random.nextInt(bc.randXmax - bc.randXmin) + bc.randXmin) * -1) * bc.speedIncrCoeficient;
+//        gravity *= speedIncrCoeficient/2;
+        System.out.println("velocityX " + bc.velocityX);
+        if (tc.y > Gdx.graphics.getHeight() / 2) {
+            bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin) * -1) * bc.speedIncrCoeficient;
+        } else {
+            bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin)) * bc.speedIncrCoeficient;
+        }
+        System.out.println("velocityY " + bc.velocityY);
+//        speedIncrCoeficient += 0.5f;
+        bc.gravity = Math.abs(bc.velocityX / (7 - bc.speedIncrCoeficient * bc.gravityDecreaseMultiplier));
+        bc.speedIncrCoeficient += 0.1f;
+        bc.gravityDecreaseMultiplier -= 0.05f;
+        System.out.println("gravity " + bc.gravity);
+    }
+
+    private boolean checkCollision(ButterflyComponent bc, FlowerCollisionComponent fcc) {
+        return bc.boundsRect.overlaps(fcc.boundsRect);
+    }
 }

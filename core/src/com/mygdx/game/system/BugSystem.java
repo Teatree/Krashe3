@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerCollisionComponent;
-import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;

@@ -54,7 +54,7 @@ public class DandelionSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         DandelionComponent dc = mapper.get(entity);
 
-        if(isGameAlive() && CUR_SCREEN == "GAME") {
+        if(isGameAlive() && "GAME".equals(CUR_SCREEN)) {
             counter++;
             if (dc.state == GROWING) {
                 if (counter >= GlobalConstants.DANDELION_GROWING_DURATION) {

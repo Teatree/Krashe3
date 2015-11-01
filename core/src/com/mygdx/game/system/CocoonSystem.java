@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.CacconComponent;
+import com.mygdx.game.entity.componets.ButterflyComponent;
+import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameStage;
@@ -13,44 +13,46 @@ import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.mygdx.game.entity.componets.CacconComponent.State.*;
+import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
 
 /**
  * Created by AnastasiiaRudyk on 31/10/2015.
  */
-public class CacoonSystem extends IteratingSystem {
+public class CocoonSystem extends IteratingSystem {
 
-    private ComponentMapper<CacconComponent> mapper = ComponentMapper.getFor(CacconComponent.class);
+    private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
     private ComponentMapper<FlowerCollisionComponent> collisionMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
     private SceneLoader sl;
+    FlowerCollisionComponent fcc;
+    private CompositeItemVO butterflyComposite;
 
-    public CacoonSystem(SceneLoader sl) {
-        super(Family.all(BugComponent.class).get());
+    public CocoonSystem(SceneLoader sl) {
+        super(Family.all(CocoonComponent.class).get());
+        butterflyComposite = sl.loadVoFromLibrary("simpleLib");
         this.sl = sl;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        CacconComponent cc = mapper.get(entity);
+        CocoonComponent cc = mapper.get(entity);
         DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
         TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-        FlowerCollisionComponent fcc = collisionMapper.get(entity);
+        fcc = collisionMapper.get(entity);
 
-        if (cc != null) {
-            updateRect(cc, tc, dc);
-            act(cc, entity, deltaTime);
+        updateRect(cc, tc, dc);
+        act(cc, entity, deltaTime);
 
-            if (cc.isCollision) {
-                hit(cc);
-            }
+        if (checkCollision(cc, fcc)) {
+            hit(cc);
         }
     }
 
-    public void act(CacconComponent cc, Entity entity, float delta) {
+    public void act(CocoonComponent cc, Entity entity, float delta) {
 
-        if (GlobalConstants.CUR_SCREEN == "GAME") {
+        if ("GAME".equals(GlobalConstants.CUR_SCREEN)) {
             cc.counter++;
             if (cc.state == SPAWNING) {
                 if (cc.counter >= GlobalConstants.COCOON_SPAWNING_DURATION) {
@@ -78,8 +80,7 @@ public class CacoonSystem extends IteratingSystem {
         }
     }
 
-    public void hit(CacconComponent cc) {
-        System.out.println("Hit!");
+    public void hit(CocoonComponent cc) {
         cc.isCollision = false;
         if (cc.state != DEAD) {
             cc.health--;
@@ -88,29 +89,31 @@ public class CacoonSystem extends IteratingSystem {
         }
     }
 
-    public void updateRect(CacconComponent cc, TransformComponent tc, DimensionsComponent dc) {
-        if (cc != null) {
-            cc.boundsRect.x = (int) tc.x;
-            cc.boundsRect.y = (int) tc.y-200;
-            cc.boundsRect.width = (int) dc.width * tc.scaleX;
-            cc.boundsRect.height = (int) dc.height * tc.scaleY;
-        }
+    public void updateRect(CocoonComponent cc, TransformComponent tc, DimensionsComponent dc) {
+        cc.boundsRect.x = (int) tc.x;
+        cc.boundsRect.y = (int) tc.y - 200;
+        cc.boundsRect.width = (int) dc.width * tc.scaleX;
+        cc.boundsRect.height = (int) dc.height * tc.scaleY;
     }
 
-    private boolean checkCollision(CacconComponent cc, FlowerCollisionComponent fcc) {
-        System.out.println("YES COLLISION");
+    private boolean checkCollision(CocoonComponent cc, FlowerCollisionComponent fcc) {
         cc.isCollision = cc.boundsRect.overlaps(fcc.boundsRect);
         return cc.isCollision;
     }
 
     private void spawnButterfly() {
-//            ((GameStage) stage).game.butterflyPowerUp = new ButterflyPowerUp(sceneLoader, stage);
-//            ((GameStage) stage).game.butterflyPowerUp.createUmbrellaController();
-//            ((GameStage) stage).game.butterflyPowerUp.getCompositeItem().setX(1900);
-//            ((GameStage) stage).game.butterflyPowerUp.getCompositeItem().setY(700);
-//            stage.addActor(((GameStage) stage).game.butterflyPowerUp.getCompositeItem());
-//        }
+
+        Entity butterflyEntity = sl.entityFactory.createEntity(sl.getRoot(), butterflyComposite);
+        sl.entityFactory.initAllChildren(sl.getEngine(), butterflyEntity, butterflyComposite.composite);
+        sl.getEngine().addEntity(butterflyEntity);
+
+        TransformComponent tc = new TransformComponent();
+        tc.x = 850;
+        tc.y = 700;
+        butterflyEntity.add(tc);
+
+        ButterflyComponent bc  = new ButterflyComponent();
+        butterflyEntity.add(fcc);
+        butterflyEntity.add(bc);
     }
-
-
 }

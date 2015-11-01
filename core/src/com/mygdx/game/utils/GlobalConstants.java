@@ -17,9 +17,9 @@ public abstract class GlobalConstants {
 
     public static final int COCOON_SPAWNING_DURATION = 200;
     public static final int COCOON_HIT_DURATION = 40;
-    public static final int COCOON_HEALTH = 20;
-    public static final int COCOON_SPAWN_MAX = 2000;
-    public static final int COCOON_SPAWN_MIN = 1500;
+    public static final int COCOON_HEALTH = 5;
+    public static final int COCOON_SPAWN_MAX = 1000;
+    public static final int COCOON_SPAWN_MIN = 500;
 
     public static final int MAX_IDLE_COUNT = 600;
     public static final int MIN_IDLE_COUNTER = 290;

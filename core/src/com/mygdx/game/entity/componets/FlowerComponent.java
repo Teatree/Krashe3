@@ -1,9 +1,7 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 /**
  * Created by Teatree on 9/3/2015.
@@ -16,8 +14,6 @@ public class FlowerComponent implements Component {
     private int curHp = maxHp;
 
 //    public Rectangle boundsRect = new Rectangle();
-
-    private CompositeItemVO flowerLib;
 
     public State state = State.IDLE;
 

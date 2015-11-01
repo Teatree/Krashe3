@@ -1,13 +1,11 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.entity.componets.CacconComponent;
+import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.system.*;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -36,7 +34,7 @@ public class GameScreenScript implements IScript {
 //    private int spawnCounter = 0;
 
     public int dandelionSpawnCounter;
-    public int cacoonSpawnCounter;
+    public int cocoonSpawnCounter;
 
     public FlowerCollisionComponent fcc;
 
@@ -49,19 +47,17 @@ public class GameScreenScript implements IScript {
         gameItem = new ItemWrapper(item);
 
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-        cacoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
 
-        BugSystem bugSystem = new BugSystem();
-
-        stage.sceneLoader.getEngine().addSystem(bugSystem);
+//        stage.sceneLoader.getEngine().addSystem(new BugSystem());
         stage.sceneLoader.getEngine().addSystem(new DandelionSystem(sceneLoader));
-        stage.sceneLoader.getEngine().addSystem(new CacoonSystem(sceneLoader));
 
-        stage.sceneLoader.getEngine().addSystem(new UmbrelaSystem());
+        stage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         stage.sceneLoader.getEngine().addSystem(new FlowerSystem());
+        stage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
 
         //init Flower
         final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLibV3");
@@ -82,28 +78,28 @@ public class GameScreenScript implements IScript {
         FlowerComponent fc = new FlowerComponent();
         flowerEntity.add(fc);
 
-        FlowerCollisionComponent fcc = new FlowerCollisionComponent();
+        fcc = new FlowerCollisionComponent();
         flowerEntity.add(fcc);
-
-        this.fcc = fcc;
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
-        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader,fcc));
+
+        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader, fcc));
+
+        GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
+
 
         // Adding a Click listener to playButton so we can start game when clicked
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 tempC.composite.layers.get(0).isVisible = true;
-                System.out.println("isVisibleNow? =" + tempC.composite.layers.get(0).isVisible);
             }
 
             @Override
             public void touchDown() {
                 tempC.composite.layers.get(0).isVisible = false;
-                System.out.println("isVisible? =" + tempC.composite.layers.get(0).isVisible);
             }
 
             @Override
@@ -122,13 +118,13 @@ public class GameScreenScript implements IScript {
     @Override
     public void act(float delta) {
         dandelionSpawnCounter--;
-        cacoonSpawnCounter--;
+        cocoonSpawnCounter--;
         //Spawn dandelion
         if (dandelionSpawnCounter <= 0) {
             spawnDandelion();
         }
-        //spawn Cacoon
-        if (cacoonSpawnCounter <= 0) {
+        //spawn Cocoon
+        if (cocoonSpawnCounter <= 0) {
             spawnCocoon();
         }
     }
@@ -154,20 +150,20 @@ public class GameScreenScript implements IScript {
     }
 
     private void spawnCocoon() {
-        cacoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         CompositeItemVO cocoonComposite = sceneLoader.loadVoFromLibrary("drunkbugLib");
         Entity cocoonEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), cocoonComposite);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), cocoonEntity, cocoonComposite.composite);
 
         TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = 800;
+        transformComponent.x = 850;
         transformComponent.y = 710;
         cocoonEntity.add(transformComponent);
 
-        CacconComponent cc = new CacconComponent();
+        cocoonEntity.add(fcc);
+        CocoonComponent cc = new CocoonComponent();
         cocoonEntity.add(cc);
-        cocoonEntity.add(this.fcc);
 
 //        DimensionsComponent dc = new DimensionsComponent();
 //        cocoonEntity.add(dc);
