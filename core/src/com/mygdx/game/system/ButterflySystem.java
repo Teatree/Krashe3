@@ -77,7 +77,7 @@ public class ButterflySystem extends IteratingSystem {
     public void push(ButterflyComponent bc, TransformComponent tc) {
         bc.velocityX = ((random.nextInt(bc.randXmax - bc.randXmin) + bc.randXmin) * -1) * bc.speedIncrCoeficient;
 //        gravity *= speedIncrCoeficient/2;
-        System.out.println("velocityX " + bc.velocityX);
+//        System.out.println("velocityX " + bc.velocityX);
         if (tc.y > Gdx.graphics.getHeight() / 2) {
             bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin) * -1) * bc.speedIncrCoeficient;
         } else {
@@ -88,7 +88,7 @@ public class ButterflySystem extends IteratingSystem {
         bc.gravity = Math.abs(bc.velocityX / (7 - bc.speedIncrCoeficient * bc.gravityDecreaseMultiplier));
         bc.speedIncrCoeficient += 0.1f;
         bc.gravityDecreaseMultiplier -= 0.05f;
-        System.out.println("gravity " + bc.gravity);
+//        System.out.println("gravity " + bc.gravity);
     }
 
     private boolean checkCollision(ButterflyComponent bc, FlowerCollisionComponent fcc) {

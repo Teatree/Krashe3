@@ -53,7 +53,7 @@ public class CocoonSystem extends IteratingSystem {
     public void act(CocoonComponent cc, Entity entity, float delta) {
 
         if ("GAME".equals(GlobalConstants.CUR_SCREEN)) {
-            cc.counter++;
+
             if (cc.state == SPAWNING) {
                 if (cc.counter >= GlobalConstants.COCOON_SPAWNING_DURATION) {
                     cc.state = IDLE;
@@ -62,6 +62,7 @@ public class CocoonSystem extends IteratingSystem {
             }
 
             if (cc.state == HIT) {
+                cc.counter++;
                 if (cc.counter >= GlobalConstants.COCOON_HIT_DURATION) {
                     if (cc.health <= 0) {
                         cc.state = DEAD;
@@ -91,24 +92,29 @@ public class CocoonSystem extends IteratingSystem {
 
     public void updateRect(CocoonComponent cc, TransformComponent tc, DimensionsComponent dc) {
         cc.boundsRect.x = (int) tc.x;
-        cc.boundsRect.y = (int) tc.y - 200;
+//        cc.boundsRect.y = (int) tc.y+85;
+        cc.boundsRect.y = 793;
         cc.boundsRect.width = (int) dc.width * tc.scaleX;
         cc.boundsRect.height = (int) dc.height * tc.scaleY;
+//        System.out.println(cc.boundsRect.toString());
     }
 
     private boolean checkCollision(CocoonComponent cc, FlowerCollisionComponent fcc) {
         cc.isCollision = cc.boundsRect.overlaps(fcc.boundsRect);
+        if( cc.isCollision) {
+            System.out.println("collision!");
+        }
         return cc.isCollision;
     }
 
     private void spawnButterfly() {
-
+        System.out.println("Butterfla llkn ");
         Entity butterflyEntity = sl.entityFactory.createEntity(sl.getRoot(), butterflyComposite);
         sl.entityFactory.initAllChildren(sl.getEngine(), butterflyEntity, butterflyComposite.composite);
         sl.getEngine().addEntity(butterflyEntity);
 
         TransformComponent tc = new TransformComponent();
-        tc.x = 850;
+        tc.x = 750;
         tc.y = 700;
         butterflyEntity.add(tc);
 

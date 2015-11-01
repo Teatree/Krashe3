@@ -66,9 +66,9 @@ public class Overlap2dRenderer extends IteratingSystem {
 		batch.begin();
 		drawRecursively(entity);
 		batch.end();
-//		sr.begin(ShapeRenderer.ShapeType.Line);
-//		sr.rect(970,126,90,90);
-//		sr.end();
+		sr.begin(ShapeRenderer.ShapeType.Line);
+		sr.rect(850,795,211,157);
+		sr.end();
 
 		
 		//TODO kinda not cool (this should be done in separate lights renderer maybe?
