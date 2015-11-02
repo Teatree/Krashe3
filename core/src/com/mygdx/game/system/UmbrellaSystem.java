@@ -5,7 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.entity.componets.ButterflyComponent;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -19,6 +22,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
+    private ComponentMapper<FlowerCollisionComponent> fccMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
 
     int randXmin = 110;
     int randXmax = 200;
@@ -37,7 +41,18 @@ public class UmbrellaSystem extends IteratingSystem {
         tc.scaleX = 0.2f;
         tc.scaleY = 0.2f;
 
+        FlowerCollisionComponent fcc = fccMapper.get(entity);
         UmbrellaComponent uc = mapper.get(entity);
+
+        move(deltaTime, tc, uc);
+        updateRect(uc, tc, dc);
+
+        if(checkCollision(uc, fcc)){
+            GameStage.sceneLoader.getEngine().removeEntity(entity);
+        }
+    }
+
+    private void move(float deltaTime, TransformComponent tc, UmbrellaComponent uc) {
         if (uc.state == UmbrellaComponent.State.PUSH) {
             pushUmbrella(uc, tc);
             uc.state = UmbrellaComponent.State.FLY;
@@ -47,7 +62,6 @@ public class UmbrellaSystem extends IteratingSystem {
         if (isOutOfBounds(uc)) {
             pushUmbrella(uc, tc);
         }
-        updateRect(uc, tc, dc);
     }
 
     public void pushUmbrella(UmbrellaComponent uc, TransformComponent tc) {
@@ -79,5 +93,9 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public boolean isOutOfBounds(UmbrellaComponent uc) {
         return uc.boundsRect.getX() >= Gdx.graphics.getWidth();
+    }
+
+    private boolean checkCollision(UmbrellaComponent bc, FlowerCollisionComponent fcc) {
+        return bc.boundsRect.overlaps(fcc.boundsRect);
     }
 }

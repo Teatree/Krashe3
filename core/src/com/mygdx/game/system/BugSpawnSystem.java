@@ -7,6 +7,7 @@ import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
@@ -40,12 +41,10 @@ public class BugSpawnSystem extends EntitySystem {
     private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
 
     private Random rand;
-    private SceneLoader sl;
 
     private int spawnInterval = 200;
 
-    public BugSpawnSystem(SceneLoader sl, FlowerCollisionComponent fcc) {
-        this.sl = sl;
+    public BugSpawnSystem(FlowerCollisionComponent fcc) {
         this.fcc = fcc;
         init();
     }
@@ -64,11 +63,11 @@ public class BugSpawnSystem extends EntitySystem {
         libBugsNameType.put(BugType.BEE, BEE);
         libBugsNameType.put(BugType.QUEENBEE, QUEENBEE);
 
-        libBugsNameComposite.put(SIMPLE, sl.loadVoFromLibrary(SIMPLE));
-        libBugsNameComposite.put(DRUNK, sl.loadVoFromLibrary(DRUNK));
-        libBugsNameComposite.put(CHARGER, sl.loadVoFromLibrary(CHARGER));
-        libBugsNameComposite.put(BEE, sl.loadVoFromLibrary(BEE));
-        libBugsNameComposite.put(QUEENBEE, sl.loadVoFromLibrary(QUEENBEE));
+        libBugsNameComposite.put(SIMPLE, GameStage.sceneLoader.loadVoFromLibrary(SIMPLE));
+        libBugsNameComposite.put(DRUNK, GameStage.sceneLoader.loadVoFromLibrary(DRUNK));
+        libBugsNameComposite.put(CHARGER, GameStage.sceneLoader.loadVoFromLibrary(CHARGER));
+        libBugsNameComposite.put(BEE, GameStage.sceneLoader.loadVoFromLibrary(BEE));
+        libBugsNameComposite.put(QUEENBEE, GameStage.sceneLoader.loadVoFromLibrary(QUEENBEE));
     }
 
     private TransformComponent getPos(){
@@ -103,9 +102,9 @@ public class BugSpawnSystem extends EntitySystem {
         }
 
         if(spawnInterval == 0){
-            Entity bugEntity = sl.entityFactory.createEntity(sl.getRoot(), tempC);
-            sl.entityFactory.initAllChildren(sl.getEngine(), bugEntity, tempC.composite);
-            sl.getEngine().addEntity(bugEntity);
+            Entity bugEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bugEntity, tempC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(bugEntity);
 
             BugComponent bc = new BugComponent();
             bc.startYPosition = getPos().y;

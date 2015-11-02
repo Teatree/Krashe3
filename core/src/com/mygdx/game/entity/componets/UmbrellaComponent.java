@@ -12,13 +12,17 @@ public class UmbrellaComponent implements Component {
     public float speedIncrCoeficient = 1f;
     public float gravityDecreaseMultiplier = 1.5f;
 
-    public Random random = new Random();
     public Rectangle boundsRect = new Rectangle();
     public float velocityX;
     public float velocityY;
     public float gravity;
 
     public State state;
+
+
+    public UmbrellaComponent() {
+        this.state = UmbrellaComponent.State.PUSH;
+    }
 
     public enum State {
         PUSH, FLY, DEAD

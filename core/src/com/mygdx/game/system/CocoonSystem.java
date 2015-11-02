@@ -100,15 +100,10 @@ public class CocoonSystem extends IteratingSystem {
     }
 
     private boolean checkCollision(CocoonComponent cc, FlowerCollisionComponent fcc) {
-        cc.isCollision = cc.boundsRect.overlaps(fcc.boundsRect);
-        if( cc.isCollision) {
-            System.out.println("collision!");
-        }
-        return cc.isCollision;
+        return cc.boundsRect.overlaps(fcc.boundsRect);
     }
 
     private void spawnButterfly() {
-        System.out.println("Butterfla llkn ");
         Entity butterflyEntity = sl.entityFactory.createEntity(sl.getRoot(), butterflyComposite);
         sl.entityFactory.initAllChildren(sl.getEngine(), butterflyEntity, butterflyComposite.composite);
         sl.getEngine().addEntity(butterflyEntity);

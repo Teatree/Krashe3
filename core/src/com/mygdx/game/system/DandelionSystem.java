@@ -5,7 +5,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.DandelionComponent;
+import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -23,22 +25,21 @@ import static com.mygdx.game.stages.GameScreenScript.*;
 public class DandelionSystem extends IteratingSystem {
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
-    private SceneLoader sl;
+    private FlowerCollisionComponent fcc;
 
     private int counter;
     private CompositeItemVO umbrellaComposite;
 
-    public DandelionSystem(SceneLoader sceneLoader) {
+    public DandelionSystem(FlowerCollisionComponent fcc) {
         super(Family.all(DandelionComponent.class).get());
-        this.sl = sceneLoader;
-
-        umbrellaComposite = sceneLoader.loadVoFromLibrary("simpleLib");
+        this.fcc = fcc;
+        umbrellaComposite = GameStage.sceneLoader.loadVoFromLibrary("simpleLib");
     }
 
     private void spawnUmbrella(){
-        Entity umbrellaEntity = sl.entityFactory.createEntity(sl.getRoot(), umbrellaComposite);
-        sl.entityFactory.initAllChildren(sl.getEngine(), umbrellaEntity, umbrellaComposite.composite);
-        sl.getEngine().addEntity(umbrellaEntity);
+        Entity umbrellaEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), umbrellaComposite);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), umbrellaEntity, umbrellaComposite.composite);
+        GameStage.sceneLoader.getEngine().addEntity(umbrellaEntity);
 
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = 1300;
@@ -46,8 +47,9 @@ public class DandelionSystem extends IteratingSystem {
         umbrellaEntity.add(transformComponent);
 
         UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
-        umbrellaComponent.state = UmbrellaComponent.State.PUSH;
         umbrellaEntity.add(umbrellaComponent);
+
+        umbrellaEntity.add(fcc);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class DandelionSystem extends IteratingSystem {
                     spawnUmbrella();
                 } else if (counter >= GlobalConstants.DANDELION_DUYING_DURATION) {
                     dc.state = DEAD;
-                    sl.getEngine().removeEntity(entity);
+                    GameStage.sceneLoader.getEngine().removeEntity(entity);
 //                    ((GameStage) stage).removeActor(item);
 //                    ((GameStage) stage).game.dandelionPowerup = null;
                 }

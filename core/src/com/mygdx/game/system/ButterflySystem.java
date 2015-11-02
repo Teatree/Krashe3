@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.ButterflyComponent;
-import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerCollisionComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -83,7 +82,7 @@ public class ButterflySystem extends IteratingSystem {
         } else {
             bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin)) * bc.speedIncrCoeficient;
         }
-        System.out.println("velocityY " + bc.velocityY);
+//        System.out.println("velocityY " + bc.velocityY);
 //        speedIncrCoeficient += 0.5f;
         bc.gravity = Math.abs(bc.velocityX / (7 - bc.speedIncrCoeficient * bc.gravityDecreaseMultiplier));
         bc.speedIncrCoeficient += 0.1f;

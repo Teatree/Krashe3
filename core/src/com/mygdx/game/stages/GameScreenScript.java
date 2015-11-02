@@ -49,24 +49,26 @@ public class GameScreenScript implements IScript {
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
 
-//        stage.sceneLoader.getEngine().addSystem(new BugSystem());
-        stage.sceneLoader.getEngine().addSystem(new DandelionSystem(sceneLoader));
+        //One flower collision component will be used in all systems
+        fcc = new FlowerCollisionComponent();
 
-        stage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
-        stage.sceneLoader.getEngine().addSystem(new FlowerSystem());
-        stage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
+        GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
+        GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fcc));
+
+        GameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
+        GameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
+        GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
+        GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fcc));
+        GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
 
         //init Flower
-        final CompositeItemVO tempC = stage.sceneLoader.loadVoFromLibrary("flowerLibV3");
-//        LayerItemVO tempL = tempC.
-        Entity flowerEntity = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
-        stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
-        stage.sceneLoader.getEngine().addEntity(flowerEntity);
-//        flowerEntity.getComponent().composite.layers.get(1).isVisible = false;
-
+        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
+        Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(flowerEntity);
 
         TransformComponent tc = new TransformComponent();
         tc.x = 970;
@@ -78,16 +80,11 @@ public class GameScreenScript implements IScript {
         FlowerComponent fc = new FlowerComponent();
         flowerEntity.add(fc);
 
-        fcc = new FlowerCollisionComponent();
         flowerEntity.add(fcc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
-
-        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader, fcc));
-
-        GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
 
 
         // Adding a Click listener to playButton so we can start game when clicked

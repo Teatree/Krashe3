@@ -25,7 +25,7 @@ public class BugComponent implements Component {
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
 
 
-    public static enum State {
+    public enum State {
         IDLE,
         PREPARING,
         CHARGING,

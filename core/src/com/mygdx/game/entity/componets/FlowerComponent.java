@@ -7,8 +7,6 @@ import com.mygdx.game.utils.GlobalConstants;
  * Created by Teatree on 9/3/2015.
  */
 public class FlowerComponent implements Component {
-    public static long pointsAmount = 0L;
-    public static long sessionPointsAmount = 0L;
 
     private int maxHp = GlobalConstants.DEFAULT_MAX_HP;
     private int curHp = maxHp;
