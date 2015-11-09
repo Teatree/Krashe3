@@ -16,6 +16,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
+import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
 /**
  * Created by Teatree on 9/3/2015.
@@ -49,8 +50,11 @@ public class ButterflySystem extends IteratingSystem {
         updateRectangle(bc, tc, dc);
 
         if (checkCollision(bc, fcc)) {
+            fcc.isCollision = true;
             bc.state = DEAD;
             GameStage.sceneLoader.getEngine().removeEntity(entity);
+            fcc.score += bc.points;
+            scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
         }
     }
 

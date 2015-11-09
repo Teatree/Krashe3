@@ -15,7 +15,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
-
+import static com.mygdx.game.stages.GameScreenScript.*;
 /**
  * Created by Teatree on 9/3/2015.
  */
@@ -33,8 +33,8 @@ public class BugSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        transformComponent.scaleX = 0.6f;
-        transformComponent.scaleY = 0.6f;
+        transformComponent.scaleX = BUG_SCALE;
+        transformComponent.scaleY = BUG_SCALE;
         FlowerCollisionComponent fcc = fMapper.get(entity);
         BugComponent bugComponent = mapper.get(entity);
 
@@ -42,11 +42,17 @@ public class BugSystem extends IteratingSystem {
             updateRect(bugComponent, transformComponent, dimensionsComponent);
 //        transformComponent.y = bugComponent.startYPosition + 0.5f;
             moveEntity(deltaTime, transformComponent, bugComponent);
-            if (isOutOfBounds(bugComponent) || checkFlowerCollision(fcc, bugComponent)) {
-                soundMgr.play("eat");
+            if (checkFlowerCollision(fcc, bugComponent)) {
+
                 bugComponent.state = DEAD;
+                fcc.score += bugComponent.points;
+                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" +fcc.score);
+
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
                 fcc.isCollision = true;
+            }
+            if (isOutOfBounds(bugComponent)){
+                GameStage.sceneLoader.getEngine().removeEntity(entity);
             }
         }
 

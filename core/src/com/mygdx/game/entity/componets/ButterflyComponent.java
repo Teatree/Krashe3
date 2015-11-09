@@ -24,9 +24,11 @@ public class ButterflyComponent implements Component {
     public int randYmax = 55;
 
     public State state;
+    public int points;
 
     public ButterflyComponent() {
         state = State.SPAWN;
+        points = 3;
     }
 
     public enum State {

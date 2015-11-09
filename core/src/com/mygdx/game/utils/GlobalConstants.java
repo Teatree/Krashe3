@@ -39,4 +39,6 @@ public abstract class GlobalConstants {
 
     public static int POINT_TRAVEL = Gdx.graphics.getHeight()-685;
 
+    public static final float BUG_SCALE = 0.6f;
+
 }

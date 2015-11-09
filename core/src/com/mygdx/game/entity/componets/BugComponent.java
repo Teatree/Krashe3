@@ -24,6 +24,9 @@ public class BugComponent implements Component {
 
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
 
+    public BugComponent() {
+        points = 1;
+    }
 
     public enum State {
         IDLE,

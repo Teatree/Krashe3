@@ -15,6 +15,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
+import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
+
 /**
  * Created by Teatree on 10/6/2015.
  */
@@ -48,7 +50,10 @@ public class UmbrellaSystem extends IteratingSystem {
         updateRect(uc, tc, dc);
 
         if(checkCollision(uc, fcc)){
+            fcc.isCollision = true;
             GameStage.sceneLoader.getEngine().removeEntity(entity);
+            fcc.score *= uc.pointsMult;
+            scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
         }
     }
 

@@ -14,6 +14,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
+import static com.mygdx.game.utils.SoundMgr.soundMgr;
 
 /**
  * Created by Teatree on 9/3/2015.
@@ -94,6 +95,7 @@ public class FlowerSystem extends IteratingSystem {
 
         if (fc.state == ATTACK || fc.state == FlowerComponent.State.RETREAT) {
             if (fcc.isCollision) {
+
                 fc.state = FlowerComponent.State.ATTACK_BITE;
                 fc.eatCounter = BITE_ANIMATION_TIME;
                 setBiteAttackAnimation(lc);
@@ -176,6 +178,7 @@ public class FlowerSystem extends IteratingSystem {
         lc.getLayer("peduncleAttack").isVisible = true;
         lc.getLayer("attackHeadIdleIdle").isVisible = true;
         lc.getLayer("attackHeadIdle").isVisible = false;
+        lc.getLayer("headBite").isVisible = false;
     }
 
     private void setIdleAnimation(LayerMapComponent lc) {
@@ -200,6 +203,8 @@ public class FlowerSystem extends IteratingSystem {
         lc.getLayer("attackHeadIdleIdle").isVisible = false;
         lc.getLayer("attackHeadIdle").isVisible = true;
         lc.getLayer("headBite").isVisible = false;
+
+        soundMgr.play("eat");
     }
 
     private void setBiteIdleAnimation(LayerMapComponent lc) {
@@ -212,6 +217,8 @@ public class FlowerSystem extends IteratingSystem {
         lc.getLayer("attackHeadIdleIdle").isVisible = false;
         lc.getLayer("attackHeadIdle").isVisible = false;
         lc.getLayer("headBite").isVisible = true;
+
+        soundMgr.play("eat");
     }
 
     public void move(TransformComponent tc, FlowerComponent fc) {

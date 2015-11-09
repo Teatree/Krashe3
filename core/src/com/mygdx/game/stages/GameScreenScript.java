@@ -1,14 +1,12 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.mygdx.game.entity.componets.CocoonComponent;
-import com.mygdx.game.entity.componets.DandelionComponent;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
-import com.mygdx.game.entity.componets.FlowerComponent;
+import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -27,7 +25,6 @@ public class GameScreenScript implements IScript {
     public static boolean GAME_OVER = false;
     public static boolean GAME_PAUSED = false;
 
-    private GameStage stage;
     private ItemWrapper gameItem;
     public Random random = new Random();
 //    CompositeVO
@@ -36,11 +33,10 @@ public class GameScreenScript implements IScript {
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
 
+    //One flower collision component will be used in all systems
     public FlowerCollisionComponent fcc;
-
-    public GameScreenScript(GameStage stage) {
-        this.stage = stage;
-    }
+    public PlayerComponent pc;
+    public static LabelComponent scoreLabelComponent;
 
     @Override
     public void init(Entity item) {
@@ -52,8 +48,13 @@ public class GameScreenScript implements IScript {
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
 
-        //One flower collision component will be used in all systems
+        Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
+        scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
+
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "why string builder?");
+
         fcc = new FlowerCollisionComponent();
+        pc = new PlayerComponent();
 
         GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
         GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fcc));
@@ -73,14 +74,15 @@ public class GameScreenScript implements IScript {
         TransformComponent tc = new TransformComponent();
         tc.x = 970;
         tc.y = -774;
-        tc.scaleX = 0.6f;
-        tc.scaleY = 0.6f;
+        tc.scaleX = BUG_SCALE;
+        tc.scaleY = BUG_SCALE;
         flowerEntity.add(tc);
 
         FlowerComponent fc = new FlowerComponent();
         flowerEntity.add(fc);
 
         flowerEntity.add(fcc);
+        flowerEntity.add(pc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);

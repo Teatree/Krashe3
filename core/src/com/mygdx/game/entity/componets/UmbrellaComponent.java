@@ -18,10 +18,12 @@ public class UmbrellaComponent implements Component {
     public float gravity;
 
     public State state;
+    public int pointsMult;
 
 
     public UmbrellaComponent() {
         this.state = UmbrellaComponent.State.PUSH;
+        pointsMult = 2;
     }
 
     public enum State {
