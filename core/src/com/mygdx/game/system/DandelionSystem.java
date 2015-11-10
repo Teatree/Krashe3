@@ -5,12 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.DandelionComponent;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.SceneLoader;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
@@ -25,12 +23,12 @@ import static com.mygdx.game.stages.GameScreenScript.*;
 public class DandelionSystem extends IteratingSystem {
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
-    private FlowerCollisionComponent fcc;
+    private FlowerPublicComponent fcc;
 
     private int counter;
     private CompositeItemVO umbrellaComposite;
 
-    public DandelionSystem(FlowerCollisionComponent fcc) {
+    public DandelionSystem(FlowerPublicComponent fcc) {
         super(Family.all(DandelionComponent.class).get());
         this.fcc = fcc;
         umbrellaComposite = GameStage.sceneLoader.loadVoFromLibrary("simpleLib");

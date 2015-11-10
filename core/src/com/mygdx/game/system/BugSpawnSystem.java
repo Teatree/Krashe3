@@ -2,20 +2,13 @@ package com.mygdx.game.system;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
-import com.mygdx.game.entity.componets.FlowerComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
-import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.FrameRange;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
-import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -36,7 +29,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static final String BEE = "simpleLib";
     public static final String QUEENBEE = "simpleLib";
 
-    public FlowerCollisionComponent fcc;
+    public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
     private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
 
@@ -44,7 +37,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     private int spawnInterval = 200;
 
-    public BugSpawnSystem(FlowerCollisionComponent fcc) {
+    public BugSpawnSystem(FlowerPublicComponent fcc) {
         this.fcc = fcc;
         init();
     }

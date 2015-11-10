@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -23,7 +23,7 @@ public class FlowerSystem extends IteratingSystem {
 
     public static final int BITE_ANIMATION_TIME = 50;
     private ComponentMapper<FlowerComponent> mapper = ComponentMapper.getFor(FlowerComponent.class);
-    private ComponentMapper<FlowerCollisionComponent> collisionMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
+    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private ShapeRenderer sr;
 
     public FlowerSystem() {
@@ -38,7 +38,7 @@ public class FlowerSystem extends IteratingSystem {
         transformComponent.scaleX = 0.6f;
         transformComponent.scaleY = 0.6f;
         FlowerComponent flowerComponent = mapper.get(entity);
-        FlowerCollisionComponent fcc = collisionMapper.get(entity);
+        FlowerPublicComponent fcc = collisionMapper.get(entity);
         moveFlower();
         updateRect(fcc, transformComponent, dimensionsComponent);
         act(fcc, flowerComponent, transformComponent, dimensionsComponent, layerComponent, deltaTime);
@@ -49,7 +49,7 @@ public class FlowerSystem extends IteratingSystem {
 
     }
 
-    public void updateRect(FlowerCollisionComponent fcc, TransformComponent tc, DimensionsComponent dc) {
+    public void updateRect(FlowerPublicComponent fcc, TransformComponent tc, DimensionsComponent dc) {
         fcc.boundsRect.x = (int) tc.x;
         fcc.boundsRect.y = (int) tc.y + 1500 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
@@ -69,7 +69,7 @@ public class FlowerSystem extends IteratingSystem {
 //                        Actions.moveBy(0, -20)));
 //    }
 
-    public void act(FlowerCollisionComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, LayerMapComponent lc, float delta) {
+    public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, LayerMapComponent lc, float delta) {
         if (fc.state == FlowerComponent.State.IDLE_BITE) {
             setBiteIdleAnimation(lc);
         }
@@ -82,6 +82,8 @@ public class FlowerSystem extends IteratingSystem {
                 fc.state = FlowerComponent.State.IDLE_BITE;
                 fc.eatCounter = BITE_ANIMATION_TIME;
                 fcc.isCollision = false;
+
+                soundMgr.play("eat");
             } else {
                 setIdleAnimation(lc);
             }
@@ -100,6 +102,8 @@ public class FlowerSystem extends IteratingSystem {
                 fc.eatCounter = BITE_ANIMATION_TIME;
                 setBiteAttackAnimation(lc);
                 fcc.isCollision = false;
+
+                soundMgr.play("eat");
             } else {
                 move(tc, fc);
                 if (tc.y >= -200 && fc.state == FlowerComponent.State.ATTACK) {
@@ -203,8 +207,6 @@ public class FlowerSystem extends IteratingSystem {
         lc.getLayer("attackHeadIdleIdle").isVisible = false;
         lc.getLayer("attackHeadIdle").isVisible = true;
         lc.getLayer("headBite").isVisible = false;
-
-        soundMgr.play("eat");
     }
 
     private void setBiteIdleAnimation(LayerMapComponent lc) {
@@ -217,8 +219,6 @@ public class FlowerSystem extends IteratingSystem {
         lc.getLayer("attackHeadIdleIdle").isVisible = false;
         lc.getLayer("attackHeadIdle").isVisible = false;
         lc.getLayer("headBite").isVisible = true;
-
-        soundMgr.play("eat");
     }
 
     public void move(TransformComponent tc, FlowerComponent fc) {

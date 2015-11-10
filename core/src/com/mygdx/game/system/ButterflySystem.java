@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.ButterflyComponent;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -24,7 +24,7 @@ import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 public class ButterflySystem extends IteratingSystem {
 
     private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
-    private ComponentMapper<FlowerCollisionComponent> collisionMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
+    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public Random random = new Random();
 
@@ -34,7 +34,7 @@ public class ButterflySystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        FlowerCollisionComponent fcc = collisionMapper.get(entity);
+        FlowerPublicComponent fcc = collisionMapper.get(entity);
         ButterflyComponent bc = mapper.get(entity);
 
         TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -94,7 +94,7 @@ public class ButterflySystem extends IteratingSystem {
 //        System.out.println("gravity " + bc.gravity);
     }
 
-    private boolean checkCollision(ButterflyComponent bc, FlowerCollisionComponent fcc) {
+    private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {
         return bc.boundsRect.overlaps(fcc.boundsRect);
     }
 }

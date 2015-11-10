@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -14,7 +14,6 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
 import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.mygdx.game.utils.SoundMgr.soundMgr;
 import static com.mygdx.game.stages.GameScreenScript.*;
 /**
  * Created by Teatree on 9/3/2015.
@@ -22,7 +21,7 @@ import static com.mygdx.game.stages.GameScreenScript.*;
 public class BugSystem extends IteratingSystem {
 
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
-    private ComponentMapper<FlowerCollisionComponent> fMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
+    private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public BugSystem(){
 
@@ -35,7 +34,7 @@ public class BugSystem extends IteratingSystem {
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         transformComponent.scaleX = BUG_SCALE;
         transformComponent.scaleY = BUG_SCALE;
-        FlowerCollisionComponent fcc = fMapper.get(entity);
+        FlowerPublicComponent fcc = fMapper.get(entity);
         BugComponent bugComponent = mapper.get(entity);
 
         if (bugComponent.state != DEAD) {
@@ -58,7 +57,7 @@ public class BugSystem extends IteratingSystem {
 
     }
 
-    private boolean checkFlowerCollision(FlowerCollisionComponent fcc, BugComponent bc){
+    private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
 
 //        fcc.isCollision = fcc.boundsRect.overlaps(bc.boundsRect);
         return fcc.boundsRect.overlaps(bc.boundsRect);

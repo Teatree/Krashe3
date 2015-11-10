@@ -6,8 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
-import com.mygdx.game.entity.componets.FlowerCollisionComponent;
-import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -24,9 +23,9 @@ import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
 public class CocoonSystem extends IteratingSystem {
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
-    private ComponentMapper<FlowerCollisionComponent> collisionMapper = ComponentMapper.getFor(FlowerCollisionComponent.class);
+    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SceneLoader sl;
-    FlowerCollisionComponent fcc;
+    FlowerPublicComponent fcc;
     private CompositeItemVO butterflyComposite;
 
     public CocoonSystem(SceneLoader sl) {
@@ -99,7 +98,7 @@ public class CocoonSystem extends IteratingSystem {
 //        System.out.println(cc.boundsRect.toString());
     }
 
-    private boolean checkCollision(CocoonComponent cc, FlowerCollisionComponent fcc) {
+    private boolean checkCollision(CocoonComponent cc, FlowerPublicComponent fcc) {
         return cc.boundsRect.overlaps(fcc.boundsRect);
     }
 

@@ -34,7 +34,7 @@ public class GameScreenScript implements IScript {
     public int cocoonSpawnCounter;
 
     //One flower collision component will be used in all systems
-    public FlowerCollisionComponent fcc;
+    public FlowerPublicComponent fcc;
     public PlayerComponent pc;
     public static LabelComponent scoreLabelComponent;
 
@@ -53,7 +53,7 @@ public class GameScreenScript implements IScript {
 
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "why string builder?");
 
-        fcc = new FlowerCollisionComponent();
+        fcc = new FlowerPublicComponent();
         pc = new PlayerComponent();
 
         GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
