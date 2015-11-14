@@ -6,10 +6,14 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
@@ -24,37 +28,44 @@ public class BugSystem extends IteratingSystem {
     private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public BugSystem(){
-
          super(Family.all(BugComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        transformComponent.scaleX = BUG_SCALE;
-        transformComponent.scaleY = BUG_SCALE;
-        FlowerPublicComponent fcc = fMapper.get(entity);
-        BugComponent bugComponent = mapper.get(entity);
+        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (bugComponent.state != DEAD) {
-            updateRect(bugComponent, transformComponent, dimensionsComponent);
-//        transformComponent.y = bugComponent.startYPosition + 0.5f;
-            moveEntity(deltaTime, transformComponent, bugComponent);
-            if (checkFlowerCollision(fcc, bugComponent)) {
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+            DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
+            transformComponent.scaleX = BUG_SCALE;
+            transformComponent.scaleY = BUG_SCALE;
+            FlowerPublicComponent fcc = fMapper.get(entity);
+            BugComponent bugComponent = mapper.get(entity);
 
-                bugComponent.state = DEAD;
-                fcc.score += bugComponent.points;
-                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" +fcc.score);
+            if (bugComponent.state != DEAD) {
+                updateRect(bugComponent, transformComponent, dimensionsComponent);
+//          transformComponent.y = bugComponent.startYPosition + 0.5f;
+                moveEntity(deltaTime, transformComponent, bugComponent);
+                if (checkFlowerCollision(fcc, bugComponent)) {
 
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
-                fcc.isCollision = true;
-            }
-            if (isOutOfBounds(bugComponent)){
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
+                    bugComponent.state = DEAD;
+                    fcc.score += bugComponent.points;
+                    scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
+
+                    if (bugComponent.type.equals(BugType.QUEENBEE)) {
+                        BugSpawnSystem.isAngeredBeesMode = true;
+                        BugSpawnSystem.queenBeeOnStage = false;
+                    }
+                    GameStage.sceneLoader.getEngine().removeEntity(entity);
+                    fcc.isCollision = true;
+                }
+                if (isOutOfBounds(bugComponent)) {
+                    GameStage.sceneLoader.getEngine().removeEntity(entity);
+                    GameScreenScript.isGameOver = true;
+                }
             }
         }
-
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){

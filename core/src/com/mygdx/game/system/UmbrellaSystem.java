@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -36,23 +37,25 @@ public class UmbrellaSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
 
-        TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-        tc.scaleX = 0.2f;
-        tc.scaleY = 0.2f;
+            TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
+            tc.scaleX = 0.2f;
+            tc.scaleY = 0.2f;
 
-        FlowerPublicComponent fcc = fccMapper.get(entity);
-        UmbrellaComponent uc = mapper.get(entity);
+            FlowerPublicComponent fcc = fccMapper.get(entity);
+            UmbrellaComponent uc = mapper.get(entity);
 
-        move(deltaTime, tc, uc);
-        updateRect(uc, tc, dc);
+            move(deltaTime, tc, uc);
+            updateRect(uc, tc, dc);
 
-        if(checkCollision(uc, fcc)){
-            fcc.isCollision = true;
-            GameStage.sceneLoader.getEngine().removeEntity(entity);
-            fcc.score *= uc.pointsMult;
-            scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
+            if (checkCollision(uc, fcc)) {
+                fcc.isCollision = true;
+                GameStage.sceneLoader.getEngine().removeEntity(entity);
+                fcc.score *= uc.pointsMult;
+                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
+            }
         }
     }
 

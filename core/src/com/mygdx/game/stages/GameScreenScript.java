@@ -1,12 +1,16 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -22,9 +26,6 @@ import static com.mygdx.game.stages.GameStage.*;
  */
 public class GameScreenScript implements IScript {
 
-    public static boolean GAME_OVER = false;
-    public static boolean GAME_PAUSED = false;
-
     private ItemWrapper gameItem;
     public Random random = new Random();
 //    CompositeVO
@@ -37,6 +38,10 @@ public class GameScreenScript implements IScript {
     public FlowerPublicComponent fcc;
     public PlayerComponent pc;
     public static LabelComponent scoreLabelComponent;
+    public static LabelComponent startLabelComponent;
+    public static boolean isPause;
+    public static boolean isGameOver;
+    public static boolean isStarted;
 
     @Override
     public void init(Entity item) {
@@ -52,6 +57,12 @@ public class GameScreenScript implements IScript {
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
 
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "why string builder?");
+
+        Entity startLabel = gameItem.getChild("lbl_tap2start").getEntity();
+
+        startLabelComponent = startLabel.getComponent(LabelComponent.class);
+
+        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "TAP TO START");
 
         fcc = new FlowerPublicComponent();
         pc = new PlayerComponent();
@@ -116,60 +127,98 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        dandelionSpawnCounter--;
-        cocoonSpawnCounter--;
-        //Spawn dandelion
-        if (dandelionSpawnCounter <= 0) {
-            spawnDandelion();
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            isPause = !isPause;
         }
-        //spawn Cocoon
-        if (cocoonSpawnCounter <= 0) {
-            spawnCocoon();
+
+        if (!isStarted && Gdx.input.justTouched()){
+            startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
+            isStarted = true;
+        }
+
+        if (!isPause && !isGameOver && isStarted) {
+            if (canDandelionSpawn()) {
+                dandelionSpawnCounter--;
+            }
+            if (canCocoonSpawn()) {
+                cocoonSpawnCounter--;
+            }
+            //Spawn dandelion
+            if (dandelionSpawnCounter <= 0) {
+                spawnDandelion();
+            }
+            //spawn Cocoon
+            if (cocoonSpawnCounter <= 0) {
+                spawnCocoon();
+            }
+            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
+                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
+                sacs.paused = false;
+            }
+        }else{
+            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
+                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
+                sacs.paused = true;
+            }
         }
     }
 
     private void spawnDandelion() {
-        dandelionSpawnCounter =
-                random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
-        CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("simpleLib");
-        Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
+        if(canDandelionSpawn()){
 
-        TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = 200;
-        transformComponent.y = 110;
-        dandelionEntity.add(transformComponent);
+            dandelionSpawnCounter =
+                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
-        DandelionComponent dc = new DandelionComponent();
-        dc.state = DandelionComponent.State.GROWING;
-        dandelionEntity.add(dc);
+            CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("simpleLib");
+            Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
 
-        sceneLoader.getEngine().addEntity(dandelionEntity);
+            TransformComponent transformComponent = new TransformComponent();
+            transformComponent.x = 200;
+            transformComponent.y = 110;
+            dandelionEntity.add(transformComponent);
+
+            DandelionComponent dc = new DandelionComponent();
+            dc.state = DandelionComponent.State.GROWING;
+            dandelionEntity.add(dc);
+
+            sceneLoader.getEngine().addEntity(dandelionEntity);
+        }
     }
 
     private void spawnCocoon() {
-        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+        if(canCocoonSpawn()) {
+            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
-        CompositeItemVO cocoonComposite = sceneLoader.loadVoFromLibrary("drunkbugLib");
-        Entity cocoonEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), cocoonComposite);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), cocoonEntity, cocoonComposite.composite);
+            CompositeItemVO cocoonComposite = sceneLoader.loadVoFromLibrary("drunkbugLib");
+            Entity cocoonEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), cocoonComposite);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), cocoonEntity, cocoonComposite.composite);
 
-        TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = 850;
-        transformComponent.y = 710;
-        cocoonEntity.add(transformComponent);
+            TransformComponent transformComponent = new TransformComponent();
+            transformComponent.x = 850;
+            transformComponent.y = 710;
+            cocoonEntity.add(transformComponent);
 
-        cocoonEntity.add(fcc);
-        CocoonComponent cc = new CocoonComponent();
-        cocoonEntity.add(cc);
+            cocoonEntity.add(fcc);
+            CocoonComponent cc = new CocoonComponent();
+            cocoonEntity.add(cc);
 
 //        DimensionsComponent dc = new DimensionsComponent();
 //        cocoonEntity.add(dc);
-        sceneLoader.getEngine().addEntity(cocoonEntity);
+            sceneLoader.getEngine().addEntity(cocoonEntity);
+        }
     }
 
-    public static boolean isGameAlive() {
-        return !GAME_PAUSED && !GAME_OVER;
+    private boolean canCocoonSpawn() {
+        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
+    }
+
+    private boolean canDandelionSpawn() {
+        return (sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()) == null ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0) &&
+                (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()) == null ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0);
     }
 }
