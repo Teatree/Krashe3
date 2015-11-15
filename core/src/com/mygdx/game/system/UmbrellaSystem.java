@@ -27,7 +27,7 @@ public class UmbrellaSystem extends IteratingSystem {
     private ComponentMapper<FlowerPublicComponent> fccMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     int randXmin = 110;
-    int randXmax = 200;
+    int randXmax = 150;
     int randYmin = 45;
     int randYmax = 45;
 

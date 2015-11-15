@@ -62,7 +62,7 @@ public class BugSystem extends IteratingSystem {
                 }
                 if (isOutOfBounds(bugComponent)) {
                     GameStage.sceneLoader.getEngine().removeEntity(entity);
-                    GameScreenScript.isGameOver = true;
+//                    GameScreenScript.isGameOver = true;
                 }
             }
         }

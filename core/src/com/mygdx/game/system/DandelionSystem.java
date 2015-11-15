@@ -37,14 +37,14 @@ public class DandelionSystem extends IteratingSystem {
         umbrellaComposite = GameStage.sceneLoader.loadVoFromLibrary("simpleLib");
     }
 
-    private void spawnUmbrella(){
+    private void spawnUmbrella(float x, float y){
         Entity umbrellaEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), umbrellaComposite);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), umbrellaEntity, umbrellaComposite.composite);
         GameStage.sceneLoader.getEngine().addEntity(umbrellaEntity);
 
         TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = 1300;
-        transformComponent.y = 210;
+        transformComponent.x = x;
+        transformComponent.y = y;
         umbrellaEntity.add(transformComponent);
 
         UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
@@ -75,7 +75,8 @@ public class DandelionSystem extends IteratingSystem {
                 }
                 if (dc.state == DYING) {
                     if (counter == GlobalConstants.DANDELION_UMBRELLA_DUYING_POINT) {
-                        spawnUmbrella();
+                        TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
+                        spawnUmbrella(tc.x, tc.y);
                     } else if (counter >= GlobalConstants.DANDELION_DUYING_DURATION) {
                         dc.state = DEAD;
                         GameStage.sceneLoader.getEngine().removeEntity(entity);

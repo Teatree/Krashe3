@@ -12,8 +12,8 @@ public abstract class GlobalConstants {
     public static final int DANDELION_IDLE_DURATION = 200;
     public static final int DANDELION_UMBRELLA_DUYING_POINT = 200;
     public static final int DANDELION_DUYING_DURATION = 400;
-    public static final int DANDELION_SPAWN_CHANCE_MAX = 2000;
-    public static final int DANDELION_SPAWN_CHANCE_MIN = 1500;
+    public static final int DANDELION_SPAWN_CHANCE_MAX = 200;
+    public static final int DANDELION_SPAWN_CHANCE_MIN = 100;
 
     public static final int COCOON_SPAWNING_DURATION = 200;
     public static final int COCOON_HIT_DURATION = 5;
