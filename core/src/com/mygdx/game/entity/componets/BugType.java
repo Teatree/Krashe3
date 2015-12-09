@@ -5,5 +5,4 @@ package com.mygdx.game.entity.componets;
  */
 public enum BugType {
     SIMPLE,DRUNK,CHARGER,BEE,QUEENBEE
-
 }
