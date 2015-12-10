@@ -12,3 +12,4 @@ public class FlowerPublicComponent implements Component {
 
     public int score;
 }
+          

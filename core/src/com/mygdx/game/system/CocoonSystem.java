@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -36,16 +37,18 @@ public class CocoonSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        CocoonComponent cc = mapper.get(entity);
-        DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
-        TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-        fcc = collisionMapper.get(entity);
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            CocoonComponent cc = mapper.get(entity);
+            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+            TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
+            fcc = collisionMapper.get(entity);
 
-        updateRect(cc, tc, dc);
-        act(cc, entity, deltaTime);
+            updateRect(cc, tc, dc);
+            act(cc, entity, deltaTime);
 
-        if (checkCollision(cc, fcc)) {
-            hit(cc);
+            if (checkCollision(cc, fcc)) {
+                hit(cc);
+            }
         }
     }
 
