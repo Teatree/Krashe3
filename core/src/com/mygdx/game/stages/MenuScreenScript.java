@@ -31,7 +31,7 @@ public class MenuScreenScript implements IScript {
     public void init(Entity item) {
         menuItem = new ItemWrapper(item);
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity playBtn = menuItem.getChild("btn_settings").getEntity();
+        Entity playBtn = menuItem.getChild("btn_play").getEntity();
 
         final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
 

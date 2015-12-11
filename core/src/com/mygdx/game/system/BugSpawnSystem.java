@@ -33,11 +33,11 @@ public class BugSpawnSystem extends EntitySystem {
     public static boolean queenBeeOnStage = false;
     public static int angeredBeesModeTimer = 800;
 
-    public static final String SIMPLE = "drunkbugLib";
+    public static final String SIMPLE = "simpleLib";
     public static final String DRUNK = "drunkbugLib";
-    public static final String CHARGER = "drunkbugLib";
-    public static final String BEE = "simpleLib";
-    public static final String QUEENBEE = "chargerLib";
+    public static final String CHARGER = "chargerLib";
+    public static final String BEE = "beeLib";
+    public static final String QUEENBEE = "queenbeeLib";
 
     public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
