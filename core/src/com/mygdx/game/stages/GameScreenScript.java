@@ -4,15 +4,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -28,10 +25,10 @@ import static com.mygdx.game.stages.GameStage.*;
  */
 public class GameScreenScript implements IScript {
 
+    public static final String START_MESSAGE = "TAP TO START";
+
     private ItemWrapper gameItem;
     public Random random = new Random();
-//    CompositeVO
-//    private int spawnCounter = 0;
 
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
@@ -53,18 +50,18 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity shopBtn = gameItem.getChild("btn_shop").getEntity();
+        Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
 
         Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
 
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "why string builder?");
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "0");
 
         Entity startLabel = gameItem.getChild("lbl_tap2start").getEntity();
 
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
 
-        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "TAP TO START");
+        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         fcc = new FlowerPublicComponent();
         pc = new PlayerComponent();
@@ -103,15 +100,16 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(lc);
 
         // Adding a Click listener to playButton so we can start game when clicked
-        shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                tempC.composite.layers.get(0).isVisible = true;
+                isPause = !isPause;
+//                tempC.composite.layers.get(0).isVisible = true;
             }
 
             @Override
             public void touchDown() {
-                tempC.composite.layers.get(0).isVisible = false;
+//                tempC.composite.layers.get(0).isVisible = false;
             }
 
             @Override
@@ -132,8 +130,6 @@ public class GameScreenScript implements IScript {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             isPause = !isPause;
         }
-
-
 
         if (!isStarted && Gdx.input.justTouched()){
             startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
