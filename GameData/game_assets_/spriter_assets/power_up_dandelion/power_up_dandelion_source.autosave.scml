@@ -8,8 +8,12 @@
         <file id="4" name="bottom_full.png" width="200" height="200" pivot_x="0" pivot_y="1"/>
         <file id="5" name="explosion.png" width="200" height="200" pivot_x="0" pivot_y="1"/>
     </folder>
+<<<<<<< HEAD
     <entity id="0" name="entity_000">
         <obj_info name="bone_body" type="bone" w="84.3445" h="10"/>
+=======
+    <entity id="0" name="entity_spawn">
+>>>>>>> 7b6a7cf19908504634826f84fe9f8ad295c76e74
         <animation id="0" name="spawn" length="300" interval="100" looping="false">
             <mainline>
                 <key id="0">
@@ -237,6 +241,7 @@
             <timeline id="5" name="explosion">
                 <key id="0" spin="0">
                     <object folder="0" file="5" x="-111" y="102" angle="0" a="0"/>
+<<<<<<< HEAD
                 </key>
                 <key id="1" time="300" spin="0">
                     <object folder="0" file="5" x="-111" y="102" angle="0" a="0"/>
@@ -269,13 +274,17 @@
             <timeline id="2" obj="0" name="bone_body" object_type="bone">
                 <key id="0">
                     <bone x="2" y="-79" angle="74.623749"/>
+=======
+>>>>>>> 7b6a7cf19908504634826f84fe9f8ad295c76e74
                 </key>
-                <key id="1" time="500" spin="-1">
-                    <bone x="2" y="-79" angle="85.763605"/>
+                <key id="1" time="300" spin="0">
+                    <object folder="0" file="5" x="-111" y="102" angle="0" a="0"/>
                 </key>
             </timeline>
         </animation>
-        <animation id="2" name="die" length="600" interval="100">
+    </entity>
+    <entity id="1" name="entity_die">
+        <animation id="0" name="die" length="600" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -454,6 +463,44 @@
                 </key>
                 <key id="3" time="385" spin="0">
                     <object folder="0" file="0" x="-111" y="102" angle="0" a="0"/>
+<<<<<<< HEAD
+=======
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+    <entity id="2" name="entity_idle">
+        <obj_info name="bone_body" type="bone" w="84.3445" h="10"/>
+        <animation id="0" name="idle" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="2" key="0"/>
+                    <object_ref id="0" parent="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="500">
+                    <bone_ref id="0" timeline="2" key="1"/>
+                    <object_ref id="0" parent="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="body_full_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="3" x="158.018543" y="143.388075" angle="280.244087"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="bottom_full_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="4" x="-111" y="102" angle="0"/>
+                </key>
+            </timeline>
+            <timeline id="2" obj="0" name="bone_body" object_type="bone">
+                <key id="0">
+                    <bone x="2" y="-79" angle="74.623749"/>
+                </key>
+                <key id="1" time="500" spin="-1">
+                    <bone x="2" y="-79" angle="85.763605"/>
+>>>>>>> 7b6a7cf19908504634826f84fe9f8ad295c76e74
                 </key>
             </timeline>
         </animation>

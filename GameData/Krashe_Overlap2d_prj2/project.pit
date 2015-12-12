@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"projectName":"Krashe_Overlap2d_prj2","projectVersion":"0.0.9","projectMainExportPath":"D:\\projects\\Krashe3\\android\\assets","lastOpenScene":"MainScene","texturepackerWidth":"2048","texturepackerHeight":"2048","sceneConfigs":[{"sceneName":"MainScene","cameraPosition":[662.239,357.49426]},{"sceneName":"ShopScene","cameraPosition":[649,388]},{"sceneName":"MenuScene","cameraPosition":[601,494]}]}
+=======
+{"projectName":"Krashe_Overlap2d_prj2","projectVersion":"0.0.9","projectMainExportPath":"D:\\projects\\Krashe3\\android\\assets","lastOpenScene":"MainScene","texturepackerWidth":"2048","texturepackerHeight":"2048","sceneConfigs":[{"sceneName":"MainScene","cameraPosition":[1409.8262,500.35406]},{"sceneName":"ShopScene","cameraPosition":[649,388]},{"sceneName":"MenuScene","cameraPosition":[589,414]}]}
+>>>>>>> 7b6a7cf19908504634826f84fe9f8ad295c76e74
