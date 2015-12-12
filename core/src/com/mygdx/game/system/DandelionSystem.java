@@ -101,7 +101,7 @@ public class DandelionSystem extends IteratingSystem {
                 }
                 if (dc.state == DYING) {
                     setAnimDie(sasComponent, saComponent);
-                    if (sasComponent.get().isAnimationFinished(0.83f)) {
+                    if (sasComponent.get().isAnimationFinished(stateTime)) {
                         System.out.println("curAni is: " + sasComponent.currentAnimation.getKeyFrame(54) + "DYING!");
                         TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
                         spawnUmbrella(tc.x, tc.y);
@@ -116,18 +116,21 @@ public class DandelionSystem extends IteratingSystem {
 
     public void setAnimSpawn(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
         if (canPlay) {
+            stateTime = 0;
             sasComponent.set(saComponent.frameRangeMap.get("Spawn"), 24, Animation.PlayMode.NORMAL);
             canPlay = false;
         }
     }
     public void setAnimIdle(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
         if (canPlay) {
+            stateTime = 0;
             sasComponent.set(saComponent.frameRangeMap.get("Idle"), 24, Animation.PlayMode.LOOP);
             canPlay = false;
         }
     }
     public void setAnimDie(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
         if (canPlay) {
+            stateTime = 0;
             sasComponent.set(saComponent.frameRangeMap.get("Die"), 24, Animation.PlayMode.NORMAL);
             canPlay = false;
         }
