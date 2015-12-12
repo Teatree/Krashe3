@@ -5,14 +5,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
@@ -21,6 +19,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
 import static com.mygdx.game.utils.GlobalConstants.*;
+import static com.badlogic.gdx.graphics.g2d.Animation.*;
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.*;
 
 
 /**
@@ -28,20 +28,27 @@ import static com.mygdx.game.utils.GlobalConstants.*;
  */
 public class DandelionSystem extends IteratingSystem {
 
+    public static final String SPAWN_ANI_NAME = "Spawn";
+    public static final String IDLE_ANI_NAME = "Idle";
+    public static final String DIE_ANI_NAME = "Die";
+
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
     private FlowerPublicComponent fcc;
 
     private int counter;
     private CompositeItemVO umbrellaComposite;
-    float stateTime;
 
-    private boolean canPlay = true;
+    //counts time from start of animation.
+    //Use to check if Animation finished in NORMAL mode
+    //Should be set to 0 when current animation finished
+    private float stateTime;
+
+    private boolean canPlayAnimation = true;
 
     public DandelionSystem(FlowerPublicComponent fcc) {
         super(Family.all(DandelionComponent.class).get());
         this.fcc = fcc;
-
         umbrellaComposite = GameStage.sceneLoader.loadVoFromLibrary("umbrellaLib");
     }
 
@@ -71,8 +78,6 @@ public class DandelionSystem extends IteratingSystem {
             SpriteAnimationComponent saComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
             SpriteAnimationStateComponent sasComponent = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-            System.out.println("current ani keyframe is: " + sasComponent.currentAnimation.getFrameDuration());
-
             if ("GAME".equals(CUR_SCREEN)) {
 //
                 if (dc.state == GROWING) {
@@ -80,33 +85,29 @@ public class DandelionSystem extends IteratingSystem {
 //                        dc.state = IDLE;
 //                        counter = 0;
 //                    }
-                    setAnimSpawn(sasComponent, saComponent);
+                    setAnimation(SPAWN_ANI_NAME, NORMAL, sasComponent, saComponent);
                     if (sasComponent.get().isAnimationFinished(stateTime)){
-                        canPlay = true;
-                        System.out.println("curAni is: " + sasComponent.currentAnimation.getKeyFrame(54) + "SPAWN!");
+                        canPlayAnimation = true;
                         dc.state = IDLE;
 //                        sasComponent.set(saComponent.frameRangeMap.get("Idle"), 24, Animation.PlayMode.LOOP);
                     }
                 }
                 if (dc.state == IDLE) {
-                    System.out.println(" I'M IDLE!!! ");
                     counter++;
-                    setAnimIdle(sasComponent, saComponent);
+                    setAnimation(IDLE_ANI_NAME, LOOP, sasComponent, saComponent);
                     if (counter >= GlobalConstants.DANDELION_IDLE_DURATION) {
-                        canPlay = true;
-                        System.out.println("curAni is: " + sasComponent.currentAnimation.getKeyFrame(54) + "IDLE!");
+                        canPlayAnimation = true;
                         dc.state = DYING;
                         counter = 0;
                     }
                 }
                 if (dc.state == DYING) {
-                    setAnimDie(sasComponent, saComponent);
+                    setAnimation(DIE_ANI_NAME, NORMAL, sasComponent, saComponent);
                     if (sasComponent.get().isAnimationFinished(stateTime)) {
-                        System.out.println("curAni is: " + sasComponent.currentAnimation.getKeyFrame(54) + "DYING!");
                         TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
-                        canPlay = true;
+                        canPlayAnimation = true;
                         GameStage.sceneLoader.getEngine().removeEntity(entity);
                     }
                 }
@@ -114,25 +115,11 @@ public class DandelionSystem extends IteratingSystem {
         }
     }
 
-    public void setAnimSpawn(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
-        if (canPlay) {
+    public void setAnimation(String animationName, PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
+        if (canPlayAnimation) {
             stateTime = 0;
-            sasComponent.set(saComponent.frameRangeMap.get("Spawn"), 24, Animation.PlayMode.NORMAL);
-            canPlay = false;
-        }
-    }
-    public void setAnimIdle(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
-        if (canPlay) {
-            stateTime = 0;
-            sasComponent.set(saComponent.frameRangeMap.get("Idle"), 24, Animation.PlayMode.LOOP);
-            canPlay = false;
-        }
-    }
-    public void setAnimDie(SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){
-        if (canPlay) {
-            stateTime = 0;
-            sasComponent.set(saComponent.frameRangeMap.get("Die"), 24, Animation.PlayMode.NORMAL);
-            canPlay = false;
+            sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
+            canPlayAnimation = false;
         }
     }
 }
