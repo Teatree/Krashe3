@@ -38,6 +38,11 @@ public class BugSpawnSystem extends EntitySystem {
     public static final String CHARGER = "chargerLib";
     public static final String BEE = "beeLib";
     public static final String QUEENBEE = "queenbeeLib";
+//    public static final String SIMPLE = "simpleBugAni";
+//    public static final String DRUNK = "drunkBugAni";
+//    public static final String CHARGER = "chargerAni";
+//    public static final String BEE = "beeAni";
+//    public static final String QUEENBEE = "queenBeeAni";
 
     public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
@@ -120,8 +125,6 @@ public class BugSpawnSystem extends EntitySystem {
             BugComponent bc = new BugComponent();
             bc.startYPosition = getPos().y;
             bc.type = tempType;
-            AnimationComponent animationComponent = new AnimationComponent();
-            bugEntity.add(animationComponent);
 //            SpriteAnimationStateComponent animationComponent = new SpriteAnimationStateComponent();
 //            animationComponent.set(new FrameRange("ani", 1, 5), 20, Animation.PlayMode.LOOP_REVERSED);
             bugEntity.add(bc);

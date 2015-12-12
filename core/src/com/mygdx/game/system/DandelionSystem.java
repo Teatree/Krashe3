@@ -36,7 +36,7 @@ public class DandelionSystem extends IteratingSystem {
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
     private FlowerPublicComponent fcc;
 
-    private int counter;
+    private int idleCounter;
     private CompositeItemVO umbrellaComposite;
 
     //counts time from start of animation.
@@ -70,40 +70,41 @@ public class DandelionSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
+        DandelionComponent dc = mapper.get(entity);
+        SpriteAnimationComponent saComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
+        SpriteAnimationStateComponent animStateComp = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
+
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
 
-
+            animStateComp.paused = false;
             stateTime += Gdx.graphics.getDeltaTime();
-            DandelionComponent dc = mapper.get(entity);
-            SpriteAnimationComponent saComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
-            SpriteAnimationStateComponent sasComponent = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
             if ("GAME".equals(CUR_SCREEN)) {
-//
                 if (dc.state == GROWING) {
 //                    if (counter >= GlobalConstants.DANDELION_GROWING_DURATION) {
 //                        dc.state = IDLE;
 //                        counter = 0;
 //                    }
-                    setAnimation(SPAWN_ANI_NAME, NORMAL, sasComponent, saComponent);
-                    if (sasComponent.get().isAnimationFinished(stateTime)){
+                    setAnimation(SPAWN_ANI_NAME, NORMAL, animStateComp, saComponent);
+                    if (animStateComp.get().isAnimationFinished(stateTime)){
                         canPlayAnimation = true;
                         dc.state = IDLE;
 //                        sasComponent.set(saComponent.frameRangeMap.get("Idle"), 24, Animation.PlayMode.LOOP);
                     }
                 }
                 if (dc.state == IDLE) {
-                    counter++;
-                    setAnimation(IDLE_ANI_NAME, LOOP, sasComponent, saComponent);
-                    if (counter >= GlobalConstants.DANDELION_IDLE_DURATION) {
+                    idleCounter++;
+                    setAnimation(IDLE_ANI_NAME, LOOP, animStateComp, saComponent);
+                    if (idleCounter >= GlobalConstants.DANDELION_IDLE_DURATION) {
                         canPlayAnimation = true;
                         dc.state = DYING;
-                        counter = 0;
+                        idleCounter = 0;
                     }
                 }
                 if (dc.state == DYING) {
-                    setAnimation(DIE_ANI_NAME, NORMAL, sasComponent, saComponent);
-                    if (sasComponent.get().isAnimationFinished(stateTime)) {
+                    setAnimation(DIE_ANI_NAME, NORMAL, animStateComp, saComponent);
+                    if (animStateComp.get().isAnimationFinished(stateTime)) {
                         TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
@@ -112,6 +113,8 @@ public class DandelionSystem extends IteratingSystem {
                     }
                 }
             }
+        } else {
+            animStateComp.paused = true;
         }
     }
 

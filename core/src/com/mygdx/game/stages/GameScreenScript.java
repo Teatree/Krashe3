@@ -50,7 +50,7 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
+
 
         Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
@@ -100,20 +100,26 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(lc);
 
         // Adding a Click listener to playButton so we can start game when clicked
+        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
         pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
             @Override
             public void touchUp() {
-                isPause = !isPause;
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
 //                tempC.composite.layers.get(0).isVisible = true;
             }
 
             @Override
             public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
 //                tempC.composite.layers.get(0).isVisible = false;
             }
 
             @Override
             public void clicked() {
+                isPause = !isPause;
 //                tempC.composite.layers.get(0).isVisible = true;
             }
         });
@@ -179,8 +185,8 @@ public class GameScreenScript implements IScript {
 //            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
 
             TransformComponent transformComponent = new TransformComponent();
-            transformComponent.x = 200;
-            transformComponent.y = 110;
+            transformComponent.x = 300;
+            transformComponent.y = 60;
             dandelionEntity.add(transformComponent);
             DandelionComponent dc = new DandelionComponent();
             dc.state = DandelionComponent.State.GROWING;

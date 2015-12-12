@@ -4,12 +4,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.CompositeVO;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 /**
@@ -31,12 +33,13 @@ public class MenuScreenScript implements IScript {
     public void init(Entity item) {
         menuItem = new ItemWrapper(item);
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity playBtn = menuItem.getChild("btn_play").getEntity();
+        final Entity playBtn = menuItem.getChild("btn_play").getEntity();
 
         final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
 
         // Adding a Click listener to playButton so we can start game when clicked
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+
             @Override
             public void touchUp() {
                 System.out.println("Piiiip");

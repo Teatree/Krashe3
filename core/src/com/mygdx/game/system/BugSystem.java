@@ -36,6 +36,7 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
             transformComponent.scaleX = BUG_SCALE;
@@ -65,6 +66,8 @@ public class BugSystem extends IteratingSystem {
 //                    GameScreenScript.isGameOver = true;
                 }
             }
+        } else {
+//            sasc.paused = true;
         }
     }
 
