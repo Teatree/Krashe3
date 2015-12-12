@@ -4,12 +4,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -96,9 +98,9 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(pc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
+
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
-
 
         // Adding a Click listener to playButton so we can start game when clicked
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -131,6 +133,8 @@ public class GameScreenScript implements IScript {
             isPause = !isPause;
         }
 
+
+
         if (!isStarted && Gdx.input.justTouched()){
             startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
             isStarted = true;
@@ -146,20 +150,21 @@ public class GameScreenScript implements IScript {
             //Spawn dandelion
             if (dandelionSpawnCounter <= 0) {
                 spawnDandelion();
+
             }
             //spawn Cocoon
             if (cocoonSpawnCounter <= 0) {
                 spawnCocoon();
             }
-            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
-                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
-                sacs.paused = false;
-            }
+//            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
+//                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
+//                sacs.paused = false;
+//            }
         }else{
-            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
-                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
-                sacs.paused = true;
-            }
+//            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
+//                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
+//                sacs.paused = true;
+//            }
         }
     }
 
@@ -167,23 +172,24 @@ public class GameScreenScript implements IScript {
 
         if(canDandelionSpawn()){
 
+//            dandelionSpawnCounter = 700000000;
             dandelionSpawnCounter =
                     random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
-            CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("simpleLib");
-            Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            Entity dandelionEntity = root.getChild("dandelionAni").getEntity();
+//            CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("dandelionLib");
+//            Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
+//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
 
             TransformComponent transformComponent = new TransformComponent();
             transformComponent.x = 200;
             transformComponent.y = 110;
             dandelionEntity.add(transformComponent);
-
             DandelionComponent dc = new DandelionComponent();
             dc.state = DandelionComponent.State.GROWING;
             dandelionEntity.add(dc);
-
-            sceneLoader.getEngine().addEntity(dandelionEntity);
+//            sceneLoader.getEngine().addEntity(dandelionEntity);
         }
     }
 
