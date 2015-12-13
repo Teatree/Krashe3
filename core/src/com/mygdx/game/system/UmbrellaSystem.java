@@ -11,6 +11,7 @@ import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
@@ -22,14 +23,16 @@ import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
  */
 public class UmbrellaSystem extends IteratingSystem {
 
+    public static final float UMBRELLA_SCALE = 0.4f;
+
+    private int randVelocityXmin = 110;
+    private int randVelocityXmax = 150;
+    private int randVelocityYmin = 45;
+    private int randVelocityYmax = 47;
+    
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
     private ComponentMapper<FlowerPublicComponent> fccMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-
-    int randXmin = 110;
-    int randXmax = 150;
-    int randYmin = 45;
-    int randYmax = 45;
 
     public UmbrellaSystem() {
         super(Family.all(UmbrellaComponent.class).get());
@@ -37,12 +40,15 @@ public class UmbrellaSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            sasc.paused = false;
+
+            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-            tc.scaleX = 0.2f;
-            tc.scaleY = 0.2f;
+            tc.scaleX = UMBRELLA_SCALE;
+            tc.scaleY = UMBRELLA_SCALE;
 
             FlowerPublicComponent fcc = fccMapper.get(entity);
             UmbrellaComponent uc = mapper.get(entity);
@@ -56,6 +62,8 @@ public class UmbrellaSystem extends IteratingSystem {
                 fcc.score *= uc.pointsMult;
                 scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
             }
+        } else {
+            sasc.paused = true;
         }
     }
 
@@ -72,12 +80,12 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     public void pushUmbrella(UmbrellaComponent uc, TransformComponent tc) {
-        uc.velocityX = ((random.nextInt(randXmax - randXmin) + randXmin) * -1) * uc.speedIncrCoeficient;
+        uc.velocityX = ((random.nextInt(randVelocityXmax - randVelocityXmin) + randVelocityXmin) * -1) * uc.speedIncrCoeficient;
 //        gravity *= speedIncrCoeficient/2;
         if (tc.y > Gdx.graphics.getHeight() / 2) {
-            uc.velocityY = (random.nextInt((randYmax - randYmin) + randYmin) * -1) * uc.speedIncrCoeficient;
+            uc.velocityY = (random.nextInt((randVelocityYmax - randVelocityYmin) + randVelocityYmin) * -1) * uc.speedIncrCoeficient;
         } else {
-            uc.velocityY = (random.nextInt((randYmax - randYmin) + randYmin)) * uc.speedIncrCoeficient;
+            uc.velocityY = (random.nextInt((randVelocityYmax - randVelocityYmin) + randVelocityYmin)) * uc.speedIncrCoeficient;
         }
 //        speedIncrCoeficient += 0.5f;
         uc.gravity = Math.abs(uc.velocityX / (7 - uc.speedIncrCoeficient * uc.gravityDecreaseMultiplier));

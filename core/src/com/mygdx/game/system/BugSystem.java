@@ -45,17 +45,20 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+            sasc.paused = false;
+
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
+            TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
             transformComponent.scaleX = BUG_SCALE;
             transformComponent.scaleY = BUG_SCALE;
             FlowerPublicComponent fcc = fMapper.get(entity);
             BugComponent bugComponent = mapper.get(entity);
 
             if (bugComponent.state != DEAD) {
+
                 updateRect(bugComponent, transformComponent, dimensionsComponent);
-//          transformComponent.y = bugComponent.startYPosition + 0.5f;
                 moveEntity(deltaTime, transformComponent, bugComponent, sasc, sac);
+
                 if (checkFlowerCollision(fcc, bugComponent)) {
 
                     bugComponent.state = DEAD;
@@ -66,14 +69,11 @@ public class BugSystem extends IteratingSystem {
                         BugSpawnSystem.isAngeredBeesMode = true;
                         BugSpawnSystem.queenBeeOnStage = false;
                     }
-//                    GameStage.sceneLoader.getEngine().removeEntity(entity);
                     BugPool.getInstance().release(entity);
                     fcc.isCollision = true;
                 }
                 if (isOutOfBounds(bugComponent)) {
                     BugPool.getInstance().release(entity);
-//                    GameStage.sceneLoader.getEngine().removeEntity(entity);
-//                    GameScreenScript.isGameOver = true;
                 }
             }
         } else {
@@ -84,8 +84,6 @@ public class BugSystem extends IteratingSystem {
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
-
-//        fcc.isCollision = fcc.boundsRect.overlaps(bc.boundsRect);
         return fcc.boundsRect.overlaps(bc.boundsRect);
     }
 
@@ -113,8 +111,6 @@ public class BugSystem extends IteratingSystem {
                     bugComponent.velocity = deltaTime * IDLE_MVMNT_SPEED;
                     setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
                     if (bugComponent.counter == 0) {
-//                        spriterActor.setAnimation(1);
-//                        animationComponent.animations
                         canPlayAnimation = true;
                         setAnimation("Preparing", Animation.PlayMode.LOOP, sasc, sac);
                         bugComponent.counter = PREPARATION_TIME;
@@ -125,7 +121,6 @@ public class BugSystem extends IteratingSystem {
                 else if (bugComponent.state == BugComponent.State.PREPARING) {
                     bugComponent.velocity = deltaTime * PREPARING_MVMNT_SPEED;
                     if (bugComponent.counter == 0) {
-//                        spriterActor.setAnimation(2);
                         bugComponent.state = BugComponent.State.CHARGING;
                         canPlayAnimation = true;
                         setAnimation("Charging", Animation.PlayMode.LOOP, sasc, sac);

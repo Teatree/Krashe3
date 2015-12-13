@@ -16,8 +16,10 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.badlogic.gdx.graphics.g2d.Animation.*;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.*;
@@ -31,6 +33,7 @@ public class DandelionSystem extends IteratingSystem {
     public static final String SPAWN_ANI_NAME = "Spawn";
     public static final String IDLE_ANI_NAME = "Idle";
     public static final String DIE_ANI_NAME = "Die";
+    public static final int HIDE_POSITION = -200;
 
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
@@ -53,9 +56,9 @@ public class DandelionSystem extends IteratingSystem {
     }
 
     private void spawnUmbrella(float x, float y){
-        Entity umbrellaEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), umbrellaComposite);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), umbrellaEntity, umbrellaComposite.composite);
-        GameStage.sceneLoader.getEngine().addEntity(umbrellaEntity);
+
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity umbrellaEntity = root.getChild("umbrellaAni").getEntity();
 
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = x;
@@ -82,15 +85,10 @@ public class DandelionSystem extends IteratingSystem {
 
             if ("GAME".equals(CUR_SCREEN)) {
                 if (dc.state == GROWING) {
-//                    if (counter >= GlobalConstants.DANDELION_GROWING_DURATION) {
-//                        dc.state = IDLE;
-//                        counter = 0;
-//                    }
                     setAnimation(SPAWN_ANI_NAME, NORMAL, animStateComp, saComponent);
                     if (animStateComp.get().isAnimationFinished(stateTime)){
                         canPlayAnimation = true;
                         dc.state = IDLE;
-//                        sasComponent.set(saComponent.frameRangeMap.get("Idle"), 24, Animation.PlayMode.LOOP);
                     }
                 }
                 if (dc.state == IDLE) {
@@ -109,9 +107,8 @@ public class DandelionSystem extends IteratingSystem {
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
                         canPlayAnimation = true;
-//                        GameStage.sceneLoader.getEngine().removeEntity(entity);
-                        tc.x = -200;
-                        tc.y = -200;
+                        tc.x = HIDE_POSITION;
+                        tc.y = HIDE_POSITION;
                     }
                 }
             }
