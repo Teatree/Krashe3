@@ -109,7 +109,9 @@ public class DandelionSystem extends IteratingSystem {
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
                         canPlayAnimation = true;
-                        GameStage.sceneLoader.getEngine().removeEntity(entity);
+//                        GameStage.sceneLoader.getEngine().removeEntity(entity);
+                        tc.x = -200;
+                        tc.y = -200;
                     }
                 }
             }

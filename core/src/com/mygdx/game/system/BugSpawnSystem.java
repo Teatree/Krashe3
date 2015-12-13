@@ -2,22 +2,19 @@ package com.mygdx.game.system;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
+import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
-import com.uwsoft.editor.renderer.SceneLoader;
+import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.factory.component.SpriteComponentFactory;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import static com.mygdx.game.utils.BugPool.*;
 
 /**
  * Created by Teatree on 9/3/2015.
@@ -33,20 +30,15 @@ public class BugSpawnSystem extends EntitySystem {
     public static boolean queenBeeOnStage = false;
     public static int angeredBeesModeTimer = 800;
 
-    public static final String SIMPLE = "simpleLib";
-    public static final String DRUNK = "drunkbugLib";
-    public static final String CHARGER = "chargerLib";
-    public static final String BEE = "beeLib";
-    public static final String QUEENBEE = "queenbeeLib";
-//    public static final String SIMPLE = "simpleBugAni";
-//    public static final String DRUNK = "drunkBugAni";
-//    public static final String CHARGER = "chargerAni";
-//    public static final String BEE = "beeAni";
-//    public static final String QUEENBEE = "queenBeeAni";
+//    public static final String SIMPLE = "simpleLib";
+//    public static final String DRUNK = "drunkbugLib";
+//    public static final String CHARGER = "chargerLib";
+//    public static final String BEE = "beeLib";
+//    public static final String QUEENBEE = "queenbeeLib";
 
     public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
-    private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
+//    private HashMap<String, CompositeItemVO> libBugsNameComposite = new HashMap<>();
 
     private Random rand;
 
@@ -58,6 +50,7 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void init() {
+
         rand = new Random();
 
         SPAWN_MIN_X = -400;
@@ -71,11 +64,11 @@ public class BugSpawnSystem extends EntitySystem {
         libBugsNameType.put(BugType.BEE, BEE);
         libBugsNameType.put(BugType.QUEENBEE, QUEENBEE);
 
-        libBugsNameComposite.put(SIMPLE, GameStage.sceneLoader.loadVoFromLibrary(SIMPLE));
-        libBugsNameComposite.put(DRUNK, GameStage.sceneLoader.loadVoFromLibrary(DRUNK));
-        libBugsNameComposite.put(CHARGER, GameStage.sceneLoader.loadVoFromLibrary(CHARGER));
-        libBugsNameComposite.put(BEE, GameStage.sceneLoader.loadVoFromLibrary(BEE));
-        libBugsNameComposite.put(QUEENBEE, GameStage.sceneLoader.loadVoFromLibrary(QUEENBEE));
+//        libBugsNameComposite.put(SIMPLE, GameStage.sceneLoader.loadVoFromLibrary(SIMPLE));
+//        libBugsNameComposite.put(DRUNK, GameStage.sceneLoader.loadVoFromLibrary(DRUNK));
+//        libBugsNameComposite.put(CHARGER, GameStage.sceneLoader.loadVoFromLibrary(CHARGER));
+//        libBugsNameComposite.put(BEE, GameStage.sceneLoader.loadVoFromLibrary(BEE));
+//        libBugsNameComposite.put(QUEENBEE, GameStage.sceneLoader.loadVoFromLibrary(QUEENBEE));
 
     }
 
@@ -89,48 +82,50 @@ public class BugSpawnSystem extends EntitySystem {
     public void spawn() {
         CompositeItemVO tempC;
         BugType tempType;
-        if (isAngeredBeesMode){
-            tempC = libBugsNameComposite.get(BEE).clone();
-            tempType = BugType.BEE;
-        }
-        else{
-            int probabilityValue = rand.nextInt(100);
-            if (probabilityValue < 10) {
-                //Drunk
-                tempC = libBugsNameComposite.get(DRUNK).clone();
-                tempType = BugType.DRUNK;
-            } else if (probabilityValue >= 10 && probabilityValue < 40) {
-                //Simple
-                tempC = libBugsNameComposite.get(SIMPLE).clone();
-                tempType = BugType.SIMPLE;
-            } else if (probabilityValue >= 41 && probabilityValue < 60 ) {
-                //Charger
-                tempC = libBugsNameComposite.get(CHARGER).clone();
-                tempType = BugType.CHARGER;
-            } else if (probabilityValue >= 61 && probabilityValue < 70 ){
-                tempC = libBugsNameComposite.get(QUEENBEE).clone();
-                tempType = BugType.QUEENBEE;
-                queenBeeOnStage = true;
-            } else {
-                tempC = libBugsNameComposite.get(BEE).clone();
-                tempType = BugType.BEE;
-            }
-        }
 
         if(spawnInterval == 0){
-            Entity bugEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bugEntity, tempC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(bugEntity);
+            if (isAngeredBeesMode){
+//            tempC = libBugsNameComposite.get(BEE).clone();
+                tempType = BugType.BEE;
+            }
+            else{
+                int probabilityValue = rand.nextInt(100);
+                if (probabilityValue < 10) {
+                    //Drunk
+//                tempC = libBugsNameComposite.get(DRUNK).clone();
+                    tempType = BugType.DRUNK;
+                } else if (probabilityValue >= 10 && probabilityValue < 40) {
+                    //Simple
+//                tempC = libBugsNameComposite.get(SIMPLE).clone();
+                    tempType = BugType.SIMPLE;
+                } else if (probabilityValue >= 41 && probabilityValue < 60 ) {
+                    //Charger
+//                tempC = libBugsNameComposite.get(CHARGER).clone();
+                    tempType = BugType.CHARGER;
+                } else if (probabilityValue >= 61 && probabilityValue < 70 ){
+//                tempC = libBugsNameComposite.get(QUEENBEE).clone();
+                    tempType = BugType.QUEENBEE;
+                    queenBeeOnStage = true;
+                } else {
+//                tempC = libBugsNameComposite.get(BEE).clone();
+                    tempType = BugType.BEE;
+                }
+            }
+//            Entity bugEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+            Entity bugEntity = BugPool.getInstance().get(tempType);
+//            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bugEntity, tempC.composite);
+//            GameStage.sceneLoader.getEngine().addEntity(bugEntity);
 
             BugComponent bc = new BugComponent();
-            bc.startYPosition = getPos().y;
+            TransformComponent tc = getPos();
+            bc.startYPosition = tc.y;
             bc.type = tempType;
-//            SpriteAnimationStateComponent animationComponent = new SpriteAnimationStateComponent();
-//            animationComponent.set(new FrameRange("ani", 1, 5), 20, Animation.PlayMode.LOOP_REVERSED);
+            bc.state = BugComponent.State.IDLE;
             bugEntity.add(bc);
             bugEntity.add(fcc);
-            bugEntity.add(getPos());
-//            bugEntity.add(SpriteComponentFactory.);
+
+            bugEntity.remove(TransformComponent.class);
+            bugEntity.add(tc);
 
             spawnInterval = 100;
         } else {
