@@ -11,7 +11,7 @@ import com.mygdx.game.stages.GameStage;
 
 public class Main extends ApplicationAdapter {
 
-	GameStage stage;
+	public static GameStage stage;
 	Array<Viewport> viewports;
 	Array<String> names;
 

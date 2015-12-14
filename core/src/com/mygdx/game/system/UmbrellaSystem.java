@@ -81,13 +81,11 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public void pushUmbrella(UmbrellaComponent uc, TransformComponent tc) {
         uc.velocityX = ((random.nextInt(randVelocityXmax - randVelocityXmin) + randVelocityXmin) * -1) * uc.speedIncrCoeficient;
-//        gravity *= speedIncrCoeficient/2;
         if (tc.y > Gdx.graphics.getHeight() / 2) {
             uc.velocityY = (random.nextInt((randVelocityYmax - randVelocityYmin) + randVelocityYmin) * -1) * uc.speedIncrCoeficient;
         } else {
             uc.velocityY = (random.nextInt((randVelocityYmax - randVelocityYmin) + randVelocityYmin)) * uc.speedIncrCoeficient;
         }
-//        speedIncrCoeficient += 0.5f;
         uc.gravity = Math.abs(uc.velocityX / (7 - uc.speedIncrCoeficient * uc.gravityDecreaseMultiplier));
         uc.speedIncrCoeficient += 0.1f;
         uc.gravityDecreaseMultiplier -= 0.05f;

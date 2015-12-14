@@ -26,11 +26,13 @@ public class TransformMathUtils {
         ParentNodeComponent parentNodeComponent = entity.getComponent(ParentNodeComponent.class);
         Entity parentEntity = null;
         if(parentNodeComponent != null){
-            ViewPortComponent viewPortComponent = ComponentRetriever.get(parentNodeComponent.parentEntity, ViewPortComponent.class);
+            ViewPortComponent viewPortComponent =
+					ComponentRetriever.get(parentNodeComponent.parentEntity, ViewPortComponent.class);
             if(viewPortComponent == null) {
                 parentEntity = parentNodeComponent.parentEntity;
             } else {
-                Vector3 worldCoordinates = viewPortComponent.viewPort.getCamera().unproject(new Vector3(sceneCoords.x, sceneCoords.y,0));
+                Vector3 worldCoordinates = viewPortComponent.viewPort.getCamera().
+						unproject(new Vector3(sceneCoords.x, sceneCoords.y,0));
                 sceneCoords.x = worldCoordinates.x;
                 sceneCoords.y = worldCoordinates.y;
             }

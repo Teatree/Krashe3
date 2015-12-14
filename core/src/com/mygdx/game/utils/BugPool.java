@@ -128,6 +128,9 @@ public class BugPool {
                 bees.add(bug);
                 break;
             }
+            case QUEENBEE : {
+                break;
+            }
         }
         bug.remove(BugComponent.class);
         bug.remove(FlowerPublicComponent.class);

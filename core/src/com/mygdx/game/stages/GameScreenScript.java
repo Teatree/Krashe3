@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
-import com.mygdx.game.utils.BugPool;
+import com.mygdx.game.utils.CameraShaker;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -43,40 +43,72 @@ public class GameScreenScript implements IScript {
     public static boolean isGameOver;
     public static boolean isStarted;
 
+    public static CameraShaker cameraShaker = new CameraShaker();
+
     @Override
     public void init(Entity item) {
         gameItem = new ItemWrapper(item);
-
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
-
         Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
-
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "0");
 
         Entity startLabel = gameItem.getChild("lbl_tap2start").getEntity();
-
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
-
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         fcc = new FlowerPublicComponent();
         pc = new PlayerComponent();
 
+        addSystems();
+
+        //init Flower
+        initFlower();
+
+        // Adding a Click listener to playButton so we can start game when clicked
+        initPauseBtn();
+
+    }
+
+    private void addSystems() {
         GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
         GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fcc));
-
         GameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         GameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
         GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
         GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fcc));
         GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
+    }
 
-        //init Flower
+    private void initPauseBtn() {
+        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
+        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+            }
+
+            @Override
+            public void clicked() {
+                GameScreenScript.cameraShaker.initShaking(8f, 1f);
+                isPause = !isPause;
+            }
+        });
+    }
+
+    private void initFlower() {
         final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
         Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
@@ -99,32 +131,6 @@ public class GameScreenScript implements IScript {
 
         lc.setLayers(tempC.composite.layers);
         flowerEntity.add(lc);
-
-        // Adding a Click listener to playButton so we can start game when clicked
-        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
-        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
-            @Override
-            public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
-//                tempC.composite.layers.get(0).isVisible = true;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
-//                tempC.composite.layers.get(0).isVisible = false;
-            }
-
-            @Override
-            public void clicked() {
-                isPause = !isPause;
-//                tempC.composite.layers.get(0).isVisible = true;
-            }
-        });
-
     }
 
     @Override
@@ -136,6 +142,10 @@ public class GameScreenScript implements IScript {
     public void act(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             isPause = !isPause;
+        }
+
+        if (cameraShaker.time > 0){
+            cameraShaker.shake(delta);
         }
 
         if (!isStarted && Gdx.input.justTouched()){
@@ -159,31 +169,16 @@ public class GameScreenScript implements IScript {
             if (cocoonSpawnCounter <= 0) {
                 spawnCocoon();
             }
-//            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
-//                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
-//                sacs.paused = false;
-//            }
-        }else{
-//            for(Entity e : GameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(SpriteAnimationStateComponent.class).get())){
-//                SpriteAnimationStateComponent sacs = ComponentRetriever.get(e, SpriteAnimationStateComponent.class);
-//                sacs.paused = true;
-//            }
         }
     }
 
     private void spawnDandelion() {
-
         if(canDandelionSpawn()){
-
-//            dandelionSpawnCounter = 700000000;
             dandelionSpawnCounter =
                     random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity dandelionEntity = root.getChild("dandelionAni").getEntity();
-//            CompositeItemVO dandelionComposite = sceneLoader.loadVoFromLibrary("dandelionLib");
-//            Entity dandelionEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), dandelionComposite);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), dandelionEntity, dandelionComposite.composite);
 
             TransformComponent transformComponent = new TransformComponent();
             transformComponent.x = 300;
@@ -212,9 +207,6 @@ public class GameScreenScript implements IScript {
             cocoonEntity.add(fcc);
             CocoonComponent cc = new CocoonComponent();
             cocoonEntity.add(cc);
-
-//        DimensionsComponent dc = new DimensionsComponent();
-//        cocoonEntity.add(dc);
             sceneLoader.getEngine().addEntity(cocoonEntity);
         }
     }

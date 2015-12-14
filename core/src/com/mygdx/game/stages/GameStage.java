@@ -19,7 +19,7 @@ import static com.mygdx.game.utils.BackgroundMusicMgr.*;
 public class GameStage extends Stage{
 
 //    public GameScreenScript game;
-    public Viewport viewport;
+    public static Viewport viewport;
     public static SceneLoader sceneLoader;
 
     public GameStage getInstance() {
