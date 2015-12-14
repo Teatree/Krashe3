@@ -73,8 +73,10 @@ public class BugSpawnSystem extends EntitySystem {
                 } else if (probabilityValue >= 41 && probabilityValue < 60 ) {
                     createBug(BugType.CHARGER);
                 } else if (probabilityValue >= 61 && probabilityValue < 70 ){
-                    createBug(BugType.QUEENBEE);
-                    queenBeeOnStage = true;
+                    if (!queenBeeOnStage) {
+                        createBug(BugType.QUEENBEE);
+                        queenBeeOnStage = true;
+                    }
                 } else {
                     createBug(BugType.BEE);
                 }
@@ -112,6 +114,7 @@ public class BugSpawnSystem extends EntitySystem {
                     angeredBeesModeTimer--;
                     if (angeredBeesModeTimer <= 0) {
                         isAngeredBeesMode = false;
+                        GameScreenScript.cameraShaker.initBlinking(35, 3);
                         angeredBeesModeTimer = 800;
                     }
                 }

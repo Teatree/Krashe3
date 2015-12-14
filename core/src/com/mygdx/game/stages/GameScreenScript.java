@@ -163,7 +163,7 @@ public class GameScreenScript implements IScript {
 
         if (cameraShaker.time > 0){
             cameraShaker.shake(delta);
-            LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
+            cameraShaker.blink();
         }
 
         if (!isStarted && Gdx.input.justTouched()){

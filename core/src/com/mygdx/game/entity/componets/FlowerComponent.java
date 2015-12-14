@@ -3,21 +3,23 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.mygdx.game.utils.GlobalConstants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Teatree on 9/3/2015.
  */
 public class FlowerComponent implements Component {
+    public static final int DEFAULT_EAT_COUNTER = 30;
 
     private int maxHp = GlobalConstants.DEFAULT_MAX_HP;
     private int curHp = maxHp;
-
-//    public Rectangle boundsRect = new Rectangle();
-
     public State state = State.IDLE;
+    public int eatCounter = DEFAULT_EAT_COUNTER;
 
-    public int eatCounter = 30;
+    List<VanityComponent> vanities = new ArrayList();
 
-    public enum State{
+    public enum State {
         IDLE,
         ATTACK,
         RETREAT,

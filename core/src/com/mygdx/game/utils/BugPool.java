@@ -91,7 +91,9 @@ public class BugPool {
                 return drunkBugs.pop();
             }
             case CHARGER : {
-                return chargerBugs.pop();
+                Entity bug = chargerBugs.pop();
+                bug.getComponent(BugComponent.class).state = BugComponent.State.IDLE;
+                return bug;
             }
             case BEE : {
                 return bees.pop();
