@@ -44,6 +44,7 @@ public class GameScreenScript implements IScript {
     public static boolean isStarted;
 
     public static CameraShaker cameraShaker = new CameraShaker();
+    public static Entity background;
 
     @Override
     public void init(Entity item) {
@@ -71,6 +72,21 @@ public class GameScreenScript implements IScript {
 
         // Adding a Click listener to playButton so we can start game when clicked
         initPauseBtn();
+
+        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("backgroundLib");
+        background = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), background, tempC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(background);
+
+        LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
+        lc.setLayers(tempC.composite.layers);
+        background.add(lc);
+
+        lc.getLayer("blink").isVisible = false;
+        TransformComponent tc = new TransformComponent();
+        tc.x = 0;
+        tc.y = 0;
+        background.add(tc);
 
     }
 
@@ -102,8 +118,9 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                GameScreenScript.cameraShaker.initShaking(8f, 1f);
-                isPause = !isPause;
+
+                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
+//                isPause = !isPause;
             }
         });
     }
@@ -146,6 +163,7 @@ public class GameScreenScript implements IScript {
 
         if (cameraShaker.time > 0){
             cameraShaker.shake(delta);
+            LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
         }
 
         if (!isStarted && Gdx.input.justTouched()){
@@ -221,5 +239,11 @@ public class GameScreenScript implements IScript {
                 sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0) &&
                 (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()) == null ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0);
+    }
+
+    public static void angerBees() {
+        BugSpawnSystem.isAngeredBeesMode = true;
+        GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
+        BugSpawnSystem.queenBeeOnStage = false;
     }
 }

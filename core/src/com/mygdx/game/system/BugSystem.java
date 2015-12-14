@@ -65,7 +65,7 @@ public class BugSystem extends IteratingSystem {
                     scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
 
                     if (bugComponent.type.equals(BugType.QUEENBEE)) {
-                        angerBees();
+                        GameScreenScript.angerBees();
                     }
                     BugPool.getInstance().release(entity);
                     fcc.isCollision = true;
@@ -77,12 +77,6 @@ public class BugSystem extends IteratingSystem {
         } else {
             sasc.paused = true;
         }
-    }
-
-    private void angerBees() {
-        BugSpawnSystem.isAngeredBeesMode = true;
-        GameScreenScript.cameraShaker.initShaking(8f, 1f);
-        BugSpawnSystem.queenBeeOnStage = false;
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
