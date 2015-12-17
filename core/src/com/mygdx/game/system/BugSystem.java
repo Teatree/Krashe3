@@ -68,24 +68,17 @@ public class BugSystem extends IteratingSystem {
                     if (bc.type.equals(BugType.QUEENBEE)) {
                         GameScreenScript.angerBees();
                     }
-                    resetCharger(sac, sasc, bc);
+//                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
                     fcc.isCollision = true;
                 }
                 if (isOutOfBounds(bc)) {
-                    resetCharger(sac, sasc, bc);
+//                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
                 }
             }
         } else {
             sasc.paused = true;
-        }
-    }
-
-    private void resetCharger(SpriteAnimationComponent sac, SpriteAnimationStateComponent sasc, BugComponent bc) {
-        if(bc.type.equals(BugType.CHARGER)){
-            bc.state = IDLE;
-            setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
         }
     }
 
@@ -118,7 +111,6 @@ public class BugSystem extends IteratingSystem {
 
     private void moveCharger(float deltaTime, TransformComponent tc, BugComponent bc, SpriteAnimationStateComponent sasc, SpriteAnimationComponent sac) {
         bc.counter--;
-
         // Move
         tc.x += bc.velocity;
 

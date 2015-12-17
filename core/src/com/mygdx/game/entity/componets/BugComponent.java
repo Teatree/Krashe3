@@ -25,7 +25,34 @@ public class BugComponent implements Component {
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
 
     public BugComponent() {
-        points = 1;
+        state = State.IDLE;
+    }
+
+    public BugComponent(BugType type) {
+        this.type = type;
+        this.state = State.IDLE;
+        switch (type){
+            case DRUNK: {
+                points = 10;
+                break;
+            }
+            case BEE: {
+                points = 15;
+                break;
+            }
+            case CHARGER: {
+                points = 25;
+                break;
+            }
+            case QUEENBEE: {
+                points = 33;
+                break;
+            }
+            default:{
+                points = 10;
+                break;
+            }
+        }
     }
 
     public enum State {

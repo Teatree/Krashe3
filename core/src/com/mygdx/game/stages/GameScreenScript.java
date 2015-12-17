@@ -122,12 +122,33 @@ public class GameScreenScript implements IScript {
             @Override
             public void clicked() {
                 final Entity dialog = gameItem.getChild("dialog").getEntity();
-                TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
-                dialogTc.x = 40;
-                dialogTc.y = 40;
+                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+                dialogTc.x = 300;
+                dialogTc.y = 100;
+
+                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
+                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
+
+                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                    @Override
+                    public void touchUp() {
+                    }
+
+                    @Override
+                    public void touchDown() {
+                    }
+
+                    @Override
+                    public void clicked() {
+                        isPause = false;
+                        dialogTc.x = -1000;
+                    }
+                });
 
 //                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-                isPause = !isPause;
+                isPause = true;
             }
         });
     }

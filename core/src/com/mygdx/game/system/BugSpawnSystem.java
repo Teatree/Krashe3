@@ -2,22 +2,28 @@ package com.mygdx.game.system;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.BugComponent.State.IDLE;
 import static com.mygdx.game.utils.BugPool.*;
 
 /**
  * Created by Teatree on 9/3/2015.
  */
 public class BugSpawnSystem extends EntitySystem {
+
+    public static int ANGERED_BEES_MODE_DURATION = 800;
 
     private int SPAWN_MAX_X = -400;
     private int SPAWN_MIN_X = 300;
@@ -26,7 +32,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     public static boolean isAngeredBeesMode = false;
     public static boolean queenBeeOnStage = false;
-    public static int angeredBeesModeTimer = 800;
+    public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
 
     public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
@@ -90,14 +96,14 @@ public class BugSpawnSystem extends EntitySystem {
 
     private void createBug(BugType tempType) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
-        BugComponent bc = new BugComponent();
-        TransformComponent tc = getPos();
-        bc.startYPosition = tc.y;
-        bc.type = tempType;
-        bc.state = BugComponent.State.IDLE;
+        BugComponent bc = new BugComponent(tempType);
+//        bc.type = tempType;
+//        bc.state = BugComponent.State.IDLE;
         bugEntity.add(bc);
         bugEntity.add(fcc);
 
+        TransformComponent tc = getPos();
+        bc.startYPosition = tc.y;
         bugEntity.remove(TransformComponent.class);
         bugEntity.add(tc);
     }
@@ -107,17 +113,22 @@ public class BugSpawnSystem extends EntitySystem {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             if(GameScreenScript.isStarted) {
                 super.update(deltaTime);
-                spawn();
 
-                if (isAngeredBeesMode) {
-                    angeredBeesModeTimer--;
-                    if (angeredBeesModeTimer <= 0) {
-                        isAngeredBeesMode = false;
-                        GameScreenScript.cameraShaker.initBlinking(35, 3);
-                        angeredBeesModeTimer = 800;
-                    }
-                }
+                spawn();
+                updateAngeredBeesMode();
             }
         }
     }
+
+    private void updateAngeredBeesMode() {
+        if (isAngeredBeesMode) {
+            angeredBeesModeTimer--;
+            if (angeredBeesModeTimer <= 0) {
+                isAngeredBeesMode = false;
+                GameScreenScript.cameraShaker.initBlinking(35, 3);
+                angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+            }
+        }
+    }
+
 }
