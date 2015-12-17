@@ -90,7 +90,6 @@ public class BugSpawnSystem extends EntitySystem {
 
     private void createBug(BugType tempType) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
-
         BugComponent bc = new BugComponent();
         TransformComponent tc = getPos();
         bc.startYPosition = tc.y;

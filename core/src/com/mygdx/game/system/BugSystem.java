@@ -18,6 +18,7 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponen
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
+import static com.mygdx.game.entity.componets.BugComponent.State.IDLE;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -51,31 +52,40 @@ public class BugSystem extends IteratingSystem {
             transformComponent.scaleX = BUG_SCALE;
             transformComponent.scaleY = BUG_SCALE;
             FlowerPublicComponent fcc = fMapper.get(entity);
-            BugComponent bugComponent = mapper.get(entity);
+            BugComponent bc = mapper.get(entity);
 
-            if (bugComponent.state != DEAD) {
+            if (bc.state != DEAD) {
 
-                updateRect(bugComponent, transformComponent, dimensionsComponent);
-                moveEntity(deltaTime, transformComponent, bugComponent, sasc, sac);
+                updateRect(bc, transformComponent, dimensionsComponent);
+                moveEntity(deltaTime, transformComponent, bc, sasc, sac);
 
-                if (checkFlowerCollision(fcc, bugComponent)) {
+                if (checkFlowerCollision(fcc, bc)) {
 
-                    bugComponent.state = DEAD;
-                    fcc.score += bugComponent.points;
+                    bc.state = DEAD;
+                    fcc.score += bc.points;
                     scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
 
-                    if (bugComponent.type.equals(BugType.QUEENBEE)) {
+                    if (bc.type.equals(BugType.QUEENBEE)) {
                         GameScreenScript.angerBees();
                     }
+                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
                     fcc.isCollision = true;
                 }
-                if (isOutOfBounds(bugComponent)) {
+                if (isOutOfBounds(bc)) {
+                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
                 }
             }
         } else {
             sasc.paused = true;
+        }
+    }
+
+    private void resetCharger(SpriteAnimationComponent sac, SpriteAnimationStateComponent sasc, BugComponent bc) {
+        if(bc.type.equals(BugType.CHARGER)){
+            bc.state = IDLE;
+            setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
         }
     }
 

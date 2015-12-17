@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
+import com.mygdx.game.utils.DailyGoalGenerator;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -45,6 +46,8 @@ public class GameScreenScript implements IScript {
 
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
+
+    public DailyGoalGenerator dailyGoalGenerator;
 
     @Override
     public void init(Entity item) {
@@ -118,9 +121,13 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                final Entity dialog = gameItem.getChild("dialog").getEntity();
+                TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+                dialogTc.x = 40;
+                dialogTc.y = 40;
 
-                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-//                isPause = !isPause;
+//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
+                isPause = !isPause;
             }
         });
     }
@@ -139,6 +146,8 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(tc);
 
         FlowerComponent fc = new FlowerComponent();
+        dailyGoalGenerator = new DailyGoalGenerator();
+        fc.goals = dailyGoalGenerator.getGoalsForToday();
         flowerEntity.add(fc);
 
         flowerEntity.add(fcc);
@@ -181,7 +190,6 @@ public class GameScreenScript implements IScript {
             //Spawn dandelion
             if (dandelionSpawnCounter <= 0) {
                 spawnDandelion();
-
             }
             //spawn Cocoon
             if (cocoonSpawnCounter <= 0) {

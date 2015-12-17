@@ -7,8 +7,14 @@ import com.badlogic.ashley.core.Component;
  */
 public class VanityComponent implements Component {
 
-    public String Name;
+    public String name;
     public int cost;
+    public String description;
+    public boolean bought;
+    public boolean enabled;
 
+    public void apply (FlowerComponent fc){
+
+    }
 }
 

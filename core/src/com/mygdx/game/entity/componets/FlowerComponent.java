@@ -17,7 +17,8 @@ public class FlowerComponent implements Component {
     public State state = State.IDLE;
     public int eatCounter = DEFAULT_EAT_COUNTER;
 
-    List<VanityComponent> vanities = new ArrayList();
+    public List<VanityComponent> vanities = new ArrayList();
+    public List<DailyGoal> goals = new ArrayList<>();
 
     public enum State {
         IDLE,
@@ -30,6 +31,4 @@ public class FlowerComponent implements Component {
     public boolean isEating(){
         return state == State.IDLE_BITE || state == State.ATTACK_BITE;
     }
-
-
 }

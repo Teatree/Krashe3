@@ -45,127 +45,129 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1881, 2
+  xy: 1843, 736
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
   offset: 0, 0
   index: -1
-chargerBugAni05
+buttoncameraoff
+  rotate: false
+  xy: 1843, 614
+  size: 121, 120
+  split: 23, 18, 17, 29
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttoncameraon
+  rotate: false
+  xy: 1881, 2
+  size: 121, 120
+  split: 23, 17, 17, 29
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+chargerBugAni07
   rotate: false
   xy: 2, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni06
+chargerBugAni08
   rotate: false
   xy: 1843, 1898
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni07
+chargerBugAni09
   rotate: false
   xy: 184, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni08
+chargerBugAni10
   rotate: false
   xy: 1843, 1750
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni09
+chargerBugAni11
   rotate: false
   xy: 366, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni10
+chargerBugAni12
   rotate: false
   xy: 1843, 1602
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni11
+chargerBugAni13
   rotate: false
   xy: 548, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni12
+chargerBugAni14
   rotate: false
   xy: 1843, 1454
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni13
+chargerBugAni15
   rotate: false
   xy: 730, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni14
+chargerBugAni16
   rotate: false
   xy: 1843, 1306
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni15
+chargerBugAni17
   rotate: false
   xy: 912, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni16
+chargerBugAni18
   rotate: false
   xy: 1843, 1158
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni17
+chargerBugAni19
   rotate: false
   xy: 1094, 22
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni18
+chargerBugAni20
   rotate: false
   xy: 1843, 1010
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
-chargerBugAni19
-  rotate: false
-  xy: 1843, 862
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni20
-  rotate: false
-  xy: 1843, 714
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
 flowerhead
   rotate: false
-  xy: 1843, 562
+  xy: 1843, 858
   size: 143, 150
   orig: 143, 150
   offset: 0, 0
@@ -188,7 +190,7 @@ pop-upback
   index: -1
 pot
   rotate: false
-  xy: 1269, 486
+  xy: 1843, 554
   size: 62, 58
   orig: 62, 58
   offset: 0, 0
@@ -318,25 +320,9 @@ size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-buttoncameraoff
-  rotate: false
-  xy: 2, 2
-  size: 121, 120
-  split: 23, 18, 17, 29
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttoncameraon
-  rotate: false
-  xy: 576, 302
-  size: 121, 120
-  split: 23, 17, 17, 29
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
 buttonnoAdsoff
   rotate: false
-  xy: 248, 2
+  xy: 576, 180
   size: 120, 120
   split: 14, 18, 11, 13
   pad: 11, 13, 16, 14
@@ -345,7 +331,7 @@ buttonnoAdsoff
   index: -1
 buttonnoAdson
   rotate: false
-  xy: 699, 180
+  xy: 699, 302
   size: 120, 120
   split: 12, 15, 11, 14
   orig: 120, 120
@@ -353,7 +339,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 125, 2
+  xy: 2, 2
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -361,7 +347,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 576, 180
+  xy: 576, 302
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -370,7 +356,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 699, 302
+  xy: 125, 2
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -379,7 +365,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 822, 302
+  xy: 248, 2
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -387,7 +373,7 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 370, 2
+  xy: 698, 180
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
@@ -395,7 +381,7 @@ buttonsettingson
   index: -1
 buttonshopoff
   rotate: false
-  xy: 821, 180
+  xy: 821, 302
   size: 120, 120
   split: 14, 16, 17, 17
   orig: 120, 120
@@ -403,7 +389,7 @@ buttonshopoff
   index: -1
 buttonshopon
   rotate: false
-  xy: 492, 2
+  xy: 370, 2
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120

@@ -1,0 +1,146 @@
+
+dandelionIdleAni.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dandelionIdleAni01
+  rotate: false
+  xy: 2, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni02
+  rotate: false
+  xy: 2, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni20
+  rotate: false
+  xy: 2, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni03
+  rotate: false
+  xy: 143, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni19
+  rotate: false
+  xy: 143, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni04
+  rotate: false
+  xy: 2, 394
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni18
+  rotate: false
+  xy: 2, 394
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni05
+  rotate: false
+  xy: 143, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni17
+  rotate: false
+  xy: 143, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni06
+  rotate: false
+  xy: 284, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni16
+  rotate: false
+  xy: 284, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni07
+  rotate: false
+  xy: 2, 198
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni15
+  rotate: false
+  xy: 2, 198
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni08
+  rotate: false
+  xy: 143, 394
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni14
+  rotate: false
+  xy: 143, 394
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni09
+  rotate: false
+  xy: 284, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni13
+  rotate: false
+  xy: 284, 590
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni10
+  rotate: false
+  xy: 425, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni12
+  rotate: false
+  xy: 425, 786
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
+dandelionIdleAni11
+  rotate: false
+  xy: 2, 2
+  size: 139, 194
+  orig: 139, 194
+  offset: 0, 0
+  index: -1
