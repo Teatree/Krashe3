@@ -125,7 +125,7 @@ public class BugSpawnSystem extends EntitySystem {
             angeredBeesModeTimer--;
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
-                GameScreenScript.cameraShaker.initBlinking(35, 3);
+                GameScreenScript.cameraShaker.initBlinking(40, 3);
                 angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
             }
         }

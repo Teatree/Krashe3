@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.utils.SaveMngr;
 
 public class Main extends ApplicationAdapter {
 
@@ -45,7 +47,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void pause () {
-//		SaveManager.saveProperties();
+//		SaveMngr.saveStats(GameScreenScript.fcc);
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-//		SaveManager.saveProperties();
+		SaveMngr.saveStats(GameScreenScript.fcc);
 	}
 
 	static public Array<String> getViewportNames () {

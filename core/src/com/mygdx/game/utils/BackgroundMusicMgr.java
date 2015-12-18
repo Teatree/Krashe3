@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 public class BackgroundMusicMgr {
 
     public static BackgroundMusicMgr backgroundMusicMgr;
+    public static boolean musicOn;
 
     private Music music;
 

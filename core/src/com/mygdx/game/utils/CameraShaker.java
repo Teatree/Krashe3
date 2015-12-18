@@ -51,6 +51,7 @@ public class CameraShaker {
     public void blink() {
         this.blinkIntervalCounter--;
         LayerMapComponent lc = ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class);
+//        lc.getLayer("blink").isVisible = true;
         if (this.blinkIntervalCounter == 0 && blinkCounter != 0) {
             lc.getLayer("blink").isVisible = !lc.getLayer("blink").isVisible;
             this.blinkIntervalCounter = blinkInterval;

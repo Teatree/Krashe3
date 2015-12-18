@@ -59,12 +59,21 @@ public class UmbrellaSystem extends IteratingSystem {
             if (checkCollision(uc, fcc)) {
                 fcc.isCollision = true;
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
+
+                //temp
+                fcc.totalScore -= fcc.score;
                 fcc.score *= uc.pointsMult;
-                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
+                fcc.totalScore += fcc.score;
+
+                reloadScoreLabel(fcc);
             }
         } else {
             sasc.paused = true;
         }
+    }
+
+    private void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score  + "/" + fcc.totalScore);
     }
 
     private void move(float deltaTime, TransformComponent tc, UmbrellaComponent uc) {

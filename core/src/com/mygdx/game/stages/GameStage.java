@@ -39,7 +39,7 @@ public class GameStage extends Stage{
     public void initGame() {
         sceneLoader = new SceneLoader();
         sceneLoader.loadScene("MainScene", viewport);
-        GameScreenScript game = new GameScreenScript();
+        GameScreenScript game = new GameScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(game);
 //        Flower.init(this, sceneLoader);

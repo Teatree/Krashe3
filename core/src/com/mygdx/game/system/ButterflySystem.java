@@ -56,7 +56,10 @@ public class ButterflySystem extends IteratingSystem {
                 bc.state = DEAD;
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
                 fcc.score += bc.points;
-                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score);
+
+                //temp
+                fcc.totalScore += bc.points;
+                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
             }
         }
     }

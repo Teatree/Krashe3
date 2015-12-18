@@ -8,6 +8,7 @@ import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalGenerator;
+import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -30,14 +31,14 @@ public class GameScreenScript implements IScript {
     public static final String START_MESSAGE = "TAP TO START";
 
     private ItemWrapper gameItem;
+    GameStage game;
     public Random random = new Random();
 
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
 
     //One flower collision component will be used in all systems
-    public FlowerPublicComponent fcc;
-    public PlayerComponent pc;
+    public static FlowerPublicComponent fcc;
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
     public static boolean isPause;
@@ -48,6 +49,10 @@ public class GameScreenScript implements IScript {
     public static Entity background;
 
     public DailyGoalGenerator dailyGoalGenerator;
+
+    public GameScreenScript(GameStage game) {
+        this.game = game;
+    }
 
     @Override
     public void init(Entity item) {
@@ -65,8 +70,7 @@ public class GameScreenScript implements IScript {
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
-        fcc = new FlowerPublicComponent();
-        pc = new PlayerComponent();
+        fcc = SaveMngr.loadStats();
 
         addSystems();
 
@@ -105,6 +109,11 @@ public class GameScreenScript implements IScript {
 
     private void initPauseBtn() {
         final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
+
+        TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
+        pauseBtnTc.scaleX = 0.7f;
+        pauseBtnTc.scaleY = 0.7f;
+
         pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
             @Override
@@ -158,8 +167,7 @@ public class GameScreenScript implements IScript {
         Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
         GameStage.sceneLoader.getEngine().addEntity(flowerEntity);
-
-        TransformComponent tc = new TransformComponent();
+        TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = 970;
         tc.y = -774;
         tc.scaleX = BUG_SCALE;
@@ -172,7 +180,6 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(fc);
 
         flowerEntity.add(fcc);
-        flowerEntity.add(pc);
 
         LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
 
@@ -182,7 +189,6 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void dispose() {
-
     }
 
     @Override
@@ -227,10 +233,13 @@ public class GameScreenScript implements IScript {
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity dandelionEntity = root.getChild("dandelionAni").getEntity();
 
-            TransformComponent transformComponent = new TransformComponent();
-            transformComponent.x = 300;
-            transformComponent.y = 60;
-            dandelionEntity.add(transformComponent);
+            TransformComponent tc = dandelionEntity.getComponent(TransformComponent.class);
+            tc.x = 300;
+            tc.y = 40;
+            tc.scaleX = 0.7f;
+            tc.scaleY = 0.7f;
+
+            dandelionEntity.add(tc);
             DandelionComponent dc = new DandelionComponent();
             dc.state = DandelionComponent.State.GROWING;
             dandelionEntity.add(dc);
@@ -246,10 +255,10 @@ public class GameScreenScript implements IScript {
             Entity cocoonEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), cocoonComposite);
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), cocoonEntity, cocoonComposite.composite);
 
-            TransformComponent transformComponent = new TransformComponent();
-            transformComponent.x = 850;
-            transformComponent.y = 710;
-            cocoonEntity.add(transformComponent);
+            TransformComponent tc = cocoonEntity.getComponent(TransformComponent.class);
+            tc.x = 850;
+            tc.y = 710;
+            cocoonEntity.add(tc);
 
             cocoonEntity.add(fcc);
             CocoonComponent cc = new CocoonComponent();
