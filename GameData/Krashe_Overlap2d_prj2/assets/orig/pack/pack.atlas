@@ -67,20 +67,6 @@ buttoncameraon
   orig: 121, 120
   offset: 0, 0
   index: -1
-flowerhead
-  rotate: false
-  xy: 1843, 858
-  size: 143, 150
-  orig: 143, 150
-  offset: 0, 0
-  index: -1
-flowerpeducle
-  rotate: false
-  xy: 1204, 494
-  size: 63, 1550
-  orig: 63, 1550
-  offset: 0, 0
-  index: -1
 pop-upback
   rotate: false
   xy: 1659, 24
@@ -176,19 +162,5 @@ buttonshopon
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120
-  offset: 0, 0
-  index: -1
-queenBeeAni17
-  rotate: false
-  xy: 2, 124
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni18
-  rotate: false
-  xy: 289, 124
-  size: 285, 298
-  orig: 285, 298
   offset: 0, 0
   index: -1
