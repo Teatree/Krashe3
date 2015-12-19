@@ -63,3 +63,4 @@ build/
 ## OS Specific
 .DS_Store
 /GameData/Krashe_Overlap2d_prj2/export
+/android/assets/game.sav
