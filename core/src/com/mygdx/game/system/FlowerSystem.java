@@ -58,7 +58,7 @@ public class FlowerSystem extends IteratingSystem {
         fcc.boundsRect.y = (int) tc.y + 105 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
-//        System.out.println(fcc.boundsRect.x + " " + fcc.boundsRect.y + " " + fcc.boundsRect.width + " " + fcc.boundsRect.height);
+//        System.out.println(fpc.boundsRect.x + " " + fpc.boundsRect.y + " " + fpc.boundsRect.width + " " + fpc.boundsRect.height);
     }
 
 //    public void addMovementActionUp() {

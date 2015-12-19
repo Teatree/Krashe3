@@ -21,11 +21,10 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 		names = getViewportNames();
 
-//		AssetsManager.load();
+		GameScreenScript.fpc = SaveMngr.loadStats();
 		stage = new GameStage();
 		viewports = getViewports(stage.getCamera());
 		stage.setViewport(viewports.first());
-//		SaveManager.loadProperties();
 
 		Gdx.input.setInputProcessor(stage);
 	}
@@ -47,7 +46,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void pause () {
-//		SaveMngr.saveStats(GameScreenScript.fcc);
+//		SaveMngr.saveStats(GameScreenScript.fpc);
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		SaveMngr.saveStats(GameScreenScript.fcc);
+		SaveMngr.saveStats(GameScreenScript.fpc);
 	}
 
 	static public Array<String> getViewportNames () {

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -42,7 +43,6 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchUp() {
-                System.out.println("Piiiip");
             }
 
             @Override
@@ -64,7 +64,13 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                stage.initShopMenu();
+                if (GameScreenScript.fpc.vanities.isEmpty()) {
+                    VanityComponent vc = new VanityComponent();
+                    vc.apply(GameScreenScript.fpc);
+                } else {
+                    GameScreenScript.fpc.vanities.get(0).disable(GameScreenScript.fpc);
+                }
+//                stage.initShopMenu();
             }
 
             @Override

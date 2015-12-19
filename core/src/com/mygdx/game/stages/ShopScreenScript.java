@@ -1,17 +1,7 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.BugType;
-import com.mygdx.game.system.BugSpawnSystem;
-import com.mygdx.game.system.BugSystem;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 

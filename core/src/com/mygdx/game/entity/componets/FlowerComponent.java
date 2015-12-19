@@ -17,9 +17,6 @@ public class FlowerComponent implements Component {
     public State state = State.IDLE;
     public int eatCounter = DEFAULT_EAT_COUNTER;
 
-    public List<VanityComponent> vanities = new ArrayList();
-    public List<DailyGoal> goals = new ArrayList<>();
-
     public enum State {
         IDLE,
         ATTACK,

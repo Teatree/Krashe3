@@ -8,7 +8,6 @@ import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalGenerator;
-import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -39,7 +38,7 @@ public class GameScreenScript implements IScript {
     public int cocoonSpawnCounter;
 
     //One flower collision component will be used in all systems
-    public static FlowerPublicComponent fcc;
+    public static FlowerPublicComponent fpc;
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
     public static boolean isPause;
@@ -72,9 +71,6 @@ public class GameScreenScript implements IScript {
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
-
-        fcc = SaveMngr.loadStats();
-
         addSystems();
 
         //init Flower
@@ -102,11 +98,11 @@ public class GameScreenScript implements IScript {
 
     private void addSystems() {
         GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
-        GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fcc));
+        GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fpc));
         GameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         GameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
         GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
-        GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fcc));
+        GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
         GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
     }
 
@@ -133,38 +129,34 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                final Entity dialog = gameItem.getChild("dialog").getEntity();
-//                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
-//                dialogTc.x = 300;
-//                dialogTc.y = 100;
-//
-//                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
-//                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
-//                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
-//
-//                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
-//                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//                    @Override
-//                    public void touchUp() {
-//                    }
-//
-//                    @Override
-//                    public void touchDown() {
-//                    }
-//
-//                    @Override
-//                    public void clicked() {
-//                        isPause = false;
-//                        dialogTc.x = -1000;
-//                    }
-//                });
-//
-////                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-//                isPause = true;
+                final Entity dialog = gameItem.getChild("dialog").getEntity();
+                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+                dialogTc.x = 300;
+                dialogTc.y = 100;
 
-                Entity test = gameItem.getChild("charger_test").getEntity();
-                SpriterComponent spriterC = test.getComponent(SpriterComponent.class);
-                spriterC.player.setAnimation(2);
+                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
+                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
+
+                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                    @Override
+                    public void touchUp() {
+                    }
+
+                    @Override
+                    public void touchDown() {
+                    }
+
+                    @Override
+                    public void clicked() {
+                        isPause = false;
+                        dialogTc.x = -1000;
+                    }
+                });
+
+//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
+                isPause = true;
             }
         });
     }
@@ -185,10 +177,10 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
         dailyGoalGenerator = new DailyGoalGenerator();
-        fc.goals = dailyGoalGenerator.getGoalsForToday();
+        fpc.goals = dailyGoalGenerator.getGoalsForToday();
         flowerEntity.add(fc);
 
-        flowerEntity.add(fcc);
+        flowerEntity.add(fpc);
 
 //        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
 
@@ -269,7 +261,7 @@ public class GameScreenScript implements IScript {
             tc.y = 710;
             cocoonEntity.add(tc);
 
-            cocoonEntity.add(fcc);
+            cocoonEntity.add(fpc);
             CocoonComponent cc = new CocoonComponent();
             cocoonEntity.add(cc);
             sceneLoader.getEngine().addEntity(cocoonEntity);
