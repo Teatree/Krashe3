@@ -14,6 +14,7 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
@@ -37,14 +38,14 @@ public class FlowerSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        LayerMapComponent layerComponent = ComponentRetriever.get(entity, LayerMapComponent.class);
-        transformComponent.scaleX = 0.6f;
-        transformComponent.scaleY = 0.6f;
+//        LayerMapComponent layerComponent = ComponentRetriever.get(entity, LayerMapComponent.class);
+        SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
+        spriterComponent.scale = 0.6f;
         FlowerComponent flowerComponent = mapper.get(entity);
         FlowerPublicComponent fcc = collisionMapper.get(entity);
         moveFlower();
         updateRect(fcc, transformComponent, dimensionsComponent);
-        act(fcc, flowerComponent, transformComponent, dimensionsComponent, layerComponent, deltaTime);
+        act(fcc, flowerComponent, transformComponent, dimensionsComponent, spriterComponent, deltaTime);
 
     }
 
@@ -54,7 +55,7 @@ public class FlowerSystem extends IteratingSystem {
 
     public void updateRect(FlowerPublicComponent fcc, TransformComponent tc, DimensionsComponent dc) {
         fcc.boundsRect.x = (int) tc.x;
-        fcc.boundsRect.y = (int) tc.y + 1500 * tc.scaleY;
+        fcc.boundsRect.y = (int) tc.y + 105 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
 //        System.out.println(fcc.boundsRect.x + " " + fcc.boundsRect.y + " " + fcc.boundsRect.width + " " + fcc.boundsRect.height);
@@ -72,10 +73,10 @@ public class FlowerSystem extends IteratingSystem {
 //                        Actions.moveBy(0, -20)));
 //    }
 
-    public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, LayerMapComponent lc, float delta) {
+    public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             if (fc.state == FlowerComponent.State.IDLE_BITE) {
-                setBiteIdleAnimation(lc);
+                setBiteIdleAnimation(sc);
             }
 //        if (fc.state == FlowerComponent.State.ATTACK_BITE) {
 //            setBiteAttackAnimation(lc);
@@ -89,13 +90,13 @@ public class FlowerSystem extends IteratingSystem {
 
                     soundMgr.play("eat");
                 } else {
-                    setIdleAnimation(lc);
+                    setIdleAnimation(sc);
                 }
             }
             if (Gdx.input.justTouched() && fc.state != FlowerComponent.State.ATTACK) {
                 fc.state = FlowerComponent.State.ATTACK;
 
-                setAttackAnimation(lc);
+                setAttackAnimation(sc);
 //                fc.eatCounter = 0;
             }
 
@@ -104,18 +105,18 @@ public class FlowerSystem extends IteratingSystem {
 
                     fc.state = FlowerComponent.State.ATTACK_BITE;
                     fc.eatCounter = BITE_ANIMATION_TIME;
-                    setBiteAttackAnimation(lc);
+                    setBiteAttackAnimation(sc);
                     fcc.isCollision = false;
 
                     soundMgr.play("eat");
                 } else {
                     move(tc, fc);
-                    if (tc.y >= -190 && fc.state == FlowerComponent.State.ATTACK) {
+                    if (tc.y >= 660 && fc.state == FlowerComponent.State.ATTACK) {
                         fc.state = FlowerComponent.State.RETREAT;
                     }
-                    if (tc.y == -774 && fc.state == FlowerComponent.State.RETREAT) {
+                    if (tc.y <= 106 && fc.state == FlowerComponent.State.RETREAT) {
                         fc.state = FlowerComponent.State.IDLE;
-                        setIdleAnimation(lc);
+                        setIdleAnimation(sc);
                     }
                 }
             }
@@ -125,11 +126,11 @@ public class FlowerSystem extends IteratingSystem {
 
                 if (fc.state == ATTACK_BITE && fc.eatCounter == 0) {
                     fc.state = FlowerComponent.State.RETREAT;
-                    setAttackAnimation(lc);
+                    setAttackAnimation(sc);
                 }
                 if (fc.state == IDLE_BITE && fc.eatCounter == 0) {
                     fc.state = FlowerComponent.State.IDLE;
-                    setIdleAnimation(lc);
+                    setIdleAnimation(sc);
                 }
             }
 
@@ -179,52 +180,20 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
-    private void setAttackAnimation(LayerMapComponent lc) {
-        lc.getLayer("headIdle").isVisible = false;
-        lc.getLayer("peduncleIdle").isVisible = false;
-        lc.getLayer("leavesDynamic").isVisible = false;
-
-        lc.getLayer("leavesStatic").isVisible = true;
-        lc.getLayer("peduncleAttack").isVisible = true;
-        lc.getLayer("attackHeadIdleIdle").isVisible = true;
-        lc.getLayer("attackHeadIdle").isVisible = false;
-        lc.getLayer("headBite").isVisible = false;
+    private void setAttackAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(3);
     }
 
-    private void setIdleAnimation(LayerMapComponent lc) {
-        lc.getLayer("headIdle").isVisible = true;
-        lc.getLayer("peduncleIdle").isVisible = true;
-        lc.getLayer("leavesDynamic").isVisible = true;
-
-        lc.getLayer("leavesStatic").isVisible = false;
-        lc.getLayer("peduncleAttack").isVisible = false;
-        lc.getLayer("attackHeadIdleIdle").isVisible = false;
-        lc.getLayer("attackHeadIdle").isVisible = false;
-        lc.getLayer("headBite").isVisible = false;
+    private void setIdleAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(0);
     }
 
-    private void setBiteAttackAnimation(LayerMapComponent lc) {
-        lc.getLayer("headIdle").isVisible = false;
-        lc.getLayer("peduncleIdle").isVisible = false;
-        lc.getLayer("leavesDynamic").isVisible = false;
-
-        lc.getLayer("leavesStatic").isVisible = true;
-        lc.getLayer("peduncleAttack").isVisible = true;
-        lc.getLayer("attackHeadIdleIdle").isVisible = false;
-        lc.getLayer("attackHeadIdle").isVisible = true;
-        lc.getLayer("headBite").isVisible = false;
+    private void setBiteAttackAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(4);
     }
 
-    private void setBiteIdleAnimation(LayerMapComponent lc) {
-        lc.getLayer("headIdle").isVisible = false;
-        lc.getLayer("peduncleIdle").isVisible = true;
-        lc.getLayer("leavesDynamic").isVisible = true;
-
-        lc.getLayer("leavesStatic").isVisible = false;
-        lc.getLayer("peduncleAttack").isVisible = false;
-        lc.getLayer("attackHeadIdleIdle").isVisible = false;
-        lc.getLayer("attackHeadIdle").isVisible = false;
-        lc.getLayer("headBite").isVisible = true;
+    private void setBiteIdleAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(1);
     }
 
     public void move(TransformComponent tc, FlowerComponent fc) {

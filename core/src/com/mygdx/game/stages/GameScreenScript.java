@@ -170,13 +170,15 @@ public class GameScreenScript implements IScript {
     }
 
     private void initFlower() {
-        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
-        Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(flowerEntity);
+//        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
+//        Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
+//        GameStage.sceneLoader.getEngine().addEntity(flowerEntity);
+
+        Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
-        tc.x = 970;
-        tc.y = -774;
+        tc.x = 988;
+        tc.y = 105;
         tc.scaleX = BUG_SCALE;
         tc.scaleY = BUG_SCALE;
         flowerEntity.add(tc);
@@ -188,10 +190,10 @@ public class GameScreenScript implements IScript {
 
         flowerEntity.add(fcc);
 
-        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
+//        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
 
-        lc.setLayers(tempC.composite.layers);
-        flowerEntity.add(lc);
+//        lc.setLayers(tempC.composite.layers);
+//        flowerEntity.add(lc);
     }
 
     @Override
