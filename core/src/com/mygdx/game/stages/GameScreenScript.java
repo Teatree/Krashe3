@@ -13,6 +13,7 @@ import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -56,6 +57,7 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
@@ -69,6 +71,7 @@ public class GameScreenScript implements IScript {
         Entity startLabel = gameItem.getChild("lbl_tap2start").getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
+
 
         fcc = SaveMngr.loadStats();
 
@@ -130,34 +133,38 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                final Entity dialog = gameItem.getChild("dialog").getEntity();
-                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
-                dialogTc.x = 300;
-                dialogTc.y = 100;
+//                final Entity dialog = gameItem.getChild("dialog").getEntity();
+//                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+//                dialogTc.x = 300;
+//                dialogTc.y = 100;
+//
+//                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+//                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
+//                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
+//
+//                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+//                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//                    @Override
+//                    public void touchUp() {
+//                    }
+//
+//                    @Override
+//                    public void touchDown() {
+//                    }
+//
+//                    @Override
+//                    public void clicked() {
+//                        isPause = false;
+//                        dialogTc.x = -1000;
+//                    }
+//                });
+//
+////                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
+//                isPause = true;
 
-                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
-                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
-                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
-
-                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
-                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                    @Override
-                    public void touchUp() {
-                    }
-
-                    @Override
-                    public void touchDown() {
-                    }
-
-                    @Override
-                    public void clicked() {
-                        isPause = false;
-                        dialogTc.x = -1000;
-                    }
-                });
-
-//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-                isPause = true;
+                Entity test = gameItem.getChild("charger_test").getEntity();
+                SpriterComponent spriterC = test.getComponent(SpriterComponent.class);
+                spriterC.player.setAnimation(2);
             }
         });
     }
