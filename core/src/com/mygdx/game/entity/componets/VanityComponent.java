@@ -3,6 +3,7 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.mygdx.game.utils.SaveMngr;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class VanityComponent implements Component {
     public static final String PATH_PREFIX = "orig\\spriter_animations\\flower_idle\\";
     public static final String TYPE_SUFFIX = ".png";
 
+    public String icon;
     public String name;
     public int cost;
     public String description;
@@ -23,15 +25,38 @@ public class VanityComponent implements Component {
     public boolean available = true;
     public boolean enabled;
 
+    public boolean floatingText;
+    public int bugsSpawnAmount;
+    public int attackSpeed;
+    public int cocoonChance;
+    public int dandelionChance;
+    public int angeredBeesDuration;
+
     public Map<String, String> assetsToChange = new HashMap<>();
 
     public VanityComponent() {
-        assetsToChange.put("head_top", "head_top_deer");
+
+    }
+    public VanityComponent(SaveMngr.VanityStats vc) {
+        this.icon = vc.icon;
+        this.name = vc.name;
+        this.cost = vc.cost;
+        this.description = vc.description;
+        this.bought = vc.bought;
+        this.available = vc.available;
+        this.enabled = vc.enabled;
+        this.floatingText = vc.floatingText;
+        this.bugsSpawnAmount = vc.bugsSpawnAmount;
+        this.attackSpeed = vc.attackSpeed;
+        this.cocoonChance = vc.cocoonChance;
+        this.dandelionChance = vc.dandelionChance;
+        this.angeredBeesDuration = vc.angeredBeesDuration;
+        this.assetsToChange = vc.assetsToChange;
     }
 
     public void apply (FlowerPublicComponent fc){
 
-        if (bought) {
+//        if (bought) {
             fc.totalScore -= cost;
             this.enabled = true;
 
@@ -43,7 +68,7 @@ public class VanityComponent implements Component {
 
             }
             fc.vanities.add(this);
-        }
+//        }
     }
 
     public void disable(FlowerPublicComponent fc){

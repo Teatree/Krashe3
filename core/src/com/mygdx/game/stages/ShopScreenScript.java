@@ -1,9 +1,13 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import java.util.List;
 
 /**
  * Created by Teatree on 7/25/2015.
@@ -23,9 +27,14 @@ public class ShopScreenScript implements IScript {
     public void init(Entity item) {
         shopItem = new ItemWrapper(item);
 
+        getAllVanities ();
+
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity menuBtn = shopItem.getChild("btn_shop").getEntity();
 
+
+        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        final Entity playBtn = shopItem.getChild("btn_play").getEntity();
 //        BugSystem bugSystem = new BugSystem();
 
 //        stage.sceneLoader.getEngine().addSystem(bugSystem);
@@ -54,17 +63,20 @@ public class ShopScreenScript implements IScript {
 //        final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
 
         // Adding a Click listener to playButton so we can start game when clicked
+
         menuBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-//                spriteAnimationComponent.playMode
-//                System.out.println(spriteAnimationComponent.playMode);
+
             }
 
             @Override
             public void touchDown() {
 
                 stage.initMenu();
+                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
+                System.out.println(vanityComponentList.get(1).icon);
+                vanityComponentList.get(1).apply(GameScreenScript.fpc);
             }
 
             @Override
@@ -83,5 +95,52 @@ public class ShopScreenScript implements IScript {
     @Override
     public void act(float delta) {
 //        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+    }
+
+    public void getAllVanities (){
+        final List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
+
+//        for (final VanityComponent vc : vanityComponentList){
+            stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+            Entity piska = shopItem.getChild(vanityComponentList.get(0).icon).getEntity();
+            piska.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+                    System.out.println(vanityComponentList.get(0).icon);
+                    vanityComponentList.get(0).apply(GameScreenScript.fpc);
+                }
+
+                @Override
+                public void touchDown() {
+                    System.out.println(vanityComponentList.get(0).icon);
+                    vanityComponentList.get(0).apply(GameScreenScript.fpc);
+                }
+
+                @Override
+                public void clicked() {
+                    System.out.println(vanityComponentList.get(0).icon);
+                    vanityComponentList.get(0).apply(GameScreenScript.fpc);
+
+                }
+            });
+
+            Entity piska2 = shopItem.getChild(vanityComponentList.get(1).icon).getEntity();
+            piska2.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+                }
+
+                @Override
+                public void touchDown() {
+                }
+
+                @Override
+                public void clicked() {
+                    System.out.println(vanityComponentList.get(1).icon);
+                    vanityComponentList.get(1).apply(GameScreenScript.fpc);
+
+                }
+            });
+//        }
     }
 }

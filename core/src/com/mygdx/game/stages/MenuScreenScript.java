@@ -64,13 +64,13 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                if (GameScreenScript.fpc.vanities.isEmpty()) {
-                    VanityComponent vc = new VanityComponent();
-                    vc.apply(GameScreenScript.fpc);
-                } else {
-                    GameScreenScript.fpc.vanities.get(0).disable(GameScreenScript.fpc);
-                }
-//                stage.initShopMenu();
+//                if (GameScreenScript.fpc.vanities.isEmpty()) {
+//                    VanityComponent vc = new VanityComponent();
+//                    vc.apply(GameScreenScript.fpc);
+//                } else {
+//                    GameScreenScript.fpc.vanities.get(0).disable(GameScreenScript.fpc);
+//                }
+                stage.initShopMenu();
             }
 
             @Override

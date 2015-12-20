@@ -23,8 +23,7 @@ public class SaveMngr {
         gameStats.totalScore = fc.totalScore;
 
         for (VanityComponent vc : fc.vanities){
-            VanityStats vs = new VanityStats();
-            vs.assetsToChange = vc.assetsToChange;
+            VanityStats vs = new VanityStats(vc);
             gameStats.vanities.add(vs);
         }
         Json json = new Json();
@@ -69,7 +68,75 @@ public class SaveMngr {
         public List<VanityStats> vanities = new ArrayList<>();
     }
 
-    private static class VanityStats {
+
+    public static class VanityStats {
         public Map<String, String> assetsToChange = new HashMap<>();
+
+        public String icon;
+        public String name;
+        public int cost;
+        public String description;
+        public boolean bought = true;
+        public boolean available = true;
+        public boolean enabled;
+        public boolean floatingText;
+        public int bugsSpawnAmount;
+        public int attackSpeed;
+        public int cocoonChance;
+        public int dandelionChance;
+        public int angeredBeesDuration;
+
+        public VanityStats() {
+        }
+
+        public VanityStats(VanityComponent vc) {
+            this.name = vc.name;
+            this.cost = vc.cost;
+            this.description = vc.description;
+            this.bought = vc.bought;
+            this.available = vc.available;
+            this.enabled = vc.enabled;
+            this.floatingText = vc.floatingText;
+            this.bugsSpawnAmount = vc.bugsSpawnAmount;
+            this.attackSpeed = vc.attackSpeed;
+            this.cocoonChance = vc.cocoonChance;
+            this.dandelionChance = vc.dandelionChance;
+            this.angeredBeesDuration = vc.angeredBeesDuration;
+        }
+    }
+    public static void generateVanityJSON() {
+        VanityStats vanity1 = new VanityStats();
+        VanityStats vanity2 = new VanityStats();
+
+        vanity1.attackSpeed = 5;
+        vanity1.icon = "btn_attack_van";
+
+        vanity2.icon = "btn_deer_van";
+        vanity2.assetsToChange.put("head_top", "head_top_deer");
+
+        List<VanityStats> vanityStatses = new ArrayList<>();
+
+        vanityStatses.add(vanity1);
+        vanityStatses.add(vanity2);
+
+        Json jsonVanityObj = new Json();
+
+        writeFile("vanity.params", jsonVanityObj.toJson(vanityStatses));
+    }
+
+    public static List<VanityComponent> getAllVanity() {
+        String saved = readFile("vanity.params");
+        List<VanityComponent> vanComps = new ArrayList<>();
+
+        if (!"".equals(saved)) {
+            Json json = new Json();
+            List<VanityStats> vinitys = json.fromJson(List.class, saved);
+
+            for (VanityStats vs : vinitys){
+                VanityComponent vc = new VanityComponent(vs);
+                vanComps.add(vc);
+            }
+        }
+        return vanComps;
     }
 }

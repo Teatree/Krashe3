@@ -6,9 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.GlobalConstants;
+import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.SceneLoader;
+import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import java.util.List;
 
 import static com.mygdx.game.utils.SoundMgr.*;
 import static com.mygdx.game.utils.BackgroundMusicMgr.*;
@@ -111,6 +116,5 @@ public class GameStage extends Stage{
             }
         }
     }
-
 
 }
