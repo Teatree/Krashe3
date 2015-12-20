@@ -110,6 +110,7 @@ public class SaveMngr {
 
         vanity1.attackSpeed = 5;
         vanity1.icon = "btn_attack_van";
+        vanity1.assetsToChange.put("head_top", "head_top_default");
 
         vanity2.icon = "btn_deer_van";
         vanity2.assetsToChange.put("head_top", "head_top_deer");

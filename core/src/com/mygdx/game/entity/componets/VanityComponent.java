@@ -61,8 +61,6 @@ public class VanityComponent implements Component {
             this.enabled = true;
 
             for (Map.Entry entry : assetsToChange.entrySet()) {
-                FileHandle fromDefault = Gdx.files.internal(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX);
-                fromDefault.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + DEFAULT + TYPE_SUFFIX));
                 FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
                 newAsset.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
 

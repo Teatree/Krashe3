@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class SoundMgr {
 
     public static SoundMgr soundMgr;
+    public static boolean soundOn = false;
 
     public HashMap<String, Sound> fx = new HashMap<String, Sound>();
 
@@ -29,7 +30,9 @@ public class SoundMgr {
     }
 
     public void play(String name) {
-        fx.get(name).play();
+        if (soundOn) {
+            fx.get(name).play();
+        }
     }
 
     public void play(String name, float volume) {

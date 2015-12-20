@@ -18,7 +18,6 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponen
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
-import static com.mygdx.game.entity.componets.BugComponent.State.IDLE;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -120,8 +119,8 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state == BugComponent.State.IDLE) {
-            bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
             setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
+            bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
                 setAnimation("Preparing", Animation.PlayMode.LOOP, sasc, sac);

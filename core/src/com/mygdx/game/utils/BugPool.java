@@ -105,7 +105,7 @@ public class BugPool {
 
     public void release(Entity bug){
         BugComponent bc = mapper.get(bug);
-//        bc.velocity = 0;
+        bc.velocity = 0;
 
         TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
         tc.x = -300;
