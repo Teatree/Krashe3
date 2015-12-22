@@ -41,10 +41,15 @@ public class Overlap2dRenderer extends IteratingSystem {
 	private boolean isPhysicsOn = true;
 	
 	private float accumulator = 0;
-	//private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	
 	public Batch batch;
 	public ShapeRenderer sr;
+
+	public float dx;
+	public float dy;
+	public float dw;
+	public float dh;
 
 	public Overlap2dRenderer(Batch batch) {
 		super(Family.all(ViewPortComponent.class).get());
@@ -65,8 +70,11 @@ public class Overlap2dRenderer extends IteratingSystem {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawRecursively(entity);
+		sr.begin(ShapeRenderer.ShapeType.Line);
+		sr.rect(dx,dy,dw,dh);
+		sr.end();
 		batch.end();
-		
+
 		//TODO kinda not cool (this should be done in separate lights renderer maybe?
 		if(rayHandler != null) {
 			rayHandler.setCulling(false);
@@ -100,8 +108,9 @@ public class Overlap2dRenderer extends IteratingSystem {
 		
 		//currentComposite = rootEntity;
 		CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
-		
-		
+
+
+
 		if (curCompositeTransformComponent.transform){
 			computeTransform(rootEntity);
 			applyTransform(rootEntity, batch);
@@ -260,5 +269,16 @@ public class Overlap2dRenderer extends IteratingSystem {
     public Batch getBatch() {
         return batch;
     }
+
+	public void drawDebug(float x, float y, float width, float height) {
+		dx = x;
+		dy = y;
+		dw = width;
+		dh = height;
+	}
+
+	public Box2DDebugRenderer getbox2DDebugRenderer() {
+		return debugRenderer;
+	}
 }
 

@@ -40,7 +40,8 @@ public class CameraShaker {
             current_time += delta;
         } else {
             // When the shaking is over move the camera back to the center
-//      GameStage.viewport.getCamera().position.x = Gdx.graphics.getWidth()/2;
+//      GameStage.sceneLoader.getBatch().begin();
+//     GameStage.sceneLoader.
 //      GameStage.viewport.getCamera().position.y = Gdx.graphics.getHeight()/2 + 2;
 //            blinkCounter = 0;
             ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer("blink").isVisible = false;

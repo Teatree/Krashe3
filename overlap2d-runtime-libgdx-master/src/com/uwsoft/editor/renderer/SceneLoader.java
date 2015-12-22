@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
@@ -354,4 +356,12 @@ public class SceneLoader {
     public Batch getBatch() {
         return renderer.getBatch();
     }
+
+	public void drawDebug(float x, float y, float width, float height){
+		renderer.drawDebug(x,y,width,height);
+	}
+
+	public Box2DDebugRenderer getBox2DDebugRenderer() {
+		return renderer.getbox2DDebugRenderer();
+	}
 }

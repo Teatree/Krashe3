@@ -5,17 +5,18 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+import com.uwsoft.editor.renderer.utils.LibGdxDrawer;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
@@ -28,7 +29,7 @@ public class FlowerSystem extends IteratingSystem {
     public static final int BITE_ANIMATION_TIME = 50;
     private ComponentMapper<FlowerComponent> mapper = ComponentMapper.getFor(FlowerComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-    private ShapeRenderer sr;
+//    private ShapeRenderer sr = new ShapeRenderer();
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -54,11 +55,13 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void updateRect(FlowerPublicComponent fcc, TransformComponent tc, DimensionsComponent dc) {
-        fcc.boundsRect.x = (int) tc.x;
-        fcc.boundsRect.y = (int) tc.y + 105 * tc.scaleY;
+        fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
+        fcc.boundsRect.y = (int) tc.y + 50 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
-//        System.out.println(fpc.boundsRect.x + " " + fpc.boundsRect.y + " " + fpc.boundsRect.width + " " + fpc.boundsRect.height);
+
+        GameStage.sceneLoader.drawDebug(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
+////        System.out.println(fpc.boundsRect.x + " " + fpc.boundsRect.y + " " + fpc.boundsRect.width + " " + fpc.boundsRect.height);
     }
 
 //    public void addMovementActionUp() {
