@@ -37,6 +37,7 @@ public class VanityComponent implements Component {
     public VanityComponent() {
 
     }
+
     public VanityComponent(SaveMngr.VanityStats vc) {
         this.icon = vc.icon;
         this.name = vc.name;

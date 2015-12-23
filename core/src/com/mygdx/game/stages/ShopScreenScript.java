@@ -6,6 +6,7 @@ import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.List;
@@ -29,14 +30,15 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity menuBtn = shopItem.getChild("btn_back").getEntity();
+        Entity backBtn = shopItem.getChild("btn_back").getEntity();
+
+
+//        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+//        final Entity playBtn = shopItem.getChild("btn_play").getEntity();
 
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        final Entity playBtn = shopItem.getChild("btn_play").getEntity();
-
-
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        final Entity btnShop1 = shopItem.getChild("btn_shop_item_1").getEntity();
 //        BugSystem bugSystem = new BugSystem();
 
 //        stage.sceneLoader.getEngine().addSystem(bugSystem);
@@ -69,8 +71,14 @@ public class ShopScreenScript implements IScript {
 
         getAllVanities2();
 
-        final LayerMapComponent lc = menuBtn.getComponent(LayerMapComponent.class);
-        menuBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+
+
+        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+        lc.getLayer("normal").isVisible = false;
+        lc.getLayer("Default").isVisible = true;
+        lc.getLayer("pressed").isVisible = false;
+
+        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer("normal").isVisible = false;
@@ -86,9 +94,45 @@ public class ShopScreenScript implements IScript {
                 lc.getLayer("pressed").isVisible = true;
 
                 stage.initMenu();
-                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
-                System.out.println(vanityComponentList.get(1).icon);
-                vanityComponentList.get(1).apply(GameScreenScript.fpc);
+//                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
+//                System.out.println(vanityComponentList.get(1).icon);
+//                vanityComponentList.get(1).apply(GameScreenScript.fpc);
+            }
+
+            @Override
+            public void clicked() {
+
+            }
+        });
+
+
+        final LayerMapComponent lc2 = ComponentRetriever.get(btnShop1, LayerMapComponent.class);
+        lc2.getLayer("LockedN").isVisible = false;
+        lc2.getLayer("LockedP").isVisible = false;
+        lc2.getLayer("Default").isVisible = false;
+        lc2.getLayer("UnlockedN").isVisible = false;
+        lc2.getLayer("UnlockedP").isVisible = false;
+
+        btnShop1.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc2.getLayer("LockedN").isVisible = false;
+                lc2.getLayer("LockedP").isVisible = false;
+                lc2.getLayer("Default").isVisible = false;
+                lc2.getLayer("UnlockedN").isVisible = false;
+                lc2.getLayer("UnlockedP").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+
+                lc2.getLayer("LockedN").isVisible = true;
+                lc2.getLayer("LockedP").isVisible = false;
+                lc2.getLayer("Default").isVisible = false;
+                lc2.getLayer("UnlockedN").isVisible = false;
+                lc2.getLayer("UnlockedP").isVisible = false;
+
+                System.out.println("shop Item 1 down");
             }
 
             @Override
