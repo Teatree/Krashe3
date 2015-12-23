@@ -357,11 +357,8 @@ public class SceneLoader {
         return renderer.getBatch();
     }
 
-	public void drawDebug(float x, float y, float width, float height){
-		renderer.drawDebug(x,y,width,height);
+	public void drawDebugRect(float x, float y, float width, float height){
+		renderer.drawDebugRect(x,y,width,height);
 	}
 
-	public Box2DDebugRenderer getBox2DDebugRenderer() {
-		return renderer.getbox2DDebugRenderer();
-	}
 }

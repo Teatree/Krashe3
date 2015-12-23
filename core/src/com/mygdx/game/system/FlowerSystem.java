@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.stages.GameScreenScript;
@@ -14,9 +12,7 @@ import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
-import com.uwsoft.editor.renderer.utils.LibGdxDrawer;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
@@ -29,7 +25,6 @@ public class FlowerSystem extends IteratingSystem {
     public static final int BITE_ANIMATION_TIME = 50;
     private ComponentMapper<FlowerComponent> mapper = ComponentMapper.getFor(FlowerComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-//    private ShapeRenderer sr = new ShapeRenderer();
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -39,7 +34,6 @@ public class FlowerSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-//        LayerMapComponent layerComponent = ComponentRetriever.get(entity, LayerMapComponent.class);
         SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
         spriterComponent.scale = 0.6f;
         FlowerComponent flowerComponent = mapper.get(entity);
@@ -56,34 +50,18 @@ public class FlowerSystem extends IteratingSystem {
 
     public void updateRect(FlowerPublicComponent fcc, TransformComponent tc, DimensionsComponent dc) {
         fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
-        fcc.boundsRect.y = (int) tc.y + 50 * tc.scaleY;
+        fcc.boundsRect.y = (int) tc.y + 95 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
 
-        GameStage.sceneLoader.drawDebug(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
-////        System.out.println(fpc.boundsRect.x + " " + fpc.boundsRect.y + " " + fpc.boundsRect.width + " " + fpc.boundsRect.height);
+        GameStage.sceneLoader.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
     }
-
-//    public void addMovementActionUp() {
-//        transformComponent.addAction(
-//                Actions.sequence(
-//                        Actions.moveBy(0, 20)));
-//    }
-//
-//    public void addMovementActionDown() {
-//        item.addAction(
-//                Actions.sequence(
-//                        Actions.moveBy(0, -20)));
-//    }
 
     public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             if (fc.state == FlowerComponent.State.IDLE_BITE) {
                 setBiteIdleAnimation(sc);
             }
-//        if (fc.state == FlowerComponent.State.ATTACK_BITE) {
-//            setBiteAttackAnimation(lc);
-//        }
 
             if (fc.state == FlowerComponent.State.IDLE) {
                 if (fcc.isCollision) {

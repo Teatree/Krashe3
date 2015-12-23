@@ -270,15 +270,11 @@ public class Overlap2dRenderer extends IteratingSystem {
         return batch;
     }
 
-	public void drawDebug(float x, float y, float width, float height) {
+	public void drawDebugRect(float x, float y, float width, float height) {
 		dx = x;
 		dy = y;
 		dw = width;
 		dh = height;
-	}
-
-	public Box2DDebugRenderer getbox2DDebugRenderer() {
-		return debugRenderer;
 	}
 }
 

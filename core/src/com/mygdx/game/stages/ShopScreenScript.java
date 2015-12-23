@@ -3,6 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -28,7 +29,7 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity menuBtn = shopItem.getChild("btn_shop").getEntity();
+        Entity menuBtn = shopItem.getChild("btn_back").getEntity();
 
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
@@ -68,14 +69,21 @@ public class ShopScreenScript implements IScript {
 
         getAllVanities2();
 
+        final LayerMapComponent lc = menuBtn.getComponent(LayerMapComponent.class);
         menuBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("Default").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
             }
 
             @Override
             public void touchDown() {
+
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("Default").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
 
                 stage.initMenu();
                 List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
