@@ -32,14 +32,8 @@ public class ShopScreenScript implements IScript {
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         Entity backBtn = shopItem.getChild("btn_back").getEntity();
 
-
 //        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 //        final Entity playBtn = shopItem.getChild("btn_play").getEntity();
-
-
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        final Entity btnShop1 = shopItem.getChild("btn_shop_item_1").getEntity();
-//        BugSystem bugSystem = new BugSystem();
 
 //        stage.sceneLoader.getEngine().addSystem(bugSystem);
 //        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
@@ -71,19 +65,14 @@ public class ShopScreenScript implements IScript {
 
         getAllVanities2();
 
-
-
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        lc.getLayer("normal").isVisible = false;
-        lc.getLayer("Default").isVisible = true;
-        lc.getLayer("pressed").isVisible = false;
 
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("normal").isVisible = true;
                 lc.getLayer("Default").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
             }
 
             @Override
@@ -93,7 +82,6 @@ public class ShopScreenScript implements IScript {
                 lc.getLayer("Default").isVisible = false;
                 lc.getLayer("pressed").isVisible = true;
 
-                stage.initMenu();
 //                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
 //                System.out.println(vanityComponentList.get(1).icon);
 //                vanityComponentList.get(1).apply(GameScreenScript.fpc);
@@ -101,68 +89,55 @@ public class ShopScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                stage.initMenu();
 
             }
         });
 
-
-        final LayerMapComponent lc2 = ComponentRetriever.get(btnShop1, LayerMapComponent.class);
-        lc2.getLayer("LockedN").isVisible = false;
-        lc2.getLayer("LockedP").isVisible = false;
-        lc2.getLayer("Default").isVisible = false;
-        lc2.getLayer("UnlockedN").isVisible = false;
-        lc2.getLayer("UnlockedP").isVisible = false;
-
-        btnShop1.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc2.getLayer("LockedN").isVisible = false;
-                lc2.getLayer("LockedP").isVisible = false;
-                lc2.getLayer("Default").isVisible = false;
-                lc2.getLayer("UnlockedN").isVisible = false;
-                lc2.getLayer("UnlockedP").isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-
-                lc2.getLayer("LockedN").isVisible = true;
-                lc2.getLayer("LockedP").isVisible = false;
-                lc2.getLayer("Default").isVisible = false;
-                lc2.getLayer("UnlockedN").isVisible = false;
-                lc2.getLayer("UnlockedP").isVisible = false;
-
-                System.out.println("shop Item 1 down");
-            }
-
-            @Override
-            public void clicked() {
-
-            }
-        });
 
     }
 
     private void getAllVanities2() {
         List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
 
+
+
         for (final VanityComponent vc : vanityComponentList) {
-            shopItem.getChild(vc.icon).getEntity().getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+
+            Entity entity = shopItem.getChild(vc.icon).getEntity();
+
+            final LayerMapComponent lc2 = ComponentRetriever.get(entity, LayerMapComponent.class);
+            lc2.getLayer("LockedN").isVisible = false;
+            lc2.getLayer("LockedP").isVisible = false;
+            lc2.getLayer("Default").isVisible = true;
+            lc2.getLayer("UnlockedN").isVisible = false;
+            lc2.getLayer("UnlockedP").isVisible = false;
+
+            entity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
-
+                    lc2.getLayer("LockedN").isVisible = false;
+                    lc2.getLayer("LockedP").isVisible = false;
+                    lc2.getLayer("Default").isVisible = true;
+                    lc2.getLayer("UnlockedN").isVisible = false;
+                    lc2.getLayer("UnlockedP").isVisible = false;
                 }
 
                 @Override
                 public void touchDown() {
 
-                    stage.initMenu();
-                    System.out.println(vc.icon);
-                    vc.apply(GameScreenScript.fpc);
+                    lc2.getLayer("LockedN").isVisible = false;
+                    lc2.getLayer("LockedP").isVisible = false;
+                    lc2.getLayer("Default").isVisible = false;
+                    lc2.getLayer("UnlockedN").isVisible = false;
+                    lc2.getLayer("UnlockedP").isVisible = false;
+
                 }
 
                 @Override
                 public void clicked() {
+                    System.out.println(vc.icon);
+                    vc.apply(GameScreenScript.fpc);
 
                 }
             });
