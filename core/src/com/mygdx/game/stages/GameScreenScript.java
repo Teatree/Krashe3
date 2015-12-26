@@ -104,6 +104,7 @@ public class GameScreenScript implements IScript {
         GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
         GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
         GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
+        GameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
     }
 
     private void initPauseBtn() {

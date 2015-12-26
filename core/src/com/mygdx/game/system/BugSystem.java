@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
@@ -16,8 +17,10 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -62,6 +65,14 @@ public class BugSystem extends IteratingSystem {
 
                     bc.state = DEAD;
                     fcc.score += bc.points;
+
+                    ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                    Entity bugJuiceBubble = root.getChild("bug_juice_bubble").getEntity();
+
+                    TransformComponent tc = bugJuiceBubble.getComponent(TransformComponent.class);
+                    bugJuiceBubble.add(new BugJuiceBubbleComponent());
+                    tc.x = bc.boundsRect.getX();
+                    tc.y = bc.boundsRect.getY();
 
                     //temp
                     fcc.totalScore += bc.points;
