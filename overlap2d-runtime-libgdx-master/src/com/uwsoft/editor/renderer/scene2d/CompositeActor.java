@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
+import com.uwsoft.editor.renderer.scripts.IActorScript;
 import com.uwsoft.editor.renderer.utils.CustomVariables;
 
 import java.util.ArrayList;
@@ -22,12 +23,13 @@ import java.util.HashMap;
  */
 public class CompositeActor extends Group {
 
-    private IResourceRetriever ir;
+    protected IResourceRetriever ir;
 
     private float pixelsPerWU;
+    private float resMultiplier;
 
     protected CompositeItemVO vo;
-
+    private ArrayList<IActorScript> scripts = new ArrayList<IActorScript>(3);
     private HashMap<Integer, Actor> indexes = new HashMap<Integer, Actor>();
     private HashMap<String, LayerItemVO> layerMap = new HashMap<String, LayerItemVO>();
 
@@ -44,6 +46,10 @@ public class CompositeActor extends Group {
         this.vo = vo;
 
         pixelsPerWU = ir.getProjectVO().pixelToWorld;
+
+        ResolutionEntryVO resolutionEntryVO = ir.getLoadedResolution();
+        resMultiplier = resolutionEntryVO.getMultiplier(ir.getProjectVO().originalResolution);
+
         makeLayerMap(vo);
         build(vo, itemHandler, isRoot);
     }
@@ -55,7 +61,7 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void build(CompositeItemVO vo, BuiltItemHandler itemHandler, boolean isRoot) {
+    protected void build(CompositeItemVO vo, BuiltItemHandler itemHandler, boolean isRoot) {
         buildImages(vo.composite.sImages, itemHandler);
         build9PatchImages(vo.composite.sImage9patchs, itemHandler);
         buildLabels(vo.composite.sLabels, itemHandler);
@@ -69,9 +75,21 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void buildComposites(ArrayList<CompositeItemVO> composites, BuiltItemHandler itemHandler) {
+    protected void buildComposites(ArrayList<CompositeItemVO> composites, BuiltItemHandler itemHandler) {
+
         for(int i = 0; i < composites.size(); i++) {
-            CompositeActor actor = new CompositeActor(composites.get(i), ir, itemHandler, false);
+            String className   =   getClassName(composites.get(i).customVars);
+            CompositeActor actor;
+            if(className!=null){
+                try {
+                    Class<?> c = Class.forName(className);
+                    actor   =   (CompositeActor) c.getConstructors()[0].newInstance(composites.get(i), ir, itemHandler);
+                }catch (Exception ex){
+                    actor  = new CompositeActor(composites.get(i), ir, itemHandler, false);
+                }
+            }else {
+                actor  = new CompositeActor(composites.get(i), ir, itemHandler, false);
+            }
             processMain(actor, composites.get(i));
             addActor(actor);
 
@@ -79,7 +97,22 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void buildImages(ArrayList<SimpleImageVO> images, BuiltItemHandler itemHandler) {
+    private String getClassName(String customVars) {
+        CustomVariables cv = new CustomVariables();
+        cv.loadFromString(customVars);
+        String className    =   cv.getStringVariable("className");
+        if(className!=null && className.equals("")){
+            className   =   null;
+        }
+        return className;
+    }
+
+    public void addScript(IActorScript iScript) {
+        scripts.add(iScript);
+        iScript.init(this);
+    }
+
+    protected void buildImages(ArrayList<SimpleImageVO> images, BuiltItemHandler itemHandler) {
         for(int i = 0; i < images.size(); i++) {
             Image image = new Image(ir.getTextureRegion(images.get(i).imageName));
             processMain(image, images.get(i));
@@ -89,13 +122,13 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void build9PatchImages(ArrayList<Image9patchVO> patches, BuiltItemHandler itemHandler) {
+    protected void build9PatchImages(ArrayList<Image9patchVO> patches, BuiltItemHandler itemHandler) {
         for(int i = 0; i < patches.size(); i++) {
             TextureAtlas.AtlasRegion region = (TextureAtlas.AtlasRegion) ir.getTextureRegion(patches.get(i).imageName);
             NinePatch ninePatch = new NinePatch(region, region.splits[0], region.splits[1], region.splits[2], region.splits[3]);
             Image image = new Image(ninePatch);
-            image.setWidth(patches.get(i).width*pixelsPerWU);
-            image.setHeight(patches.get(i).height * pixelsPerWU);
+            image.setWidth(patches.get(i).width*pixelsPerWU/resMultiplier);
+            image.setHeight(patches.get(i).height * pixelsPerWU/resMultiplier);
             processMain(image, patches.get(i));
             addActor(image);
 
@@ -103,13 +136,13 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void buildLabels(ArrayList<LabelVO> labels, BuiltItemHandler itemHandler) {
+    protected void buildLabels(ArrayList<LabelVO> labels, BuiltItemHandler itemHandler) {
         for(int i = 0; i < labels.size(); i++) {
             Label.LabelStyle style = new Label.LabelStyle(ir.getBitmapFont(labels.get(i).style, labels.get(i).size), Color.WHITE);
             Label label = new Label(labels.get(i).text, style);
             label.setAlignment(labels.get(i).align);
-            label.setWidth(labels.get(i).width * pixelsPerWU);
-            label.setHeight(labels.get(i).height * pixelsPerWU);
+            label.setWidth(labels.get(i).width * pixelsPerWU / resMultiplier);
+            label.setHeight(labels.get(i).height * pixelsPerWU / resMultiplier);
             processMain(label, labels.get(i));
             addActor(label);
 
@@ -117,13 +150,13 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void processMain(Actor actor, MainItemVO vo) {
+    protected void processMain(Actor actor, MainItemVO vo) {
 
         buildCoreData(actor, vo);
 
         //actor properties
-        actor.setPosition(vo.x * pixelsPerWU, vo.y * pixelsPerWU);
-        actor.setOrigin(vo.originX * pixelsPerWU, vo.originY * pixelsPerWU);
+        actor.setPosition(vo.x * pixelsPerWU/resMultiplier, vo.y * pixelsPerWU/resMultiplier);
+        actor.setOrigin(vo.originX * pixelsPerWU/resMultiplier, vo.originY * pixelsPerWU/resMultiplier);
         actor.setScale(vo.scaleX, vo.scaleY);
         actor.setRotation(vo.rotation);
         actor.setColor(new Color(vo.tint[0], vo.tint[1], vo.tint[2], vo.tint[3]));
@@ -137,7 +170,7 @@ public class CompositeActor extends Group {
         }
     }
 
-    private void buildCoreData(Actor actor, MainItemVO vo){
+    protected void buildCoreData(Actor actor, MainItemVO vo){
 
         //custom variables
         CustomVariables cv = null;
@@ -157,7 +190,7 @@ public class CompositeActor extends Group {
     }
 
 
-    private void processZIndexes() {
+    protected void processZIndexes() {
         Object[] indexArray = indexes.keySet().toArray();
         Arrays.sort(indexArray);
 
@@ -223,8 +256,8 @@ public class CompositeActor extends Group {
 
         }
 
-        setWidth(upperX - 0);
-        setHeight(upperY - 0);
+        setWidth(upperX);
+        setHeight(upperY);
     }
 
     public void setLayerVisibility(String layerName, boolean isVisible) {
@@ -279,6 +312,10 @@ public class CompositeActor extends Group {
         }
         return items;
     }
+    
+    public ArrayList<IActorScript> getScripts() {
+        return scripts;
+    }
 
     public CompositeItemVO getVo() {
         return vo;
@@ -306,5 +343,13 @@ public class CompositeActor extends Group {
                 }
             }
         };
+    }
+
+    @Override
+    public void act(float delta) {
+        for (int i = 0; i < scripts.size(); i++) {
+            scripts.get(i).act(delta);
+        }
+        super.act(delta);
     }
 }

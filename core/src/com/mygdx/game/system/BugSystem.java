@@ -11,11 +11,13 @@ import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -38,7 +40,8 @@ public class BugSystem extends IteratingSystem {
     boolean canPlayAnimation = true;
 
     public BugSystem(){
-         super(Family.all(BugComponent.class).get());
+        super(Family.all(BugComponent.class).get());
+
     }
 
     @Override
@@ -66,18 +69,10 @@ public class BugSystem extends IteratingSystem {
                     bc.state = DEAD;
                     fcc.score += bc.points;
 
-                    ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-                    Entity bugJuiceBubble = root.getChild("bug_juice_bubble").getEntity();
-
-                    TransformComponent tc = bugJuiceBubble.getComponent(TransformComponent.class);
-                    bugJuiceBubble.add(new BugJuiceBubbleComponent());
-                    tc.x = bc.boundsRect.getX();
-                    tc.y = bc.boundsRect.getY();
-
                     //temp
                     fcc.totalScore += bc.points;
 
-                    scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+//                    scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
 
                     if (bc.type.equals(BugType.QUEENBEE)) {
                         GameScreenScript.angerBees();
@@ -85,6 +80,8 @@ public class BugSystem extends IteratingSystem {
 //                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
                     fcc.isCollision = true;
+
+                    spawnBugJuiceBubble(bc);
                 }
                 if (isOutOfBounds(bc)) {
 //                    resetCharger(sac, sasc, bc);
@@ -94,6 +91,21 @@ public class BugSystem extends IteratingSystem {
         } else {
             sasc.paused = true;
         }
+    }
+
+    private void spawnBugJuiceBubble(BugComponent bc) {
+        CompositeItemVO bugJuiceBubbleC = GameStage.sceneLoader.loadVoFromLibrary("bug_juice_bubble_lib");
+
+        Entity bugJuiceBubbleE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), bugJuiceBubbleC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
+
+        TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
+        bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
+        tc.x = bc.boundsRect.getX();
+        tc.y = bc.boundsRect.getY();
+
+        bugJuiceBubbleE.add(fpc);
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){

@@ -25,9 +25,9 @@ public class CompositeVO {
     public ArrayList<SpineVO> sSpineAnimations = new ArrayList<SpineVO>(1);
     public ArrayList<SpriteAnimationVO> sSpriteAnimations = new ArrayList<SpriteAnimationVO>(1);
     public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<SpriterVO>(1);
+    public ArrayList<ColorPrimitiveVO> sColorPrimitives = new ArrayList<ColorPrimitiveVO>(1);
 
     public ArrayList<LayerItemVO> layers = new ArrayList<LayerItemVO>();
-    public ArrayList<LayerItemVO> inVisibleLayers = new ArrayList<LayerItemVO>();
 
     public CompositeVO() {
 
@@ -76,25 +76,14 @@ public class CompositeVO {
         for (int i = 0; i < vo.sSpriteAnimations.size(); i++) {
             sSpriteAnimations.add(new SpriteAnimationVO(vo.sSpriteAnimations.get(i)));
         }
-        
+
         for (int i = 0; i < vo.sSpriterAnimations.size(); i++) {
         	sSpriterAnimations.add(new SpriterVO(vo.sSpriterAnimations.get(i)));
         }
 
-//        for (int j = 0; j < vo.inVisibleLayers.size(); j++){
-//            if (vo.inVisibleLayers.get(j).isVisible) {
-//                layers.add(new LayerItemVO(vo.layers.get(j)));
-//            }
-//        }
-//
-//        inVisibleLayers.clear();
-//        for (int i = 0; i < vo.layers.size(); i++) {
-//            if (vo.layers.get(i).isVisible) {
-//                layers.add(new LayerItemVO(vo.layers.get(i)));
-//            }else{
-//                inVisibleLayers.add(new LayerItemVO(vo.layers.get(i)));
-//            }
-//        }
+        for (int i = 0; i < vo.sColorPrimitives.size(); i++) {
+            sColorPrimitives.add(new ColorPrimitiveVO(vo.sColorPrimitives.get(i)));
+        }
 
         layers.clear();
         for (int i = 0; i < vo.layers.size(); i++) {
@@ -139,6 +128,9 @@ public class CompositeVO {
         if (className.equals("SpriteAnimationVO")) {
             sSpriteAnimations.add((SpriteAnimationVO) vo);
         }
+        if(className.equals("ColorPrimitiveVO")) {
+            sColorPrimitives.add((ColorPrimitiveVO) vo);
+        }
     }
 
     public void removeItem(MainItemVO vo) {
@@ -176,6 +168,9 @@ public class CompositeVO {
         if (className.equals("SpriterVO")) {
         	sSpriterAnimations.remove((SpriterVO) vo);
         }
+        if(className.equals("ColorPrimitiveVO")) {
+            sColorPrimitives.remove((ColorPrimitiveVO) vo);
+        }
     }
 
     public void clear() {
@@ -189,6 +184,7 @@ public class CompositeVO {
         sSpineAnimations.clear();
         sSpriteAnimations.clear();
         sSpriterAnimations.clear();
+        sColorPrimitives.clear();
     }
 
     public boolean isEmpty() {
@@ -203,7 +199,8 @@ public class CompositeVO {
                 sSpriterAnimations.size() == 0 &&
                 sSpineAnimations.size() == 0 &&
                 sSelectBoxes.size() == 0 &&
-                sTextBox.size() == 0;
+                sTextBox.size() == 0 &&
+                sColorPrimitives.size() == 0;
     }
 
     public String[] getRecursiveParticleEffectsList() {
@@ -331,6 +328,9 @@ public class CompositeVO {
         for(MainItemVO vo: compositeVo.sTextBox) {
             itemsList.add(vo);
         }
+        for(MainItemVO vo: compositeVo.sColorPrimitives) {
+            itemsList.add(vo);
+        }
         for(CompositeItemVO vo: compositeVo.sComposites) {
             itemsList = getAllItemsRecursive(itemsList,vo.composite);
             itemsList.add(vo);
@@ -391,6 +391,11 @@ public class CompositeVO {
                 LightVO vo = new LightVO();
                 vo.loadFromEntity(entity);
                 sLights.add(vo);
+            }
+            if(entityType == EntityFactory.COLOR_PRIMITIVE) {
+                ColorPrimitiveVO vo = new ColorPrimitiveVO();
+                vo.loadFromEntity(entity);
+                sColorPrimitives.add(vo);
             }
         }
 

@@ -1,12 +1,7 @@
 package com.uwsoft.editor.renderer.physics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 
 /**
@@ -38,22 +33,32 @@ public class PhysicsBodyLoader {
         return getInstance().scale;
     }
 
-    public Body createBody(World world, PhysicsBodyComponent pysicsComponent, Vector2[][] minPolygonData, Vector2 mulVec) {
+    public Body createBody(World world, PhysicsBodyComponent physicsComponent, Vector2[][] minPolygonData, Vector2 mulVec) {
 
         FixtureDef fixtureDef = new FixtureDef();
 
-        if(pysicsComponent != null) {
-            fixtureDef.density = pysicsComponent.density;
-            fixtureDef.friction = pysicsComponent.friction;
-            fixtureDef.restitution = pysicsComponent.restitution;
+        if(physicsComponent != null) {
+            fixtureDef.density = physicsComponent.density;
+            fixtureDef.friction = physicsComponent.friction;
+            fixtureDef.restitution = physicsComponent.restitution;
+
+            fixtureDef.isSensor = physicsComponent.sensor;
+
+            fixtureDef.filter.maskBits = physicsComponent.filter.maskBits;
+            fixtureDef.filter.groupIndex = physicsComponent.filter.groupIndex;
+            fixtureDef.filter.categoryBits = physicsComponent.filter.categoryBits;
         }
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(0, 0);
 
-        if(pysicsComponent.bodyType == 0) {
+        bodyDef.awake = physicsComponent.awake;
+        bodyDef.allowSleep = physicsComponent.allowSleep;
+        bodyDef.bullet = physicsComponent.bullet;
+
+        if(physicsComponent.bodyType == 0) {
             bodyDef.type = BodyDef.BodyType.StaticBody;
-        } else if (pysicsComponent.bodyType == 1){
+        } else if (physicsComponent.bodyType == 1){
             bodyDef.type = BodyDef.BodyType.KinematicBody;
         } else {
             bodyDef.type = BodyDef.BodyType.DynamicBody;
