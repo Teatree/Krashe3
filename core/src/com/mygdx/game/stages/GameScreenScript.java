@@ -30,7 +30,7 @@ public class GameScreenScript implements IScript {
 
     public static final String START_MESSAGE = "TAP TO START";
 
-    private ItemWrapper gameItem;
+    private static ItemWrapper gameItem;
     GameStage game;
     public Random random = new Random();
 
@@ -44,6 +44,8 @@ public class GameScreenScript implements IScript {
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
+
+    public static int gameOverCounter = 240;
 
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
@@ -162,6 +164,56 @@ public class GameScreenScript implements IScript {
         });
     }
 
+    public void updateGameOver(){
+        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
+        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+
+        gameOverCounter--;
+        if (gameOverCounter % 48 == 0){
+            gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
+        }
+
+        if (gameOverCounter <= 0){
+            game.initMenu();
+            gameOverCounter = 240;
+            isGameOver = false;
+        }
+    }
+
+    public static void showGameOver() {
+        isGameOver = true;
+
+        final Entity gameOverDialog = gameItem.getChild("game_over_dialog").getEntity();
+        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
+        dialogTc.x = 300;
+        dialogTc.y = 100;
+
+        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
+        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
+
+        Entity watchAdBtn = gameItem.getChild("game_over_dialog").getChild("btn_watch_video").getEntity();
+        watchAdBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                isGameOver = false;
+                dialogTc.x = -1000;
+                gameOverCounter = 240;
+            }
+        });
+
+//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
+        isGameOver = true;
+    }
+
     private void initFlower() {
 //        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
 //        Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
@@ -224,6 +276,13 @@ public class GameScreenScript implements IScript {
             if (cocoonSpawnCounter <= 0) {
                 spawnCocoon();
             }
+        }
+        else{
+
+        }
+
+        if (isGameOver) {
+            updateGameOver();
         }
     }
 

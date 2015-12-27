@@ -86,6 +86,8 @@ public class BugSystem extends IteratingSystem {
                 if (isOutOfBounds(bc)) {
 //                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
+
+                    GameScreenScript.showGameOver();
                 }
             }
         } else {
