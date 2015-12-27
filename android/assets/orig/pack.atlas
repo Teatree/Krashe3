@@ -6,21 +6,237 @@ filter: Linear,Linear
 repeat: none
 SmallBlink
   rotate: false
-  xy: 2, 458
+  xy: 2, 294
   size: 1200, 786
   orig: 1200, 786
   offset: 0, 0
   index: -1
 background
   rotate: false
-  xy: 2, 1246
+  xy: 2, 1082
   size: 1200, 786
   orig: 1200, 786
   offset: 0, 0
   index: -1
+chargerBugAni07
+  rotate: false
+  xy: 1861, 1898
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni08
+  rotate: false
+  xy: 1861, 1750
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni09
+  rotate: false
+  xy: 1843, 1602
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni10
+  rotate: false
+  xy: 1843, 1454
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni11
+  rotate: false
+  xy: 1843, 1306
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni12
+  rotate: false
+  xy: 1843, 1158
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni13
+  rotate: false
+  xy: 1843, 1010
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni14
+  rotate: false
+  xy: 1843, 862
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni15
+  rotate: false
+  xy: 1843, 714
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni16
+  rotate: false
+  xy: 1843, 566
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni17
+  rotate: false
+  xy: 1843, 418
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+dnaamountbackground0
+  rotate: false
+  xy: 2, 2
+  size: 7, 38
+  orig: 7, 38
+  offset: 0, 0
+  index: -1
+dnaamountbackground1
+  rotate: false
+  xy: 1269, 330
+  size: 7, 38
+  orig: 7, 38
+  offset: 0, 0
+  index: -1
+flowerpeducle
+  rotate: false
+  xy: 1204, 318
+  size: 63, 1550
+  orig: 63, 1550
+  offset: 0, 0
+  index: -1
+pot
+  rotate: false
+  xy: 1491, 10
+  size: 62, 58
+  orig: 62, 58
+  offset: 0, 0
+  index: -1
+queenBeeAni01
+  rotate: false
+  xy: 1269, 1570
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni02
+  rotate: false
+  xy: 1269, 1270
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni03
+  rotate: false
+  xy: 1556, 1570
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni04
+  rotate: false
+  xy: 1269, 970
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni05
+  rotate: false
+  xy: 1269, 670
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni05 (1)
+  rotate: false
+  xy: 1556, 1270
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni06
+  rotate: false
+  xy: 1556, 970
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni07
+  rotate: false
+  xy: 1269, 370
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni08
+  rotate: false
+  xy: 1556, 670
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni09
+  rotate: false
+  xy: 1556, 370
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni10
+  rotate: false
+  xy: 1204, 18
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni11
+  rotate: false
+  xy: 1491, 70
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+shopbuildingbot
+  rotate: false
+  xy: 2, 42
+  size: 1200, 250
+  orig: 1200, 250
+  offset: 0, 0
+  index: -1
+shopconveyorbelt
+  rotate: false
+  xy: 2, 1870
+  size: 1857, 174
+  orig: 1857, 174
+  offset: 0, 0
+  index: -1
+shopitem1
+  rotate: false
+  xy: 1778, 72
+  size: 248, 296
+  orig: 248, 296
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
 backnooff
   rotate: false
-  xy: 1881, 124
+  xy: 1207, 742
   size: 121, 120
   split: 26, 24, 24, 30
   orig: 121, 120
@@ -28,278 +244,49 @@ backnooff
   index: -1
 backshadow
   rotate: false
-  xy: 1437, 12
+  xy: 863, 722
   size: 220, 220
   split: 89, 105, 80, 104
   pad: 88, 106, 79, 105
   orig: 220, 220
   offset: 0, 0
   index: -1
-bugjuicebubble
-  rotate: false
-  xy: 1150, 423
-  size: 33, 33
-  orig: 33, 33
-  offset: 0, 0
-  index: -1
 buttonback
   rotate: false
-  xy: 1881, 2
+  xy: 1330, 742
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
   offset: 0, 0
   index: -1
-chargerBugAni07
-  rotate: false
-  xy: 2, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni08
-  rotate: false
-  xy: 184, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni09
-  rotate: false
-  xy: 366, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni10
-  rotate: false
-  xy: 548, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni11
-  rotate: false
-  xy: 730, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni12
-  rotate: false
-  xy: 912, 10
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni13
-  rotate: false
-  xy: 1843, 1134
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni14
-  rotate: false
-  xy: 1843, 986
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni15
-  rotate: false
-  xy: 1843, 838
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni16
-  rotate: false
-  xy: 1843, 690
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni17
-  rotate: false
-  xy: 1843, 542
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni18
-  rotate: false
-  xy: 1843, 394
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-chargerBugAni19
-  rotate: false
-  xy: 1843, 246
-  size: 180, 146
-  orig: 180, 146
-  offset: 0, 0
-  index: -1
-deer
-  rotate: false
-  xy: 1269, 1532
-  size: 390, 500
-  orig: 390, 500
-  offset: 0, 0
-  index: -1
-flowerhead
-  rotate: false
-  xy: 1843, 1282
-  size: 143, 150
-  orig: 143, 150
-  offset: 0, 0
-  index: -1
-flowerpeducle
-  rotate: false
-  xy: 1204, 482
-  size: 63, 1550
-  orig: 63, 1550
-  offset: 0, 0
-  index: -1
-pop-upback
-  rotate: false
-  xy: 1659, 12
-  size: 220, 220
-  split: 89, 103, 111, 101
-  pad: 89, 103, 111, 102
-  orig: 220, 220
-  offset: 0, 0
-  index: -1
-pot
-  rotate: false
-  xy: 1556, 1472
-  size: 62, 58
-  orig: 62, 58
-  offset: 0, 0
-  index: -1
-queenBeeAni01
-  rotate: false
-  xy: 2, 158
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni02
-  rotate: false
-  xy: 1269, 1232
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni03
-  rotate: false
-  xy: 1661, 1734
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni04
-  rotate: false
-  xy: 289, 158
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni05
-  rotate: false
-  xy: 576, 158
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni05 (1)
-  rotate: false
-  xy: 1269, 932
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni06
-  rotate: false
-  xy: 1269, 632
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni07
-  rotate: false
-  xy: 863, 158
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni08
-  rotate: false
-  xy: 1661, 1434
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni09
-  rotate: false
-  xy: 1556, 1134
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni10
-  rotate: false
-  xy: 1556, 834
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni11
-  rotate: false
-  xy: 1556, 534
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni12
-  rotate: false
-  xy: 1269, 332
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni13
-  rotate: false
-  xy: 1556, 234
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-queenBeeAni14
-  rotate: false
-  xy: 1150, 32
-  size: 285, 298
-  orig: 285, 298
-  offset: 0, 0
-  index: -1
-
-pack2.png
-size: 2048,512
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 buttonbackoff
   rotate: false
-  xy: 1150, 328
+  xy: 1453, 742
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
   offset: 0, 0
   index: -1
+buttonbackoff1
+  rotate: false
+  xy: 1576, 742
+  size: 121, 120
+  split: 14, 16, 13, 15
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonbackon1
+  rotate: false
+  xy: 1207, 620
+  size: 121, 120
+  split: 16, 17, 15, 17
+  pad: 16, 16, 15, 17
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
 buttoncameraoff
   rotate: false
-  xy: 184, 28
+  xy: 1330, 620
   size: 121, 120
   split: 23, 18, 17, 29
   orig: 121, 120
@@ -307,7 +294,7 @@ buttoncameraoff
   index: -1
 buttoncameraon
   rotate: false
-  xy: 1150, 206
+  xy: 1453, 620
   size: 121, 120
   split: 23, 17, 17, 29
   orig: 121, 120
@@ -315,7 +302,7 @@ buttoncameraon
   index: -1
 buttonnoAdsoff
   rotate: false
-  xy: 1396, 328
+  xy: 1085, 655
   size: 120, 120
   split: 14, 18, 11, 13
   pad: 11, 13, 16, 14
@@ -324,7 +311,7 @@ buttonnoAdsoff
   index: -1
 buttonnoAdson
   rotate: false
-  xy: 430, 28
+  xy: 1699, 616
   size: 120, 120
   split: 12, 15, 11, 14
   orig: 120, 120
@@ -332,7 +319,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 1273, 328
+  xy: 1576, 620
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -340,7 +327,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 307, 28
+  xy: 863, 600
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -349,7 +336,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 1273, 206
+  xy: 826, 478
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -358,7 +345,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 1396, 206
+  xy: 949, 478
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -366,15 +353,31 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 1518, 328
+  xy: 949, 356
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
   offset: 0, 0
   index: -1
+buttonshopitemunknown
+  rotate: false
+  xy: 826, 356
+  size: 121, 120
+  split: 18, 16, 16, 16
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonshopitemunknownoff
+  rotate: false
+  xy: 1699, 738
+  size: 121, 120
+  split: 14, 15, 15, 17
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
 buttonshopoff
   rotate: false
-  xy: 552, 28
+  xy: 1071, 533
   size: 120, 120
   split: 14, 16, 17, 17
   orig: 120, 120
@@ -382,44 +385,144 @@ buttonshopoff
   index: -1
 buttonshopon
   rotate: false
-  xy: 1518, 206
+  xy: 1071, 411
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120
   offset: 0, 0
   index: -1
-chargerBugAni20
+chargerBugAni18
   rotate: false
-  xy: 2, 2
+  xy: 1207, 864
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
+chargerBugAni19
+  rotate: false
+  xy: 1389, 864
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+chargerBugAni20
+  rotate: false
+  xy: 1571, 864
+  size: 180, 146
+  orig: 180, 146
+  offset: 0, 0
+  index: -1
+dnaamountbackground
+  rotate: false
+  xy: 576, 2
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+flowerhead
+  rotate: false
+  xy: 1753, 860
+  size: 143, 150
+  orig: 143, 150
+  offset: 0, 0
+  index: -1
+itemsantabeard
+  rotate: false
+  xy: 1085, 777
+  size: 120, 165
+  orig: 120, 165
+  offset: 0, 0
+  index: -1
+itemsantabeardoff
+  rotate: false
+  xy: 1898, 845
+  size: 120, 165
+  orig: 120, 165
+  offset: 0, 0
+  index: -1
+itemunknown
+  rotate: false
+  xy: 1193, 498
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+itemunknownoff
+  rotate: false
+  xy: 1315, 498
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+pop-upback
+  rotate: false
+  xy: 576, 124
+  size: 220, 220
+  split: 89, 103, 111, 101
+  pad: 89, 103, 111, 102
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+queenBeeAni12
+  rotate: false
+  xy: 2, 644
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni13
+  rotate: false
+  xy: 2, 344
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
+queenBeeAni14
+  rotate: false
+  xy: 289, 644
+  size: 285, 298
+  orig: 285, 298
+  offset: 0, 0
+  index: -1
 queenBeeAni15
   rotate: false
-  xy: 2, 150
+  xy: 2, 44
   size: 285, 298
   orig: 285, 298
   offset: 0, 0
   index: -1
 queenBeeAni16
   rotate: false
-  xy: 289, 150
+  xy: 289, 344
   size: 285, 298
   orig: 285, 298
   offset: 0, 0
   index: -1
 queenBeeAni17
   rotate: false
-  xy: 576, 150
+  xy: 576, 644
   size: 285, 298
   orig: 285, 298
   offset: 0, 0
   index: -1
 queenBeeAni18
   rotate: false
-  xy: 863, 150
+  xy: 289, 44
   size: 285, 298
   orig: 285, 298
+  offset: 0, 0
+  index: -1
+shopbuildingtop
+  rotate: false
+  xy: 2, 944
+  size: 1200, 66
+  orig: 1200, 66
+  offset: 0, 0
+  index: -1
+shopitem1off
+  rotate: false
+  xy: 576, 346
+  size: 248, 296
+  orig: 248, 296
   offset: 0, 0
   index: -1
