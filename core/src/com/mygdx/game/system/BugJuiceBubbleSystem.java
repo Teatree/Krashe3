@@ -33,10 +33,6 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         FlowerPublicComponent fcc = flowerMapper.get(entity);
         BugJuiceBubbleComponent bjc = mapper.get(entity);
 
-//        if (tc.x <= Gdx.graphics.getWidth() - dc.width || tc.y <= Gdx.graphics.getHeight() - dc.height) {
-//            tc.x++;
-//            tc.y++;
-
         if (!bjc.began) {
             begin(bjc, tc);
             bjc.began = true;

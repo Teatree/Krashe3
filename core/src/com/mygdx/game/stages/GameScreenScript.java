@@ -99,13 +99,13 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-        GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
         GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fpc));
         GameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         GameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
         GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
         GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
         GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
+        GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
         GameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
     }
 
@@ -118,6 +118,7 @@ public class GameScreenScript implements IScript {
 
         pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
+
             @Override
             public void touchUp() {
                 lc.getLayer("normal").isVisible = true;
@@ -164,19 +165,24 @@ public class GameScreenScript implements IScript {
         });
     }
 
-    public void updateGameOver(){
+    public void updateGameOver() {
         Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
         gameOverCounter--;
-        if (gameOverCounter % 48 == 0){
+        if (gameOverCounter % 48 == 0) {
             gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
         }
 
-        if (gameOverCounter <= 0){
-            game.initMenu();
+        if (gameOverCounter <= 0) {
             gameOverCounter = 240;
             isGameOver = false;
+            isStarted = false;
+            isPause = false;
+            BugSpawnSystem.isAngeredBeesMode = false;
+            BugSpawnSystem.queenBeeOnStage = false;
+//            sceneLoader.getEngine().removeSystem(sceneLoader.getEngine().getSystem(BugSystem.class));
+            game.initMenu();
         }
     }
 
@@ -209,17 +215,9 @@ public class GameScreenScript implements IScript {
                 gameOverCounter = 240;
             }
         });
-
-//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-        isGameOver = true;
     }
 
     private void initFlower() {
-//        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("flowerLibV3");
-//        Entity flowerEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), flowerEntity, tempC.composite);
-//        GameStage.sceneLoader.getEngine().addEntity(flowerEntity);
-
         Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = 988;
@@ -232,13 +230,7 @@ public class GameScreenScript implements IScript {
         dailyGoalGenerator = new DailyGoalGenerator();
         fpc.goals = dailyGoalGenerator.getGoalsForToday();
         flowerEntity.add(fc);
-
         flowerEntity.add(fpc);
-
-//        LayerMapComponent lc = ComponentRetriever.get(flowerEntity, LayerMapComponent.class);
-
-//        lc.setLayers(tempC.composite.layers);
-//        flowerEntity.add(lc);
     }
 
     @Override
@@ -247,16 +239,13 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            isPause = !isPause;
-        }
 
-        if (cameraShaker.time > 0){
+        if (cameraShaker.time > 0) {
             cameraShaker.shake(delta);
             cameraShaker.blink();
         }
 
-        if (!isStarted && Gdx.input.justTouched()){
+        if (!isStarted && Gdx.input.justTouched()) {
             startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
             isStarted = true;
         }
@@ -277,9 +266,6 @@ public class GameScreenScript implements IScript {
                 spawnCocoon();
             }
         }
-        else{
-
-        }
 
         if (isGameOver) {
             updateGameOver();
@@ -287,7 +273,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void spawnDandelion() {
-        if(canDandelionSpawn()){
+        if (canDandelionSpawn()) {
             dandelionSpawnCounter =
                     random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
@@ -309,7 +295,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void spawnCocoon() {
-        if(canCocoonSpawn()) {
+        if (canCocoonSpawn()) {
             cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
             CompositeItemVO cocoonComposite = sceneLoader.loadVoFromLibrary("drunkbugLib");

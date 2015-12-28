@@ -19,10 +19,8 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
-import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -41,7 +39,6 @@ public class BugSystem extends IteratingSystem {
 
     public BugSystem(){
         super(Family.all(BugComponent.class).get());
-
     }
 
     @Override
@@ -60,19 +57,13 @@ public class BugSystem extends IteratingSystem {
             BugComponent bc = mapper.get(entity);
 
             if (bc.state != DEAD) {
-
                 updateRect(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
 
                 if (checkFlowerCollision(fcc, bc)) {
-
                     bc.state = DEAD;
                     fcc.score += bc.points;
-
-                    //temp
                     fcc.totalScore += bc.points;
-
-//                    scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
 
                     if (bc.type.equals(BugType.QUEENBEE)) {
                         GameScreenScript.angerBees();
@@ -86,12 +77,14 @@ public class BugSystem extends IteratingSystem {
                 if (isOutOfBounds(bc)) {
 //                    resetCharger(sac, sasc, bc);
                     BugPool.getInstance().release(entity);
-
                     GameScreenScript.showGameOver();
                 }
             }
         } else {
             sasc.paused = true;
+            if (isGameOver){
+                BugPool.getInstance().release(entity);
+            }
         }
     }
 
