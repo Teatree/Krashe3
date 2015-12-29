@@ -12,9 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
@@ -32,6 +30,7 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.*;
+import com.uwsoft.editor.renderer.systems.action.ActionSystem;
 import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
@@ -110,6 +109,7 @@ public class SceneLoader {
 
 		// this has to be done differently.
 		engine.removeAllEntities();
+		entityFactory.clean();
 
 		pixelsPerWU = rm.getProjectVO().pixelToWorld;
 
@@ -156,6 +156,7 @@ public class SceneLoader {
 		CompositeSystem compositeSystem = new CompositeSystem();
 		LabelSystem labelSystem = new LabelSystem();
         ScriptSystem scriptSystem = new ScriptSystem();
+        ActionSystem actionSystem = new ActionSystem();
 		renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
 		renderer.setRayHandler(rayHandler);
 		renderer.setBox2dWorld(world);
@@ -168,6 +169,7 @@ public class SceneLoader {
 		engine.addSystem(compositeSystem);
 		engine.addSystem(labelSystem);
         engine.addSystem(scriptSystem);
+        engine.addSystem(actionSystem);
 		engine.addSystem(renderer);
 
         // additional
@@ -356,9 +358,4 @@ public class SceneLoader {
     public Batch getBatch() {
         return renderer.getBatch();
     }
-
-	public void drawDebugRect(float x, float y, float width, float height){
-		renderer.drawDebugRect(x,y,width,height);
-	}
-
 }

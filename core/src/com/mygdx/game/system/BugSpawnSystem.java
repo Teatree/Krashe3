@@ -2,6 +2,7 @@ package com.mygdx.game.system;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
@@ -97,15 +98,15 @@ public class BugSpawnSystem extends EntitySystem {
     private void createBug(BugType tempType) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
         BugComponent bc = new BugComponent(tempType);
-//        bc.type = tempType;
-//        bc.state = BugComponent.State.IDLE;
         bugEntity.add(bc);
         bugEntity.add(fcc);
 
+
         TransformComponent tc = getPos();
         bc.startYPosition = tc.y;
-        bugEntity.remove(TransformComponent.class);
-        bugEntity.add(tc);
+        bugEntity.getComponent(TransformComponent.class).x = tc.x;
+        bugEntity.getComponent(TransformComponent.class).y = tc.y;
+//        bugEntity.add(tc);
     }
 
     @Override

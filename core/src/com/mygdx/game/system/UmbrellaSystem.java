@@ -5,11 +5,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -53,7 +55,7 @@ public class UmbrellaSystem extends IteratingSystem {
             FlowerPublicComponent fcc = fccMapper.get(entity);
             UmbrellaComponent uc = mapper.get(entity);
 
-            move(deltaTime, tc, uc);
+            move(deltaTime, tc, uc, entity);
             updateRect(uc, tc, dc);
 
             if (checkCollision(uc, fcc)) {
@@ -76,16 +78,66 @@ public class UmbrellaSystem extends IteratingSystem {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score  + "/" + fcc.totalScore);
     }
 
-    private void move(float deltaTime, TransformComponent tc, UmbrellaComponent uc) {
-        if (uc.state == UmbrellaComponent.State.PUSH) {
-            pushUmbrella(uc, tc);
-            uc.state = UmbrellaComponent.State.FLY;
+    private void move(float deltaTime, TransformComponent tc, UmbrellaComponent uc, Entity entity) {
+//        if (uc.state == UmbrellaComponent.State.PUSH) {
+//            pushUmbrella(uc, tc);
+//            uc.state = UmbrellaComponent.State.FLY;
+//        } else {
+//            flyUmbrella(uc, tc, deltaTime);
+//        }
+//        if (isOutOfBounds(uc)) {
+//            pushUmbrella(uc, tc);
+//        }
+
+//        TintComponent tic = entity.getComponent(TintComponent.class);
+//        TransformComponent tc = entity.getComponent(TransformComponent.class);
+//        DimensionsComponent dc = entity.getComponent(DimensionsComponent.class);
+        FlowerPublicComponent fcc = fccMapper.get(entity);
+//        BugJuiceBubbleComponent uc = mapper.get(entity);
+
+        if (!uc.began) {
+            begin(uc, tc);
+            uc.began = true;
+        }
+        uc.time += deltaTime;
+        uc.complete = uc.time >= uc.duration;
+        float percent;
+        if (uc.complete) {
+            percent = 1;
         } else {
-            flyUmbrella(uc, tc, deltaTime);
+            percent = uc.time / uc.duration;
+            if (uc.interpolation != null) percent = uc.interpolation.apply(percent);
         }
-        if (isOutOfBounds(uc)) {
-            pushUmbrella(uc, tc);
-        }
+        update(uc, tc, uc.reverse ? 1 - percent : percent);
+        if (uc.complete) end(fcc, entity);
+    }
+
+
+    public void update(UmbrellaComponent uc, TransformComponent tc, float percent) {
+        setPosition(tc, uc.startX + (uc.endX - uc.startX) * percent, uc.startY + (uc.endY - uc.startY) * percent);
+//        if (tc.x >= Gdx.graphics.getWidth()-10){
+//            uc.startX = tc.x;
+//            uc.startY = tc.y;
+//            uc.endY = random.nextInt(Gdx.graphics.getHeight());
+//            uc.endX = random.nextInt(Gdx.graphics.getWidth());
+//
+//        }
+    }
+
+    protected void begin(UmbrellaComponent uc, TransformComponent tc) {
+        uc.startX = tc.x;
+        uc.startY = tc.y;
+    }
+
+    protected void end(FlowerPublicComponent fcc, Entity entity) {
+//        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+
+        GameStage.sceneLoader.getEngine().removeEntity(entity);
+    }
+
+    public void setPosition(TransformComponent tc, float x, float y) {
+        tc.x = x;
+        tc.y = y;
     }
 
     public void pushUmbrella(UmbrellaComponent uc, TransformComponent tc) {

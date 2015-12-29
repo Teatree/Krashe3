@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.attachments.Attachment;
+import com.esotericsoftware.spine.attachments.MeshAttachment;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
+import com.esotericsoftware.spine.attachments.SkinnedMeshAttachment;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 
 public class SpineObjectComponent implements Component {
@@ -37,10 +39,24 @@ public class SpineObjectComponent implements Component {
             Slot slot = skeleton.getSlots().get(i);
             Attachment attachment = slot.getAttachment();
             if (attachment == null) continue;
-            if (!(attachment instanceof RegionAttachment)) continue;
-            RegionAttachment imageRegion = (RegionAttachment) attachment;
-            imageRegion.updateWorldVertices(slot, false);
-            float[] vertices = imageRegion.getWorldVertices();
+            if (!((attachment instanceof RegionAttachment) || (attachment instanceof MeshAttachment) || (attachment instanceof SkinnedMeshAttachment))) continue;
+            float[] vertices = new float[0];
+            if ((attachment instanceof RegionAttachment)) {
+                RegionAttachment region = (RegionAttachment) attachment;
+                region.updateWorldVertices(slot, false);
+                vertices = region.getWorldVertices();
+            }
+            if ((attachment instanceof MeshAttachment)) {
+                MeshAttachment region = (MeshAttachment) attachment;
+                region.updateWorldVertices(slot, false);
+                vertices = region.getWorldVertices();
+            }
+            if ((attachment instanceof SkinnedMeshAttachment)) {
+                SkinnedMeshAttachment region = (SkinnedMeshAttachment) attachment;
+                region.updateWorldVertices(slot, false);
+                vertices = region.getWorldVertices();
+            }
+
             for (int ii = 0, nn = vertices.length; ii < nn; ii += 5) {
                 minX = Math.min(minX, vertices[ii]);
                 minY = Math.min(minY, vertices[ii + 1]);

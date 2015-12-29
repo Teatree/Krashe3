@@ -54,7 +54,7 @@ public class FlowerSystem extends IteratingSystem {
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
 
-        GameStage.sceneLoader.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
+//        GameStage.sceneLoader.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
     }
 
     public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {

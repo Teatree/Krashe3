@@ -40,7 +40,6 @@ public class DandelionSystem extends IteratingSystem {
     private FlowerPublicComponent fcc;
 
     private int idleCounter;
-    private CompositeItemVO umbrellaComposite;
 
     //counts time from start of animation.
     //Use to check if Animation finished in NORMAL mode
@@ -52,7 +51,6 @@ public class DandelionSystem extends IteratingSystem {
     public DandelionSystem(FlowerPublicComponent fcc) {
         super(Family.all(DandelionComponent.class).get());
         this.fcc = fcc;
-        umbrellaComposite = GameStage.sceneLoader.loadVoFromLibrary("umbrellaLib");
     }
 
     private void spawnUmbrella(float x, float y){

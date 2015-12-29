@@ -3,6 +3,7 @@ package com.uwsoft.editor.renderer.components.physics;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
 
 public class PhysicsBodyComponent implements Component {
 	public int bodyType;
@@ -12,13 +13,16 @@ public class PhysicsBodyComponent implements Component {
 	public float rotationalInertia;
 	public float damping;
 	public float gravityScale;
+
 	public boolean allowSleep;
 	public boolean awake;
 	public boolean bullet;
+    public boolean sensor;
 
 	public float density;
 	public float friction;
 	public float restitution;
+    public Filter filter;
 
     public Body body;
 
@@ -31,10 +35,12 @@ public class PhysicsBodyComponent implements Component {
         damping = 0;
         gravityScale = 0;
         allowSleep = true;
+        sensor = false;
         awake = true;
         bullet = false;
         density = 1;
         friction = 1;
         restitution = 1;
+        filter = new Filter();
     }
 }
