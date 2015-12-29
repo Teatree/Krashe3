@@ -5,6 +5,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
@@ -36,42 +39,60 @@ public class UmbrellaSystem extends IteratingSystem {
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
     private ComponentMapper<FlowerPublicComponent> fccMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
+
+
     public UmbrellaSystem() {
         super(Family.all(UmbrellaComponent.class).get());
+
+
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
-
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            sasc.paused = false;
-
-            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+        UmbrellaComponent uc = mapper.get(entity);
+        DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
             tc.scaleX = UMBRELLA_SCALE;
             tc.scaleY = UMBRELLA_SCALE;
 
-            FlowerPublicComponent fcc = fccMapper.get(entity);
-            UmbrellaComponent uc = mapper.get(entity);
 
-            move(deltaTime, tc, uc, entity);
-            updateRect(uc, tc, dc);
+        uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
+        if(uc.current >= 1)
+            uc.current -= 1;
+        uc.myCatmull.valueAt(uc.out, uc.current);
+        tc.x = uc.out.x;
+        tc.y = uc.out.y;
 
-            if (checkCollision(uc, fcc)) {
-                fcc.isCollision = true;
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
-
-                //temp
-                fcc.totalScore -= fcc.score;
-                fcc.score *= uc.pointsMult;
-                fcc.totalScore += fcc.score;
-
-                reloadScoreLabel(fcc);
-            }
-        } else {
-            sasc.paused = true;
-        }
+//
+//        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+//            sasc.paused = false;
+//
+//            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+//            TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
+//            tc.scaleX = UMBRELLA_SCALE;
+//            tc.scaleY = UMBRELLA_SCALE;
+//
+//            FlowerPublicComponent fcc = fccMapper.get(entity);
+//            UmbrellaComponent uc = mapper.get(entity);
+//
+//            move(deltaTime, tc, uc, entity);
+//            updateRect(uc, tc, dc);
+//
+//            if (checkCollision(uc, fcc)) {
+//                fcc.isCollision = true;
+//                GameStage.sceneLoader.getEngine().removeEntity(entity);
+//
+//                //temp
+//                fcc.totalScore -= fcc.score;
+//                fcc.score *= uc.pointsMult;
+//                fcc.totalScore += fcc.score;
+//
+//                reloadScoreLabel(fcc);
+//            }
+//        } else {
+//            sasc.paused = true;
+//        }
     }
 
     private void reloadScoreLabel(FlowerPublicComponent fcc) {
@@ -94,7 +115,6 @@ public class UmbrellaSystem extends IteratingSystem {
 //        DimensionsComponent dc = entity.getComponent(DimensionsComponent.class);
         FlowerPublicComponent fcc = fccMapper.get(entity);
 //        BugJuiceBubbleComponent uc = mapper.get(entity);
-
         if (!uc.began) {
             begin(uc, tc);
             uc.began = true;
@@ -112,9 +132,8 @@ public class UmbrellaSystem extends IteratingSystem {
         if (uc.complete) end(fcc, entity);
     }
 
-
     public void update(UmbrellaComponent uc, TransformComponent tc, float percent) {
-        setPosition(tc, uc.startX + (uc.endX - uc.startX) * percent, uc.startY + (uc.endY - uc.startY) * percent);
+        setPosition(tc, uc.startX + (uc.endX - uc.startX) * percent * percent, uc.startY + (uc.endY - uc.startY) * percent);
 //        if (tc.x >= Gdx.graphics.getWidth()-10){
 //            uc.startX = tc.x;
 //            uc.startY = tc.y;

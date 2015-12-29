@@ -61,7 +61,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     public void update(BugJuiceBubbleComponent bjc, TransformComponent tc, float percent) {
-        setPosition(tc, bjc.startX + (bjc.endX - bjc.startX) * percent, bjc.startY + (bjc.endY - bjc.startY) * percent);
+        setPosition(tc, bjc.startX + (bjc.endX - bjc.startX) * percent, bjc.startY + (bjc.endY - bjc.startY) * percent );
     }
 
     protected void begin(BugJuiceBubbleComponent bjc, TransformComponent tc) {
