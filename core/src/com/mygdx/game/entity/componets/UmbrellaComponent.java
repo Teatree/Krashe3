@@ -26,7 +26,6 @@ public class UmbrellaComponent implements Component {
     public UmbrellaComponent() {
         this.state = UmbrellaComponent.State.PUSH;
         pointsMult = 2;
-
     }
 
     public enum State {

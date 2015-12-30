@@ -15,8 +15,10 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 /**
  * Created by AnastasiiaRudyk on 31/10/2015.
@@ -27,11 +29,13 @@ public class CocoonSystem extends IteratingSystem {
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SceneLoader sl;
     FlowerPublicComponent fcc;
-    private CompositeItemVO butterflyComposite;
+    Entity butterflyEntity;
 
     public CocoonSystem(SceneLoader sl) {
         super(Family.all(CocoonComponent.class).get());
-        butterflyComposite = sl.loadVoFromLibrary("simpleLib");
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        butterflyEntity = root.getChild("drunkBugAni8").getEntity();
+
         this.sl = sl;
     }
 
@@ -94,11 +98,9 @@ public class CocoonSystem extends IteratingSystem {
 
     public void updateRect(CocoonComponent cc, TransformComponent tc, DimensionsComponent dc) {
         cc.boundsRect.x = (int) tc.x;
-//        cc.boundsRect.y = (int) tc.y+85;
         cc.boundsRect.y = 793;
         cc.boundsRect.width = (int) dc.width * tc.scaleX;
         cc.boundsRect.height = (int) dc.height * tc.scaleY;
-//        System.out.println(cc.boundsRect.toString());
     }
 
     private boolean checkCollision(CocoonComponent cc, FlowerPublicComponent fcc) {
@@ -106,16 +108,12 @@ public class CocoonSystem extends IteratingSystem {
     }
 
     private void spawnButterfly() {
-        Entity butterflyEntity = sl.entityFactory.createEntity(sl.getRoot(), butterflyComposite);
-        sl.entityFactory.initAllChildren(sl.getEngine(), butterflyEntity, butterflyComposite.composite);
-        sl.getEngine().addEntity(butterflyEntity);
 
-        TransformComponent tc = new TransformComponent();
+        TransformComponent tc = butterflyEntity.getComponent(TransformComponent.class);
         tc.x = 750;
         tc.y = 700;
-        butterflyEntity.add(tc);
 
-        ButterflyComponent bc  = new ButterflyComponent();
+        ButterflyComponent bc = new ButterflyComponent();
         butterflyEntity.add(fcc);
         butterflyEntity.add(bc);
     }

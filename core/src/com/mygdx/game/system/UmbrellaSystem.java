@@ -58,7 +58,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.dataSet[1] = new Vector2(-500, Gdx.graphics.getHeight() / 2);
                 uc.dataSet[2] = new Vector2(Gdx.graphics.getWidth() - 30, Gdx.graphics.getHeight() / 2);
 
-                uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
+                uc.myCatmull = new Bezier<>(uc.dataSet);
                 uc.out = new Vector2(340, Gdx.graphics.getHeight() / 4);
                 uc.myCatmull.valueAt(uc.out, 5);
                 uc.myCatmull.derivativeAt(uc.out, 5);
@@ -99,15 +99,11 @@ public class UmbrellaSystem extends IteratingSystem {
                 fcc.score *= uc.pointsMult;
                 fcc.totalScore += fcc.score;
 
-                reloadScoreLabel(fcc);
+                GameScreenScript.reloadScoreLabel(fcc);
             }
         } else {
             sasc.paused = true;
         }
-    }
-
-    private void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {

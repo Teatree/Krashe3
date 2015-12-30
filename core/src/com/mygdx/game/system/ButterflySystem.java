@@ -5,19 +5,20 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Bezier;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
-import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
 /**
  * Created by Teatree on 9/3/2015.
@@ -35,41 +36,58 @@ public class ButterflySystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            FlowerPublicComponent fcc = collisionMapper.get(entity);
-            ButterflyComponent bc = mapper.get(entity);
+            sasc.paused = false;
 
+            ButterflyComponent bc = mapper.get(entity);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
-            LayerMapComponent lc = ComponentRetriever.get(entity, LayerMapComponent.class);
+            FlowerPublicComponent fcc = collisionMapper.get(entity);
 
             if (bc.state.equals(SPAWN)) {
-                push(bc, tc);
-                bc.state = FLY;
-            } else {
-                fly(bc, tc, deltaTime);
-            }
-            updateRectangle(bc, tc, dc);
+                bc.dataSet = new Vector2[3];
+                bc.dataSet[0] = new Vector2(tc.x, tc.y);
+                bc.dataSet[1] = new Vector2(-500, Gdx.graphics.getHeight() / 2);
+                bc.dataSet[2] = new Vector2(Gdx.graphics.getWidth() - 30, Gdx.graphics.getHeight() / 2);
 
+                bc.myCatmull = new Bezier<>(bc.dataSet);
+                bc.out = new Vector2(340, Gdx.graphics.getHeight() / 4);
+                bc.myCatmull.valueAt(bc.out, 5);
+                bc.myCatmull.derivativeAt(bc.out, 5);
+
+                bc.state = FLY;
+            }
+
+            bc.current += Gdx.graphics.getDeltaTime() * bc.speed;
+            bc.myCatmull.valueAt(bc.out, bc.current);
+            tc.x = bc.out.x;
+            tc.y = bc.out.y;
+
+            if (bc.current >= 1 && bc.state.equals(FLY) || isOutOfBounds(bc)) {
+                die(bc, tc);
+            }
+
+            updateRectangle(bc, tc, dc);
             if (checkCollision(bc, fcc)) {
                 fcc.isCollision = true;
-                bc.state = DEAD;
                 GameStage.sceneLoader.getEngine().removeEntity(entity);
-                fcc.score += bc.points;
 
-                //temp
-                fcc.totalScore += bc.points;
-                scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+                fcc.totalScore -= fcc.score;
+                fcc.score += bc.points;
+                fcc.totalScore += fcc.score;
+
+                GameScreenScript.reloadScoreLabel(fcc);
             }
+        } else {
+            sasc.paused = true;
         }
     }
 
-    public void fly(ButterflyComponent bc, TransformComponent tc, float delta) {
-//            if(isGameAlive()) {
-        bc.velocityX += bc.gravity * delta;
-        tc.x = tc.x + bc.velocityX * delta;
-        tc.y = tc.y + +bc.velocityY * delta;
-//            }
+    private void die(ButterflyComponent bc, TransformComponent tc) {
+        tc.x = -900;
+        tc.y = -900;
+        bc.state = DEAD;
     }
 
     public void updateRectangle(ButterflyComponent bc, TransformComponent tc, DimensionsComponent dc) {
@@ -81,23 +99,6 @@ public class ButterflySystem extends IteratingSystem {
 
     public boolean isOutOfBounds(ButterflyComponent bc) {
         return bc.boundsRect.getX() >= Gdx.graphics.getWidth();
-    }
-
-    public void push(ButterflyComponent bc, TransformComponent tc) {
-        bc.velocityX = ((random.nextInt(bc.randXmax - bc.randXmin) + bc.randXmin) * -1) * bc.speedIncrCoeficient;
-//        gravity *= speedIncrCoeficient/2;
-//        System.out.println("velocityX " + bc.velocityX);
-        if (tc.y > Gdx.graphics.getHeight() / 2) {
-            bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin) * -1) * bc.speedIncrCoeficient;
-        } else {
-            bc.velocityY = (random.nextInt((bc.randYmax - bc.randYmin) + bc.randYmin)) * bc.speedIncrCoeficient;
-        }
-//        System.out.println("velocityY " + bc.velocityY);
-//        speedIncrCoeficient += 0.5f;
-        bc.gravity = Math.abs(bc.velocityX / (7 - bc.speedIncrCoeficient * bc.gravityDecreaseMultiplier));
-        bc.speedIncrCoeficient += 0.1f;
-        bc.gravityDecreaseMultiplier -= 0.05f;
-//        System.out.println("gravity " + bc.gravity);
     }
 
     private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {

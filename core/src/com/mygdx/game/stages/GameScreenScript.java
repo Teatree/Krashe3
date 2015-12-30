@@ -331,4 +331,8 @@ public class GameScreenScript implements IScript {
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
     }
+
+    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+    }
 }
