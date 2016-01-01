@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.GlobalConstants;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.SceneLoader;
@@ -51,6 +52,9 @@ public class GameStage extends Stage{
         root.addScript(gameScript);
         GlobalConstants.CUR_SCREEN = "GAME";
         backgroundMusicMgr.stop();
+
+        GameScreenScript.isStarted = false;
+        BugPool.resetBugPool();
     }
 
     public void initMenu(){
@@ -60,6 +64,8 @@ public class GameStage extends Stage{
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(menu);
         GlobalConstants.CUR_SCREEN = "MENU";
+
+
 //        backgroundMusicMgrInst.play();
 //
 //        GameScreenScript.isAngeredBeesMode = false;

@@ -29,44 +29,19 @@ public class ShopScreenScript implements IScript {
     public void init(Entity item) {
         shopItem = new ItemWrapper(item);
 
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity backBtn = shopItem.getChild("btn_back").getEntity();
-
-//        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-//        final Entity playBtn = shopItem.getChild("btn_play").getEntity();
-
-//        stage.sceneLoader.getEngine().addSystem(bugSystem);
-//        stage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(stage.sceneLoader));
-
-//        CompositeItemVO bugData =  stage.sceneLoader.loadVoFromLibrary("chargerAni");
-//        while(spawnCounter < 20){
-//            spawnCounter++;
-//            CompositeItemVO tempC = bugData.clone();
-//            tempC.x = MathUtils.random(0, Gdx.graphics.getWidth()-100);
-//            tempC.y = MathUtils.random(0, Gdx.graphics.getHeight()-100);
-//            Entity tempEnty = stage.sceneLoader.entityFactory.createEntity(stage.sceneLoader.getRoot(), tempC);
-//            stage.sceneLoader.entityFactory.initAllChildren(stage.sceneLoader.getEngine(), tempEnty, tempC.composite);
-//            stage.sceneLoader.getEngine().addEntity(tempEnty);
-//            System.out.println("Successfully spawned dude: " + spawnCounter);
-//            BugComponent bc = new BugComponent();
-//            bc.type = BugType.CHARGER;
-////            bc.type = BugType.SIMPLE;
-//
-//            tempEnty.add(bc);
-//        }
-
-
-//        final Entity btnSettings = menuItem.getCompositeById("btn_settings");
-//        final Entity btnNoAds = menuItem.getCompositeById("btn_noAds");
-//        final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
-
-        // Adding a Click listener to playButton so we can start game when clicked
 
 
         getAllVanities2();
 
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+        addBackButton();
 
+
+    }
+
+    private void addBackButton() {
+        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        Entity backBtn = shopItem.getChild("btn_back").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
@@ -93,8 +68,6 @@ public class ShopScreenScript implements IScript {
 
             }
         });
-
-
     }
 
     private void getAllVanities2() {

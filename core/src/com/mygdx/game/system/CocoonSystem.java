@@ -27,16 +27,13 @@ public class CocoonSystem extends IteratingSystem {
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-    private SceneLoader sl;
     FlowerPublicComponent fcc;
     Entity butterflyEntity;
 
     public CocoonSystem(SceneLoader sl) {
         super(Family.all(CocoonComponent.class).get());
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        butterflyEntity = root.getChild("drunkBugAni8").getEntity();
-
-        this.sl = sl;
+        butterflyEntity = root.getChild("butterflyAni8").getEntity();
     }
 
     @Override

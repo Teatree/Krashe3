@@ -80,6 +80,7 @@ public class GameScreenScript implements IScript {
 
         // Adding a Click listener to playButton so we can start game when clicked
         initPauseBtn();
+        initBackButton();
 
         final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("backgroundLib");
         background = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
@@ -95,7 +96,6 @@ public class GameScreenScript implements IScript {
         tc.x = 0;
         tc.y = 0;
         background.add(tc);
-
     }
 
     private void addSystems() {
@@ -107,6 +107,43 @@ public class GameScreenScript implements IScript {
         GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
         GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
         GameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
+    }
+
+    private void initBackButton() {
+        game.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        Entity backBtn = gameItem.getChild("btn_back").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+
+        TransformComponent backBtnTc = backBtn.getComponent(TransformComponent.class);
+        backBtnTc.scaleX = 0.7f;
+        backBtnTc.scaleY = 0.7f;
+        backBtnTc.x = 90;
+        backBtnTc.y = 680;
+
+
+        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+
+//                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
+//                System.out.println(vanityComponentList.get(1).icon);
+//                vanityComponentList.get(1).apply(GameScreenScript.fpc);
+            }
+
+            @Override
+            public void clicked() {
+                game.initMenu();
+            }
+        });
     }
 
     private void initPauseBtn() {

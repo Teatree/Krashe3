@@ -40,6 +40,11 @@ public class BugPool {
         }
         return instance;
     }
+
+    public static void resetBugPool(){
+        instance = new BugPool();
+    }
+
     private BugPool () {
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
 

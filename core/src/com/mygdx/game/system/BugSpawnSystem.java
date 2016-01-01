@@ -62,8 +62,10 @@ public class BugSpawnSystem extends EntitySystem {
 
     private TransformComponent getPos(){
         TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
-        transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
+//        transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
+//        transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
+        transformComponent.x = 100;
+        transformComponent.y = 100;
         return transformComponent;
     }
 
@@ -100,7 +102,6 @@ public class BugSpawnSystem extends EntitySystem {
         BugComponent bc = new BugComponent(tempType);
         bugEntity.add(bc);
         bugEntity.add(fcc);
-
 
         TransformComponent tc = getPos();
         bc.startYPosition = tc.y;
