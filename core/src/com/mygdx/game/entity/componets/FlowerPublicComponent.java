@@ -19,5 +19,13 @@ public class FlowerPublicComponent implements Component {
 
     public List<VanityComponent> vanities = new ArrayList();
     public List<DailyGoal> goals = new ArrayList<>();
+
+    public boolean checkGoals(int n){
+        boolean allAchieved = true;
+        for (DailyGoal goal : goals){
+            allAchieved = allAchieved && goal.checkIfAchieved(n);
+        }
+        return allAchieved;
+    }
 }
           

@@ -6,23 +6,17 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
+import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
-
 import java.util.Random;
-
-import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
 /**
  * Created by Teatree on 10/6/2015.
@@ -92,9 +86,10 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (checkCollision(uc, fcc)) {
                 fcc.isCollision = true;
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
+//                GameStage.sceneLoader.getEngine().removeEntity(entity);
 
-                //temp
+                hide(entity, tc);
+
                 fcc.totalScore -= fcc.score;
                 fcc.score *= uc.pointsMult;
                 fcc.totalScore += fcc.score;
@@ -104,6 +99,12 @@ public class UmbrellaSystem extends IteratingSystem {
         } else {
             sasc.paused = true;
         }
+    }
+
+    private void hide(Entity entity, TransformComponent tc) {
+        tc.x = -300;
+        tc.y = -300;
+        entity.remove(UmbrellaComponent.class);
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {

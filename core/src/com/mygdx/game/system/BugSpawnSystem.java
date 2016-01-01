@@ -49,9 +49,9 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void init() {
-        SPAWN_MIN_X = -400;
+        SPAWN_MIN_X = -200;
         SPAWN_MIN_Y = 100;
-        SPAWN_MAX_X = -200;
+        SPAWN_MAX_X = -100;
         SPAWN_MAX_Y = 700;
 
         libBugsNameType.put(BugType.SIMPLE, SIMPLE);
@@ -65,7 +65,7 @@ public class BugSpawnSystem extends EntitySystem {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
         transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
-        bc.endX = transformComponent.x + Gdx.graphics.getWidth()+400;
+        bc.endX = Gdx.graphics.getWidth()+50;
         bc.endY = transformComponent.y;
 
         return transformComponent;

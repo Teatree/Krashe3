@@ -20,13 +20,6 @@ public class BugComponent implements Component {
     public BugType type;
     public State state = State.IDLE;
 
-    public int pointsMult;
-
-    public CatmullRomSpline<Vector2> myCatmull;
-    public float speed = 0.05f;
-    public float current = 0;
-    public Vector2 out;
-
     public float startX, startY;
     public float endX;
     public float endY;

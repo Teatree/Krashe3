@@ -6,10 +6,9 @@ import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by AnastasiiaRudyk on 12/14/2015.
@@ -17,11 +16,12 @@ import java.util.Map;
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
-
+        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         for (VanityComponent vc : fc.vanities){
             VanityStats vs = new VanityStats(vc);
             gameStats.vanities.add(vs);
@@ -37,7 +37,13 @@ public class SaveMngr {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
-
+            try {
+                Calendar lastGoalsDate = Calendar.getInstance();
+                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
+                DailyGoalSystem.latestDate = lastGoalsDate;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             for (VanityStats vs : gameStats.vanities){
                 VanityComponent vc = new VanityComponent();
                 vc.assetsToChange = vs.assetsToChange;
@@ -67,6 +73,7 @@ public class SaveMngr {
 
     private static class GameStats {
         public int totalScore;
+        public String lastGoalsDate;
         public List<VanityStats> vanities = new ArrayList<>();
     }
 

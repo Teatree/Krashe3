@@ -10,19 +10,18 @@ import java.util.Random;
 /**
  * Created by AnastasiiaRudyk on 12/16/2015.
  */
-public class DailyGoalGenerator {
+public class DailyGoalSystem {
     public static final int GOALS_AMOUNT_FOR_ONE_DAY = 3;
     public Random random;
-    public Calendar latestDate;
+    public static Calendar latestDate;
     List<DailyGoal> goals;
 
-    public DailyGoalGenerator() {
+    public DailyGoalSystem() {
+        if (latestDate == null)
         latestDate = Calendar.getInstance();
-        latestDate.set(2012, 12, 15);
     }
 
     public List<DailyGoal> getGoalsForToday(){
-
         Calendar cal1 = Calendar.getInstance();
         boolean sameDay = cal1.get(Calendar.YEAR) == latestDate.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == latestDate.get(Calendar.DAY_OF_YEAR);
@@ -37,9 +36,8 @@ public class DailyGoalGenerator {
     }
 
     private DailyGoal createGoal(){
-        DailyGoal goal = new DailyGoal();
-        goal.achieved = false;
-        goal.description = "We are the same :(";
+        Random r = new Random();
+        DailyGoal goal = new DailyGoal(DailyGoal.GoalType.values()[r.nextInt(DailyGoal.GoalType.values().length-1)]);
         return goal;
     }
 }

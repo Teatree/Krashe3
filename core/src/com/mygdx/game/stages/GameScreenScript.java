@@ -3,16 +3,14 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
-import com.mygdx.game.utils.DailyGoalGenerator;
+import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -50,7 +48,7 @@ public class GameScreenScript implements IScript {
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
 
-    public DailyGoalGenerator dailyGoalGenerator;
+    public DailyGoalSystem dailyGoalGenerator;
 
     public GameScreenScript(GameStage game) {
         this.game = game;
@@ -75,10 +73,8 @@ public class GameScreenScript implements IScript {
 
         addSystems();
 
-        //init Flower
         initFlower();
 
-        // Adding a Click listener to playButton so we can start game when clicked
         initPauseBtn();
         initBackButton();
 
@@ -141,7 +137,8 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                game.initMenu();
+//                game.initMenu();
+                pause();
             }
         });
     }
@@ -170,36 +167,45 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                final Entity dialog = gameItem.getChild("dialog").getEntity();
-                final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
-                dialogTc.x = 300;
-                dialogTc.y = 100;
-
-                Entity startLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
-                LabelComponent dialogLabelComp = startLabel.getComponent(LabelComponent.class);
-                dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!");
-
-                Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
-                closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                    @Override
-                    public void touchUp() {
-                    }
-
-                    @Override
-                    public void touchDown() {
-                    }
-
-                    @Override
-                    public void clicked() {
-                        isPause = false;
-                        dialogTc.x = -1000;
-                    }
-                });
-
-//                GameScreenScript.cameraShaker.initShaking(8f, 0.9f);
-                isPause = true;
+                pause();
             }
         });
+    }
+
+    private void pause() {
+        final Entity dialog = gameItem.getChild("dialog").getEntity();
+        final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+        dialogTc.x = 300;
+        dialogTc.y = 100;
+
+        Entity goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+        LabelComponent dialogLabelComp = goalLabel.getComponent(LabelComponent.class);
+
+        StringBuilder goalsList = new StringBuilder();
+        for (DailyGoal g : fpc.goals){
+            String achieved = g.achieved ? " achieved " : " not achieved ";
+            goalsList.append(" \n  - " + g.description + " - " + achieved);
+        }
+        dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList );
+
+        Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+        closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                isPause = false;
+                dialogTc.x = -1000;
+            }
+        });
+
+        isPause = true;
     }
 
     public void updateGameOver() {
@@ -218,7 +224,6 @@ public class GameScreenScript implements IScript {
             isPause = false;
             BugSpawnSystem.isAngeredBeesMode = false;
             BugSpawnSystem.queenBeeOnStage = false;
-//            sceneLoader.getEngine().removeSystem(sceneLoader.getEngine().getSystem(BugSystem.class));
             game.initMenu();
         }
     }
@@ -264,7 +269,7 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(tc);
 
         FlowerComponent fc = new FlowerComponent();
-        dailyGoalGenerator = new DailyGoalGenerator();
+        dailyGoalGenerator = new DailyGoalSystem();
         fpc.goals = dailyGoalGenerator.getGoalsForToday();
         flowerEntity.add(fc);
         flowerEntity.add(fpc);

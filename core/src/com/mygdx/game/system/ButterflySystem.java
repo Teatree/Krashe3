@@ -28,8 +28,6 @@ public class ButterflySystem extends IteratingSystem {
     private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
-    public Random random = new Random();
-
     public ButterflySystem() {
         super(Family.all(ButterflyComponent.class).get());
     }
@@ -71,7 +69,10 @@ public class ButterflySystem extends IteratingSystem {
             updateRectangle(bc, tc, dc);
             if (checkCollision(bc, fcc)) {
                 fcc.isCollision = true;
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
+//                GameStage.sceneLoader.getEngine().removeEntity(entity);
+                tc.x = -300;
+                tc.y = -300;
+                entity.remove(ButterflyComponent.class);
 
                 fcc.totalScore -= fcc.score;
                 fcc.score += bc.points;
