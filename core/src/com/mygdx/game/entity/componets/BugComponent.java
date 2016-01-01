@@ -1,7 +1,12 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
 import java.util.Random;
@@ -14,6 +19,22 @@ public class BugComponent implements Component {
 
     public BugType type;
     public State state = State.IDLE;
+
+    public int pointsMult;
+
+    public CatmullRomSpline<Vector2> myCatmull;
+    public float speed = 0.05f;
+    public float current = 0;
+    public Vector2 out;
+
+    public float startX, startY;
+    public float endX;
+    public float endY;
+    public float duration = 14;
+    public float time;
+    public Interpolation interpolation = Interpolation.exp5In;
+    public boolean reverse, began, complete;
+    public int alignment = Align.bottomLeft;
 
     public int points;
 

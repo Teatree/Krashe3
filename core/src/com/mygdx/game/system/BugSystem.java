@@ -58,7 +58,7 @@ public class BugSystem extends IteratingSystem {
 
             if (bc.state != DEAD) {
                 updateRect(bc, transformComponent, dimensionsComponent);
-                moveEntity(deltaTime, transformComponent, bc, sasc, sac);
+                moveEntity(deltaTime, transformComponent, bc, sasc, sac, entity, fcc);
 
                 if (checkFlowerCollision(fcc, bc)) {
                     bc.state = DEAD;
@@ -108,22 +108,22 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void moveEntity(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent,
-                            SpriteAnimationStateComponent sasc, SpriteAnimationComponent sac){
+                            SpriteAnimationStateComponent sasc, SpriteAnimationComponent sac, Entity entity, FlowerPublicComponent fcc){
         switch (bugComponent.type.toString()){
             case SIMPLE:
-                moveSimple(deltaTime, transformComponent, bugComponent);
+                moveSimple(deltaTime, transformComponent, bugComponent, entity, fcc);
                 break;
             case DRUNK:
-                moveSimple(deltaTime, transformComponent, bugComponent);
+                moveSimple(deltaTime, transformComponent, bugComponent, entity, fcc);
                 break;
             case CHARGER:
                 moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
                 break;
             case BEE:
-                moveSimple(deltaTime, transformComponent, bugComponent);
+                moveSimple(deltaTime, transformComponent, bugComponent, entity, fcc);
                 break;
             case QUEENBEE:
-                moveSimple(deltaTime, transformComponent, bugComponent);
+                moveSimple(deltaTime, transformComponent, bugComponent, entity, fcc);
                 break;
             default:
                 break;
@@ -162,10 +162,26 @@ public class BugSystem extends IteratingSystem {
         }
     }
 
-    private void moveSimple(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent) {
-        transformComponent.y = bugComponent.startYPosition + (-(float) Math.cos(transformComponent.x / 20) * 75);
-        transformComponent.x += bugComponent.velocity;
-        bugComponent.velocity += deltaTime * 0.4;
+    private void moveSimple(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent, Entity entity, FlowerPublicComponent fcc) {
+//        transformComponent.y = bugComponent.startYPosition + (-(float) Math.cos(transformComponent.x / 20) * 75);
+//        transformComponent.x += bugComponent.velocity;
+//        bugComponent.velocity += deltaTime * 0.4;
+
+        if (!bugComponent.began) {
+            begin(bugComponent, transformComponent);
+            bugComponent.began = true;
+        }
+        bugComponent.time += deltaTime;
+        bugComponent.complete = bugComponent.time >= bugComponent.duration;
+        float percent;
+        if (bugComponent.complete) {
+            percent = 1;
+        } else {
+            percent = bugComponent.time / bugComponent.duration;
+            if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
+        }
+        update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
+        if (bugComponent.complete) end(fcc, entity);
     }
 
     public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
@@ -173,6 +189,10 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRect.y = (int)tc.y;
         bc.boundsRect.width = (int)dc.width*tc.scaleX;
         bc.boundsRect.height = (int)dc.height*tc.scaleY;
+    }
+
+    public void update(BugComponent uc, TransformComponent tc, float percent) {
+        setPosition(tc, uc.startX + (uc.endX - uc.startX) * percent * percent, uc.startY + (uc.endY - uc.startY) * percent);
     }
 
     public boolean isOutOfBounds(BugComponent bc){
@@ -187,5 +207,21 @@ public class BugSystem extends IteratingSystem {
             sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
         }
+    }
+
+    protected void begin(BugComponent uc, TransformComponent tc) {
+        uc.startX = tc.x;
+        uc.startY = tc.y;
+    }
+
+    protected void end(FlowerPublicComponent fcc, Entity entity) {
+//        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+
+        GameStage.sceneLoader.getEngine().removeEntity(entity);
+    }
+
+    public void setPosition(TransformComponent tc, float x, float y) {
+        tc.x = x;
+        tc.y = y;
     }
 }

@@ -3,6 +3,7 @@ package com.mygdx.game.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
@@ -60,12 +61,13 @@ public class BugSpawnSystem extends EntitySystem {
         libBugsNameType.put(BugType.QUEENBEE, QUEENBEE);
     }
 
-    private TransformComponent getPos(){
+    private TransformComponent getPos(BugComponent bc){
         TransformComponent transformComponent = new TransformComponent();
-//        transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
-//        transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
-        transformComponent.x = 100;
-        transformComponent.y = 100;
+        transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
+        transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
+        bc.endX = transformComponent.x + Gdx.graphics.getWidth()+400;
+        bc.endY = transformComponent.y;
+
         return transformComponent;
     }
 
@@ -103,7 +105,7 @@ public class BugSpawnSystem extends EntitySystem {
         bugEntity.add(bc);
         bugEntity.add(fcc);
 
-        TransformComponent tc = getPos();
+        TransformComponent tc = getPos(bc);
         bc.startYPosition = tc.y;
         bugEntity.getComponent(TransformComponent.class).x = tc.x;
         bugEntity.getComponent(TransformComponent.class).y = tc.y;
