@@ -17,16 +17,19 @@ public class DailyGoalSystem {
     List<DailyGoal> goals;
 
     public DailyGoalSystem() {
-        if (latestDate == null)
-        latestDate = Calendar.getInstance();
+//        if (latestDate == null)
+//        latestDate = Calendar.getInstance();
     }
 
     public List<DailyGoal> getGoalsForToday(){
-        Calendar cal1 = Calendar.getInstance();
-        boolean sameDay = cal1.get(Calendar.YEAR) == latestDate.get(Calendar.YEAR) &&
-                cal1.get(Calendar.DAY_OF_YEAR) == latestDate.get(Calendar.DAY_OF_YEAR);
-
+        Calendar today = Calendar.getInstance();
+        boolean sameDay = false;
+        if (latestDate !=null) {
+            sameDay = today.get(Calendar.YEAR) == latestDate.get(Calendar.YEAR) &&
+                    today.get(Calendar.DAY_OF_YEAR) == latestDate.get(Calendar.DAY_OF_YEAR);
+        }
         if (!sameDay){
+            latestDate = today;
             goals = new ArrayList<>();
             for (int i = 0; i < GOALS_AMOUNT_FOR_ONE_DAY; i++){
                 goals.add(createGoal());

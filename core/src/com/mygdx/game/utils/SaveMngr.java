@@ -3,6 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.mygdx.game.entity.componets.DailyGoal;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 
@@ -25,6 +26,14 @@ public class SaveMngr {
         for (VanityComponent vc : fc.vanities){
             VanityStats vs = new VanityStats(vc);
             gameStats.vanities.add(vs);
+        }
+        for (DailyGoal goal : fc.goals){
+            DailyGoalStats dgs = new DailyGoalStats();
+            dgs.achieved = goal.achieved;
+            dgs.description = goal.description;
+            dgs.n = goal.n;
+            dgs.type = goal.type.toString();
+            gameStats.goals.add(dgs);
         }
         Json json = new Json();
         writeFile(DATA_FILE, json.toJson(gameStats));
@@ -49,6 +58,14 @@ public class SaveMngr {
                 vc.assetsToChange = vs.assetsToChange;
                 fc.vanities.add(vc);
             }
+            for (DailyGoalStats dg : gameStats.goals){
+                DailyGoal goal = new DailyGoal();
+                goal.achieved = dg.achieved;
+                goal.type = DailyGoal.GoalType.valueOf(dg.type);
+                goal.n = dg.n;
+                goal.description = dg.description;
+                fc.goals.add(goal);
+            }
         }
         return fc;
     }
@@ -71,12 +88,35 @@ public class SaveMngr {
         return "";
     }
 
+    public static List<VanityComponent> getAllVanity() {
+        String saved = readFile("vanity.params");
+        List<VanityComponent> vanComps = new ArrayList<>();
+
+        if (!"".equals(saved)) {
+            Json json = new Json();
+            List<VanityStats> vinitys = json.fromJson(List.class, saved);
+
+            for (VanityStats vs : vinitys){
+                VanityComponent vc = new VanityComponent(vs);
+                vanComps.add(vc);
+            }
+        }
+        return vanComps;
+    }
+
     private static class GameStats {
         public int totalScore;
         public String lastGoalsDate;
         public List<VanityStats> vanities = new ArrayList<>();
+        public List<DailyGoalStats> goals = new ArrayList<>();
     }
 
+    private static class DailyGoalStats{
+        public int n;
+        public String type;
+        public String description;
+        public boolean achieved;
+    }
 
     public static class VanityStats {
         public Map<String, String> assetsToChange = new HashMap<>();
@@ -153,19 +193,5 @@ public class SaveMngr {
         writeFile("vanity.params", jsonVanityObj.toJson(vanityStatses));
     }
 
-    public static List<VanityComponent> getAllVanity() {
-        String saved = readFile("vanity.params");
-        List<VanityComponent> vanComps = new ArrayList<>();
 
-        if (!"".equals(saved)) {
-            Json json = new Json();
-            List<VanityStats> vinitys = json.fromJson(List.class, saved);
-
-            for (VanityStats vs : vinitys){
-                VanityComponent vc = new VanityComponent(vs);
-                vanComps.add(vc);
-            }
-        }
-        return vanComps;
-    }
 }

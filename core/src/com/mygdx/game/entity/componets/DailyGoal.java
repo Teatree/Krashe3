@@ -27,6 +27,8 @@ public class DailyGoal {
     public int n;
     private Random random;
 
+    public DailyGoal() {
+    }
 
     public DailyGoal (GoalType type){
         this.type = type;
