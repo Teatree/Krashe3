@@ -224,7 +224,7 @@ public class GameScreenScript implements IScript {
             isPause = false;
             BugSpawnSystem.isAngeredBeesMode = false;
             BugSpawnSystem.queenBeeOnStage = false;
-            game.initMenu();
+            game.initResult();
         }
     }
 

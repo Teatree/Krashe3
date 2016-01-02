@@ -86,6 +86,7 @@ public class ShopScreenScript implements IScript {
             lc2.getLayer("UnlockedN").isVisible = false;
             lc2.getLayer("UnlockedP").isVisible = false;
 
+            entity.add(new ButtonComponent());
             entity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {

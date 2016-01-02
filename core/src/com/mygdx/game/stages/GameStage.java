@@ -70,6 +70,14 @@ public class GameStage extends Stage{
 //
 //        GameScreenScript.isAngeredBeesMode = false;
     }
+    public void initResult(){
+        sceneLoader = new SceneLoader();
+        sceneLoader.loadScene("ResultScene", viewport);
+        ResultScreenScript result = new ResultScreenScript(this);
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        root.addScript(result);
+        GlobalConstants.CUR_SCREEN = "RESULT";
+    }
 
     public void initShopMenu(){
         sceneLoader = new SceneLoader();

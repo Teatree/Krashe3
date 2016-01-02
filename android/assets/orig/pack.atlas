@@ -266,6 +266,22 @@ pot
   orig: 62, 58
   offset: 0, 0
   index: -1
+progressbarfiller
+  rotate: false
+  xy: 1491, 1231
+  size: 12, 12
+  split: 5, 5, 5, 5
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+progressbarframe
+  rotate: false
+  xy: 1864, 1477
+  size: 20, 20
+  split: 4, 4, 4, 4
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 shopbuildingbot
   rotate: false
   xy: 2, 13
