@@ -29,6 +29,12 @@ public class ResultScreenScript implements IScript {
         this.stage = stage;
     }
 
+    Entity txtEarnedE;
+    LabelComponent earnedLabel;
+    int i = 0;
+    int j = 0;
+    int counter = 100;
+
     @Override
     public void init(Entity item) {
         resultScreenItem = new ItemWrapper(item);
@@ -41,9 +47,12 @@ public class ResultScreenScript implements IScript {
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), "TOTAL: " + String.valueOf(fpc.totalScore));
 
-        Entity txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
-        LabelComponent earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
-        earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+//        Entity txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
+//        LabelComponent earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
+//        earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+
+        txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
+        earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
 
         Entity txtBestE = resultScreenItem.getChild("lbl_BET_SCORE").getEntity();
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
@@ -153,6 +162,17 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+        scoreLoading();
     }
 
+    private void scoreLoading() {
+        if (i < fpc.score) {
+            j++;
+            if (j == 2) {
+                earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
+                i++;
+                j=0;
+            }
+        }
+    }
 }

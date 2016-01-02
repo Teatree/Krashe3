@@ -43,7 +43,8 @@ public class GameScreenScript implements IScript {
     public static boolean isGameOver;
     public static boolean isStarted;
 
-    public static int gameOverCounter = 240;
+//    public static int gameOverCounter = 240;
+    public static int gameOverCounter = 20;
 
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
@@ -72,9 +73,7 @@ public class GameScreenScript implements IScript {
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         addSystems();
-
         initFlower();
-
         initPauseBtn();
         initBackButton();
 
@@ -258,6 +257,8 @@ public class GameScreenScript implements IScript {
     }
 
     private void initFlower() {
+
+        fpc.score = 0;
         Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = 988;
