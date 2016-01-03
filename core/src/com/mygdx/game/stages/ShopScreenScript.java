@@ -29,83 +29,35 @@ public class ShopScreenScript implements IScript {
     public void init(Entity item) {
         shopItem = new ItemWrapper(item);
 
-
-
-        getAllVanities2();
-
-        addBackButton();
-
-
-    }
-
-    private void addBackButton() {
+//        getAllVanities2();
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-        Entity backBtn = shopItem.getChild("btn_back").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("Default").isVisible = false;
-                lc.getLayer("pressed").isVisible = false;
-            }
+        getAllVanities();
 
-            @Override
-            public void touchDown() {
-
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("Default").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
-
-//                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
-//                System.out.println(vanityComponentList.get(1).icon);
-//                vanityComponentList.get(1).apply(GameScreenScript.fpc);
-            }
-
-            @Override
-            public void clicked() {
-                stage.initMenu();
-
-            }
-        });
+        addBackButtonPlease();
     }
 
-    private void getAllVanities2() {
+    private void getAllVanities() {
+//        Entity backBtn = shopItem.getChild("btn_shop_item_1").getEntity();
         List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
-
-
 
         for (final VanityComponent vc : vanityComponentList) {
 
-            Entity entity = shopItem.getChild(vc.icon).getEntity();
+            Entity btn = shopItem.getChild(vc.icon).getEntity();
 
-            final LayerMapComponent lc2 = ComponentRetriever.get(entity, LayerMapComponent.class);
-            lc2.getLayer("LockedN").isVisible = false;
-            lc2.getLayer("LockedP").isVisible = false;
-            lc2.getLayer("Default").isVisible = true;
-            lc2.getLayer("UnlockedN").isVisible = false;
-            lc2.getLayer("UnlockedP").isVisible = false;
-
-            entity.add(new ButtonComponent());
-            entity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            final LayerMapComponent lc = ComponentRetriever.get(btn, LayerMapComponent.class);
+            btn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
-                    lc2.getLayer("LockedN").isVisible = false;
-                    lc2.getLayer("LockedP").isVisible = false;
-                    lc2.getLayer("Default").isVisible = true;
-                    lc2.getLayer("UnlockedN").isVisible = false;
-                    lc2.getLayer("UnlockedP").isVisible = false;
+                    lc.getLayer("normal").isVisible = true;
+                    lc.getLayer("Default").isVisible = false;
+                    lc.getLayer("pressed").isVisible = false;
                 }
 
                 @Override
                 public void touchDown() {
-
-                    lc2.getLayer("LockedN").isVisible = false;
-                    lc2.getLayer("LockedP").isVisible = false;
-                    lc2.getLayer("Default").isVisible = false;
-                    lc2.getLayer("UnlockedN").isVisible = false;
-                    lc2.getLayer("UnlockedP").isVisible = false;
-
+                    lc.getLayer("normal").isVisible = false;
+                    lc.getLayer("Default").isVisible = false;
+                    lc.getLayer("pressed").isVisible = true;
                 }
 
                 @Override
@@ -116,6 +68,31 @@ public class ShopScreenScript implements IScript {
                 }
             });
         }
+    }
+
+    private void addBackButtonPlease(){
+        Entity btnBack = shopItem.getChild("btn_back").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(btnBack, LayerMapComponent.class);
+        btnBack.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("Default").isVisible = false;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("Default").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+            }
+
+            @Override
+            public void clicked() {
+                stage.initMenu();
+            }
+        });
     }
 
     @Override

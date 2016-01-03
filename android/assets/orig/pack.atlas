@@ -311,7 +311,7 @@ shopitem1off
   offset: 0, 0
   index: -1
 
-pack2.png
+pack3.png
 size: 2048,128
 format: RGBA8888
 filter: Linear,Linear
