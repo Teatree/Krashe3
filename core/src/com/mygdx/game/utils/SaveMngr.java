@@ -22,6 +22,7 @@ public class SaveMngr {
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
+        gameStats.bestScore = fc.bestScore;
         gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         for (VanityComponent vc : fc.vanities){
             VanityStats vs = new VanityStats(vc);
@@ -46,6 +47,7 @@ public class SaveMngr {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
+            fc.bestScore = gameStats.bestScore;
             try {
                 Calendar lastGoalsDate = Calendar.getInstance();
                 lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
@@ -105,6 +107,7 @@ public class SaveMngr {
     }
 
     private static class GameStats {
+        public int bestScore;
         public int totalScore;
         public String lastGoalsDate;
         public List<VanityStats> vanities = new ArrayList<>();

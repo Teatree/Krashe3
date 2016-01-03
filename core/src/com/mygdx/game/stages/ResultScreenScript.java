@@ -1,21 +1,16 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.mygdx.game.entity.componets.DailyGoal;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.NinePatchComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.data.Image9patchVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -49,6 +44,10 @@ public class ResultScreenScript implements IScript {
         Entity txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
         LabelComponent earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
         earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+
+        Entity txtBestE = resultScreenItem.getChild("lbl_BET_SCORE").getEntity();
+        LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
+        bestLabel.text.replace(0, bestLabel.text.capacity(), "YOUR BEST: " + String.valueOf(fpc.bestScore));
 
         List<VanityComponent> vanities = SaveMngr.getAllVanity();
         Collections.sort(vanities, new Comparator<VanityComponent>() {
@@ -97,7 +96,6 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 stage.initMenu();
-
             }
         });
     }

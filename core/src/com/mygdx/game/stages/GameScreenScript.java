@@ -126,13 +126,8 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-
                 lc.getLayer("normal").isVisible = false;
                 lc.getLayer("pressed").isVisible = true;
-
-//                List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
-//                System.out.println(vanityComponentList.get(1).icon);
-//                vanityComponentList.get(1).apply(GameScreenScript.fpc);
             }
 
             @Override
@@ -224,6 +219,9 @@ public class GameScreenScript implements IScript {
             isPause = false;
             BugSpawnSystem.isAngeredBeesMode = false;
             BugSpawnSystem.queenBeeOnStage = false;
+            if (fpc.bestScore < fpc.score){
+                fpc.bestScore = fpc.score;
+            }
             game.initResult();
         }
     }
@@ -270,7 +268,7 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
         dailyGoalGenerator = new DailyGoalSystem();
-        if (fpc.goals== null) {
+        if (fpc.goals==null || fpc.goals.isEmpty()) {
             fpc.goals = dailyGoalGenerator.getGoalsForToday();
         }
         flowerEntity.add(fc);
