@@ -21,9 +21,15 @@ public class VanityComponent implements Component {
     public String name;
     public int cost;
     public String description;
-    public boolean bought = true;
-    public boolean available = true;
-    public boolean enabled;
+
+    //true when was bought (could be not applied)
+    public boolean bought;
+
+    //true when was presented in showcase
+    public boolean advertised;
+
+    //true when is applied now
+    public boolean enabled ;
 
     public boolean floatingText;
     public int bugsSpawnAmount;
@@ -44,7 +50,7 @@ public class VanityComponent implements Component {
         this.cost = vc.cost;
         this.description = vc.description;
         this.bought = vc.bought;
-        this.available = vc.available;
+        this.advertised = vc.advertised;
         this.enabled = vc.enabled;
         this.floatingText = vc.floatingText;
         this.bugsSpawnAmount = vc.bugsSpawnAmount;

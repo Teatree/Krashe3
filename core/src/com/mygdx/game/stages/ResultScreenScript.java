@@ -37,6 +37,8 @@ public class ResultScreenScript implements IScript {
     private Entity bgE;
     private Entity showcaseE;
 
+    private VanityComponent showCaseVanity;
+
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
     }
@@ -80,6 +82,15 @@ public class ResultScreenScript implements IScript {
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), "YOUR BEST: " + String.valueOf(fpc.bestScore));
 
+        int need = getNeedForNextItem();
+
+        Entity txtNeedE = resultScreenItem.getChild("lbl_TO_UNLOCK").getEntity();
+        LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
+        needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
+
+    }
+
+    private int getNeedForNextItem() {
         List<VanityComponent> vanities = SaveMngr.getAllVanity();
         Collections.sort(vanities, new Comparator<VanityComponent>() {
             @Override
@@ -91,17 +102,19 @@ public class ResultScreenScript implements IScript {
         });
         nextVanityCost = 0;
         for (VanityComponent vc : vanities) {
-            if (vc.cost >= fpc.totalScore) {
-                nextVanityCost = vc.cost;
-                break;
+            if (!vc.advertised) {
+                if (vc.cost > fpc.totalScore) {
+                    nextVanityCost = vc.cost;
+                    break;
+                } else {
+                    nextVanityCost = vc.cost;
+                    showCaseVanity = vc;
+                    vc.advertised = true;
+                    break;
+                }
             }
         }
-        int need = nextVanityCost - fpc.totalScore;
-
-        Entity txtNeedE = resultScreenItem.getChild("lbl_TO_UNLOCK").getEntity();
-        LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
-        needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
-
+        return nextVanityCost - fpc.totalScore;
     }
 
     private void initBackButton() {
@@ -180,36 +193,37 @@ public class ResultScreenScript implements IScript {
     }
 
     @Override
-    public void dispose() {
-
-    }
-
-    @Override
     public void act(float delta) {
-        scoreLoading();
-
+        if (i < fpc.score) {
+            updateScore();
+        } else {
+            updateProgressBar();
+        }
         if (showcasePopup) {
             showFadeIn();
         }
     }
 
-    private void scoreLoading() {
-        if (i < fpc.score) {
-            j++;
-            if (j == 2) {
-                earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
-                i++;
-                j = 0;
-            }
-        } else {
-            DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-            if (dcProgressBar.width <= ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f) {
-                dcProgressBar.width += 2;
-            } else {
-                if (!showcasePopup) {
-                    initShowcase();
-                }
-            }
+    private void updateProgressBar() {
+        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
+        if (dcProgressBar.width <= ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f) {
+            dcProgressBar.width += 2;
+        } else if (!showcasePopup && showCaseVanity != null) {
+            initShowcase();
+        }
+//        else {
+//            if (!showcasePopup) {
+//                initShowcase();
+//            }
+//        }
+    }
+
+    private void updateScore() {
+        j++;
+        if (j == 2) {
+            earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
+            i++;
+            j = 0;
         }
     }
 
@@ -231,6 +245,8 @@ public class ResultScreenScript implements IScript {
         btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
         TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
         ticLbl.color.a = 0f;
+        LabelComponent lc = btn_lblE.getComponent(LabelComponent.class);
+        lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
 
         aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
@@ -270,7 +286,7 @@ public class ResultScreenScript implements IScript {
 
             sc.player.speed = 12;
 
-            if(sc.player.time >= 225) {
+            if (sc.player.time >= 225) {
                 sc.player.setAnimation(1);
             }
         }
@@ -278,6 +294,10 @@ public class ResultScreenScript implements IScript {
         TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
         tc.x = -25;
         tc.y = -35;
-//        showcasePopup = true;
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }

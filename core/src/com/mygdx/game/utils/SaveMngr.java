@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by AnastasiiaRudyk on 12/14/2015.
+ * Created by AR on 12/14/2015.
  */
 public class SaveMngr {
 
@@ -128,8 +128,8 @@ public class SaveMngr {
         public String name;
         public int cost;
         public String description;
-        public boolean bought = true;
-        public boolean available = true;
+        public boolean bought;
+        public boolean advertised;
         public boolean enabled;
         public boolean floatingText;
         public int bugsSpawnAmount;
@@ -146,7 +146,7 @@ public class SaveMngr {
             this.cost = vc.cost;
             this.description = vc.description;
             this.bought = vc.bought;
-            this.available = vc.available;
+            this.advertised = vc.advertised;
             this.enabled = vc.enabled;
             this.floatingText = vc.floatingText;
             this.bugsSpawnAmount = vc.bugsSpawnAmount;
@@ -165,23 +165,27 @@ public class SaveMngr {
         vanity1.attackSpeed = 5;
 //        vanity1.icon = "btn_shop_item_1";
         vanity1.cost = 150;
+        vanity1.name = "vanity1";
         vanity1.assetsToChange.put("head_top", "head_top_christmas");
         vanity1.assetsToChange.put("head_mid", "head_mid_christmas");
         vanity1.assetsToChange.put("head_bottom", "head_bottom_christmas");
 
 //        vanity2.icon = "btn_shop_item_2";
         vanity2.cost = 250;
+        vanity2.name = "vanity2";
         vanity2.assetsToChange.put("head_top", "head_top_deer");
         vanity2.assetsToChange.put("head_mid", "head_mid_default");
         vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
 
 //        vanity3.icon = "btn_shop_item_3";
         vanity3.cost = 90;
+        vanity3.name = "vanity3";
         vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
         vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
 
 //        vanity4.icon = "btn_shop_item_4";
         vanity4.cost = 650;
+        vanity4.name = "vanity4";
         vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
         vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
         vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");
