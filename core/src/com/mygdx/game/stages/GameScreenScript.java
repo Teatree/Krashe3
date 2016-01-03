@@ -341,9 +341,8 @@ public class GameScreenScript implements IScript {
         if (canCocoonSpawn()) {
             cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
-            CompositeItemVO cocoonComposite = sceneLoader.loadVoFromLibrary("drunkbugLib");
-            Entity cocoonEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), cocoonComposite);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), cocoonEntity, cocoonComposite.composite);
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            Entity cocoonEntity = root.getChild("cocoonAni").getEntity();
 
             TransformComponent tc = cocoonEntity.getComponent(TransformComponent.class);
             tc.x = 850;
@@ -353,7 +352,6 @@ public class GameScreenScript implements IScript {
             cocoonEntity.add(fpc);
             CocoonComponent cc = new CocoonComponent();
             cocoonEntity.add(cc);
-            sceneLoader.getEngine().addEntity(cocoonEntity);
         }
     }
 

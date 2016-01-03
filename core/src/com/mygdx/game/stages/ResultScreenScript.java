@@ -5,6 +5,7 @@ import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -30,7 +31,13 @@ public class ResultScreenScript implements IScript {
     }
 
     Entity txtEarnedE;
+    Entity progressBarE;
+    Entity backBtn;
+    Entity backPlay;
+    Entity shopBtn;
     LabelComponent earnedLabel;
+    boolean showcasePopup;
+    int nextVanityCost;
     int i = 0;
     int j = 0;
     int counter = 100;
@@ -46,6 +53,11 @@ public class ResultScreenScript implements IScript {
         Entity txtTotalE = resultScreenItem.getChild("lbl_TOTAL").getEntity();
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), "TOTAL: " + String.valueOf(fpc.totalScore));
+
+        progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
+
+        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
+        dcProgressBar.width = fpc.totalScore - fpc.score;
 
 //        Entity txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
 //        LabelComponent earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
@@ -67,7 +79,7 @@ public class ResultScreenScript implements IScript {
                 return 0;
             }
         });
-        int nextVanityCost = 0;
+        nextVanityCost = 0;
         for(VanityComponent vc: vanities){
             if(vc.cost >= fpc.totalScore){
                 nextVanityCost = vc.cost;
@@ -80,14 +92,10 @@ public class ResultScreenScript implements IScript {
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
         needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
 
-
-        Entity progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
-        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        dcProgressBar.width = ((float)fpc.totalScore/(float)nextVanityCost) * 100 * 6.9f;
     }
 
     private void initBackButton() {
-        Entity backBtn = resultScreenItem.getChild("btn_back").getEntity();
+        backBtn = resultScreenItem.getChild("btn_back").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -104,15 +112,17 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initMenu();
+                if(!showcasePopup) {
+                    stage.initMenu();
+                }
             }
         });
     }
 
     private void initPlayBtn() {
-        Entity backBtn = resultScreenItem.getChild("btn_play").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        backPlay = resultScreenItem.getChild("btn_play").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
+        backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer("normal").isVisible = true;
@@ -127,15 +137,17 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initGame();
+                if(!showcasePopup) {
+                    stage.initGame();
+                }
             }
         });
     }
 
     private void initShopBtn() {
-        Entity backBtn = resultScreenItem.getChild("btn_shop").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        shopBtn = resultScreenItem.getChild("btn_shop").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(shopBtn, LayerMapComponent.class);
+        shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer("normal").isVisible = true;
@@ -150,7 +162,9 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initShopMenu();
+                if(!showcasePopup) {
+                    stage.initShopMenu();
+                }
             }
         });
     }
@@ -172,6 +186,20 @@ public class ResultScreenScript implements IScript {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
                 i++;
                 j=0;
+            }
+        }
+        else{
+            DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
+            if(dcProgressBar.width <= ((float)fpc.totalScore/(float)nextVanityCost) * 100 * 6.9f) {
+                dcProgressBar.width+=2;
+            }else {
+//                if (){
+                    Entity showcaseE = resultScreenItem.getChild("showcase").getEntity();
+                    TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
+                    tc.x = -25;
+                    tc.y = -35;
+                    showcasePopup = true;
+//                }
             }
         }
     }
