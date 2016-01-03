@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r4.1">
+    <folder id="0">
+        <file id="0" name="item_back_shine.png" width="120" height="120" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="item_unknown.png" width="120" height="120" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="intro" length="230" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="140">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+                <key id="2" time="170">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+                <key id="3" time="210">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+                <key id="4" time="230">
+                    <object_ref id="0" timeline="0" key="3" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="3" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="item_back_shine">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="0.318025" y="-0.000837" pivot_x="0.498431" pivot_y="0.500837" scale_x="0.411915" scale_y="0.411915" a="0"/>
+                </key>
+                <key id="1" time="140" spin="0">
+                    <object folder="0" file="0" x="0.318025" y="-0.000837" pivot_x="0.498431" pivot_y="0.500837" scale_x="1.4" scale_y="1.2"/>
+                </key>
+                <key id="2" time="210" spin="0">
+                    <object folder="0" file="0" x="0.318025" y="-0.000837" pivot_x="0.498431" pivot_y="0.500837"/>
+                </key>
+                <key id="3" time="230" spin="0">
+                    <object folder="0" file="0" x="0.318025" y="-0.000837" pivot_x="0.498431" pivot_y="0.500837"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="item_unknown">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="0.190904" y="-0.130113" pivot_x="0.490585" pivot_y="0.498222" scale_x="0.411915" scale_y="0.411915" a="0"/>
+                </key>
+                <key id="1" time="140" spin="0">
+                    <object folder="0" file="1" x="0.141018" y="-0.180844" pivot_x="0.490585" pivot_y="0.498222" scale_x="1.1" scale_y="1.1"/>
+                </key>
+                <key id="2" time="170" spin="0">
+                    <object folder="0" file="1" x="0.165961" y="-0.155478" pivot_x="0.490585" pivot_y="0.498222"/>
+                </key>
+                <key id="3" time="230" spin="0">
+                    <object folder="0" file="1" x="-0.12555" y="-0.130113" pivot_x="0.490585" pivot_y="0.498222"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="idle" length="300" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="0" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="150">
+                    <object_ref id="0" timeline="1" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="0" key="0" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="item_unknown_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="0.87445" y="0.86989" pivot_x="0.498431" pivot_y="0.504185"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="item_back_shine_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="0.31541" y="0.001046" pivot_x="0.501046" pivot_y="0.498954"/>
+                </key>
+                <key id="1" time="150" spin="0">
+                    <object folder="0" file="0" x="0.31541" y="0.001046" pivot_x="0.501046" pivot_y="0.498954" scale_x="1.111226" scale_y="1.023072" a="0.83333"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
