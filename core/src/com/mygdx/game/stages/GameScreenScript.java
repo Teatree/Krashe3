@@ -44,7 +44,7 @@ public class GameScreenScript implements IScript {
     public static boolean isStarted;
 
 //    public static int gameOverCounter = 240;
-    public static int gameOverCounter = 20;
+    public static int gameOverCounter = 240;
 
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;

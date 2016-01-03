@@ -68,7 +68,6 @@ public class ShopScreenScript implements IScript {
             tcb.x = tc.x;
             tcb.y = tc.y;
 
-
             bagEntity.add(new ButtonComponent());
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
@@ -83,9 +82,8 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void clicked() {
-                    System.out.println(vc.icon);
+//                    System.out.println(vc.icon);
                     vc.apply(GameScreenScript.fpc);
-
                 }
             });
             x += 250;

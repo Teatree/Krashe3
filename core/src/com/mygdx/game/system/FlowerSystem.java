@@ -59,6 +59,7 @@ public class FlowerSystem extends IteratingSystem {
 
     public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            sc.player.speed = 24;
             if (fc.state == FlowerComponent.State.IDLE_BITE) {
                 setBiteIdleAnimation(sc);
             }
@@ -158,6 +159,8 @@ public class FlowerSystem extends IteratingSystem {
 //                }
 //            }
 
+        }else{
+            sc.player.speed = 0;
         }
     }
 

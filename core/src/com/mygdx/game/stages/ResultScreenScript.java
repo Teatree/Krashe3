@@ -1,13 +1,18 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -25,6 +30,12 @@ public class ResultScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper resultScreenItem;
+    private Entity btn_lblE;
+    private Entity aniE;
+    private Entity btn_buyE;
+    private Entity btn_noE;
+    private Entity bgE;
+    private Entity showcaseE;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -32,10 +43,9 @@ public class ResultScreenScript implements IScript {
 
     Entity txtEarnedE;
     Entity progressBarE;
-    Entity backBtn;
-    Entity backPlay;
-    Entity shopBtn;
+
     LabelComponent earnedLabel;
+
     boolean showcasePopup;
     int nextVanityCost;
     int i = 0;
@@ -80,8 +90,8 @@ public class ResultScreenScript implements IScript {
             }
         });
         nextVanityCost = 0;
-        for(VanityComponent vc: vanities){
-            if(vc.cost >= fpc.totalScore){
+        for (VanityComponent vc : vanities) {
+            if (vc.cost >= fpc.totalScore) {
                 nextVanityCost = vc.cost;
                 break;
             }
@@ -95,7 +105,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initBackButton() {
-        backBtn = resultScreenItem.getChild("btn_back").getEntity();
+        Entity backBtn = resultScreenItem.getChild("btn_back").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -112,7 +122,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!showcasePopup) {
+                if (!showcasePopup) {
                     stage.initMenu();
                 }
             }
@@ -120,7 +130,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initPlayBtn() {
-        backPlay = resultScreenItem.getChild("btn_play").getEntity();
+        Entity backPlay = resultScreenItem.getChild("btn_play").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
         backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -137,7 +147,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!showcasePopup) {
+                if (!showcasePopup) {
                     stage.initGame();
                 }
             }
@@ -145,7 +155,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initShopBtn() {
-        shopBtn = resultScreenItem.getChild("btn_shop").getEntity();
+        Entity shopBtn = resultScreenItem.getChild("btn_shop").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(shopBtn, LayerMapComponent.class);
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -162,7 +172,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!showcasePopup) {
+                if (!showcasePopup) {
                     stage.initShopMenu();
                 }
             }
@@ -177,6 +187,10 @@ public class ResultScreenScript implements IScript {
     @Override
     public void act(float delta) {
         scoreLoading();
+
+        if (showcasePopup) {
+            showFadeIn();
+        }
     }
 
     private void scoreLoading() {
@@ -185,22 +199,85 @@ public class ResultScreenScript implements IScript {
             if (j == 2) {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
                 i++;
-                j=0;
+                j = 0;
             }
-        }
-        else{
+        } else {
             DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-            if(dcProgressBar.width <= ((float)fpc.totalScore/(float)nextVanityCost) * 100 * 6.9f) {
-                dcProgressBar.width+=2;
-            }else {
-//                if (){
-                    Entity showcaseE = resultScreenItem.getChild("showcase").getEntity();
-                    TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
-                    tc.x = -25;
-                    tc.y = -35;
-                    showcasePopup = true;
-//                }
+            if (dcProgressBar.width <= ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f) {
+                dcProgressBar.width += 2;
+            } else {
+                if (!showcasePopup) {
+                    initShowcase();
+                }
             }
         }
+    }
+
+    private void initShowcase() {
+        showcaseE = resultScreenItem.getChild("showcase").getEntity();
+
+        bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
+        TintComponent tic = bgE.getComponent(TintComponent.class);
+        tic.color.a = 0f;
+
+        btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
+        TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
+        ticNo.color.a = 0f;
+
+        btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
+        TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
+        ticBuy.color.a = 0f;
+
+        btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+        TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
+        ticLbl.color.a = 0f;
+
+        aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+        SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
+        sc.animationName = "intro";
+        sc.player.speed = 0;
+        sc.player.time = 0;
+
+        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
+        tc.x = -25;
+        tc.y = -35;
+        showcasePopup = true;
+    }
+
+    private void showFadeIn() {
+        showcaseE = resultScreenItem.getChild("showcase").getEntity();
+        TintComponent tic = bgE.getComponent(TintComponent.class);
+
+        if (tic.color.a <= 1) {
+            bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
+            tic.color.a += 0.05f;
+
+            btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
+            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
+            ticNo.color.a += 0.05f;
+
+            btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
+            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
+            ticBuy.color.a += 0.05f;
+
+            btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
+            ticLbl.color.a += 0.05f;
+
+        } else if (tic.color.a >= 0.9f) {
+            Entity aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+            SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
+
+            sc.player.speed = 12;
+
+            if(sc.player.time >= 225) {
+                sc.player.setAnimation(1);
+            }
+        }
+
+        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
+        tc.x = -25;
+        tc.y = -35;
+//        showcasePopup = true;
     }
 }
