@@ -74,9 +74,8 @@ public class ButterflySystem extends IteratingSystem {
                 tc.y = -300;
                 entity.remove(ButterflyComponent.class);
 
-                fcc.totalScore -= fcc.score;
                 fcc.score += bc.points;
-                fcc.totalScore += fcc.score;
+                fcc.totalScore += bc.points;
 
                 GameScreenScript.reloadScoreLabel(fcc);
             }

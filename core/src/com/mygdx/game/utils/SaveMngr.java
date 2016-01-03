@@ -158,9 +158,9 @@ public class SaveMngr {
     }
     public static void generateVanityJSON() {
         VanityStats vanity1 = new VanityStats();
-        VanityStats vanity2 = new VanityStats();
-        VanityStats vanity3 = new VanityStats();
-        VanityStats vanity4 = new VanityStats();
+//        VanityStats vanity2 = new VanityStats();
+//        VanityStats vanity3 = new VanityStats();
+//        VanityStats vanity4 = new VanityStats();
 
         vanity1.attackSpeed = 5;
         vanity1.icon = "btn_shop_item_1";
@@ -169,31 +169,31 @@ public class SaveMngr {
         vanity1.assetsToChange.put("head_mid", "head_mid_christmas");
         vanity1.assetsToChange.put("head_bottom", "head_bottom_christmas");
 
-        vanity2.icon = "btn_shop_item_2";
-        vanity2.cost = 250;
-        vanity2.assetsToChange.put("head_top", "head_top_deer");
-        vanity2.assetsToChange.put("head_mid", "head_mid_default");
-        vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
-
-        vanity3.icon = "btn_shop_item_3";
-        vanity3.cost = 90;
-        vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
-        vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
-
-        vanity4.icon = "btn_shop_item_4";
-        vanity4.cost = 650;
-        vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
-        vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
-        vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_christmas");
-        vanity4.assetsToChange.put("peducle_top", "peducle_top_christmas");
-        vanity4.assetsToChange.put("peducle_top_under", "peducle_top_under_christmas");
+//        vanity2.icon = "btn_shop_item_2";
+//        vanity2.cost = 250;
+//        vanity2.assetsToChange.put("head_top", "head_top_deer");
+//        vanity2.assetsToChange.put("head_mid", "head_mid_default");
+//        vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
+//
+//        vanity3.icon = "btn_shop_item_3";
+//        vanity3.cost = 90;
+//        vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
+//        vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
+//
+//        vanity4.icon = "btn_shop_item_4";
+//        vanity4.cost = 650;
+//        vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
+//        vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
+//        vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_christmas");
+//        vanity4.assetsToChange.put("peducle_top", "peducle_top_christmas");
+//        vanity4.assetsToChange.put("peducle_top_under", "peducle_top_under_christmas");
 
         List<VanityStats> vanityStatses = new ArrayList<>();
 
         vanityStatses.add(vanity1);
-        vanityStatses.add(vanity2);
-        vanityStatses.add(vanity3);
-        vanityStatses.add(vanity4);
+//        vanityStatses.add(vanity2);
+//        vanityStatses.add(vanity3);
+//        vanityStatses.add(vanity4);
 
         Json jsonVanityObj = new Json();
 
