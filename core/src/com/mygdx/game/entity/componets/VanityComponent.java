@@ -51,6 +51,7 @@ public class VanityComponent implements Component {
         this.description = vc.description;
         this.bought = vc.bought;
         this.advertised = vc.advertised;
+
         this.enabled = vc.enabled;
         this.floatingText = vc.floatingText;
         this.bugsSpawnAmount = vc.bugsSpawnAmount;

@@ -79,7 +79,8 @@ public class CocoonSystem extends IteratingSystem {
             }
 
             if (cc.state == DEAD) {
-                GameStage.sceneLoader.getEngine().removeEntity(entity);
+//                GameStage.sceneLoader.getEngine().removeEntity(entity);
+                entity.getComponent(TransformComponent.class).y = -500;
             }
         }
     }

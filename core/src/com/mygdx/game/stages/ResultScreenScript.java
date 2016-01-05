@@ -1,6 +1,8 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
@@ -10,8 +12,6 @@ import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -27,6 +27,13 @@ import static com.mygdx.game.stages.GameScreenScript.*;
  * Created by Teatree on 7/25/2015.
  */
 public class ResultScreenScript implements IScript {
+
+    public static final int PROGRESS_BAR_WIDTH = 690;
+    public static final String SHOWCASE = "showcase";
+    public static final String PATH_PREFIX = "orig\\spriter_animations\\showcase_present_ani\\";
+    public static final String TYPE_SUFFIX = ".png";
+    public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
+
 
     private GameStage stage;
     private ItemWrapper resultScreenItem;
@@ -86,8 +93,11 @@ public class ResultScreenScript implements IScript {
 
         Entity txtNeedE = resultScreenItem.getChild("lbl_TO_UNLOCK").getEntity();
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
-        needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
-
+        if (need > 0) {
+            needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
+        } else {
+            needLabel.text.replace(0, needLabel.text.capacity(), "YOU UNLOCKED NEXT ITEM!");
+        }
     }
 
     private int getNeedForNextItem() {
@@ -138,6 +148,56 @@ public class ResultScreenScript implements IScript {
                 if (!showcasePopup) {
                     stage.initMenu();
                 }
+            }
+        });
+    }
+    private void initShowCaseBackButton() {
+        Entity backBtn = resultScreenItem.getChild(SHOWCASE).getChild("btn_no").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+            }
+
+            @Override
+            public void clicked() {
+                showcasePopup = false;
+                showcaseE.getComponent(TransformComponent.class).x = 2000;
+                showCaseVanity = null;
+            }
+        });
+    }
+
+    private void initShowCaseBuyButton() {
+        Entity backBtn = resultScreenItem.getChild(SHOWCASE).getChild("btn_buy").getEntity();
+        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+            }
+
+            @Override
+            public void clicked() {
+                showcasePopup = false;
+                showcaseE.getComponent(TransformComponent.class).x = 2000;
+                showCaseVanity.apply(fpc);
+                showCaseVanity = null;
             }
         });
     }
@@ -206,7 +266,9 @@ public class ResultScreenScript implements IScript {
 
     private void updateProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        if (dcProgressBar.width <= ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f) {
+        float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
+        if (dcProgressBar.width <= progressBarActualLength &&
+                dcProgressBar.width <= PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += 2;
         } else if (!showcasePopup && showCaseVanity != null) {
             initShowcase();
@@ -220,15 +282,19 @@ public class ResultScreenScript implements IScript {
 
     private void updateScore() {
         j++;
+        int counterStep = fpc.score / 72 > 1 ? fpc.score / 72 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
-            i++;
+            i += counterStep;
             j = 0;
         }
     }
 
     private void initShowcase() {
         showcaseE = resultScreenItem.getChild("showcase").getEntity();
+
+        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
+        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
 
         bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
         TintComponent tic = bgE.getComponent(TintComponent.class);
@@ -258,6 +324,8 @@ public class ResultScreenScript implements IScript {
         tc.x = -25;
         tc.y = -35;
         showcasePopup = true;
+        initShowCaseBackButton();
+        initShowCaseBuyButton();
     }
 
     private void showFadeIn() {

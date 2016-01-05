@@ -56,8 +56,7 @@ public class SaveMngr {
                 e.printStackTrace();
             }
             for (VanityStats vs : gameStats.vanities){
-                VanityComponent vc = new VanityComponent();
-                vc.assetsToChange = vs.assetsToChange;
+                VanityComponent vc = new VanityComponent(vs);
                 fc.vanities.add(vc);
             }
             for (DailyGoalStats dg : gameStats.goals){
@@ -162,30 +161,30 @@ public class SaveMngr {
         VanityStats vanity3 = new VanityStats();
         VanityStats vanity4 = new VanityStats();
 
+        vanity3.cost = 90;
+        vanity3.name = "Christmas leaves";
+        vanity3.icon = "leaf_christmas";
+        vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
+        vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
+
         vanity1.attackSpeed = 5;
-//        vanity1.icon = "btn_shop_item_1";
         vanity1.cost = 150;
-        vanity1.name = "vanity1";
+        vanity1.name = "majestic beard";
+        vanity1.icon = "santabeard";
         vanity1.assetsToChange.put("head_top", "head_top_christmas");
         vanity1.assetsToChange.put("head_mid", "head_mid_christmas");
         vanity1.assetsToChange.put("head_bottom", "head_bottom_christmas");
 
-//        vanity2.icon = "btn_shop_item_2";
         vanity2.cost = 250;
-        vanity2.name = "vanity2";
+        vanity2.name = "Deer horns";
+        vanity2.icon = "deer";
         vanity2.assetsToChange.put("head_top", "head_top_deer");
         vanity2.assetsToChange.put("head_mid", "head_mid_default");
         vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
 
-//        vanity3.icon = "btn_shop_item_3";
-        vanity3.cost = 90;
-        vanity3.name = "vanity3";
-        vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
-        vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
-
-//        vanity4.icon = "btn_shop_item_4";
         vanity4.cost = 650;
-        vanity4.name = "vanity4";
+        vanity4.name = "Santa outfit";
+        vanity4.icon = "christmas";
         vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
         vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
         vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");

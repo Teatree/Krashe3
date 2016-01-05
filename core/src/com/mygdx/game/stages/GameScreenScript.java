@@ -355,6 +355,7 @@ public class GameScreenScript implements IScript {
         }
     }
 
+    //TODO: NPE
     private boolean canCocoonSpawn() {
         return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
                 sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
