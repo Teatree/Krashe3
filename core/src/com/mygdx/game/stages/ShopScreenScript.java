@@ -41,11 +41,11 @@ public class ShopScreenScript implements IScript {
     }
 
     private void getAllAllVanities(){
-        List<VanityComponent> vanityComponentList = SaveMngr.getAllVanity();
+//        List<VanityComponent> vanityComponentList = ;
         int x = 173;
         int y = 289;
 
-        for (final VanityComponent vc : vanityComponentList) {
+        for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
 
 
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();

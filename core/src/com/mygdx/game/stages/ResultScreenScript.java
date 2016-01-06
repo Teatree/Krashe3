@@ -30,9 +30,6 @@ public class ResultScreenScript implements IScript {
 
     public static final int PROGRESS_BAR_WIDTH = 690;
     public static final String SHOWCASE = "showcase";
-    public static final String PATH_PREFIX = "orig\\spriter_animations\\showcase_present_ani\\";
-    public static final String TYPE_SUFFIX = ".png";
-    public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
 
 
     private GameStage stage;
@@ -42,13 +39,13 @@ public class ResultScreenScript implements IScript {
     private Entity btn_buyE;
     private Entity btn_noE;
     private Entity bgE;
-    private Entity showcaseE;
 
-    private VanityComponent showCaseVanity;
+    public static VanityComponent showCaseVanity;
+    private static boolean show;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
-    }
+}
 
     Entity txtEarnedE;
     Entity progressBarE;
@@ -101,8 +98,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private int getNeedForNextItem() {
-        List<VanityComponent> vanities = SaveMngr.getAllVanity();
-        Collections.sort(vanities, new Comparator<VanityComponent>() {
+        Collections.sort(fpc.vanities, new Comparator<VanityComponent>() {
             @Override
             public int compare(VanityComponent o1, VanityComponent o2) {
                 if (o1.cost > o2.cost) return 1;
@@ -111,7 +107,7 @@ public class ResultScreenScript implements IScript {
             }
         });
         nextVanityCost = 0;
-        for (VanityComponent vc : vanities) {
+        for (VanityComponent vc : fpc.vanities) {
             if (!vc.advertised) {
                 if (vc.cost > fpc.totalScore) {
                     nextVanityCost = vc.cost;
@@ -147,57 +143,8 @@ public class ResultScreenScript implements IScript {
             public void clicked() {
                 if (!showcasePopup) {
                     stage.initMenu();
+                    show = false;
                 }
-            }
-        });
-    }
-    private void initShowCaseBackButton() {
-        Entity backBtn = resultScreenItem.getChild(SHOWCASE).getChild("btn_no").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                showcasePopup = false;
-                showcaseE.getComponent(TransformComponent.class).x = 2000;
-                showCaseVanity = null;
-            }
-        });
-    }
-
-    private void initShowCaseBuyButton() {
-        Entity backBtn = resultScreenItem.getChild(SHOWCASE).getChild("btn_buy").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                showcasePopup = false;
-                showcaseE.getComponent(TransformComponent.class).x = 2000;
-                showCaseVanity.apply(fpc);
-                showCaseVanity = null;
             }
         });
     }
@@ -220,9 +167,10 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if (!showcasePopup) {
+//                if (!showcasePopup) {
                     stage.initGame();
-                }
+                show = false;
+//                }
             }
         });
     }
@@ -245,9 +193,10 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if (!showcasePopup) {
+//                if (!showcasePopup) {
                     stage.initShopMenu();
-                }
+                show = false;
+//                }
             }
         });
     }
@@ -259,9 +208,10 @@ public class ResultScreenScript implements IScript {
         } else {
             updateProgressBar();
         }
-        if (showcasePopup) {
-            showFadeIn();
-        }
+//        if (showcasePopup) {
+//            showFadeIn();
+
+//        }
     }
 
     private void updateProgressBar() {
@@ -291,78 +241,46 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initShowcase() {
-        showcaseE = resultScreenItem.getChild("showcase").getEntity();
-
-        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
-        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
-
-        bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
-        TintComponent tic = bgE.getComponent(TintComponent.class);
-        tic.color.a = 0f;
-
-        btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
-        TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
-        ticNo.color.a = 0f;
-
-        btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
-        TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
-        ticBuy.color.a = 0f;
-
-        btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
-        TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
-        ticLbl.color.a = 0f;
-        LabelComponent lc = btn_lblE.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
-
-        aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
-        SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
-        sc.animationName = "intro";
-        sc.player.speed = 0;
-        sc.player.time = 0;
-
-        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
-        tc.x = -25;
-        tc.y = -35;
-        showcasePopup = true;
-        initShowCaseBackButton();
-        initShowCaseBuyButton();
-    }
-
-    private void showFadeIn() {
-        showcaseE = resultScreenItem.getChild("showcase").getEntity();
-        TintComponent tic = bgE.getComponent(TintComponent.class);
-
-        if (tic.color.a <= 1) {
-            bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
-            tic.color.a += 0.05f;
-
-            btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
-            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
-            ticNo.color.a += 0.05f;
-
-            btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
-            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
-            ticBuy.color.a += 0.05f;
-
-            btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
-            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
-            ticLbl.color.a += 0.05f;
-
-        } else if (tic.color.a >= 0.9f) {
-            Entity aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
-            SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
-
-            sc.player.speed = 12;
-
-            if (sc.player.time >= 225) {
-                sc.player.setAnimation(1);
-            }
+        if (!show) {
+            stage.initShowcase();
+            show = true;
         }
-
-        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
-        tc.x = -25;
-        tc.y = -35;
     }
+//    private void showFadeIn() {
+//        showcaseE = resultScreenItem.getChild("showcase").getEntity();
+//        TintComponent tic = bgE.getComponent(TintComponent.class);
+//
+//        if (tic.color.a <= 1) {
+//            bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
+//            tic.color.a += 0.05f;
+//
+//            btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
+//            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
+//            ticNo.color.a += 0.05f;
+//
+//            btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
+//            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
+//            ticBuy.color.a += 0.05f;
+//
+//            btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+//            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
+//            ticLbl.color.a += 0.05f;
+//
+//        } else if (tic.color.a >= 0.9f) {
+//            Entity aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+//            SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
+//
+//            sc.player.speed = 12;
+//
+//            if (sc.player.time >= 225) {
+//                sc.player.setAnimation(1);
+//            }
+//        }
+//
+//        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
+//        tc.x = -25;
+//        tc.y = -35;
+//    }
 
     @Override
     public void dispose() {

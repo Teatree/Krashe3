@@ -64,7 +64,7 @@ public class VanityComponent implements Component {
 
     public void apply (FlowerPublicComponent fc){
 
-//        if (bought) {
+        if (bought) {
             fc.totalScore -= cost;
             this.enabled = true;
 
@@ -72,8 +72,9 @@ public class VanityComponent implements Component {
                 FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
                 newAsset.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
             }
-            fc.vanities.add(this);
-//        }
+//            fc.vanities.add(this);
+            this.enabled = true;
+        }
     }
 
     public void disable(FlowerPublicComponent fc){

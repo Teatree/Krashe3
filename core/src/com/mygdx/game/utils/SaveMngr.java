@@ -28,6 +28,8 @@ public class SaveMngr {
             VanityStats vs = new VanityStats(vc);
             gameStats.vanities.add(vs);
         }
+        Json json2 = new Json();
+        writeFile("vanity.params", json2.toJson(gameStats.vanities));
         for (DailyGoal goal : fc.goals){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -55,10 +57,11 @@ public class SaveMngr {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            for (VanityStats vs : gameStats.vanities){
-                VanityComponent vc = new VanityComponent(vs);
-                fc.vanities.add(vc);
-            }
+//            for (VanityStats vs : gameStats.vanities){
+//                VanityComponent vc = new VanityComponent(vs);
+//                fc.vanities.add(vc);
+//            }
+            fc.vanities = getAllVanity();
             for (DailyGoalStats dg : gameStats.goals){
                 DailyGoal goal = new DailyGoal();
                 goal.achieved = dg.achieved;
@@ -202,6 +205,4 @@ public class SaveMngr {
 
         writeFile("vanity.params", jsonVanityObj.toJson(vanityStatses));
     }
-
-
 }
