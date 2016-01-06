@@ -242,8 +242,8 @@ public class ResultScreenScript implements IScript {
 
     private void initShowcase() {
         if (!show) {
-//            stage.initShowcase();
             show = true;
+            stage.initShowcase();
         }
     }
 //    private void showFadeIn() {

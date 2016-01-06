@@ -77,14 +77,14 @@ public class GameStage extends Stage{
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
-//    public void initShowcase(){
-//        sceneLoader = new SceneLoader();
-//        sceneLoader.loadScene("ShowcaseScene", viewport);
-//        ShowcaseScreenScript result = new ShowcaseScreenScript(this);
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        root.addScript(result);
-//        GlobalConstants.CUR_SCREEN = "SHOW";
-//    }
+    public void initShowcase(){
+        sceneLoader = new SceneLoader();
+        sceneLoader.loadScene("ShowcaseScene", viewport);
+        ShowcaseScreenScript result = new ShowcaseScreenScript(this);
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        root.addScript(result);
+        GlobalConstants.CUR_SCREEN = "SHOW";
+    }
 
     public void initShopMenu(){
         sceneLoader = new SceneLoader();
