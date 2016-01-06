@@ -45,7 +45,7 @@ public class CameraShaker {
 //      GameStage.viewport.getCamera().position.y = Gdx.graphics.getHeight()/2 + 2;
 //            blinkCounter = 0;
             ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer("blink").isVisible = false;
-            GameStage.viewport.apply(true);
+//            GameStage.viewport.apply(true);
         }
     }
 

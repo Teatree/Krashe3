@@ -10,8 +10,10 @@ import com.badlogic.gdx.utils.Align;
  */
 public class BugJuiceBubbleComponent implements Component {
     public float startX, startY;
-    public float endX = Gdx.graphics.getWidth() - 120;
-    public float endY = Gdx.graphics.getHeight() - 120;
+//    public float endX = Gdx.graphics.getWidth() - 120;
+//    public float endY = Gdx.graphics.getHeight() - 120;
+    public float endX = 1080;
+    public float endY = 680;
     public float duration = 1;
     public float time;
     public float alpha = 0.2f;

@@ -29,7 +29,7 @@ public class GameScreenScript implements IScript {
     public static final String START_MESSAGE = "TAP TO START";
 
     private static ItemWrapper gameItem;
-    GameStage game;
+    public static GameStage game;
     public Random random = new Random();
 
     public int dandelionSpawnCounter;
@@ -131,8 +131,8 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                game.initMenu();
-                pause();
+                game.initMenu();
+//                pause();
             }
         });
     }

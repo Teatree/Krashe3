@@ -16,11 +16,11 @@ public class Main extends ApplicationAdapter {
 	public static GameStage stage;
 	Array<Viewport> viewports;
 	Array<String> names;
+    public int viewportWidth;
+    public int viewportHeight;
 
 	@Override
 	public void create () {
-
-//		SaveMngr.getAllVanity();
 		SaveMngr.generateVanityJSON();
 		names = getViewportNames();
 
@@ -39,22 +39,23 @@ public class Main extends ApplicationAdapter {
 		stage.update();
 
 		stage.act();
+        stage.getViewport().update(viewportWidth, viewportHeight, true);
 //		stage.setDebugAll(true);
 		stage.draw();
 	}
 
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+        viewportWidth = width;
+        viewportHeight = height;
+        stage.getViewport().update(width, height, true);
 	}
 
 	@Override
 	public void pause () {
-//		SaveMngr.saveStats(GameScreenScript.fpc);
 	}
 
 	@Override
 	public void resume () {
-//		SaveManager.loadProperties();
 	}
 
 	@Override
@@ -83,11 +84,11 @@ public class Main extends ApplicationAdapter {
 		int maxWorldHeight = 1440;
 
 		Array<Viewport> viewports = new Array();
-		viewports.add(new StretchViewport(minWorldWidth, minWorldHeight, camera));
-		viewports.add(new FillViewport(minWorldWidth, minWorldHeight, camera));
-		viewports.add(new FitViewport(minWorldWidth, minWorldHeight, camera));
-		viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, camera));
-		viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, maxWorldWidth, maxWorldHeight, camera));
+        viewports.add(new StretchViewport(minWorldWidth, minWorldHeight, camera));
+        viewports.add(new FitViewport(minWorldWidth, minWorldHeight, camera));
+        viewports.add(new FillViewport(minWorldWidth, minWorldHeight, camera));
+        viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, maxWorldWidth, maxWorldHeight, camera));
+        viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, camera));
 		viewports.add(new ScreenViewport(camera));
 
 		ScreenViewport screenViewport = new ScreenViewport(camera);

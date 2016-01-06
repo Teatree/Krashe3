@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
@@ -23,7 +22,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
-
+import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.utils.BugPool.*;
 
 
@@ -201,10 +200,10 @@ public class BugSystem extends IteratingSystem {
     }
 
     public boolean isOutOfBounds(BugComponent bc){
-        if (bc.boundsRect.getX() >= Gdx.graphics.getWidth()){
-            return true;
-        }
-        return false;
+//        if (bc.boundsRect.getX() >= stage.getViewport().getScreenWidth()){
+//            return true;
+//        }
+        return bc.boundsRect.getX() >= 1200;
     }
 
     public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent){

@@ -18,6 +18,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
+import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
 
 /**
@@ -46,11 +47,14 @@ public class ButterflySystem extends IteratingSystem {
             if (bc.state.equals(SPAWN)) {
                 bc.dataSet = new Vector2[3];
                 bc.dataSet[0] = new Vector2(tc.x, tc.y);
-                bc.dataSet[1] = new Vector2(-500, Gdx.graphics.getHeight() / 2);
-                bc.dataSet[2] = new Vector2(Gdx.graphics.getWidth() - 30, Gdx.graphics.getHeight() / 2);
+//                bc.dataSet[1] = new Vector2(-500, stage.getViewport().getScreenHeight() / 2);
+//                bc.dataSet[2] = new Vector2(stage.getViewport().getScreenWidth() - 30,stage.getViewport().getScreenHeight() / 2);
+                bc.dataSet[1] = new Vector2(-500, 400);
+                bc.dataSet[2] = new Vector2(1170,400);
 
                 bc.myCatmull = new Bezier<>(bc.dataSet);
-                bc.out = new Vector2(340, Gdx.graphics.getHeight() / 4);
+//                bc.out = new Vector2(340, stage.getViewport().getScreenHeight() / 4);
+                bc.out = new Vector2(340, 200);
                 bc.myCatmull.valueAt(bc.out, 5);
                 bc.myCatmull.derivativeAt(bc.out, 5);
 
@@ -98,7 +102,8 @@ public class ButterflySystem extends IteratingSystem {
     }
 
     public boolean isOutOfBounds(ButterflyComponent bc) {
-        return bc.boundsRect.getX() >= Gdx.graphics.getWidth();
+//        return bc.boundsRect.getX() >= stage.getViewport().getScreenWidth();
+        return bc.boundsRect.getX() >= 1200;
     }
 
     private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {

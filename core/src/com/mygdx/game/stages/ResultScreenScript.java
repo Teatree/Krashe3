@@ -242,7 +242,7 @@ public class ResultScreenScript implements IScript {
 
     private void initShowcase() {
         if (!show) {
-            stage.initShowcase();
+//            stage.initShowcase();
             show = true;
         }
     }

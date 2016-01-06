@@ -2,22 +2,16 @@ package com.mygdx.game.system;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 
 import java.util.HashMap;
 import java.util.Random;
 
-import static com.mygdx.game.entity.componets.BugComponent.State.IDLE;
 import static com.mygdx.game.utils.BugPool.*;
 
 /**
@@ -30,7 +24,7 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MAX_X = -400;
     private int SPAWN_MIN_X = 300;
     private int SPAWN_MIN_Y = -200;
-    private int SPAWN_MAX_Y = 700;
+    private int SPAWN_MAX_Y = 600;
 
     public static boolean isAngeredBeesMode = false;
     public static boolean queenBeeOnStage = false;
@@ -65,7 +59,8 @@ public class BugSpawnSystem extends EntitySystem {
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = rand.nextInt(SPAWN_MAX_X-SPAWN_MIN_X)+SPAWN_MIN_X;
         transformComponent.y = rand.nextInt(SPAWN_MAX_Y-SPAWN_MIN_Y)+SPAWN_MIN_Y;
-        bc.endX = Gdx.graphics.getWidth()+200;
+//        bc.endX = stage.getViewport().getScreenWidth()+250;
+        bc.endX = 1450;
         bc.endY = transformComponent.y;
 
         return transformComponent;
