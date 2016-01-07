@@ -1,8 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -39,9 +37,6 @@ public class ShowcaseScreenScript implements IScript {
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
         Entity showcaseE = screenItem.getChild("showcase").getEntity();
-
-        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
-        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
 
         Entity bgE = screenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
         TintComponent tic = bgE.getComponent(TintComponent.class);
@@ -93,9 +88,6 @@ public class ShowcaseScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                showcasePopup = false;
-//                showcaseE.getComponent(TransformComponent.class).x = 2000;
-//                showCaseVanity = null;
                 stage.initResult();
             }
         });
@@ -119,10 +111,7 @@ public class ShowcaseScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                showcasePopup = false;
-//                showcaseE.getComponent(TransformComponent.class).x = 2000;
-                showCaseVanity.apply(fpc);
-//                showCaseVanity = null;
+                showCaseVanity.buyAndUse(fpc);
                 stage.initResult();
             }
         });
