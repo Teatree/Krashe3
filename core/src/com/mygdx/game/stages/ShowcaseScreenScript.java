@@ -23,9 +23,14 @@ public class ShowcaseScreenScript implements IScript {
     public static final String TYPE_SUFFIX = ".png";
     public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
 
-
+    Entity showcaseE;
+    Entity bgE;
     private GameStage stage;
     private ItemWrapper screenItem;
+    private Entity btn_noE;
+    private Entity btn_buyE;
+    private Entity btn_lblE;
+    private Entity aniE;
 
     public ShowcaseScreenScript(GameStage stage) {
         this.stage = stage;
@@ -36,31 +41,31 @@ public class ShowcaseScreenScript implements IScript {
         screenItem = new ItemWrapper(entity);
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
-        Entity showcaseE = screenItem.getChild("showcase").getEntity();
+        showcaseE = screenItem.getChild("showcase").getEntity();
 
-        Entity bgE = screenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
+        bgE = screenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
         TintComponent tic = bgE.getComponent(TintComponent.class);
-//        tic.color.a = 0f;
+        tic.color.a = 0f;
 
-        Entity btn_noE = screenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
+        btn_noE = screenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
         TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
-//        ticNo.color.a = 0f;
+        ticNo.color.a = 0f;
 
-        Entity btn_buyE = screenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
+        btn_buyE = screenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
         TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
-//        ticBuy.color.a = 0f;
+        ticBuy.color.a = 0f;
 
-        Entity btn_lblE = screenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+        btn_lblE = screenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
         TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
-//        ticLbl.color.a = 0f;
+        ticLbl.color.a = 0f;
         LabelComponent lc = btn_lblE.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
 
-        Entity aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+        aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = "intro";
         sc.player.speed = 12;
-//        sc.player.time = 0;
+        sc.player.time = 0;
 
         initShowCaseBackButton();
         initShowCaseBuyButton();
@@ -117,9 +122,46 @@ public class ShowcaseScreenScript implements IScript {
         });
     }
 
+    private void showFadeIn() {
+
+        showcaseE = screenItem.getChild("showcase").getEntity();
+        TintComponent tic = bgE.getComponent(TintComponent.class);
+
+        if (tic.color.a <= 1) {
+            bgE = screenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
+            tic.color.a += 0.05f;
+
+            btn_noE = screenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
+            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
+            ticNo.color.a += 0.05f;
+
+            btn_buyE = screenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
+            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
+            ticBuy.color.a += 0.05f;
+
+            btn_lblE = screenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
+            ticLbl.color.a += 0.05f;
+
+        } else if (tic.color.a >= 0.9f) {
+            Entity aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+            SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
+
+            sc.player.speed = 12;
+
+            if (sc.player.time >= 225) {
+                sc.player.setAnimation(1);
+            }
+        }
+
+        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
+        tc.x = -25;
+        tc.y = -35;
+    }
+
     @Override
     public void act(float delta) {
-
+        showFadeIn();
     }
 
     @Override

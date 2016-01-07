@@ -225,41 +225,6 @@ public class ResultScreenScript implements IScript {
             stage.initShowcase();
         }
     }
-//    private void showFadeIn() {
-//        showcaseE = resultScreenItem.getChild("showcase").getEntity();
-//        TintComponent tic = bgE.getComponent(TintComponent.class);
-//
-//        if (tic.color.a <= 1) {
-//            bgE = resultScreenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
-//            tic.color.a += 0.05f;
-//
-//            btn_noE = resultScreenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
-//            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
-//            ticNo.color.a += 0.05f;
-//
-//            btn_buyE = resultScreenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
-//            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
-//            ticBuy.color.a += 0.05f;
-//
-//            btn_lblE = resultScreenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
-//            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
-//            ticLbl.color.a += 0.05f;
-//
-//        } else if (tic.color.a >= 0.9f) {
-//            Entity aniE = resultScreenItem.getChild("showcase").getChild("showcase_ani").getEntity();
-//            SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
-//
-//            sc.player.speed = 12;
-//
-//            if (sc.player.time >= 225) {
-//                sc.player.setAnimation(1);
-//            }
-//        }
-//
-//        TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
-//        tc.x = -25;
-//        tc.y = -35;
-//    }
 
     @Override
     public void dispose() {
