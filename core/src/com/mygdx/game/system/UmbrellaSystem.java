@@ -10,9 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
@@ -101,10 +103,28 @@ public class UmbrellaSystem extends IteratingSystem {
                 fcc.totalScore += fcc.score;
 
                 GameScreenScript.reloadScoreLabel(fcc);
+
+                playParticleEffectFor();
             }
         } else {
             sasc.paused = true;
         }
+    }
+
+    private void playParticleEffectFor() {
+        CompositeItemVO starBurstParticleC = GameStage.sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
+
+        Entity starBurstParticleE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), starBurstParticleC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(starBurstParticleE);
+
+        TransformComponent tc6 = starBurstParticleE.getComponent(TransformComponent.class);
+        tc6.x = 1088;
+        tc6.y = 674;
+
+        GameScreenScript.starBurstParticleE = starBurstParticleE;
+
+        GameScreenScript.isParticlePlaying = true;
     }
 
     private void hide(Entity entity, TransformComponent tc) {

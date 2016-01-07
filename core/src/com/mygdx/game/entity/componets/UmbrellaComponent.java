@@ -1,9 +1,11 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Align;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.Random;
 

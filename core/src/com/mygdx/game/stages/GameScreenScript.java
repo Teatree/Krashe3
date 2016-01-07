@@ -11,6 +11,7 @@ import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -32,8 +33,12 @@ public class GameScreenScript implements IScript {
     public static GameStage game;
     public Random random = new Random();
 
+    private static int counter;
+
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
+
+    public ParticleComponent pc;
 
     //One flower collision component will be used in all systems
     public static FlowerPublicComponent fpc;
@@ -42,12 +47,15 @@ public class GameScreenScript implements IScript {
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
+    public static boolean isParticlePlaying;
+    public static Entity starBurstParticleE;
 
 //    public static int gameOverCounter = 240;
     public static int gameOverCounter = 240;
 
     public static CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
+    public Entity starBurst;
 
     public DailyGoalSystem dailyGoalGenerator;
 
@@ -76,6 +84,10 @@ public class GameScreenScript implements IScript {
         initFlower();
         initPauseBtn();
         initBackButton();
+
+// I can't understand why this doesn't work
+//        Entity ype = gameItem.getChild("star_burst_particle_lib").getChild("yellow_p").getEntity();
+//        pc = ype.getComponent(ParticleComponent.class);
 
         final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("backgroundLib");
         background = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
@@ -274,6 +286,7 @@ public class GameScreenScript implements IScript {
         }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
+
     }
 
     @Override
@@ -282,6 +295,9 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+
+//        System.out.println("pc is Complete: " + pc.particleEffect.isComplete());
+//        pc.particleEffect.allowCompletion();
 
         if (cameraShaker.time > 0) {
             cameraShaker.shake(delta);
@@ -312,6 +328,18 @@ public class GameScreenScript implements IScript {
 
         if (isGameOver) {
             updateGameOver();
+        }
+
+        if(isParticlePlaying){
+            counter++;
+            removeEffectIn(110);
+        }
+    }
+
+    private void removeEffectIn(int frames) {
+        if(counter>=frames){
+            GameStage.sceneLoader.getEngine().removeEntity(starBurstParticleE);
+            isParticlePlaying = false;
         }
     }
 
