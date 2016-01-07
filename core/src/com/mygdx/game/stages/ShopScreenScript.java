@@ -46,8 +46,6 @@ public class ShopScreenScript implements IScript {
         int y = 289;
 
         for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
-
-
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);

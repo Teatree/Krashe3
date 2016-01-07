@@ -1,25 +1,17 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.VanityComponent;
-import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -34,11 +26,6 @@ public class ResultScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper resultScreenItem;
-    private Entity btn_lblE;
-    private Entity aniE;
-    private Entity btn_buyE;
-    private Entity btn_noE;
-    private Entity bgE;
 
     public static VanityComponent showCaseVanity;
     private static boolean show;
