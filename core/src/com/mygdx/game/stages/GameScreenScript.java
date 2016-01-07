@@ -340,6 +340,7 @@ public class GameScreenScript implements IScript {
         if(counter>=frames){
             GameStage.sceneLoader.getEngine().removeEntity(starBurstParticleE);
             isParticlePlaying = false;
+            counter = 0;
         }
     }
 
