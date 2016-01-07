@@ -146,6 +146,7 @@ public class SaveMngr {
         public VanityStats(VanityComponent vc) {
             this.name = vc.name;
             this.cost = vc.cost;
+            this.assetsToChange = vc.assetsToChange;
             this.description = vc.description;
             this.bought = vc.bought;
             this.advertised = vc.advertised;

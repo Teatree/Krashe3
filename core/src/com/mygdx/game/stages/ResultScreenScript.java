@@ -1,6 +1,8 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -14,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.ShowcaseScreenScript.*;
 
 /**
  * Created by Teatree on 7/25/2015.
@@ -32,7 +35,7 @@ public class ResultScreenScript implements IScript {
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
-}
+    }
 
     Entity txtEarnedE;
     Entity progressBarE;
@@ -61,10 +64,6 @@ public class ResultScreenScript implements IScript {
 
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
         dcProgressBar.width = fpc.totalScore - fpc.score;
-
-//        Entity txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
-//        LabelComponent earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
-//        earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
 
         txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
@@ -155,7 +154,7 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
 //                if (!showcasePopup) {
-                    stage.initGame();
+                stage.initGame();
                 show = false;
 //                }
             }
@@ -180,25 +179,19 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                if (!showcasePopup) {
-                    stage.initShopMenu();
+                stage.initShopMenu();
                 show = false;
-//                }
             }
         });
     }
 
     @Override
     public void act(float delta) {
-        if (i < fpc.score) {
+        if (i <= fpc.score) {
             updateScore();
         } else {
             updateProgressBar();
         }
-//        if (showcasePopup) {
-//            showFadeIn();
-
-//        }
     }
 
     private void updateProgressBar() {
@@ -210,16 +203,11 @@ public class ResultScreenScript implements IScript {
         } else if (!showcasePopup && showCaseVanity != null) {
             initShowcase();
         }
-//        else {
-//            if (!showcasePopup) {
-//                initShowcase();
-//            }
-//        }
     }
 
     private void updateScore() {
         j++;
-        int counterStep = fpc.score / 72 > 1 ? fpc.score / 72 : 1;
+        int counterStep = fpc.score / 48 > 1 ? fpc.score / 48 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
             i += counterStep;
@@ -230,6 +218,10 @@ public class ResultScreenScript implements IScript {
     private void initShowcase() {
         if (!show) {
             show = true;
+
+            FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
+            newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
+
             stage.initShowcase();
         }
     }
