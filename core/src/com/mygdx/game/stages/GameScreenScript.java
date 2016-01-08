@@ -226,12 +226,12 @@ public class GameScreenScript implements IScript {
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
-        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
-        ticDialg.color.a = 0;
+//        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
+//        ticDialg.color.a = 0;
 
 
-        TintComponent ticGoalLabel = pauseDialog.getComponent(TintComponent.class);
-        ticGoalLabel.color.a = 0;
+//        TintComponent ticGoalLabel = pauseDialog.getComponent(TintComponent.class);
+//        ticGoalLabel.color.a = 0;
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
@@ -242,8 +242,8 @@ public class GameScreenScript implements IScript {
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
 
 //        closePauseBtn = gameItem.getChild("pause").getChild("btn_close").getEntity();
-        TintComponent ticCloseDialogBtn = closePauseBtn.getComponent(TintComponent.class);
-        ticCloseDialogBtn.color.a = 0;
+//        TintComponent ticCloseDialogBtn = closePauseBtn.getComponent(TintComponent.class);
+//        ticCloseDialogBtn.color.a = 0;
 
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -257,7 +257,6 @@ public class GameScreenScript implements IScript {
             @Override
             public void clicked() {
                 isPause = false;
-
             }
         });
 
@@ -471,9 +470,10 @@ public class GameScreenScript implements IScript {
 
         if (ticDialg.color.a <= 1 && appear ||
                 ticDialg.color.a >= 0 && !appear) {
-            ticDialg.color.a += fadeCoefficient * 0.005f;
-            ticGoals.color.a += fadeCoefficient * 0.005f;
-            ticClose.color.a += fadeCoefficient * 0.005f;
+            System.out.println("col " + ticDialg.color.a +" / " +ticGoals.color.a);
+            ticDialg.color.a += fadeCoefficient * 0.2f;
+            ticGoals.color.a += fadeCoefficient * 0.2f;
+            ticClose.color.a += fadeCoefficient * 0.2f;
         }
 
         if(!appear && ticDialg.color.a <= 0){
