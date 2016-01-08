@@ -14,9 +14,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
 
-/**
- * Created by Teatree on 01/05/2016.
- */
+
 public class ShowcaseScreenScript implements IScript {
 
     public static final String PATH_PREFIX = "orig\\spriter_animations\\showcase_present_ani\\";
@@ -123,7 +121,6 @@ public class ShowcaseScreenScript implements IScript {
     }
 
     private void showFadeIn() {
-
         showcaseE = screenItem.getChild("showcase").getEntity();
         TintComponent tic = bgE.getComponent(TintComponent.class);
 
@@ -144,11 +141,9 @@ public class ShowcaseScreenScript implements IScript {
             ticLbl.color.a += 0.05f;
 
         } else if (tic.color.a >= 0.9f) {
-            Entity aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+            aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
             SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
-
             sc.player.speed = 12;
-
             if (sc.player.time >= 225) {
                 sc.player.setAnimation(1);
             }
