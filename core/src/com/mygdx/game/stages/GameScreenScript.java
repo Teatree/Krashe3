@@ -8,6 +8,7 @@ import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -50,7 +51,7 @@ public class GameScreenScript implements IScript {
     public static boolean isParticlePlaying;
     public static Entity starBurstParticleE;
 
-//    public static int gameOverCounter = 240;
+    //    public static int gameOverCounter = 240;
     public static int gameOverCounter = 240;
 
     public static CameraShaker cameraShaker = new CameraShaker();
@@ -58,6 +59,9 @@ public class GameScreenScript implements IScript {
     public Entity starBurst;
 
     public DailyGoalSystem dailyGoalGenerator;
+    private Entity pauseDialog;
+    private Entity goalLabel;
+    private Entity closePauseBtn;
 
     public GameScreenScript(GameStage game) {
         this.game = game;
@@ -84,6 +88,7 @@ public class GameScreenScript implements IScript {
         initFlower();
         initPauseBtn();
         initBackButton();
+        initPauseDialog();
 
 // I can't understand why this doesn't work
 //        Entity ype = gameItem.getChild("star_burst_particle_lib").getChild("yellow_p").getEntity();
@@ -143,13 +148,42 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                game.initMenu();
-//                pause();
+//                game.initMenu();
+                pause();
             }
         });
     }
 
-    private void initPauseBtn() {
+//    private void initPuseBtn() {
+//        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
+//
+//        TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
+//        pauseBtnTc.scaleX = 0.7f;
+//        pauseBtnTc.scaleY = 0.7f;
+//
+//        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
+//
+//            @Override
+//            public void touchUp() {
+//                lc.getLayer("normal").isVisible = true;
+//                lc.getLayer("pressed").isVisible = false;
+//            }
+//
+//            @Override
+//            public void touchDown() {
+//                lc.getLayer("normal").isVisible = false;
+//                lc.getLayer("pressed").isVisible = true;
+//            }
+//
+//            @Override
+//            public void clicked() {
+//                pause();
+//            }
+//        });
+//    }
+
+    private void initPauseBtn (){
         final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
 
         TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
@@ -178,24 +212,40 @@ public class GameScreenScript implements IScript {
         });
     }
 
+    private void initPauseDialog(){
+        pauseDialog = gameItem.getChild("dialog").getEntity();
+        goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+        closePauseBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
+        dialogTc.x = -3000;
+        dialogTc.y = -1000;
+    }
+
     private void pause() {
-        final Entity dialog = gameItem.getChild("dialog").getEntity();
-        final TransformComponent dialogTc = dialog.getComponent(TransformComponent.class);
+
+        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
+        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
+        ticDialg.color.a = 0;
 
-        Entity goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
-        LabelComponent dialogLabelComp = goalLabel.getComponent(LabelComponent.class);
+
+        TintComponent ticGoalLabel = pauseDialog.getComponent(TintComponent.class);
+        ticGoalLabel.color.a = 0;
+        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
-        for (DailyGoal g : fpc.goals){
+        for (DailyGoal g : fpc.goals) {
             String achieved = g.achieved ? " achieved " : " not achieved ";
-            goalsList.append(" \n  - " + g.description + " - " + achieved);
+            goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
         }
-        dialogLabelComp.text.replace(0, dialogLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList );
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
 
-        Entity closeDialogBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
-        closeDialogBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//        closePauseBtn = gameItem.getChild("pause").getChild("btn_close").getEntity();
+        TintComponent ticCloseDialogBtn = closePauseBtn.getComponent(TintComponent.class);
+        ticCloseDialogBtn.color.a = 0;
+
+        closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -207,7 +257,7 @@ public class GameScreenScript implements IScript {
             @Override
             public void clicked() {
                 isPause = false;
-                dialogTc.x = -1000;
+
             }
         });
 
@@ -230,7 +280,7 @@ public class GameScreenScript implements IScript {
             isPause = false;
             BugSpawnSystem.isAngeredBeesMode = false;
             BugSpawnSystem.queenBeeOnStage = false;
-            if (fpc.bestScore < fpc.score){
+            if (fpc.bestScore < fpc.score) {
                 fpc.bestScore = fpc.score;
             }
             game.initResult();
@@ -281,7 +331,7 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
         dailyGoalGenerator = new DailyGoalSystem();
-        if (fpc.goals==null || fpc.goals.isEmpty()) {
+        if (fpc.goals == null || fpc.goals.isEmpty()) {
             fpc.goals = dailyGoalGenerator.getGoalsForToday();
         }
         flowerEntity.add(fc);
@@ -330,14 +380,20 @@ public class GameScreenScript implements IScript {
             updateGameOver();
         }
 
-        if(isParticlePlaying){
+        if (isParticlePlaying) {
             counter++;
             removeEffectIn(110);
+        }
+
+        if (isPause){
+            fadePause(true);
+        } else {
+            fadePause(false);
         }
     }
 
     private void removeEffectIn(int frames) {
-        if(counter>=frames){
+        if (counter >= frames) {
             GameStage.sceneLoader.getEngine().removeEntity(starBurstParticleE);
             isParticlePlaying = false;
             counter = 0;
@@ -384,7 +440,6 @@ public class GameScreenScript implements IScript {
         }
     }
 
-    //TODO: NPE
     private boolean canCocoonSpawn() {
         return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
                 sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
@@ -405,5 +460,25 @@ public class GameScreenScript implements IScript {
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+    }
+
+    private void fadePause(boolean appear) {
+        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
+        TintComponent ticGoals = goalLabel.getComponent(TintComponent.class);
+        TintComponent ticClose = closePauseBtn.getComponent(TintComponent.class);
+
+        int fadeCoefficient = appear ? 1 : -1;
+
+        if (ticDialg.color.a <= 1 && appear ||
+                ticDialg.color.a >= 0 && !appear) {
+            ticDialg.color.a += fadeCoefficient * 0.005f;
+            ticGoals.color.a += fadeCoefficient * 0.005f;
+            ticClose.color.a += fadeCoefficient * 0.005f;
+        }
+
+        if(!appear && ticDialg.color.a <= 0){
+            TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
+            dialogTc.x = -1000;
+        };
     }
 }
