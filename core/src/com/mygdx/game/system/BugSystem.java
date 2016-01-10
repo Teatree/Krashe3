@@ -14,7 +14,6 @@ import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -23,7 +22,6 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.game.entity.componets.BugComponent.State.DEAD;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.utils.BugPool.*;
 
 

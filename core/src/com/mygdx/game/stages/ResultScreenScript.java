@@ -33,6 +33,7 @@ public class ResultScreenScript implements IScript {
 
     public static VanityComponent showCaseVanity;
     private static boolean show;
+    public static boolean isWasShowcase;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -94,18 +95,21 @@ public class ResultScreenScript implements IScript {
             }
         });
         nextVanityCost = 0;
+        VanityComponent tempVc = null;
         for (VanityComponent vc : fpc.vanities) {
             if (!vc.advertised) {
                 if (vc.cost > fpc.totalScore) {
                     nextVanityCost = vc.cost;
                     break;
                 } else {
-                    nextVanityCost = vc.cost;
-                    showCaseVanity = vc;
-                    vc.advertised = true;
-                    break;
+                    tempVc = vc;
                 }
             }
+        }
+        if(tempVc!=null) {
+            showCaseVanity = tempVc;
+            showCaseVanity.advertised = true;
+            nextVanityCost = showCaseVanity.cost;
         }
         return nextVanityCost - fpc.totalScore;
     }
@@ -132,6 +136,7 @@ public class ResultScreenScript implements IScript {
                     stage.initMenu();
                     show = false;
                 }
+                isWasShowcase = false;
             }
         });
     }
@@ -157,6 +162,7 @@ public class ResultScreenScript implements IScript {
 //                if (!showcasePopup) {
                 stage.initGame();
                 show = false;
+                isWasShowcase = false;
 //                }
             }
         });
@@ -182,16 +188,24 @@ public class ResultScreenScript implements IScript {
             public void clicked() {
                 stage.initShopMenu();
                 show = false;
+                isWasShowcase = false;
             }
         });
     }
 
     @Override
     public void act(float delta) {
-        if (i <= fpc.score) {
-            updateScore();
-        } else {
-            updateProgressBar();
+        if(!isWasShowcase) {
+            if (i <= fpc.score) {
+                updateScore();
+            } else {
+                earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+                updateProgressBar();
+            }
+        }else {
+            earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+            float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
+            progressBarE.getComponent(DimensionsComponent.class).width = progressBarActualLength;
         }
     }
 

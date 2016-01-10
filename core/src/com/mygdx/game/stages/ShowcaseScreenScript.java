@@ -99,7 +99,8 @@ public class ShowcaseScreenScript implements IScript {
             @Override
             public void clicked() {
                 spawn = -1;
-//                stage.initResult();
+                ResultScreenScript.isWasShowcase = true;
+                stage.initResult();
             }
         });
     }
@@ -112,6 +113,7 @@ public class ShowcaseScreenScript implements IScript {
             public void touchUp() {
                 lc.getLayer("normal").isVisible = true;
                 lc.getLayer("pressed").isVisible = false;
+
             }
 
             @Override
@@ -123,7 +125,8 @@ public class ShowcaseScreenScript implements IScript {
             @Override
             public void clicked() {
                 showCaseVanity.buyAndUse(fpc);
-//                stage.initResult();
+                ResultScreenScript.isWasShowcase = true;
+                stage.initResult();
                 spawn = -1;
             }
         });
