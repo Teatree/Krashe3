@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -228,6 +229,6 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void dispose() {
-
+        SaveMngr.saveStats(fpc);
     }
 }

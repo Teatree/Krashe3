@@ -21,8 +21,8 @@ public class ShowcaseScreenScript implements IScript {
     public static final String TYPE_SUFFIX = ".png";
     public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
 
-    Entity showcaseE;
-    Entity bgE;
+    private Entity showcaseE;
+    private Entity bgE;
     private GameStage stage;
     private ItemWrapper screenItem;
     private Entity btn_noE;
@@ -30,12 +30,18 @@ public class ShowcaseScreenScript implements IScript {
     private Entity btn_lblE;
     private Entity aniE;
 
+    //spawn == 0 -> stable
+    //spawn > 0 -> appearing
+    //spawn < 0 -> disappearing
+    private int spawn;
+
     public ShowcaseScreenScript(GameStage stage) {
         this.stage = stage;
     }
 
     @Override
     public void init(Entity entity) {
+        spawn = 1;
         screenItem = new ItemWrapper(entity);
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
@@ -71,6 +77,7 @@ public class ShowcaseScreenScript implements IScript {
         TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
         tc.x = -25;
         tc.y = -35;
+
     }
 
     private void initShowCaseBackButton() {
@@ -91,7 +98,8 @@ public class ShowcaseScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initResult();
+                spawn = -1;
+//                stage.initResult();
             }
         });
     }
@@ -115,38 +123,44 @@ public class ShowcaseScreenScript implements IScript {
             @Override
             public void clicked() {
                 showCaseVanity.buyAndUse(fpc);
-                stage.initResult();
+//                stage.initResult();
+                spawn = -1;
             }
         });
     }
 
     private void showFadeIn() {
-        showcaseE = screenItem.getChild("showcase").getEntity();
         TintComponent tic = bgE.getComponent(TintComponent.class);
+        TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
+        TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
+        TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
 
-        if (tic.color.a <= 1) {
-            bgE = screenItem.getChild("showcase").getChild("img_bg_show_case").getEntity();
-            tic.color.a += 0.05f;
+        boolean shouldChange = (ticLbl.color.a < 1 && spawn > 0) ||
+                (ticLbl.color.a > 0 && spawn < 0);
 
-            btn_noE = screenItem.getChild("showcase").getChild("btn_no").getChild("img_n").getEntity();
-            TintComponent ticNo = btn_noE.getComponent(TintComponent.class);
-            ticNo.color.a += 0.05f;
+        int fadeCoefficient = spawn;
 
-            btn_buyE = screenItem.getChild("showcase").getChild("btn_buy").getChild("img_n").getEntity();
-            TintComponent ticBuy = btn_buyE.getComponent(TintComponent.class);
-            ticBuy.color.a += 0.05f;
+        if (spawn < 0 && ticLbl.color.a <= 0.5) {
+            spawn = 0;
+            stage.initResult();
+        }
 
-            btn_lblE = screenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
-            TintComponent ticLbl = btn_lblE.getComponent(TintComponent.class);
-            ticLbl.color.a += 0.05f;
-
-        } else if (tic.color.a >= 0.9f) {
+        if (shouldChange) {
+            tic.color.a += fadeCoefficient * 0.1f;
+            ticNo.color.a += fadeCoefficient * 0.1f;
+            ticBuy.color.a += fadeCoefficient * 0.1f;
+            ticLbl.color.a += fadeCoefficient * 0.1f;
+        }
+        if (tic.color.a >= 0.9f) {
             aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
             SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
             sc.player.speed = 12;
             if (sc.player.time >= 225) {
                 sc.player.setAnimation(1);
             }
+        }
+        if (spawn > 0 && ticLbl.color.a >= 1) {
+            spawn = 0;
         }
 
         TransformComponent tc = showcaseE.getComponent(TransformComponent.class);
@@ -161,6 +175,6 @@ public class ShowcaseScreenScript implements IScript {
 
     @Override
     public void dispose() {
-
+        showCaseVanity = null;
     }
 }

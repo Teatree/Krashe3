@@ -37,7 +37,7 @@ backshadow
   index: -1
 bugjuicebubble
   rotate: false
-  xy: 2006, 1991
+  xy: 1769, 1571
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
@@ -201,13 +201,6 @@ flowerpeducle
   orig: 63, 1550
   offset: 0, 0
   index: -1
-img
-  rotate: false
-  xy: 1861, 1850
-  size: 22, 22
-  orig: 22, 22
-  offset: 0, 0
-  index: -1
 item_button_off
   rotate: false
   xy: 1204, 2
@@ -268,14 +261,14 @@ pop-up_back
   index: -1
 pot
   rotate: false
-  xy: 1448, 52
+  xy: 1448, 186
   size: 62, 58
   orig: 62, 58
   offset: 0, 0
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1204, 284
+  xy: 1861, 1860
   size: 12, 12
   split: 5, 5, 5, 5
   orig: 12, 12
@@ -283,7 +276,7 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 1892, 1608
+  xy: 2006, 2004
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
@@ -315,27 +308,6 @@ shopitem1off
   xy: 1269, 956
   size: 248, 296
   orig: 248, 296
-  offset: 0, 0
-  index: -1
-sludge
-  rotate: false
-  xy: 1769, 1562
-  size: 42, 42
-  orig: 42, 42
-  offset: 0, 0
-  index: -1
-star
-  rotate: false
-  xy: 1448, 179
-  size: 65, 65
-  orig: 65, 65
-  offset: 0, 0
-  index: -1
-starY
-  rotate: false
-  xy: 1448, 112
-  size: 65, 65
-  orig: 65, 65
   offset: 0, 0
   index: -1
 

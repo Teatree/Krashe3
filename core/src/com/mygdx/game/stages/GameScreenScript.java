@@ -60,8 +60,11 @@ public class GameScreenScript implements IScript {
 
     public DailyGoalSystem dailyGoalGenerator;
     private Entity pauseDialog;
+    private Entity pauseDialogBackground;
     private Entity goalLabel;
     private Entity closePauseBtn;
+    private Entity closePauseBtnNorm;
+    private Entity closePauseBtnPres;
 
     public GameScreenScript(GameStage game) {
         this.game = game;
@@ -154,36 +157,8 @@ public class GameScreenScript implements IScript {
         });
     }
 
-//    private void initPuseBtn() {
-//        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
-//
-//        TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
-//        pauseBtnTc.scaleX = 0.7f;
-//        pauseBtnTc.scaleY = 0.7f;
-//
-//        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
-//
-//            @Override
-//            public void touchUp() {
-//                lc.getLayer("normal").isVisible = true;
-//                lc.getLayer("pressed").isVisible = false;
-//            }
-//
-//            @Override
-//            public void touchDown() {
-//                lc.getLayer("normal").isVisible = false;
-//                lc.getLayer("pressed").isVisible = true;
-//            }
-//
-//            @Override
-//            public void clicked() {
-//                pause();
-//            }
-//        });
-//    }
 
-    private void initPauseBtn (){
+    private void initPauseBtn() {
         final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
 
         TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
@@ -212,26 +187,23 @@ public class GameScreenScript implements IScript {
         });
     }
 
-    private void initPauseDialog(){
+    private void initPauseDialog() {
         pauseDialog = gameItem.getChild("dialog").getEntity();
+        pauseDialogBackground = gameItem.getChild("dialog").getChild("dialog").getChild("img_pause").getEntity();
         goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
         closePauseBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
+        closePauseBtnPres = gameItem.getChild("dialog").getChild("btn_close").getChild("img_btn_close_pr").getEntity();
+        closePauseBtnNorm = gameItem.getChild("dialog").getChild("btn_close").getChild("img_btn_close_norm").getEntity();
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = -3000;
         dialogTc.y = -1000;
     }
 
     private void pause() {
-
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
-//        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
-//        ticDialg.color.a = 0;
 
-
-//        TintComponent ticGoalLabel = pauseDialog.getComponent(TintComponent.class);
-//        ticGoalLabel.color.a = 0;
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
@@ -240,10 +212,6 @@ public class GameScreenScript implements IScript {
             goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
         }
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
-
-//        closePauseBtn = gameItem.getChild("pause").getChild("btn_close").getEntity();
-//        TintComponent ticCloseDialogBtn = closePauseBtn.getComponent(TintComponent.class);
-//        ticCloseDialogBtn.color.a = 0;
 
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -384,11 +352,7 @@ public class GameScreenScript implements IScript {
             removeEffectIn(110);
         }
 
-        if (isPause){
-            fadePause(true);
-        } else {
-            fadePause(false);
-        }
+        fadePause();
     }
 
     private void removeEffectIn(int frames) {
@@ -461,24 +425,29 @@ public class GameScreenScript implements IScript {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
-    private void fadePause(boolean appear) {
+    private void fadePause() {
         TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
+        TintComponent ticDialgBg = pauseDialogBackground.getComponent(TintComponent.class);
         TintComponent ticGoals = goalLabel.getComponent(TintComponent.class);
         TintComponent ticClose = closePauseBtn.getComponent(TintComponent.class);
+        TintComponent ticClosePr = closePauseBtnPres.getComponent(TintComponent.class);
+        TintComponent ticCloseNorm = closePauseBtnNorm.getComponent(TintComponent.class);
 
-        int fadeCoefficient = appear ? 1 : -1;
+        boolean appear = (ticGoals.color.a < 1 && isPause) ||
+                (ticGoals.color.a > 0 && !isPause);
 
-        if (ticDialg.color.a <= 1 && appear ||
-                ticDialg.color.a >= 0 && !appear) {
-            System.out.println("col " + ticDialg.color.a +" / " +ticGoals.color.a);
-            ticDialg.color.a += fadeCoefficient * 0.2f;
-            ticGoals.color.a += fadeCoefficient * 0.2f;
-            ticClose.color.a += fadeCoefficient * 0.2f;
+        int fadeCoefficient = isPause ? 1 : -1;
+
+        if (appear) {
+            ticGoals.color.a += fadeCoefficient * 0.1f;
+            ticClosePr.color.a += fadeCoefficient * 0.1f;
+            ticCloseNorm.color.a += fadeCoefficient * 0.1f;
+            ticDialgBg.color.a += fadeCoefficient * 0.1f;
         }
 
-        if(!appear && ticDialg.color.a <= 0){
+        if (!isPause && ticDialg.color.a <= 0) {
             TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
             dialogTc.x = -1000;
-        };
+        }
     }
 }
