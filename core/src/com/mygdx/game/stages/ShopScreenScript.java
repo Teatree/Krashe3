@@ -7,6 +7,7 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -22,6 +23,8 @@ public class ShopScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper shopItem;
+    public Entity scoreLbl;
+    public LabelComponent lc;
 //    private int spawnCounter = 0;
 
     public ShopScreenScript(GameStage stage) {
@@ -38,6 +41,10 @@ public class ShopScreenScript implements IScript {
 
         addBackButtonPlease();
 
+        scoreLbl = shopItem.getChild("score_lbl").getEntity();
+        lc = scoreLbl.getComponent(LabelComponent.class);
+
+
     }
 
     private void getAllAllVanities(){
@@ -51,18 +58,26 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_white_beard_n").clone();
-            final Entity beardE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), beardE, tempItemC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(beardE);
+            Entity itemIcon;
+            if(!vc.bought) {
+                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+                itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+                GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            }else{
+                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_white_beard_n").clone();
+                itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+                GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            }
 
             TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
             tc.x = x;
             tc.y = y;
 
-            beardE.add(new ButtonComponent());
-            shopItem.getChild("btn_shop_icon_lib").addChild(beardE);
-            TransformComponent tcb = beardE.getComponent(TransformComponent.class);
+            itemIcon.add(new ButtonComponent());
+            shopItem.getChild("btn_shop_icon_lib").addChild(itemIcon);
+            TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x;
             tcb.y = tc.y;
 
@@ -121,6 +136,7 @@ public class ShopScreenScript implements IScript {
     @Override
     public void act(float delta) {
 //        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+        lc.text.replace(0, lc.text.length(), String.valueOf(GameScreenScript.fpc.totalScore));
     }
 
 }

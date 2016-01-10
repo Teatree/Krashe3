@@ -286,7 +286,6 @@ public class GameScreenScript implements IScript {
     }
 
     private void initFlower() {
-
         fpc.score = 0;
         Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
@@ -303,7 +302,6 @@ public class GameScreenScript implements IScript {
         }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
-
     }
 
     @Override
