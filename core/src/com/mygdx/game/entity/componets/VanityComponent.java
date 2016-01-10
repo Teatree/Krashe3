@@ -18,6 +18,7 @@ public class VanityComponent implements Component {
     public static final String TYPE_SUFFIX = ".png";
 
     public String icon;
+    public String shopIcon;
     public String name;
     public int cost;
     public String description;
@@ -46,6 +47,7 @@ public class VanityComponent implements Component {
 
     public VanityComponent(SaveMngr.VanityStats vc) {
         this.icon = vc.icon;
+        this.shopIcon = vc.shopIcon;
         this.name = vc.name;
         this.cost = vc.cost;
         this.description = vc.description;

@@ -61,7 +61,6 @@ public class SaveMngr {
 //                VanityComponent vc = new VanityComponent(vs);
 //                fc.vanities.add(vc);
 //            }
-            fc.vanities = getAllVanity();
             for (DailyGoalStats dg : gameStats.goals){
                 DailyGoal goal = new DailyGoal();
                 goal.achieved = dg.achieved;
@@ -71,6 +70,8 @@ public class SaveMngr {
                 fc.goals.add(goal);
             }
         }
+        fc.vanities = getAllVanity();
+
         return fc;
     }
 
@@ -127,6 +128,7 @@ public class SaveMngr {
         public Map<String, String> assetsToChange = new HashMap<>();
 
         public String icon;
+        public String shopIcon;
         public String name;
         public int cost;
         public String description;
@@ -147,6 +149,7 @@ public class SaveMngr {
             this.name = vc.name;
             this.cost = vc.cost;
             this.icon = vc.icon;
+            this.shopIcon = vc.shopIcon;
             this.assetsToChange = vc.assetsToChange;
             this.description = vc.description;
             this.bought = vc.bought;
@@ -169,6 +172,7 @@ public class SaveMngr {
         vanity3.cost = 90;
         vanity3.name = "Christmas leaves";
         vanity3.icon = "leaf_christmas";
+        vanity3.shopIcon = "item_white_beard_n";
         vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
         vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
 
@@ -176,6 +180,7 @@ public class SaveMngr {
         vanity1.cost = 150;
         vanity1.name = "majestic beard";
         vanity1.icon = "santabeard";
+        vanity1.shopIcon = "item_white_beard_n";
         vanity1.assetsToChange.put("head_top", "head_top_christmas");
         vanity1.assetsToChange.put("head_mid", "head_mid_christmas");
         vanity1.assetsToChange.put("head_bottom", "head_bottom_christmas");
@@ -183,6 +188,7 @@ public class SaveMngr {
         vanity2.cost = 250;
         vanity2.name = "Deer horns";
         vanity2.icon = "deer";
+        vanity2.shopIcon = "item_deer_horns_n";
         vanity2.assetsToChange.put("head_top", "head_top_deer");
         vanity2.assetsToChange.put("head_mid", "head_mid_default");
         vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
@@ -190,6 +196,7 @@ public class SaveMngr {
         vanity4.cost = 650;
         vanity4.name = "Santa outfit";
         vanity4.icon = "christmas";
+        vanity4.shopIcon = "item_white_beard_n";
         vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
         vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
         vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");

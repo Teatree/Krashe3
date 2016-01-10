@@ -65,7 +65,7 @@ public class ShopScreenScript implements IScript {
                 GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
                 GameStage.sceneLoader.getEngine().addEntity(itemIcon);
             }else{
-                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_white_beard_n").clone();
+                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
                 itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
                 GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
                 GameStage.sceneLoader.getEngine().addEntity(itemIcon);
