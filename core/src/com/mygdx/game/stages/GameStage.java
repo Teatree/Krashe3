@@ -100,12 +100,4 @@ public class GameStage extends Stage{
 //        System.out.println(sceneLoader.getEngine());
     }
 
-    public void removeActor(Entity item) {
-        for (Actor actor : this.getActors()) {
-            if (actor.equals(item)) {
-                actor.remove();
-            }
-        }
-    }
-
 }

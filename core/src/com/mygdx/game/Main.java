@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -30,6 +31,7 @@ public class Main extends ApplicationAdapter {
 		stage.setViewport(viewports.first());
 
 		Gdx.input.setInputProcessor(stage);
+
 	}
 
 	@Override
