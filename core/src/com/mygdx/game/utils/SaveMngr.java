@@ -168,6 +168,10 @@ public class SaveMngr {
         VanityStats vanity2 = new VanityStats();
         VanityStats vanity3 = new VanityStats();
         VanityStats vanity4 = new VanityStats();
+        VanityStats vanity5 = new VanityStats();
+        VanityStats vanity6 = new VanityStats();
+        VanityStats vanity7 = new VanityStats();
+        VanityStats vanity8 = new VanityStats();
 
         vanity3.cost = 90;
         vanity3.name = "Christmas leaves";
@@ -203,12 +207,36 @@ public class SaveMngr {
         vanity4.assetsToChange.put("peducle_top", "peducle_top_christmas");
         vanity4.assetsToChange.put("peducle_top_under", "peducle_top_under_christmas");
 
+        vanity5.cost = 750;
+        vanity5.name = "Bike helmet";
+        vanity5.icon = "leaf_christmas";
+        vanity5.shopIcon = "item_white_beard_n";
+
+        vanity6.cost = 900;
+        vanity6.name = "Cool Sun-glasses";
+        vanity6.icon = "santabeard";
+        vanity6.shopIcon = "item_white_beard_n";
+
+        vanity7.cost = 1200;
+        vanity7.name = "Pilot's scarf";
+        vanity7.icon = "deer";
+        vanity7.shopIcon = "item_deer_horns_n";
+
+        vanity8.cost = 1550;
+        vanity8.name = "Tea cup";
+        vanity8.icon = "christmas";
+        vanity8.shopIcon = "item_white_beard_n";
+
         List<VanityStats> vanityStatses = new ArrayList<>();
 
         vanityStatses.add(vanity1);
         vanityStatses.add(vanity2);
         vanityStatses.add(vanity3);
         vanityStatses.add(vanity4);
+        vanityStatses.add(vanity5);
+        vanityStatses.add(vanity6);
+        vanityStatses.add(vanity7);
+        vanityStatses.add(vanity8);
 
         Json jsonVanityObj = new Json();
 

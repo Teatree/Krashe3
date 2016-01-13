@@ -8,8 +8,8 @@ import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -38,14 +38,8 @@ public class ShopScreenScript implements IScript {
     public List<Entity> bags = new ArrayList<>();
     public List<Entity> itemIcons = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
-    private boolean began;
-    private float time;
-    private boolean complete;
-    private float duration;
-    private Interpolation interpolation;
-    private boolean reverse;
-    private float startX;
-    private float endX;
+    public boolean isHighlighted;
+    float stopVelocity;
 
 //    private int spawnCounter = 0;
 
@@ -108,8 +102,15 @@ public class ShopScreenScript implements IScript {
             bags.add(bagEntity);
             itemIcons.add(itemIcon);
 
+
+//            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
+
             bagEntity.add(new ButtonComponent());
 
+//            if(isHighlighted) {
+//                bagEntity.getComponent(ButtonComponent.class).isTouched = false;
+//            }
+//            bagEntity.getComponent(ButtonComponent.class).isTouched = false;
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
@@ -118,7 +119,6 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void touchDown() {
-
                 }
 
                 @Override
@@ -128,6 +128,7 @@ public class ShopScreenScript implements IScript {
                 }
             });
             x += 250;
+
         }
     }
 
@@ -163,7 +164,6 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        System.out.println("asd: " + touchZoneBtn.isTouched);
         if(touchZoneBtn.isTouched){
             if(!isGdxWritten) {
                 tempGdx.x = Gdx.input.getX();
@@ -173,23 +173,37 @@ public class ShopScreenScript implements IScript {
                 int i = 0;
                 while(i<bags.size()){
                     bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x-Gdx.input.getX())/15;
-                    tempGdx.x -= (tempGdx.x-Gdx.input.getX())/10;
                     itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                     i++;
                 }
+                stopVelocity = (Gdx.input.getX()-tempGdx.x)/15;
+                tempGdx.x -= (tempGdx.x-Gdx.input.getX())/15;
+                isHighlighted = true;
             }
             if(tempGdx.x < Gdx.input.getX()){
-
                 int i = 0;
                 while(i<bags.size()){
                     bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX()-tempGdx.x)/15;
-                    tempGdx.x += (Gdx.input.getX()-tempGdx.x)/10;
                     itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                     i++;
                 }
+                stopVelocity = (Gdx.input.getX()-tempGdx.x)/15;
+                tempGdx.x += (Gdx.input.getX()-tempGdx.x)/15;
+                isHighlighted = true;
             }
         }else{
             isGdxWritten = false;
+            if(stopVelocity != 0){
+                int i = 0;
+                while(i<bags.size()){
+                        bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
+                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                    i++;
+                }
+                stopVelocity -= stopVelocity/20;
+            }else{
+                isHighlighted = false;
+            }
         }
 //        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
         lc.text.replace(0, lc.text.length(), String.valueOf(GameScreenScript.fpc.totalScore));
