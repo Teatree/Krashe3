@@ -38,7 +38,7 @@ public class ShopScreenScript implements IScript {
     public List<Entity> bags = new ArrayList<>();
     public List<Entity> itemIcons = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
-    public boolean isHighlighted;
+    private boolean isHighlighted;
     float stopVelocity;
 
 //    private int spawnCounter = 0;
