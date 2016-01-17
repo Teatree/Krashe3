@@ -8,9 +8,7 @@ import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -41,6 +39,23 @@ public class ShopScreenScript implements IScript {
     private boolean isHighlighted;
     float stopVelocity;
 
+    // FIELD!!!! MUHAHAHAHHAHAHAHAHHA!!!
+    private Entity preview_e;
+    private Entity lbl_score_lbl;
+    private Entity lbl_desc;
+    private Entity lbl_title;
+    private Entity lbl_price;
+    private Entity btn_back_shop;
+    private Entity btn_left;
+    private Entity btn_right;
+    private Entity btn_buy;
+    private Entity preview_icon;
+    private Entity bg;
+    private boolean isPreviewOn;
+    private TransformComponent tc1;
+    private TintComponent tci1;
+
+
 //    private int spawnCounter = 0;
 
     public ShopScreenScript(GameStage stage) {
@@ -53,7 +68,6 @@ public class ShopScreenScript implements IScript {
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
-        getAllAllVanities();
 
         addBackButtonPlease();
 
@@ -63,6 +77,33 @@ public class ShopScreenScript implements IScript {
         touchZone = shopItem.getChild("touchZone_scroll").getEntity();
 
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
+
+        lbl_score_lbl = shopItem.getChild("preview").getChild("preview_score_lbl").getEntity();
+        lbl_desc = shopItem.getChild("preview").getChild("lbl_desc").getEntity();
+        lbl_title = shopItem.getChild("preview").getChild("lbl_item_name").getEntity();
+        lbl_price = shopItem.getChild("preview").getChild("lbl_price").getEntity();
+        btn_back_shop = shopItem.getChild("preview").getChild("btn_back_shop").getEntity();
+        btn_left = shopItem.getChild("preview").getChild("btn_left").getEntity();
+        btn_right = shopItem.getChild("preview").getChild("btn_right").getEntity();
+        btn_buy = shopItem.getChild("preview").getChild("btn_buy").getEntity();
+        preview_icon = shopItem.getChild("preview").getChild("btn_back_shop").getEntity();
+        bg = shopItem.getChild("preview").getChild("img_bg_show_case").getEntity();
+
+        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+            @Override
+            public void touchUp() {
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                isPreviewOn = false;
+            }
+        });
+        getAllAllVanities();
     }
 
     private void getAllAllVanities(){
@@ -103,14 +144,10 @@ public class ShopScreenScript implements IScript {
             itemIcons.add(itemIcon);
 
 
-//            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
-
             bagEntity.add(new ButtonComponent());
 
-//            if(isHighlighted) {
-//                bagEntity.getComponent(ButtonComponent.class).isTouched = false;
-//            }
-//            bagEntity.getComponent(ButtonComponent.class).isTouched = false;
+
+
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
@@ -124,7 +161,58 @@ public class ShopScreenScript implements IScript {
                 @Override
                 public void clicked() {
 //                    System.out.println(vc.icon);
-                    vc.apply(GameScreenScript.fpc);
+                    if(!isPreviewOn) {
+                        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
+                        if (vc.description != null) {
+                            lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
+                        }
+                        lbl_title.getComponent(LabelComponent.class).text.replace(0, lbl_title.getComponent(LabelComponent.class).text.length, vc.name);
+                        lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
+                        btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+                            @Override
+                            public void touchUp() {
+                            }
+
+                            @Override
+                            public void touchDown() {
+                            }
+
+                            @Override
+                            public void clicked() {
+                                vc.buyAndUse(GameScreenScript.fpc);
+
+//                                shopItem.getChild("preview").addChild("")
+                            }
+                        });
+
+
+                        preview_e = shopItem.getChild("preview").getEntity();
+                        TransformComponent preview_tc = preview_e.getComponent(TransformComponent.class);
+                        preview_tc.x = -30;
+                        preview_tc.y = -30;
+
+                        Entity iconE;
+                        if(!vc.bought) {
+                            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+                            iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                            GameStage.sceneLoader.getEngine().addEntity(iconE);
+                        }else{
+                            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
+                            iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                            GameStage.sceneLoader.getEngine().addEntity(iconE);
+                        }
+                        iconE.getComponent(ZIndexComponent.class).setZIndex(100);
+                        shopItem.getChild("btn_shop_icon_lib").addChild(iconE);
+                        tc1 = iconE.getComponent(TransformComponent.class);
+                        tc1.x = 484;
+                        tc1.y = 407;
+                        tci1 = iconE.getComponent(TintComponent.class);
+
+                        isPreviewOn = true;
+//                    vc.apply(GameScreenScript.fpc);
+                    }
                 }
             });
             x += 250;
@@ -152,7 +240,9 @@ public class ShopScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initMenu();
+                if(!isPreviewOn) {
+                    stage.initMenu();
+                }
             }
         });
     }
@@ -164,50 +254,93 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if(touchZoneBtn.isTouched){
-            if(!isGdxWritten) {
-                tempGdx.x = Gdx.input.getX();
-                isGdxWritten = true;
-            }
-            if(tempGdx.x > Gdx.input.getX()){
-                int i = 0;
-                while(i<bags.size()){
-                    bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x-Gdx.input.getX())/15;
-                    itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
-                    i++;
+        if(!isPreviewOn) {
+            if (touchZoneBtn.isTouched) {
+                if (!isGdxWritten) {
+                    tempGdx.x = Gdx.input.getX();
+                    isGdxWritten = true;
                 }
-                stopVelocity = (Gdx.input.getX()-tempGdx.x)/15;
-                tempGdx.x -= (tempGdx.x-Gdx.input.getX())/15;
-                isHighlighted = true;
-            }
-            if(tempGdx.x < Gdx.input.getX()){
-                int i = 0;
-                while(i<bags.size()){
-                    bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX()-tempGdx.x)/15;
-                    itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
-                    i++;
+                if (tempGdx.x > Gdx.input.getX()) {
+                    int i = 0;
+                    while (i < bags.size()) {
+                        bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x - Gdx.input.getX()) / 15;
+                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        i++;
+                    }
+                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
+                    tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
+                    isHighlighted = true;
                 }
-                stopVelocity = (Gdx.input.getX()-tempGdx.x)/15;
-                tempGdx.x += (Gdx.input.getX()-tempGdx.x)/15;
-                isHighlighted = true;
-            }
-        }else{
-            isGdxWritten = false;
-            if(stopVelocity != 0){
-                int i = 0;
-                while(i<bags.size()){
+                if (tempGdx.x < Gdx.input.getX()) {
+                    int i = 0;
+                    while (i < bags.size()) {
+                        bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX() - tempGdx.x) / 15;
+                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        i++;
+                    }
+                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
+                    tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
+                    isHighlighted = true;
+                }
+            } else {
+                isGdxWritten = false;
+                if (stopVelocity != 0) {
+                    int i = 0;
+                    while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
                         itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
-                    i++;
+                        i++;
+                    }
+                    stopVelocity -= stopVelocity / 20;
+                } else {
+                    isHighlighted = false;
                 }
-                stopVelocity -= stopVelocity/20;
-            }else{
-                isHighlighted = false;
             }
-        }
 //        stage.sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+
+        }
         lc.text.replace(0, lc.text.length(), String.valueOf(GameScreenScript.fpc.totalScore));
+        fadePreview();
     }
 
+    private void fadePreview() {
+        TintComponent ticLblScore = lbl_score_lbl.getComponent(TintComponent.class);
+        TintComponent ticLblDesc = lbl_desc.getComponent(TintComponent.class);
+        TintComponent ticTitle = lbl_title.getComponent(TintComponent.class);
+        TintComponent ticLblPrice = lbl_price.getComponent(TintComponent.class);
+        TintComponent ticBackShop = btn_back_shop.getComponent(TintComponent.class);
+        TintComponent ticLeftBtn = btn_left.getComponent(TintComponent.class);
+        TintComponent ticRightBtn = btn_right.getComponent(TintComponent.class);
+        TintComponent ticBuyBtn = btn_buy.getComponent(TintComponent.class);
+        TintComponent ticPreviewIcon = preview_icon.getComponent(TintComponent.class);
+        TintComponent ticBg = bg.getComponent(TintComponent.class);
+
+        boolean appear = (ticBackShop.color.a < 1 && isPreviewOn) ||
+                (ticBackShop.color.a > 0 && !isPreviewOn);
+
+        int fadeCoefficient = isPreviewOn ? 1 : -1;
+
+        if (appear) {
+            ticLblScore.color.a += fadeCoefficient * 0.1f;
+            ticLblDesc.color.a += fadeCoefficient * 0.1f;
+            ticTitle.color.a += fadeCoefficient * 0.1f;
+            ticLblPrice.color.a += fadeCoefficient * 0.1f;
+            ticBackShop.color.a += fadeCoefficient * 0.1f;
+            ticLeftBtn.color.a += fadeCoefficient * 0.1f;
+            ticRightBtn.color.a += fadeCoefficient * 0.1f;
+            ticBuyBtn.color.a += fadeCoefficient * 0.1f;
+            ticPreviewIcon.color.a += fadeCoefficient * 0.1f;
+            ticBg.color.a += fadeCoefficient * 0.1f;
+            if(tci1!=null) {
+                tci1.color.a += fadeCoefficient * 0.1f;
+            }
+        }
+
+        if (!isPreviewOn && ticBackShop.color.a <= 0 && preview_e!=null) {
+            TransformComponent previewTc = preview_e.getComponent(TransformComponent.class);
+            previewTc.x = -1500;
+            tc1.x = -1500;
+        }
+    }
 
 }
