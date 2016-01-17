@@ -65,7 +65,13 @@ public class ResultScreenScript implements IScript {
         progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
 
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        dcProgressBar.width = fpc.totalScore - fpc.score;
+        if (fpc.totalScore - fpc.score < 690) {
+            dcProgressBar.width = fpc.totalScore - fpc.score;
+        }else if(fpc.totalScore - fpc.score < 0){
+            dcProgressBar.width = 0;
+        }else{
+            dcProgressBar.width = 690;
+        }
 
         txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
@@ -201,6 +207,7 @@ public class ResultScreenScript implements IScript {
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
                 updateProgressBar();
+
             }
         }else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
@@ -217,6 +224,12 @@ public class ResultScreenScript implements IScript {
             dcProgressBar.width += 2;
         } else if (!showcasePopup && showCaseVanity != null) {
             initShowcase();
+        }
+
+        if(fpc.totalScore - fpc.score < 0){
+            dcProgressBar.width = 0;
+        }else if(fpc.totalScore - fpc.score > 690){
+            dcProgressBar.width = 690;
         }
     }
 

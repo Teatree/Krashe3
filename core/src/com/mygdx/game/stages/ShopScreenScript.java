@@ -130,7 +130,7 @@ public class ShopScreenScript implements IScript {
                 GameStage.sceneLoader.getEngine().addEntity(itemIcon);
             }
 
-            TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
+            final TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
             tc.x = x;
             tc.y = y;
 
@@ -145,8 +145,6 @@ public class ShopScreenScript implements IScript {
 
 
             bagEntity.add(new ButtonComponent());
-
-
 
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
@@ -181,10 +179,35 @@ public class ShopScreenScript implements IScript {
                             public void clicked() {
                                 vc.buyAndUse(GameScreenScript.fpc);
 
+                                preview_e = shopItem.getChild("preview").getEntity();
+                                TransformComponent preview_tc = preview_e.getComponent(TransformComponent.class);
+                                preview_tc.x = -30;
+                                preview_tc.y = -30;
+
+                                Entity iconE;
+                                if(!vc.bought) {
+                                    CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+                                    iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                                    GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                                    GameStage.sceneLoader.getEngine().addEntity(iconE);
+                                }else{
+                                    CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
+                                    iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                                    GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                                    GameStage.sceneLoader.getEngine().addEntity(iconE);
+                                    lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
+                                    getAllAllVanities();
+//                                    shopItem.getChild("preview").getChild("item_unknown_n").getComponent(TransformComponent.class).x = -1500;
+                                }
+                                iconE.getComponent(ZIndexComponent.class).setZIndex(100);
+                                shopItem.getChild("preview").addChild(iconE);
+                                tc1 = iconE.getComponent(TransformComponent.class);
+                                tc1.x = -1500;
+                                tci1 = iconE.getComponent(TintComponent.class);
+
 //                                shopItem.getChild("preview").addChild("")
                             }
                         });
-
 
                         preview_e = shopItem.getChild("preview").getEntity();
                         TransformComponent preview_tc = preview_e.getComponent(TransformComponent.class);
@@ -192,23 +215,20 @@ public class ShopScreenScript implements IScript {
                         preview_tc.y = -30;
 
                         Entity iconE;
-                        if(!vc.bought) {
-                            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
-                            iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
-                            GameStage.sceneLoader.getEngine().addEntity(iconE);
-                        }else{
+                        if (vc.bought) {
                             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
                             iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
                             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
                             GameStage.sceneLoader.getEngine().addEntity(iconE);
+                            iconE.getComponent(ZIndexComponent.class).setZIndex(100);
+                            shopItem.getChild("preview").addChild(iconE);
+                            tc1 = iconE.getComponent(TransformComponent.class);
+                            tc1.x = 484;
+                            tc1.y = 407;
+                            tci1 = iconE.getComponent(TintComponent.class);
+                            TransformComponent tc5 = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().getComponent(TransformComponent.class);
+                            tc5.x = -1500;
                         }
-                        iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-                        shopItem.getChild("btn_shop_icon_lib").addChild(iconE);
-                        tc1 = iconE.getComponent(TransformComponent.class);
-                        tc1.x = 484;
-                        tc1.y = 407;
-                        tci1 = iconE.getComponent(TintComponent.class);
 
                         isPreviewOn = true;
 //                    vc.apply(GameScreenScript.fpc);
@@ -339,7 +359,7 @@ public class ShopScreenScript implements IScript {
         if (!isPreviewOn && ticBackShop.color.a <= 0 && preview_e!=null) {
             TransformComponent previewTc = preview_e.getComponent(TransformComponent.class);
             previewTc.x = -1500;
-            tc1.x = -1500;
+//            tc1.x = -1500;
         }
     }
 
