@@ -3,6 +3,7 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.SaveMngr;
 
 import java.util.HashMap;
@@ -85,6 +86,11 @@ public class VanityComponent implements Component {
         buy(fc);
         apply(fc);
     }
+
+    public boolean isAffordable(){
+        return GameScreenScript.fpc.totalScore >= this.cost;
+    }
+
     public void disable(FlowerPublicComponent fc){
         fc.vanities.remove(this);
         this.enabled = false;

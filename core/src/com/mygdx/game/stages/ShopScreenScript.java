@@ -51,10 +51,11 @@ public class ShopScreenScript implements IScript {
     private Entity btn_buy;
     private Entity preview_icon;
     private Entity bg;
+    private Entity lbl_not_enough;
     private boolean isPreviewOn;
     private TransformComponent tc1;
+    private TransformComponent tc5;
     private TintComponent tci1;
-
 
 //    private int spawnCounter = 0;
 
@@ -64,10 +65,10 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+        GameScreenScript.fpc.totalScore += 500;
         shopItem = new ItemWrapper(item);
 
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-
 
         addBackButtonPlease();
 
@@ -88,6 +89,7 @@ public class ShopScreenScript implements IScript {
         btn_buy = shopItem.getChild("preview").getChild("btn_buy").getEntity();
         preview_icon = shopItem.getChild("preview").getChild("btn_back_shop").getEntity();
         bg = shopItem.getChild("preview").getChild("img_bg_show_case").getEntity();
+        lbl_not_enough = shopItem.getChild("preview").getChild("lbl_not_enough").getEntity();
 
         btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
             @Override
@@ -144,6 +146,7 @@ public class ShopScreenScript implements IScript {
             itemIcons.add(itemIcon);
 
 
+
             bagEntity.add(new ButtonComponent());
 
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -159,6 +162,16 @@ public class ShopScreenScript implements IScript {
                 @Override
                 public void clicked() {
 //                    System.out.println(vc.icon);
+                    btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
+                    lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+                    if(vc.isAffordable()){
+                        btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
+                        lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+                    }else{
+                        btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
+                        lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
+                    }
+
                     if(!isPreviewOn) {
                         lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
                         if (vc.description != null) {
@@ -166,7 +179,8 @@ public class ShopScreenScript implements IScript {
                         }
                         lbl_title.getComponent(LabelComponent.class).text.replace(0, lbl_title.getComponent(LabelComponent.class).text.length, vc.name);
                         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
-                        btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+                        btn_buy.getComponent(ButtonComponent.class).clearListeners();
+                        btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                             @Override
                             public void touchUp() {
                             }
@@ -177,35 +191,43 @@ public class ShopScreenScript implements IScript {
 
                             @Override
                             public void clicked() {
-                                vc.buyAndUse(GameScreenScript.fpc);
+                                if (btn_buy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
+                                    vc.buyAndUse(GameScreenScript.fpc);
 
-                                preview_e = shopItem.getChild("preview").getEntity();
-                                TransformComponent preview_tc = preview_e.getComponent(TransformComponent.class);
-                                preview_tc.x = -30;
-                                preview_tc.y = -30;
+                                    preview_e = shopItem.getChild("preview").getEntity();
+                                    TransformComponent preview_tc = preview_e.getComponent(TransformComponent.class);
+                                    preview_tc.x = -30;
+                                    preview_tc.y = -30;
 
-                                Entity iconE;
-                                if(!vc.bought) {
-                                    CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
-                                    iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                                    GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
-                                    GameStage.sceneLoader.getEngine().addEntity(iconE);
-                                }else{
-                                    CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
-                                    iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                                    GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
-                                    GameStage.sceneLoader.getEngine().addEntity(iconE);
-                                    lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
-                                    getAllAllVanities();
+                                    Entity iconE;
+                                    if (!vc.bought) {
+                                        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+                                        iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                                        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                                        GameStage.sceneLoader.getEngine().addEntity(iconE);
+                                        lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(1);
+                                    } else {
+                                        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
+                                        iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                                        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+                                        GameStage.sceneLoader.getEngine().addEntity(iconE);
+                                        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
+//                                    getAllAllVanities();
 //                                    shopItem.getChild("preview").getChild("item_unknown_n").getComponent(TransformComponent.class).x = -1500;
-                                }
-                                iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-                                shopItem.getChild("preview").addChild(iconE);
-                                tc1 = iconE.getComponent(TransformComponent.class);
-                                tc1.x = -1500;
-                                tci1 = iconE.getComponent(TintComponent.class);
+
+                                    }
+                                    iconE.getComponent(ZIndexComponent.class).setZIndex(100);
+                                    shopItem.getChild("preview").addChild(iconE);
+                                    tci1 = iconE.getComponent(TintComponent.class);
+
+                                    tc1 = iconE.getComponent(TransformComponent.class);
+                                    tc1.x = 484;
+                                    tc1.y = 407;
+                                    tci1 = iconE.getComponent(TintComponent.class);
+                                    tc5.x = -1500;
 
 //                                shopItem.getChild("preview").addChild("")
+                                }
                             }
                         });
 
@@ -215,6 +237,8 @@ public class ShopScreenScript implements IScript {
                         preview_tc.y = -30;
 
                         Entity iconE;
+                        tc5 = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().getComponent(TransformComponent.class);
+
                         if (vc.bought) {
                             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
                             iconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
@@ -226,12 +250,14 @@ public class ShopScreenScript implements IScript {
                             tc1.x = 484;
                             tc1.y = 407;
                             tci1 = iconE.getComponent(TintComponent.class);
-                            TransformComponent tc5 = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().getComponent(TransformComponent.class);
                             tc5.x = -1500;
+                        }else{
+                            tc5.x = 484;
                         }
 
                         isPreviewOn = true;
 //                    vc.apply(GameScreenScript.fpc);
+
                     }
                 }
             });
@@ -359,7 +385,12 @@ public class ShopScreenScript implements IScript {
         if (!isPreviewOn && ticBackShop.color.a <= 0 && preview_e!=null) {
             TransformComponent previewTc = preview_e.getComponent(TransformComponent.class);
             previewTc.x = -1500;
-//            tc1.x = -1500;
+            if(tc1 != null) {
+                tc1.x = -1500;
+            }
+            if(tc5 != null) {
+                tc5.x = -1500;
+            }
         }
     }
 

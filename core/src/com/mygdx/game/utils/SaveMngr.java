@@ -23,7 +23,7 @@ public class SaveMngr {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
-        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
+//        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         for (VanityComponent vc : fc.vanities){
             VanityStats vs = new VanityStats(vc);
             gameStats.vanities.add(vs);
@@ -50,13 +50,13 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
-            try {
-                Calendar lastGoalsDate = Calendar.getInstance();
-                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
-                DailyGoalSystem.latestDate = lastGoalsDate;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Calendar lastGoalsDate = Calendar.getInstance();
+//                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
+//                DailyGoalSystem.latestDate = lastGoalsDate;
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 //            for (VanityStats vs : gameStats.vanities){
 //                VanityComponent vc = new VanityComponent(vs);
 //                fc.vanities.add(vc);
