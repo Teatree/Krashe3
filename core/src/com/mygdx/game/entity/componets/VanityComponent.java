@@ -1,10 +1,14 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.HashMap;
 import java.util.Map;
