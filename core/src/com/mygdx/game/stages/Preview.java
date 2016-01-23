@@ -42,24 +42,26 @@ public class Preview {
         btn_left = shopItem.getChild("preview").getChild("btn_left").getEntity();
         btn_right = shopItem.getChild("preview").getChild("btn_right").getEntity();
         btn_buy = shopItem.getChild("preview").getChild("btn_buy").getEntity();
-        preview_icon = shopItem.getChild("preview").getChild("btn_back_shop").getEntity();
+        preview_icon = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity();
         bg = shopItem.getChild("preview").getChild("img_bg_show_case").getEntity();
         lbl_not_enough = shopItem.getChild("preview").getChild("lbl_not_enough").getEntity();
 
-//        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
-//            @Override
-//            public void touchUp() {
-//            }
-//
-//            @Override
-//            public void touchDown() {
-//            }
-//
-//            @Override
-//            public void clicked() {
-//                ShopScreenScript.isPreviewOn = false;
-//            }
-//        });
+        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+            @Override
+            public void touchUp() {
+                System.out.println("1");
+//                System.out.println("1");
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                ShopScreenScript.isPreviewOn = false;
+            }
+        });
     }
 
     public void fadePreview() {

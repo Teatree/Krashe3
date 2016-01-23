@@ -200,7 +200,7 @@ public class SaveMngr {
         vanity4.cost = 650;
         vanity4.name = "Santa outfit";
         vanity4.icon = "christmas";
-        vanity4.shopIcon = "item_white_beard_n";
+        vanity4.shopIcon = "item_santa_hat_n";
         vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
         vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
         vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");
@@ -210,22 +210,22 @@ public class SaveMngr {
         vanity5.cost = 750;
         vanity5.name = "Bike helmet";
         vanity5.icon = "leaf_christmas";
-        vanity5.shopIcon = "item_white_beard_n";
+        vanity5.shopIcon = "item_biker_helm_n";
 
         vanity6.cost = 900;
-        vanity6.name = "Cool Sun-glasses";
+        vanity6.name = "Cool Sun glasses";
         vanity6.icon = "santabeard";
-        vanity6.shopIcon = "item_white_beard_n";
+        vanity6.shopIcon = "item_sun_glasses_n";
 
         vanity7.cost = 1200;
         vanity7.name = "Pilot's scarf";
         vanity7.icon = "deer";
-        vanity7.shopIcon = "item_deer_horns_n";
+        vanity7.shopIcon = "item_pilot_scarf_n";
 
         vanity8.cost = 1550;
         vanity8.name = "Tea cup";
         vanity8.icon = "christmas";
-        vanity8.shopIcon = "item_white_beard_n";
+        vanity8.shopIcon = "item_tea_cup_n";
 
         List<VanityStats> vanityStatses = new ArrayList<>();
 

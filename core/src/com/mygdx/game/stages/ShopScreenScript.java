@@ -42,11 +42,10 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-        GameScreenScript.fpc.totalScore += 500;
+//        GameScreenScript.fpc.totalScore += 500;
+        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
-
-        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
         addBackButtonPlease();
 
