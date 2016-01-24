@@ -13,7 +13,11 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 /**
  * Created by Teatree on 7/25/2015.
@@ -62,6 +66,15 @@ public class ShopScreenScript implements IScript {
     private void getAllAllVanities() {
         int x = 173;
         int y = 289;
+
+        Collections.sort(fpc.vanities, new Comparator<VanityComponent>() {
+            @Override
+            public int compare(VanityComponent o1, VanityComponent o2) {
+                if (o1.cost > o2.cost) return 1;
+                if (o1.cost < o2.cost) return -1;
+                return 0;
+            }
+        });
 
         for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
@@ -113,6 +126,8 @@ public class ShopScreenScript implements IScript {
             });
             x += 250;
         }
+
+
     }
 
     private void addBackButtonPlease() {

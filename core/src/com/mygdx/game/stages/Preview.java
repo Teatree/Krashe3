@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -25,6 +26,7 @@ public class Preview {
     public Entity btn_buy;
     public Entity lbl_not_enough;
     public Entity preview_icon;
+    public Entity preview_n;
     public Entity bg;
     Entity iconE;
 
@@ -34,6 +36,7 @@ public class Preview {
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
+        preview_n = shopItem.getChild("preview").getEntity();
         lbl_score_lbl = shopItem.getChild("preview").getChild("preview_score_lbl").getEntity();
         lbl_desc = shopItem.getChild("preview").getChild("lbl_desc").getEntity();
         lbl_title = shopItem.getChild("preview").getChild("lbl_item_name").getEntity();
@@ -65,39 +68,30 @@ public class Preview {
     }
 
     public void fadePreview() {
-        TintComponent ticLblScore = lbl_score_lbl.getComponent(TintComponent.class);
-        TintComponent ticLblDesc = lbl_desc.getComponent(TintComponent.class);
-        TintComponent ticTitle = lbl_title.getComponent(TintComponent.class);
-        TintComponent ticLblPrice = lbl_price.getComponent(TintComponent.class);
-        TintComponent ticBackShop = btn_back_shop.getComponent(TintComponent.class);
-        TintComponent ticLeftBtn = btn_left.getComponent(TintComponent.class);
-        TintComponent ticRightBtn = btn_right.getComponent(TintComponent.class);
-        TintComponent ticBuyBtn = btn_buy.getComponent(TintComponent.class);
-        TintComponent ticPreviewIcon = preview_icon.getComponent(TintComponent.class);
-        TintComponent ticBg = bg.getComponent(TintComponent.class);
+        NodeComponent nc = preview_n.getComponent(NodeComponent.class);
+        TintComponent tcp = preview_n.getComponent(TintComponent.class);
 
-        boolean appear = (ticBackShop.color.a < 1 && ShopScreenScript.isPreviewOn) ||
-                (ticBackShop.color.a > 0 && !ShopScreenScript.isPreviewOn);
+        boolean appear = (tcp.color.a < 1 && ShopScreenScript.isPreviewOn) ||
+                (tcp.color.a > 0 && !ShopScreenScript.isPreviewOn);
 
         int fadeCoefficient = ShopScreenScript.isPreviewOn ? 1 : -1;
 
         if (appear) {
-            ticLblScore.color.a += fadeCoefficient * 0.1f;
-            ticLblDesc.color.a += fadeCoefficient * 0.1f;
-            ticTitle.color.a += fadeCoefficient * 0.1f;
-            ticLblPrice.color.a += fadeCoefficient * 0.1f;
-            ticBackShop.color.a += fadeCoefficient * 0.1f;
-            ticLeftBtn.color.a += fadeCoefficient * 0.1f;
-            ticRightBtn.color.a += fadeCoefficient * 0.1f;
-            ticBuyBtn.color.a += fadeCoefficient * 0.1f;
-            ticPreviewIcon.color.a += fadeCoefficient * 0.1f;
-            ticBg.color.a += fadeCoefficient * 0.1f;
-            if (tciPreviewIcon != null) {
-                tciPreviewIcon.color.a += fadeCoefficient * 0.1f;
-            }
+            tcp.color.a += fadeCoefficient * 0.1f;
+            fadeChildren(nc, fadeCoefficient);
         }
 
-        hidePreview(ticBackShop);
+        hidePreview(tcp);
+    }
+
+    private void fadeChildren(NodeComponent nc, int fadeCoefficient) {
+        if (nc != null && nc.children != null && nc.children.size != 0) {
+            for (Entity e : nc.children) {
+                TintComponent tc = e.getComponent(TintComponent.class);
+                tc.color.a += fadeCoefficient * 0.1f;
+                fadeChildren(e.getComponent(NodeComponent.class), fadeCoefficient);
+            }
+        }
     }
 
     private void hidePreview(TintComponent ticBackShop) {
@@ -143,7 +137,7 @@ public class Preview {
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
-    public void iniyBuyButton(VanityComponent vc) {
+    public void canBuyCheck(VanityComponent vc) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.isAffordable()) {
@@ -166,14 +160,13 @@ public class Preview {
     }
 
     public void showPreview(VanityComponent vc) {
-        iniyBuyButton(vc);
+        canBuyCheck(vc);
 
         if (!ShopScreenScript.isPreviewOn) {
             setLabelsValues(vc);
             initBuyButton(vc);
             initPreviewWindow();
 
-//                        Entity iconE;
             tcPreviewWindow = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().getComponent(TransformComponent.class);
 
             if (vc.bought) {
@@ -181,7 +174,6 @@ public class Preview {
             } else {
                 tcPreviewWindow.x = 484;
             }
-
             ShopScreenScript.isPreviewOn = true;
         }
     }
