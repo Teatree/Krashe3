@@ -32,7 +32,6 @@ public class Preview {
 
     public TransformComponent tcPreviewIcon;
     public TransformComponent tcPreviewWindow;
-    public TintComponent tciPreviewIcon;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
@@ -53,7 +52,6 @@ public class Preview {
             @Override
             public void touchUp() {
                 System.out.println("1");
-//                System.out.println("1");
             }
 
             @Override
@@ -117,7 +115,6 @@ public class Preview {
         tcPreviewIcon = iconE.getComponent(TransformComponent.class);
         tcPreviewIcon.x = 484;
         tcPreviewIcon.y = 407;
-        tciPreviewIcon = iconE.getComponent(TintComponent.class);
         tcPreviewWindow.x = -1500;
     }
 
@@ -208,12 +205,10 @@ public class Preview {
 
                     iconE.getComponent(ZIndexComponent.class).setZIndex(100);
                     shopItem.getChild("preview").addChild(iconE);
-                    tciPreviewIcon = iconE.getComponent(TintComponent.class);
 
                     tcPreviewIcon = iconE.getComponent(TransformComponent.class);
                     tcPreviewIcon.x = 484;
                     tcPreviewIcon.y = 407;
-                    tciPreviewIcon = iconE.getComponent(TintComponent.class);
                     tcPreviewWindow.x = -1500;
                 }
             }
