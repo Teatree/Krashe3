@@ -7,9 +7,10 @@ import com.mygdx.game.entity.componets.DailyGoal;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 /**
  * Created by AR on 12/14/2015.
@@ -24,12 +25,8 @@ public class SaveMngr {
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
-        for (VanityComponent vc : fc.vanities){
-            VanityStats vs = new VanityStats(vc);
-            gameStats.vanities.add(vs);
-        }
-        Json json2 = new Json();
-        writeFile("vanity.params", json2.toJson(gameStats.vanities));
+        saveVanities(fc);
+
         for (DailyGoal goal : fc.goals){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -40,6 +37,16 @@ public class SaveMngr {
         }
         Json json = new Json();
         writeFile(DATA_FILE, json.toJson(gameStats));
+    }
+
+    private static void saveVanities(FlowerPublicComponent fc) {
+        List<VanityStats> vanities = new ArrayList<>();
+        for (VanityComponent vc : fc.vanities){
+            VanityStats vs = new VanityStats(vc);
+            vanities.add(vs);
+        }
+        Json json2 = new Json();
+        writeFile("vanity.params", json2.toJson(vanities));
     }
 
     public static FlowerPublicComponent loadStats(){
@@ -106,6 +113,15 @@ public class SaveMngr {
                 vanComps.add(vc);
             }
         }
+
+        Collections.sort(vanComps, new Comparator<VanityComponent>() {
+            @Override
+            public int compare(VanityComponent o1, VanityComponent o2) {
+                if (o1.cost > o2.cost) return 1;
+                if (o1.cost < o2.cost) return -1;
+                return 0;
+            }
+        });
         return vanComps;
     }
 

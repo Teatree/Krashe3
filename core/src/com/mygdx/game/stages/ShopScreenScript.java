@@ -67,15 +67,6 @@ public class ShopScreenScript implements IScript {
         int x = 173;
         int y = 289;
 
-        Collections.sort(fpc.vanities, new Comparator<VanityComponent>() {
-            @Override
-            public int compare(VanityComponent o1, VanityComponent o2) {
-                if (o1.cost > o2.cost) return 1;
-                if (o1.cost < o2.cost) return -1;
-                return 0;
-            }
-        });
-
         for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);

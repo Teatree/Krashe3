@@ -1,8 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -13,18 +11,14 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.stages.ShowcaseScreenScript.*;
 
 /**
  * Created by Teatree on 7/25/2015.
  */
 public class ResultScreenScript implements IScript {
 
-    public static final int PROGRESS_BAR_WIDTH = 690;
+    public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final String SHOWCASE = "showcase";
 
 
@@ -93,14 +87,6 @@ public class ResultScreenScript implements IScript {
     }
 
     private int getNeedForNextItem() {
-        Collections.sort(fpc.vanities, new Comparator<VanityComponent>() {
-            @Override
-            public int compare(VanityComponent o1, VanityComponent o2) {
-                if (o1.cost > o2.cost) return 1;
-                if (o1.cost < o2.cost) return -1;
-                return 0;
-            }
-        });
         nextVanityCost = 0;
         VanityComponent tempVc = null;
         for (VanityComponent vc : fpc.vanities) {
@@ -113,7 +99,7 @@ public class ResultScreenScript implements IScript {
                 }
             }
         }
-        if(tempVc!=null) {
+        if (tempVc != null) {
             showCaseVanity = tempVc;
             showCaseVanity.advertised = true;
             nextVanityCost = showCaseVanity.cost;
@@ -194,7 +180,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!show) {
+                if (!show) {
                     stage.initShopMenu();
                     show = false;
                     isWasShowcase = false;
@@ -205,16 +191,16 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if(!isWasShowcase) {
+        if (!isWasShowcase) {
             if (i <= fpc.score) {
                 updateScore();
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
                 updateProgressBar();
             }
-        }else {
+        } else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
-            float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
+            float progressBarActualLength = getProgressBarActualLength();
             progressBarE.getComponent(DimensionsComponent.class).width = progressBarActualLength;
         }
         showcase.showFading();
@@ -222,9 +208,10 @@ public class ResultScreenScript implements IScript {
 
     private void updateProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
-        if (dcProgressBar.width <= progressBarActualLength &&
-                dcProgressBar.width <= PROGRESS_BAR_WIDTH) {
+//        float progressBarActualLength = getProgressBarActualLength();
+
+        if (dcProgressBar.width <= getProgressBarActualLength() &&
+                dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += 2;
         } else if (!show && showCaseVanity != null) {
             initShowcase();
@@ -233,11 +220,17 @@ public class ResultScreenScript implements IScript {
             setProgressBar();
         }
 
-        if(fpc.totalScore - fpc.score < 0){
+        if (fpc.totalScore - fpc.score < 0) {
             dcProgressBar.width = 0;
-        }else if(fpc.totalScore - fpc.score > 690){
+        } else if (fpc.totalScore - fpc.score > 690) {
             dcProgressBar.width = 690;
         }
+    }
+
+    private float getProgressBarActualLength() {
+        return fpc.totalScore < nextVanityCost ?
+                    ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f :
+                    MAX_PROGRESS_BAR_WIDTH;
     }
 
     private void setProgressBar() {
@@ -245,9 +238,9 @@ public class ResultScreenScript implements IScript {
         int scoreDiff = fpc.totalScore - fpc.score;
         if (scoreDiff < 690) {
             dcProgressBar.width = scoreDiff;
-        }else if(scoreDiff < 0){
+        } else if (scoreDiff < 0) {
             dcProgressBar.width = 0;
-        }else{
+        } else {
             dcProgressBar.width = 690;
         }
     }
