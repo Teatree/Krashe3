@@ -12,12 +12,10 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 /**
  * Created by Teatree on 7/25/2015.
@@ -33,7 +31,7 @@ public class ShopScreenScript implements IScript {
     public Vector2 tempGdx = new Vector2();
     public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
-    public List<Entity> itemIcons = new ArrayList<>();
+    public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public ButtonComponent touchZoneBtn;
     float stopVelocity;
     public static boolean isPreviewOn;
@@ -62,6 +60,11 @@ public class ShopScreenScript implements IScript {
 
         getAllAllVanities();
     }
+
+    private  void updatebags(){
+
+    }
+
 
     private void getAllAllVanities() {
         int x = 173;
@@ -97,7 +100,7 @@ public class ShopScreenScript implements IScript {
             tcb.y = tc.y;
 
             bags.add(bagEntity);
-            itemIcons.add(itemIcon);
+            itemIcons.put(vc.shopIcon, itemIcon);
 
             bagEntity.add(new ButtonComponent());
 
@@ -117,8 +120,6 @@ public class ShopScreenScript implements IScript {
             });
             x += 250;
         }
-
-
     }
 
     private void addBackButtonPlease() {
@@ -151,6 +152,7 @@ public class ShopScreenScript implements IScript {
     @Override
     public void act(float delta) {
         if (!isPreviewOn) {
+            List<Entity> itemIcons2 = new ArrayList<>(itemIcons.values());
             if (touchZoneBtn.isTouched) {
                 if (!isGdxWritten) {
                     tempGdx.x = Gdx.input.getX();
@@ -160,7 +162,7 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x - Gdx.input.getX()) / 15;
-                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
@@ -170,7 +172,7 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX() - tempGdx.x) / 15;
-                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
@@ -182,13 +184,12 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
-                        itemIcons.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity -= stopVelocity / 20;
                 }
             }
-
         }
         lc.text.replace(0, lc.text.length(), String.valueOf(GameScreenScript.fpc.totalScore));
         preview.fadePreview();

@@ -192,7 +192,7 @@ public class SaveMngr {
         vanity3.cost = 90;
         vanity3.name = "Christmas leaves";
         vanity3.icon = "leaf_christmas";
-        vanity3.shopIcon = "item_white_beard_n";
+        vanity3.shopIcon = "bug_juice_bubble_lib";
         vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
         vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
 
