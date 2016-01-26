@@ -29,7 +29,7 @@ public class Player {
 	
 	protected Entity entity;
 	Animation animation;
-	public int time;
+	int time;
 	public int speed;
 	Timeline.Key[] tweenedKeys, unmappedTweenedKeys;
 	private Timeline.Key[] tempTweenedKeys, tempUnmappedTweenedKeys;
@@ -45,7 +45,7 @@ public class Player {
 	public final Box prevBBox;
 	private BoneIterator boneIterator;
 	private ObjectIterator objectIterator;
-	public Mainline.Key currentKey, prevKey;
+	private Mainline.Key currentKey, prevKey;
 	public boolean copyObjects = true;
 	
 	/**

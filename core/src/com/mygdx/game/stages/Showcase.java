@@ -1,14 +1,13 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.mygdx.game.entity.componets.VanityComponent;
+import com.badlogic.gdx.math.Interpolation;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -75,12 +74,13 @@ public class Showcase {
             tcp.color.a += fadeCoefficient * 0.1f;
             fadeChildren(nc, fadeCoefficient);
         }
-        hidePreview(tcp);
+        hideWindow(tcp);
     }
 
-    private void hidePreview(TintComponent ticParent) {
+    private void hideWindow(TintComponent ticParent) {
         if (!show && ticParent.color.a <= 0 && showcaseE != null) {
             if (itemIcon != null) {
+                tcItem.x = -1500;
                 sceneLoader.getEngine().removeEntity(itemIcon);
                 itemIcon = null;
                 tcItem = null;
@@ -93,31 +93,41 @@ public class Showcase {
 
 //        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
 //        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
-        System.out.println("showcase init : " + showCaseVanity.name + " asset " + showCaseVanity.icon);
         Entity aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
         sc.player.speed = 6;
-        sc.player.time = 0;
+//        sc.player.time = 0;
 
-//        tcItem = aniE.getComponent(TransformComponent.class);
-//        tcItem.x = 484;
-//        tcItem.y = 407;
+        initShowCaseItem();
 
+        tcShowCase.x = -25;
+        tcShowCase.y = -35;
+    }
+
+    private void initShowCaseItem() {
         CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon).clone();
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(100);
-//        screenItem.getChild("showcase").addChild(itemIcon);
 
         tcItem = itemIcon.getComponent(TransformComponent.class);
-        tcItem.x = 480;
-        tcItem.y = 395;
+        tcItem.x = 445;
+        tcItem.y = 350;
+        tcItem.scaleX = 0.05f;
+        tcItem.scaleY = 0.05f;
+        tcItem.rotation = -120f;
+        itemIcon.getComponent(TintComponent.class).color.a = 0.0f;
 
-        tcShowCase.x = -25;
-        tcShowCase.y = -35;
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.parallel(
+                Actions.scaleTo(1.5f, 1.5f, 7, Interpolation.exp5Out),
+                Actions.fadeIn(10, Interpolation.exp10Out),
+                Actions.rotateBy(120f, 2, Interpolation.circleOut)));
+        itemIcon.add(ac);
     }
 
     private void initShowCaseBackButton() {
