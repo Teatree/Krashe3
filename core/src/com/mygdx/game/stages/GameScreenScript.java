@@ -3,24 +3,26 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
+import com.brashmonkey.spriter.Interpolator;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalSystem;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
 import static com.mygdx.game.utils.GlobalConstants.*;
+import static com.mygdx.game.utils.Utils.*;
 import static com.mygdx.game.stages.GameStage.*;
 
 /**
@@ -39,9 +41,6 @@ public class GameScreenScript implements IScript {
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
 
-    public ParticleComponent pc;
-
-    //One flower collision component will be used in all systems
     public static FlowerPublicComponent fpc;
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
@@ -51,7 +50,6 @@ public class GameScreenScript implements IScript {
     public static boolean isParticlePlaying;
     public static Entity starBurstParticleE;
 
-    //    public static int gameOverCounter = 240;
     public static int gameOverCounter = 240;
 
     public static CameraShaker cameraShaker = new CameraShaker();
@@ -60,11 +58,7 @@ public class GameScreenScript implements IScript {
 
     public DailyGoalSystem dailyGoalGenerator;
     private Entity pauseDialog;
-    private Entity pauseDialogBackground;
-    private Entity goalLabel;
-    private Entity closePauseBtn;
-    private Entity closePauseBtnNorm;
-    private Entity closePauseBtnPres;
+    public static Entity gameOverDialog;
 
     public GameScreenScript(GameStage game) {
         this.game = game;
@@ -92,6 +86,7 @@ public class GameScreenScript implements IScript {
         initPauseBtn();
         initBackButton();
         initPauseDialog();
+        initGameOverDialog();
 
 // I can't understand why this doesn't work
 //        Entity ype = gameItem.getChild("star_burst_particle_lib").getChild("yellow_p").getEntity();
@@ -125,7 +120,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initBackButton() {
-        game.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+
         Entity backBtn = gameItem.getChild("btn_back").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
 
@@ -151,8 +146,7 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                game.initMenu();
-                pause();
+                game.initMenu();
             }
         });
     }
@@ -189,30 +183,7 @@ public class GameScreenScript implements IScript {
 
     private void initPauseDialog() {
         pauseDialog = gameItem.getChild("dialog").getEntity();
-        pauseDialogBackground = gameItem.getChild("dialog").getChild("dialog").getChild("img_pause").getEntity();
-        goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
-        closePauseBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
-        closePauseBtnPres = gameItem.getChild("dialog").getChild("btn_close").getChild("img_btn_close_pr").getEntity();
-        closePauseBtnNorm = gameItem.getChild("dialog").getChild("btn_close").getChild("img_btn_close_norm").getEntity();
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = -3000;
-        dialogTc.y = -1000;
-    }
-
-    private void pause() {
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = 300;
-        dialogTc.y = 100;
-
-        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-
-        StringBuilder goalsList = new StringBuilder();
-        for (DailyGoal g : fpc.goals) {
-            String achieved = g.achieved ? " achieved " : " not achieved ";
-            goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
-        }
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
-
+        Entity closePauseBtn = gameItem.getChild("dialog").getChild("btn_close").getEntity();
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
@@ -228,43 +199,16 @@ public class GameScreenScript implements IScript {
             }
         });
 
-        isPause = true;
+        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
+        dialogTc.x = -3000;
+        dialogTc.y = -1000;
     }
 
-    public void updateGameOver() {
-        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
-        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-
-        gameOverCounter--;
-        if (gameOverCounter % 48 == 0) {
-            gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
-        }
-
-        if (gameOverCounter <= 0) {
-            gameOverCounter = 240;
-            isGameOver = false;
-            isStarted = false;
-            isPause = false;
-            BugSpawnSystem.isAngeredBeesMode = false;
-            BugSpawnSystem.queenBeeOnStage = false;
-            if (fpc.bestScore < fpc.score) {
-                fpc.bestScore = fpc.score;
-            }
-            game.initResult();
-        }
-    }
-
-    public static void showGameOver() {
-        isGameOver = true;
-
-        final Entity gameOverDialog = gameItem.getChild("game_over_dialog").getEntity();
+    private void initGameOverDialog() {
+        gameOverDialog = gameItem.getChild("game_over_dialog").getEntity();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
-        dialogTc.x = 300;
-        dialogTc.y = 100;
-
-        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
-        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
+        dialogTc.x = -3000;
+        dialogTc.y = -1000;
 
         Entity watchAdBtn = gameItem.getChild("game_over_dialog").getChild("btn_watch_video").getEntity();
         watchAdBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -283,6 +227,74 @@ public class GameScreenScript implements IScript {
                 gameOverCounter = 240;
             }
         });
+    }
+
+    private void pause() {
+        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
+        dialogTc.x = 300;
+        dialogTc.y = 100;
+
+        final Entity goalLabel = gameItem.getChild("dialog").getChild("lbl_dialog").getEntity();
+        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+
+        StringBuilder goalsList = new StringBuilder();
+        for (DailyGoal g : fpc.goals) {
+            String achieved = g.achieved ? " achieved " : " not achieved ";
+            goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
+        }
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
+        isPause = true;
+    }
+
+    public void updateGameOver() {
+
+        fade(gameOverDialog, isGameOver);
+        if(isGameOver) {
+            final Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
+            final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+
+            final ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
+            gameOverTimerLbl.add(ac);
+
+            gameOverCounter--;
+            if (gameOverCounter % 48 == 0) {
+                gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
+            }
+
+            if (gameOverCounter <= 0) {
+                finishGame();
+            }
+        }
+    }
+
+    private void finishGame() {
+        gameOverCounter = 240;
+        isGameOver = false;
+        isStarted = false;
+        isPause = false;
+        BugSpawnSystem.isAngeredBeesMode = false;
+        BugSpawnSystem.queenBeeOnStage = false;
+        if (fpc.bestScore < fpc.score) {
+            fpc.bestScore = fpc.score;
+        }
+        game.initResult();
+    }
+
+    public static void showGameOver() {
+        isGameOver = true;
+
+        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
+        dialogTc.x = 300;
+        dialogTc.y = 100;
+
+        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
+        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
+
+        TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
+        tc.color.a = 0;
     }
 
     private void initFlower() {
@@ -341,16 +353,16 @@ public class GameScreenScript implements IScript {
             }
         }
 
-        if (isGameOver) {
+//        if (isGameOver) {
             updateGameOver();
-        }
+//        }
 
         if (isParticlePlaying) {
             counter++;
             removeEffectIn(110);
         }
 
-        fadePause();
+        fade(pauseDialog, isPause);
     }
 
     private void removeEffectIn(int frames) {
@@ -421,31 +433,5 @@ public class GameScreenScript implements IScript {
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
-    }
-
-    private void fadePause() {
-        TintComponent ticDialg = pauseDialog.getComponent(TintComponent.class);
-        TintComponent ticDialgBg = pauseDialogBackground.getComponent(TintComponent.class);
-        TintComponent ticGoals = goalLabel.getComponent(TintComponent.class);
-        TintComponent ticClose = closePauseBtn.getComponent(TintComponent.class);
-        TintComponent ticClosePr = closePauseBtnPres.getComponent(TintComponent.class);
-        TintComponent ticCloseNorm = closePauseBtnNorm.getComponent(TintComponent.class);
-
-        boolean appear = (ticGoals.color.a < 1 && isPause) ||
-                (ticGoals.color.a > 0 && !isPause);
-
-        int fadeCoefficient = isPause ? 1 : -1;
-
-        if (appear) {
-            ticGoals.color.a += fadeCoefficient * 0.1f;
-            ticClosePr.color.a += fadeCoefficient * 0.1f;
-            ticCloseNorm.color.a += fadeCoefficient * 0.1f;
-            ticDialgBg.color.a += fadeCoefficient * 0.1f;
-        }
-
-        if (!isPause && ticDialg.color.a <= 0) {
-            TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-            dialogTc.x = -1000;
-        }
     }
 }

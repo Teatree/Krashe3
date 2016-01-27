@@ -15,6 +15,7 @@ import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.Utils.*;
 
 /**
  * Created by AnastasiiaRudyk on 1/24/2016.
@@ -49,16 +50,6 @@ public class Showcase {
         initShowCaseBuyButton();
 
         tcShowCase = showcaseE.getComponent(TransformComponent.class);
-    }
-
-    private void fadeChildren(NodeComponent nc, int fadeCoefficient) {
-        if (nc != null && nc.children != null && nc.children.size != 0) {
-            for (Entity e : nc.children) {
-                TintComponent tc = e.getComponent(TintComponent.class);
-                tc.color.a += fadeCoefficient * 0.1f;
-                fadeChildren(e.getComponent(NodeComponent.class), fadeCoefficient);
-            }
-        }
     }
 
     public void showFading() {
@@ -118,15 +109,13 @@ public class Showcase {
         tcItem.y = 350;
         tcItem.scaleX = 0.05f;
         tcItem.scaleY = 0.05f;
-        tcItem.rotation = -120f;
         itemIcon.getComponent(TintComponent.class).color.a = 0.0f;
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(
-                Actions.scaleTo(1.5f, 1.5f, 7, Interpolation.exp5Out),
-                Actions.fadeIn(10, Interpolation.exp10Out),
-                Actions.rotateBy(120f, 2, Interpolation.circleOut)));
+                Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
+                Actions.fadeIn(7, Interpolation.exp10Out)));
         itemIcon.add(ac);
     }
 

@@ -9,16 +9,12 @@ import com.mygdx.game.entity.componets.VanityComponent;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static com.mygdx.game.utils.Utils.*;
 
-import static com.mygdx.game.stages.GameScreenScript.fpc;
-
-/**
- * Created by AR on 12/14/2015.
- */
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
-    public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();

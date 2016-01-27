@@ -13,6 +13,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.ShopScreenScript.*;
+import static com.mygdx.game.utils.Utils.*;
 
 public class Preview {
 
@@ -83,16 +84,6 @@ public class Preview {
         }
 
         hidePreview(tcp);
-    }
-
-    private void fadeChildren(NodeComponent nc, int fadeCoefficient) {
-        if (nc != null && nc.children != null && nc.children.size != 0) {
-            for (Entity e : nc.children) {
-                TintComponent tc = e.getComponent(TintComponent.class);
-                tc.color.a += fadeCoefficient * 0.1f;
-                fadeChildren(e.getComponent(NodeComponent.class), fadeCoefficient);
-            }
-        }
     }
 
     private void hidePreview(TintComponent ticBackShop) {
