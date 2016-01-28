@@ -52,7 +52,7 @@ public class GameScreenScript implements IScript {
 
     public static int gameOverCounter = 240;
 
-    public static CameraShaker cameraShaker = new CameraShaker();
+    public static final CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
     public Entity starBurst;
 
@@ -249,7 +249,7 @@ public class GameScreenScript implements IScript {
     public void updateGameOver() {
 
         fade(gameOverDialog, isGameOver);
-        if(isGameOver) {
+        if (isGameOver) {
             final Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
@@ -353,9 +353,7 @@ public class GameScreenScript implements IScript {
             }
         }
 
-//        if (isGameOver) {
-            updateGameOver();
-//        }
+        updateGameOver();
 
         if (isParticlePlaying) {
             counter++;

@@ -236,10 +236,10 @@ public class ResultScreenScript implements IScript {
     private void setProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
         int scoreDiff = fpc.totalScore - fpc.score;
-        if (scoreDiff < 690) {
-            dcProgressBar.width = scoreDiff;
-        } else if (scoreDiff < 0) {
+        if (scoreDiff < 0) {
             dcProgressBar.width = 0;
+        } else if (scoreDiff < 690) {
+            dcProgressBar.width = scoreDiff;
         } else {
             dcProgressBar.width = 690;
         }

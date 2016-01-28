@@ -25,14 +25,15 @@ public class Preview {
     public Entity lbl_title;
     public Entity lbl_price;
     public Entity btn_back_shop;
-    public Entity btn_left;
     public Entity btn_right;
     public Entity btn_buy;
     public Entity lbl_not_enough;
     public Entity preview_icon;
     public Entity preview_n;
     public Entity bg;
-    Entity iconE;
+    private Entity iconE;
+    private Entity btnLeft;
+    private Entity btnNext;
 
     public TransformComponent tcPreviewIcon;
     public TransformComponent tcPreviewWindow;
@@ -45,15 +46,16 @@ public class Preview {
         lbl_title = shopItem.getChild("preview").getChild("lbl_item_name").getEntity();
         lbl_price = shopItem.getChild("preview").getChild("lbl_price").getEntity();
         btn_back_shop = shopItem.getChild("preview").getChild("btn_back_shop").getEntity();
-        btn_left = shopItem.getChild("preview").getChild("btn_left").getEntity();
         btn_right = shopItem.getChild("preview").getChild("btn_right").getEntity();
         btn_buy = shopItem.getChild("preview").getChild("btn_buy").getEntity();
         preview_icon = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity();
         bg = shopItem.getChild("preview").getChild("img_bg_show_case").getEntity();
         lbl_not_enough = shopItem.getChild("preview").getChild("lbl_not_enough").getEntity();
+        btnLeft = shopItem.getChild("preview").getChild("btn_left").getEntity();
+        btnNext = shopItem.getChild("preview").getChild("btn_right").getEntity();
 
         preview_n.getComponent(ZIndexComponent.class).setZIndex(51);
-        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
+        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -153,21 +155,23 @@ public class Preview {
     public void showPreview(VanityComponent vc) {
         canBuyCheck(vc);
 
-        if (!ShopScreenScript.isPreviewOn) {
-            setLabelsValues(vc);
-            initBuyButton(vc);
-            initPreviewWindow();
+//        if (!ShopScreenScript.isPreviewOn) {
+        setLabelsValues(vc);
+        initBuyButton(vc);
+        initPrevButton(vc);
+        initNextButton(vc);
+        initPreviewWindow();
 
-            tcPreviewWindow = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().
-                    getComponent(TransformComponent.class);
+        tcPreviewWindow = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().
+                getComponent(TransformComponent.class);
 
-            if (vc.bought) {
-                initBoughtPreviewIcon(vc);
-            } else {
-                tcPreviewWindow.x = 484;
-            }
-            ShopScreenScript.isPreviewOn = true;
+        if (vc.bought) {
+            initBoughtPreviewIcon(vc);
+        } else {
+            tcPreviewWindow.x = 484;
         }
+        ShopScreenScript.isPreviewOn = true;
+//        }
     }
 
     public void initBuyButton(final VanityComponent vc) {
@@ -219,7 +223,56 @@ public class Preview {
                 iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
                 iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
                 sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
-                itemIcons.put(vc.shopIcon,iconBagClone);
+                itemIcons.put(vc.shopIcon, iconBagClone);
+            }
+        });
+    }
+
+    private void initPrevButton(final VanityComponent vc) {
+        btnLeft.getComponent(ButtonComponent.class).clearListeners();
+        btnLeft.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+
+            @Override
+            public void touchUp() {
+
+            }
+
+            @Override
+            public void touchDown() {
+
+            }
+
+            @Override
+            public void clicked() {
+                int previousIndex = GameScreenScript.fpc.vanities.indexOf(vc) - 1;
+                if (previousIndex >= 0) {
+                    showPreview(GameScreenScript.fpc.vanities.get(previousIndex));
+                    System.out.println("prev");
+                }
+            }
+        });
+    }
+
+    private void initNextButton(final VanityComponent vc) {
+        btnNext.getComponent(ButtonComponent.class).clearListeners();
+        btnNext.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+
+            }
+
+            @Override
+            public void touchDown() {
+
+            }
+
+            @Override
+            public void clicked() {
+                int nextIndex = GameScreenScript.fpc.vanities.indexOf(vc) + 1;
+                if (nextIndex < GameScreenScript.fpc.vanities.size()) {
+                    showPreview(GameScreenScript.fpc.vanities.get(nextIndex));
+                    System.out.println("next");
+                }
             }
         });
     }

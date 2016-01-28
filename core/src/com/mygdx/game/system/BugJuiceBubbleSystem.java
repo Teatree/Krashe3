@@ -22,11 +22,6 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
     private ComponentMapper<FlowerPublicComponent> flowerMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
-    private boolean isPlayable = true;
-    private boolean isRemovable;
-
-//    AlphaAction
-
     public BugJuiceBubbleSystem() {
         super(Family.all(BugJuiceBubbleComponent.class).get());
     }
@@ -34,7 +29,6 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TintComponent tic = entity.getComponent(TintComponent.class);
         TransformComponent tc = entity.getComponent(TransformComponent.class);
-        DimensionsComponent dc = entity.getComponent(DimensionsComponent.class);
         FlowerPublicComponent fcc = flowerMapper.get(entity);
         BugJuiceBubbleComponent bjc = mapper.get(entity);
 

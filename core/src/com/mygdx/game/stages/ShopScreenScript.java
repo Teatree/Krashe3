@@ -31,7 +31,7 @@ public class ShopScreenScript implements IScript {
     public Vector2 tempGdx = new Vector2();
     public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
-    public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
+    public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public ButtonComponent touchZoneBtn;
     float stopVelocity;
     public static boolean isPreviewOn;
@@ -44,7 +44,6 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-//        GameScreenScript.fpc.totalScore += 500;
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
