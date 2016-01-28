@@ -26,6 +26,7 @@ public class Showcase {
     public static final String TYPE_SUFFIX = ".png";
     public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
     public static final String INTRO = "intro";
+    public static final String SHOWCASE = "showcase";
 
     private ItemWrapper screenItem;
     private ResultScreenScript resultScreen;
@@ -40,9 +41,9 @@ public class Showcase {
         this.screenItem = resultScreenItem;
         this.resultScreen = resultScreen;
 
-        showcaseE = screenItem.getChild("showcase").getEntity();
+        showcaseE = screenItem.getChild(SHOWCASE).getEntity();
 
-        Entity lbl_nameE = screenItem.getChild("showcase").getChild("lbl_item_name").getEntity();
+        Entity lbl_nameE = screenItem.getChild(SHOWCASE).getChild("lbl_item_name").getEntity();
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
 
@@ -84,7 +85,7 @@ public class Showcase {
 
 //        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
 //        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
-        Entity aniE = screenItem.getChild("showcase").getChild("showcase_ani").getEntity();
+        Entity aniE = screenItem.getChild(SHOWCASE).getChild("showcase_ani").getEntity();
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
@@ -102,6 +103,7 @@ public class Showcase {
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
+        screenItem.getChild(SHOWCASE).addChild(itemIcon);
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(100);
 
         tcItem = itemIcon.getComponent(TransformComponent.class);
@@ -120,7 +122,7 @@ public class Showcase {
     }
 
     private void initShowCaseBackButton() {
-        Entity backBtn = screenItem.getChild("showcase").getChild("btn_no").getEntity();
+        Entity backBtn = screenItem.getChild(SHOWCASE).getChild("btn_no").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -145,7 +147,7 @@ public class Showcase {
     }
 
     private void initShowCaseBuyButton() {
-        Entity backBtn = screenItem.getChild("showcase").getChild("btn_buy").getEntity();
+        Entity backBtn = screenItem.getChild(SHOWCASE).getChild("btn_buy").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override

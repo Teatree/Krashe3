@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
-import com.brashmonkey.spriter.Interpolator;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
@@ -12,7 +11,6 @@ import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -25,9 +23,7 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.utils.Utils.*;
 import static com.mygdx.game.stages.GameStage.*;
 
-/**
- * Created by Teatree on 7/25/2015.
- */
+
 public class GameScreenScript implements IScript {
 
     public static final String START_MESSAGE = "TAP TO START";
@@ -36,7 +32,7 @@ public class GameScreenScript implements IScript {
     public static GameStage game;
     public Random random = new Random();
 
-    private static int counter;
+    private static int particleCounter;
 
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
@@ -356,7 +352,6 @@ public class GameScreenScript implements IScript {
         updateGameOver();
 
         if (isParticlePlaying) {
-            counter++;
             removeEffectIn(110);
         }
 
@@ -364,10 +359,11 @@ public class GameScreenScript implements IScript {
     }
 
     private void removeEffectIn(int frames) {
-        if (counter >= frames) {
+        particleCounter++;
+        if (particleCounter >= frames) {
             GameStage.sceneLoader.getEngine().removeEntity(starBurstParticleE);
             isParticlePlaying = false;
-            counter = 0;
+            particleCounter = 0;
         }
     }
 
