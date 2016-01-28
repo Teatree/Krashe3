@@ -103,11 +103,14 @@ public class Preview {
 
     public void initBoughtPreviewIcon(VanityComponent vc) {
         CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
-        Entity iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+        if (iconE != null) {
+            sceneLoader.getEngine().removeEntity(iconE);
+        }
+        iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
         sceneLoader.getEngine().addEntity(iconE);
         iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-        shopItem.getChild("preview").addChild(iconE);
+//        shopItem.getChild("preview").addChild(iconE);
         tcPreviewIcon = iconE.getComponent(TransformComponent.class);
         tcPreviewIcon.x = 484;
         tcPreviewIcon.y = 407;
@@ -143,7 +146,10 @@ public class Preview {
     }
 
     public Entity initUnknownPreviewIcon() {
-        Entity iconE;
+//        Entity iconE;
+        if (iconE != null) {
+            sceneLoader.getEngine().removeEntity(iconE);
+        }
         CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
         iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
@@ -164,11 +170,11 @@ public class Preview {
 
         tcPreviewWindow = shopItem.getChild("preview").getChild("preview_shop_icon").getEntity().
                 getComponent(TransformComponent.class);
-
         if (vc.bought) {
             initBoughtPreviewIcon(vc);
         } else {
             tcPreviewWindow.x = 484;
+            initUnknownPreviewIcon();
         }
         ShopScreenScript.isPreviewOn = true;
 //        }
@@ -195,11 +201,13 @@ public class Preview {
                     if (!vc.bought) {
                         iconE = initUnknownPreviewIcon();
                     } else {
-                        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
-                        iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-                        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
-                        sceneLoader.getEngine().addEntity(iconE);
+//                        sceneLoader.getEngine().removeEntity(iconE);
+//                        iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+//                        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
+//                        sceneLoader.getEngine().addEntity(iconE);
+                        initBoughtPreviewIcon(vc);
 
+                        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
                         changeBagIcon(tempItemC);
 
                         lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
@@ -233,14 +241,10 @@ public class Preview {
         btnLeft.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
 
             @Override
-            public void touchUp() {
-
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -257,21 +261,16 @@ public class Preview {
         btnNext.getComponent(ButtonComponent.class).clearListeners();
         btnNext.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
                 int nextIndex = GameScreenScript.fpc.vanities.indexOf(vc) + 1;
                 if (nextIndex < GameScreenScript.fpc.vanities.size()) {
                     showPreview(GameScreenScript.fpc.vanities.get(nextIndex));
-                    System.out.println("next");
                 }
             }
         });
