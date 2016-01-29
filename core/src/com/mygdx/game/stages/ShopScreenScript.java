@@ -17,9 +17,6 @@ import java.util.*;
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
-/**
- * Created by Teatree on 7/25/2015.
- */
 public class ShopScreenScript implements IScript {
 
     private GameStage stage;
@@ -114,7 +111,9 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void clicked() {
-                    preview.showPreview(vc);
+                    if (!isPreviewOn) {
+                        preview.showPreview(vc, true);
+                    }
                 }
             });
             x += 250;
@@ -183,14 +182,16 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
+                                .getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity -= stopVelocity / 20;
                 }
             }
         }
-        lc.text.replace(0, lc.text.length(), String.valueOf(GameScreenScript.fpc.totalScore));
+        preview.checkAndClose();
+        lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
         preview.fadePreview();
     }
 
