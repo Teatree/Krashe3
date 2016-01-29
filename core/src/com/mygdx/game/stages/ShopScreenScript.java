@@ -3,6 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -21,7 +22,7 @@ public class ShopScreenScript implements IScript {
 
     private GameStage stage;
     private ItemWrapper shopItem;
-    public Entity scoreLbl;
+    public static Entity scoreLbl;
     public Entity touchZone;
     public LabelComponent lc;
 
@@ -49,18 +50,11 @@ public class ShopScreenScript implements IScript {
 
         scoreLbl = shopItem.getChild("score_lbl").getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
-
         touchZone = shopItem.getChild("touchZone_scroll").getEntity();
-
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
 
         getAllAllVanities();
     }
-
-    private  void updatebags(){
-
-    }
-
 
     private void getAllAllVanities() {
         int x = 173;
@@ -100,19 +94,33 @@ public class ShopScreenScript implements IScript {
 
             bagEntity.add(new ButtonComponent());
 
+            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
+                    if (isPreviewOn){
+                        bagEntity.getComponent(ButtonComponent.class).isTouched = false;
+                        lc.getLayer("normal").isVisible = true;
+                        lc.getLayer("pressed").isVisible = false;
+                    }
                 }
 
                 @Override
                 public void touchDown() {
+                    if (isPreviewOn){
+                        bagEntity.getComponent(ButtonComponent.class).isTouched = false;
+                        lc.getLayer("normal").isVisible = true;
+                        lc.getLayer("pressed").isVisible = false;
+                    }
                 }
 
                 @Override
                 public void clicked() {
                     if (!isPreviewOn) {
                         preview.showPreview(vc, true);
+                    } else {
+                        lc.getLayer("normal").isVisible = true;
+                        lc.getLayer("pressed").isVisible = false;
                     }
                 }
             });
@@ -193,6 +201,11 @@ public class ShopScreenScript implements IScript {
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
         preview.fadePreview();
+    }
+
+    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLbl.getComponent(LabelComponent.class).text.replace(0, scoreLbl.getComponent(LabelComponent.class).text.capacity(),
+                String.valueOf(fcc.totalScore));
     }
 
     @Override

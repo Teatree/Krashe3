@@ -40,6 +40,8 @@ public class Preview {
     public static final String LBL_NOT_ENOUGH = "tag_lbl_not_enough";
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
     public static final String BTN_BUY = "tag_btn_buy";
+    public static final String BTN_ENABLE = "tag_btn_enable";
+    public static final String BTN_DISABLE = "tag_btn_disable";
     public static final String LBL_PRICE = "tag_lbl_price";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
@@ -177,7 +179,7 @@ public class Preview {
     }
 
     public void setLabelsValues(VanityComponent vc) {
-//        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(GameScreenScript.fpc.totalScore));
+//        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(fpc.totalScore));
         if (vc.description != null) {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
         }
@@ -214,6 +216,8 @@ public class Preview {
 
         setLabelsValues(vc);
         initBuyButton(vc);
+        initEnableButton(vc);
+        initDisableButton(vc);
         initPrevButton(vc);
         initNextButton(vc);
         initPreviewWindow();
@@ -238,69 +242,98 @@ public class Preview {
             initUnknownPreviewIcon();
         }
 
-        boundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x,
+        boundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
                 30,
-                previewE.getComponent(DimensionsComponent.class).width, //+ 2 * btnNext.getComponent(DimensionsComponent.class).width,
+                previewE.getComponent(DimensionsComponent.class).width * 0.8f,
                 previewE.getComponent(DimensionsComponent.class).height);
 
         ShopScreenScript.isPreviewOn = true;
     }
 
     public void initBuyButton(final VanityComponent vc) {
-        btn_buy.getComponent(ButtonComponent.class).clearListeners();
-        btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
+        if(!vc.bought) {
+            btn_buy.getComponent(ButtonComponent.class).clearListeners();
+            btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+                }
 
-            @Override
-            public void touchDown() {
-            }
+                @Override
+                public void touchDown() {
+                }
 
-            @Override
-            public void clicked() {
-                if (btn_buy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
-                    vc.buyAndUse(GameScreenScript.fpc);
+                @Override
+                public void clicked() {
+                    if (btn_buy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
+                        vc.buyAndUse(GameScreenScript.fpc);
 
-                    initPreviewWindow();
-
-                    if (!vc.bought) {
-                        iconE = initUnknownPreviewIcon();
-                    } else {
-                        initBoughtPreviewIcon(vc);
-                        changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone());
+                        initPreviewWindow();
+                        if (!vc.bought) {
+                            iconE = initUnknownPreviewIcon();
+                        } else {
+                            initBoughtPreviewIcon(vc);
+                            changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone(), vc);
 //                        playParticleEffect();
 
 //                        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0,
 //                                lbl_score_lbl.getComponent(LabelComponent.class).text.length,
-//                                String.valueOf(GameScreenScript.fpc.totalScore));
-                    }
+//                                String.valueOf(fpc.totalScore));
+                            ShopScreenScript.reloadScoreLabel(GameScreenScript.fpc);
+                        }
 
-                    iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-                    shopItem.getChild(PREVIEW).addChild(iconE);
+                        iconE.getComponent(ZIndexComponent.class).setZIndex(100);
+                        shopItem.getChild(PREVIEW).addChild(iconE);
 
 //                    tcPreviewIcon = iconE.getComponent(TransformComponent.class);
-                    iconE.getComponent(TransformComponent.class).x = 290;
-                    iconE.getComponent(TransformComponent.class).y = 407;
-                    tcPreviewUnknowIcon.x = -1500;
-                }
-            }
+                        iconE.getComponent(TransformComponent.class).x = 290;
+                        iconE.getComponent(TransformComponent.class).y = 407;
+                        tcPreviewUnknowIcon.x = -1500;
+                    }
 
-            private void changeBagIcon(CompositeItemVO tempItemC) {
-                Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
-                sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
-                sceneLoader.getEngine().addEntity(iconBagClone);
-                iconBagClone.getComponent(ZIndexComponent.class).setZIndex(20);
-                iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
-                iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
-                sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
-                itemIcons.put(vc.shopIcon, iconBagClone);
-            }
-        });
+                }
+            });
+        }
+    }
+
+    public void initEnableButton(final VanityComponent vc){
+        if(vc.bought && !vc.enabled) {
+            Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity();
+            enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
+            enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+                }
+                @Override
+                public void touchDown() {
+                }
+                @Override
+                public void clicked() {
+                    vc.apply(GameScreenScript.fpc);
+                }
+            });
+        }
+    }
+
+    public void initDisableButton(final VanityComponent vc){
+        if(vc.bought && !vc.enabled) {
+            Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity();
+            enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
+            enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+                }
+                @Override
+                public void touchDown() {
+                }
+                @Override
+                public void clicked() {
+                    vc.disable(GameScreenScript.fpc);
+                }
+            });
+        }
     }
 
     private void playParticleEffect() {
-
         iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
         iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
         iconE.getComponent(TintComponent.class).color.a = 0;
@@ -333,14 +366,10 @@ public class Preview {
     private void initPrevButton(final VanityComponent vc) {
         btnLeft.getComponent(ButtonComponent.class).clearListeners();
         btnLeft.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-
             @Override
-            public void touchUp() {
-            }
-
+            public void touchUp() {}
             @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -373,7 +402,7 @@ public class Preview {
     }
 
     public void checkAndClose(){
-        boolean isOutside = boundingBox != null ? !boundingBox.contains(Gdx.input.getX(), Gdx.input.getY()) : true;
+        boolean isOutside = boundingBox == null || !boundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
         if (Gdx.input.justTouched() && isPreviewOn && isOutside){
             TransformComponent previewTc = previewE.getComponent(TransformComponent.class);
             previewTc.x = -1500;
@@ -382,5 +411,16 @@ public class Preview {
             }
             isPreviewOn = false;
         }
+    }
+
+    private void changeBagIcon(CompositeItemVO tempItemC, VanityComponent vc) {
+        Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+        sceneLoader.getEngine().addEntity(iconBagClone);
+        iconBagClone.getComponent(ZIndexComponent.class).setZIndex(20);
+        iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
+        iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
+        sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+        itemIcons.put(vc.shopIcon, iconBagClone);
     }
 }
