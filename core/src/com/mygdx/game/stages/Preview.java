@@ -2,9 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.*;
@@ -16,21 +14,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.ShopScreenScript.*;
-import static com.mygdx.game.utils.Utils.*;
 
 public class Preview {
-
-//    public static final String PREVIEW = "preview";
-//    public static final String PREVIEW_SHOP_ICON = "preview_shop_icon";
-//    public static final String ITEM_UNKNOWN = "item_unknown_n";
-//    public static final String BTN_RIGHT = "btn_right";
-//    public static final String BTN_LEFT = "btn_left";
-//    public static final String LBL_NOT_ENOUGH = "lbl_not_enough";
-//    public static final String IMG_BG_SHOW_CASE = "img_bg_show_case";
-//    public static final String BTN_BUY = "btn_buy";
-//    public static final String LBL_PRICE = "lbl_price";
-//    public static final String LBL_ITEM_NAME = "lbl_item_name";
-//    public static final String LBL_DESC = "lbl_desc";
 
     public static final String PREVIEW = "previewTag";
     public static final String PREVIEW_SHOP_ICON = "tag_shop_icon";
@@ -45,43 +30,29 @@ public class Preview {
     public static final String LBL_PRICE = "tag_lbl_price";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
+    public static final int ICON_X = 290;
+    public static final int PREVIEW_X = 260;
 
     private ItemWrapper shopItem;
 
     public Entity previewE;
-//    public Entity lbl_score_lbl;
     public Entity lbl_desc;
     public Entity lbl_title;
     public Entity lbl_price;
-//    public Entity btn_back_shop;
-//    public Entity btn_right;
-    public Entity btn_buy;
     public Entity lbl_not_enough;
-//    public Entity preview_icon;
-//    public Entity preview_n;
     public Entity bg;
     private Entity iconE;
     private Entity btnLeft;
     private Entity btnNext;
 
-//    public TransformComponent tcPreviewIcon;
-    public TransformComponent tcPreviewUnknowIcon;
-    private Rectangle boundingBox;
-
-    ParticleEffectPool bombEffectPool;
-    Array<ParticleEffectPool.PooledEffect> effects = new Array();
+    private Rectangle tagBoundingBox;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
         previewE = shopItem.getChild(PREVIEW).getEntity();
-//        lbl_score_lbl = shopItem.getChild(PREVIEW).getChild("preview_score_lbl").getEntity();
         lbl_desc = shopItem.getChild(PREVIEW).getChild(LBL_DESC).getEntity();
         lbl_title = shopItem.getChild(PREVIEW).getChild(LBL_ITEM_NAME).getEntity();
         lbl_price = shopItem.getChild(PREVIEW).getChild(LBL_PRICE).getEntity();
-//        btn_back_shop = shopItem.getChild(PREVIEW).getChild("btn_back_shop").getEntity();
-//        btn_right = shopItem.getChild(PREVIEW).getChild(BTN_RIGHT).getEntity();
-        btn_buy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
-//        preview_icon = shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity();
         bg = shopItem.getChild(PREVIEW).getChild(IMG_BG_SHOW_CASE).getEntity();
         lbl_not_enough = shopItem.getChild(PREVIEW).getChild(LBL_NOT_ENOUGH).getEntity();
         btnLeft = shopItem.getChild(PREVIEW).getChild(BTN_LEFT).getEntity();
@@ -92,66 +63,10 @@ public class Preview {
         btnNext.getComponent(TransformComponent.class).y += btnNext.getComponent(DimensionsComponent.class).height;
 
         previewE.getComponent(ZIndexComponent.class).setZIndex(51);
-//        btn_back_shop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//            @Override
-//            public void touchUp() {
-//            }
-//
-//            @Override
-//            public void touchDown() {
-//            }
-//
-//            @Override
-//            public void clicked() {
-//                isPreviewOn = false;
-//            }
-//        });
-
-//        TextureAtlas particleAtlas; //<-load some atlas with your particle assets in
-//
-//        ParticleEffect bombEffect = new ParticleEffect();
-//        bombEffect.load(Gdx.files.internal("particles/bomb.p"));
-//
-//        bombEffectPool = new ParticleEffectPool(bombEffect, 1, 2);
-//
-//        ParticleEffectPool.PooledEffect effect = bombEffectPool.obtain();
-//        effect.setPosition(x, y);
-//        effects.add(effect);
-
-
-    }
-
-    public void fadePreview() {
-        NodeComponent nc = previewE.getComponent(NodeComponent.class);
-        TintComponent tcp = previewE.getComponent(TintComponent.class);
-
-        boolean appear = (tcp.color.a < 1 && isPreviewOn) ||
-                (tcp.color.a > 0 && !isPreviewOn);
-
-        int fadeCoefficient = isPreviewOn ? 1 : -1;
-
-        if (appear) {
-            tcp.color.a += fadeCoefficient * 0.1f;
-            fadeChildren(nc, fadeCoefficient);
-        }
-
-//        hidePreview(tcp);
-    }
-
-    private void hidePreview(TintComponent ticBackShop) {
-        if (!isPreviewOn && ticBackShop.color.a <= 0 && previewE != null) {
-            TransformComponent previewTc = previewE.getComponent(TransformComponent.class);
-            previewTc.x = -1500;
-            if (iconE.getComponent(TransformComponent.class) != null) {
-                iconE.getComponent(TransformComponent.class).x = -1500;
-            }
-            if (tcPreviewUnknowIcon != null) {
-                tcPreviewUnknowIcon.x = -1500;
-            }
-        }
     }
 
     public void initBoughtPreviewIcon(VanityComponent vc) {
+        iconE.getComponent(TransformComponent.class).x = -1500;
         CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
         if (iconE != null) {
             sceneLoader.getEngine().removeEntity(iconE);
@@ -159,19 +74,17 @@ public class Preview {
         iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
         sceneLoader.getEngine().addEntity(iconE);
-        iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-        shopItem.getChild(PREVIEW).addChild(iconE);
-        if (iconE.getComponent(ActionComponent.class) == null) {
-            iconE.getComponent(TransformComponent.class).x = 290;
-            iconE.getComponent(TransformComponent.class).y = 407;
-        }
-        tcPreviewUnknowIcon.x = -1500;
+        iconE.getComponent(ZIndexComponent.class).setZIndex(101);
+
+        iconE.getComponent(TransformComponent.class).x = 487;
+        iconE.getComponent(TransformComponent.class).y = 317;
+        shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
+                getComponent(TransformComponent.class).x = -1500;
     }
 
     public void initPreviewWindow() {
-//        previewE = shopItem.getChild(PREVIEW).getEntity();
         TransformComponent preview_tc = previewE.getComponent(TransformComponent.class);
-        preview_tc.x = 260;
+        preview_tc.x = PREVIEW_X;
         preview_tc.y = -10;
         preview_tc.scaleX = 0.9f;
         preview_tc.scaleY = 0.9f;
@@ -179,7 +92,6 @@ public class Preview {
     }
 
     public void setLabelsValues(VanityComponent vc) {
-//        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0, lbl_score_lbl.getComponent(LabelComponent.class).text.length, String.valueOf(fpc.totalScore));
         if (vc.description != null) {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
         }
@@ -187,7 +99,7 @@ public class Preview {
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
-    public void canBuyCheck(VanityComponent vc) {
+    public void canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.isAffordable()) {
@@ -212,12 +124,13 @@ public class Preview {
     }
 
     public void showPreview(VanityComponent vc, boolean jump) {
-        canBuyCheck(vc);
-
         setLabelsValues(vc);
-        initBuyButton(vc);
-        initEnableButton(vc);
-        initDisableButton(vc);
+        if (!vc.bought) {
+            initBuyButton(vc);
+        } else {
+            initEnableButton(vc);
+            initDisableButton(vc);
+        }
         initPrevButton(vc);
         initNextButton(vc);
         initPreviewWindow();
@@ -232,17 +145,15 @@ public class Preview {
             previewE.add(ac);
         }
 
-        tcPreviewUnknowIcon = shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-                getComponent(TransformComponent.class);
         if (vc.bought) {
             initBoughtPreviewIcon(vc);
         } else {
             shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-                    getComponent(TransformComponent.class).x = 290;
+                    getComponent(TransformComponent.class).x = ICON_X;
             initUnknownPreviewIcon();
         }
 
-        boundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
+        tagBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
                 30,
                 previewE.getComponent(DimensionsComponent.class).width * 0.8f,
                 previewE.getComponent(DimensionsComponent.class).height);
@@ -251,45 +162,25 @@ public class Preview {
     }
 
     public void initBuyButton(final VanityComponent vc) {
+        final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
+        canBuyCheck(vc, btnBuy);
         if(!vc.bought) {
-            btn_buy.getComponent(ButtonComponent.class).clearListeners();
-            btn_buy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            btnBuy.getComponent(ButtonComponent.class).clearListeners();
+            btnBuy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
-                public void touchUp() {
-                }
-
+                public void touchUp() {}
                 @Override
-                public void touchDown() {
-                }
+                public void touchDown() {}
 
                 @Override
                 public void clicked() {
-                    if (btn_buy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
+                    if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
                         vc.buyAndUse(GameScreenScript.fpc);
 
-                        initPreviewWindow();
-                        if (!vc.bought) {
-                            iconE = initUnknownPreviewIcon();
-                        } else {
-                            initBoughtPreviewIcon(vc);
+                        showPreview(vc, false);
                             changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone(), vc);
-//                        playParticleEffect();
-
-//                        lbl_score_lbl.getComponent(LabelComponent.class).text.replace(0,
-//                                lbl_score_lbl.getComponent(LabelComponent.class).text.length,
-//                                String.valueOf(fpc.totalScore));
                             ShopScreenScript.reloadScoreLabel(GameScreenScript.fpc);
                         }
-
-                        iconE.getComponent(ZIndexComponent.class).setZIndex(100);
-                        shopItem.getChild(PREVIEW).addChild(iconE);
-
-//                    tcPreviewIcon = iconE.getComponent(TransformComponent.class);
-                        iconE.getComponent(TransformComponent.class).x = 290;
-                        iconE.getComponent(TransformComponent.class).y = 407;
-                        tcPreviewUnknowIcon.x = -1500;
-                    }
-
                 }
             });
         }
@@ -301,33 +192,31 @@ public class Preview {
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
-                public void touchUp() {
-                }
+                public void touchUp() {}
                 @Override
-                public void touchDown() {
-                }
+                public void touchDown() {}
                 @Override
                 public void clicked() {
                     vc.apply(GameScreenScript.fpc);
+                    showPreview(vc, false);
                 }
             });
         }
     }
 
     public void initDisableButton(final VanityComponent vc){
-        if(vc.bought && !vc.enabled) {
+        if(vc.bought && vc.enabled) {
             Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity();
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
-                public void touchUp() {
-                }
+                public void touchUp() {}
                 @Override
-                public void touchDown() {
-                }
+                public void touchDown() {}
                 @Override
                 public void clicked() {
                     vc.disable(GameScreenScript.fpc);
+                    showPreview(vc, false);
                 }
             });
         }
@@ -338,7 +227,7 @@ public class Preview {
         iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
         iconE.getComponent(TintComponent.class).color.a = 0;
 
-        iconE.getComponent(TransformComponent.class).x = 534;
+        iconE.getComponent(TransformComponent.class).x = 524;
         iconE.getComponent(TransformComponent.class).y = 700;
 
         ActionComponent ac = new ActionComponent();
@@ -402,10 +291,14 @@ public class Preview {
     }
 
     public void checkAndClose(){
-        boolean isOutside = boundingBox == null || !boundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
+        boolean isOutside = tagBoundingBox == null || !tagBoundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
         if (Gdx.input.justTouched() && isPreviewOn && isOutside){
-            TransformComponent previewTc = previewE.getComponent(TransformComponent.class);
-            previewTc.x = -1500;
+
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.moveTo(260, 900, 2, Interpolation.exp10));
+            previewE.add(ac);
+
             if (iconE.getComponent(TransformComponent.class) != null) {
                 iconE.getComponent(TransformComponent.class).x = -1500;
             }

@@ -200,7 +200,7 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
-        preview.fadePreview();
+//        preview.fadePreview();
     }
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
