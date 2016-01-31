@@ -16,7 +16,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.*;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class ShopScreenScript implements IScript {
 
@@ -117,7 +116,7 @@ public class ShopScreenScript implements IScript {
                 @Override
                 public void clicked() {
                     if (!isPreviewOn) {
-                        preview.showPreview(vc, true);
+                        preview.showPreview(vc, true, false);
                     } else {
                         lc.getLayer("normal").isVisible = true;
                         lc.getLayer("pressed").isVisible = false;
@@ -200,7 +199,6 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
-//        preview.fadePreview();
     }
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {

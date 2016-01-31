@@ -96,7 +96,6 @@ public class VanityComponent implements Component {
     }
 
     public void disable(FlowerPublicComponent fc){
-        fc.vanities.remove(this);
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
