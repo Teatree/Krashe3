@@ -213,7 +213,6 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void dispose() {
-
     }
 
 }

@@ -91,7 +91,7 @@ public class VanityComponent implements Component {
         apply(fc);
     }
 
-    public boolean isAffordable(){
+    public boolean canBuy(){
         return GameScreenScript.fpc.totalScore >= this.cost;
     }
 
