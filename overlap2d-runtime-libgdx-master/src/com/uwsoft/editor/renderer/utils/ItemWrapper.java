@@ -69,7 +69,7 @@ public class ItemWrapper {
             ParentNodeComponent parentNodeComponent = child.getComponent(ParentNodeComponent.class);
             parentNodeComponent.parentEntity = entity;
             nodeComponent.children.add(child);
-
+            childMap.put(child.getComponent(MainItemComponent.class).itemIdentifier, child);
             return  new ItemWrapper(child);
         }
 

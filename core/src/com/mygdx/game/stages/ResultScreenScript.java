@@ -1,8 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -13,18 +11,14 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.stages.ShowcaseScreenScript.*;
 
 /**
  * Created by Teatree on 7/25/2015.
  */
 public class ResultScreenScript implements IScript {
 
-    public static final int PROGRESS_BAR_WIDTH = 690;
+    public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final String SHOWCASE = "showcase";
 
 
@@ -32,7 +26,7 @@ public class ResultScreenScript implements IScript {
     private ItemWrapper resultScreenItem;
 
     public static VanityComponent showCaseVanity;
-    private static boolean show;
+    public static boolean show;
     public static boolean isWasShowcase;
 
     public ResultScreenScript(GameStage stage) {
@@ -40,7 +34,10 @@ public class ResultScreenScript implements IScript {
     }
 
     Entity txtEarnedE;
-    Entity progressBarE;
+    public Entity txtNeedE;
+    public Entity txtBestE;
+    public Entity txtTotalE;
+    public Entity progressBarE;
 
     LabelComponent earnedLabel;
 
@@ -48,7 +45,8 @@ public class ResultScreenScript implements IScript {
     int nextVanityCost;
     int i = 0;
     int j = 0;
-    int counter = 100;
+
+    private Showcase showcase;
 
     @Override
     public void init(Entity item) {
@@ -58,31 +56,28 @@ public class ResultScreenScript implements IScript {
         initPlayBtn();
         initShopBtn();
 
-        Entity txtTotalE = resultScreenItem.getChild("lbl_TOTAL").getEntity();
+        txtTotalE = resultScreenItem.getChild("lbl_TOTAL").getEntity();
+        txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
+        progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
+        txtBestE = resultScreenItem.getChild("lbl_BET_SCORE").getEntity();
+        txtNeedE = resultScreenItem.getChild("lbl_TO_UNLOCK").getEntity();
+
+        initResultScreen();
+        showcase = new Showcase(resultScreenItem, this);
+    }
+
+    public void initResultScreen() {
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), "TOTAL: " + String.valueOf(fpc.totalScore));
+        setProgressBar();
 
-        progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
-
-        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        if (fpc.totalScore - fpc.score < 690) {
-            dcProgressBar.width = fpc.totalScore - fpc.score;
-        }else if(fpc.totalScore - fpc.score < 0){
-            dcProgressBar.width = 0;
-        }else{
-            dcProgressBar.width = 690;
-        }
-
-        txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
 
-        Entity txtBestE = resultScreenItem.getChild("lbl_BET_SCORE").getEntity();
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), "YOUR BEST: " + String.valueOf(fpc.bestScore));
 
         int need = getNeedForNextItem();
 
-        Entity txtNeedE = resultScreenItem.getChild("lbl_TO_UNLOCK").getEntity();
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
         if (need > 0) {
             needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
@@ -92,14 +87,6 @@ public class ResultScreenScript implements IScript {
     }
 
     private int getNeedForNextItem() {
-        Collections.sort(fpc.vanities, new Comparator<VanityComponent>() {
-            @Override
-            public int compare(VanityComponent o1, VanityComponent o2) {
-                if (o1.cost > o2.cost) return 1;
-                if (o1.cost < o2.cost) return -1;
-                return 0;
-            }
-        });
         nextVanityCost = 0;
         VanityComponent tempVc = null;
         for (VanityComponent vc : fpc.vanities) {
@@ -112,7 +99,7 @@ public class ResultScreenScript implements IScript {
                 }
             }
         }
-        if(tempVc!=null) {
+        if (tempVc != null) {
             showCaseVanity = tempVc;
             showCaseVanity.advertised = true;
             nextVanityCost = showCaseVanity.cost;
@@ -138,7 +125,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if (!showcasePopup) {
+                if (!showcasePopup && !show) {
                     stage.initMenu();
                     show = false;
                 }
@@ -166,10 +153,11 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
 //                if (!showcasePopup) {
-                stage.initGame();
-                show = false;
-                isWasShowcase = false;
-//                }
+                if (!show) {
+                    stage.initGame();
+                    show = false;
+                    isWasShowcase = false;
+                }
             }
         });
     }
@@ -192,43 +180,67 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                stage.initShopMenu();
-                show = false;
-                isWasShowcase = false;
+                if (!show) {
+                    stage.initShopMenu();
+                    show = false;
+                    isWasShowcase = false;
+                }
             }
         });
     }
 
     @Override
     public void act(float delta) {
-        if(!isWasShowcase) {
+        if (!isWasShowcase) {
             if (i <= fpc.score) {
                 updateScore();
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
                 updateProgressBar();
-
             }
-        }else {
+        } else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
-            float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
+            float progressBarActualLength = getProgressBarActualLength();
             progressBarE.getComponent(DimensionsComponent.class).width = progressBarActualLength;
         }
+        showcase.showFading();
     }
 
     private void updateProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        float progressBarActualLength = ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f;
-        if (dcProgressBar.width <= progressBarActualLength &&
-                dcProgressBar.width <= PROGRESS_BAR_WIDTH) {
+//        float progressBarActualLength = getProgressBarActualLength();
+
+        if (dcProgressBar.width <= getProgressBarActualLength() &&
+                dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += 2;
-        } else if (!showcasePopup && showCaseVanity != null) {
+        } else if (!show && showCaseVanity != null) {
             initShowcase();
+            progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
+
+            setProgressBar();
         }
 
-        if(fpc.totalScore - fpc.score < 0){
+        if (fpc.totalScore - fpc.score < 0) {
             dcProgressBar.width = 0;
-        }else if(fpc.totalScore - fpc.score > 690){
+        } else if (fpc.totalScore - fpc.score > 690) {
+            dcProgressBar.width = 690;
+        }
+    }
+
+    private float getProgressBarActualLength() {
+        return fpc.totalScore < nextVanityCost ?
+                    ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f :
+                    MAX_PROGRESS_BAR_WIDTH;
+    }
+
+    private void setProgressBar() {
+        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
+        int scoreDiff = fpc.totalScore - fpc.score;
+        if (scoreDiff < 0) {
+            dcProgressBar.width = 0;
+        } else if (scoreDiff < 690) {
+            dcProgressBar.width = scoreDiff;
+        } else {
             dcProgressBar.width = 690;
         }
     }
@@ -246,11 +258,13 @@ public class ResultScreenScript implements IScript {
     private void initShowcase() {
         if (!show) {
             show = true;
+//            Showcase showcase = new Showcase(resultScreenItem);
+            showcase.initShowCase();
 
-            FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
-            newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
-
-            stage.initShowcase();
+//            FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
+//            newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
+//
+//            stage.initShowcase();
         }
     }
 

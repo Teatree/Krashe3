@@ -7,29 +7,22 @@ import com.mygdx.game.entity.componets.DailyGoal;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static com.mygdx.game.utils.Utils.*;
 
-/**
- * Created by AR on 12/14/2015.
- */
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
-    public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
-        for (VanityComponent vc : fc.vanities){
-            VanityStats vs = new VanityStats(vc);
-            gameStats.vanities.add(vs);
-        }
-        Json json2 = new Json();
-        writeFile("vanity.params", json2.toJson(gameStats.vanities));
+        saveVanities(fc);
+
         for (DailyGoal goal : fc.goals){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -40,6 +33,16 @@ public class SaveMngr {
         }
         Json json = new Json();
         writeFile(DATA_FILE, json.toJson(gameStats));
+    }
+
+    private static void saveVanities(FlowerPublicComponent fc) {
+        List<VanityStats> vanities = new ArrayList<>();
+        for (VanityComponent vc : fc.vanities){
+            VanityStats vs = new VanityStats(vc);
+            vanities.add(vs);
+        }
+        Json json2 = new Json();
+        writeFile("vanity.params", json2.toJson(vanities));
     }
 
     public static FlowerPublicComponent loadStats(){
@@ -106,6 +109,15 @@ public class SaveMngr {
                 vanComps.add(vc);
             }
         }
+
+        Collections.sort(vanComps, new Comparator<VanityComponent>() {
+            @Override
+            public int compare(VanityComponent o1, VanityComponent o2) {
+                if (o1.cost > o2.cost) return 1;
+                if (o1.cost < o2.cost) return -1;
+                return 0;
+            }
+        });
         return vanComps;
     }
 
@@ -176,7 +188,7 @@ public class SaveMngr {
         vanity3.cost = 90;
         vanity3.name = "Christmas leaves";
         vanity3.icon = "leaf_christmas";
-        vanity3.shopIcon = "item_white_beard_n";
+        vanity3.shopIcon = "bug_juice_bubble_lib";
         vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
         vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
 
@@ -200,7 +212,7 @@ public class SaveMngr {
         vanity4.cost = 650;
         vanity4.name = "Santa outfit";
         vanity4.icon = "christmas";
-        vanity4.shopIcon = "item_white_beard_n";
+        vanity4.shopIcon = "item_santa_hat_n";
         vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
         vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
         vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");
@@ -210,22 +222,22 @@ public class SaveMngr {
         vanity5.cost = 750;
         vanity5.name = "Bike helmet";
         vanity5.icon = "leaf_christmas";
-        vanity5.shopIcon = "item_white_beard_n";
+        vanity5.shopIcon = "item_biker_helm_n";
 
         vanity6.cost = 900;
-        vanity6.name = "Cool Sun-glasses";
+        vanity6.name = "Cool Sun glasses";
         vanity6.icon = "santabeard";
-        vanity6.shopIcon = "item_white_beard_n";
+        vanity6.shopIcon = "item_sun_glasses_n";
 
         vanity7.cost = 1200;
         vanity7.name = "Pilot's scarf";
         vanity7.icon = "deer";
-        vanity7.shopIcon = "item_deer_horns_n";
+        vanity7.shopIcon = "item_pilot_scarf_n";
 
         vanity8.cost = 1550;
         vanity8.name = "Tea cup";
         vanity8.icon = "christmas";
-        vanity8.shopIcon = "item_white_beard_n";
+        vanity8.shopIcon = "item_tea_cup_n";
 
         List<VanityStats> vanityStatses = new ArrayList<>();
 

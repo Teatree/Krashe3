@@ -43,7 +43,7 @@ public class Actions {
         actionLogicMap.put(type.getName(), type.newInstance());
     }
 
-    private static void checkInit() {
+    public static void checkInit() {
         if (!initialized) try {
             initialize();
         } catch (InstantiationException e) {
@@ -214,6 +214,7 @@ public class Actions {
     }
 
     public static AlphaData fadeIn (float duration, Interpolation interpolation) {
+        checkInit();
         return alpha(1, duration, interpolation);
     }
 

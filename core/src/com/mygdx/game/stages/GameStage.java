@@ -1,20 +1,13 @@
 package com.mygdx.game.stages;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.GlobalConstants;
-import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.SceneLoader;
-import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-
-import java.util.List;
 
 import static com.mygdx.game.utils.SoundMgr.*;
 import static com.mygdx.game.utils.BackgroundMusicMgr.*;
@@ -77,14 +70,14 @@ public class GameStage extends Stage{
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
-    public void initShowcase(){
-        sceneLoader = new SceneLoader();
-        sceneLoader.loadScene("ShowcaseScene", viewport);
-        ShowcaseScreenScript result = new ShowcaseScreenScript(this);
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        root.addScript(result);
-        GlobalConstants.CUR_SCREEN = "SHOW";
-    }
+//    public void initShowcase(){
+//        sceneLoader = new SceneLoader();
+//        sceneLoader.loadScene("ShowcaseScene", viewport);
+//        ShowcaseScreenScript result = new ShowcaseScreenScript(this);
+//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+//        root.addScript(result);
+//        GlobalConstants.CUR_SCREEN = "SHOW";
+//    }
 
     public void initShopMenu(){
         sceneLoader = new SceneLoader();
