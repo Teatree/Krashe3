@@ -32,6 +32,7 @@ public class ShopScreenScript implements IScript {
     public ButtonComponent touchZoneBtn;
     float stopVelocity;
     public static boolean isPreviewOn;
+    public static boolean canOpenPreview = true;
 
     public Preview preview;
 
@@ -115,7 +116,7 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void clicked() {
-                    if (!isPreviewOn) {
+                    if (!isPreviewOn && canOpenPreview) {
                         preview.showPreview(vc, true, false);
                     } else {
                         lc.getLayer("normal").isVisible = true;
@@ -162,6 +163,7 @@ public class ShopScreenScript implements IScript {
                 if (!isGdxWritten) {
                     tempGdx.x = Gdx.input.getX();
                     isGdxWritten = true;
+                    canOpenPreview = true;
                 }
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;
@@ -172,6 +174,8 @@ public class ShopScreenScript implements IScript {
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
+
+                    canOpenPreview = false;
                 }
                 if (tempGdx.x < Gdx.input.getX()) {
                     int i = 0;
@@ -182,6 +186,7 @@ public class ShopScreenScript implements IScript {
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
+                    canOpenPreview = false;
                 }
             } else {
                 isGdxWritten = false;

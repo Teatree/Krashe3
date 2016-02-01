@@ -98,7 +98,6 @@ public class Preview {
 
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
                 getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {
