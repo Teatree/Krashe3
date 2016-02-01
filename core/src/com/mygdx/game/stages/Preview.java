@@ -1,7 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -34,6 +33,8 @@ public class Preview {
     public static final int ICON_X = 465;
     public static final int ICON_X_RELATIONAL = 260;
     public static final int PREVIEW_X = 260;
+    public static final int FAR_FAR_AWAY_X = 1500;
+    public static final int FAR_FAR_AWAY_Y = 1500;
 
     private ItemWrapper shopItem;
 
@@ -79,8 +80,8 @@ public class Preview {
         if (playAni) {
             iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
             iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
-            iconE.getComponent(TransformComponent.class).x = 325;
-            iconE.getComponent(TransformComponent.class).y = 349;
+            iconE.getComponent(TransformComponent.class).x = 575;
+            iconE.getComponent(TransformComponent.class).y = 379;
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
@@ -96,7 +97,8 @@ public class Preview {
         }
 
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-                getComponent(TransformComponent.class).x = -1500;
+                getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {
@@ -132,7 +134,7 @@ public class Preview {
         if (iconE != null) {
             sceneLoader.getEngine().removeEntity(iconE);
         }
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN).clone();
+        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN);
         iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
         sceneLoader.getEngine().addEntity(iconE);
@@ -164,12 +166,12 @@ public class Preview {
 
         }
         if (jump) {
-            previewE.getComponent(TransformComponent.class).x = 260;
+            previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = 460;
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(260, 30, 2, Interpolation.exp10Out));
+            ac.dataArray.add(Actions.moveTo(PREVIEW_X, 30, 2, Interpolation.exp10Out));
             previewE.add(ac);
 
             ActionComponent c = new ActionComponent();
@@ -178,13 +180,13 @@ public class Preview {
             iconE.add(ac);
 
         }else{
-            previewE.getComponent(TransformComponent.class).x = 260;
+            previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = 30;
         }
 
         tagBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
                 30,
-                previewE.getComponent(DimensionsComponent.class).width * 0.8f,
+                648,
                 previewE.getComponent(DimensionsComponent.class).height);
 
         ShopScreenScript.isPreviewOn = true;
@@ -194,8 +196,8 @@ public class Preview {
         final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
         canBuyCheck(vc, btnBuy);
         if (!vc.bought) {
-            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = -1500;
-            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = -1500;
+            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
             btnBuy.getComponent(TransformComponent.class).x =
                     shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).x;
@@ -223,8 +225,8 @@ public class Preview {
 
     public void initEnableButton(final VanityComponent vc) {
         if (vc.bought && !vc.enabled) {
-            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = -1500;
-            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = -1500;
+            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity();
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             enableBtn.getComponent(TransformComponent.class).x =
@@ -251,8 +253,8 @@ public class Preview {
 
     public void initDisableButton(final VanityComponent vc) {
         if (vc.bought && vc.enabled) {
-            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = -1500;
-            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = -1500;
+            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             Entity disableBtn = shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity();
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             disableBtn.getComponent(TransformComponent.class).x =
@@ -336,8 +338,7 @@ public class Preview {
 
         btnNext.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
             public void touchDown() {
@@ -359,27 +360,29 @@ public class Preview {
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(260, 900, 2, Interpolation.exp10));
+            ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
             previewE.add(ac);
 
             if (iconE.getComponent(TransformComponent.class) != null) {
-                ActionComponent c = new ActionComponent();
-                Actions.checkInit();
-                c.dataArray.add(Actions.moveTo(ICON_X, 900, 2, Interpolation.exp10));
-                iconE.add(c);
+//                ActionComponent c = new ActionComponent();
+//                Actions.checkInit();
+//                c.dataArray.add(Actions.moveTo(ICON_X, 900, 1, Interpolation.exp10));
+//                iconE.add(c);
 //                iconE.getComponent(TransformComponent.class).x = -1500;
 //                sceneLoader.getEngine().removeEntity(iconE);
             }
         }
         if (previewE.getComponent(TransformComponent.class).y >= 890) {
             isPreviewOn = false;
-            iconE.getComponent(TransformComponent.class).x = -1500;
+//            iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            iconE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             sceneLoader.getEngine().removeEntity(iconE);
         }
-        if (previewE.getComponent(TransformComponent.class).y >= 590) {
-            iconE.getComponent(TransformComponent.class).x = -1500;
-            sceneLoader.getEngine().removeEntity(iconE);
-        }
+//        if (previewE.getComponent(TransformComponent.class).y >= 590) {
+//            iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            iconE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+//            sceneLoader.getEngine().removeEntity(iconE);
+//        }
     }
 
     private void changeBagIcon(CompositeItemVO tempItemC, VanityComponent vc) {
