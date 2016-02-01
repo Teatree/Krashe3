@@ -1,6 +1,7 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
@@ -30,7 +31,8 @@ public class Preview {
     public static final String LBL_PRICE = "tag_lbl_price";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
-    public static final int ICON_X = 290;
+    public static final int ICON_X = 465;
+    public static final int ICON_X_RELATIONAL = 260;
     public static final int PREVIEW_X = 260;
 
     private ItemWrapper shopItem;
@@ -66,24 +68,13 @@ public class Preview {
     }
 
     public void initBoughtPreviewIcon(VanityComponent vc, boolean playAni) {
-        iconE.getComponent(TransformComponent.class).x = -1500;
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
         if (iconE != null) {
             sceneLoader.getEngine().removeEntity(iconE);
         }
+        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
         iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
         sceneLoader.getEngine().addEntity(iconE);
-        iconE.getComponent(ZIndexComponent.class).setZIndex(1);
-
-        shopItem.getChild(PREVIEW).addChild(iconE);
-        NodeComponent nc = previewE.getComponent(NodeComponent.class);
-        Entity e = nc.children.get(nc.children.size-1);
-        e.getComponent(ZIndexComponent.class).setZIndex(101);
-        sceneLoader.getEngine().removeEntity(iconE);
-//        for(Entity e: nc.children){
-//        }
-//        sceneLoader.getEngine().removeEntity(iconE);
 
         if (playAni) {
             iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
@@ -95,11 +86,13 @@ public class Preview {
             Actions.checkInit();
             ac.dataArray.add(Actions.parallel(
                     Actions.scaleTo(1, 1, 1f, Interpolation.exp5Out),
-                    Actions.moveTo(265, 289, 1f, Interpolation.exp5Out)));
+                    Actions.moveTo(ICON_X, 309, 1f, Interpolation.exp5Out)));
             iconE.add(ac);
+            iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         }else{
-            iconE.getComponent(TransformComponent.class).x = 265;
-            iconE.getComponent(TransformComponent.class).y = 289;
+            iconE.getComponent(TransformComponent.class).x = ICON_X;
+            iconE.getComponent(TransformComponent.class).y = 309;
+            iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         }
 
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
@@ -144,6 +137,9 @@ public class Preview {
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
         sceneLoader.getEngine().addEntity(iconE);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(52);
+//        iconE.getComponent(TransformComponent.class).x = ICON_X;
+//        iconE.getComponent(TransformComponent.class).y = 309;
+//        iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         return iconE;
     }
 
@@ -159,6 +155,14 @@ public class Preview {
         initNextButton(vc);
         initPreviewWindow();
 
+        if (vc.bought) {
+            initBoughtPreviewIcon(vc, justBoughtAni);
+        } else {
+            shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
+                    getComponent(TransformComponent.class).x = ICON_X_RELATIONAL;
+            initUnknownPreviewIcon();
+
+        }
         if (jump) {
             previewE.getComponent(TransformComponent.class).x = 260;
             previewE.getComponent(TransformComponent.class).y = 460;
@@ -167,17 +171,15 @@ public class Preview {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(260, 30, 2, Interpolation.exp10Out));
             previewE.add(ac);
+
+            ActionComponent c = new ActionComponent();
+            Actions.checkInit();
+            c.dataArray.add(Actions.moveTo(ICON_X, 309, 2, Interpolation.exp10Out));
+            iconE.add(ac);
+
         }else{
             previewE.getComponent(TransformComponent.class).x = 260;
             previewE.getComponent(TransformComponent.class).y = 30;
-        }
-
-        if (vc.bought) {
-            initBoughtPreviewIcon(vc, justBoughtAni);
-        } else {
-            shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-                    getComponent(TransformComponent.class).x = ICON_X;
-            initUnknownPreviewIcon();
         }
 
         tagBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
@@ -278,35 +280,35 @@ public class Preview {
         }
     }
 
-    private void playParticleEffect() {
-        iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
-        iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
-        iconE.getComponent(TintComponent.class).color.a = 0;
-
-        iconE.getComponent(TransformComponent.class).x = 524;
-        iconE.getComponent(TransformComponent.class).y = 700;
-
-        ActionComponent ac = new ActionComponent();
-        Actions.checkInit();
-        ac.dataArray.add(Actions.parallel(Actions.fadeIn(3),
-                Actions.scaleTo(1.2f, 1.2f, 3),
-                Actions.moveTo(484, 407, 3)));
-        iconE.add(ac);
-
-        CompositeItemVO starBurstParticleC = sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
-        Entity starBurstParticleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), starBurstParticleC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
-        sceneLoader.getEngine().addEntity(starBurstParticleE);
-
-//        ParticleComponent pc = new ParticleComponent();
-//        pc.particleEffect = starBurstParticleC.composite.;
-//        pc.particleEffect.setDuration(101);
-//        starBurstParticleE.add(pc);
-
-        TransformComponent tcParticles = starBurstParticleE.getComponent(TransformComponent.class);
-        tcParticles.x = 534;
-        tcParticles.y = 477;
-    }
+//    private void playParticleEffect() {
+//        iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
+//        iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
+//        iconE.getComponent(TintComponent.class).color.a = 0;
+//
+//        iconE.getComponent(TransformComponent.class).x = 524;
+//        iconE.getComponent(TransformComponent.class).y = 700;
+//
+//        ActionComponent ac = new ActionComponent();
+//        Actions.checkInit();
+//        ac.dataArray.add(Actions.parallel(Actions.fadeIn(3),
+//                Actions.scaleTo(1.2f, 1.2f, 3),
+//                Actions.moveTo(484, 407, 3)));
+//        iconE.add(ac);
+//
+//        CompositeItemVO starBurstParticleC = sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
+//        Entity starBurstParticleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), starBurstParticleC);
+//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
+//        sceneLoader.getEngine().addEntity(starBurstParticleE);
+//
+////        ParticleComponent pc = new ParticleComponent();
+////        pc.particleEffect = starBurstParticleC.composite.;
+////        pc.particleEffect.setDuration(101);
+////        starBurstParticleE.add(pc);
+//
+//        TransformComponent tcParticles = starBurstParticleE.getComponent(TransformComponent.class);
+//        tcParticles.x = 534;
+//        tcParticles.y = 477;
+//    }
 
     private void initPrevButton(final VanityComponent vc) {
         btnLeft.getComponent(ButtonComponent.class).clearListeners();
@@ -360,12 +362,23 @@ public class Preview {
             ac.dataArray.add(Actions.moveTo(260, 900, 2, Interpolation.exp10));
             previewE.add(ac);
 
-//            if (iconE.getComponent(TransformComponent.class) != null) {
+            if (iconE.getComponent(TransformComponent.class) != null) {
+                ActionComponent c = new ActionComponent();
+                Actions.checkInit();
+                c.dataArray.add(Actions.moveTo(ICON_X, 900, 2, Interpolation.exp10));
+                iconE.add(c);
 //                iconE.getComponent(TransformComponent.class).x = -1500;
-//            }
+//                sceneLoader.getEngine().removeEntity(iconE);
+            }
         }
         if (previewE.getComponent(TransformComponent.class).y >= 890) {
             isPreviewOn = false;
+            iconE.getComponent(TransformComponent.class).x = -1500;
+            sceneLoader.getEngine().removeEntity(iconE);
+        }
+        if (previewE.getComponent(TransformComponent.class).y >= 590) {
+            iconE.getComponent(TransformComponent.class).x = -1500;
+            sceneLoader.getEngine().removeEntity(iconE);
         }
     }
 
