@@ -364,10 +364,10 @@ public class Preview {
             previewE.add(ac);
 
             if (iconE.getComponent(TransformComponent.class) != null) {
-//                ActionComponent c = new ActionComponent();
-//                Actions.checkInit();
-//                c.dataArray.add(Actions.moveTo(ICON_X, 900, 1, Interpolation.exp10));
-//                iconE.add(c);
+                ActionComponent c = new ActionComponent();
+                Actions.checkInit();
+                c.dataArray.add(Actions.moveTo(ICON_X, 900, 1, Interpolation.exp10));
+                iconE.add(c);
 //                iconE.getComponent(TransformComponent.class).x = -1500;
 //                sceneLoader.getEngine().removeEntity(iconE);
             }
