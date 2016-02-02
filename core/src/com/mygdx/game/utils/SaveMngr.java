@@ -9,7 +9,7 @@ import com.mygdx.game.entity.componets.VanityComponent;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import static com.mygdx.game.utils.Utils.*;
+import static com.mygdx.game.utils.EffectUtils.*;
 
 public class SaveMngr {
 

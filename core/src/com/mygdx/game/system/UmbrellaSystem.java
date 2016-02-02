@@ -11,6 +11,7 @@ import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
@@ -52,13 +53,10 @@ public class UmbrellaSystem extends IteratingSystem {
             if (uc.state == UmbrellaComponent.State.PUSH) {
                 uc.dataSet = new Vector2[3];
                 uc.dataSet[0] = new Vector2(tc.x, tc.y);
-//                uc.dataSet[1] = new Vector2(-500, stage.getViewport().getScreenHeight() / 2);
                 uc.dataSet[1] = new Vector2(-500, 400);
-//                uc.dataSet[2] = new Vector2(stage.getViewport().getScreenWidth() - 30, stage.getViewport().getScreenHeight() / 2);
                 uc.dataSet[2] = new Vector2(1170, 400);
 
                 uc.myCatmull = new Bezier<>(uc.dataSet);
-//                uc.out = new Vector2(340, stage.getViewport().getScreenHeight() / 4);
                 uc.out = new Vector2(340, 200);
                 uc.myCatmull.valueAt(uc.out, 5);
                 uc.myCatmull.derivativeAt(uc.out, 5);
@@ -68,13 +66,10 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (uc.current >= 1 && uc.state == UmbrellaComponent.State.FLY) {
                 uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
-//                uc.dataSet[2] = new Vector2(stage.getViewport().getScreenWidth() - 30, random.nextInt((((int) stage.getViewport().getScreenHeight() - 100) - 100)) + 100);
                 uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
                 uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
-//                System.out.println("0: " + uc.dataSet[0].y + " || 1: " + uc.dataSet[1].y + " || 2: " + uc.dataSet[2].y);
 
                 uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
-//                uc.out = new Vector2(340, stage.getViewport().getScreenHeight() / 4);
                 uc.out = new Vector2(340, 200);
                 uc.myCatmull.valueAt(uc.out, 5);
                 uc.myCatmull.derivativeAt(uc.out, 5);
@@ -94,7 +89,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (checkCollision(uc, fcc)) {
                 fcc.isCollision = true;
-//                GameStage.sceneLoader.getEngine().removeEntity(entity);
 
                 hide(entity, tc);
 
@@ -112,19 +106,21 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-        CompositeItemVO starBurstParticleC = GameStage.sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
+//        CompositeItemVO starBurstParticleC = GameStage.sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
+//
+//        Entity starBurstParticleE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), starBurstParticleC);
+//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
+//        GameStage.sceneLoader.getEngine().addEntity(starBurstParticleE);
+//
+//        TransformComponent tc6 = starBurstParticleE.getComponent(TransformComponent.class);
+//        tc6.x = 1088;
+//        tc6.y = 674;
+//
+//        GameScreenScript.starBurstParticleE = starBurstParticleE;
+//
+//        GameScreenScript.isParticlePlaying = true;
 
-        Entity starBurstParticleE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), starBurstParticleC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(starBurstParticleE);
-
-        TransformComponent tc6 = starBurstParticleE.getComponent(TransformComponent.class);
-        tc6.x = 1088;
-        tc6.y = 674;
-
-        GameScreenScript.starBurstParticleE = starBurstParticleE;
-
-        GameScreenScript.isParticlePlaying = true;
+        EffectUtils.playYellowStarsParticleEffect(1088, 674);
     }
 
     private void hide(Entity entity, TransformComponent tc) {

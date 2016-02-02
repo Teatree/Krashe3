@@ -14,6 +14,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.ShopScreenScript.*;
+import static com.mygdx.game.utils.EffectUtils.*;
 
 public class Preview {
 
@@ -35,6 +36,7 @@ public class Preview {
     public static final int PREVIEW_X = 260;
     public static final int FAR_FAR_AWAY_X = 1500;
     public static final int FAR_FAR_AWAY_Y = 1500;
+    public static final String NOT_NUFF = "tag_notNuff";
 
     private ItemWrapper shopItem;
 
@@ -90,6 +92,8 @@ public class Preview {
                     Actions.moveTo(ICON_X, 309, 1f, Interpolation.exp5Out)));
             iconE.add(ac);
             iconE.getComponent(ZIndexComponent.class).setZIndex(101);
+
+            playYellowStarsParticleEffect(544, 467);
         }else{
             iconE.getComponent(TransformComponent.class).x = ICON_X;
             iconE.getComponent(TransformComponent.class).y = 309;
@@ -98,7 +102,6 @@ public class Preview {
 
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
                 getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {
@@ -118,15 +121,18 @@ public class Preview {
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
-    public void canBuyCheck(VanityComponent vc, Entity btn_buy) {
+    public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
-        if (vc.isAffordable()) {
+        if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+            return true;
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
+            btn_buy.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
+            return false;
         }
     }
 
@@ -194,22 +200,21 @@ public class Preview {
 
     public void initBuyButton(final VanityComponent vc) {
         final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
-        canBuyCheck(vc, btnBuy);
-        if (!vc.bought) {
-            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        canBuyCheck(vc, btnBuy);
+        shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        if (!vc.bought && canBuyCheck(vc, btnBuy)) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
             btnBuy.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).x;
+                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).x;
             btnBuy.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).y;
+                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).y;
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
             btnBuy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {}
                 @Override
                 public void touchDown() {}
-
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
@@ -266,12 +271,10 @@ public class Preview {
             disableBtn.getComponent(ButtonComponent.class).clearListeners();
             disableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
-                public void touchUp() {
-                }
+                public void touchUp() {}
 
                 @Override
-                public void touchDown() {
-                }
+                public void touchDown() {}
 
                 @Override
                 public void clicked() {
@@ -281,36 +284,6 @@ public class Preview {
             });
         }
     }
-
-//    private void playParticleEffect() {
-//        iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
-//        iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
-//        iconE.getComponent(TintComponent.class).color.a = 0;
-//
-//        iconE.getComponent(TransformComponent.class).x = 524;
-//        iconE.getComponent(TransformComponent.class).y = 700;
-//
-//        ActionComponent ac = new ActionComponent();
-//        Actions.checkInit();
-//        ac.dataArray.add(Actions.parallel(Actions.fadeIn(3),
-//                Actions.scaleTo(1.2f, 1.2f, 3),
-//                Actions.moveTo(484, 407, 3)));
-//        iconE.add(ac);
-//
-//        CompositeItemVO starBurstParticleC = sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
-//        Entity starBurstParticleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), starBurstParticleC);
-//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
-//        sceneLoader.getEngine().addEntity(starBurstParticleE);
-//
-////        ParticleComponent pc = new ParticleComponent();
-////        pc.particleEffect = starBurstParticleC.composite.;
-////        pc.particleEffect.setDuration(101);
-////        starBurstParticleE.add(pc);
-//
-//        TransformComponent tcParticles = starBurstParticleE.getComponent(TransformComponent.class);
-//        tcParticles.x = 534;
-//        tcParticles.y = 477;
-//    }
 
     private void initPrevButton(final VanityComponent vc) {
         btnLeft.getComponent(ButtonComponent.class).clearListeners();

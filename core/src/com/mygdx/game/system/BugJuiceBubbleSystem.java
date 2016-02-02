@@ -7,12 +7,8 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
-
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
 /**
@@ -31,15 +27,6 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         TransformComponent tc = entity.getComponent(TransformComponent.class);
         FlowerPublicComponent fcc = flowerMapper.get(entity);
         BugJuiceBubbleComponent bjc = mapper.get(entity);
-
-        bjc.counter++;
-        if (bjc.counter <= 1) {
-            bjc.tc2.x = tc.x;
-            bjc.tc2.y = tc.y;
-        }else if(bjc.counter >= 30){
-            GameStage.sceneLoader.getEngine().removeEntity(bjc.splatterEffectE);
-            bjc.counter = 0;
-        }
 
         if (!bjc.began) {
             begin(bjc, tc);

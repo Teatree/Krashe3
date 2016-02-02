@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -32,6 +33,7 @@ public class ShopScreenScript implements IScript {
     public ButtonComponent touchZoneBtn;
     float stopVelocity;
     public static boolean isPreviewOn;
+    public static boolean canOpenPreview = true;
 
     public Preview preview;
 
@@ -44,9 +46,9 @@ public class ShopScreenScript implements IScript {
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
+        GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         addBackButtonPlease();
-
         scoreLbl = shopItem.getChild("score_lbl").getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
         touchZone = shopItem.getChild("touchZone_scroll").getEntity();
@@ -115,7 +117,7 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void clicked() {
-                    if (!isPreviewOn) {
+                    if (!isPreviewOn && canOpenPreview) {
                         preview.showPreview(vc, true, false);
                     } else {
                         lc.getLayer("normal").isVisible = true;
@@ -162,6 +164,7 @@ public class ShopScreenScript implements IScript {
                 if (!isGdxWritten) {
                     tempGdx.x = Gdx.input.getX();
                     isGdxWritten = true;
+                    canOpenPreview = true;
                 }
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;
@@ -172,6 +175,8 @@ public class ShopScreenScript implements IScript {
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
+
+                    canOpenPreview = false;
                 }
                 if (tempGdx.x < Gdx.input.getX()) {
                     int i = 0;
@@ -182,6 +187,7 @@ public class ShopScreenScript implements IScript {
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
+                    canOpenPreview = false;
                 }
             } else {
                 isGdxWritten = false;
@@ -208,7 +214,6 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void dispose() {
-
     }
 
 }
