@@ -30,6 +30,10 @@ import static com.mygdx.game.utils.BugPool.*;
  */
 public class BugSystem extends IteratingSystem {
 
+    public static final String CHARGING_ANI = "Charging";
+    public static final String IDLE_ANI = "Idle";
+    public static final String PREPARING_ANI = "Preparing";
+
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
@@ -142,11 +146,11 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
-            setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
-                setAnimation("Preparing", Animation.PlayMode.LOOP, sasc, sac);
+                setAnimation(PREPARING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.counter = PREPARATION_TIME;
                 bc.state = PREPARING;
             }
@@ -157,13 +161,19 @@ public class BugSystem extends IteratingSystem {
             if (bc.counter == 0) {
                 bc.state = CHARGING;
                 canPlayAnimation = true;
-                setAnimation("Charging", Animation.PlayMode.LOOP, sasc, sac);
+                setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.velocity = deltaTime * CHARGING_MVMNT_SPEED;
             }
         }
         // Charging
         else if (CHARGING.equals(bc.state)) {
             bc.velocity += deltaTime * 3.4;
+        }
+
+        if (checkFlowerCollision(fpc, bc) || isOutOfBounds(bc)) {
+            bc.state = DEAD;
+            canPlayAnimation = true;
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
         }
     }
 
