@@ -1,22 +1,11 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.entity.componets.VanityComponent;
-import com.mygdx.game.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.CompositeVO;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
-import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 /**
  * Created by Teatree on 7/25/2015.
@@ -36,17 +25,16 @@ public class MenuScreenScript implements IScript {
     @Override
     public void init(Entity item) {
         menuItem = new ItemWrapper(item);
+
         stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         final Entity playBtn = menuItem.getChild("btn_play").getEntity();
-
         final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
 
         // Adding a Click listener to playButton so we can start game when clicked
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
 
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
             public void touchDown() {

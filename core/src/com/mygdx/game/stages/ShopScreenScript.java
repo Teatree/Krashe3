@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -45,9 +46,9 @@ public class ShopScreenScript implements IScript {
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
+        GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         addBackButtonPlease();
-
         scoreLbl = shopItem.getChild("score_lbl").getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
         touchZone = shopItem.getChild("touchZone_scroll").getEntity();

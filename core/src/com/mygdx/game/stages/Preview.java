@@ -8,15 +8,13 @@ import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.ShopScreenScript.*;
+import static com.mygdx.game.utils.EffectUtils.*;
 
 public class Preview {
 
@@ -38,6 +36,7 @@ public class Preview {
     public static final int PREVIEW_X = 260;
     public static final int FAR_FAR_AWAY_X = 1500;
     public static final int FAR_FAR_AWAY_Y = 1500;
+    public static final String NOT_NUFF = "tag_notNuff";
 
     private ItemWrapper shopItem;
 
@@ -94,7 +93,7 @@ public class Preview {
             iconE.add(ac);
             iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
-            playParticleEffect();
+            playYellowStarsParticleEffect(544, 467);
         }else{
             iconE.getComponent(TransformComponent.class).x = ICON_X;
             iconE.getComponent(TransformComponent.class).y = 309;
@@ -122,16 +121,18 @@ public class Preview {
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
-    public void canBuyCheck(VanityComponent vc, Entity btn_buy) {
+    public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+            return true;
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
+            return false;
         }
     }
 
@@ -199,15 +200,15 @@ public class Preview {
 
     public void initBuyButton(final VanityComponent vc) {
         final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
-        canBuyCheck(vc, btnBuy);
-        if (!vc.bought) {
-            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        canBuyCheck(vc, btnBuy);
+        shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        if (!vc.bought && canBuyCheck(vc, btnBuy)) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
             btnBuy.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).x;
+                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).x;
             btnBuy.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).y;
+                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).y;
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
             btnBuy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
@@ -282,35 +283,6 @@ public class Preview {
                 }
             });
         }
-    }
-
-    private void playParticleEffect() {
-
-        ParticleEffectVO vo = new ParticleEffectVO();
-        vo.particleName = "starsyellowburst";
-        vo.layerName = "Default";
-        vo.x = 544;
-        vo.y = 467;
-
-        Entity starBurstParticleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), vo);
-//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), starBurstParticleE, vo);
-        sceneLoader.getEngine().addEntity(starBurstParticleE);
-
-        ParticleComponent pc = ComponentRetriever.get(starBurstParticleE, ParticleComponent.class);
-        pc.particleEffect.setDuration(1);
-        pc.particleEffect.start();
-        starBurstParticleE.add(pc);
-
-        starBurstParticleE.getComponent(ZIndexComponent.class).setZIndex(101);
-
-
-//        DisposingParticleComponent disposingParticleComponent = new DisposingParticleComponent();
-//        disposingParticleComponent.duration = 4f;
-//        splatter.add(disposingParticleComponent);
-
-//        TransformComponent tcParticles = starBurstParticleE.getComponent(TransformComponent.class);
-//        tcParticles.x = 544;
-//        tcParticles.y = 467;
     }
 
     private void initPrevButton(final VanityComponent vc) {

@@ -15,7 +15,7 @@ import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.Utils.*;
+import static com.mygdx.game.utils.EffectUtils.*;
 
 /**
  * Created by AnastasiiaRudyk on 1/24/2016.

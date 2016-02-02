@@ -20,7 +20,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.mygdx.game.utils.Utils.*;
+import static com.mygdx.game.utils.EffectUtils.*;
 import static com.mygdx.game.stages.GameStage.*;
 
 
@@ -32,8 +32,6 @@ public class GameScreenScript implements IScript {
     public static GameStage game;
     public Random random = new Random();
 
-    private static int particleCounter;
-
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
 
@@ -43,14 +41,11 @@ public class GameScreenScript implements IScript {
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
-    public static boolean isParticlePlaying;
-    public static Entity starBurstParticleE;
 
     public static int gameOverCounter = 240;
 
     public static final CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
-    public Entity starBurst;
 
     public DailyGoalSystem dailyGoalGenerator;
     private Entity pauseDialog;
@@ -83,15 +78,14 @@ public class GameScreenScript implements IScript {
         initBackButton();
         initPauseDialog();
         initGameOverDialog();
+        initBackground();
+    }
 
-// I can't understand why this doesn't work
-//        Entity ype = gameItem.getChild("star_burst_particle_lib").getChild("yellow_p").getEntity();
-//        pc = ype.getComponent(ParticleComponent.class);
-
-        final CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("backgroundLib");
-        background = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), background, tempC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(background);
+    private void initBackground() {
+        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary("backgroundLib");
+        background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), background, tempC.composite);
+        sceneLoader.getEngine().addEntity(background);
 
         LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);
@@ -105,14 +99,15 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-        GameStage.sceneLoader.getEngine().addSystem(new DandelionSystem(fpc));
-        GameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem());
-        GameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
-        GameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
-        GameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
-        GameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
-        GameStage.sceneLoader.getEngine().addSystem(new BugSystem());
-        GameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
+        sceneLoader.getEngine().addSystem(new DandelionSystem(fpc));
+        sceneLoader.getEngine().addSystem(new UmbrellaSystem());
+        sceneLoader.getEngine().addSystem(new FlowerSystem());
+        sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
+        sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
+        sceneLoader.getEngine().addSystem(new ButterflySystem());
+        sceneLoader.getEngine().addSystem(new BugSystem());
+        sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
+        sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
     }
 
     private void initBackButton() {
@@ -319,9 +314,6 @@ public class GameScreenScript implements IScript {
     @Override
     public void act(float delta) {
 
-//        System.out.println("pc is Complete: " + pc.particleEffect.isComplete());
-//        pc.particleEffect.allowCompletion();
-
         if (cameraShaker.time > 0) {
             cameraShaker.shake(delta);
             cameraShaker.blink();
@@ -350,21 +342,7 @@ public class GameScreenScript implements IScript {
         }
 
         updateGameOver();
-
-        if (isParticlePlaying) {
-            removeEffectIn(110);
-        }
-
         fade(pauseDialog, isPause);
-    }
-
-    private void removeEffectIn(int frames) {
-        particleCounter++;
-        if (particleCounter >= frames) {
-            GameStage.sceneLoader.getEngine().removeEntity(starBurstParticleE);
-            isParticlePlaying = false;
-            particleCounter = 0;
-        }
     }
 
     private void spawnDandelion() {
