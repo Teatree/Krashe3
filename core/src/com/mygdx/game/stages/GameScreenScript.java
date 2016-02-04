@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
@@ -213,9 +214,22 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                isGameOver = false;
-                dialogTc.x = -1000;
-                gameOverCounter = 240;
+//                isGameOver = false;
+//                dialogTc.x = -1000;
+//                gameOverCounter = 240;
+                if (Main.adsController.isWifiConnected()) {
+                    Main.adsController.showInterstitialAd(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("Interstitial app closed");
+                            isGameOver = false;
+                            dialogTc.x = -1000;
+                            gameOverCounter = 240;
+                        }
+                    });
+                } else {
+                    System.out.println("Interstitial ad not (yet) loaded");
+                }
             }
         });
     }

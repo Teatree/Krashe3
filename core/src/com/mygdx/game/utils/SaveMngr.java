@@ -14,7 +14,7 @@ import static com.mygdx.game.utils.EffectUtils.*;
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
-    public static SimpleDateFormat sdf = getDateFormat();
+//    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -46,6 +46,7 @@ public class SaveMngr {
     }
 
     public static FlowerPublicComponent loadStats(){
+        System.err.println(DATA_FILE);
         FlowerPublicComponent fc = new FlowerPublicComponent();
         String saved = readFile(DATA_FILE);
         if (!"".equals(saved)) {
