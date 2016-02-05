@@ -5,8 +5,9 @@ package com.mygdx.game;
  */
 public interface AdsController {
 
-    void showBannerAd();
-    void hideBannerAd();
     boolean isWifiConnected();
-    void showInterstitialAd (Runnable then);
+
+    void showInterstitialVideoAd(Runnable then);
+
+    void showInterstitialGeneralAd(Runnable then);
 }

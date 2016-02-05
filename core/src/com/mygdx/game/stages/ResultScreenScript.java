@@ -1,25 +1,29 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.game.stages.GameScreenScript.*;
+import java.util.Random;
 
-/**
- * Created by Teatree on 7/25/2015.
- */
+import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.GameStage.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
+
 public class ResultScreenScript implements IScript {
 
     public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final String SHOWCASE = "showcase";
+    public static final double PERCENTS_BEFORE_AD = 0.01;
 
 
     private GameStage stage;
@@ -28,6 +32,7 @@ public class ResultScreenScript implements IScript {
     public static VanityComponent showCaseVanity;
     public static boolean show;
     public static boolean isWasShowcase;
+    private Entity adsBtn;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -51,7 +56,7 @@ public class ResultScreenScript implements IScript {
     @Override
     public void init(Entity item) {
         resultScreenItem = new ItemWrapper(item);
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         initBackButton();
         initPlayBtn();
         initShopBtn();
@@ -135,7 +140,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initPlayBtn() {
-        Entity backPlay = resultScreenItem.getChild("btn_play").getEntity();
+        final Entity backPlay = resultScreenItem.getChild("btn_play").getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
         backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -152,12 +157,24 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                if (!showcasePopup) {
                 if (!show) {
-                    stage.initGame();
-                    show = false;
-                    isWasShowcase = false;
+                    if (new Random().nextInt(10) <= 3) {
+                        Main.adsController.showInterstitialGeneralAd(new Runnable() {
+                            @Override
+                            public void run() {
+                                backToGame();
+                            }
+                        });
+                    } else {
+                        backToGame();
+                    }
                 }
+            }
+
+            private void backToGame() {
+                stage.initGame();
+                show = false;
+                isWasShowcase = false;
             }
         });
     }
@@ -200,24 +217,26 @@ public class ResultScreenScript implements IScript {
             }
         } else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
-            float progressBarActualLength = getProgressBarActualLength();
-            progressBarE.getComponent(DimensionsComponent.class).width = progressBarActualLength;
+            progressBarE.getComponent(DimensionsComponent.class).width = getProgressBarActualLength();
         }
         showcase.showFading();
     }
 
     private void updateProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-//        float progressBarActualLength = getProgressBarActualLength();
 
         if (dcProgressBar.width <= getProgressBarActualLength() &&
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += 2;
-        } else if (!show && showCaseVanity != null) {
-            initShowcase();
-            progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
-
-            setProgressBar();
+        } else {
+            if (!show && showCaseVanity != null) {
+                initShowcase();
+                progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
+                setProgressBar();
+            }
+            if (!show && fpc.totalScore >= PERCENTS_BEFORE_AD * nextVanityCost && adsBtn == null) {
+                initWatchAdsForMoneyBtn();
+            }
         }
 
         if (fpc.totalScore - fpc.score < 0) {
@@ -229,8 +248,8 @@ public class ResultScreenScript implements IScript {
 
     private float getProgressBarActualLength() {
         return fpc.totalScore < nextVanityCost ?
-                    ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f :
-                    MAX_PROGRESS_BAR_WIDTH;
+                ((float) fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f :
+                MAX_PROGRESS_BAR_WIDTH;
     }
 
     private void setProgressBar() {
@@ -258,14 +277,69 @@ public class ResultScreenScript implements IScript {
     private void initShowcase() {
         if (!show) {
             show = true;
-//            Showcase showcase = new Showcase(resultScreenItem);
             showcase.initShowCase();
-
-//            FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
-//            newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
-//
-//            stage.initShowcase();
         }
+    }
+
+    private void initWatchAdsForMoneyBtn() {
+
+        adsBtn = resultScreenItem.getChild("btn_watch_for_money").getEntity();
+
+        TransformComponent tc = adsBtn.getComponent(TransformComponent.class);
+        tc.x = 978;
+        tc.y = 250;
+
+        final LayerMapComponent lc = ComponentRetriever.get(adsBtn, LayerMapComponent.class);
+        adsBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+                lc.getLayer("normal").isVisible = true;
+                lc.getLayer("pressed").isVisible = false;
+            }
+
+            @Override
+            public void touchDown() {
+                lc.getLayer("normal").isVisible = false;
+                lc.getLayer("pressed").isVisible = true;
+            }
+
+            @Override
+            public void clicked() {
+                if (!show) {
+                    if (Main.adsController.isWifiConnected()) {
+                        Main.adsController.showInterstitialGeneralAd(new Runnable() {
+                            @Override
+                            public void run() {
+                                //give that money!
+                                fpc.totalScore = nextVanityCost;
+                                adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                                init(resultScreenItem.getEntity());
+                            }
+                        });
+                    } else {
+                        fpc.score = nextVanityCost - fpc.totalScore;
+                        fpc.totalScore = nextVanityCost;
+
+                        adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                        init(resultScreenItem.getEntity());
+
+//                        Entity lbl = resultScreenItem.getChild("btn_watch_for_money").getChild("lbl").getEntity();
+//                        LabelComponent lc = lbl.getComponent(LabelComponent.class);
+//                        lc.text.replace(0, lc.text.capacity(), "You need internet connection");
+                    }
+                }
+            }
+        });
+
+        tc.scaleY = 0.1f;
+        tc.scaleX = 0.1f;
+        adsBtn.getComponent(TintComponent.class).color.a = 0.1f;
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.parallel(
+                Actions.scaleTo(1f, 1f, 0.5f, Interpolation.exp5Out),
+                Actions.fadeIn(0.5f, Interpolation.exp10Out)));
+        adsBtn.add(ac);
     }
 
     @Override

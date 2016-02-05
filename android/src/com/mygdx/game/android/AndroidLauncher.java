@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import android.widget.Toast;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 
@@ -17,73 +16,44 @@ import com.google.android.gms.ads.*;
 import com.mygdx.game.Main;
 import com.mygdx.game.AdsController;
 
-public class AndroidLauncher extends AndroidApplication  implements AdsController {
+public class AndroidLauncher extends AndroidApplication implements AdsController {
 //        implements AndroidFragmentApplication.Callbacks{
 
     private static final String BANNER_AD_UNIT_ID = "ca-app-pub-4809397092315700/3739329274";
-    private static final String INTERSTITIAL_UNIT_ID = "ca-app-pub-4809397092315700/1974891273";
+    private static final String INTERSTITIAL_VIDEO_UNIT_ID = "ca-app-pub-4809397092315700/1974891273";
+    private static final String INTERSTITIAL_GENERAL_UNIT_ID = "ca-app-pub-4809397092315700/1061404471";
 
     AdView bannerAd;
-    InterstitialAd interstitialAd;
+    InterstitialAd interstitialVideoAd;
+    InterstitialAd interstitialGeneralAd;
 
-	@Override
-	protected void onCreate (Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-//		initialize(new Main(), config);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(new Main(this), config);
-		setupAds();
+        setupAds();
 
-		RelativeLayout layout = new RelativeLayout(this);
-		layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT);
-//
-//		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-//				ViewGroup.LayoutParams.MATCH_PARENT,
-//				ViewGroup.LayoutParams.WRAP_CONTENT);
-//		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//		layout.addView(bannerAd, params);
+        RelativeLayout layout = new RelativeLayout(this);
+        layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        setContentView(layout);
+    }
 
-		setContentView(layout);
-	}
+    public void setupAds() {
 
-	public void setupAds() {
-//		bannerAd = new AdView(this);
-//		bannerAd.setVisibility(View.VISIBLE);
-//		bannerAd.setBackgroundColor(0xff000000); // black
-//		bannerAd.setAdUnitId(BANNER_AD_UNIT_ID);
-//		bannerAd.setAdSize(AdSize.SMART_BANNER);
-
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId(INTERSTITIAL_UNIT_ID);
-
+        interstitialVideoAd = new InterstitialAd(this);
+        interstitialVideoAd.setAdUnitId(INTERSTITIAL_VIDEO_UNIT_ID);
         AdRequest.Builder builder = new AdRequest.Builder();
         AdRequest ad = builder.build();
-        interstitialAd.loadAd(ad);
-	}
+        interstitialVideoAd.loadAd(ad);
 
-	@Override
-	public void showBannerAd() {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				bannerAd.setVisibility(View.VISIBLE);
-				AdRequest.Builder builder = new AdRequest.Builder();
-				AdRequest ad = builder.build();
-				bannerAd.loadAd(ad);
-			}
-		});
-	}
-
-	@Override
-	public void hideBannerAd() {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				bannerAd.setVisibility(View.INVISIBLE);
-			}
-		});
-	}
+        interstitialGeneralAd = new InterstitialAd(this);
+        interstitialGeneralAd.setAdUnitId(INTERSTITIAL_GENERAL_UNIT_ID);
+        AdRequest.Builder builderGen = new AdRequest.Builder();
+        AdRequest adGen = builderGen.build();
+        interstitialGeneralAd.loadAd(adGen);
+    }
 
     @Override
     public boolean isWifiConnected() {
@@ -94,28 +64,43 @@ public class AndroidLauncher extends AndroidApplication  implements AdsControlle
     }
 
     @Override
-    public void showInterstitialAd(final Runnable then) {
+    public void showInterstitialVideoAd(final Runnable then) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 if (then != null) {
-                    interstitialAd.setAdListener(new AdListener() {
+                    interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {
                             Gdx.app.postRunnable(then);
-//                            AdRequest.Builder builder = new AdRequest.Builder();
-//                            AdRequest ad = builder.build();
-//                            interstitialAd.loadAd(ad);
-                        }
-                        @Override
-                        public void onAdLoaded() {
-                            Toast.makeText(getApplicationContext(), "Finished Loading Interstitial", Toast.LENGTH_SHORT).show();
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            AdRequest ad = builder.build();
+                            interstitialVideoAd.loadAd(ad);
                         }
                     });
                 }
+                interstitialVideoAd.show();
+            }
+        });
+    }
 
-                interstitialAd.show();
+    @Override
+    public void showInterstitialGeneralAd(final Runnable then) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (then != null) {
+                    interstitialVideoAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            Gdx.app.postRunnable(then);
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            AdRequest ad = builder.build();
+                            interstitialVideoAd.loadAd(ad);
+                        }
+                    });
+                }
+                interstitialVideoAd.show();
             }
         });
     }

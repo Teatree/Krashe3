@@ -16,10 +16,9 @@ import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.EffectUtils.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
-/**
- * Created by AnastasiiaRudyk on 1/24/2016.
- */
+
 public class Showcase {
 
     public static final String PATH_PREFIX = "orig\\spriter_animations\\showcase_present_ani\\";
@@ -42,10 +41,6 @@ public class Showcase {
         this.resultScreen = resultScreen;
 
         showcaseE = screenItem.getChild(SHOWCASE).getEntity();
-
-        Entity lbl_nameE = screenItem.getChild(SHOWCASE).getChild("lbl_item_name").getEntity();
-        LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
 
         initShowCaseBackButton();
         initShowCaseBuyButton();
@@ -72,12 +67,12 @@ public class Showcase {
     private void hideWindow(TintComponent ticParent) {
         if (!show && ticParent.color.a <= 0 && showcaseE != null) {
             if (itemIcon != null) {
-                tcItem.x = -1500;
+                tcItem.x = FAR_FAR_AWAY_X;
                 sceneLoader.getEngine().removeEntity(itemIcon);
                 itemIcon = null;
                 tcItem = null;
             }
-            tcShowCase.x = -1500;
+            tcShowCase.x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -85,6 +80,11 @@ public class Showcase {
 
 //        FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + showCaseVanity.icon + TYPE_SUFFIX);
 //        newAsset.copyTo(Gdx.files.local(PATH_PREFIX + ITEM_UNKNOWN_DEFAULT + TYPE_SUFFIX));
+
+        Entity lbl_nameE = screenItem.getChild(SHOWCASE).getChild("lbl_item_name").getEntity();
+        LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
+        lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
+
         Entity aniE = screenItem.getChild(SHOWCASE).getChild("showcase_ani").getEntity();
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);

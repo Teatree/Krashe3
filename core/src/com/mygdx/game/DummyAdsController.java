@@ -1,18 +1,7 @@
 package com.mygdx.game;
 
-/**
- * Created by AnastasiiaRudyk on 2/4/2016.
- */
+
 public class DummyAdsController implements AdsController {
-    @Override
-    public void showBannerAd() {
-
-    }
-
-    @Override
-    public void hideBannerAd() {
-
-    }
 
     @Override
     public boolean isWifiConnected() {
@@ -20,7 +9,12 @@ public class DummyAdsController implements AdsController {
     }
 
     @Override
-    public void showInterstitialAd(Runnable then) {
+    public void showInterstitialVideoAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showInterstitialGeneralAd(Runnable then) {
 
     }
 }
