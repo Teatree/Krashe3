@@ -15,15 +15,13 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.*;
 import com.mygdx.game.Main;
 import com.mygdx.game.AdsController;
+import com.mygdx.game.stages.GameScreenScript;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController {
-//        implements AndroidFragmentApplication.Callbacks{
 
-    private static final String BANNER_AD_UNIT_ID = "ca-app-pub-4809397092315700/3739329274";
     private static final String INTERSTITIAL_VIDEO_UNIT_ID = "ca-app-pub-4809397092315700/1974891273";
     private static final String INTERSTITIAL_GENERAL_UNIT_ID = "ca-app-pub-4809397092315700/1061404471";
 
-    AdView bannerAd;
     InterstitialAd interstitialVideoAd;
     InterstitialAd interstitialGeneralAd;
 
@@ -89,7 +87,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null) {
+                if (then != null && !GameScreenScript.fpc.noAds) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {

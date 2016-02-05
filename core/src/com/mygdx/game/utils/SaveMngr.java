@@ -20,6 +20,9 @@ public class SaveMngr {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
+        gameStats.noAds = fc.noAds;
+        gameStats.noMusic = fc.noMusic;
+        gameStats.noSound = fc.noSound;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
 
@@ -54,6 +57,9 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
+            fc.noAds = gameStats.noAds;
+            fc.noMusic = gameStats.noMusic;
+            fc.noSound = gameStats.noSound;
 //            try {
 //                Calendar lastGoalsDate = Calendar.getInstance();
 //                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
@@ -123,6 +129,9 @@ public class SaveMngr {
     }
 
     private static class GameStats {
+        public boolean noAds;
+        public boolean noSound;
+        public boolean noMusic;
         public int bestScore;
         public int totalScore;
         public String lastGoalsDate;

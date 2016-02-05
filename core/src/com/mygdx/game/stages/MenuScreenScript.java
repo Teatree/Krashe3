@@ -13,24 +13,37 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 public class MenuScreenScript implements IScript {
 
     private GameStage stage;
-    private ItemWrapper menuItem;
     public IResourceRetriever ir;
 
     public MenuScreenScript(GameStage stage) {
         this.stage = stage;
-        ir = stage.sceneLoader.getRm();
+        ir = GameStage.sceneLoader.getRm();
     }
 
 
     @Override
     public void init(Entity item) {
-        menuItem = new ItemWrapper(item);
+        ItemWrapper menuItem = new ItemWrapper(item);
 
-        stage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         final Entity playBtn = menuItem.getChild("btn_play").getEntity();
         final Entity btnShop = menuItem.getChild("btn_shop").getEntity();
+        final Entity btnNoAds = menuItem.getChild("btn_noAds").getEntity();
 
-        // Adding a Click listener to playButton so we can start game when clicked
+        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                GameScreenScript.fpc.noAds = true;
+            }
+        });
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
 
             @Override
@@ -55,12 +68,6 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-//                if (GameScreenScript.fpc.vanities.isEmpty()) {
-//                    VanityComponent vc = new VanityComponent();
-//                    vc.apply(GameScreenScript.fpc);
-//                } else {
-//                    GameScreenScript.fpc.vanities.get(0).disable(GameScreenScript.fpc);
-//                }
                 stage.initShopMenu();
             }
 
@@ -69,44 +76,6 @@ public class MenuScreenScript implements IScript {
 
             }
         });
-//        btnSettings.addListener(new ClickListener(){
-//            // Need to keep touch down in order for touch up to work normal (libGDX awkwardness)
-//            public boolean touchDown (InputEvent event, float x, float y, int
-//                    pointer, int button) {
-//                touchDownButton(btnSettings);
-//                return true;
-//            }
-//            public void touchUp (InputEvent event, float x, float y, int pointer,
-//                                 int button) {
-//                touchUpButton(btnSettings);
-//            }
-//        });
-//        btnNoAds.addListener(new ClickListener(){
-//            // Need to keep touch down in order for touch up to work normal (libGDX awkwardness)
-//            public boolean touchDown (InputEvent event, float x, float y, int
-//                    pointer, int button) {
-//                touchDownButton(btnNoAds);
-//                return true;
-//            }
-//            public void touchUp (InputEvent event, float x, float y, int pointer,
-//                                 int button) {
-//                touchUpButton(btnNoAds);
-//            }
-//        });
-//        btnShop.addListener(new ClickListener(){
-//            // Need to keep touch down in order for touch up to work normal (libGDX awkwardness)
-//            public boolean touchDown (InputEvent event, float x, float y, int
-//                    pointer, int button) {
-//                touchDownButton(btnShop);
-//                stage.initShopMenu();
-//
-//                return true;
-//            }
-//            public void touchUp (InputEvent event, float x, float y, int pointer,
-//                                 int button) {
-//                touchUpButton(btnShop);
-//            }
-//        });
     }
 
     @Override

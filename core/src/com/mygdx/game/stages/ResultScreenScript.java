@@ -22,8 +22,7 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 public class ResultScreenScript implements IScript {
 
     public static final int MAX_PROGRESS_BAR_WIDTH = 690;
-    public static final String SHOWCASE = "showcase";
-    public static final double PERCENTS_BEFORE_AD = 0.01;
+    public static final double PERCENTS_TO_OFFER_AD = 0.01;
 
 
     private GameStage stage;
@@ -55,6 +54,8 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+        i = 0;
+        j = 0;
         resultScreenItem = new ItemWrapper(item);
         sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         initBackButton();
@@ -234,7 +235,7 @@ public class ResultScreenScript implements IScript {
                 progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
                 setProgressBar();
             }
-            if (!show && fpc.totalScore >= PERCENTS_BEFORE_AD * nextVanityCost && adsBtn == null) {
+            if (!show && fpc.totalScore >= PERCENTS_TO_OFFER_AD * nextVanityCost && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
             }
         }
