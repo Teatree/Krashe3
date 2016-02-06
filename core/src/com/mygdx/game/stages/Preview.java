@@ -15,6 +15,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.ShopScreenScript.*;
 import static com.mygdx.game.utils.EffectUtils.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class Preview {
 
@@ -34,8 +35,6 @@ public class Preview {
     public static final int ICON_X = 465;
     public static final int ICON_X_RELATIONAL = 260;
     public static final int PREVIEW_X = 260;
-    public static final int FAR_FAR_AWAY_X = 1500;
-    public static final int FAR_FAR_AWAY_Y = 1500;
     public static final String NOT_NUFF = "tag_notNuff";
 
     private ItemWrapper shopItem;
@@ -100,8 +99,12 @@ public class Preview {
             iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         }
 
+
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
                 getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
+                getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {

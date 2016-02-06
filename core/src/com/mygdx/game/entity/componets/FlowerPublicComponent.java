@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class FlowerPublicComponent implements Component {
 
+    public boolean noAds = false;
+    public boolean noSound;
+    public boolean noMusic;
+
     public Rectangle boundsRect = new Rectangle();
     public boolean isCollision;
 

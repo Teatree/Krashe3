@@ -11,6 +11,7 @@ import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -30,6 +31,10 @@ import static com.mygdx.game.utils.BugPool.*;
  */
 public class BugSystem extends IteratingSystem {
 
+    public static final String CHARGING_ANI = "Charging";
+    public static final String IDLE_ANI = "Idle";
+    public static final String PREPARING_ANI = "Preparing";
+
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
@@ -45,6 +50,7 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!isPause && !isGameOver) {
+
             sasc.paused = false;
 
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
@@ -54,7 +60,9 @@ public class BugSystem extends IteratingSystem {
             FlowerPublicComponent fcc = fMapper.get(entity);
             BugComponent bc = mapper.get(entity);
 
-            if (bc.state != DEAD) {
+            if(BugSpawnSystem.isBlewUp()){
+                destroyBug(entity, transformComponent);
+            }else if(bc.state != DEAD) {
                 updateRect(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
 
@@ -76,6 +84,7 @@ public class BugSystem extends IteratingSystem {
                     showGameOver();
                 }
             }
+
         } else {
             sasc.paused = true;
             if (isGameOver){
@@ -98,6 +107,13 @@ public class BugSystem extends IteratingSystem {
 
         EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         bugJuiceBubbleE.add(fpc);
+    }
+
+    private void destroyBug(Entity bugE, TransformComponent tc) {
+        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+//        tc.x = GlobalConstants.FAR_FAR_AWAY_X;
+//        tc.y = GlobalConstants.FAR_FAR_AWAY_Y;
+        BugPool.getInstance().release(bugE);
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
@@ -142,11 +158,11 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
-            setAnimation("Idle", Animation.PlayMode.LOOP, sasc, sac);
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
-                setAnimation("Preparing", Animation.PlayMode.LOOP, sasc, sac);
+                setAnimation(PREPARING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.counter = PREPARATION_TIME;
                 bc.state = PREPARING;
             }
@@ -157,13 +173,19 @@ public class BugSystem extends IteratingSystem {
             if (bc.counter == 0) {
                 bc.state = CHARGING;
                 canPlayAnimation = true;
-                setAnimation("Charging", Animation.PlayMode.LOOP, sasc, sac);
+                setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.velocity = deltaTime * CHARGING_MVMNT_SPEED;
             }
         }
         // Charging
         else if (CHARGING.equals(bc.state)) {
             bc.velocity += deltaTime * 3.4;
+        }
+
+        if (checkFlowerCollision(fpc, bc) || isOutOfBounds(bc)) {
+            bc.state = DEAD;
+            canPlayAnimation = true;
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
         }
     }
 
@@ -193,7 +215,8 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
-        float x = uc.startX + (uc.endX - uc.startX) * percent * percent;
+        float step = percent <= 0.3 ? 5 : 0;
+        float x = uc.startX + (uc.endX - uc.startX) * percent * (percent + step);
 
         double y =  (Math.sin(x / 100) * 50) + uc.startY;
         setPosition(tc, x, (float)y);

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
@@ -57,6 +58,8 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+
+        ResultScreenScript.showCaseVanity = null;
 
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
@@ -201,7 +204,10 @@ public class GameScreenScript implements IScript {
         dialogTc.x = -3000;
         dialogTc.y = -1000;
 
-        Entity watchAdBtn = gameItem.getChild("game_over_dialog").getChild("btn_watch_video").getEntity();
+        final Entity watchAdBtn = gameItem.getChild("game_over_dialog").getChild("btn_watch_video").getEntity();
+        final Entity turnOnWifi = gameItem.getChild("game_over_dialog").getChild("lbl_turn_on_wifi").getEntity();
+        turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
         watchAdBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
@@ -213,11 +219,30 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                isGameOver = false;
-                dialogTc.x = -1000;
-                gameOverCounter = 240;
+                if (Main.adsController.isWifiConnected()) {
+                    playVideoAd(dialogTc);
+                } else {
+                    turnOnWifi.getComponent(TransformComponent.class).x = 127;
+                    turnOnWifi.getComponent(TransformComponent.class).y = 45;
+                }
             }
         });
+    }
+
+    private void playVideoAd(final TransformComponent dialogTc) {
+        if (Main.adsController.isWifiConnected()) {
+            Main.adsController.showInterstitialVideoAd(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Interstitial app closed");
+                    isGameOver = false;
+                    dialogTc.x = -1000;
+                    gameOverCounter = 240;
+                }
+            });
+        } else {
+            System.out.println("Interstitial ad not (yet) loaded");
+        }
     }
 
     private void pause() {

@@ -14,12 +14,15 @@ import static com.mygdx.game.utils.EffectUtils.*;
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
-    public static SimpleDateFormat sdf = getDateFormat();
+//    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
+        gameStats.noAds = fc.noAds;
+        gameStats.noMusic = fc.noMusic;
+        gameStats.noSound = fc.noSound;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
 
@@ -46,6 +49,7 @@ public class SaveMngr {
     }
 
     public static FlowerPublicComponent loadStats(){
+        System.err.println(DATA_FILE);
         FlowerPublicComponent fc = new FlowerPublicComponent();
         String saved = readFile(DATA_FILE);
         if (!"".equals(saved)) {
@@ -53,6 +57,9 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
+            fc.noAds = gameStats.noAds;
+            fc.noMusic = gameStats.noMusic;
+            fc.noSound = gameStats.noSound;
 //            try {
 //                Calendar lastGoalsDate = Calendar.getInstance();
 //                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
@@ -122,6 +129,9 @@ public class SaveMngr {
     }
 
     private static class GameStats {
+        public boolean noAds;
+        public boolean noSound;
+        public boolean noMusic;
         public int bestScore;
         public int totalScore;
         public String lastGoalsDate;

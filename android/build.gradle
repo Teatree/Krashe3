@@ -115,4 +115,6 @@ idea {
     }
 }
 dependencies {
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.google.android.gms:play-services:7.0.0'
 }

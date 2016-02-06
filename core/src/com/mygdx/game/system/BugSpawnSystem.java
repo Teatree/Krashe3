@@ -118,7 +118,9 @@ public class BugSpawnSystem extends EntitySystem {
             }
         }
     }
-
+    public static boolean isBlewUp (){
+        return isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION-10;
+    }
     private void updateAngeredBeesMode() {
         if (isAngeredBeesMode) {
             angeredBeesModeTimer--;

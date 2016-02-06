@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -20,17 +19,31 @@ public class Main extends ApplicationAdapter {
     public int viewportWidth;
     public int viewportHeight;
 
+	public static AdsController adsController;
+
+	public Main(AdsController adsController){
+        if (adsController != null) {
+            this.adsController = adsController;
+        } else {
+            this.adsController = new DummyAdsController();
+        }
+	}
+
 	@Override
 	public void create () {
 		SaveMngr.generateVanityJSON();
 		names = getViewportNames();
 
 		GameScreenScript.fpc = SaveMngr.loadStats();
-		stage = new GameStage();
+        stage = new GameStage();
 		viewports = getViewports(stage.getCamera());
 		stage.setViewport(viewports.first());
 
 		Gdx.input.setInputProcessor(stage);
+
+//		if (adsController.isWifiConnected()) {
+//			adsController.showBannerAd();
+//		}
 
 	}
 
