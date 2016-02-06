@@ -99,8 +99,12 @@ public class Preview {
             iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         }
 
+
         shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
                 getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
+                getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {

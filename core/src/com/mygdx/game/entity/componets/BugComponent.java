@@ -25,7 +25,7 @@ public class BugComponent implements Component {
     public float endY;
     public float duration = 14;
     public float time;
-    public Interpolation interpolation = Interpolation.exp5In;
+    public Interpolation interpolation = Interpolation.exp5;
     public boolean reverse, began, complete;
     public int alignment = Align.bottomLeft;
 

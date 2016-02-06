@@ -11,6 +11,7 @@ import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -49,6 +50,7 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!isPause && !isGameOver) {
+
             sasc.paused = false;
 
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
@@ -58,7 +60,9 @@ public class BugSystem extends IteratingSystem {
             FlowerPublicComponent fcc = fMapper.get(entity);
             BugComponent bc = mapper.get(entity);
 
-            if (bc.state != DEAD) {
+            if(BugSpawnSystem.isBlewUp()){
+                destroyBug(entity, transformComponent);
+            }else if(bc.state != DEAD) {
                 updateRect(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
 
@@ -80,6 +84,7 @@ public class BugSystem extends IteratingSystem {
                     showGameOver();
                 }
             }
+
         } else {
             sasc.paused = true;
             if (isGameOver){
@@ -102,6 +107,13 @@ public class BugSystem extends IteratingSystem {
 
         EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         bugJuiceBubbleE.add(fpc);
+    }
+
+    private void destroyBug(Entity bugE, TransformComponent tc) {
+        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+//        tc.x = GlobalConstants.FAR_FAR_AWAY_X;
+//        tc.y = GlobalConstants.FAR_FAR_AWAY_Y;
+        BugPool.getInstance().release(bugE);
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
@@ -203,7 +215,8 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
-        float x = uc.startX + (uc.endX - uc.startX) * percent * percent;
+        float step = percent <= 0.3 ? 5 : 0;
+        float x = uc.startX + (uc.endX - uc.startX) * percent * (percent + step);
 
         double y =  (Math.sin(x / 100) * 50) + uc.startY;
         setPosition(tc, x, (float)y);

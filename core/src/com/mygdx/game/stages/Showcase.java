@@ -57,11 +57,18 @@ public class Showcase {
 
         int fadeCoefficient = show ? 1 : -1;
 
+//        if(fadeCoefficient == -1 && !nc.children.contains(itemIcon, false) && itemIcon!=null) {
+//            screenItem.getChild(SHOWCASE).addChild(itemIcon);
+//        }
+
         if (appear) {
             tcp.color.a += fadeCoefficient * 0.1f;
             fadeChildren(nc, fadeCoefficient);
+            if (itemIcon != null && fadeCoefficient <0 )
+            fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
         }
         hideWindow(tcp);
+
     }
 
     private void hideWindow(TintComponent ticParent) {
@@ -103,7 +110,6 @@ public class Showcase {
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
-        screenItem.getChild(SHOWCASE).addChild(itemIcon);
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(100);
 
         tcItem = itemIcon.getComponent(TransformComponent.class);
@@ -117,7 +123,8 @@ public class Showcase {
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(
                 Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
-                Actions.fadeIn(7, Interpolation.exp10Out)));
+                Actions.fadeIn(5, Interpolation.exp10Out)));
+        System.out.println("alpha: " + itemIcon.getComponent(TintComponent.class).color.a);
         itemIcon.add(ac);
     }
 
