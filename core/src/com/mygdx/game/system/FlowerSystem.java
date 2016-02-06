@@ -22,7 +22,9 @@ import static com.mygdx.game.utils.SoundMgr.soundMgr;
  */
 public class FlowerSystem extends IteratingSystem {
 
-    public static final int BITE_ANIMATION_TIME = 50;
+    public static final int BITE_ANIMATION_TIME = 26;
+    public static final int TRANSITION_ANIMATION_TIME = 8;
+    public static int ANIMATION_SPEED = 24;
     private ComponentMapper<FlowerComponent> mapper = ComponentMapper.getFor(FlowerComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
@@ -38,13 +40,8 @@ public class FlowerSystem extends IteratingSystem {
         spriterComponent.scale = 0.6f;
         FlowerComponent flowerComponent = mapper.get(entity);
         FlowerPublicComponent fcc = collisionMapper.get(entity);
-        moveFlower();
         updateRect(fcc, transformComponent, dimensionsComponent);
         act(fcc, flowerComponent, transformComponent, dimensionsComponent, spriterComponent, deltaTime);
-
-    }
-
-    public void moveFlower() {
 
     }
 
@@ -59,7 +56,7 @@ public class FlowerSystem extends IteratingSystem {
 
     public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            sc.player.speed = 24;
+            sc.player.speed = ANIMATION_SPEED;
             if (fc.state == FlowerComponent.State.IDLE_BITE) {
                 setBiteIdleAnimation(sc);
             }
@@ -75,11 +72,27 @@ public class FlowerSystem extends IteratingSystem {
                     setIdleAnimation(sc);
                 }
             }
-            if (Gdx.input.justTouched() && fc.state != FlowerComponent.State.ATTACK) {
+            if (Gdx.input.justTouched() && fc.state == FlowerComponent.State.IDLE) {
+                fc.state = FlowerComponent.State.TRANSITION;
+            }
+
+            if (Gdx.input.justTouched() && fc.state != FlowerComponent.State.TRANSITION && fc.state != FlowerComponent.State.ATTACK) {
                 fc.state = FlowerComponent.State.ATTACK;
 
                 setAttackAnimation(sc);
+            }
+
+            if (fc.state == FlowerComponent.State.TRANSITION){
+                fc.transCounter--;
+                System.out.println("counter: " + fc.transCounter);
+
+                setTransitionAnimation(sc);
 //                fc.eatCounter = 0;
+                if (fc.transCounter <= 0){
+                    setAttackAnimation(sc);
+                    fc.state = FlowerComponent.State.ATTACK;
+                    fc.transCounter = TRANSITION_ANIMATION_TIME;
+                }
             }
 
             if (fc.state == ATTACK || fc.state == FlowerComponent.State.RETREAT) {
@@ -164,28 +177,30 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
-    private void setAttackAnimation(SpriterComponent sc) {
-        sc.player.setAnimation(3);
-    }
-
     private void setIdleAnimation(SpriterComponent sc) {
         sc.player.setAnimation(0);
-    }
-
-    private void setBiteAttackAnimation(SpriterComponent sc) {
-        sc.player.setAnimation(4);
     }
 
     private void setBiteIdleAnimation(SpriterComponent sc) {
         sc.player.setAnimation(1);
     }
 
+    private void setTransitionAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(2);
+    }
+
+    private void setAttackAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(3);
+    }
+
+    private void setBiteAttackAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(4);
+    }
+
+
+
     public void move(TransformComponent tc, FlowerComponent fc) {
         tc.y += fc.state == FlowerComponent.State.ATTACK ? 11.5f : -11.5f;
-//        tc.y += fc.state == FlowerComponent.State.RETREAT ? -2.5f : 0f ;
-
-//        tc.y += 2.5f;
-//        System.out.println("BOOM!");
     }
 
 //    public void moveDown(TransformComponent tc){
