@@ -35,6 +35,8 @@ public class ShopScreenScript implements IScript {
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
 
+    public int bagPosId;
+
     public Preview preview;
 
     public ShopScreenScript(GameStage stage) {
@@ -58,9 +60,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void getAllAllVanities() {
-        int x = 173;
-        int y = 289;
-
+        TransformComponent previousTc = null;
         for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
@@ -81,9 +81,13 @@ public class ShopScreenScript implements IScript {
                 GameStage.sceneLoader.getEngine().addEntity(itemIcon);
             }
 
-            final TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
-            tc.x = x;
-            tc.y = y;
+            final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
+//            final TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
+//            tc.x = x;
+//            tc.y = y;
+
+            bagEntity.add(tc);
+            previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
             shopItem.getChild("btn_shop_icon_lib").addChild(itemIcon);
@@ -126,7 +130,6 @@ public class ShopScreenScript implements IScript {
                     }
                 }
             });
-            x += 250;
         }
     }
 
@@ -206,6 +209,48 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
+    }
+
+    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc){
+        TransformComponent tc = new TransformComponent();
+        int step = 20;
+
+        if (previous == null) {
+            tc.x = 173;
+            tc.y = 359;
+            return tc;
+        }
+        switch(bagPosId) {
+            case 0: {
+                tc.x = previous.x;
+                tc.y = previous.y - previousDc.height - step;
+
+                bagPosId++;
+                break;
+            }
+            case 1: {
+                tc.x = previous.x + previousDc.width + step;
+                tc.y = previous.y;
+
+                bagPosId++;
+                break;
+            }
+            case 2: {
+                tc.x = previous.x;
+                tc.y = previous.y + previousDc.height + step;
+
+                bagPosId++;
+                break;
+            }
+            case 3: {
+                tc.x = previous.x + previousDc.width + step;
+                tc.y = previous.y;
+
+                bagPosId = 0;
+                break;
+            }
+        }
+        return tc;
     }
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
