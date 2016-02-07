@@ -104,7 +104,7 @@ public class ShopScreenScript implements IScript {
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
-                    if (isPreviewOn){
+                    if (isPreviewOn || !canOpenPreview){
                         bagEntity.getComponent(ButtonComponent.class).isTouched = false;
                         lc.getLayer("normal").isVisible = true;
                         lc.getLayer("pressed").isVisible = false;
@@ -113,7 +113,7 @@ public class ShopScreenScript implements IScript {
 
                 @Override
                 public void touchDown() {
-                    if (isPreviewOn){
+                    if (isPreviewOn || !canOpenPreview){
                         bagEntity.getComponent(ButtonComponent.class).isTouched = false;
                         lc.getLayer("normal").isVisible = true;
                         lc.getLayer("pressed").isVisible = false;
