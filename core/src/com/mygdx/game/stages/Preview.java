@@ -20,7 +20,6 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 public class Preview {
 
     public static final String PREVIEW = "previewTag";
-//    public static final String PREVIEW_SHOP_ICON = "tag_shop_icon";
     public static final String ITEM_UNKNOWN = "item_unknown_n";
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
@@ -175,8 +174,6 @@ public class Preview {
         if (vc.bought) {
             initBoughtPreviewIcon(vc, justBoughtAni);
         } else {
-//            shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-//                    getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
             initUnknownPreviewIcon(jump);
 
         }
@@ -188,14 +185,6 @@ public class Preview {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(PREVIEW_X, 30, 2, Interpolation.exp10Out));
             previewE.add(ac);
-
-//            ActionComponent c = new ActionComponent();
-//            Actions.checkInit();
-//            c.dataArray.add(Actions.moveTo(ICON_X, 309, 2, Interpolation.exp10Out));
-//            iconE.add(c);
-//            iconE.getComponent(TransformComponent.class).x = previewE.getComponent(TransformComponent.class).x + ICON_X_RELATIVE;
-//            iconE.getComponent(TransformComponent.class).y = previewE.getComponent(TransformComponent.class).y + ICON_Y_RELATIVE;
-
         }else{
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = 30;
@@ -211,7 +200,6 @@ public class Preview {
 
     public void initBuyButton(final VanityComponent vc) {
         final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
-//        canBuyCheck(vc, btnBuy);
         shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         if (!vc.bought && canBuyCheck(vc, btnBuy)) {
@@ -343,33 +331,20 @@ public class Preview {
         updateTagIcon();
 
         boolean isOutside = tagBoundingBox == null || !tagBoundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
-        if (Gdx.input.justTouched() && isPreviewOn && isOutside) {
-
-            ActionComponent ac = new ActionComponent();
-            Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
-            previewE.add(ac);
-
-            if (iconE.getComponent(TransformComponent.class) != null) {
-//                ActionComponent c = new ActionComponent();
-//                Actions.checkInit();
-//                c.dataArray.add(Actions.moveTo(ICON_X, 900, 1, Interpolation.exp10));
-//                iconE.add(c);
-//                iconE.getComponent(TransformComponent.class).x = -1500;
-//                sceneLoader.getEngine().removeEntity(iconE);
+        float currentYpos = previewE.getComponent(TransformComponent.class).y;
+        if (Gdx.input.justTouched() && currentYpos <= 30 || currentYpos >= 890) {
+            if (isPreviewOn && isOutside) {
+                ActionComponent ac = new ActionComponent();
+                Actions.checkInit();
+                ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
+                previewE.add(ac);
             }
         }
+
         if (previewE.getComponent(TransformComponent.class).y >= 890) {
             isPreviewOn = false;
-//            iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            iconE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             sceneLoader.getEngine().removeEntity(iconE);
         }
-//        if (previewE.getComponent(TransformComponent.class).y >= 590) {
-//            iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            iconE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-//            sceneLoader.getEngine().removeEntity(iconE);
-//        }
     }
 
     private void updateTagIcon() {

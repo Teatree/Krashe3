@@ -44,18 +44,22 @@ public class ButtonSystem extends IteratingSystem {
             MainItemComponent childMainItemComponent = ComponentRetriever.get(childEntity, MainItemComponent.class);
             ZIndexComponent childZComponent = ComponentRetriever.get(childEntity, ZIndexComponent.class);
             if(isTouched(entity)) {
-                if(childZComponent.layerName.equals("normal")) {
-                    childMainItemComponent.visible = false;
-                }
-                if(childZComponent.layerName.equals("pressed")) {
-                    childMainItemComponent.visible = true;
+                if (!entity.getComponent(ButtonComponent.class).skipDefaultLayersChange) {
+                    if (childZComponent.layerName.equals("normal")) {
+                        childMainItemComponent.visible = false;
+                    }
+                    if (childZComponent.layerName.equals("pressed")) {
+                        childMainItemComponent.visible = true;
+                    }
                 }
             } else {
-                if(childZComponent.layerName.equals("normal")) {
-                    childMainItemComponent.visible = true;
-                }
-                if(childZComponent.layerName.equals("pressed")) {
-                    childMainItemComponent.visible = false;
+                if (!entity.getComponent(ButtonComponent.class).skipDefaultLayersChange) {
+                    if (childZComponent.layerName.equals("normal")) {
+                        childMainItemComponent.visible = true;
+                    }
+                    if (childZComponent.layerName.equals("pressed")) {
+                        childMainItemComponent.visible = false;
+                    }
                 }
             }
         }

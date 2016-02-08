@@ -82,10 +82,6 @@ public class ShopScreenScript implements IScript {
             }
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
-//            final TransformComponent tc = bagEntity.getComponent(TransformComponent.class);
-//            tc.x = x;
-//            tc.y = y;
-
             bagEntity.add(tc);
             previousTc = tc;
 
@@ -105,7 +101,6 @@ public class ShopScreenScript implements IScript {
                 @Override
                 public void touchUp() {
                     if (isPreviewOn || !canOpenPreview){
-                        bagEntity.getComponent(ButtonComponent.class).isTouched = false;
                         lc.getLayer("normal").isVisible = true;
                         lc.getLayer("pressed").isVisible = false;
                     }
@@ -114,10 +109,10 @@ public class ShopScreenScript implements IScript {
                 @Override
                 public void touchDown() {
                     if (isPreviewOn || !canOpenPreview){
-                        bagEntity.getComponent(ButtonComponent.class).isTouched = false;
                         lc.getLayer("normal").isVisible = true;
                         lc.getLayer("pressed").isVisible = false;
                     }
+
                 }
 
                 @Override
@@ -169,6 +164,7 @@ public class ShopScreenScript implements IScript {
                     tempGdx.x = Gdx.input.getX();
                     isGdxWritten = true;
                     canOpenPreview = true;
+                    ButtonComponent.skipDefaultLayersChange = false;
                 }
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;
@@ -180,6 +176,7 @@ public class ShopScreenScript implements IScript {
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
 
+                    ButtonComponent.skipDefaultLayersChange = true;
                     canOpenPreview = false;
                 }
                 if (tempGdx.x < Gdx.input.getX()) {
@@ -192,6 +189,7 @@ public class ShopScreenScript implements IScript {
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
                     canOpenPreview = false;
+                    ButtonComponent.skipDefaultLayersChange = true;
                 }
             } else {
                 isGdxWritten = false;

@@ -84,7 +84,6 @@ public class FlowerSystem extends IteratingSystem {
 
             if (fc.state == FlowerComponent.State.TRANSITION){
                 fc.transCounter--;
-                System.out.println("counter: " + fc.transCounter);
 
                 setTransitionAnimation(sc);
 //                fc.eatCounter = 0;
