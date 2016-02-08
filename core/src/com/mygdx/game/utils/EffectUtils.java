@@ -2,10 +2,7 @@ package com.mygdx.game.utils;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.ParticleLifespanComponent;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -61,18 +58,20 @@ public class EffectUtils {
         vo.x = x;
         vo.y = y;
 
-        Entity starBurstParticleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), vo);
-        sceneLoader.getEngine().addEntity(starBurstParticleE);
+        Entity particleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), vo);
+        sceneLoader.getEngine().addEntity(particleE);
 
-        ParticleComponent pc = ComponentRetriever.get(starBurstParticleE, ParticleComponent.class);
-        starBurstParticleE.add(pc);
+        ParticleComponent pc = ComponentRetriever.get(particleE, ParticleComponent.class);
+        particleE.add(pc);
 
-        starBurstParticleE.getComponent(ZIndexComponent.class).setZIndex(101);
+        particleE.getComponent(ZIndexComponent.class).setZIndex(101);
+        particleE.getComponent(ParentNodeComponent.class).parentEntity.getComponent(TransformComponent.class).x = x;
+        particleE.getComponent(ParentNodeComponent.class).parentEntity.getComponent(TransformComponent.class).y = y;
 
         ParticleLifespanComponent lifespanComponent = new ParticleLifespanComponent();
         lifespanComponent.duration = duration;
-        starBurstParticleE.add(lifespanComponent);
-
+        particleE.add(lifespanComponent);
+        pc.particleEffect.setPosition(x, y);
         pc.particleEffect.start();
     }
 
