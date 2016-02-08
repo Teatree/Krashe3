@@ -95,11 +95,13 @@ public class SaveMngr {
         fc.vanities = getAllVanity();
 
         fc.pets = getAllPets();
+
+        fc.currentPet = fc.pets.get(0);
         return fc;
     }
 
     public static List<VanityComponent> getAllVanity() {
-        String saved = readFile((VANITIES_FILE));
+        String saved = readFile(VANITIES_FILE);
         List<VanityComponent> vanComps = new ArrayList<>();
 
         if (!"".equals(saved)) {
@@ -213,6 +215,7 @@ public class SaveMngr {
         public boolean tryPeriod;
         public int tryPeriodDuration;
 
+        public Pet(){}
         public Pet(PetComponent petComponent) {
             this.name = petComponent.name;
             this.activated = petComponent.activated;
@@ -241,7 +244,7 @@ public class SaveMngr {
         return "";
     }
 
-    public static void generateVanityJSON() {
+    public static void generateVanityJson() {
         VanityStats vanity1 = new VanityStats();
         VanityStats vanity2 = new VanityStats();
         VanityStats vanity3 = new VanityStats();
@@ -318,8 +321,21 @@ public class SaveMngr {
 
         Json jsonVanityObj = new Json();
 
-        writeFile((VANITIES_FILE), jsonVanityObj.toJson(vanityStatses));
+        writeFile(VANITIES_FILE, jsonVanityObj.toJson(vanityStatses));
     }
 
+    public static void generatePetsJson(){
+        Pet dummyPet = new Pet();
+        dummyPet.activated = true;
+        dummyPet.bought = true;
+        dummyPet.name = "pet";
+        dummyPet.cost = 42;
 
+        ArrayList<Pet> allPets = new ArrayList<>();
+        allPets.add(dummyPet);
+
+        Json jsonPetsObj = new Json();
+
+        writeFile(PETS_FILE, jsonPetsObj.toJson(allPets));
+    }
 }

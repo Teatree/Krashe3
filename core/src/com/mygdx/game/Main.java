@@ -31,7 +31,10 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		SaveMngr.generateVanityJSON();
+
+		SaveMngr.generateVanityJson();
+		SaveMngr.generatePetsJson();
+
 		names = getViewportNames();
 
 		GameScreenScript.fpc = SaveMngr.loadStats();

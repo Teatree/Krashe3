@@ -48,6 +48,10 @@ public class PetComponent implements Component {
         this.cost = pet.cost;
         this.tryPeriod = pet.tryPeriod;
         this.tryPeriodDuration = pet.tryPeriodDuration;
+
+        this.state = State.SPAWNING;
+        this.boundsRect = new Rectangle();
+        this.counter = SPAWN_DURATION;
     }
 
     public enum State {
