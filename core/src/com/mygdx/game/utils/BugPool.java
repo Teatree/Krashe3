@@ -13,9 +13,6 @@ import java.util.Stack;
 
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
-/**
- * Created by AnastasiiaRudyk on 12/13/2015.
- */
 public class BugPool {
 
     public static final String SIMPLE = "SIMPLE";

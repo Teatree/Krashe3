@@ -11,9 +11,6 @@ import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
-/**
- * Created by AnastasiiaRudyk on 12/26/2015.
- */
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
     private ComponentMapper<FlowerPublicComponent> flowerMapper = ComponentMapper.getFor(FlowerPublicComponent.class);

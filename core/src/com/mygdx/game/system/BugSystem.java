@@ -26,9 +26,6 @@ import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.utils.BugPool.*;
 
 
-/**
- * Created by Teatree on 9/3/2015.
- */
 public class BugSystem extends IteratingSystem {
 
     public static final String CHARGING_ANI = "Charging";
@@ -100,8 +97,6 @@ public class BugSystem extends IteratingSystem {
 
     private void destroyBug(Entity bugE, TransformComponent tc) {
         EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
-//        tc.x = GlobalConstants.FAR_FAR_AWAY_X;
-//        tc.y = GlobalConstants.FAR_FAR_AWAY_Y;
         BugPool.getInstance().release(bugE);
     }
 

@@ -6,9 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by AnastasiiaRudyk on 27/10/2015.
- */
 public class FlowerPublicComponent implements Component {
 
     public boolean noAds = false;

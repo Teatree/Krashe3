@@ -13,9 +13,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by AnastasiiaRudyk on 12/14/2015.
- */
 public class VanityComponent implements Component {
 
     public static final String DEFAULT = "_default";

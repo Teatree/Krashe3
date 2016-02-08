@@ -21,9 +21,6 @@ import java.util.Random;
 import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
 
-/**
- * Created by Teatree on 9/3/2015.
- */
 public class ButterflySystem extends IteratingSystem {
 
     private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);

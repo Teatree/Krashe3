@@ -20,9 +20,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
-/**
- * Created by AnastasiiaRudyk on 31/10/2015.
- */
 public class CocoonSystem extends IteratingSystem {
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);

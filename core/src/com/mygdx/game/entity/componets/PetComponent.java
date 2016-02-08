@@ -10,8 +10,8 @@ public class PetComponent implements Component {
 
     public static final int DEFAULT_EAT_COUNTER = 26;
     public static final int DEFAULT_IDLE_VELOCITY = 0;
-    public static final int IDLE_DURATION_MAX = 3000;
-    public static final int IDLE_DURATION_MIN = 1000;
+    public static final int IDLE_DURATION_MAX = 2000;
+    public static final int IDLE_DURATION_MIN = 900;
     public static final int SPAWN_DURATION = 100;
 
     public State state;

@@ -343,7 +343,7 @@ public class GameScreenScript implements IScript {
                 && fpc.currentPet.activated) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);
-            tc.x = 1059;
+            tc.x = 1049;
             tc.y = 455;
             pet.add(fpc.currentPet);
         }

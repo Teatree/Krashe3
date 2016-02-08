@@ -10,9 +10,6 @@ import com.mygdx.game.system.BugJuiceBubbleSystem;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
-/**
- * Created by AnastasiiaRudyk on 12/26/2015.
- */
 public class BugJuiceBubbleComponent implements Component {
     public float startX, startY;
     public float endX = 1080;

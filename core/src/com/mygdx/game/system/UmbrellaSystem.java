@@ -22,9 +22,6 @@ import java.util.Random;
 
 import static com.mygdx.game.Main.stage;
 
-/**
- * Created by Teatree on 10/6/2015.
- */
 public class UmbrellaSystem extends IteratingSystem {
 
     public static final float UMBRELLA_SCALE = 0.4f;
@@ -106,20 +103,6 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-//        CompositeItemVO starBurstParticleC = GameStage.sceneLoader.loadVoFromLibrary("star_burst_particle_lib");
-//
-//        Entity starBurstParticleE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), starBurstParticleC);
-//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), starBurstParticleE, starBurstParticleC.composite);
-//        GameStage.sceneLoader.getEngine().addEntity(starBurstParticleE);
-//
-//        TransformComponent tc6 = starBurstParticleE.getComponent(TransformComponent.class);
-//        tc6.x = 1088;
-//        tc6.y = 674;
-//
-//        GameScreenScript.starBurstParticleE = starBurstParticleE;
-//
-//        GameScreenScript.isParticlePlaying = true;
-
         EffectUtils.playYellowStarsParticleEffect(1088, 674);
     }
 

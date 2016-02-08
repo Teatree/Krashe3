@@ -23,9 +23,9 @@ public class Main extends ApplicationAdapter {
 
 	public Main(AdsController adsController){
         if (adsController != null) {
-            this.adsController = adsController;
+			Main.adsController = adsController;
         } else {
-            this.adsController = new DummyAdsController();
+			Main.adsController = new DummyAdsController();
         }
 	}
 

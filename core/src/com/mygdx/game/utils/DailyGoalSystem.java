@@ -7,9 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by AnastasiiaRudyk on 12/16/2015.
- */
 public class DailyGoalSystem {
     public static final int GOALS_AMOUNT_FOR_ONE_DAY = 3;
     public Random random;
@@ -17,8 +14,6 @@ public class DailyGoalSystem {
     List<DailyGoal> goals;
 
     public DailyGoalSystem() {
-//        if (latestDate == null)
-//        latestDate = Calendar.getInstance();
     }
 
     public List<DailyGoal> getGoalsForToday(){
@@ -40,7 +35,6 @@ public class DailyGoalSystem {
 
     private DailyGoal createGoal(){
         Random r = new Random();
-        DailyGoal goal = new DailyGoal(DailyGoal.GoalType.values()[r.nextInt(DailyGoal.GoalType.values().length-1)]);
-        return goal;
+        return new DailyGoal(DailyGoal.GoalType.values()[r.nextInt(DailyGoal.GoalType.values().length-1)]);
     }
 }
