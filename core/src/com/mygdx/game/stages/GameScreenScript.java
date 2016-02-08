@@ -82,6 +82,7 @@ public class GameScreenScript implements IScript {
         initPauseDialog();
         initGameOverDialog();
         initBackground();
+        initPet();
     }
 
     private void initBackground() {
@@ -111,6 +112,8 @@ public class GameScreenScript implements IScript {
         sceneLoader.getEngine().addSystem(new BugSystem());
         sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
         sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+        sceneLoader.getEngine().addSystem(new PetSystem());
+
     }
 
     private void initBackButton() {
@@ -224,6 +227,9 @@ public class GameScreenScript implements IScript {
                 } else {
                     turnOnWifi.getComponent(TransformComponent.class).x = 127;
                     turnOnWifi.getComponent(TransformComponent.class).y = 45;
+                    isGameOver = false;
+                    dialogTc.x = -1000;
+                    gameOverCounter = 240;
                 }
             }
         });
@@ -234,7 +240,6 @@ public class GameScreenScript implements IScript {
             Main.adsController.showInterstitialVideoAd(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("Interstitial app closed");
                     isGameOver = false;
                     dialogTc.x = -1000;
                     gameOverCounter = 240;
@@ -330,6 +335,16 @@ public class GameScreenScript implements IScript {
         }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
+    }
+
+    public void initPet (){
+        if (fpc.currentPet != null) {
+            Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
+            TransformComponent tc = pet.getComponent(TransformComponent.class);
+            tc.x = 1059;
+            tc.y = 455;
+            pet.add(fpc.currentPet);
+        }
     }
 
     @Override

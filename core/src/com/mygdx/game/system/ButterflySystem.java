@@ -107,6 +107,6 @@ public class ButterflySystem extends IteratingSystem {
     }
 
     private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {
-        return bc.boundsRect.overlaps(fcc.boundsRect);
+        return fcc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 }

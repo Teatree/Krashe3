@@ -94,19 +94,8 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
-        CompositeItemVO bugJuiceBubbleC = sceneLoader.loadVoFromLibrary("bug_juice_bubble_lib");
-
-        Entity bugJuiceBubbleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), bugJuiceBubbleC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
-        sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
-
-        TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
-        bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
-        tc.x = bc.boundsRect.getX();
-        tc.y = bc.boundsRect.getY();
-
-        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
-        bugJuiceBubbleE.add(fpc);
+        EffectUtils.spawnBugJuiceBubble(bc.boundsRect.x + bc.boundsRect.getWidth()/2,
+                bc.boundsRect.y + bc.boundsRect.getHeight()/2);
     }
 
     private void destroyBug(Entity bugE, TransformComponent tc) {
@@ -117,7 +106,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     private boolean checkFlowerCollision(FlowerPublicComponent fcc, BugComponent bc){
-        return fcc.boundsRect.overlaps(bc.boundsRect);
+        return fcc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 
     private void moveEntity(float deltaTime,
@@ -152,6 +141,7 @@ public class BugSystem extends IteratingSystem {
                              BugComponent bc,
                              SpriteAnimationStateComponent sasc,
                              SpriteAnimationComponent sac) {
+
         bc.counter--;
         // Move
         tc.x += bc.velocity;

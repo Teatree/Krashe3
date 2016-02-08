@@ -1,20 +1,13 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.uwsoft.editor.renderer.components.TransformComponent;
 
 import java.util.Random;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
-/**
- * Created by Teatree on 9/3/2015.
- */
 public class BugComponent implements Component {
 
     public BugType type;

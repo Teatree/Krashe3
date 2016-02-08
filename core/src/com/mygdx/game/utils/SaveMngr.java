@@ -5,16 +5,17 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.entity.componets.DailyGoal;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.entity.componets.PetComponent;
 import com.mygdx.game.entity.componets.VanityComponent;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import static com.mygdx.game.utils.EffectUtils.*;
 
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
-//    public static SimpleDateFormat sdf = getDateFormat();
+    public static final String VANITIES_FILE = "vanity.params";
+    public static final String PETS_FILE = "pets.params";
+    //    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -25,7 +26,9 @@ public class SaveMngr {
         gameStats.noSound = fc.noSound;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
+        saveOtherPets(fc);
 
+        gameStats.currentPet = fc.currentPet != null ? new Pet(fc.currentPet) : null;
         for (DailyGoal goal : fc.goals){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -45,7 +48,17 @@ public class SaveMngr {
             vanities.add(vs);
         }
         Json json2 = new Json();
-        writeFile("vanity.params", json2.toJson(vanities));
+        writeFile((VANITIES_FILE), json2.toJson(vanities));
+    }
+
+    private static void saveOtherPets(FlowerPublicComponent fc) {
+        List<Pet> vanities = new ArrayList<>();
+        for (PetComponent petComp : fc.pets){
+            Pet pet = new Pet(petComp);
+            vanities.add(pet);
+        }
+        Json json2 = new Json();
+        writeFile(PETS_FILE, json2.toJson(vanities));
     }
 
     public static FlowerPublicComponent loadStats(){
@@ -67,10 +80,7 @@ public class SaveMngr {
 //            } catch (ParseException e) {
 //                e.printStackTrace();
 //            }
-//            for (VanityStats vs : gameStats.vanities){
-//                VanityComponent vc = new VanityComponent(vs);
-//                fc.vanities.add(vc);
-//            }
+
             for (DailyGoalStats dg : gameStats.goals){
                 DailyGoal goal = new DailyGoal();
                 goal.achieved = dg.achieved;
@@ -79,32 +89,17 @@ public class SaveMngr {
                 goal.description = dg.description;
                 fc.goals.add(goal);
             }
+
+            fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
         }
         fc.vanities = getAllVanity();
 
+        fc.pets = getAllPets();
         return fc;
     }
 
-    private static void writeFile(String fileName, String s) {
-        FileHandle file = Gdx.files.local(fileName);
-//        file.writeString(com.badlogic.gdx.utils.Base64Coder.encodeString(s), false);
-        file.writeString(s, false);
-    }
-
-    private static String readFile(String fileName) {
-        FileHandle file = Gdx.files.local(fileName);
-        if (file != null && file.exists()) {
-            String s = file.readString();
-            if (!s.isEmpty()) {
-//                return com.badlogic.gdx.utils.Base64Coder.decodeString(s);
-                return s;
-            }
-        }
-        return "";
-    }
-
     public static List<VanityComponent> getAllVanity() {
-        String saved = readFile("vanity.params");
+        String saved = readFile((VANITIES_FILE));
         List<VanityComponent> vanComps = new ArrayList<>();
 
         if (!"".equals(saved)) {
@@ -128,6 +123,30 @@ public class SaveMngr {
         return vanComps;
     }
 
+    public static List<PetComponent> getAllPets() {
+        String saved = readFile(PETS_FILE);
+        List<PetComponent> petComps = new ArrayList<>();
+
+        if (!"".equals(saved)) {
+            Json json = new Json();
+            List<Pet> pets = json.fromJson(List.class, saved);
+
+            for (Pet p : pets){
+                petComps.add(new PetComponent(p));
+            }
+        }
+
+        Collections.sort(petComps, new Comparator<PetComponent>() {
+            @Override
+            public int compare(PetComponent o1, PetComponent o2) {
+                if (o1.cost > o2.cost) return 1;
+                if (o1.cost < o2.cost) return -1;
+                return 0;
+            }
+        });
+        return petComps;
+    }
+
     private static class GameStats {
         public boolean noAds;
         public boolean noSound;
@@ -135,8 +154,8 @@ public class SaveMngr {
         public int bestScore;
         public int totalScore;
         public String lastGoalsDate;
-        public List<VanityStats> vanities = new ArrayList<>();
         public List<DailyGoalStats> goals = new ArrayList<>();
+        public Pet currentPet;
     }
 
     private static class DailyGoalStats{
@@ -185,6 +204,43 @@ public class SaveMngr {
             this.angeredBeesDuration = vc.angeredBeesDuration;
         }
     }
+
+    public static class Pet {
+        public String name;
+        public boolean bought;
+        public boolean activated;
+        public long cost;
+        public boolean tryPeriod;
+        public int tryPeriodDuration;
+
+        public Pet(PetComponent petComponent) {
+            this.name = petComponent.name;
+            this.activated = petComponent.activated;
+            this.bought = petComponent.bought;
+            this.cost = petComponent.cost;
+            this.tryPeriod = petComponent.tryPeriod;
+            this.tryPeriodDuration = petComponent.tryPeriodDuration;
+        }
+    }
+
+    private static void writeFile(String fileName, String s) {
+        FileHandle file = Gdx.files.local(fileName);
+//        file.writeString(com.badlogic.gdx.utils.Base64Coder.encodeString(s), false);
+        file.writeString(s, false);
+    }
+
+    private static String readFile(String fileName) {
+        FileHandle file = Gdx.files.local(fileName);
+        if (file != null && file.exists()) {
+            String s = file.readString();
+            if (!s.isEmpty()) {
+//                return com.badlogic.gdx.utils.Base64Coder.decodeString(s);
+                return s;
+            }
+        }
+        return "";
+    }
+
     public static void generateVanityJSON() {
         VanityStats vanity1 = new VanityStats();
         VanityStats vanity2 = new VanityStats();
@@ -262,6 +318,8 @@ public class SaveMngr {
 
         Json jsonVanityObj = new Json();
 
-        writeFile("vanity.params", jsonVanityObj.toJson(vanityStatses));
+        writeFile((VANITIES_FILE), jsonVanityObj.toJson(vanityStatses));
     }
+
+
 }

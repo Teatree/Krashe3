@@ -22,8 +22,11 @@ public class FlowerPublicComponent implements Component {
     public int totalScore;
     public int score;
 
-    public List<VanityComponent> vanities = new ArrayList();
+    public List<VanityComponent> vanities = new ArrayList<>();
     public List<DailyGoal> goals = new ArrayList<>();
+    public List<PetComponent> pets = new ArrayList<>();
+
+    public PetComponent currentPet;
 
     public boolean checkGoals(int n){
         boolean allAchieved = true;
@@ -31,6 +34,15 @@ public class FlowerPublicComponent implements Component {
             allAchieved = allAchieved && goal.checkIfAchieved(n);
         }
         return allAchieved;
+    }
+
+    public boolean petAndFlowerCollisionCheck(Rectangle rectangle){
+        if (currentPet != null) {
+            return boundsRect.overlaps(rectangle) ||
+                    currentPet.boundsRect.overlaps(rectangle);
+        } else {
+            return boundsRect.overlaps(rectangle);
+        }
     }
 }
           

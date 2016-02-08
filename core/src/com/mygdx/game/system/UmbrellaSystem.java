@@ -137,6 +137,6 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private boolean checkCollision(UmbrellaComponent bc, FlowerPublicComponent fcc) {
-        return bc.boundsRect.overlaps(fcc.boundsRect);
+        return fcc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 }

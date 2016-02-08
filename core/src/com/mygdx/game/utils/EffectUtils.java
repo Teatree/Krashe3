@@ -1,24 +1,24 @@
 package com.mygdx.game.utils;
 
 import com.badlogic.ashley.core.Entity;
+import com.mygdx.game.entity.componets.BugComponent;
+import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.ParticleLifespanComponent;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.text.SimpleDateFormat;
 
+import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
     public static final String GREEN_SPLATTER = "splatter.party";
-
-    public static SimpleDateFormat getDateFormat(){
-        return new SimpleDateFormat("MM/dd/yyyy");
-    }
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -81,5 +81,21 @@ public class EffectUtils {
 
     public static void playSplatterParticleEffect(float x, float y){
         playParticleEffect(x, y, GREEN_SPLATTER, 0.5f);
+    }
+
+    public static void spawnBugJuiceBubble(float x, float y) {
+        CompositeItemVO bugJuiceBubbleC = sceneLoader.loadVoFromLibrary("bug_juice_bubble_lib");
+
+        Entity bugJuiceBubbleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), bugJuiceBubbleC);
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
+        sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
+
+        TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
+        bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
+        tc.x = x;
+        tc.y = y;
+
+        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+        bugJuiceBubbleE.add(fpc);
     }
 }
