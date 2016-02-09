@@ -9,16 +9,28 @@ import java.util.Random;
 public class PetComponent implements Component {
 
     public static final int DEFAULT_EAT_COUNTER = 26;
-    public static final int DEFAULT_IDLE_VELOCITY = 0;
-    public static final int IDLE_DURATION_MAX = 2000;
-    public static final int IDLE_DURATION_MIN = 900;
+    public static final int OUTSIDE_DURATION_MAX = 1000;
+    public static final int OUTSIDE_DURATION_MIN = 500;
     public static final int SPAWN_DURATION = 100;
+    public static final float X_SPAWN_POSITION = 1049;
+    public static final int Y_SPAWN_POSITION_MAX = 568;
+    public static final int Y_SPAWN_POSITION_MIN = 370;
+
+    public static final String CHARGING_ANI = "Charging";
+    public static final String IDLE_ANI = "Idle";
+    public static final String SPAWN_ANI = "Idle";
+    public static final String TACK_ANI = "Preparing";
+    public static final String EAt_ANI = "Charging";
 
     public State state;
-    public int eatCounter = DEFAULT_EAT_COUNTER;
     public Rectangle boundsRect;
     public float velocity;
-    public int counter;
+    public int animationCounter;
+
+    public int amountBugsBeforeCharging;
+    public int totalEatenBugs;
+    public int duringGameEatenBugs;
+    public int eatenBugsCounter;
 
     public String name;
     public boolean bought;
@@ -26,19 +38,18 @@ public class PetComponent implements Component {
     public long cost;
     public boolean tryPeriod;
     public int tryPeriodDuration;
-//    public float duration = 14;
-//    public float time;
 
-    public static final String CHARGING_ANI = "Charging";
-    public static final String IDLE_ANI = "Idle";
-    public static final String SPAWN_ANI = "Idle";
-    public static final String PREPARING_ANI = "Preparing";
+    public boolean isCollision;
 
     public PetComponent() {
+        init();
+        this.name = "pet";
+    }
+
+    private void init() {
         this.state = State.SPAWNING;
         this.boundsRect = new Rectangle();
-        this.counter = SPAWN_DURATION;
-        this.name = "pet";
+        this.animationCounter = SPAWN_DURATION;
     }
 
     public PetComponent (SaveMngr.Pet pet){
@@ -48,22 +59,37 @@ public class PetComponent implements Component {
         this.cost = pet.cost;
         this.tryPeriod = pet.tryPeriod;
         this.tryPeriodDuration = pet.tryPeriodDuration;
-
-        this.state = State.SPAWNING;
-        this.boundsRect = new Rectangle();
-        this.counter = SPAWN_DURATION;
+        this.amountBugsBeforeCharging = pet.amountBugsBeforeCharging;
+        this.totalEatenBugs = pet.totalEatenBugs;
+        init();
     }
 
     public enum State {
         SPAWNING,
         IDLE,
         EATING,
-        PREPARING,
+        TACK,
         CHARGING,
         OUTSIDE
     }
 
-    public void setIdleStateDuration (){
-        this.counter = new Random().nextInt(IDLE_DURATION_MAX - IDLE_DURATION_MIN) + IDLE_DURATION_MIN;
+    public void setOutsideStateDuration(){
+        this.animationCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
+    }
+
+    public static int getNewPositionY (){
+        return new Random().nextInt(Y_SPAWN_POSITION_MAX - Y_SPAWN_POSITION_MIN) + Y_SPAWN_POSITION_MIN;
+    }
+
+    public static void eatThatBug(PetComponent pet, Rectangle bugRectangle) {
+        if (pet.boundsRect.overlaps(bugRectangle)){
+            pet.eatenBugsCounter++;
+            pet.totalEatenBugs++;
+            pet.duringGameEatenBugs++;
+
+            pet.state = State.EATING;
+            pet.isCollision = true;
+            pet.animationCounter = DEFAULT_EAT_COUNTER;
+        }
     }
 }

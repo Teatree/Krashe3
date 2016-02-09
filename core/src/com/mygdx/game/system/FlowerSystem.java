@@ -17,9 +17,6 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
 
-/**
- * Created by Teatree on 9/3/2015.
- */
 public class FlowerSystem extends IteratingSystem {
 
     public static final int BITE_ANIMATION_TIME = 26;

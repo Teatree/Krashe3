@@ -214,6 +214,8 @@ public class SaveMngr {
         public long cost;
         public boolean tryPeriod;
         public int tryPeriodDuration;
+        public int amountBugsBeforeCharging;
+        public int totalEatenBugs;
 
         public Pet(){}
         public Pet(PetComponent petComponent) {
@@ -223,6 +225,8 @@ public class SaveMngr {
             this.cost = petComponent.cost;
             this.tryPeriod = petComponent.tryPeriod;
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
+            this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
+            this.totalEatenBugs = petComponent.totalEatenBugs;
         }
     }
 
@@ -330,6 +334,8 @@ public class SaveMngr {
         dummyPet.bought = true;
         dummyPet.name = "pet";
         dummyPet.cost = 42;
+        dummyPet.amountBugsBeforeCharging = 2;
+        dummyPet.totalEatenBugs = 0;
 
         ArrayList<Pet> allPets = new ArrayList<>();
         allPets.add(dummyPet);

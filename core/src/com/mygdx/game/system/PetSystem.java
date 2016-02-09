@@ -37,40 +37,61 @@ public class PetSystem extends IteratingSystem {
         PetComponent pc = mapper.get(entity);
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
         SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
+        TransformComponent tc = entity.getComponent(TransformComponent.class);
 
-        updateRect(pc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
+        updateRect(pc, tc, entity.getComponent(DimensionsComponent.class));
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            pc.counter--;
+            pc.animationCounter--;
+
+            if (pc.state.equals(EATING)){
+                setAnimation(EAt_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                if (pc.animationCounter >= 0){
+                    if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+                        pc.state = IDLE;
+                        setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                    } else {
+                        canPlayAnimation = true;
+                        setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                        pc.state = CHARGING;
+                    }
+                }
+            }
             if (pc.state.equals(SPAWNING)){
-                setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                setAnimation(SPAWN_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 pc.velocity = 0;
-                if (pc.counter == 0) {
+                if (pc.animationCounter == 0) {
                     pc.state = IDLE;
                     canPlayAnimation = true;
-                    pc.setIdleStateDuration();
+                    pc.setOutsideStateDuration();
                     setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 }
             }
 
-            if (pc.state.equals(IDLE)) {
-                if (pc.counter == 0) {
-                    canPlayAnimation = true;
-                    setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
-                    pc.state = CHARGING;
-                }
-            }
+//            if (pc.state.equals(IDLE)) {
+//                if (pc.eatenBugsCounter >= pc.amountBugsBeforeCharging) {
+//                    canPlayAnimation = true;
+//                    setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
+//                    pc.state = CHARGING;
+//                }
+//            }
+
             if (pc.state.equals(CHARGING)) {
                 pc.velocity += deltaTime * 3.4;
-                entity.getComponent(TransformComponent.class).x -= pc.velocity;
+                tc.x -= pc.velocity;
             }
 
-            if (entity.getComponent(TransformComponent.class).x < -100){
+            if (tc.x < -100){
                 pc.state = OUTSIDE;
                 pc.velocity = 0;
+                tc.x = FAR_FAR_AWAY_X;
+                pc.setOutsideStateDuration();
             }
 
-            if (pc.state.equals(OUTSIDE)){
-                entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            if (pc.state.equals(OUTSIDE) && pc.animationCounter <= 0){
+                pc.state = SPAWNING;
+                pc.animationCounter = PetComponent.SPAWN_DURATION;
+                tc.x = X_SPAWN_POSITION;
+                tc.y = PetComponent.getNewPositionY();
             }
         }
     }
