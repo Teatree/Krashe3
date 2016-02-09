@@ -8,10 +8,12 @@ import java.util.Random;
 
 public class PetComponent implements Component {
 
-    public static final int DEFAULT_EAT_COUNTER = 26;
+    public static final int DEFAULT_EAT_DURATION = 26;
     public static final int OUTSIDE_DURATION_MAX = 1000;
     public static final int OUTSIDE_DURATION_MIN = 500;
     public static final int SPAWN_DURATION = 100;
+    public static final int TACK_DURATION = 100;
+
     public static final float X_SPAWN_POSITION = 1049;
     public static final int Y_SPAWN_POSITION_MAX = 568;
     public static final int Y_SPAWN_POSITION_MIN = 370;
@@ -68,7 +70,7 @@ public class PetComponent implements Component {
         SPAWNING,
         IDLE,
         EATING,
-        TACK,
+        MOVE,
         CHARGING,
         OUTSIDE
     }
@@ -89,7 +91,7 @@ public class PetComponent implements Component {
 
             pet.state = State.EATING;
             pet.isCollision = true;
-            pet.animationCounter = DEFAULT_EAT_COUNTER;
+            pet.animationCounter = DEFAULT_EAT_DURATION;
         }
     }
 }
