@@ -99,9 +99,11 @@ public class PetSystem extends IteratingSystem {
 
             if (pc.state.equals(OUTSIDE) && pc.animationCounter <= 0) {
                 pc.state = SPAWNING;
+                pc.eatenBugsCounter = 0;
                 pc.animationCounter = PetComponent.SPAWN_DURATION;
                 tc.x = X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
+                setAnimation(SPAWN_ANI, Animation.PlayMode.LOOP, sasc, sac);
             }
 
             if (Gdx.input.justTouched() &&
@@ -133,6 +135,7 @@ public class PetSystem extends IteratingSystem {
         if (canPlayAnimation) {
             sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
+
         }
     }
 }

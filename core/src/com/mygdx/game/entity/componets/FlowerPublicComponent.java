@@ -15,9 +15,9 @@ public class FlowerPublicComponent implements Component {
     public Rectangle boundsRect = new Rectangle();
     public boolean isCollision;
 
-    public int bestScore;
-    public int totalScore;
-    public int score;
+    public long bestScore;
+    public long totalScore;
+    public long score;
 
     public List<VanityComponent> vanities = new ArrayList<>();
     public List<DailyGoal> goals = new ArrayList<>();
@@ -25,15 +25,15 @@ public class FlowerPublicComponent implements Component {
 
     public PetComponent currentPet;
 
-    public boolean checkGoals(int n){
+    public boolean checkGoals(int n) {
         boolean allAchieved = true;
-        for (DailyGoal goal : goals){
+        for (DailyGoal goal : goals) {
             allAchieved = allAchieved && goal.checkIfAchieved(n);
         }
         return allAchieved;
     }
 
-    public boolean petAndFlowerCollisionCheck(Rectangle rectangle){
+    public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
         if (currentPet != null) {
             PetComponent.eatThatBug(currentPet, rectangle);
             return boundsRect.overlaps(rectangle) ||
@@ -43,5 +43,8 @@ public class FlowerPublicComponent implements Component {
         }
     }
 
+    public boolean flowerCollisionCheck(Rectangle rectangle) {
+        return boundsRect.overlaps(rectangle);
+    }
 }
           

@@ -96,7 +96,7 @@ public class SaveMngr {
 
         fc.pets = getAllPets();
 
-        fc.currentPet = fc.pets.get(0);
+//        fc.currentPet = fc.pets.get(0);
         return fc;
     }
 
@@ -153,8 +153,8 @@ public class SaveMngr {
         public boolean noAds;
         public boolean noSound;
         public boolean noMusic;
-        public int bestScore;
-        public int totalScore;
+        public long bestScore;
+        public long totalScore;
         public String lastGoalsDate;
         public List<DailyGoalStats> goals = new ArrayList<>();
         public Pet currentPet;
@@ -173,7 +173,7 @@ public class SaveMngr {
         public String icon;
         public String shopIcon;
         public String name;
-        public int cost;
+        public long cost;
         public String description;
         public boolean bought;
         public boolean advertised;
@@ -191,7 +191,7 @@ public class SaveMngr {
         public VanityStats(VanityComponent vc) {
             this.name = vc.name;
             this.cost = vc.cost;
-            this.icon = vc.icon;
+//            this.icon = vc.icon;
             this.shopIcon = vc.shopIcon;
             this.assetsToChange = vc.assetsToChange;
             this.description = vc.description;
@@ -216,17 +216,19 @@ public class SaveMngr {
         public int tryPeriodDuration;
         public int amountBugsBeforeCharging;
         public int totalEatenBugs;
+        public String shopIcon;
 
         public Pet(){}
         public Pet(PetComponent petComponent) {
             this.name = petComponent.name;
-            this.activated = petComponent.activated;
+            this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;
             this.tryPeriod = petComponent.tryPeriod;
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
             this.totalEatenBugs = petComponent.totalEatenBugs;
+            this.shopIcon = petComponent.shopIcon;
         }
     }
 
@@ -330,12 +332,13 @@ public class SaveMngr {
 
     public static void generatePetsJson(){
         Pet dummyPet = new Pet();
-        dummyPet.activated = true;
-        dummyPet.bought = true;
+//        dummyPet.activated = true;
+//        dummyPet.bought = true;
         dummyPet.name = "pet";
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 2;
         dummyPet.totalEatenBugs = 0;
+        dummyPet.shopIcon = "btn_back_GUI_lib";
 
         ArrayList<Pet> allPets = new ArrayList<>();
         allPets.add(dummyPet);

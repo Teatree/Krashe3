@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -17,6 +17,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.*;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class ShopScreenScript implements IScript {
 
@@ -61,25 +62,24 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         TransformComponent previousTc = null;
-        for (final VanityComponent vc : GameScreenScript.fpc.vanities) {
+        List<ShopItem> allShopItems = new ArrayList<>();
+        allShopItems.addAll(fpc.pets);
+        allShopItems.addAll(fpc.vanities);
+
+        for (final ShopItem vc : allShopItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon;
-            if (!vc.bought) {
-                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
-                itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-                GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            if (vc.type.equals(ShopItem.CurrencyType.SOFT)) {
+                itemIcon = initSoftCurrencyShopItem(vc);
             } else {
-                CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
-                itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-                itemIcon.getComponent(ZIndexComponent.class).setZIndex(120);
-                GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+                itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
             }
+
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(25);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
@@ -126,6 +126,23 @@ public class ShopScreenScript implements IScript {
                 }
             });
         }
+    }
+
+    private Entity initSoftCurrencyShopItem(ShopItem vc) {
+        Entity itemIcon;
+        if (!vc.bought) {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+            itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+        } else {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
+            itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(120);
+            GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+        }
+        return itemIcon;
     }
 
     private void addBackButtonPlease() {

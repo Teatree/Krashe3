@@ -13,26 +13,14 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VanityComponent implements Component {
+public class VanityComponent extends ShopItem implements Component {
 
     public static final String DEFAULT = "_default";
     public static final String PATH_PREFIX = "orig\\spriter_animations\\flower_idle\\";
     public static final String TYPE_SUFFIX = ".png";
 
-    public String icon;
-    public String shopIcon;
-    public String name;
-    public int cost;
-    public String description;
-
-    //true when was bought (could be not applied)
-    public boolean bought;
-
     //true when was presented in showcase
     public boolean advertised;
-
-    //true when is applied now
-    public boolean enabled ;
 
     public boolean floatingText;
     public int bugsSpawnAmount;
@@ -43,12 +31,14 @@ public class VanityComponent implements Component {
 
     public Map<String, String> assetsToChange = new HashMap<>();
 
-    public VanityComponent() {
+    public PetComponent pet;
 
+    public VanityComponent() {
+        type = CurrencyType.SOFT;
     }
 
     public VanityComponent(SaveMngr.VanityStats vc) {
-        this.icon = vc.icon;
+        type = CurrencyType.SOFT;
         this.shopIcon = vc.shopIcon;
         this.name = vc.name;
         this.cost = vc.cost;

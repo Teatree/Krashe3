@@ -6,7 +6,7 @@ import com.mygdx.game.utils.SaveMngr;
 
 import java.util.Random;
 
-public class PetComponent implements Component {
+public class PetComponent extends ShopItem implements Component {
 
     public static final int DEFAULT_EAT_DURATION = 26;
     public static final int OUTSIDE_DURATION_MAX = 1000;
@@ -34,10 +34,6 @@ public class PetComponent implements Component {
     public int duringGameEatenBugs;
     public int eatenBugsCounter;
 
-    public String name;
-    public boolean bought;
-    public boolean activated;
-    public long cost;
     public boolean tryPeriod;
     public int tryPeriodDuration;
 
@@ -45,7 +41,7 @@ public class PetComponent implements Component {
 
     public PetComponent() {
         init();
-        this.name = "pet";
+        type = CurrencyType.HARD;
     }
 
     private void init() {
@@ -55,15 +51,35 @@ public class PetComponent implements Component {
     }
 
     public PetComponent (SaveMngr.Pet pet){
+        type = CurrencyType.HARD;
         this.name = pet.name;
-        this.activated = pet.activated;
+        this.enabled = pet.activated;
         this.bought = pet.bought;
         this.cost = pet.cost;
         this.tryPeriod = pet.tryPeriod;
         this.tryPeriodDuration = pet.tryPeriodDuration;
         this.amountBugsBeforeCharging = pet.amountBugsBeforeCharging;
         this.totalEatenBugs = pet.totalEatenBugs;
+        this.shopIcon = pet.shopIcon;
         init();
+    }
+
+    @Override
+    public void apply(FlowerPublicComponent fpc) {
+        this.enabled = true;
+        fpc.currentPet = this;
+    }
+
+    @Override
+    public void disable(FlowerPublicComponent fpc) {
+        this.enabled = false;
+        fpc.currentPet = null;
+    }
+
+    @Override
+    public void buyAndUse(FlowerPublicComponent fpc) {
+        this.bought = true;
+        apply(fpc);
     }
 
     public enum State {

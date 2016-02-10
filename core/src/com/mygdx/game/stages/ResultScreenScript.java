@@ -46,7 +46,7 @@ public class ResultScreenScript implements IScript {
     LabelComponent earnedLabel;
 
     boolean showcasePopup;
-    int nextVanityCost;
+    long nextVanityCost;
     int i = 0;
     int j = 0;
 
@@ -82,7 +82,7 @@ public class ResultScreenScript implements IScript {
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), "YOUR BEST: " + String.valueOf(fpc.bestScore));
 
-        int need = getNeedForNextItem();
+        long need = getNeedForNextItem();
 
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
         if (need > 0) {
@@ -92,7 +92,7 @@ public class ResultScreenScript implements IScript {
         }
     }
 
-    private int getNeedForNextItem() {
+    private long getNeedForNextItem() {
         nextVanityCost = 0;
         VanityComponent tempVc = null;
         for (VanityComponent vc : fpc.vanities) {
@@ -255,7 +255,7 @@ public class ResultScreenScript implements IScript {
 
     private void setProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        int scoreDiff = fpc.totalScore - fpc.score;
+        long scoreDiff = fpc.totalScore - fpc.score;
         if (scoreDiff < 0) {
             dcProgressBar.width = 0;
         } else if (scoreDiff < 690) {
@@ -267,7 +267,7 @@ public class ResultScreenScript implements IScript {
 
     private void updateScore() {
         j++;
-        int counterStep = fpc.score / 48 > 1 ? fpc.score / 48 : 1;
+        long counterStep = fpc.score / 48 > 1 ? fpc.score / 48 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
             i += counterStep;

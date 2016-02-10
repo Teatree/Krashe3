@@ -340,7 +340,7 @@ public class GameScreenScript implements IScript {
     public void initPet (){
         if (fpc.currentPet != null
                 && fpc. currentPet.bought
-                && fpc.currentPet.activated) {
+                && fpc.currentPet.enabled) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);
             tc.x = 1049;
