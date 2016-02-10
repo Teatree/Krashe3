@@ -184,6 +184,7 @@ public class SaveMngr {
         public int cocoonChance;
         public int dandelionChance;
         public int angeredBeesDuration;
+        public Pet pet;
 
         public VanityStats() {
         }
@@ -191,7 +192,6 @@ public class SaveMngr {
         public VanityStats(VanityComponent vc) {
             this.name = vc.name;
             this.cost = vc.cost;
-//            this.icon = vc.icon;
             this.shopIcon = vc.shopIcon;
             this.assetsToChange = vc.assetsToChange;
             this.description = vc.description;
@@ -204,6 +204,7 @@ public class SaveMngr {
             this.cocoonChance = vc.cocoonChance;
             this.dandelionChance = vc.dandelionChance;
             this.angeredBeesDuration = vc.angeredBeesDuration;
+            this.pet = vc.pet != null ? new Pet(vc.pet) : null;
         }
     }
 

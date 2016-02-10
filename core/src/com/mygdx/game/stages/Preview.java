@@ -349,7 +349,7 @@ public class Preview {
 
         boolean isOutside = tagBoundingBox == null || !tagBoundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
         float currentYpos = previewE.getComponent(TransformComponent.class).y;
-        if (Gdx.input.isTouched() && currentYpos <= 35 || currentYpos >= 800) {
+        if (Gdx.input.isTouched() && currentYpos <= 50 || currentYpos >= 800) {
             if (isPreviewOn && isOutside) {
                 ActionComponent ac = new ActionComponent();
                 Actions.checkInit();
@@ -358,8 +358,9 @@ public class Preview {
             }
         }
 
-        if (previewE.getComponent(TransformComponent.class).y >= 890) {
+        if (previewE.getComponent(TransformComponent.class).y >= 790) {
             isPreviewOn = false;
+            canOpenPreview = true;
             sceneLoader.getEngine().removeEntity(iconE);
         }
     }

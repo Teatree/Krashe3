@@ -54,6 +54,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.dandelionChance = vc.dandelionChance;
         this.angeredBeesDuration = vc.angeredBeesDuration;
         this.assetsToChange = vc.assetsToChange;
+        this.pet = vc.pet != null ? new PetComponent(vc.pet) : pet;
     }
 
     public void apply (FlowerPublicComponent fc){
@@ -64,7 +65,9 @@ public class VanityComponent extends ShopItem implements Component {
                 FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
                 newAsset.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
             }
-            this.enabled = true;
+            if (this.pet != null){
+                GameScreenScript.fpc.currentPet = this.pet;
+            }
         }
     }
 
