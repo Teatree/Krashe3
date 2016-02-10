@@ -100,31 +100,29 @@ public class ShopScreenScript implements IScript {
             bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
-                    if (isPreviewOn || !canOpenPreview){
-                        lc.getLayer("normal").isVisible = true;
-                        lc.getLayer("pressed").isVisible = false;
-                    }
+                    skipLayersOverride(lc);
                 }
 
                 @Override
                 public void touchDown() {
-                    if (isPreviewOn || !canOpenPreview){
-                        lc.getLayer("normal").isVisible = true;
-                        lc.getLayer("pressed").isVisible = false;
-                    }
-
+                    skipLayersOverride(lc);
                 }
 
                 @Override
                 public void clicked() {
                     if (!isPreviewOn && canOpenPreview) {
                         preview.showPreview(vc, true, false);
-                    } else {
-                        lc.getLayer("normal").isVisible = true;
-                        lc.getLayer("pressed").isVisible = false;
                     }
+                    skipLayersOverride(lc);
                 }
             });
+        }
+    }
+
+    public void skipLayersOverride(LayerMapComponent lc) {
+        if (isPreviewOn || !canOpenPreview){
+            lc.getLayer("normal").isVisible = true;
+            lc.getLayer("pressed").isVisible = false;
         }
     }
 
