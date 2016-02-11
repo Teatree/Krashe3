@@ -6,18 +6,22 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.game.stages.GameStage.*;
+import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
+import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ShopScreenScript.*;
-import static com.mygdx.game.utils.EffectUtils.*;
-import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.*;
+import static com.mygdx.game.utils.EffectUtils.playYellowStarsParticleEffect;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class Preview {
 
@@ -39,24 +43,19 @@ public class Preview {
     public static final int PREVIEW_X = 260;
     public static final String NOT_NUFF = "tag_notNuff";
     public static final int PREVIEW_Y = -10;
-
-    private ItemWrapper shopItem;
-
+    private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
     public Entity lbl_title;
     public Entity lbl_price;
     public Entity lbl_not_enough;
     public Entity bg;
+    private ItemWrapper shopItem;
     private Entity iconE;
     private Entity btnLeft;
     private Entity btnNext;
-
     private Rectangle tagBoundingBox;
-
     private ShopItem vc;
-
-    private static boolean shouldDeleteIconE = true;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
@@ -169,6 +168,8 @@ public class Preview {
 
     public void showPreview(ShopItem vc, boolean jump, boolean justBoughtAni) {
         this.vc = vc;
+
+        isPreviewOn = true;
         setLabelsValues();
         if (!vc.bought) {
             initBuyButton(vc);
@@ -243,7 +244,9 @@ public class Preview {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
                         vc.buyAndUse(GameScreenScript.fpc);
                         showPreview(vc, false, true);
-                        changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone());
+                        if (vc.currencyType.equals(SOFT)) {
+                            changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone());
+                        }
                         ShopScreenScript.reloadScoreLabel(GameScreenScript.fpc);
                     }
                 }
@@ -402,13 +405,15 @@ public class Preview {
     }
 
     private void changeBagIcon(CompositeItemVO tempItemC) {
-        Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
-        sceneLoader.getEngine().addEntity(iconBagClone);
-        iconBagClone.getComponent(ZIndexComponent.class).setZIndex(20);
-        iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
-        iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
-        sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
-        itemIcons.put(vc.shopIcon, iconBagClone);
+        if (vc.currencyType.equals(SOFT)) {
+            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+            sceneLoader.getEngine().addEntity(iconBagClone);
+            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(20);
+            iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
+            iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
+            sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+            itemIcons.put(vc.shopIcon, iconBagClone);
+        }
     }
 }
