@@ -6,7 +6,7 @@ public abstract class ShopItem {
     public String name;
     public long cost;
     public String description;
-    public CurrencyType type;
+    public CurrencyType currencyType;
 
     //true when was bought (could be not applied)
     public boolean bought;

@@ -38,6 +38,7 @@ public class PetSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         PetComponent pc = mapper.get(entity);
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
         SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
@@ -45,6 +46,7 @@ public class PetSystem extends IteratingSystem {
 
         updateRect(pc, tc, entity.getComponent(DimensionsComponent.class));
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+            sasc.paused = false;
             pc.animationCounter--;
 
             if (pc.state.equals(MOVE) ) {
@@ -121,6 +123,8 @@ public class PetSystem extends IteratingSystem {
                 ac.dataArray.add(Actions.moveTo(1150, tc.y,0.7f));
                 entity.add(ac);
             }
+        } else {
+            sasc.paused = true;
         }
     }
 

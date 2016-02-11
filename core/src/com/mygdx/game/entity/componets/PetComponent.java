@@ -41,7 +41,7 @@ public class PetComponent extends ShopItem implements Component {
 
     public PetComponent() {
         init();
-        type = CurrencyType.HARD;
+        currencyType = CurrencyType.HARD;
     }
 
     private void init() {
@@ -50,8 +50,8 @@ public class PetComponent extends ShopItem implements Component {
         this.animationCounter = SPAWN_DURATION;
     }
 
-    public PetComponent (SaveMngr.Pet pet){
-        type = CurrencyType.HARD;
+    public PetComponent (SaveMngr.PetJson pet){
+        currencyType = CurrencyType.HARD;
         this.name = pet.name;
         this.enabled = pet.activated;
         this.bought = pet.bought;

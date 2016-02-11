@@ -3,10 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.game.entity.componets.DailyGoal;
-import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.entity.componets.PetComponent;
-import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.entity.componets.*;
 
 import java.util.*;
 
@@ -15,6 +12,7 @@ public class SaveMngr {
     public static final String DATA_FILE = "game.sav";
     public static final String VANITIES_FILE = "vanity.params";
     public static final String PETS_FILE = "pets.params";
+    public static final String UPGRADES_FILE = "upgrades.params";
     //    public static SimpleDateFormat sdf = getDateFormat();
 
     public static void saveStats(FlowerPublicComponent fc) {
@@ -28,7 +26,7 @@ public class SaveMngr {
         saveVanities(fc);
         saveOtherPets(fc);
 
-        gameStats.currentPet = fc.currentPet != null ? new Pet(fc.currentPet) : null;
+        gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
         for (DailyGoal goal : fc.goals){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -42,9 +40,9 @@ public class SaveMngr {
     }
 
     private static void saveVanities(FlowerPublicComponent fc) {
-        List<VanityStats> vanities = new ArrayList<>();
+        List<VanityJson> vanities = new ArrayList<>();
         for (VanityComponent vc : fc.vanities){
-            VanityStats vs = new VanityStats(vc);
+            VanityJson vs = new VanityJson(vc);
             vanities.add(vs);
         }
         Json json2 = new Json();
@@ -52,9 +50,9 @@ public class SaveMngr {
     }
 
     private static void saveOtherPets(FlowerPublicComponent fc) {
-        List<Pet> vanities = new ArrayList<>();
+        List<PetJson> vanities = new ArrayList<>();
         for (PetComponent petComp : fc.pets){
-            Pet pet = new Pet(petComp);
+            PetJson pet = new PetJson(petComp);
             vanities.add(pet);
         }
         Json json2 = new Json();
@@ -106,22 +104,22 @@ public class SaveMngr {
 
         if (!"".equals(saved)) {
             Json json = new Json();
-            List<VanityStats> vinitys = json.fromJson(List.class, saved);
+            List<VanityJson> vinitys = json.fromJson(List.class, saved);
 
-            for (VanityStats vs : vinitys){
+            for (VanityJson vs : vinitys){
                 VanityComponent vc = new VanityComponent(vs);
                 vanComps.add(vc);
             }
         }
 
-        Collections.sort(vanComps, new Comparator<VanityComponent>() {
-            @Override
-            public int compare(VanityComponent o1, VanityComponent o2) {
-                if (o1.cost > o2.cost) return 1;
-                if (o1.cost < o2.cost) return -1;
-                return 0;
-            }
-        });
+//        Collections.sort(vanComps, new Comparator<VanityComponent>() {
+//            @Override
+//            public int compare(VanityComponent o1, VanityComponent o2) {
+//                if (o1.cost > o2.cost) return 1;
+//                if (o1.cost < o2.cost) return -1;
+//                return 0;
+//            }
+//        });
         return vanComps;
     }
 
@@ -131,21 +129,21 @@ public class SaveMngr {
 
         if (!"".equals(saved)) {
             Json json = new Json();
-            List<Pet> pets = json.fromJson(List.class, saved);
+            List<PetJson> pets = json.fromJson(List.class, saved);
 
-            for (Pet p : pets){
+            for (PetJson p : pets){
                 petComps.add(new PetComponent(p));
             }
         }
 
-        Collections.sort(petComps, new Comparator<PetComponent>() {
-            @Override
-            public int compare(PetComponent o1, PetComponent o2) {
-                if (o1.cost > o2.cost) return 1;
-                if (o1.cost < o2.cost) return -1;
-                return 0;
-            }
-        });
+//        Collections.sort(petComps, new Comparator<PetComponent>() {
+//            @Override
+//            public int compare(PetComponent o1, PetComponent o2) {
+//                if (o1.cost > o2.cost) return 1;
+//                if (o1.cost < o2.cost) return -1;
+//                return 0;
+//            }
+//        });
         return petComps;
     }
 
@@ -157,7 +155,7 @@ public class SaveMngr {
         public long totalScore;
         public String lastGoalsDate;
         public List<DailyGoalStats> goals = new ArrayList<>();
-        public Pet currentPet;
+        public PetJson currentPet;
     }
 
     private static class DailyGoalStats{
@@ -167,7 +165,7 @@ public class SaveMngr {
         public boolean achieved;
     }
 
-    public static class VanityStats {
+    public static class VanityJson {
         public Map<String, String> assetsToChange = new HashMap<>();
 
         public String icon;
@@ -184,12 +182,12 @@ public class SaveMngr {
         public int cocoonChance;
         public int dandelionChance;
         public int angeredBeesDuration;
-        public Pet pet;
+        public PetJson pet;
 
-        public VanityStats() {
+        public VanityJson() {
         }
 
-        public VanityStats(VanityComponent vc) {
+        public VanityJson(VanityComponent vc) {
             this.name = vc.name;
             this.cost = vc.cost;
             this.shopIcon = vc.shopIcon;
@@ -204,11 +202,11 @@ public class SaveMngr {
             this.cocoonChance = vc.cocoonChance;
             this.dandelionChance = vc.dandelionChance;
             this.angeredBeesDuration = vc.angeredBeesDuration;
-            this.pet = vc.pet != null ? new Pet(vc.pet) : null;
+            this.pet = vc.pet != null ? new PetJson(vc.pet) : null;
         }
     }
 
-    public static class Pet {
+    public static class PetJson {
         public String name;
         public boolean bought;
         public boolean activated;
@@ -219,8 +217,8 @@ public class SaveMngr {
         public int totalEatenBugs;
         public String shopIcon;
 
-        public Pet(){}
-        public Pet(PetComponent petComponent) {
+        public PetJson(){}
+        public PetJson(PetComponent petComponent) {
             this.name = petComponent.name;
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
@@ -232,6 +230,23 @@ public class SaveMngr {
             this.shopIcon = petComponent.shopIcon;
         }
     }
+
+//    public static class UpgradeJson {
+//        public String name;
+//        public boolean bought;
+//        public boolean activated;
+//        public long cost;
+//        public String shopIcon;
+//
+//        public UpgradeJson(){}
+//        public UpgradeJson(Upgrade petComponent) {
+//            this.name = petComponent.name;
+//            this.activated = petComponent.enabled;
+//            this.bought = petComponent.bought;
+//            this.cost = petComponent.cost;
+//            this.shopIcon = petComponent.shopIcon;
+//        }
+//    }
 
     private static void writeFile(String fileName, String s) {
         FileHandle file = Gdx.files.local(fileName);
@@ -252,14 +267,14 @@ public class SaveMngr {
     }
 
     public static void generateVanityJson() {
-        VanityStats vanity1 = new VanityStats();
-        VanityStats vanity2 = new VanityStats();
-        VanityStats vanity3 = new VanityStats();
-        VanityStats vanity4 = new VanityStats();
-        VanityStats vanity5 = new VanityStats();
-        VanityStats vanity6 = new VanityStats();
-        VanityStats vanity7 = new VanityStats();
-        VanityStats vanity8 = new VanityStats();
+        VanityJson vanity1 = new VanityJson();
+        VanityJson vanity2 = new VanityJson();
+        VanityJson vanity3 = new VanityJson();
+        VanityJson vanity4 = new VanityJson();
+        VanityJson vanity5 = new VanityJson();
+        VanityJson vanity6 = new VanityJson();
+        VanityJson vanity7 = new VanityJson();
+        VanityJson vanity8 = new VanityJson();
 
         vanity3.cost = 90;
         vanity3.name = "Christmas leaves";
@@ -315,7 +330,7 @@ public class SaveMngr {
         vanity8.icon = "christmas";
         vanity8.shopIcon = "item_tea_cup_n";
 
-        List<VanityStats> vanityStatses = new ArrayList<>();
+        List<VanityJson> vanityStatses = new ArrayList<>();
 
         vanityStatses.add(vanity1);
         vanityStatses.add(vanity2);
@@ -332,7 +347,7 @@ public class SaveMngr {
     }
 
     public static void generatePetsJson(){
-        Pet dummyPet = new Pet();
+        PetJson dummyPet = new PetJson();
 //        dummyPet.activated = true;
 //        dummyPet.bought = true;
         dummyPet.name = "pet";
@@ -341,11 +356,22 @@ public class SaveMngr {
         dummyPet.totalEatenBugs = 0;
         dummyPet.shopIcon = "btn_back_GUI_lib";
 
-        ArrayList<Pet> allPets = new ArrayList<>();
+        ArrayList<PetJson> allPets = new ArrayList<>();
         allPets.add(dummyPet);
 
         Json jsonPetsObj = new Json();
 
         writeFile(PETS_FILE, jsonPetsObj.toJson(allPets));
     }
+//
+//    public static void generateUpgradeJson(){
+//        UpgradeJson dummyUpgrade = new UpgradeJson();
+//
+//        ArrayList<UpgradeJson> allUpgrades = new ArrayList<>();
+//        allUpgrades.add(dummyUpgrade);
+//
+//        Json jsonPetsObj = new Json();
+//
+//        writeFile(UPGRADES_FILE, jsonPetsObj.toJson(allUpgrades));
+//    }
 }

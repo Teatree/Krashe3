@@ -8,6 +8,10 @@ import java.util.List;
 
 public class FlowerPublicComponent implements Component {
 
+    //upgrades
+    public boolean doubleJuice;
+    public boolean phoenix;
+
     public boolean noAds = false;
     public boolean noSound;
     public boolean noMusic;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
+import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -18,6 +19,7 @@ import java.util.*;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.*;
 
 public class ShopScreenScript implements IScript {
 
@@ -39,6 +41,7 @@ public class ShopScreenScript implements IScript {
     public int bagPosId;
 
     public Preview preview;
+    public static List<ShopItem> allShopItems = new ArrayList<>();
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
@@ -62,9 +65,29 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         TransformComponent previousTc = null;
-        List<ShopItem> allShopItems = new ArrayList<>();
+        allShopItems.addAll(Upgrade.getAllUpgrades());
         allShopItems.addAll(fpc.pets);
         allShopItems.addAll(fpc.vanities);
+
+        Collections.sort(allShopItems, new Comparator<ShopItem>() {
+            @Override
+            public int compare(ShopItem o1, ShopItem o2) {
+                if (o1.currencyType.equals(o2.currencyType)){
+                    return compareByCost(o1, o2);
+                } else {
+                    return o1.currencyType.equals(HARD) ? 1 : -1;
+                }
+            }
+
+            public int compareByCost(ShopItem o1, ShopItem o2) {
+                if (o1.cost == o2.cost){
+                    return 0;
+                } else {
+                    return o1.cost > o2.cost ? 1 : -1;
+                }
+            }
+        });
+        Collections.reverse(allShopItems);
 
         for (final ShopItem vc : allShopItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
@@ -73,7 +96,7 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon;
-            if (vc.type.equals(ShopItem.CurrencyType.SOFT)) {
+            if (vc.currencyType.equals(SOFT)) {
                 itemIcon = initSoftCurrencyShopItem(vc);
             } else {
                 itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
@@ -92,7 +115,11 @@ public class ShopScreenScript implements IScript {
             tcb.y = tc.y;
 
             bags.add(bagEntity);
-            itemIcons.put(vc.shopIcon, itemIcon);
+            if (vc.currencyType.equals(SOFT)) {
+                itemIcons.put(vc.shopIcon, itemIcon);
+            } else {
+                itemIcons.put(vc.name, itemIcon);
+            }
 
             bagEntity.add(new ButtonComponent());
 
