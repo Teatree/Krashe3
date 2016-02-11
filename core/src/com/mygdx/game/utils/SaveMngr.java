@@ -94,7 +94,7 @@ public class SaveMngr {
 
         fc.pets = getAllPets();
 
-//        fc.currentPet = fc.pets.get(0);
+        fc.currentPet = fc.pets.get(0);
         return fc;
     }
 
@@ -348,8 +348,10 @@ public class SaveMngr {
 
     public static void generatePetsJson(){
         PetJson dummyPet = new PetJson();
-//        dummyPet.activated = true;
-//        dummyPet.bought = true;
+
+        dummyPet.activated = true;
+        dummyPet.bought = true;
+
         dummyPet.name = "pet";
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 2;
