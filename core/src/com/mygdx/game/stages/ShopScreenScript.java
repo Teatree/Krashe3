@@ -106,6 +106,8 @@ public class ShopScreenScript implements IScript {
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
+
+            addDot(bagEntity, bagEntity.getComponent(TransformComponent.class), bagEntity.getComponent(DimensionsComponent.class));
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
@@ -249,6 +251,54 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
+    }
+
+    private void addDot (Entity bag, TransformComponent bagTc, DimensionsComponent bagDc) {
+        TransformComponent tc = new TransformComponent();
+        switch (bagPosId) {
+            case 0: {
+                tc.x = bagDc.width/2;
+                tc.y = -5;
+//                tc.x = bagTc.x + bagDc.width/2;
+//                tc.y = bagTc.y - 5;
+                break;
+            }
+            case 1: {
+                tc.x = bagDc.width + 5;
+                tc.y = bagDc.height/2;
+//                tc.x = bagTc.x + bagDc.width + 5;
+//                tc.y = bagTc.y + bagDc.height/2;
+                break;
+            }
+            case 2: {
+                tc.x = bagDc.width/2;
+                tc.y = bagDc.height + 5;
+//                 tc.x = bagTc.x + bagDc.width/2;
+//                tc.y = bagTc.y + bagDc.height + 5;
+                break;
+
+            }
+            case 3: {
+                tc.x = bagDc.width + 5;
+                tc.y = bagDc.height/2;
+//                tc.x = bagTc.x + bagDc.width + 5;
+//                tc.y = bagTc.y + bagDc.height/2;
+                break;
+            }
+        }
+        tc.scaleX = 0.2f;
+        tc.scaleY = 0.2f;
+
+        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("dot_lib").clone();
+        final Entity dotE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotE, tempC.composite);
+        dotE.getComponent(ZIndexComponent.class).setZIndex(0);
+        dotE.add(tc);
+        bag.getComponent(NodeComponent.class).addChild(dotE);
+        shopItem.getChild("background").getEntity().getComponent(ZIndexComponent.class).setZIndex(1);
+        for(Entity e : bag.getComponent(NodeComponent.class).children)
+            e.getComponent(ZIndexComponent.class).setZIndex(25);
+//        GameStage.sceneLoader.getEngine().removeEntity(dotE);
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc){
