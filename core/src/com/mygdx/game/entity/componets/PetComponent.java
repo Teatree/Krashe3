@@ -8,13 +8,13 @@ import java.util.Random;
 
 public class PetComponent extends ShopItem implements Component {
 
-    public static final int DEFAULT_EAT_DURATION = 26;
+    public static final int DEFAULT_BITE_DURATION = 26;
     public static final int OUTSIDE_DURATION_MAX = 1000;
     public static final int OUTSIDE_DURATION_MIN = 500;
-    public static final int SPAWN_DURATION = 100;
-    public static final int TACK_DURATION = 100;
+    public static final int SPAWN_DURATION = 40;
+    public static final int TAP_DURATION = 100;
 
-    public static final float X_SPAWN_POSITION = 1049;
+    public static final float X_SPAWN_POSITION = 1200;
     public static final int Y_SPAWN_POSITION_MAX = 568;
     public static final int Y_SPAWN_POSITION_MIN = 370;
 
@@ -44,10 +44,11 @@ public class PetComponent extends ShopItem implements Component {
         currencyType = CurrencyType.HARD;
     }
 
-    private void init() {
+    public void init() {
         this.state = State.SPAWNING;
         this.boundsRect = new Rectangle();
         this.animationCounter = SPAWN_DURATION;
+        eatenBugsCounter = 0;
     }
 
     public PetComponent (SaveMngr.PetJson pet){
@@ -85,9 +86,9 @@ public class PetComponent extends ShopItem implements Component {
     public enum State {
         SPAWNING,
         IDLE,
-        EATING,
-        MOVE,
-        CHARGING,
+        BITE,
+        TAPPED,
+        DASH,
         OUTSIDE
     }
 
@@ -105,9 +106,12 @@ public class PetComponent extends ShopItem implements Component {
             pet.totalEatenBugs++;
             pet.duringGameEatenBugs++;
 
-            pet.state = State.EATING;
-            pet.isCollision = true;
-            pet.animationCounter = DEFAULT_EAT_DURATION;
+            if (!pet.state.equals(State.DASH)) {
+                pet.state = State.BITE;
+                pet.isCollision = true;
+                pet.animationCounter = DEFAULT_BITE_DURATION;
+            }
         }
     }
+
 }

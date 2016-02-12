@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
+import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.*;
@@ -230,6 +231,8 @@ public class GameScreenScript implements IScript {
                     isGameOver = false;
                     dialogTc.x = -1000;
                     gameOverCounter = 240;
+                    BugSpawnSystem.isAngeredBeesMode = false;
+                    fpc.currentPet.init();
                 }
             }
         });
@@ -243,6 +246,8 @@ public class GameScreenScript implements IScript {
                     isGameOver = false;
                     dialogTc.x = -1000;
                     gameOverCounter = 240;
+                    fpc.currentPet.init();
+                    BugSpawnSystem.isAngeredBeesMode = false;
                 }
             });
         } else {
@@ -343,8 +348,10 @@ public class GameScreenScript implements IScript {
                 && fpc.currentPet.enabled) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);
-            tc.x = 1049;
+            tc.x = 1200;
             tc.y = 455;
+            fpc.currentPet.init();
+
             pet.add(fpc.currentPet);
         }
     }
