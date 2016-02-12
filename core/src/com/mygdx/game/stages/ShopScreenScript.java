@@ -17,34 +17,37 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.*;
 
+import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
+import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.*;
 
 public class ShopScreenScript implements IScript {
 
-    private GameStage stage;
-    private ItemWrapper shopItem;
+    public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static Entity scoreLbl;
+    public static boolean isPreviewOn;
+    public static boolean canOpenPreview = true;
+    public static List<ShopItem> allShopItems = new ArrayList<>();
     public Entity touchZone;
     public LabelComponent lc;
-
     public Vector2 tempGdx = new Vector2();
     public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
-    public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public ButtonComponent touchZoneBtn;
-    float stopVelocity;
-    public static boolean isPreviewOn;
-    public static boolean canOpenPreview = true;
-
     public int bagPosId;
-
     public Preview preview;
-    public static List<ShopItem> allShopItems = new ArrayList<>();
+    float stopVelocity;
+    private GameStage stage;
+    private ItemWrapper shopItem;
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
+    }
+
+    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLbl.getComponent(LabelComponent.class).text.replace(0, scoreLbl.getComponent(LabelComponent.class).text.capacity(),
+                String.valueOf(fcc.totalScore));
     }
 
     @Override
@@ -72,7 +75,7 @@ public class ShopScreenScript implements IScript {
         Collections.sort(allShopItems, new Comparator<ShopItem>() {
             @Override
             public int compare(ShopItem o1, ShopItem o2) {
-                if (o1.currencyType.equals(o2.currencyType)){
+                if (o1.currencyType.equals(o2.currencyType)) {
                     return compareByCost(o1, o2);
                 } else {
                     return o1.currencyType.equals(HARD) ? 1 : -1;
@@ -80,7 +83,7 @@ public class ShopScreenScript implements IScript {
             }
 
             public int compareByCost(ShopItem o1, ShopItem o2) {
-                if (o1.cost == o2.cost){
+                if (o1.cost == o2.cost) {
                     return 0;
                 } else {
                     return o1.cost > o2.cost ? 1 : -1;
@@ -149,7 +152,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public void skipLayersOverride(LayerMapComponent lc) {
-        if (isPreviewOn || !canOpenPreview){
+        if (isPreviewOn || !canOpenPreview) {
             lc.getLayer("normal").isVisible = true;
             lc.getLayer("pressed").isVisible = false;
         }
@@ -207,9 +210,11 @@ public class ShopScreenScript implements IScript {
                 if (!isGdxWritten) {
                     tempGdx.x = Gdx.input.getX();
                     isGdxWritten = true;
-                    canOpenPreview = true;
+
                     ButtonComponent.skipDefaultLayersChange = false;
                 }
+                canOpenPreview = tempGdx.x == Gdx.input.getX();
+
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;
                     while (i < bags.size()) {
@@ -221,7 +226,6 @@ public class ShopScreenScript implements IScript {
                     tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
 
                     ButtonComponent.skipDefaultLayersChange = true;
-                    canOpenPreview = false;
                 }
                 if (tempGdx.x < Gdx.input.getX()) {
                     int i = 0;
@@ -232,7 +236,6 @@ public class ShopScreenScript implements IScript {
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
                     tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
-                    canOpenPreview = false;
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
             } else {
@@ -253,11 +256,11 @@ public class ShopScreenScript implements IScript {
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
     }
 
-    private void addDot (Entity bag, TransformComponent bagTc, DimensionsComponent bagDc) {
+    private void addDot(Entity bag, TransformComponent bagTc, DimensionsComponent bagDc) {
         TransformComponent tc = new TransformComponent();
         switch (bagPosId) {
             case 0: {
-                tc.x = bagDc.width/2;
+                tc.x = bagDc.width / 2;
                 tc.y = -5;
 //                tc.x = bagTc.x + bagDc.width/2;
 //                tc.y = bagTc.y - 5;
@@ -265,13 +268,13 @@ public class ShopScreenScript implements IScript {
             }
             case 1: {
                 tc.x = bagDc.width + 5;
-                tc.y = bagDc.height/2;
+                tc.y = bagDc.height / 2;
 //                tc.x = bagTc.x + bagDc.width + 5;
 //                tc.y = bagTc.y + bagDc.height/2;
                 break;
             }
             case 2: {
-                tc.x = bagDc.width/2;
+                tc.x = bagDc.width / 2;
                 tc.y = bagDc.height + 5;
 //                 tc.x = bagTc.x + bagDc.width/2;
 //                tc.y = bagTc.y + bagDc.height + 5;
@@ -280,7 +283,7 @@ public class ShopScreenScript implements IScript {
             }
             case 3: {
                 tc.x = bagDc.width + 5;
-                tc.y = bagDc.height/2;
+                tc.y = bagDc.height / 2;
 //                tc.x = bagTc.x + bagDc.width + 5;
 //                tc.y = bagTc.y + bagDc.height/2;
                 break;
@@ -296,12 +299,12 @@ public class ShopScreenScript implements IScript {
         dotE.add(tc);
         bag.getComponent(NodeComponent.class).addChild(dotE);
         shopItem.getChild("background").getEntity().getComponent(ZIndexComponent.class).setZIndex(1);
-        for(Entity e : bag.getComponent(NodeComponent.class).children)
+        for (Entity e : bag.getComponent(NodeComponent.class).children)
             e.getComponent(ZIndexComponent.class).setZIndex(25);
 //        GameStage.sceneLoader.getEngine().removeEntity(dotE);
     }
 
-    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc){
+    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
         TransformComponent tc = new TransformComponent();
         int step = 20;
 
@@ -310,7 +313,7 @@ public class ShopScreenScript implements IScript {
             tc.y = 359;
             return tc;
         }
-        switch(bagPosId) {
+        switch (bagPosId) {
             case 0: {
                 tc.x = previous.x;
                 tc.y = previous.y - previousDc.height - step;
@@ -341,11 +344,6 @@ public class ShopScreenScript implements IScript {
             }
         }
         return tc;
-    }
-
-    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLbl.getComponent(LabelComponent.class).text.replace(0, scoreLbl.getComponent(LabelComponent.class).text.capacity(),
-                String.valueOf(fcc.totalScore));
     }
 
     @Override
