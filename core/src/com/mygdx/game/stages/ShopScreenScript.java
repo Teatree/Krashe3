@@ -86,7 +86,7 @@ public class ShopScreenScript implements IScript {
                 if (o1.cost == o2.cost) {
                     return 0;
                 } else {
-                    return o1.cost > o2.cost ? 1 : -1;
+                    return o1.cost < o2.cost ? 1 : -1;
                 }
             }
         });
@@ -105,7 +105,7 @@ public class ShopScreenScript implements IScript {
                 itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
             }
 
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(25);
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(26);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);

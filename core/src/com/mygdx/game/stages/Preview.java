@@ -42,7 +42,7 @@ public class Preview {
     public static final int ICON_Y_RELATIVE = 280;
     public static final int PREVIEW_X = 260;
     public static final String NOT_NUFF = "tag_notNuff";
-    public static final int PREVIEW_Y = -10;
+    public static final int PREVIEW_Y = 30;
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
@@ -88,13 +88,13 @@ public class Preview {
                 iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
                 iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
                 iconE.getComponent(TransformComponent.class).x = 575;
-                iconE.getComponent(TransformComponent.class).y = 379;
+                iconE.getComponent(TransformComponent.class).y = 409;
 
                 ActionComponent ac = new ActionComponent();
                 Actions.checkInit();
                 ac.dataArray.add(Actions.parallel(
                         Actions.scaleTo(1, 1, 1f, Interpolation.exp5Out),
-                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 1f, Interpolation.exp5Out)));
+                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 1f)));
                 iconE.add(ac);
                 iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -192,8 +192,8 @@ public class Preview {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
             iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PREVIEW).getChild(vc.name).getEntity();
-            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
-            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE;
+            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE + PREVIEW_X;
+            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE + PREVIEW_Y;
         }
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -203,11 +203,11 @@ public class Preview {
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(PREVIEW_X, 30, 2, Interpolation.exp10Out));
+            ac.dataArray.add(Actions.moveTo(PREVIEW_X, PREVIEW_Y, 2, Interpolation.exp10Out));
             previewE.add(ac);
         } else {
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
-            previewE.getComponent(TransformComponent.class).y = 30;
+            previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
         }
 
         tagBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
@@ -377,7 +377,6 @@ public class Preview {
 
         if (previewE.getComponent(TransformComponent.class).y >= 790) {
             isPreviewOn = false;
-//            canOpenPreview = true;
             setShouldDeleteIconE();
             removeIconE();
         }
@@ -409,7 +408,7 @@ public class Preview {
             Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
             sceneLoader.getEngine().addEntity(iconBagClone);
-            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(20);
+            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(25);
             iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
             iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
             sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
