@@ -22,6 +22,8 @@ public class SaveMngr {
         gameStats.noAds = fc.noAds;
         gameStats.noMusic = fc.noMusic;
         gameStats.noSound = fc.noSound;
+        gameStats.doubleJuice = fc.doubleJuice;
+        gameStats.phoenix = fc.phoenix;
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
         saveOtherPets(fc);
@@ -71,6 +73,8 @@ public class SaveMngr {
             fc.noAds = gameStats.noAds;
             fc.noMusic = gameStats.noMusic;
             fc.noSound = gameStats.noSound;
+            fc.doubleJuice = gameStats.doubleJuice;
+            fc.phoenix = gameStats.phoenix;
 //            try {
 //                Calendar lastGoalsDate = Calendar.getInstance();
 //                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
@@ -112,14 +116,6 @@ public class SaveMngr {
             }
         }
 
-//        Collections.sort(vanComps, new Comparator<VanityComponent>() {
-//            @Override
-//            public int compare(VanityComponent o1, VanityComponent o2) {
-//                if (o1.cost > o2.cost) return 1;
-//                if (o1.cost < o2.cost) return -1;
-//                return 0;
-//            }
-//        });
         return vanComps;
     }
 
@@ -135,15 +131,6 @@ public class SaveMngr {
                 petComps.add(new PetComponent(p));
             }
         }
-
-//        Collections.sort(petComps, new Comparator<PetComponent>() {
-//            @Override
-//            public int compare(PetComponent o1, PetComponent o2) {
-//                if (o1.cost > o2.cost) return 1;
-//                if (o1.cost < o2.cost) return -1;
-//                return 0;
-//            }
-//        });
         return petComps;
     }
 
@@ -156,6 +143,8 @@ public class SaveMngr {
         public String lastGoalsDate;
         public List<DailyGoalStats> goals = new ArrayList<>();
         public PetJson currentPet;
+        public boolean doubleJuice;
+        public boolean phoenix;
     }
 
     private static class DailyGoalStats{
@@ -230,23 +219,6 @@ public class SaveMngr {
             this.shopIcon = petComponent.shopIcon;
         }
     }
-
-//    public static class UpgradeJson {
-//        public String name;
-//        public boolean bought;
-//        public boolean activated;
-//        public long cost;
-//        public String shopIcon;
-//
-//        public UpgradeJson(){}
-//        public UpgradeJson(Upgrade petComponent) {
-//            this.name = petComponent.name;
-//            this.activated = petComponent.enabled;
-//            this.bought = petComponent.bought;
-//            this.cost = petComponent.cost;
-//            this.shopIcon = petComponent.shopIcon;
-//        }
-//    }
 
     private static void writeFile(String fileName, String s) {
         FileHandle file = Gdx.files.local(fileName);
@@ -365,15 +337,4 @@ public class SaveMngr {
 
         writeFile(PETS_FILE, jsonPetsObj.toJson(allPets));
     }
-//
-//    public static void generateUpgradeJson(){
-//        UpgradeJson dummyUpgrade = new UpgradeJson();
-//
-//        ArrayList<UpgradeJson> allUpgrades = new ArrayList<>();
-//        allUpgrades.add(dummyUpgrade);
-//
-//        Json jsonPetsObj = new Json();
-//
-//        writeFile(UPGRADES_FILE, jsonPetsObj.toJson(allUpgrades));
-//    }
 }

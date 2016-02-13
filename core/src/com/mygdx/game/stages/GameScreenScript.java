@@ -84,8 +84,19 @@ public class GameScreenScript implements IScript {
         initGameOverDialog();
         initBackground();
         initPet();
+        initDoubleBJbadge();
     }
 
+    private void initDoubleBJbadge (){
+        if (fpc.doubleJuice){
+            Entity badge = gameItem.getChild("double_bj_badge").getEntity();
+            TransformComponent tc = badge.getComponent(TransformComponent.class);
+            tc.scaleX = 0.6f;
+            tc.scaleY = 0.6f;
+            tc.x = 953;
+            tc.y = 647;
+        }
+    }
     private void initBackground() {
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary("backgroundLib");
         background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -350,6 +361,9 @@ public class GameScreenScript implements IScript {
             TransformComponent tc = pet.getComponent(TransformComponent.class);
             tc.x = 1200;
             tc.y = 455;
+            tc.scaleX = 1.3f;
+            tc.scaleY = 1.3f;
+
             fpc.currentPet.init();
 
             pet.add(fpc.currentPet);

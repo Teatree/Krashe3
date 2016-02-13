@@ -63,7 +63,6 @@ public class PetSystem extends IteratingSystem {
                 setBiteAnimation(sc);
                 if (pc.animationCounter == 0) {
                     if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
-
                         pc.state = IDLE;
                         setIdleAnimation(sc);
                     } else {
@@ -106,9 +105,15 @@ public class PetSystem extends IteratingSystem {
                 setSpawnAnimation(sc);
             }
 
+            if (Gdx.input.justTouched()) {
+                System.err.println("rect=" + pc.boundsRect.x + ":" + pc.boundsRect.y + " - " +
+                        + pc.boundsRect.width + ":" + pc.boundsRect.height );
+                System.err.println("touch=" + Gdx.input.getX() + ":" + (786 - Gdx.input.getY()));
+                System.err.println(pc.boundsRect.contains(Gdx.input.getX(), 786 - Gdx.input.getY()));
+            }
             if (Gdx.input.justTouched() &&
                     pc.boundsRect.contains(Gdx.input.getX(), 786 - Gdx.input.getY())
-                    && !pc.state.equals(TAPPED)){
+                    && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)){
                 pc.state = TAPPED;
                 setTappedAnimation(sc);
                 pc.animationCounter = TAP_DURATION;
@@ -128,8 +133,8 @@ public class PetSystem extends IteratingSystem {
         pc.boundsRect.width = (int) dc.width * tc.scaleX;
         pc.boundsRect.height = (int) dc.height * tc.scaleY;
 
-        pc.boundsRect.x = (int) tc.x - pc.boundsRect.width/2;
-        pc.boundsRect.y = (int) tc.y - pc.boundsRect.height/2;
+        pc.boundsRect.x = (int) tc.x - 348/2;
+        pc.boundsRect.y = (int) tc.y - 361/2;
 }
 
     private void setSpawnAnimation(SpriterComponent sc) {

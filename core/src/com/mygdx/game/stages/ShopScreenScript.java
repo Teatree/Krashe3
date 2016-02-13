@@ -214,6 +214,8 @@ public class ShopScreenScript implements IScript {
                     ButtonComponent.skipDefaultLayersChange = false;
                 }
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
+                System.out.println("canOpenPrview: " + canOpenPreview);
+
 
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;

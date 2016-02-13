@@ -330,7 +330,7 @@ public class Preview {
             public void clicked() {
                 int previousIndex = allShopItems.indexOf(vc) - 1;
                 if (previousIndex >= 0) {
-                    checkIfShouldDeleteIconE();
+                    setShouldDeleteIconE();
                     showPreview(allShopItems.get(previousIndex), false, false);
                 }
             }
@@ -353,7 +353,7 @@ public class Preview {
             public void clicked() {
                 int nextIndex = allShopItems.indexOf(vc) + 1;
                 if (nextIndex < allShopItems.size()) {
-                    checkIfShouldDeleteIconE();
+                    setShouldDeleteIconE();
                     showPreview(allShopItems.get(nextIndex), false, false);
                 }
             }
@@ -377,9 +377,9 @@ public class Preview {
 
         if (previewE.getComponent(TransformComponent.class).y >= 790) {
             isPreviewOn = false;
-            canOpenPreview = true;
+//            canOpenPreview = true;
+            setShouldDeleteIconE();
             removeIconE();
-            checkIfShouldDeleteIconE();
         }
     }
 
@@ -393,7 +393,7 @@ public class Preview {
         }
     }
 
-    public void checkIfShouldDeleteIconE() {
+    public void setShouldDeleteIconE() {
         shouldDeleteIconE = vc.currencyType.equals(SOFT);
     }
 

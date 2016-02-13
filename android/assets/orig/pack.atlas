@@ -234,16 +234,23 @@ backnooff
   index: -1
 backshadow
   rotate: false
-  xy: 1054, 338
+  xy: 1304, 636
   size: 220, 220
   split: 89, 105, 80, 104
   pad: 88, 106, 79, 105
   orig: 220, 220
   offset: 0, 0
   index: -1
+bjDouble
+  rotate: false
+  xy: 1054, 314
+  size: 200, 244
+  orig: 200, 244
+  offset: 0, 0
+  index: -1
 buttonback
   rotate: false
-  xy: 1526, 736
+  xy: 1748, 736
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -267,7 +274,7 @@ buttonbackoff1
   index: -1
 buttonbackon1
   rotate: false
-  xy: 1649, 736
+  xy: 1871, 736
   size: 121, 120
   split: 16, 17, 15, 17
   pad: 16, 16, 15, 17
@@ -284,7 +291,7 @@ buttoncameraoff
   index: -1
 buttoncameraon
   rotate: false
-  xy: 1772, 736
+  xy: 470, 2
   size: 121, 120
   split: 23, 17, 17, 29
   orig: 121, 120
@@ -292,7 +299,7 @@ buttoncameraon
   index: -1
 buttonnoAdsoff
   rotate: false
-  xy: 1895, 736
+  xy: 716, 2
   size: 120, 120
   split: 14, 18, 11, 13
   pad: 11, 13, 16, 14
@@ -301,7 +308,7 @@ buttonnoAdsoff
   index: -1
 buttonnoAdson
   rotate: false
-  xy: 1649, 614
+  xy: 838, 18
   size: 120, 120
   split: 12, 15, 11, 14
   orig: 120, 120
@@ -309,7 +316,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 470, 2
+  xy: 593, 2
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -317,7 +324,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 593, 2
+  xy: 1748, 614
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -326,7 +333,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 1526, 614
+  xy: 1871, 614
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -335,7 +342,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 1771, 614
+  xy: 960, 18
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -343,7 +350,7 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 1893, 614
+  xy: 1304, 514
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
@@ -351,7 +358,7 @@ buttonsettingson
   index: -1
 buttonshopoff
   rotate: false
-  xy: 716, 2
+  xy: 1426, 514
   size: 120, 120
   split: 14, 16, 17, 17
   orig: 120, 120
@@ -359,7 +366,7 @@ buttonshopoff
   index: -1
 buttonshopon
   rotate: false
-  xy: 838, 18
+  xy: 1548, 514
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120
@@ -374,14 +381,14 @@ dnaamountbackground
   index: -1
 item_button_off
   rotate: false
-  xy: 960, 18
+  xy: 1256, 392
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
   index: -1
 item_button_on
   rotate: false
-  xy: 1304, 514
+  xy: 1378, 392
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
@@ -395,7 +402,7 @@ itemunknownoff
   index: -1
 pop-upback
   rotate: false
-  xy: 1304, 636
+  xy: 1526, 636
   size: 220, 220
   split: 89, 103, 111, 101
   pad: 89, 103, 111, 102
@@ -404,7 +411,7 @@ pop-upback
   index: -1
 pop-up_back
   rotate: false
-  xy: 1304, 636
+  xy: 1526, 636
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
