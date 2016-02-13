@@ -8,6 +8,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.World;
@@ -39,10 +40,17 @@ public class Overlap2dRenderer extends IteratingSystem {
 	public static float timeRunning = 0;
 	
 	public Batch batch;
+	public ShapeRenderer sr;
+
+	public float dx;
+	public float dy;
+	public float dw;
+	public float dh;
 
 	public Overlap2dRenderer(Batch batch) {
 		super(Family.all(ViewPortComponent.class).get());
 		this.batch = batch;
+		sr = new ShapeRenderer();
 		drawableLogicMapper = new DrawableLogicMapper();
 	}
 
@@ -60,6 +68,9 @@ public class Overlap2dRenderer extends IteratingSystem {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		drawRecursively(entity, 1f);
+//		sr.begin(ShapeRenderer.ShapeType.Line);
+//		sr.rect(dx,dy,dw,dh);
+//		sr.end();
 		batch.end();
 
 		
@@ -271,5 +282,12 @@ public class Overlap2dRenderer extends IteratingSystem {
     public Batch getBatch() {
         return batch;
     }
+
+	public void drawDebug(float x, float y, float width, float height) {
+		dx = x;
+		dy = y;
+		dw = width;
+		dh = height;
+	}
 }
 

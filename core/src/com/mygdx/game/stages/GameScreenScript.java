@@ -16,6 +16,7 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -64,7 +65,8 @@ public class GameScreenScript implements IScript {
 
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+//        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+        cocoonSpawnCounter = 100;
 
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
@@ -404,6 +406,7 @@ public class GameScreenScript implements IScript {
             }
         }
 
+
         updateGameOver();
         fade(pauseDialog, isPause);
     }
@@ -432,7 +435,8 @@ public class GameScreenScript implements IScript {
 
     private void spawnCocoon() {
         if (canCocoonSpawn()) {
-            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+//            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+            cocoonSpawnCounter = 100;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity cocoonEntity = root.getChild("cocoonAni").getEntity();
@@ -449,8 +453,9 @@ public class GameScreenScript implements IScript {
     }
 
     private boolean canCocoonSpawn() {
-        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
+//        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
+//                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
+        return true;
     }
 
     private boolean canDandelionSpawn() {
