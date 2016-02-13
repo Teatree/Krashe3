@@ -94,7 +94,7 @@ public class Preview {
                 Actions.checkInit();
                 ac.dataArray.add(Actions.parallel(
                         Actions.scaleTo(1, 1, 1f, Interpolation.exp5Out),
-                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 1f)));
+                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 1f, Interpolation.exp5Out)));
                 iconE.add(ac);
                 iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -192,8 +192,8 @@ public class Preview {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
             iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PREVIEW).getChild(vc.name).getEntity();
-            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE + PREVIEW_X;
-            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE + PREVIEW_Y;
+            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
+            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE;
         }
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -241,11 +241,11 @@ public class Preview {
 
                 @Override
                 public void clicked() {
-                    if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2) {
+                    if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
                         vc.buyAndUse(GameScreenScript.fpc);
                         showPreview(vc, false, true);
                         if (vc.currencyType.equals(SOFT)) {
-                            changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon).clone());
+                            changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon));
                         }
                         ShopScreenScript.reloadScoreLabel(GameScreenScript.fpc);
                     }
@@ -277,8 +277,10 @@ public class Preview {
 
                 @Override
                 public void clicked() {
-                    vc.apply(GameScreenScript.fpc);
-                    showPreview(vc, false, false);
+                    if(animFinished()) {
+                        vc.apply(GameScreenScript.fpc);
+                        showPreview(vc, false, false);
+                    }
                 }
             });
         }
@@ -308,8 +310,10 @@ public class Preview {
 
                 @Override
                 public void clicked() {
-                    vc.disable(GameScreenScript.fpc);
-                    showPreview(vc, false, false);
+                    if(animFinished()) {
+                        vc.disable(GameScreenScript.fpc);
+                        showPreview(vc, false, false);
+                    }
                 }
             });
         }
@@ -328,10 +332,12 @@ public class Preview {
 
             @Override
             public void clicked() {
-                int previousIndex = allShopItems.indexOf(vc) - 1;
-                if (previousIndex >= 0) {
-                    setShouldDeleteIconE();
-                    showPreview(allShopItems.get(previousIndex), false, false);
+                if(animFinished()) {
+                    int previousIndex = allShopItems.indexOf(vc) - 1;
+                    if (previousIndex >= 0) {
+                        setShouldDeleteIconE();
+                        showPreview(allShopItems.get(previousIndex), false, false);
+                    }
                 }
             }
         });
@@ -351,10 +357,12 @@ public class Preview {
 
             @Override
             public void clicked() {
-                int nextIndex = allShopItems.indexOf(vc) + 1;
-                if (nextIndex < allShopItems.size()) {
-                    setShouldDeleteIconE();
-                    showPreview(allShopItems.get(nextIndex), false, false);
+                if(animFinished()) {
+                    int nextIndex = allShopItems.indexOf(vc) + 1;
+                    if (nextIndex < allShopItems.size()) {
+                        setShouldDeleteIconE();
+                        showPreview(allShopItems.get(nextIndex), false, false);
+                    }
                 }
             }
         });
@@ -405,14 +413,18 @@ public class Preview {
 
     private void changeBagIcon(CompositeItemVO tempItemC) {
         if (vc.currencyType.equals(SOFT)) {
-            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC.clone());
+            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
             sceneLoader.getEngine().addEntity(iconBagClone);
-            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(25);
             iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
             iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
             sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
             itemIcons.put(vc.shopIcon, iconBagClone);
+            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(36);
         }
+    }
+
+    private boolean animFinished(){
+        return previewE.getComponent(TransformComponent.class).y == PREVIEW_Y;
     }
 }

@@ -68,9 +68,11 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         TransformComponent previousTc = null;
-        allShopItems.addAll(Upgrade.getAllUpgrades());
-        allShopItems.addAll(fpc.pets);
-        allShopItems.addAll(fpc.vanities);
+        if (allShopItems.isEmpty()) {
+            allShopItems.addAll(Upgrade.getAllUpgrades());
+            allShopItems.addAll(fpc.pets);
+            allShopItems.addAll(fpc.vanities);
+        }
 
         Collections.sort(allShopItems, new Comparator<ShopItem>() {
             @Override
@@ -110,7 +112,9 @@ public class ShopScreenScript implements IScript {
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
 
-            addDot(bagEntity, bagEntity.getComponent(TransformComponent.class), bagEntity.getComponent(DimensionsComponent.class));
+            if (allShopItems.indexOf(vc) != allShopItems.size()-1) {
+                addDot(bagEntity);
+            }
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
@@ -258,36 +262,29 @@ public class ShopScreenScript implements IScript {
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
     }
 
-    private void addDot(Entity bag, TransformComponent bagTc, DimensionsComponent bagDc) {
+    private void addDot(Entity bag) {
+        DimensionsComponent bagDc = bag.getComponent(DimensionsComponent.class);
         TransformComponent tc = new TransformComponent();
         switch (bagPosId) {
             case 0: {
                 tc.x = bagDc.width / 2;
                 tc.y = -5;
-//                tc.x = bagTc.x + bagDc.width/2;
-//                tc.y = bagTc.y - 5;
                 break;
             }
             case 1: {
                 tc.x = bagDc.width + 5;
                 tc.y = bagDc.height / 2;
-//                tc.x = bagTc.x + bagDc.width + 5;
-//                tc.y = bagTc.y + bagDc.height/2;
                 break;
             }
             case 2: {
                 tc.x = bagDc.width / 2;
                 tc.y = bagDc.height + 5;
-//                 tc.x = bagTc.x + bagDc.width/2;
-//                tc.y = bagTc.y + bagDc.height + 5;
                 break;
 
             }
             case 3: {
                 tc.x = bagDc.width + 5;
                 tc.y = bagDc.height / 2;
-//                tc.x = bagTc.x + bagDc.width + 5;
-//                tc.y = bagTc.y + bagDc.height/2;
                 break;
             }
         }
@@ -296,14 +293,10 @@ public class ShopScreenScript implements IScript {
 
         CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("dot_lib").clone();
         final Entity dotE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotE, tempC.composite);
         dotE.getComponent(ZIndexComponent.class).setZIndex(0);
         dotE.add(tc);
         bag.getComponent(NodeComponent.class).addChild(dotE);
-        shopItem.getChild("background").getEntity().getComponent(ZIndexComponent.class).setZIndex(1);
-        for (Entity e : bag.getComponent(NodeComponent.class).children)
-            e.getComponent(ZIndexComponent.class).setZIndex(25);
-//        GameStage.sceneLoader.getEngine().removeEntity(dotE);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotE, tempC.composite);
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
