@@ -14,12 +14,15 @@ import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
 import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class ButterflySystem extends IteratingSystem {
 
@@ -32,13 +35,17 @@ public class ButterflySystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
+        SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
+
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            sasc.paused = false;
+//            sasc.paused = false;
 
             ButterflyComponent bc = mapper.get(entity);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+            sasc.scale = 0.3f;
+            dc.height = 147;
+            dc.width = 138;
             FlowerPublicComponent fcc = collisionMapper.get(entity);
 
             if (bc.state.equals(SPAWN)) {
@@ -63,6 +70,12 @@ public class ButterflySystem extends IteratingSystem {
             tc.x = bc.out.x;
             tc.y = bc.out.y;
 
+            if(bc.current>0.4f){
+                sasc.player.setAnimation(1);
+            }else{
+                sasc.player.setAnimation(0);
+            }
+
             if (bc.current >= 1 && bc.state.equals(FLY) || isOutOfBounds(bc)) {
                 die(bc, tc);
             }
@@ -80,8 +93,9 @@ public class ButterflySystem extends IteratingSystem {
 
                 GameScreenScript.reloadScoreLabel(fcc);
             }
+            sceneLoader.renderer.drawDebug(tc.x,tc.y,dc.width,dc.height);
         } else {
-            sasc.paused = true;
+//            sasc.paused = true;
         }
     }
 

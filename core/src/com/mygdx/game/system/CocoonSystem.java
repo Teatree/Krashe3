@@ -30,7 +30,7 @@ public class CocoonSystem extends IteratingSystem {
     public CocoonSystem(SceneLoader sl) {
         super(Family.all(CocoonComponent.class).get());
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        butterflyEntity = root.getChild("butterflyAni8").getEntity();
+        butterflyEntity = root.getChild("butterfly").getEntity();
     }
 
     @Override
@@ -105,8 +105,8 @@ public class CocoonSystem extends IteratingSystem {
     private void spawnButterfly() {
 
         TransformComponent tc = butterflyEntity.getComponent(TransformComponent.class);
-        tc.x = 750;
-        tc.y = 700;
+        tc.x = 700;
+        tc.y = 750;
 
         ButterflyComponent bc = new ButterflyComponent();
         butterflyEntity.add(fcc);

@@ -55,7 +55,7 @@ public class SceneLoader {
 
 	private float pixelsPerWU = 1;
 
-	private Overlap2dRenderer renderer;
+	public Overlap2dRenderer renderer;
 	private Entity root;
 
 	public SceneLoader() {
