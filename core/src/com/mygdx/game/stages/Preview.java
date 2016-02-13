@@ -56,6 +56,7 @@ public class Preview {
     private Entity btnNext;
     private Rectangle tagBoundingBox;
     private ShopItem vc;
+    public Entity shadowE;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
@@ -380,6 +381,10 @@ public class Preview {
                 Actions.checkInit();
                 ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
                 previewE.add(ac);
+
+                ActionComponent ac2 = new ActionComponent();
+                ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.sineOut));
+                shadowE.add(ac2);
             }
         }
 
@@ -388,6 +393,7 @@ public class Preview {
             setShouldDeleteIconE();
             removeIconE();
         }
+
     }
 
     public void removeIconE() {

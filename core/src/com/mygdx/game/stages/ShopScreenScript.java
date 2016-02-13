@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
@@ -12,6 +13,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -148,6 +150,19 @@ public class ShopScreenScript implements IScript {
                 public void clicked() {
                     if (!isPreviewOn && canOpenPreview) {
                         preview.showPreview(vc, true, false);
+
+                        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("shadow_lib").clone();
+                        preview.shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+                        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), preview.shadowE, tempItemC.composite);
+                        preview.shadowE.getComponent(TransformComponent.class).x = 0;
+                        preview.shadowE.getComponent(TransformComponent.class).y = 0;
+                        preview.shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
+                        GameStage.sceneLoader.getEngine().addEntity(preview.shadowE);
+                        preview.shadowE.getComponent(TintComponent.class).color.a = 0;
+                        Actions.checkInit();
+                        ActionComponent ac = new ActionComponent();
+                        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.sineIn));
+                        preview.shadowE.add(ac);
                     }
                     skipLayersOverride(lc);
                 }
