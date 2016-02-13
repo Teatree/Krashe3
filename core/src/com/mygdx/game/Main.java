@@ -16,8 +16,8 @@ public class Main extends ApplicationAdapter {
 	public static GameStage stage;
 	Array<Viewport> viewports;
 	Array<String> names;
-    public int viewportWidth;
-    public int viewportHeight;
+    public static int viewportWidth;
+    public static int viewportHeight;
 
 	public static AdsController adsController;
 
@@ -35,10 +35,11 @@ public class Main extends ApplicationAdapter {
 		SaveMngr.generateVanityJson();
 		SaveMngr.generatePetsJson();
 
-		names = getViewportNames();
 
 		GameScreenScript.fpc = SaveMngr.loadStats();
-        stage = new GameStage();
+
+		names = getViewportNames();
+		stage = new GameStage();
 		viewports = getViewports(stage.getCamera());
 		stage.setViewport(viewports.first());
 

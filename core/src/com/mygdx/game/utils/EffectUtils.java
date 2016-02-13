@@ -1,9 +1,12 @@
 package com.mygdx.game.utils;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.ParticleLifespanComponent;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -97,5 +100,9 @@ public class EffectUtils {
 
         EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         bugJuiceBubbleE.add(fpc);
+    }
+
+    public static Vector2 getTouchCoordinates() {
+        return GameStage.viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
     }
 }

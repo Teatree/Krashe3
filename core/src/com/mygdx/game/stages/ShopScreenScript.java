@@ -161,7 +161,7 @@ public class ShopScreenScript implements IScript {
                         preview.shadowE.getComponent(TintComponent.class).color.a = 0;
                         Actions.checkInit();
                         ActionComponent ac = new ActionComponent();
-                        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.sineIn));
+                        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
                         preview.shadowE.add(ac);
                     }
                     skipLayersOverride(lc);
@@ -233,8 +233,6 @@ public class ShopScreenScript implements IScript {
                     ButtonComponent.skipDefaultLayersChange = false;
                 }
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
-                System.out.println("canOpenPrview: " + canOpenPreview);
-
 
                 if (tempGdx.x > Gdx.input.getX()) {
                     int i = 0;

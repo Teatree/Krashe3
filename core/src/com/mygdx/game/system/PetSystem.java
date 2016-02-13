@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.PetComponent;
 import com.mygdx.game.stages.GameScreenScript;
@@ -18,6 +19,7 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.PetComponent.State.*;
+import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;
 import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.entity.componets.PetComponent.*;
 
@@ -105,20 +107,15 @@ public class PetSystem extends IteratingSystem {
                 setSpawnAnimation(sc);
             }
 
-            if (Gdx.input.justTouched()) {
-                System.err.println("rect=" + pc.boundsRect.x + ":" + pc.boundsRect.y + " - " +
-                        + pc.boundsRect.width + ":" + pc.boundsRect.height );
-                System.err.println("touch=" + Gdx.input.getX() + ":" + (786 - Gdx.input.getY()));
-                System.err.println(pc.boundsRect.contains(Gdx.input.getX(), 786 - Gdx.input.getY()));
-            }
+            Vector2 v = getTouchCoordinates();
             if (Gdx.input.justTouched() &&
-                    pc.boundsRect.contains(Gdx.input.getX(), 786 - Gdx.input.getY())
+                    pc.boundsRect.contains(v.x, v.y)
                     && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)){
                 pc.state = TAPPED;
                 setTappedAnimation(sc);
                 pc.animationCounter = TAP_DURATION;
 
-                EffectUtils.playYellowStarsParticleEffect(Gdx.input.getX(), 786 - Gdx.input.getY());
+                EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
                 tc.x ++;
                 ActionComponent ac = new ActionComponent();

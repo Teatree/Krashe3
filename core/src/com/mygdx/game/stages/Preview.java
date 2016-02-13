@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -20,6 +22,7 @@ import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
 import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ShopScreenScript.*;
+import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;
 import static com.mygdx.game.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
@@ -372,8 +375,9 @@ public class Preview {
     public void checkAndClose() {
 
         updateTagIcon();
-
-        boolean isOutside = tagBoundingBox == null || !tagBoundingBox.contains(Gdx.input.getX(), Gdx.input.getY());
+        Vector2 v = getTouchCoordinates();
+        boolean isOutside = tagBoundingBox == null ||
+                !tagBoundingBox.contains(v.x, v.y);
         float currentYpos = previewE.getComponent(TransformComponent.class).y;
         if (Gdx.input.isTouched() && currentYpos <= 50 || currentYpos >= 800) {
             if (isPreviewOn && isOutside) {
@@ -383,7 +387,7 @@ public class Preview {
                 previewE.add(ac);
 
                 ActionComponent ac2 = new ActionComponent();
-                ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.sineOut));
+                ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
                 shadowE.add(ac2);
             }
         }

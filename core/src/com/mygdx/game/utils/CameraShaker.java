@@ -1,6 +1,7 @@
 package com.mygdx.game.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Main;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -46,7 +47,8 @@ public class CameraShaker {
 //      GameStage.viewport.getCamera().position.y = GameStage.viewport.getScreenHeight()/2 + 2;
 //            blinkCounter = 0;
             ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer("blink").isVisible = false;
-            GameStage.viewport.apply(true);
+            Main.stage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
+//            GameStage.viewport.apply(true);
         }
     }
 
