@@ -40,7 +40,7 @@ public class FlowerSystem extends IteratingSystem {
         FlowerPublicComponent fcc = collisionMapper.get(entity);
         updateRect(flowerComponent, fcc, transformComponent);
         act(fcc, flowerComponent, transformComponent, dimensionsComponent, spriterComponent, deltaTime);
-        sceneLoader.renderer.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height,entity.toString());
+        sceneLoader.renderer.drawDebugRect(fcc.boundsRect.x, fcc.boundsRect.y, fcc.boundsRect.width, fcc.boundsRect.height, entity.toString());
     }
 
     public void updateRect(FlowerComponent fc, FlowerPublicComponent fcc, TransformComponent tc) {
@@ -58,11 +58,12 @@ public class FlowerSystem extends IteratingSystem {
 
     public void act(FlowerPublicComponent fcc, FlowerComponent fc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            sc.player.speed = ANIMATION_SPEED;
+//            sc.player.speed = ANIMATION_SPEED;
             if (fc.state == FlowerComponent.State.IDLE_BITE) {
                 setBiteIdleAnimation(sc);
             }
 
+            System.out.println("state: " +fc.state);
             if (fc.state == FlowerComponent.State.IDLE) {
                 if (fcc.isCollision) {
                     fc.state = FlowerComponent.State.IDLE_BITE;
@@ -76,6 +77,9 @@ public class FlowerSystem extends IteratingSystem {
             if (Gdx.input.justTouched() && fc.state == FlowerComponent.State.IDLE) {
                 fc.state = FlowerComponent.State.TRANSITION;
             }
+//            if(Gdx.input.justTouched() && fc.state == FlowerComponent.State.RETREAT){
+//
+//            }
 
             if (Gdx.input.justTouched() && fc.state != FlowerComponent.State.TRANSITION && fc.state != FlowerComponent.State.ATTACK) {
                 fc.state = FlowerComponent.State.ATTACK;
@@ -89,6 +93,23 @@ public class FlowerSystem extends IteratingSystem {
                 if (sc.player.getTime() >= sc.player.getAnimation().length-20){
                     setAttackAnimation(sc);
                     fc.state = FlowerComponent.State.ATTACK;
+                }
+            }
+
+            if (fc.state == FlowerComponent.State.TRANSITION_BACK){
+
+                System.out.println("time: " + sc.player.getTime());
+                System.out.println("speed: " + sc.player.speed);
+                setTransitionBackAnimation(sc);
+
+                if (Gdx.input.justTouched()){  // This is added for quick breaking of an animation
+                    setAttackAnimation(sc);
+                    fc.state = FlowerComponent.State.ATTACK;
+                }
+
+                if (sc.player.getTime() > 20 && sc.player.getTime() < 62){
+                    setIdleAnimation(sc);
+                    fc.state = FlowerComponent.State.IDLE;
                 }
             }
 
@@ -106,8 +127,8 @@ public class FlowerSystem extends IteratingSystem {
                         fc.state = FlowerComponent.State.RETREAT;
                     }
                     if (tc.y <= 106 && fc.state == FlowerComponent.State.RETREAT) {
-                        fc.state = FlowerComponent.State.IDLE;
-                        setIdleAnimation(sc);
+                        sc.player.setTime(sc.player.getAnimation().length);
+                        fc.state = FlowerComponent.State.TRANSITION_BACK;
                     }
                 }
             }
@@ -131,27 +152,31 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     private void setIdleAnimation(SpriterComponent sc) {
-        sc.player.speed = 24;
+        sc.player.speed = ANIMATION_SPEED;
         sc.player.setAnimation(0);
     }
 
     private void setBiteIdleAnimation(SpriterComponent sc) {
-        sc.player.speed = 24;
+        sc.player.speed = ANIMATION_SPEED;
         sc.player.setAnimation(1);
     }
 
     private void setTransitionAnimation(SpriterComponent sc) {
-        sc.player.speed = 40;
+        sc.player.speed = 40; //40
+        sc.player.setAnimation(2);
+    }
+    private void setTransitionBackAnimation(SpriterComponent sc) {
+        sc.player.speed = -40;
         sc.player.setAnimation(2);
     }
 
     private void setAttackAnimation(SpriterComponent sc) {
-        sc.player.speed = 24;
+        sc.player.speed = ANIMATION_SPEED;
         sc.player.setAnimation(3);
     }
 
     private void setBiteAttackAnimation(SpriterComponent sc) {
-        sc.player.speed = 24;
+        sc.player.speed = ANIMATION_SPEED;
         sc.player.setAnimation(4);
     }
 

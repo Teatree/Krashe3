@@ -24,6 +24,7 @@ public class FlowerComponent implements Component {
         IDLE,
         ATTACK,
         TRANSITION,
+        TRANSITION_BACK,
         RETREAT,
         IDLE_BITE,
         ATTACK_BITE;
