@@ -20,17 +20,14 @@ import static com.mygdx.game.utils.BugPool.*;
 public class BugSpawnSystem extends EntitySystem {
 
     public static int ANGERED_BEES_MODE_DURATION = 800;
-
+    public static boolean isAngeredBeesMode = false;
+    public static boolean queenBeeOnStage = false;
+    public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+    public FlowerPublicComponent fcc;
     private int SPAWN_MAX_X = -400;
     private int SPAWN_MIN_X = 300;
     private int SPAWN_MIN_Y = -200;
     private int SPAWN_MAX_Y = 600;
-
-    public static boolean isAngeredBeesMode = false;
-    public static boolean queenBeeOnStage = false;
-    public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
-
-    public FlowerPublicComponent fcc;
     private HashMap<BugType, String> libBugsNameType = new HashMap<>();
 
     private Random rand = new Random();
@@ -40,6 +37,10 @@ public class BugSpawnSystem extends EntitySystem {
     public BugSpawnSystem(FlowerPublicComponent fcc) {
         this.fcc = fcc;
         init();
+    }
+
+    public static boolean isBlewUp() {
+        return isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION - 10;
     }
 
     private void init() {
@@ -74,11 +75,11 @@ public class BugSpawnSystem extends EntitySystem {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue < 10) {
                     createBug(BugType.DRUNK);
-                } else if (probabilityValue >= 10 && probabilityValue < 40) {
+                } else if (probabilityValue >= 10 && probabilityValue < 30) {
                     createBug(BugType.SIMPLE);
-                } else if (probabilityValue >= 41 && probabilityValue < 60 ) {
+                } else if (probabilityValue >= 31 && probabilityValue < 40) {
                     createBug(BugType.CHARGER);
-                } else if (probabilityValue >= 61 && probabilityValue < 70 ){
+                } else if (probabilityValue >= 41 && probabilityValue < 70) {
                     if (!queenBeeOnStage) {
                         createBug(BugType.QUEENBEE);
                         queenBeeOnStage = true;
@@ -118,9 +119,7 @@ public class BugSpawnSystem extends EntitySystem {
             }
         }
     }
-    public static boolean isBlewUp (){
-        return isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION-10;
-    }
+
     private void updateAngeredBeesMode() {
         if (isAngeredBeesMode) {
             angeredBeesModeTimer--;

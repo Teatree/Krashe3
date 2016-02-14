@@ -21,10 +21,10 @@ import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class CocoonSystem extends IteratingSystem {
 
-    private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
-    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     FlowerPublicComponent fcc;
     Entity butterflyEntity;
+    private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
+    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SpriterComponent sc = new SpriterComponent();
 
     public CocoonSystem(SceneLoader sl) {
@@ -56,7 +56,6 @@ public class CocoonSystem extends IteratingSystem {
 
         if ("GAME".equals(GlobalConstants.CUR_SCREEN)) {
 
-            System.out.println("state: " + cc.state);
             if (cc.state.equals(SPAWNING)) {
 
                 if (sc.player.getTime() >= sc.player.getAnimation().length-20) {

@@ -1,6 +1,5 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Main;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
@@ -41,15 +40,11 @@ public class CameraShaker {
             GameStage.viewport.getCamera().translate(signX * x, y, 0);
             current_time += delta;
         } else {
-            // When the shaking is over move the camera back to the center
-//      GameStage.sceneLoader.getBatch().begin();
-//     GameStage.sceneLoader.
-//      GameStage.viewport.getCamera().position.y = GameStage.viewport.getScreenHeight()/2 + 2;
-//            blinkCounter = 0;
+            GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
             ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer("blink").isVisible = false;
             Main.stage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
-//            GameStage.viewport.apply(true);
         }
+
     }
 
     public void blink() {
