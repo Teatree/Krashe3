@@ -93,7 +93,7 @@ public class ButterflySystem extends IteratingSystem {
 
                 GameScreenScript.reloadScoreLabel(fcc);
             }
-            sceneLoader.renderer.drawDebug(tc.x,tc.y,dc.width,dc.height);
+//            sceneLoader.renderer.drawDebug(tc.x,tc.y,dc.width,dc.height);
         } else {
 //            sasc.paused = true;
         }

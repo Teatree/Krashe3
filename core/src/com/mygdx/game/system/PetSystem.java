@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.PetComponent;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -41,8 +42,10 @@ public class PetSystem extends IteratingSystem {
         PetComponent pc = mapper.get(entity);
         TransformComponent tc = entity.getComponent(TransformComponent.class);
         SpriterComponent sc = entity.getComponent(SpriterComponent.class);
-
-        updateRect(pc, tc, entity.getComponent(DimensionsComponent.class));
+        DimensionsComponent dc = entity.getComponent(DimensionsComponent.class);
+        dc.width = 56;
+        dc.height = 100;
+        updateRect(pc, tc, dc);
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             pc.animationCounter--;
 
@@ -124,14 +127,15 @@ public class PetSystem extends IteratingSystem {
                 entity.add(ac);
             }
         }
+        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
     }
 
     public void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc) {
         pc.boundsRect.width = (int) dc.width * tc.scaleX;
         pc.boundsRect.height = (int) dc.height * tc.scaleY;
 
-        pc.boundsRect.x = (int) tc.x - 348/2;
-        pc.boundsRect.y = (int) tc.y - 361/2;
+        pc.boundsRect.x = (int) tc.x-dc.width;
+        pc.boundsRect.y = (int) tc.y-dc.height/2;
 }
 
     private void setSpawnAnimation(SpriterComponent sc) {

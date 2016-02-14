@@ -326,7 +326,7 @@ public class SaveMngr {
 
         dummyPet.name = "pet";
         dummyPet.cost = 42;
-        dummyPet.amountBugsBeforeCharging = 2;
+        dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
         dummyPet.shopIcon = "btn_back_GUI_lib";
 

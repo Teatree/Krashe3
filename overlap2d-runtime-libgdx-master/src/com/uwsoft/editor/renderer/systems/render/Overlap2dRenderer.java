@@ -18,6 +18,11 @@ import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.systems.render.logic.DrawableLogicMapper;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 public class Overlap2dRenderer extends IteratingSystem {
 	private final float TIME_STEP = 1f/60;
@@ -42,15 +47,7 @@ public class Overlap2dRenderer extends IteratingSystem {
 	public Batch batch;
 	public ShapeRenderer sr;
 
-	public float dx;
-	public float dy;
-	public float dw;
-	public float dh;
-
-	public float dx2;
-	public float dy2;
-	public float dw2;
-	public float dh2;
+	private List debugRects = new ArrayList();
 
 	public Overlap2dRenderer(Batch batch) {
 		super(Family.all(ViewPortComponent.class).get());
@@ -74,10 +71,13 @@ public class Overlap2dRenderer extends IteratingSystem {
 		batch.begin();
 		drawRecursively(entity, 1f);
 //		sr.begin(ShapeRenderer.ShapeType.Line);
-//		sr.rect(dx,dy,dw,dh);
-//		sr.rect(dx2,dy2,dw2,dh2);
+//		for(Object dp: debugRects){
+//			DebugRectangle d = (DebugRectangle) dp;
+//			sr.rect(d.dx,d.dy,d.dw,d.dh);
+//		}
 //		sr.end();
 		batch.end();
+		debugRects = new ArrayList();
 
 		
 		//TODO kinda not cool (this should be done in separate lights renderer maybe?
@@ -289,17 +289,44 @@ public class Overlap2dRenderer extends IteratingSystem {
         return batch;
     }
 
-	public void drawDebug(float x, float y, float width, float height) {
-		dx = x;
-		dy = y;
-		dw = width;
-		dh = height;
+	public void drawDebugRect(float x, float y, float w, float h, String e){
+		debugRects.add(new DebugRectangle(x,y,w,h,e));
 	}
-	public void drawDebug2(float x, float y, float width, float height) {
-		dx2 = x;
-		dy2 = y;
-		dw2 = width;
-		dh2 = height;
+
+	public class DebugRectangle{
+		public float dx;
+		public float dy;
+		public float dw;
+		public float dh;
+
+		String entity;
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+
+			DebugRectangle that = (DebugRectangle) o;
+
+			return entity.equals(that.entity);
+
+		}
+
+		@Override
+		public int hashCode() {
+			return entity.hashCode();
+		}
+
+		public DebugRectangle(float x, float y, float width, float height, String entity) {
+			this.entity = entity;
+
+			dx = x;
+			dy = y;
+			dw = width;
+			dh = height;
+		}
+
 	}
 }
+
 

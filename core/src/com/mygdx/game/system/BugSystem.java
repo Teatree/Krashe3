@@ -84,13 +84,14 @@ public class BugSystem extends IteratingSystem {
                     showGameOver();
                 }
             }
-
+            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x,bc.boundsRect.y,bc.boundsRect.width,bc.boundsRect.height,entity.toString());
         } else {
             sasc.paused = true;
             if (isGameOver){
                 BugPool.getInstance().release(entity);
             }
         }
+
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
@@ -196,10 +197,11 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
-        bc.boundsRect.x = (int)tc.x;
-        bc.boundsRect.y = (int)tc.y;
-        bc.boundsRect.width = (int)dc.width*tc.scaleX;
-        bc.boundsRect.height = (int)dc.height*tc.scaleY;
+        bc.boundsRect.x = (int)tc.x + 50; //Nastya can not see this
+        bc.boundsRect.y = (int)tc.y + 30;
+        bc.boundsRect.width = (int)dc.width*tc.scaleX - 50;
+        bc.boundsRect.height = (int)dc.height*tc.scaleY - 30;
+
     }
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
