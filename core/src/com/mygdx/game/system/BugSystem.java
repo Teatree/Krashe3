@@ -72,7 +72,10 @@ public class BugSystem extends IteratingSystem {
                         angerBees();
                     }
                     BugPool.getInstance().release(entity);
-                    fcc.isCollision = true;
+
+                    if(fcc.flowerCollisionCheck(bc.boundsRect)) {
+                        fcc.isCollision = true;
+                    }
 
                     spawnBugJuiceBubble(bc);
                 }

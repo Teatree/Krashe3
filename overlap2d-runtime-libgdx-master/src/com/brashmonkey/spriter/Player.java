@@ -45,7 +45,7 @@ public class Player {
 	public final Box prevBBox;
 	private BoneIterator boneIterator;
 	private ObjectIterator objectIterator;
-	private Mainline.Key currentKey, prevKey;
+	public Mainline.Key currentKey, prevKey;
 	public boolean copyObjects = true;
 	
 	/**

@@ -13,6 +13,7 @@ import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -65,8 +66,7 @@ public class GameScreenScript implements IScript {
 
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-//        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
-        cocoonSpawnCounter = 100;
+        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
         GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
@@ -435,15 +435,18 @@ public class GameScreenScript implements IScript {
 
     private void spawnCocoon() {
         if (canCocoonSpawn()) {
-//            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
-            cocoonSpawnCounter = 100;
+            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            Entity cocoonEntity = root.getChild("cocoonAni").getEntity();
+            Entity cocoonEntity = root.getChild("coccoon").getEntity();
+
+            cocoonEntity.getComponent(SpriterComponent.class).scale = 0.3f;
+            cocoonEntity.getComponent(SpriterComponent.class).player.setAnimation(0);
 
             TransformComponent tc = cocoonEntity.getComponent(TransformComponent.class);
-            tc.x = 850;
-            tc.y = 710;
+
+            tc.x = 980;
+            tc.y = 800;
             cocoonEntity.add(tc);
 
             cocoonEntity.add(fpc);
@@ -453,9 +456,8 @@ public class GameScreenScript implements IScript {
     }
 
     private boolean canCocoonSpawn() {
-//        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
-//                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
-        return true;
+        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
     }
 
     private boolean canDandelionSpawn() {

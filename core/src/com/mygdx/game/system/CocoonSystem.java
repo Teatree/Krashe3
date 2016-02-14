@@ -8,12 +8,11 @@ import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -26,6 +25,7 @@ public class CocoonSystem extends IteratingSystem {
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     FlowerPublicComponent fcc;
     Entity butterflyEntity;
+    private SpriterComponent sc = new SpriterComponent();
 
     public CocoonSystem(SceneLoader sl) {
         super(Family.all(CocoonComponent.class).get());
@@ -35,6 +35,7 @@ public class CocoonSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        sc = entity.getComponent(SpriterComponent.class);
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             CocoonComponent cc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
@@ -44,9 +45,10 @@ public class CocoonSystem extends IteratingSystem {
             updateRect(cc, tc, dc);
             act(cc, entity, deltaTime);
 
-            if (checkCollision(cc, fcc)) {
+            if (checkCollision(cc, fcc) && !cc.canHit) {
                 hit(cc);
             }
+
         }
     }
 
@@ -54,40 +56,51 @@ public class CocoonSystem extends IteratingSystem {
 
         if ("GAME".equals(GlobalConstants.CUR_SCREEN)) {
 
-            if (cc.state == SPAWNING) {
-                if (cc.counter >= GlobalConstants.COCOON_SPAWNING_DURATION) {
+            System.out.println("state: " + cc.state);
+            if (cc.state.equals(SPAWNING)) {
+
+                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
                     cc.state = IDLE;
-                    cc.counter = 0;
+                    sc.player.setAnimation(1);
+                    sc.player.speed = 0;
                 }
             }
 
             if (cc.state == HIT) {
-                cc.counter++;
-                if (cc.counter >= GlobalConstants.COCOON_HIT_DURATION) {
-                    if (cc.health <= 0) {
+                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
+                    if (cc.hitCounter >= GlobalConstants.COCOON_HIT_AMOUNT) {
                         cc.state = DEAD;
                         spawnButterfly();
-                        cc.counter = 0;
                     } else {
                         cc.state = IDLE;
-                        cc.counter = 0;
+                        if(cc.hitCounter+1<4) {
+                            sc.player.setAnimation(cc.hitCounter + 1);
+                        }
+                        sc.player.speed = 0;
                     }
                 }
             }
 
             if (cc.state == DEAD) {
 //                GameStage.sceneLoader.getEngine().removeEntity(entity);
-                entity.getComponent(TransformComponent.class).y = -500;
+                sc.player.setAnimation(3);
+                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
+                    entity.getComponent(TransformComponent.class).y = -500;
+                }
             }
         }
     }
 
     public void hit(CocoonComponent cc) {
-        cc.isCollision = false;
+
+        cc.canHit = true;
         if (cc.state != DEAD) {
-            cc.health--;
             cc.state = HIT;
-            cc.counter = 0;
+            cc.hitCounter+=1;
+            System.out.println("hit counter: " + cc.hitCounter);
+            cc.canHit = true;
+            sc.player.speed = 24;
+            sc.player.setAnimation(cc.hitCounter);
         }
     }
 
@@ -96,9 +109,13 @@ public class CocoonSystem extends IteratingSystem {
         cc.boundsRect.y = 793;
         cc.boundsRect.width = (int) dc.width * tc.scaleX;
         cc.boundsRect.height = (int) dc.height * tc.scaleY;
+        sceneLoader.renderer.drawDebug(cc.boundsRect.x,cc.boundsRect.y,cc.boundsRect.width,cc.boundsRect.height);
     }
 
     private boolean checkCollision(CocoonComponent cc, FlowerPublicComponent fcc) {
+        if (!cc.boundsRect.overlaps(fcc.boundsRect)){
+            cc.canHit = false;
+        }
         return cc.boundsRect.overlaps(fcc.boundsRect);
     }
 

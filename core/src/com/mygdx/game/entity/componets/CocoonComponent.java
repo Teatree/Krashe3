@@ -6,11 +6,10 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class CocoonComponent implements Component {
 
-    public int health = COCOON_HEALTH;
-    public int counter;
+    public int hitCounter = 0;
     public State state;
     public Rectangle boundsRect;
-    public boolean isCollision;
+    public boolean canHit;
 
     public CocoonComponent() {
         this.boundsRect = new Rectangle();

@@ -47,6 +47,11 @@ public class Overlap2dRenderer extends IteratingSystem {
 	public float dw;
 	public float dh;
 
+	public float dx2;
+	public float dy2;
+	public float dw2;
+	public float dh2;
+
 	public Overlap2dRenderer(Batch batch) {
 		super(Family.all(ViewPortComponent.class).get());
 		this.batch = batch;
@@ -70,6 +75,7 @@ public class Overlap2dRenderer extends IteratingSystem {
 		drawRecursively(entity, 1f);
 //		sr.begin(ShapeRenderer.ShapeType.Line);
 //		sr.rect(dx,dy,dw,dh);
+//		sr.rect(dx2,dy2,dw2,dh2);
 //		sr.end();
 		batch.end();
 
@@ -288,6 +294,12 @@ public class Overlap2dRenderer extends IteratingSystem {
 		dy = y;
 		dw = width;
 		dh = height;
+	}
+	public void drawDebug2(float x, float y, float width, float height) {
+		dx2 = x;
+		dy2 = y;
+		dw2 = width;
+		dh2 = height;
 	}
 }
 

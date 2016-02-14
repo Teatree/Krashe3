@@ -15,6 +15,7 @@ import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
 
 public class FlowerSystem extends IteratingSystem {
@@ -47,7 +48,7 @@ public class FlowerSystem extends IteratingSystem {
         fcc.boundsRect.y = (int) tc.y + 95 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
-
+        sceneLoader.renderer.drawDebug2(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
 //        GameStage.sceneLoader.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
     }
 
@@ -167,6 +168,7 @@ public class FlowerSystem extends IteratingSystem {
 //                    isEating = false;
 //                }
 //            }
+
 
         }else{
             sc.player.speed = 0;
