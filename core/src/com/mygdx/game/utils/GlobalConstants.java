@@ -18,27 +18,24 @@ public abstract class GlobalConstants {
     public static final int COCOON_SPAWN_MAX = 3000;
     public static final int COCOON_SPAWN_MIN = 2500;
 
-    public static final int MAX_IDLE_COUNT = 600;
+    public static final int MAX_IDLE_COUNT = 500;
     public static final int MIN_IDLE_COUNTER = 290;
-    public static final int IDLE_MVMNT_SPEED = 95; // 100
-    public static final int PREPARING_MVMNT_SPEED = 32; // 32
-    public static final int CHARGING_MVMNT_SPEED = 705;
-    public static final int PREPARATION_TIME = 200;
+    public static final int IDLE_MVMNT_SPEED = 115;
+    public static final int PREPARING_MVMNT_SPEED = 40;
+    public static final int CHARGING_MVMNT_SPEED = 505;
+    public static final int PREPARATION_TIME = 50;
 
     public static final int BEE_SPAWN_INTERVAL_ANGERED = 50;
-    public static final int BEE_SPAWN_INTERVAL_REGULAR = 200;
-    public static final int FPS = 24;
-
-    public static long BEST_SCORE = 0;
-
     public static final int DEFAULT_MAX_HP = 2;
+    public static final int BEE_SPAWN_INTERVAL_REGULAR = 200;
 
-    public static String CUR_SCREEN = "MENU";
-
-    public static int POINT_TRAVEL = Gdx.graphics.getHeight()-685;
+    public static final int FPS = 24;
 
     public static final float BUG_SCALE = 0.6f;
 
     public static final int FAR_FAR_AWAY_X = 1500;
     public static final int FAR_FAR_AWAY_Y = 1500;
+
+
+    public static String CUR_SCREEN = "MENU";
 }

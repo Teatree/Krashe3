@@ -20,7 +20,6 @@ public class BugComponent implements Component {
     public float time;
     public Interpolation interpolation = Interpolation.exp5;
     public boolean reverse, began, complete;
-    public int alignment = Align.bottomLeft;
 
     public int points;
 
@@ -66,6 +65,7 @@ public class BugComponent implements Component {
         IDLE,
         PREPARING,
         CHARGING,
+        SCARED,
         DEAD
     }
 

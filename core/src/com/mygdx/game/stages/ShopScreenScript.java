@@ -27,6 +27,8 @@ import static com.mygdx.game.stages.GameStage.sceneLoader;
 public class ShopScreenScript implements IScript {
 
     public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
+    public static final int SENSITIVITY = 13;
+
     public static Entity scoreLbl;
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
@@ -234,33 +236,34 @@ public class ShopScreenScript implements IScript {
                 }
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
 
-                if (tempGdx.x > Gdx.input.getX()) {
+                if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x - Gdx.input.getX()) / 15;
+                        bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x - Gdx.input.getX()) / SENSITIVITY;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
-                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
-                    tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / 15;
+                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+                    tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / SENSITIVITY;
 
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
-                if (tempGdx.x < Gdx.input.getX()) {
+
+                if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX() - tempGdx.x) / 15;
+                        bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
-                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / 15;
-                    tempGdx.x += (Gdx.input.getX() - tempGdx.x) / 15;
+                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+                    tempGdx.x += (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
             } else {
                 isGdxWritten = false;
-                if (stopVelocity != 0) {
-                    int i = 0;
+                if (stopVelocity != 0 && (canMoveBagsLeft() && canMoveBagsRight())) {
+                        int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
@@ -273,6 +276,14 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
+    }
+
+    public boolean canMoveBagsLeft() {
+        return bags.get(bags.size()-1).getComponent(TransformComponent.class).x >= 990;
+    }
+
+    public boolean canMoveBagsRight() {
+        return bags.get(0).getComponent(TransformComponent.class).x <= 10;
     }
 
     private void addDot(Entity bag) {
@@ -317,7 +328,7 @@ public class ShopScreenScript implements IScript {
         int step = 20;
 
         if (previous == null) {
-            tc.x = 173;
+            tc.x = 73;
             tc.y = 359;
             return tc;
         }

@@ -31,6 +31,7 @@ import static com.mygdx.game.stages.GameStage.*;
 public class GameScreenScript implements IScript {
 
     public static final String START_MESSAGE = "TAP TO START";
+    public static final String DOUBLE_BJ_BADGE = "double_bj_badge";
 
     private static ItemWrapper gameItem;
     public static GameStage game;
@@ -91,7 +92,7 @@ public class GameScreenScript implements IScript {
 
     private void initDoubleBJbadge (){
         if (fpc.doubleJuice){
-            Entity badge = gameItem.getChild("double_bj_badge").getEntity();
+            Entity badge = gameItem.getChild(DOUBLE_BJ_BADGE).getEntity();
             TransformComponent tc = badge.getComponent(TransformComponent.class);
             tc.scaleX = 0.6f;
             tc.scaleY = 0.6f;
@@ -108,8 +109,7 @@ public class GameScreenScript implements IScript {
         LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
         lc.setLayers(tempC.composite.layers);
         background.add(lc);
-
-        lc.getLayer("blink").isVisible = false;
+        lc.getLayer(CameraShaker.BLINK).isVisible = false;
         TransformComponent tc = new TransformComponent();
         tc.x = 0;
         tc.y = 0;

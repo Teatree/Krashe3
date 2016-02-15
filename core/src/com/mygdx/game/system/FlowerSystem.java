@@ -63,7 +63,6 @@ public class FlowerSystem extends IteratingSystem {
                 setBiteIdleAnimation(sc);
             }
 
-            System.out.println("state: " +fc.state);
             if (fc.state == FlowerComponent.State.IDLE) {
                 if (fcc.isCollision) {
                     fc.state = FlowerComponent.State.IDLE_BITE;
@@ -98,8 +97,6 @@ public class FlowerSystem extends IteratingSystem {
 
             if (fc.state == FlowerComponent.State.TRANSITION_BACK){
 
-                System.out.println("time: " + sc.player.getTime());
-                System.out.println("speed: " + sc.player.speed);
                 setTransitionBackAnimation(sc);
 
                 if (Gdx.input.justTouched()){  // This is added for quick breaking of an animation

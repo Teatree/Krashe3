@@ -201,7 +201,6 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRect.y = (int)tc.y + 30;
         bc.boundsRect.width = (int)dc.width*tc.scaleX - 50;
         bc.boundsRect.height = (int)dc.height*tc.scaleY - 30;
-
     }
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {

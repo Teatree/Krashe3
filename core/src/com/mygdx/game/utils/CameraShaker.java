@@ -10,6 +10,8 @@ import java.util.Random;
 
 public class CameraShaker {
 
+    public static final String BLINK = "blink";
+
     public float time;
     Random random = new Random();
     float x, y;
@@ -41,7 +43,7 @@ public class CameraShaker {
             current_time += delta;
         } else {
             GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
-            ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer("blink").isVisible = false;
+            ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
             Main.stage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
         }
 
@@ -50,14 +52,13 @@ public class CameraShaker {
     public void blink() {
         this.blinkIntervalCounter--;
         LayerMapComponent lc = ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class);
-//        lc.getLayer("blink").isVisible = true;
         if (this.blinkIntervalCounter == 0 && blinkCounter != 0) {
-            lc.getLayer("blink").isVisible = !lc.getLayer("blink").isVisible;
+            lc.getLayer(BLINK).isVisible = !lc.getLayer(BLINK).isVisible;
             this.blinkIntervalCounter = blinkInterval;
             blinkCounter--;
         }
         if (blinkCounter == 0) {
-            lc.getLayer("blink").isVisible = false;
+            lc.getLayer(BLINK).isVisible = false;
         }
     }
 
@@ -67,6 +68,6 @@ public class CameraShaker {
         this.blinkCounter = amount;
 
         LayerMapComponent lc = ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class);
-        lc.getLayer("blink").isVisible = true;
+        lc.getLayer(BLINK).isVisible = true;
     }
 }
