@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.stages.ui.GameOverDialog;
+import com.mygdx.game.stages.ui.PauseDialog;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalSystem;
@@ -21,7 +22,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
 
@@ -29,25 +29,25 @@ public class GameScreenScript implements IScript {
 
     public static final String START_MESSAGE = "TAP TO START";
     public static final String DOUBLE_BJ_BADGE = "double_bj_badge";
-    public static final CameraShaker cameraShaker = new CameraShaker();
-    public static final String GAME_OVER_DIALOG = "game_over_dialog";
 
-    public static final String PAUSE_DIALOG = "dialog";
+    public static final CameraShaker cameraShaker = new CameraShaker();
+
     public static GameStage game;
     public static FlowerPublicComponent fpc;
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
+
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
     public static Entity background;
-    private static ItemWrapper gameItem;
     private static GameOverDialog gameOverDialog;
     public Random random = new Random();
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
     public DailyGoalSystem dailyGoalGenerator;
-    private Entity pauseDialog;
+    private ItemWrapper gameItem;
+    private PauseDialog pauseDialog;
 
     public GameScreenScript(GameStage game) {
         GameScreenScript.game = game;
@@ -55,18 +55,6 @@ public class GameScreenScript implements IScript {
 
     public static void showGameOver() {
         GameOverDialog.show();
-//        isGameOver = true;
-//
-//        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
-//        dialogTc.x = 300;
-//        dialogTc.y = 100;
-//
-//        Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild("label_timer_gameover").getEntity();
-//        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-//        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
-//
-//        TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
-//        tc.color.a = 0;
     }
 
     public static void angerBees() {
@@ -102,13 +90,15 @@ public class GameScreenScript implements IScript {
         initFlower();
         initPauseBtn();
         initBackButton();
-        initPauseDialog();
         initBackground();
         initPet();
         initDoubleBJbadge();
 
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
+
+        pauseDialog = new PauseDialog(gameItem);
+        pauseDialog.init();
     }
 
     private void initDoubleBJbadge (){
@@ -208,49 +198,9 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                pause();
+                pauseDialog.pause();
             }
         });
-    }
-
-    private void initPauseDialog() {
-        pauseDialog = gameItem.getChild(PAUSE_DIALOG).getEntity();
-        Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild("btn_close").getEntity();
-        closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                isPause = false;
-            }
-        });
-
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = -3000;
-        dialogTc.y = -1000;
-    }
-
-    private void pause() {
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = 300;
-        dialogTc.y = 100;
-
-        final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild("lbl_dialog").getEntity();
-        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-
-        StringBuilder goalsList = new StringBuilder();
-        for (DailyGoal g : fpc.goals) {
-            String achieved = g.achieved ? " achieved " : " not achieved ";
-            goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
-        }
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
-        isPause = true;
     }
 
     private void initFlower() {
@@ -324,7 +274,7 @@ public class GameScreenScript implements IScript {
         }
 
         gameOverDialog.update();
-        fade(pauseDialog, isPause);
+        pauseDialog.update();
     }
 
     private void spawnDandelion() {
