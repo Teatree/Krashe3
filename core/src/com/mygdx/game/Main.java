@@ -14,12 +14,11 @@ import com.mygdx.game.utils.SaveMngr;
 public class Main extends ApplicationAdapter {
 
 	public static GameStage stage;
-	Array<Viewport> viewports;
-	Array<String> names;
     public static int viewportWidth;
     public static int viewportHeight;
-
 	public static AdsController adsController;
+	Array<Viewport> viewports;
+	Array<String> names;
 
 	public Main(AdsController adsController){
         if (adsController != null) {
@@ -27,6 +26,42 @@ public class Main extends ApplicationAdapter {
         } else {
 			Main.adsController = new DummyAdsController();
         }
+	}
+
+	static public Array<String> getViewportNames() {
+		Array<String> names = new Array();
+		names.add("StretchViewport");
+		names.add("FillViewport");
+		names.add("FitViewport");
+		names.add("ExtendViewport: no max");
+		names.add("ExtendViewport: max");
+		names.add("ScreenViewport: 1:1");
+		names.add("ScreenViewport: 0.75:1");
+		names.add("ScalingViewport: none");
+		return names;
+	}
+
+	static public Array<Viewport> getViewports(Camera camera) {
+
+		int minWorldWidth = 2400;
+		int minWorldHeight = 1440;
+		int maxWorldWidth = 2400;
+		int maxWorldHeight = 1440;
+
+		Array<Viewport> viewports = new Array();
+		viewports.add(new StretchViewport(minWorldWidth, minWorldHeight, camera));
+		viewports.add(new FitViewport(minWorldWidth, minWorldHeight, camera));
+		viewports.add(new FillViewport(minWorldWidth, minWorldHeight, camera));
+		viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, maxWorldWidth, maxWorldHeight, camera));
+		viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, camera));
+		viewports.add(new ScreenViewport(camera));
+
+		ScreenViewport screenViewport = new ScreenViewport(camera);
+		screenViewport.setUnitsPerPixel(0.75f);
+		viewports.add(screenViewport);
+
+		viewports.add(new ScalingViewport(Scaling.none, minWorldWidth, minWorldHeight, camera));
+		return viewports;
 	}
 
 	@Override
@@ -44,11 +79,6 @@ public class Main extends ApplicationAdapter {
 		stage.setViewport(viewports.first());
 
 		Gdx.input.setInputProcessor(stage);
-
-//		if (adsController.isWifiConnected()) {
-//			adsController.showBannerAd();
-//		}
-
 	}
 
 	@Override
@@ -59,7 +89,7 @@ public class Main extends ApplicationAdapter {
 
 		stage.act();
         stage.getViewport().update(viewportWidth, viewportHeight, true);
-//		stage.setDebugAll(true);
+		stage.setDebugAll(true);
 		stage.draw();
 	}
 
@@ -80,41 +110,5 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		SaveMngr.saveStats(GameScreenScript.fpc);
-	}
-
-	static public Array<String> getViewportNames () {
-		Array<String> names = new Array();
-		names.add("StretchViewport");
-		names.add("FillViewport");
-		names.add("FitViewport");
-		names.add("ExtendViewport: no max");
-		names.add("ExtendViewport: max");
-		names.add("ScreenViewport: 1:1");
-		names.add("ScreenViewport: 0.75:1");
-		names.add("ScalingViewport: none");
-		return names;
-	}
-
-	static public Array<Viewport> getViewports (Camera camera) {
-
-		int minWorldWidth = 2400;
-		int minWorldHeight = 1440;
-		int maxWorldWidth = 2400;
-		int maxWorldHeight = 1440;
-
-		Array<Viewport> viewports = new Array();
-        viewports.add(new StretchViewport(minWorldWidth, minWorldHeight, camera));
-        viewports.add(new FitViewport(minWorldWidth, minWorldHeight, camera));
-        viewports.add(new FillViewport(minWorldWidth, minWorldHeight, camera));
-        viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, maxWorldWidth, maxWorldHeight, camera));
-        viewports.add(new ExtendViewport(minWorldWidth, minWorldHeight, camera));
-		viewports.add(new ScreenViewport(camera));
-
-		ScreenViewport screenViewport = new ScreenViewport(camera);
-		screenViewport.setUnitsPerPixel(0.75f);
-		viewports.add(screenViewport);
-
-		viewports.add(new ScalingViewport(Scaling.none, minWorldWidth, minWorldHeight, camera));
-		return viewports;
 	}
 }

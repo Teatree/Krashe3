@@ -7,10 +7,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.SceneLoader;
+import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.game.utils.SoundMgr.*;
-import static com.mygdx.game.utils.BackgroundMusicMgr.*;
+import static com.mygdx.game.utils.BackgroundMusicMgr.backgroundMusicMgr;
+import static com.mygdx.game.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
+import static com.mygdx.game.utils.SoundMgr.getSoundMgr;
 
 /**
  * Created by Teatree on 5/25/2015.
@@ -21,10 +23,6 @@ public class GameStage extends Stage{
     public static SceneLoader sceneLoader;
     private GameScreenScript gameScript;
 
-    public GameStage getInstance() {
-        return this;
-    }
-
     public GameStage() {
         sceneLoader = new SceneLoader();
         viewport = new FillViewport(1200, 786);
@@ -33,9 +31,13 @@ public class GameStage extends Stage{
         initMenu();
     }
 
+    public GameStage getInstance() {
+        return this;
+    }
+
     public void initGame() {
-        sceneLoader = new SceneLoader();
         sceneLoader.loadScene("MainScene", viewport);
+        sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (gameScript == null){
             gameScript = new GameScreenScript(this);
@@ -49,20 +51,13 @@ public class GameStage extends Stage{
     }
 
     public void initMenu(){
-        sceneLoader = new SceneLoader();
         sceneLoader.loadScene("MenuScene", viewport);
         MenuScreenScript menu = new MenuScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(menu);
         GlobalConstants.CUR_SCREEN = "MENU";
-
-
-//        backgroundMusicMgrInst.play();
-//
-//        GameScreenScript.isAngeredBeesMode = false;
     }
     public void initResult(){
-        sceneLoader = new SceneLoader();
         sceneLoader.loadScene("ResultScene", viewport);
         ResultScreenScript result = new ResultScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -70,17 +65,7 @@ public class GameStage extends Stage{
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
-//    public void initShowcase(){
-//        sceneLoader = new SceneLoader();
-//        sceneLoader.loadScene("ShowcaseScene", viewport);
-//        ShowcaseScreenScript result = new ShowcaseScreenScript(this);
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        root.addScript(result);
-//        GlobalConstants.CUR_SCREEN = "SHOW";
-//    }
-
     public void initShopMenu(){
-        sceneLoader = new SceneLoader();
         sceneLoader.loadScene("ShopScene", viewport);
         ShopScreenScript shop = new ShopScreenScript(this);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -90,7 +75,6 @@ public class GameStage extends Stage{
 
     public void update() {
         sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
-//        System.out.println(sceneLoader.getEngine());
     }
 
 }

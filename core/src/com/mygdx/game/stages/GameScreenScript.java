@@ -7,57 +7,77 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.system.*;
-import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.CameraShaker;
 import com.mygdx.game.utils.DailyGoalSystem;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
+import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.mygdx.game.utils.EffectUtils.*;
-import static com.mygdx.game.stages.GameStage.*;
 
 
 public class GameScreenScript implements IScript {
 
     public static final String START_MESSAGE = "TAP TO START";
     public static final String DOUBLE_BJ_BADGE = "double_bj_badge";
-
-    private static ItemWrapper gameItem;
+    public static final CameraShaker cameraShaker = new CameraShaker();
     public static GameStage game;
-    public Random random = new Random();
-
-    public int dandelionSpawnCounter;
-    public int cocoonSpawnCounter;
-
     public static FlowerPublicComponent fpc;
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
-
     public static int gameOverCounter = 240;
-
-    public static final CameraShaker cameraShaker = new CameraShaker();
     public static Entity background;
-
+    public static Entity gameOverDialog;
+    private static ItemWrapper gameItem;
+    public Random random = new Random();
+    public int dandelionSpawnCounter;
+    public int cocoonSpawnCounter;
     public DailyGoalSystem dailyGoalGenerator;
     private Entity pauseDialog;
-    public static Entity gameOverDialog;
 
     public GameScreenScript(GameStage game) {
-        this.game = game;
+        GameScreenScript.game = game;
+    }
+
+    public static void showGameOver() {
+        isGameOver = true;
+
+        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
+        dialogTc.x = 300;
+        dialogTc.y = 100;
+
+        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
+        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
+
+        TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
+        tc.color.a = 0;
+    }
+
+    public static void angerBees() {
+        BugSpawnSystem.isAngeredBeesMode = true;
+        GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
+        BugSpawnSystem.queenBeeOnStage = false;
+    }
+
+    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
     @Override
@@ -69,7 +89,7 @@ public class GameScreenScript implements IScript {
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
-        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+//        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
         Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
@@ -100,6 +120,7 @@ public class GameScreenScript implements IScript {
             tc.y = 647;
         }
     }
+
     private void initBackground() {
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary("backgroundLib");
         background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -161,7 +182,6 @@ public class GameScreenScript implements IScript {
             }
         });
     }
-
 
     private void initPauseBtn() {
         final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
@@ -321,21 +341,6 @@ public class GameScreenScript implements IScript {
         game.initResult();
     }
 
-    public static void showGameOver() {
-        isGameOver = true;
-
-        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
-        dialogTc.x = 300;
-        dialogTc.y = 100;
-
-        Entity gameOverTimerLbl = gameItem.getChild("game_over_dialog").getChild("label_timer_gameover").getEntity();
-        LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
-
-        TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
-        tc.color.a = 0;
-    }
-
     private void initFlower() {
         fpc.score = 0;
         Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
@@ -465,15 +470,5 @@ public class GameScreenScript implements IScript {
                 sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0) &&
                 (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()) == null ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0);
-    }
-
-    public static void angerBees() {
-        BugSpawnSystem.isAngeredBeesMode = true;
-        GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
-        BugSpawnSystem.queenBeeOnStage = false;
-    }
-
-    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 }
