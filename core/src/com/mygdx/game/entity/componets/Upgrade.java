@@ -6,34 +6,9 @@ import java.util.List;
 public class Upgrade extends ShopItem{
 
     public UpgradeType upgradeType;
+    public int counter;
 
-    @Override
-    public void apply(FlowerPublicComponent fpc) {
-        this.enabled = true;
-        if (upgradeType.equals(UpgradeType.DOUBLE_JUICE)){
-            fpc.doubleJuice = true;
-        }
-        if (upgradeType.equals(UpgradeType.PHOENIX)){
-            fpc.phoenix = true;
-        }
-    }
-
-    @Override
-    public void disable(FlowerPublicComponent fpc) {
-        this.enabled = false;
-    }
-
-    @Override
-    public void buyAndUse(FlowerPublicComponent fpc) {
-        this.bought = true;
-        apply(fpc);
-    }
-
-    public enum UpgradeType {
-        PHOENIX, DOUBLE_JUICE
-    }
-
-    public static List<Upgrade> getAllUpgrades (){
+    public static List<Upgrade> getAllUpgrades() {
         List<Upgrade> all = new ArrayList<>();
         all.add(getPhoenix());
         all.add(getBJDouble());
@@ -46,7 +21,7 @@ public class Upgrade extends ShopItem{
         phoenix.cost = 13;
         phoenix.name = "phoenix";
         phoenix.bought = false;
-        phoenix.description = "You will not die! ... once...";
+        phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
         phoenix.currencyType = CurrencyType.HARD;
         return phoenix;
@@ -62,5 +37,36 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = CurrencyType.HARD;
         return bjd;
+    }
+
+    @Override
+    public void apply(FlowerPublicComponent fpc) {
+        this.enabled = true;
+        fpc.upgrades.add(this);
+//        if (upgradeType.equals(UpgradeType.DOUBLE_JUICE)){
+//            fpc.upgrades.add(this);
+//        }
+//        if (upgradeType.equals(UpgradeType.PHOENIX)){
+//            fpc.phoenix = true;
+//        }
+    }
+
+    @Override
+    public void disable(FlowerPublicComponent fpc) {
+        this.enabled = false;
+    }
+
+    @Override
+    public void buyAndUse(FlowerPublicComponent fpc) {
+        this.bought = true;
+        apply(fpc);
+    }
+
+    public void use(FlowerPublicComponent fpc) {
+
+    }
+
+    public enum UpgradeType {
+        PHOENIX, DOUBLE_JUICE
     }
 }

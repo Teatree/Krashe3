@@ -6,24 +6,21 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
-import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.*;
-import static com.mygdx.game.utils.GlobalConstants.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.stages.GameStage.*;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.BugPool.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 
 public class BugSystem extends IteratingSystem {
@@ -31,11 +28,9 @@ public class BugSystem extends IteratingSystem {
     public static final String CHARGING_ANI = "Charging";
     public static final String IDLE_ANI = "Idle";
     public static final String PREPARING_ANI = "Preparing";
-
+    boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-
-    boolean canPlayAnimation = true;
 
     public BugSystem(){
         super(Family.all(BugComponent.class).get());
@@ -65,7 +60,7 @@ public class BugSystem extends IteratingSystem {
 
                 if (checkFlowerCollision(fcc, bc)) {
                     bc.state = DEAD;
-                    fcc.score += fcc.doubleJuice ? 2*bc.points : bc.points;
+                    fcc.score += fcc.haveBugJuiceDouble() ? 2 * bc.points : bc.points;
                     fcc.totalScore += bc.points;
 
                     if (bc.type.equals(BugType.QUEENBEE)) {

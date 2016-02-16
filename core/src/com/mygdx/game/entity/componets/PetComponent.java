@@ -27,7 +27,7 @@ public class PetComponent extends ShopItem implements Component {
     public State state;
     public Rectangle boundsRect;
     public float velocity;
-    public int animationCounter;
+    public int outsideCounter;
 
     public int amountBugsBeforeCharging;
     public int totalEatenBugs;
@@ -44,14 +44,7 @@ public class PetComponent extends ShopItem implements Component {
         currencyType = CurrencyType.HARD;
     }
 
-    public void init() {
-        this.state = State.SPAWNING;
-        this.boundsRect = new Rectangle();
-        this.animationCounter = SPAWN_DURATION;
-        eatenBugsCounter = 0;
-    }
-
-    public PetComponent (SaveMngr.PetJson pet){
+    public PetComponent(SaveMngr.PetJson pet) {
         currencyType = CurrencyType.HARD;
         this.name = pet.name;
         this.enabled = pet.activated;
@@ -63,6 +56,30 @@ public class PetComponent extends ShopItem implements Component {
         this.totalEatenBugs = pet.totalEatenBugs;
         this.shopIcon = pet.shopIcon;
         init();
+    }
+
+    public static int getNewPositionY() {
+        return new Random().nextInt(Y_SPAWN_POSITION_MAX - Y_SPAWN_POSITION_MIN) + Y_SPAWN_POSITION_MIN;
+    }
+
+    public static void eatThatBug(PetComponent pet, Rectangle bugRectangle) {
+        if (pet.boundsRect.overlaps(bugRectangle)) {
+            pet.eatenBugsCounter++;
+            pet.totalEatenBugs++;
+            pet.duringGameEatenBugs++;
+
+            if (!pet.state.equals(State.DASH)) {
+                pet.state = State.BITE;
+                pet.isCollision = true;
+            }
+        }
+    }
+
+    public void init() {
+        this.state = State.SPAWNING;
+        this.boundsRect = new Rectangle();
+//        this.animationCounter = SPAWN_DURATION;
+        eatenBugsCounter = 0;
     }
 
     @Override
@@ -83,6 +100,10 @@ public class PetComponent extends ShopItem implements Component {
         apply(fpc);
     }
 
+    public void setOutsideStateDuration() {
+        this.outsideCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
+    }
+
     public enum State {
         SPAWNING,
         IDLE,
@@ -90,28 +111,6 @@ public class PetComponent extends ShopItem implements Component {
         TAPPED,
         DASH,
         OUTSIDE
-    }
-
-    public void setOutsideStateDuration(){
-        this.animationCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
-    }
-
-    public static int getNewPositionY (){
-        return new Random().nextInt(Y_SPAWN_POSITION_MAX - Y_SPAWN_POSITION_MIN) + Y_SPAWN_POSITION_MIN;
-    }
-
-    public static void eatThatBug(PetComponent pet, Rectangle bugRectangle) {
-        if (pet.boundsRect.overlaps(bugRectangle)){
-            pet.eatenBugsCounter++;
-            pet.totalEatenBugs++;
-            pet.duringGameEatenBugs++;
-
-            if (!pet.state.equals(State.DASH)) {
-                pet.state = State.BITE;
-                pet.isCollision = true;
-                pet.animationCounter = DEFAULT_BITE_DURATION;
-            }
-        }
     }
 
 }

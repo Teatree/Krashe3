@@ -20,9 +20,10 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.PetComponent.State.*;
+import static com.mygdx.game.entity.componets.PetComponent.X_SPAWN_POSITION;
 import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;
-import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.mygdx.game.entity.componets.PetComponent.*;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.game.utils.GlobalConstants.FPS;
 
 public class PetSystem extends IteratingSystem {
 
@@ -47,7 +48,8 @@ public class PetSystem extends IteratingSystem {
         dc.height = 100;
         updateRect(pc, tc, dc);
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
-            pc.animationCounter--;
+            sc.player.speed = FPS;
+//            pc.animationCounter--;
 
             if (pc.state.equals(TAPPED) ) {
                 if (tc.x >= 1300) {
@@ -66,7 +68,7 @@ public class PetSystem extends IteratingSystem {
             }
             if (pc.state.equals(BITE)){
                 setBiteAnimation(sc);
-                if (pc.animationCounter == 0) {
+                if (isAnimationFinished(sc)) {
                     if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
                         pc.state = IDLE;
                         setIdleAnimation(sc);
@@ -81,7 +83,7 @@ public class PetSystem extends IteratingSystem {
             if (pc.state.equals(SPAWNING)) {
                 setSpawnAnimation(sc);
                 pc.velocity = 0;
-                if (pc.animationCounter == 0) {
+                if (isAnimationFinished(sc)) {
                     pc.state = IDLE;
                     canPlayAnimation = true;
                     pc.setOutsideStateDuration();
@@ -101,10 +103,10 @@ public class PetSystem extends IteratingSystem {
                 pc.setOutsideStateDuration();
             }
 
-            if (pc.state.equals(OUTSIDE) && pc.animationCounter <= 0) {
+            if (pc.state.equals(OUTSIDE) && isAnimationFinished(sc)) {
                 pc.state = SPAWNING;
                 pc.eatenBugsCounter = 0;
-                pc.animationCounter = PetComponent.SPAWN_DURATION;
+//                pc.animationCounter = PetComponent.SPAWN_DURATION;
                 tc.x = X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
                 setSpawnAnimation(sc);
@@ -116,7 +118,7 @@ public class PetSystem extends IteratingSystem {
                     && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)){
                 pc.state = TAPPED;
                 setTappedAnimation(sc);
-                pc.animationCounter = TAP_DURATION;
+//                pc.animationCounter = TAP_DURATION;
 
                 EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
@@ -126,8 +128,14 @@ public class PetSystem extends IteratingSystem {
                 ac.dataArray.add(Actions.moveTo(1300, tc.y,0.7f));
                 entity.add(ac);
             }
+        } else {
+            sc.player.speed = 0;
         }
         GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
+    }
+
+    private boolean isAnimationFinished(SpriterComponent sc) {
+        return sc.player.getTime() >= sc.player.getAnimation().length - 20;
     }
 
     public void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc) {

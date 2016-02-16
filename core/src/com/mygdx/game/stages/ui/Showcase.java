@@ -1,7 +1,8 @@
-package com.mygdx.game.stages;
+package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.game.stages.ResultScreenScript;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -12,11 +13,11 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
-import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
-import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.EffectUtils.*;
-import static com.mygdx.game.utils.GlobalConstants.*;
+import static com.mygdx.game.stages.ResultScreenScript.show;
+import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
+import static com.mygdx.game.utils.EffectUtils.fadeChildren;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 
 public class Showcase {
@@ -26,13 +27,10 @@ public class Showcase {
     public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
     public static final String INTRO = "intro";
     public static final String SHOWCASE = "showcase";
-
+    public TransformComponent tcShowCase;
     private ItemWrapper screenItem;
     private ResultScreenScript resultScreen;
-
     private Entity showcaseE;
-
-    public TransformComponent tcShowCase;
     private TransformComponent tcItem;
     private Entity itemIcon;
 

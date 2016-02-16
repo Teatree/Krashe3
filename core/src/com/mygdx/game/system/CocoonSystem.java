@@ -58,7 +58,7 @@ public class CocoonSystem extends IteratingSystem {
 
             if (cc.state.equals(SPAWNING)) {
 
-                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
+                if (isAnimationFinished()) {
                     cc.state = IDLE;
                     sc.player.setAnimation(1);
                     sc.player.speed = 0;
@@ -66,7 +66,7 @@ public class CocoonSystem extends IteratingSystem {
             }
 
             if (cc.state == HIT) {
-                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
+                if (isAnimationFinished()) {
                     if (cc.hitCounter >= GlobalConstants.COCOON_HIT_AMOUNT) {
                         cc.state = DEAD;
                         spawnButterfly();
@@ -83,11 +83,15 @@ public class CocoonSystem extends IteratingSystem {
             if (cc.state == DEAD) {
 //                GameStage.sceneLoader.getEngine().removeEntity(entity);
                 sc.player.setAnimation(3);
-                if (sc.player.getTime() >= sc.player.getAnimation().length-20) {
+                if (isAnimationFinished()) {
                     entity.getComponent(TransformComponent.class).y = -500;
                 }
             }
         }
+    }
+
+    public boolean isAnimationFinished() {
+        return sc.player.getTime() >= sc.player.getAnimation().length - 20;
     }
 
     public void hit(CocoonComponent cc) {
@@ -95,11 +99,11 @@ public class CocoonSystem extends IteratingSystem {
         cc.canHit = true;
         if (cc.state != DEAD) {
             cc.state = HIT;
-            cc.hitCounter+=1;
+//            cc.hitCounter+=1;
             System.out.println("hit counter: " + cc.hitCounter);
             cc.canHit = true;
             sc.player.speed = 24;
-            sc.player.setAnimation(cc.hitCounter);
+            sc.player.setAnimation(cc.hitCounter++);
         }
     }
 

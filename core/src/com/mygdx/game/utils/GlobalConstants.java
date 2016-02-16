@@ -1,7 +1,5 @@
 package com.mygdx.game.utils;
 
-import com.badlogic.gdx.Gdx;
-
 public abstract class GlobalConstants {
     public static final int ANGERED_BEES_MODE_DURATION = 3000;
 
@@ -35,7 +33,9 @@ public abstract class GlobalConstants {
 
     public static final int FAR_FAR_AWAY_X = 1500;
     public static final int FAR_FAR_AWAY_Y = 1500;
-
-
+    //Button states
+    public static final String BTN_NORMAL = "normal";
+    public static final String BTN_PRESSED = "pressed";
     public static String CUR_SCREEN = "MENU";
+
 }

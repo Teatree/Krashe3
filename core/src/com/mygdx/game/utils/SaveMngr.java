@@ -5,7 +5,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.entity.componets.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SaveMngr {
 
@@ -19,11 +22,11 @@ public class SaveMngr {
         GameStats gameStats = new GameStats();
         gameStats.totalScore = fc.totalScore;
         gameStats.bestScore = fc.bestScore;
-        gameStats.noAds = fc.noAds;
-        gameStats.noMusic = fc.noMusic;
-        gameStats.noSound = fc.noSound;
-        gameStats.doubleJuice = fc.doubleJuice;
-        gameStats.phoenix = fc.phoenix;
+        gameStats.noAds = fc.settings.noAds;
+        gameStats.noMusic = fc.settings.noMusic;
+        gameStats.noSound = fc.settings.noSound;
+        gameStats.doubleJuice = fc.haveBugJuiceDouble();
+        gameStats.phoenix = fc.havePhoenix();
 //        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
         saveOtherPets(fc);
@@ -70,11 +73,16 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
-            fc.noAds = gameStats.noAds;
-            fc.noMusic = gameStats.noMusic;
-            fc.noSound = gameStats.noSound;
-            fc.doubleJuice = gameStats.doubleJuice;
-            fc.phoenix = gameStats.phoenix;
+            fc.settings.noAds = gameStats.noAds;
+            fc.settings.noMusic = gameStats.noMusic;
+            fc.settings.noSound = gameStats.noSound;
+
+            if (gameStats.doubleJuice) {
+                fc.upgrades.add(Upgrade.getBJDouble());
+            }
+            if (gameStats.phoenix) {
+                fc.upgrades.add(Upgrade.getPhoenix());
+            }
 //            try {
 //                Calendar lastGoalsDate = Calendar.getInstance();
 //                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
@@ -132,92 +140,6 @@ public class SaveMngr {
             }
         }
         return petComps;
-    }
-
-    private static class GameStats {
-        public boolean noAds;
-        public boolean noSound;
-        public boolean noMusic;
-        public long bestScore;
-        public long totalScore;
-        public String lastGoalsDate;
-        public List<DailyGoalStats> goals = new ArrayList<>();
-        public PetJson currentPet;
-        public boolean doubleJuice;
-        public boolean phoenix;
-    }
-
-    private static class DailyGoalStats{
-        public int n;
-        public String type;
-        public String description;
-        public boolean achieved;
-    }
-
-    public static class VanityJson {
-        public Map<String, String> assetsToChange = new HashMap<>();
-
-        public String icon;
-        public String shopIcon;
-        public String name;
-        public long cost;
-        public String description;
-        public boolean bought;
-        public boolean advertised;
-        public boolean enabled;
-        public boolean floatingText;
-        public int bugsSpawnAmount;
-        public int attackSpeed;
-        public int cocoonChance;
-        public int dandelionChance;
-        public int angeredBeesDuration;
-        public PetJson pet;
-
-        public VanityJson() {
-        }
-
-        public VanityJson(VanityComponent vc) {
-            this.name = vc.name;
-            this.cost = vc.cost;
-            this.shopIcon = vc.shopIcon;
-            this.assetsToChange = vc.assetsToChange;
-            this.description = vc.description;
-            this.bought = vc.bought;
-            this.advertised = vc.advertised;
-            this.enabled = vc.enabled;
-            this.floatingText = vc.floatingText;
-            this.bugsSpawnAmount = vc.bugsSpawnAmount;
-            this.attackSpeed = vc.attackSpeed;
-            this.cocoonChance = vc.cocoonChance;
-            this.dandelionChance = vc.dandelionChance;
-            this.angeredBeesDuration = vc.angeredBeesDuration;
-            this.pet = vc.pet != null ? new PetJson(vc.pet) : null;
-        }
-    }
-
-    public static class PetJson {
-        public String name;
-        public boolean bought;
-        public boolean activated;
-        public long cost;
-        public boolean tryPeriod;
-        public int tryPeriodDuration;
-        public int amountBugsBeforeCharging;
-        public int totalEatenBugs;
-        public String shopIcon;
-
-        public PetJson(){}
-        public PetJson(PetComponent petComponent) {
-            this.name = petComponent.name;
-            this.activated = petComponent.enabled;
-            this.bought = petComponent.bought;
-            this.cost = petComponent.cost;
-            this.tryPeriod = petComponent.tryPeriod;
-            this.tryPeriodDuration = petComponent.tryPeriodDuration;
-            this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
-            this.totalEatenBugs = petComponent.totalEatenBugs;
-            this.shopIcon = petComponent.shopIcon;
-        }
     }
 
     private static void writeFile(String fileName, String s) {
@@ -318,7 +240,7 @@ public class SaveMngr {
         writeFile(VANITIES_FILE, jsonVanityObj.toJson(vanityStatses));
     }
 
-    public static void generatePetsJson(){
+    public static void generatePetsJson() {
         PetJson dummyPet = new PetJson();
 
         dummyPet.activated = true;
@@ -336,5 +258,93 @@ public class SaveMngr {
         Json jsonPetsObj = new Json();
 
         writeFile(PETS_FILE, jsonPetsObj.toJson(allPets));
+    }
+
+    private static class GameStats {
+        public boolean noAds;
+        public boolean noSound;
+        public boolean noMusic;
+        public long bestScore;
+        public long totalScore;
+        public String lastGoalsDate;
+        public List<DailyGoalStats> goals = new ArrayList<>();
+        public PetJson currentPet;
+        public boolean doubleJuice;
+        public boolean phoenix;
+    }
+
+    private static class DailyGoalStats{
+        public int n;
+        public String type;
+        public String description;
+        public boolean achieved;
+    }
+
+    public static class VanityJson {
+        public Map<String, String> assetsToChange = new HashMap<>();
+
+        public String icon;
+        public String shopIcon;
+        public String name;
+        public long cost;
+        public String description;
+        public boolean bought;
+        public boolean advertised;
+        public boolean enabled;
+        public boolean floatingText;
+        public int bugsSpawnAmount;
+        public int attackSpeed;
+        public int cocoonChance;
+        public int dandelionChance;
+        public int angeredBeesDuration;
+        public PetJson pet;
+
+        public VanityJson() {
+        }
+
+        public VanityJson(VanityComponent vc) {
+            this.name = vc.name;
+            this.cost = vc.cost;
+            this.shopIcon = vc.shopIcon;
+            this.assetsToChange = vc.assetsToChange;
+            this.description = vc.description;
+            this.bought = vc.bought;
+            this.advertised = vc.advertised;
+            this.enabled = vc.enabled;
+            this.floatingText = vc.floatingText;
+            this.bugsSpawnAmount = vc.bugsSpawnAmount;
+            this.attackSpeed = vc.attackSpeed;
+            this.cocoonChance = vc.cocoonChance;
+            this.dandelionChance = vc.dandelionChance;
+            this.angeredBeesDuration = vc.angeredBeesDuration;
+            this.pet = vc.pet != null ? new PetJson(vc.pet) : null;
+        }
+    }
+
+    public static class PetJson {
+        public String name;
+        public boolean bought;
+        public boolean activated;
+        public long cost;
+        public boolean tryPeriod;
+        public int tryPeriodDuration;
+        public int amountBugsBeforeCharging;
+        public int totalEatenBugs;
+        public String shopIcon;
+
+        public PetJson() {
+        }
+
+        public PetJson(PetComponent petComponent) {
+            this.name = petComponent.name;
+            this.activated = petComponent.enabled;
+            this.bought = petComponent.bought;
+            this.cost = petComponent.cost;
+            this.tryPeriod = petComponent.tryPeriod;
+            this.tryPeriodDuration = petComponent.tryPeriodDuration;
+            this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
+            this.totalEatenBugs = petComponent.totalEatenBugs;
+            this.shopIcon = petComponent.shopIcon;
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.stages.ui.Showcase;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -15,42 +16,35 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
-import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.stages.GameStage.*;
-import static com.mygdx.game.utils.GlobalConstants.*;
+import static com.mygdx.game.stages.GameScreenScript.fpc;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class ResultScreenScript implements IScript {
 
     public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final double PERCENTS_TO_OFFER_AD = 0.01;
-
-
-    private GameStage stage;
-    private ItemWrapper resultScreenItem;
-
     public static VanityComponent showCaseVanity;
     public static boolean show;
     public static boolean isWasShowcase;
-    private Entity adsBtn;
-
-    public ResultScreenScript(GameStage stage) {
-        this.stage = stage;
-    }
-
-    Entity txtEarnedE;
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
     public Entity progressBarE;
-
+    Entity txtEarnedE;
     LabelComponent earnedLabel;
-
     boolean showcasePopup;
     long nextVanityCost;
     int i = 0;
     int j = 0;
-
+    private GameStage stage;
+    private ItemWrapper resultScreenItem;
+    private Entity adsBtn;
     private Showcase showcase;
+
+    public ResultScreenScript(GameStage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void init(Entity item) {

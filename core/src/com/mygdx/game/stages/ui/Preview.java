@@ -1,13 +1,14 @@
-package com.mygdx.game.stages;
+package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
+import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -53,13 +54,13 @@ public class Preview {
     public Entity lbl_price;
     public Entity lbl_not_enough;
     public Entity bg;
+    public Entity shadowE;
     private ItemWrapper shopItem;
     private Entity iconE;
     private Entity btnLeft;
     private Entity btnNext;
     private Rectangle tagBoundingBox;
     private ShopItem vc;
-    public Entity shadowE;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;

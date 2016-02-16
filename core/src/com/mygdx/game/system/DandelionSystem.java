@@ -9,20 +9,20 @@ import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.GlobalConstants.*;
-import static com.badlogic.gdx.graphics.g2d.Animation.*;
-import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.*;
+import static com.mygdx.game.utils.GlobalConstants.CUR_SCREEN;
+import static com.mygdx.game.utils.GlobalConstants.FPS;
 
 
 /**
@@ -42,7 +42,7 @@ public class DandelionSystem extends IteratingSystem {
     private int idleCounter;
 
     //counts time from start of animation.
-    //Use to check if Animation finished in NORMAL mode
+    //Use to check if Animation finished in BTN_NORMAL mode
     //Should be set to 0 when current animation finished
     private float stateTime;
 

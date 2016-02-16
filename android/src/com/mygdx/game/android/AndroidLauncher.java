@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
-
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.google.android.gms.ads.*;
-import com.mygdx.game.Main;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.mygdx.game.AdsController;
+import com.mygdx.game.Main;
 import com.mygdx.game.stages.GameScreenScript;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController {
@@ -87,7 +87,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null && !GameScreenScript.fpc.noAds) {
+                if (then != null && !GameScreenScript.fpc.settings.noAds) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {

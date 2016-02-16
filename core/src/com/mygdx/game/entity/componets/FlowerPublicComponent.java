@@ -8,13 +8,7 @@ import java.util.List;
 
 public class FlowerPublicComponent implements Component {
 
-    //upgrades
-    public boolean doubleJuice;
-    public boolean phoenix;
-
-    public boolean noAds = false;
-    public boolean noSound;
-    public boolean noMusic;
+    public GameSettings settings = new GameSettings();
 
     public Rectangle boundsRect = new Rectangle();
     public boolean isCollision;
@@ -26,6 +20,7 @@ public class FlowerPublicComponent implements Component {
     public List<VanityComponent> vanities = new ArrayList<>();
     public List<DailyGoal> goals = new ArrayList<>();
     public List<PetComponent> pets = new ArrayList<>();
+    public List<Upgrade> upgrades = new ArrayList<>();
 
     public PetComponent currentPet;
 
@@ -50,6 +45,41 @@ public class FlowerPublicComponent implements Component {
 
     public boolean flowerCollisionCheck(Rectangle rectangle) {
         return boundsRect.overlaps(rectangle);
+    }
+
+    public boolean haveBugJuiceDouble() {
+        for (Upgrade u : upgrades) {
+            if (u.upgradeType.equals(Upgrade.UpgradeType.DOUBLE_JUICE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canUsePhoenix() {
+        for (Upgrade u : upgrades) {
+            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX) && u.counter <= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean havePhoenix() {
+        for (Upgrade u : upgrades) {
+            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void resetPhoenix() {
+        for (Upgrade u : upgrades) {
+            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX)) {
+                u.counter = 0;
+            }
+        }
     }
 }
           

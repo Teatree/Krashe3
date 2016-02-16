@@ -1,7 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.mygdx.game.system.ParticleLifespanSystem;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -12,8 +11,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
  */
 public class MenuScreenScript implements IScript {
 
-    private GameStage stage;
     public IResourceRetriever ir;
+    private GameStage stage;
 
     public MenuScreenScript(GameStage stage) {
         this.stage = stage;
@@ -41,7 +40,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                GameScreenScript.fpc.noAds = true;
+                GameScreenScript.fpc.settings.noAds = true;
             }
         });
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener(){
