@@ -45,7 +45,7 @@ public class FlowerSystem extends IteratingSystem {
         fcc.boundsRect.y = (int) tc.y + 95 * tc.scaleY;
         fcc.boundsRect.width = 150 * tc.scaleX;
         fcc.boundsRect.height = 150 * tc.scaleY;
-        if (fc.state.equals(IDLE) || fc.state.equals(IDLE_BITE)) {
+        if (FlowerComponent.state.equals(IDLE) || FlowerComponent.state.equals(IDLE_BITE)) {
             fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
             fcc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
         }
@@ -61,9 +61,9 @@ public class FlowerSystem extends IteratingSystem {
 //                setBiteIdleAnimation(sc);
 //            }
 
-            if (fc.state == IDLE) {
+            if (FlowerComponent.state == IDLE) {
                 if (fcc.isCollision) {
-                    fc.state = IDLE_BITE;
+                    FlowerComponent.state = IDLE_BITE;
                     fcc.isCollision = false;
 
                     soundMgr.play("eat");
@@ -71,73 +71,83 @@ public class FlowerSystem extends IteratingSystem {
                     setIdleAnimation(sc);
                 }
             }
-            if (Gdx.input.justTouched() && fc.state == IDLE) {
-                fc.state = TRANSITION;
+            if (Gdx.input.justTouched() && FlowerComponent.state == IDLE) {
+                FlowerComponent.state = TRANSITION;
             }
 
             if (Gdx.input.justTouched()
-                    && fc.state != TRANSITION
-                    && fc.state != ATTACK) {
-                fc.state = ATTACK;
+                    && FlowerComponent.state != TRANSITION
+                    && FlowerComponent.state != ATTACK) {
+                FlowerComponent.state = ATTACK;
                 setAttackAnimation(sc);
             }
 
-            if (fc.state == TRANSITION) {
+            if (FlowerComponent.state == TRANSITION) {
                 setTransitionAnimation(sc);
                 if (isAnimationFinished(sc)) {
                     setAttackAnimation(sc);
-                    fc.state = ATTACK;
+                    FlowerComponent.state = ATTACK;
                 }
             }
 
-            if (fc.state == TRANSITION_BACK) {
+            if (FlowerComponent.state == TRANSITION_BACK) {
                 setTransitionBackAnimation(sc);
 
                 if (Gdx.input.justTouched()) {  // This is added for quick breaking of an animation
                     setAttackAnimation(sc);
-                    fc.state = ATTACK;
+                    FlowerComponent.state = ATTACK;
                 }
 
                 if (sc.player.getTime() > 20 && sc.player.getTime() < 62) {
                     setIdleAnimation(sc);
-                    fc.state = IDLE;
+                    FlowerComponent.state = IDLE;
                 }
             }
 
-            if (fc.state == ATTACK || fc.state == RETREAT) {
+            if (FlowerComponent.state == ATTACK || FlowerComponent.state == RETREAT) {
                 if (fcc.isCollision) {
-                    fc.state = ATTACK_BITE;
+                    FlowerComponent.state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
                     fcc.isCollision = false;
 
                     soundMgr.play("eat");
                 } else {
                     move(tc, fc);
-                    if (tc.y >= 660 && fc.state == ATTACK) {
-                        fc.state = RETREAT;
+                    if (tc.y >= 660 && FlowerComponent.state == ATTACK) {
+                        FlowerComponent.state = RETREAT;
                     }
-                    if (tc.y <= 106 && fc.state == RETREAT) {
+                    if (tc.y <= 106 && FlowerComponent.state == RETREAT) {
                         sc.player.setTime(sc.player.getAnimation().length);
-                        fc.state = TRANSITION_BACK;
+                        FlowerComponent.state = TRANSITION_BACK;
                     }
                 }
             }
 
-            if (fc.state == ATTACK_BITE || fc.state == IDLE_BITE) {
+            if (FlowerComponent.state == ATTACK_BITE || FlowerComponent.state == IDLE_BITE) {
 
-                if (fc.state == ATTACK_BITE) {
+                if (FlowerComponent.state == ATTACK_BITE) {
                     if (isAnimationFinished(sc)) {
-                        fc.state = RETREAT;
+                        FlowerComponent.state = RETREAT;
                         setAttackAnimation(sc);
                     }
 
                     if (fcc.isCollision && canInterruptAttackBite(sc)) {
-                        fc.state = ATTACK_BITE;
+                        FlowerComponent.state = ATTACK_BITE;
                         setBiteAttackAnimation(sc);
                     }
                 }
-                if (fc.state == IDLE_BITE && isAnimationFinished(sc)) {
-                    fc.state = IDLE;
+                if (FlowerComponent.state == IDLE_BITE && isAnimationFinished(sc)) {
+                    FlowerComponent.state = IDLE;
+                    setIdleAnimation(sc);
+                }
+            }
+
+            if (FlowerComponent.state.equals(PHOENIX)) {
+                tc.x = 988;
+                tc.y = 105;
+                setBiteIdleAnimation(sc);
+                if (isAnimationFinished(sc)) {
+                    FlowerComponent.state = IDLE;
                     setIdleAnimation(sc);
                 }
             }
@@ -185,6 +195,6 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void move(TransformComponent tc, FlowerComponent fc) {
-        tc.y += fc.state == ATTACK ? FlowerComponent.FLOWER_MOVE_SPEED : -FlowerComponent.FLOWER_MOVE_SPEED;
+        tc.y += FlowerComponent.state == ATTACK ? FlowerComponent.FLOWER_MOVE_SPEED : -FlowerComponent.FLOWER_MOVE_SPEED;
     }
 }

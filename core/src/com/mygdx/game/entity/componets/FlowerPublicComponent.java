@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FlowerPublicComponent implements Component {
 
@@ -20,7 +22,7 @@ public class FlowerPublicComponent implements Component {
     public List<VanityComponent> vanities = new ArrayList<>();
     public List<DailyGoal> goals = new ArrayList<>();
     public List<PetComponent> pets = new ArrayList<>();
-    public List<Upgrade> upgrades = new ArrayList<>();
+    public Map<Upgrade.UpgradeType, Upgrade> upgrades = new HashMap<>();
 
     public PetComponent currentPet;
 
@@ -48,37 +50,22 @@ public class FlowerPublicComponent implements Component {
     }
 
     public boolean haveBugJuiceDouble() {
-        for (Upgrade u : upgrades) {
-            if (u.upgradeType.equals(Upgrade.UpgradeType.DOUBLE_JUICE)) {
-                return true;
-            }
-        }
-        return false;
+        return upgrades.get(Upgrade.UpgradeType.DOUBLE_JUICE) != null;
     }
 
     public boolean canUsePhoenix() {
-        for (Upgrade u : upgrades) {
-            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX) && u.counter <= 0) {
-                return true;
-            }
-        }
-        return false;
+        Upgrade phoenix = upgrades.get(Upgrade.UpgradeType.PHOENIX);
+        return phoenix != null && phoenix.counter <= 0;
     }
 
     public boolean havePhoenix() {
-        for (Upgrade u : upgrades) {
-            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX)) {
-                return true;
-            }
-        }
-        return false;
+        return upgrades.get(Upgrade.UpgradeType.PHOENIX) != null;
     }
 
     public void resetPhoenix() {
-        for (Upgrade u : upgrades) {
-            if (u.upgradeType.equals(Upgrade.UpgradeType.PHOENIX)) {
-                u.counter = 0;
-            }
+        Upgrade phoenix = upgrades.get(Upgrade.UpgradeType.PHOENIX);
+        if (phoenix != null) {
+            phoenix.counter = 0;
         }
     }
 }

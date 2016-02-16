@@ -4,6 +4,7 @@ package com.mygdx.game.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
+import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.system.BugSpawnSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -20,6 +21,8 @@ import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 public class GameOverDialog {
 
     public static final String GAME_OVER_DIALOG = "game_over_dialog";
+    public static final String BTN_WATCH_VIDEO = "btn_watch_video";
+    public static final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
     public static Entity gameOverDialog;
     public static int gameOverCounter = 240;
     private static ItemWrapper gameItem;
@@ -44,14 +47,18 @@ public class GameOverDialog {
         tc.color.a = 0;
     }
 
+    public static boolean releaseAllBugs() {
+        return isGameOver && gameOverCounter <= 0 && !Upgrade.blowUpAllBugs;
+    }
+
     public void initGameOverDialog() {
         gameOverDialog = gameItem.getChild(GAME_OVER_DIALOG).getEntity();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
         dialogTc.x = -3000;
         dialogTc.y = -1000;
 
-        final Entity watchAdBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild("btn_watch_video").getEntity();
-        final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild("lbl_turn_on_wifi").getEntity();
+        final Entity watchAdBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
+        final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
         turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
         watchAdBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -113,14 +120,27 @@ public class GameOverDialog {
             if (gameOverCounter % 48 == 0) {
                 gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
             }
-
-            if (gameOverCounter <= 0) {
-                finishGame();
-            }
+            finishGame();
         }
     }
 
     private void finishGame() {
+        if (gameOverCounter <= 0) {
+            if (!fpc.canUsePhoenix()) {
+                resetGameData();
+                game.initResult();
+            } else {
+                usePhoenix();
+            }
+        }
+    }
+
+    public void usePhoenix() {
+        fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(fpc);
+        continueGame(gameOverDialog.getComponent(TransformComponent.class));
+    }
+
+    private void resetGameData() {
         gameOverCounter = 240;
         isGameOver = false;
         isStarted = false;
@@ -130,6 +150,6 @@ public class GameOverDialog {
         if (fpc.bestScore < fpc.score) {
             fpc.bestScore = fpc.score;
         }
-        game.initResult();
+        fpc.resetPhoenix();
     }
 }

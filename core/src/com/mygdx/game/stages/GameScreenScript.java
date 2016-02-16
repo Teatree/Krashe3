@@ -295,7 +295,6 @@ public class GameScreenScript implements IScript {
             DandelionComponent dc = new DandelionComponent();
             dc.state = DandelionComponent.State.GROWING;
             dandelionEntity.add(dc);
-//            sceneLoader.getEngine().addEntity(dandelionEntity);
         }
     }
 

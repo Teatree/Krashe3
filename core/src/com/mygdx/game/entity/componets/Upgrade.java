@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Upgrade extends ShopItem{
 
+    public static boolean blowUpAllBugs;
     public UpgradeType upgradeType;
     public int counter;
 
@@ -42,7 +43,7 @@ public class Upgrade extends ShopItem{
     @Override
     public void apply(FlowerPublicComponent fpc) {
         this.enabled = true;
-        fpc.upgrades.add(this);
+        fpc.upgrades.put(this.upgradeType, this);
 //        if (upgradeType.equals(UpgradeType.DOUBLE_JUICE)){
 //            fpc.upgrades.add(this);
 //        }
@@ -62,8 +63,10 @@ public class Upgrade extends ShopItem{
         apply(fpc);
     }
 
-    public void use(FlowerPublicComponent fpc) {
-
+    public void usePhoenix(FlowerPublicComponent fpc) {
+        blowUpAllBugs = true;
+        FlowerComponent.state = FlowerComponent.State.PHOENIX;
+        counter++;
     }
 
     public enum UpgradeType {

@@ -78,10 +78,10 @@ public class SaveMngr {
             fc.settings.noSound = gameStats.noSound;
 
             if (gameStats.doubleJuice) {
-                fc.upgrades.add(Upgrade.getBJDouble());
+                fc.upgrades.put(Upgrade.UpgradeType.DOUBLE_JUICE, Upgrade.getBJDouble());
             }
             if (gameStats.phoenix) {
-                fc.upgrades.add(Upgrade.getPhoenix());
+                fc.upgrades.put(Upgrade.UpgradeType.PHOENIX, Upgrade.getPhoenix());
             }
 //            try {
 //                Calendar lastGoalsDate = Calendar.getInstance();
