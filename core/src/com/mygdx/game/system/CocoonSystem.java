@@ -100,7 +100,6 @@ public class CocoonSystem extends IteratingSystem {
         if (cc.state != DEAD) {
             cc.state = HIT;
 //            cc.hitCounter+=1;
-            System.out.println("hit counter: " + cc.hitCounter);
             cc.canHit = true;
             sc.player.speed = 24;
             sc.player.setAnimation(cc.hitCounter++);

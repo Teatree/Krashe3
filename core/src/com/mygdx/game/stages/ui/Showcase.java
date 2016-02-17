@@ -122,7 +122,6 @@ public class Showcase {
         ac.dataArray.add(Actions.parallel(
                 Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
                 Actions.fadeIn(5, Interpolation.exp10Out)));
-        System.out.println("alpha: " + itemIcon.getComponent(TintComponent.class).color.a);
         itemIcon.add(ac);
     }
 

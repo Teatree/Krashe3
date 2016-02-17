@@ -65,7 +65,6 @@ public class SaveMngr {
     }
 
     public static FlowerPublicComponent loadStats(){
-        System.err.println(DATA_FILE);
         FlowerPublicComponent fc = new FlowerPublicComponent();
         String saved = readFile(DATA_FILE);
         if (!"".equals(saved)) {

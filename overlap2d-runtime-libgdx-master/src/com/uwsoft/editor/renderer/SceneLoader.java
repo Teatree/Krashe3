@@ -36,6 +36,9 @@ import com.uwsoft.editor.renderer.systems.action.ActionSystem;
 import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * SceneLoader is important part of runtime that utilizes provided
  * IResourceRetriever (or creates default one shipped with runtime) in order to
@@ -156,7 +159,6 @@ public class SceneLoader {
 
 		// this has to be done differently.
         engine = new Engine();
-//		engine.removeAllEntities();
         initSceneLoader();
 
         //TODO: error prone

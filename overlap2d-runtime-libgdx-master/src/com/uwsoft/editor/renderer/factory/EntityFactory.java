@@ -18,10 +18,7 @@ import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.factory.component.*;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class EntityFactory {
 	
@@ -73,6 +70,14 @@ public class EntityFactory {
 		
 	}
 
+    public void updateSpriterAnimation (Engine engine, Entity entity, ArrayList<SpriterVO> sSpriterAnimations){
+        if (sSpriterAnimations != null && !sSpriterAnimations.isEmpty()) {
+            for (int i = 0; i < sSpriterAnimations.size(); i++) {
+                Entity child = createEntity(entity, sSpriterAnimations.get(i));
+                engine.addEntity(child);
+            }
+        }
+    }
 	public void addExternalFactory(IExternalItemType itemType) {
 		externalFactories.put(itemType.getTypeId(), itemType.getComponentFactory());
 	}

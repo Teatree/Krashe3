@@ -57,9 +57,9 @@ public class FlowerSystem extends IteratingSystem {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
 //            sc.player.speed = ANIMATION_SPEED;
 
-//            if (fc.state == IDLE_BITE) {
-//                setBiteIdleAnimation(sc);
-//            }
+            if (fc.state == IDLE_BITE) {
+                setBiteIdleAnimation(sc);
+            }
 
             if (FlowerComponent.state == IDLE) {
                 if (fcc.isCollision) {
@@ -136,6 +136,7 @@ public class FlowerSystem extends IteratingSystem {
                         setBiteAttackAnimation(sc);
                     }
                 }
+
                 if (FlowerComponent.state == IDLE_BITE && isAnimationFinished(sc)) {
                     FlowerComponent.state = IDLE;
                     setIdleAnimation(sc);

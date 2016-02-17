@@ -6,17 +6,12 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-/**
- * Created by Teatree on 7/25/2015.
- */
 public class MenuScreenScript implements IScript {
 
-    public IResourceRetriever ir;
     private GameStage stage;
 
     public MenuScreenScript(GameStage stage) {
         this.stage = stage;
-        ir = GameStage.sceneLoader.getRm();
     }
 
 

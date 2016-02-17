@@ -105,7 +105,6 @@ public class BugSpawnSystem extends EntitySystem {
         bc.startYPosition = tc.y;
         bugEntity.getComponent(TransformComponent.class).x = tc.x;
         bugEntity.getComponent(TransformComponent.class).y = tc.y;
-//        bugEntity.add(tc);
     }
 
     @Override
