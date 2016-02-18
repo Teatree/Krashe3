@@ -86,14 +86,14 @@
 //        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
 //            @Override
 //            public void touchUp() {
-//                lc.getLayer("normal").isVisible = true;
-//                lc.getLayer("pressed").isVisible = false;
+//                lc.getLayer(NORMAL).isVisible = true;
+//                lc.getLayer(PRESSED).isVisible = false;
 //            }
 //
 //            @Override
 //            public void touchDown() {
-//                lc.getLayer("normal").isVisible = false;
-//                lc.getLayer("pressed").isVisible = true;
+//                lc.getLayer(NORMAL).isVisible = false;
+//                lc.getLayer(PRESSED).isVisible = true;
 //            }
 //
 //            @Override
@@ -111,15 +111,15 @@
 //        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
 //            @Override
 //            public void touchUp() {
-//                lc.getLayer("normal").isVisible = true;
-//                lc.getLayer("pressed").isVisible = false;
+//                lc.getLayer(NORMAL).isVisible = true;
+//                lc.getLayer(PRESSED).isVisible = false;
 //
 //            }
 //
 //            @Override
 //            public void touchDown() {
-//                lc.getLayer("normal").isVisible = false;
-//                lc.getLayer("pressed").isVisible = true;
+//                lc.getLayer(NORMAL).isVisible = false;
+//                lc.getLayer(PRESSED).isVisible = true;
 //            }
 //
 //            @Override

@@ -36,6 +36,8 @@ public abstract class GlobalConstants {
     //Button states
     public static final String BTN_NORMAL = "normal";
     public static final String BTN_PRESSED = "pressed";
-    public static String CUR_SCREEN = "MENU";
+    public static final String BTN_DEFAULT = "Default";
+    public static final String BUTTON_TAG = "button";
 
+    public static String CUR_SCREEN = "MENU";
 }

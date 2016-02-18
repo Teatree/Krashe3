@@ -24,6 +24,7 @@ import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
 import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class ShopScreenScript implements IScript {
 
@@ -57,7 +58,7 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
@@ -175,8 +176,8 @@ public class ShopScreenScript implements IScript {
 
     public void skipLayersOverride(LayerMapComponent lc) {
         if (isPreviewOn || !canOpenPreview) {
-            lc.getLayer("normal").isVisible = true;
-            lc.getLayer("pressed").isVisible = false;
+            lc.getLayer(BTN_NORMAL).isVisible = true;
+            lc.getLayer(BTN_PRESSED).isVisible = false;
         }
     }
 
@@ -203,21 +204,22 @@ public class ShopScreenScript implements IScript {
         btnBack.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("Default").isVisible = false;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_DEFAULT).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("Default").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_DEFAULT).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
             public void clicked() {
                 if (!isPreviewOn) {
+                    GameStage.updateFlowerAni();
                     stage.initMenu();
                 }
             }

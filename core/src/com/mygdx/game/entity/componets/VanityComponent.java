@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
 import java.util.HashMap;
@@ -64,6 +65,7 @@ public class VanityComponent extends ShopItem implements Component {
             if (this.pet != null){
                 GameScreenScript.fpc.currentPet = this.pet;
             }
+            GameStage.changedFlower = true;
         }
     }
 
@@ -88,6 +90,7 @@ public class VanityComponent extends ShopItem implements Component {
             FileHandle fromDefault = Gdx.files.internal(PATH_PREFIX + entry.getKey() + DEFAULT + TYPE_SUFFIX);
             fromDefault.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
         }
+        GameStage.changedFlower = true;
     }
 }
 

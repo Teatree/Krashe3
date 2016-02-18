@@ -17,7 +17,7 @@ import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.game.utils.EffectUtils.fadeChildren;
-import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 
 public class Showcase {
@@ -131,14 +131,14 @@ public class Showcase {
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
@@ -156,14 +156,14 @@ public class Showcase {
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override

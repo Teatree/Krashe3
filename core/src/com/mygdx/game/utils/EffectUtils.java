@@ -3,7 +3,6 @@ package com.mygdx.game.utils;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.game.entity.componets.ParticleLifespanComponent;
 import com.mygdx.game.stages.GameStage;
@@ -13,8 +12,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import java.text.SimpleDateFormat;
-
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
@@ -22,6 +19,7 @@ public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
     public static final String GREEN_SPLATTER = "splatter.party";
+    public static final String DEFAULT_LAYER = "Default";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -57,7 +55,7 @@ public class EffectUtils {
 
         ParticleEffectVO vo = new ParticleEffectVO();
         vo.particleName = particleName;
-        vo.layerName = "Default";
+        vo.layerName = DEFAULT_LAYER;
         vo.x = x;
         vo.y = y;
 

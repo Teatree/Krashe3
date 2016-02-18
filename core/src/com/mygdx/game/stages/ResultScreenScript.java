@@ -18,7 +18,7 @@ import java.util.Random;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class ResultScreenScript implements IScript {
 
@@ -51,7 +51,7 @@ public class ResultScreenScript implements IScript {
         i = 0;
         j = 0;
         resultScreenItem = new ItemWrapper(item);
-        sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
+        sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         initBackButton();
         initPlayBtn();
         initShopBtn();
@@ -113,14 +113,14 @@ public class ResultScreenScript implements IScript {
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
@@ -140,14 +140,14 @@ public class ResultScreenScript implements IScript {
         backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
@@ -180,14 +180,14 @@ public class ResultScreenScript implements IScript {
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
@@ -288,14 +288,14 @@ public class ResultScreenScript implements IScript {
         adsBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer("normal").isVisible = true;
-                lc.getLayer("pressed").isVisible = false;
+                lc.getLayer(BTN_NORMAL).isVisible = true;
+                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer("normal").isVisible = false;
-                lc.getLayer("pressed").isVisible = true;
+                lc.getLayer(BTN_NORMAL).isVisible = false;
+                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
