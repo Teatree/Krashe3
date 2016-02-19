@@ -219,7 +219,7 @@ public class ShopScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!isPreviewOn) {
-                    GameStage.updateFlowerAni();
+//                    GameStage.updateFlowerAni();
                     stage.initMenu();
                 }
             }

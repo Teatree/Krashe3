@@ -1,9 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
@@ -11,7 +15,7 @@ import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
-public class Main extends ApplicationAdapter {
+public class Main extends Game{
 
 	public static GameStage stage;
     public static int viewportWidth;
@@ -74,29 +78,42 @@ public class Main extends ApplicationAdapter {
 		GameScreenScript.fpc = SaveMngr.loadStats();
 
 		names = getViewportNames();
-		stage = new GameStage();
-		viewports = getViewports(stage.getCamera());
-		stage.setViewport(viewports.first());
 
-		Gdx.input.setInputProcessor(stage);
+//		this.setScreen(new LoadingScreen(this));
+
+//		Gdx.app.postRunnable(new Runnable() {
+//			@Override
+//			public void run() {
+				stage = new GameStage();
+				viewports = getViewports(stage.getCamera());
+				stage.setViewport(viewports.first());
+
+				Gdx.input.setInputProcessor(stage);
+//			}
+//		});
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.update();
+//		if (stage.sceneLoader.rm.resourcesLoaded){
+			stage.update();
 
-		stage.act();
-        stage.getViewport().update(viewportWidth, viewportHeight, true);
-		stage.setDebugAll(true);
-		stage.draw();
+			stage.act();
+			stage.getViewport().update(viewportWidth, viewportHeight, true);
+			stage.setDebugAll(true);
+			stage.draw();
+//		}
+//		super.render();
 	}
 
 	public void resize(int width, int height) {
         viewportWidth = width;
         viewportHeight = height;
-        stage.getViewport().update(width, height, true);
+//		if (stage!= null && stage.sceneLoader.rm.resourcesLoaded) {
+			stage.getViewport().update(width, height, true);
+//		}
 	}
 
 	@Override
@@ -109,6 +126,69 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
+		super.dispose();
 		SaveMngr.saveStats(GameScreenScript.fpc);
 	}
+
+//	public class LoadingScreen implements Screen{
+//
+//		ShapeRenderer sr = new ShapeRenderer();
+//		public Main main;
+//
+//		public LoadingScreen(Main main) {
+//			sr = new ShapeRenderer();
+//			this.main = main;
+//			System.out.println("loading");
+//		}
+//
+//		@Override
+//		public void show() {
+//
+//		}
+//
+//		@Override
+//		public void render(float delta) {
+//			Gdx.gl.glClearColor(0, 0, 1, 1);
+//			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//			System.out.println("loading");
+//			sr.end();
+//			sr.setAutoShapeType(true);
+//			sr.setColor(Color.DARK_GRAY);
+//			sr.begin();
+//			sr.circle(100, 100, 100);
+//			sr.end();
+//			update(delta);
+//		}
+//
+//		private void update(float delta) {
+//			if (stage.sceneLoader.rm.resourcesLoaded){
+//				stage.initMenu();
+//			}
+//		}
+//
+//		@Override
+//		public void resize(int width, int height) {
+//
+//		}
+//
+//		@Override
+//		public void pause() {
+//
+//		}
+//
+//		@Override
+//		public void resume() {
+//
+//		}
+//
+//		@Override
+//		public void hide() {
+//
+//		}
+//
+//		@Override
+//		public void dispose() {
+//
+//		}
+//	}
 }

@@ -7,16 +7,31 @@ import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import com.mygdx.game.Main;
 
-public class IOSLauncher extends IOSApplication.Delegate {
+public class IOSLauncher extends IOSApplication.Delegate implements AdsController {
     @Override
     protected IOSApplication createApplication() {
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new Main(), config);
+        return new IOSApplication(new Main(this), config);
     }
 
     public static void main(String[] argv) {
         NSAutoreleasePool pool = new NSAutoreleasePool();
         UIApplication.main(argv, null, IOSLauncher.class);
         pool.close();
+    }
+
+    @Override
+    public boolean isWifiConnected() {
+        return false;
+    }
+
+    @Override
+    public void showInterstitialVideoAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showInterstitialGeneralAd(Runnable then) {
+
     }
 }

@@ -2,6 +2,7 @@ package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.ResultScreenScript;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -169,6 +170,7 @@ public class Showcase {
             @Override
             public void clicked() {
                 showCaseVanity.buyAndUse(fpc);
+                GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 show = false;
                 resultScreen.initResultScreen();

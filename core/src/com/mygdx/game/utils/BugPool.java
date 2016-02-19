@@ -40,14 +40,14 @@ public class BugPool {
     }
 
     public static void resetBugPool() {
-//        instance = new BugPool();
+        instance = new BugPool();
     }
 
     private BugPool() {
         final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
+//        Gdx.app.postRunnable(new Runnable() {
+//            @Override
+//            public void run() {
                 simpleBugs.add(root.getChild("simpleBugAni1").getEntity());
                 bees.add(root.getChild("beeAni1").getEntity());
                 drunkBugs.add(root.getChild("drunkBugAni1").getEntity());
@@ -90,8 +90,8 @@ public class BugPool {
                 chargerBugs.add(root.getChild("chargerAni6").getEntity());
                 chargerBugs.add(root.getChild("chargerAni7").getEntity());
                 chargerBugs.add(root.getChild("chargerAni8").getEntity());
-            }
-        });
+//            }
+//        });
     }
 
     public Entity get(BugType type) {

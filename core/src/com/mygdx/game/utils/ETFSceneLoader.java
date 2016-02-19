@@ -51,7 +51,7 @@ public class ETFSceneLoader extends SceneLoader {
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
     private String curResolution = "orig";
-    private IResourceRetriever rm = null;
+    public ResourceManager rm = null;
     private float pixelsPerWU = 1;
 
     public Map<String, Engine> engineByScene = new HashMap<>();
@@ -80,7 +80,7 @@ public class ETFSceneLoader extends SceneLoader {
 
     }
 
-    public ETFSceneLoader(IResourceRetriever rm) {
+    public ETFSceneLoader(ResourceManager rm) {
         this.engine = new Engine();
         this.rm = rm;
         initSceneLoader();
