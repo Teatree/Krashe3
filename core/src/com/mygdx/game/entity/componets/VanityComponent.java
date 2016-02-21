@@ -7,6 +7,7 @@ import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,23 @@ public class VanityComponent extends ShopItem implements Component {
 
     public static final String DEFAULT = "_default";
     public static final String PATH_PREFIX = "orig\\spriter_animations\\flower_idle\\";
+    public static final String PATH_PREFIX_LOCAL = "orig\\spriter_animations\\flower_idle\\";
     public static final String TYPE_SUFFIX = ".png";
+
+    public static final String HEAD_TOP = "head_top";
+    public static final String HEAD_BOTTOM = "head_bottom";
+    public static final String HEAD_MID = "head_mid";
+    public static final String leaf_left = "leaf_left";
+    public static final String leaf_right = "leaf_right";
+    public static final String peduncle_bottom = "peducle_bottom";
+    public static final String peducle_middle = "peducle_middle";
+    public static final String peducle_middle_aboveLeaf = "peducle_middle_aboveLeaf";
+    public static final String peducle_top = "peducle_top";
+    public static final String peducle_top_under = "peducle_top_under";
+    public static final String item_back_shine = "item_back_shine";
+    public static final String flower_peducle = "flower_peducle";
+    public static final String flower_idle = "flower_idle.scml";
+
 
     //true when was presented in showcase
     public boolean advertised;
@@ -55,16 +72,20 @@ public class VanityComponent extends ShopItem implements Component {
     }
 
     public void apply (FlowerPublicComponent fc){
+//        moveToLocal();
 
         if (bought) {
             this.enabled = true;
             for (Map.Entry entry : assetsToChange.entrySet()) {
-                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
-                newAsset.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
+//                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
+//                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
+                Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
             }
+
             if (this.pet != null){
                 GameScreenScript.fpc.currentPet = this.pet;
             }
+            GameStage.updateFlowerAni();
             GameStage.changedFlower = true;
         }
     }
@@ -87,9 +108,10 @@ public class VanityComponent extends ShopItem implements Component {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            FileHandle fromDefault = Gdx.files.internal(PATH_PREFIX + entry.getKey() + DEFAULT + TYPE_SUFFIX);
-            fromDefault.copyTo(Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX));
+            Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX + entry.getKey() + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+
         }
+        GameStage.updateFlowerAni();
         GameStage.changedFlower = true;
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.GlobalConstants;
@@ -29,39 +30,41 @@ public class GameStage extends Stage {
     public static final String MEGA_FLOWER = "mega_flower";
 
     public static Viewport viewport;
-    public static SceneLoader sceneLoader;
+    public static ETFSceneLoader sceneLoader;
     public static boolean changedFlower;
     private GameScreenScript gameScript;
     public static boolean changedFlower2;
 
     public GameStage() {
         viewport = new FillViewport(1200, 786);
-//        sceneLoader = new ETFSceneLoader(viewport);
-        sceneLoader = new SceneLoader();
+//        VanityComponent.moveToLocal();
+        sceneLoader = new ETFSceneLoader(viewport);
+//        sceneLoader = new SceneLoader();
         getSoundMgr();
         getBackgroundMusicMgr();
         initMenu();
+
     }
 
-//    public static void updateFlowerAni() {
-//        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
-////        Entity[] e = sceneLoader.rootEntity.getComponent(NodeComponent.class).children.toArray();
-//        if (sceneLoader.rootEntity != null) {
-//            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
-//                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
-////            Entity bp = new ItemWrapper(sceneLoader.rootEntity).getChild(BTN_PLAY).getEntity();
-////            if (bp!= null) {
-////                sceneLoader.getEngine().removeEntity(bp);
-////                sceneLoader.getEngine().addEntity(bp);
-////            }
-////
-////            Entity mf = new ItemWrapper(sceneLoader.rootEntity).getChild(MEGA_FLOWER).getEntity();
-////            if (mf!= null) {
-////                sceneLoader.getEngine().removeEntity(mf);
-////                sceneLoader.getEngine().addEntity(mf);
-////            }
-//        }
-//    }
+    public static void updateFlowerAni() {
+        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
+//        Entity[] e = sceneLoader.rootEntity.getComponent(NodeComponent.class).children.toArray();
+        if (sceneLoader.rootEntity != null) {
+            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
+                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
+//            Entity bp = new ItemWrapper(sceneLoader.rootEntity).getChild(BTN_PLAY).getEntity();
+//            if (bp!= null) {
+//                sceneLoader.getEngine().removeEntity(bp);
+//                sceneLoader.getEngine().addEntity(bp);
+//            }
+//
+//            Entity mf = new ItemWrapper(sceneLoader.rootEntity).getChild(MEGA_FLOWER).getEntity();
+//            if (mf!= null) {
+//                sceneLoader.getEngine().removeEntity(mf);
+//                sceneLoader.getEngine().addEntity(mf);
+//            }
+        }
+    }
 
     public GameStage getInstance() {
         return this;
@@ -69,14 +72,14 @@ public class GameStage extends Stage {
 
     public void initGame() {
 
-//        if (changedFlower || changedFlower2) {
+        if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MAIN_SCENE, viewport);
-//            changedFlower = false;
-//            sceneLoader.setScene(MAIN_SCENE);
-//            BugPool.resetBugPool();
-//        } else {
-//            sceneLoader.setScene(MAIN_SCENE);
-//        }
+            changedFlower = false;
+            sceneLoader.setScene(MAIN_SCENE);
+            BugPool.resetBugPool();
+        } else {
+            sceneLoader.setScene(MAIN_SCENE);
+        }
 
         sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -92,28 +95,28 @@ public class GameStage extends Stage {
     }
 
     public void initMenu() {
-//        if (changedFlower || changedFlower2) {
+        if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
-//            changedFlower2 = false;
-//        }
-//        sceneLoader.setScene(MENU_SCENE);
+            changedFlower2 = false;
+        }
+        sceneLoader.setScene(MENU_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(new MenuScreenScript(this));
         GlobalConstants.CUR_SCREEN = "MENU";
     }
 
     public void initResult() {
-//        sceneLoader.setScene(RESULT_SCENE);
+        sceneLoader.setScene(RESULT_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(new ResultScreenScript(this));
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
     public void initShopMenu() {
-//        sceneLoader.engineByScene.remove(SHOP_SCENE);
-//        sceneLoader.rootEntityByScene.remove(SHOP_SCENE);
+        sceneLoader.engineByScene.remove(SHOP_SCENE);
+        sceneLoader.rootEntityByScene.remove(SHOP_SCENE);
         sceneLoader.loadScene(SHOP_SCENE, viewport);
-//        sceneLoader.setScene(SHOP_SCENE);
+        sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(new ShopScreenScript(this));
         GlobalConstants.CUR_SCREEN = "SHOP";

@@ -99,6 +99,13 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
             scheduleScene(projectVO.scenes.get(i).sceneName);
         }
         prepareAssetsToLoad();
+        moveToLocal();
+        int i =1;
+        FileHandle[] fichiers = Gdx.files.local("orig\\spriter_animations\\").list();
+        for(FileHandle file: fichiers) {
+            System.out.println("Directory n°"+i+" "+file.name());
+            i++;
+        }
         loadAssets();
         resourcesLoaded = true;
     }
@@ -237,7 +244,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     @Override
     public void loadSpriteAnimations() {
-        // empty existing ones that are not scheduled to load
         for (String key : spriteAnimations.keySet()) {
             if (!spriteAnimNamesToLoad.contains(key)) {
                 spriteAnimations.remove(key);
@@ -250,6 +256,12 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         }
     }
 
+    public void moveToLocal() {
+        if (!Gdx.files.local("\\orig\\spriter_animations\\").exists()) {
+            Gdx.files.internal("orig\\spriter_animations\\").copyTo(Gdx.files.local("\\orig\\spriter_animations\\"));
+        }
+    }
+
     @Override
     public void loadSpriterAnimations() {
         // empty existing ones that are not scheduled to load
@@ -259,15 +271,9 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
             }
         }
         for (String name : spriterAnimNamesToLoad) {
-            FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+            FileHandle animFile = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
             spriterAnimations.put(name, animFile);
         }
-    }
-
-    public void loadSpriterAnimation(String name) {
-        FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
-        spriterAnimations.remove(name);
-        spriterAnimations.put(name, animFile);
     }
 
     public void loadSpineAnimation(String name) {

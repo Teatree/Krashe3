@@ -70,6 +70,8 @@ public class ShopScreenScript implements IScript {
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
 
         getAllAllVanities();
+
+        fpc.totalScore = 1200;
     }
 
     private void getAllAllVanities() {
