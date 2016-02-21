@@ -9,6 +9,7 @@ import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -76,7 +77,13 @@ public class DandelionSystem extends IteratingSystem {
         SpriteAnimationComponent saComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         SpriteAnimationStateComponent animStateComp = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+        if(!GameScreenScript.isStarted){
+            entity.getComponent(TransformComponent.class).x = HIDE_POSITION;
+            entity.getComponent(TransformComponent.class).y = HIDE_POSITION;
+
+        }
+
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
 
             animStateComp.paused = false;
             stateTime += Gdx.graphics.getDeltaTime();

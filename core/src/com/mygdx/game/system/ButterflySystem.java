@@ -37,7 +37,12 @@ public class ButterflySystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
 
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+        if(!GameScreenScript.isStarted){
+            entity.getComponent(TransformComponent.class).x = -900;
+            entity.getComponent(TransformComponent.class).y = -900;
+        }
+
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
 //            sasc.paused = false;
 
             ButterflyComponent bc = mapper.get(entity);

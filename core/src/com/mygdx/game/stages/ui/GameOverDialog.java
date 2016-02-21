@@ -38,6 +38,7 @@ public class GameOverDialog {
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
+        gameOverCounter = 240;
 
         Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild("label_timer_gameover").getEntity();
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);

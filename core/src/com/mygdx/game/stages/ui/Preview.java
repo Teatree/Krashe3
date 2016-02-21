@@ -98,8 +98,8 @@ public class Preview {
                 ActionComponent ac = new ActionComponent();
                 Actions.checkInit();
                 ac.dataArray.add(Actions.parallel(
-                        Actions.scaleTo(1, 1, 1f, Interpolation.exp5Out),
-                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 1f, Interpolation.exp5Out)));
+                        Actions.scaleTo(1, 1, 0.7f, Interpolation.exp5Out),
+                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 0.7f, Interpolation.exp5Out)));
                 iconE.add(ac);
                 iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -436,6 +436,6 @@ public class Preview {
     }
 
     private boolean animFinished(){
-        return previewE.getComponent(TransformComponent.class).y == PREVIEW_Y;
+        return previewE.getComponent(TransformComponent.class).y <= PREVIEW_Y+30;
     }
 }

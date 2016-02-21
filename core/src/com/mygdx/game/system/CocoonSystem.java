@@ -36,7 +36,11 @@ public class CocoonSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         sc = entity.getComponent(SpriterComponent.class);
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+        if(!GameScreenScript.isStarted){
+            entity.getComponent(TransformComponent.class).y = -500;
+        }
+
+        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
             CocoonComponent cc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);

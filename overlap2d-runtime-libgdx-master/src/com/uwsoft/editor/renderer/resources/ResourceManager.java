@@ -100,12 +100,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         }
         prepareAssetsToLoad();
         moveToLocal();
-        int i =1;
-        FileHandle[] fichiers = Gdx.files.local("orig\\spriter_animations\\").list();
-        for(FileHandle file: fichiers) {
-            System.out.println("Directory n°"+i+" "+file.name());
-            i++;
-        }
         loadAssets();
         resourcesLoaded = true;
     }

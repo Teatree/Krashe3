@@ -43,7 +43,11 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (!isPause && !isGameOver) {
+        if(!isStarted){
+            BugPool.getInstance().release(entity);
+        }
+
+        if (!isPause && !isGameOver && isStarted) {
 
             sasc.paused = false;
 

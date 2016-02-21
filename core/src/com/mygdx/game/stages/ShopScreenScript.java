@@ -71,7 +71,7 @@ public class ShopScreenScript implements IScript {
 
         getAllAllVanities();
 
-        fpc.totalScore = 1200;
+//        fpc.totalScore = 1200;
     }
 
     private void getAllAllVanities() {

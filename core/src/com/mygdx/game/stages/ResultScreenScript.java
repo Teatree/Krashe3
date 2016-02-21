@@ -48,6 +48,7 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+
         i = 0;
         j = 0;
         resultScreenItem = new ItemWrapper(item);

@@ -77,16 +77,27 @@ public class GameStage extends Stage {
             changedFlower = false;
             sceneLoader.setScene(MAIN_SCENE);
             BugPool.resetBugPool();
+            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            root.addScript(gameScript);
         } else {
             sceneLoader.setScene(MAIN_SCENE);
+            if (gameScript == null) {
+                gameScript = new GameScreenScript(this);
+                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+                root.addScript(gameScript);
+            }
+            gameScript.reset();
         }
 
-        sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        if (gameScript == null) {
-            gameScript = new GameScreenScript(this);
-        }
-        root.addScript(gameScript);
+//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+//        if (gameScript == null) {
+//            gameScript = new GameScreenScript(this);
+//            root.addScript(gameScript);
+//        }else{
+//            gameScript.reset();
+//        }
         GlobalConstants.CUR_SCREEN = "GAME";
         backgroundMusicMgr.stop();
 

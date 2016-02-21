@@ -94,11 +94,17 @@ public class GameScreenScript implements IScript {
         initPet();
         initDoubleBJbadge();
 
-        gameOverDialog = new GameOverDialog(gameItem);
+        if(gameOverDialog==null) {
+            gameOverDialog = new GameOverDialog(gameItem);
+        }
         gameOverDialog.initGameOverDialog();
 
         pauseDialog = new PauseDialog(gameItem);
         pauseDialog.init();
+    }
+
+    public void reset(){
+        init(gameItem.getEntity());
     }
 
     private void initDoubleBJbadge (){
