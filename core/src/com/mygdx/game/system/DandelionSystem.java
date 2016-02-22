@@ -8,8 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
-import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -21,21 +19,15 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
+import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.GlobalConstants.CUR_SCREEN;
-import static com.mygdx.game.utils.GlobalConstants.FPS;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
-
-/**
- * Created by Teatree on 9/3/2015.
- */
 public class DandelionSystem extends IteratingSystem {
 
     public static final String SPAWN_ANI_NAME = "Spawn";
     public static final String IDLE_ANI_NAME = "Idle";
     public static final String DIE_ANI_NAME = "Die";
-    public static final int HIDE_POSITION = -200;
-
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
     private FlowerPublicComponent fcc;
@@ -77,13 +69,12 @@ public class DandelionSystem extends IteratingSystem {
         SpriteAnimationComponent saComponent = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         SpriteAnimationStateComponent animStateComp = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if(!GameScreenScript.isStarted){
-            entity.getComponent(TransformComponent.class).x = HIDE_POSITION;
-            entity.getComponent(TransformComponent.class).y = HIDE_POSITION;
-
+        if (!isStarted) {
+            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
 
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
+        if (!isPause && !isGameOver && isStarted) {
 
             animStateComp.paused = false;
             stateTime += Gdx.graphics.getDeltaTime();
@@ -112,8 +103,8 @@ public class DandelionSystem extends IteratingSystem {
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
                         canPlayAnimation = true;
-                        tc.x = HIDE_POSITION;
-                        tc.y = HIDE_POSITION;
+                        tc.x = FAR_FAR_AWAY_X;
+                        tc.y = FAR_FAR_AWAY_Y;
                     }
                 }
             }

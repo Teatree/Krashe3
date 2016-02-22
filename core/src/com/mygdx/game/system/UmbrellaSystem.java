@@ -12,16 +12,15 @@ import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
-import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
-import static com.mygdx.game.Main.stage;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class UmbrellaSystem extends IteratingSystem {
 
@@ -112,8 +111,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void hide(Entity entity, TransformComponent tc) {
-        tc.x = -300;
-        tc.y = -300;
+        tc.x = FAR_FAR_AWAY_X;
+        tc.y = FAR_FAR_AWAY_Y;
         entity.remove(UmbrellaComponent.class);
     }
 

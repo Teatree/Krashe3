@@ -31,6 +31,12 @@ public class GameScreenScript implements IScript {
     public static final String DOUBLE_BJ_BADGE = "double_bj_badge";
 
     public static final CameraShaker cameraShaker = new CameraShaker();
+    public static final String LBL_SCORE = "lbl_score";
+    public static final String LBL_TAP_2_START = "lbl_tap2start";
+    public static final String BTN_PAUSE = "btn_pause";
+    public static final String MEGA_FLOWER = "mega_flower";
+    public static final String DANDELION_ANI = "dandelionAni";
+    public static final String COCCOON = "coccoon";
 
     public static GameStage game;
     public static FlowerPublicComponent fpc;
@@ -78,11 +84,11 @@ public class GameScreenScript implements IScript {
 
 //        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
 
-        Entity scoreLabel = gameItem.getChild("lbl_score").getEntity();
+        Entity scoreLabel = gameItem.getChild(LBL_SCORE).getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "0");
 
-        Entity startLabel = gameItem.getChild("lbl_tap2start").getEntity();
+        Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
@@ -94,7 +100,7 @@ public class GameScreenScript implements IScript {
         initPet();
         initDoubleBJbadge();
 
-        if(gameOverDialog==null) {
+        if (gameOverDialog == null) {
             gameOverDialog = new GameOverDialog(gameItem);
         }
         gameOverDialog.initGameOverDialog();
@@ -103,11 +109,11 @@ public class GameScreenScript implements IScript {
         pauseDialog.init();
     }
 
-    public void reset(){
+    public void reset() {
         init(gameItem.getEntity());
     }
 
-    private void initDoubleBJbadge (){
+    private void initDoubleBJbadge() {
         if (fpc.haveBugJuiceDouble()) {
             Entity badge = gameItem.getChild(DOUBLE_BJ_BADGE).getEntity();
             TransformComponent tc = badge.getComponent(TransformComponent.class);
@@ -181,7 +187,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initPauseBtn() {
-        final Entity pauseBtn = gameItem.getChild("btn_pause").getEntity();
+        final Entity pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
 
         TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
         pauseBtnTc.scaleX = 0.7f;
@@ -211,7 +217,7 @@ public class GameScreenScript implements IScript {
 
     private void initFlower() {
         fpc.score = 0;
-        Entity flowerEntity = gameItem.getChild("mega_flower").getEntity();
+        Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = 988;
         tc.y = 105;
@@ -228,9 +234,9 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(fpc);
     }
 
-    public void initPet (){
+    public void initPet() {
         if (fpc.currentPet != null
-                && fpc. currentPet.bought
+                && fpc.currentPet.bought
                 && fpc.currentPet.enabled) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);
@@ -289,7 +295,7 @@ public class GameScreenScript implements IScript {
                     random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            Entity dandelionEntity = root.getChild("dandelionAni").getEntity();
+            Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
 
             TransformComponent tc = dandelionEntity.getComponent(TransformComponent.class);
             tc.x = 300;
@@ -309,7 +315,7 @@ public class GameScreenScript implements IScript {
             cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            Entity cocoonEntity = root.getChild("coccoon").getEntity();
+            Entity cocoonEntity = root.getChild(COCCOON).getEntity();
 
             cocoonEntity.getComponent(SpriterComponent.class).scale = 0.3f;
             cocoonEntity.getComponent(SpriterComponent.class).player.setAnimation(0);
@@ -327,14 +333,32 @@ public class GameScreenScript implements IScript {
     }
 
     private boolean canCocoonSpawn() {
-        return sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()) == null ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0;
+        return
+                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0 ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).y <= 0;
     }
 
     private boolean canDandelionSpawn() {
-        return (sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()) == null ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0) &&
-                (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()) == null ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0);
+
+        return (sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0 ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).x <= 0 ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).y <= 0) &&
+                (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
+                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                                .get(0).getComponent(TransformComponent.class).y == 0
+                );
     }
 }

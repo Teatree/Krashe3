@@ -24,15 +24,26 @@ public class ResultScreenScript implements IScript {
 
     public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final double PERCENTS_TO_OFFER_AD = 0.01;
+    public static final int PROGRESS_BAR_STEP = 2;
+    public static final String IMG_PROGRESS_BAR = "img_progress_bar";
+    public static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
+    public static final String YOU_EARNED = "YOU EARNED: ";
+    public static final String TOTAL = "TOTAL: ";
+    public static final String YOUR_BEST = "YOUR BEST: ";
+    public static final String YOU_NEED = "YOU NEED ";
+    public static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
+
     public static VanityComponent showCaseVanity;
     public static boolean show;
     public static boolean isWasShowcase;
+
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
     public Entity progressBarE;
     Entity txtEarnedE;
     LabelComponent earnedLabel;
+
     boolean showcasePopup;
     long nextVanityCost;
     int i = 0;
@@ -69,21 +80,21 @@ public class ResultScreenScript implements IScript {
 
     public void initResultScreen() {
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
-        totalLabel.text.replace(0, totalLabel.text.capacity(), "TOTAL: " + String.valueOf(fpc.totalScore));
+        totalLabel.text.replace(0, totalLabel.text.capacity(), TOTAL + String.valueOf(fpc.totalScore));
         setProgressBar();
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
 
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
-        bestLabel.text.replace(0, bestLabel.text.capacity(), "YOUR BEST: " + String.valueOf(fpc.bestScore));
+        bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(fpc.bestScore));
 
         long need = getNeedForNextItem();
 
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
         if (need > 0) {
-            needLabel.text.replace(0, needLabel.text.capacity(), "YOU NEED " + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
+            needLabel.text.replace(0, needLabel.text.capacity(), YOU_NEED + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
         } else {
-            needLabel.text.replace(0, needLabel.text.capacity(), "YOU UNLOCKED NEXT ITEM!");
+            needLabel.text.replace(0, needLabel.text.capacity(), YOU_UNLOCKED_NEXT_ITEM);
         }
     }
 
@@ -208,11 +219,11 @@ public class ResultScreenScript implements IScript {
             if (i <= fpc.score) {
                 updateScore();
             } else {
-                earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+                earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(fpc.score));
                 updateProgressBar();
             }
         } else {
-            earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(fpc.score));
+            earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(fpc.score));
             progressBarE.getComponent(DimensionsComponent.class).width = getProgressBarActualLength();
         }
         showcase.showFading();
@@ -223,11 +234,11 @@ public class ResultScreenScript implements IScript {
 
         if (dcProgressBar.width <= getProgressBarActualLength() &&
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
-            dcProgressBar.width += 2;
+            dcProgressBar.width += PROGRESS_BAR_STEP;
         } else {
             if (!show && showCaseVanity != null) {
                 initShowcase();
-                progressBarE = resultScreenItem.getChild("img_progress_bar").getEntity();
+                progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
                 setProgressBar();
             }
             if (!show && fpc.totalScore >= PERCENTS_TO_OFFER_AD * nextVanityCost && adsBtn == null) {
@@ -237,8 +248,8 @@ public class ResultScreenScript implements IScript {
 
         if (fpc.totalScore - fpc.score < 0) {
             dcProgressBar.width = 0;
-        } else if (fpc.totalScore - fpc.score > 690) {
-            dcProgressBar.width = 690;
+        } else if (fpc.totalScore - fpc.score > MAX_PROGRESS_BAR_WIDTH) {
+            dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
     }
 
@@ -253,10 +264,10 @@ public class ResultScreenScript implements IScript {
         long scoreDiff = fpc.totalScore - fpc.score;
         if (scoreDiff < 0) {
             dcProgressBar.width = 0;
-        } else if (scoreDiff < 690) {
+        } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width = scoreDiff;
         } else {
-            dcProgressBar.width = 690;
+            dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
     }
 
@@ -264,7 +275,7 @@ public class ResultScreenScript implements IScript {
         j++;
         long counterStep = fpc.score / 48 > 1 ? fpc.score / 48 : 1;
         if (j == 2) {
-            earnedLabel.text.replace(0, earnedLabel.text.capacity(), "YOU EARNED: " + String.valueOf(i));
+            earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(i));
             i += counterStep;
             j = 0;
         }
@@ -279,7 +290,7 @@ public class ResultScreenScript implements IScript {
 
     private void initWatchAdsForMoneyBtn() {
 
-        adsBtn = resultScreenItem.getChild("btn_watch_for_money").getEntity();
+        adsBtn = resultScreenItem.getChild(BTN_WATCH_FOR_MONEY).getEntity();
 
         TransformComponent tc = adsBtn.getComponent(TransformComponent.class);
         tc.x = 978;
@@ -318,10 +329,6 @@ public class ResultScreenScript implements IScript {
 
                         adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                         init(resultScreenItem.getEntity());
-
-//                        Entity lbl = resultScreenItem.getChild("btn_watch_for_money").getChild("lbl").getEntity();
-//                        LabelComponent lc = lbl.getComponent(LabelComponent.class);
-//                        lc.text.replace(0, lc.text.capacity(), "You need internet connection");
                     }
                 }
             }
@@ -341,5 +348,9 @@ public class ResultScreenScript implements IScript {
     @Override
     public void dispose() {
         SaveMngr.saveStats(fpc);
+    }
+
+    public void reset() {
+        init(resultScreenItem.getEntity());
     }
 }

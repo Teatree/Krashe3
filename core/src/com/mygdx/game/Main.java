@@ -1,13 +1,9 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
@@ -74,7 +70,6 @@ public class Main extends Game{
 		SaveMngr.generateVanityJson();
 		SaveMngr.generatePetsJson();
 
-
 		GameScreenScript.fpc = SaveMngr.loadStats();
 
 		names = getViewportNames();
@@ -111,9 +106,7 @@ public class Main extends Game{
 	public void resize(int width, int height) {
         viewportWidth = width;
         viewportHeight = height;
-//		if (stage!= null && stage.sceneLoader.rm.resourcesLoaded) {
 			stage.getViewport().update(width, height, true);
-//		}
 	}
 
 	@Override

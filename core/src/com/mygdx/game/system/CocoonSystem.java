@@ -18,6 +18,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
 
@@ -37,7 +38,7 @@ public class CocoonSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         sc = entity.getComponent(SpriterComponent.class);
         if(!GameScreenScript.isStarted){
-            entity.getComponent(TransformComponent.class).y = -500;
+            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
 
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
@@ -88,7 +89,7 @@ public class CocoonSystem extends IteratingSystem {
 //                GameStage.sceneLoader.getEngine().removeEntity(entity);
                 sc.player.setAnimation(3);
                 if (isAnimationFinished()) {
-                    entity.getComponent(TransformComponent.class).y = -500;
+                    entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 }
             }
         }

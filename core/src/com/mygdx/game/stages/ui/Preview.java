@@ -9,10 +9,7 @@ import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.ShopScreenScript;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -45,8 +42,9 @@ public class Preview {
     public static final int ICON_X_RELATIVE = 220;
     public static final int ICON_Y_RELATIVE = 280;
     public static final int PREVIEW_X = 260;
-    public static final String NOT_NUFF = "tag_notNuff";
+    public static final String TAG_NOT_NUFF = "tag_notNuff";
     public static final int PREVIEW_Y = 30;
+    public static final String SHADOW_LIB = "shadow_lib";
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
@@ -112,13 +110,6 @@ public class Preview {
             }
             iconE.getComponent(ZIndexComponent.class).setZIndex(101);
         }
-
-//
-//        shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-//                getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity().
-//                getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-//        sceneLoader.getEngine().removeEntity(shopItem.getChild(PREVIEW).getChild(PREVIEW_SHOP_ICON).getEntity());
     }
 
     public void initPreviewWindow() {
@@ -127,7 +118,6 @@ public class Preview {
         preview_tc.y = PREVIEW_Y;
         preview_tc.scaleX = 0.9f;
         preview_tc.scaleY = 0.9f;
-
     }
 
     public void setLabelsValues() {
@@ -176,6 +166,7 @@ public class Preview {
 
         isPreviewOn = true;
         setLabelsValues();
+
         if (!vc.bought) {
             initBuyButton(vc);
         } else {
@@ -220,7 +211,22 @@ public class Preview {
                 648,
                 previewE.getComponent(DimensionsComponent.class).height);
 
-        ShopScreenScript.isPreviewOn = true;
+        addShadow();
+    }
+
+    private void addShadow() {
+        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
+        shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
+        shadowE.getComponent(TransformComponent.class).x = 0;
+        shadowE.getComponent(TransformComponent.class).y = 0;
+        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
+        sceneLoader.getEngine().addEntity(shadowE);
+        shadowE.getComponent(TintComponent.class).color.a = 0;
+        Actions.checkInit();
+        ActionComponent ac = new ActionComponent();
+        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
+        shadowE.add(ac);
     }
 
     public void initBuyButton(final ShopItem vc) {
@@ -231,9 +237,9 @@ public class Preview {
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
             btnBuy.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).x;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             btnBuy.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild(NOT_NUFF).getComponent(TransformComponent.class).y;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
             btnBuy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
@@ -266,9 +272,9 @@ public class Preview {
             Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity();
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             enableBtn.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).x;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             enableBtn.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).y;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
 
             enableBtn.getComponent(ButtonComponent.class).clearListeners();
             enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -282,7 +288,7 @@ public class Preview {
 
                 @Override
                 public void clicked() {
-                    if(animFinished()) {
+                    if (animFinished()) {
                         vc.apply(GameScreenScript.fpc);
                         showPreview(vc, false, false);
                     }
@@ -298,9 +304,9 @@ public class Preview {
             Entity disableBtn = shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity();
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             disableBtn.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).x;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             disableBtn.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild("tag_notNuff").getComponent(TransformComponent.class).y;
+                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
 
 
             disableBtn.getComponent(ButtonComponent.class).clearListeners();
@@ -315,7 +321,7 @@ public class Preview {
 
                 @Override
                 public void clicked() {
-                    if(animFinished()) {
+                    if (animFinished()) {
                         vc.disable(GameScreenScript.fpc);
                         showPreview(vc, false, false);
                     }
@@ -337,7 +343,7 @@ public class Preview {
 
             @Override
             public void clicked() {
-                if(animFinished()) {
+                if (animFinished()) {
                     int previousIndex = allShopItems.indexOf(vc) - 1;
                     if (previousIndex >= 0) {
                         setShouldDeleteIconE();
@@ -362,7 +368,7 @@ public class Preview {
 
             @Override
             public void clicked() {
-                if(animFinished()) {
+                if (animFinished()) {
                     int nextIndex = allShopItems.indexOf(vc) + 1;
                     if (nextIndex < allShopItems.size()) {
                         setShouldDeleteIconE();
@@ -435,7 +441,7 @@ public class Preview {
         }
     }
 
-    private boolean animFinished(){
-        return previewE.getComponent(TransformComponent.class).y <= PREVIEW_Y+30;
+    private boolean animFinished() {
+        return previewE.getComponent(TransformComponent.class).y <= PREVIEW_Y + 30;
     }
 }

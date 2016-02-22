@@ -5,12 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.SceneLoader;
-import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -27,19 +24,23 @@ public class GameStage extends Stage {
     public static final String RESULT_SCENE = "ResultScene";
     public static final String MAIN_SCENE = "MainScene";
     public static final String MENU_SCENE = "MenuScene";
-    public static final String MEGA_FLOWER = "mega_flower";
+
+    public static final int WORLD_WIDTH = 1200;
+    public static final int WORLD_HEIGHT = 786;
 
     public static Viewport viewport;
     public static ETFSceneLoader sceneLoader;
     public static boolean changedFlower;
-    private GameScreenScript gameScript;
     public static boolean changedFlower2;
 
+    private GameScreenScript gameScript;
+    private MenuScreenScript menuScript;
+    private ResultScreenScript resultScript;
+    private ShopScreenScript shopScript;
+
     public GameStage() {
-        viewport = new FillViewport(1200, 786);
-//        VanityComponent.moveToLocal();
+        viewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
         sceneLoader = new ETFSceneLoader(viewport);
-//        sceneLoader = new SceneLoader();
         getSoundMgr();
         getBackgroundMusicMgr();
         initMenu();
@@ -48,21 +49,9 @@ public class GameStage extends Stage {
 
     public static void updateFlowerAni() {
         ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
-//        Entity[] e = sceneLoader.rootEntity.getComponent(NodeComponent.class).children.toArray();
         if (sceneLoader.rootEntity != null) {
             sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
                     sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
-//            Entity bp = new ItemWrapper(sceneLoader.rootEntity).getChild(BTN_PLAY).getEntity();
-//            if (bp!= null) {
-//                sceneLoader.getEngine().removeEntity(bp);
-//                sceneLoader.getEngine().addEntity(bp);
-//            }
-//
-//            Entity mf = new ItemWrapper(sceneLoader.rootEntity).getChild(MEGA_FLOWER).getEntity();
-//            if (mf!= null) {
-//                sceneLoader.getEngine().removeEntity(mf);
-//                sceneLoader.getEngine().addEntity(mf);
-//            }
         }
     }
 
@@ -91,13 +80,6 @@ public class GameStage extends Stage {
             gameScript.reset();
         }
 
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        if (gameScript == null) {
-//            gameScript = new GameScreenScript(this);
-//            root.addScript(gameScript);
-//        }else{
-//            gameScript.reset();
-//        }
         GlobalConstants.CUR_SCREEN = "GAME";
         backgroundMusicMgr.stop();
 
@@ -112,14 +94,22 @@ public class GameStage extends Stage {
         }
         sceneLoader.setScene(MENU_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        root.addScript(new MenuScreenScript(this));
+        if (menuScript == null) {
+            menuScript = new MenuScreenScript(this);
+            root.addScript(menuScript);
+        }
         GlobalConstants.CUR_SCREEN = "MENU";
     }
 
     public void initResult() {
         sceneLoader.setScene(RESULT_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        root.addScript(new ResultScreenScript(this));
+        if (resultScript == null) {
+            resultScript = new ResultScreenScript(this);
+            root.addScript(resultScript);
+        } else {
+            resultScript.reset();
+        }
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
@@ -138,6 +128,7 @@ public class GameStage extends Stage {
         new ItemWrapper(sceneLoader.getRoot()).addScript(new IScript() {
             boolean t = true;
             int l = 0;
+
             @Override
             public void init(Entity entity) {
 

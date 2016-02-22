@@ -5,10 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.entity.componets.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SaveMngr {
 
@@ -123,6 +120,20 @@ public class SaveMngr {
             }
         }
 
+        vanComps.sort(new Comparator<VanityComponent>() {
+            @Override
+            public int compare(VanityComponent o1, VanityComponent o2) {
+                return compareByCost(o1, o2);
+            }
+
+            public int compareByCost(ShopItem o1, ShopItem o2) {
+                if (o1.cost == o2.cost) {
+                    return 0;
+                } else {
+                    return o1.cost < o2.cost ? -1 : 1;
+                }
+            }
+        });
         return vanComps;
     }
 

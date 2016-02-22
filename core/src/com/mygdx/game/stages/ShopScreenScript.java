@@ -2,7 +2,6 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
@@ -14,7 +13,6 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -30,6 +28,12 @@ public class ShopScreenScript implements IScript {
 
     public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final int SENSITIVITY = 13;
+    public static final String SCORE_LBL = "score_lbl";
+    public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
+    public static final String BTN_SHOP_ICON_LIB = "btn_shop_icon_lib";
+    public static final String ITEM_UNKNOWN_N = "item_unknown_n";
+    public static final String BTN_BACK = "btn_back";
+    public static final String DOT_LIB = "dot_lib";
 
     public static Entity scoreLbl;
     public static boolean isPreviewOn;
@@ -64,14 +68,15 @@ public class ShopScreenScript implements IScript {
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         addBackButtonPlease();
-        scoreLbl = shopItem.getChild("score_lbl").getEntity();
+        scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
-        touchZone = shopItem.getChild("touchZone_scroll").getEntity();
+        touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
 
         getAllAllVanities();
 
-//        fpc.totalScore = 1200;
+        bagPosId = 0;
+        isPreviewOn = false;
     }
 
     private void getAllAllVanities() {
@@ -103,7 +108,7 @@ public class ShopScreenScript implements IScript {
         Collections.reverse(allShopItems);
 
         for (final ShopItem vc : allShopItems) {
-            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("btn_shop_icon_lib").clone();
+            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
@@ -126,7 +131,7 @@ public class ShopScreenScript implements IScript {
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
-            shopItem.getChild("btn_shop_icon_lib").addChild(itemIcon);
+            shopItem.getChild(BTN_SHOP_ICON_LIB).addChild(itemIcon);
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x;
             tcb.y = tc.y;
@@ -156,19 +161,6 @@ public class ShopScreenScript implements IScript {
                 public void clicked() {
                     if (!isPreviewOn && canOpenPreview) {
                         preview.showPreview(vc, true, false);
-
-                        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("shadow_lib").clone();
-                        preview.shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-                        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), preview.shadowE, tempItemC.composite);
-                        preview.shadowE.getComponent(TransformComponent.class).x = 0;
-                        preview.shadowE.getComponent(TransformComponent.class).y = 0;
-                        preview.shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
-                        GameStage.sceneLoader.getEngine().addEntity(preview.shadowE);
-                        preview.shadowE.getComponent(TintComponent.class).color.a = 0;
-                        Actions.checkInit();
-                        ActionComponent ac = new ActionComponent();
-                        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
-                        preview.shadowE.add(ac);
                     }
                     skipLayersOverride(lc);
                 }
@@ -186,7 +178,7 @@ public class ShopScreenScript implements IScript {
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
         Entity itemIcon;
         if (!vc.bought) {
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary("item_unknown_n").clone();
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN_N).clone();
             itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(itemIcon);
@@ -201,7 +193,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void addBackButtonPlease() {
-        Entity btnBack = shopItem.getChild("btn_back").getEntity();
+        Entity btnBack = shopItem.getChild(BTN_BACK).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(btnBack, LayerMapComponent.class);
         btnBack.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -221,7 +213,6 @@ public class ShopScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!isPreviewOn) {
-//                    GameStage.updateFlowerAni();
                     stage.initMenu();
                 }
             }
@@ -320,7 +311,7 @@ public class ShopScreenScript implements IScript {
         tc.scaleX = 0.2f;
         tc.scaleY = 0.2f;
 
-        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary("dot_lib").clone();
+        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(DOT_LIB).clone();
         final Entity dotE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
         dotE.getComponent(ZIndexComponent.class).setZIndex(0);
         dotE.add(tc);
@@ -372,6 +363,14 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void dispose() {
+        scoreLbl = null;
+        touchZone = null;
+        lc = null;
+        tempGdx = new Vector2();
+        bags = null;
+        touchZoneBtn = null;
+        preview = null;
+        stage = null;
+        shopItem = null;
     }
-
 }
