@@ -10,19 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import java.util.Random;
-
-import static com.mygdx.game.Main.stage;
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class ButterflySystem extends IteratingSystem {
 

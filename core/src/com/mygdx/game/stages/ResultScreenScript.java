@@ -205,7 +205,7 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!show) {
-                    stage.initShopMenu();
+                    stage.initShop();
                     show = false;
                     isWasShowcase = false;
                 }

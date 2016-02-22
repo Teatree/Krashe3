@@ -66,7 +66,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                stage.initShopMenu();
+                stage.initShop();
             }
 
             @Override

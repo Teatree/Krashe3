@@ -38,13 +38,14 @@ public class Preview {
     public static final String LBL_PRICE = "tag_lbl_price";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
+    public static final String TAG_NOT_NUFF = "tag_notNuff";
+    public static final String SHADOW_LIB = "shadow_lib";
+
     public static final int ICON_X = 465;
     public static final int ICON_X_RELATIVE = 220;
     public static final int ICON_Y_RELATIVE = 280;
     public static final int PREVIEW_X = 260;
-    public static final String TAG_NOT_NUFF = "tag_notNuff";
     public static final int PREVIEW_Y = 30;
-    public static final String SHADOW_LIB = "shadow_lib";
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
@@ -201,6 +202,7 @@ public class Preview {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(PREVIEW_X, PREVIEW_Y, 2, Interpolation.exp10Out));
             previewE.add(ac);
+            addShadow();
         } else {
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
@@ -210,8 +212,6 @@ public class Preview {
                 30,
                 648,
                 previewE.getComponent(DimensionsComponent.class).height);
-
-        addShadow();
     }
 
     private void addShadow() {

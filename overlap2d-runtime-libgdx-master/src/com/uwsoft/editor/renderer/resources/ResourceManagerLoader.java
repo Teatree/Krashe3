@@ -34,6 +34,7 @@ public class ResourceManagerLoader extends AsynchronousAssetLoader<ResourceManag
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, AsyncResourceManagerParam parameter) {
+
     }
 
     @Override

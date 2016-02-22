@@ -65,8 +65,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
     protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
 
-    public boolean resourcesLoaded;
-
     /**
      * Constructor does nothing
      */
@@ -101,7 +99,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         prepareAssetsToLoad();
         moveToLocal();
         loadAssets();
-        resourcesLoaded = true;
     }
 
     /**

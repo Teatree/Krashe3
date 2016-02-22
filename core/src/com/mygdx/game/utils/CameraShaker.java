@@ -27,7 +27,6 @@ public class CameraShaker {
         this.time = time;
         this.current_time = 0;
 
-        //screen flashes
         initBlinking(7, 10);
     }
 
@@ -44,7 +43,7 @@ public class CameraShaker {
         } else {
             GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
             ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
-            Main.stage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
+            Main.gameStage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
         }
 
     }

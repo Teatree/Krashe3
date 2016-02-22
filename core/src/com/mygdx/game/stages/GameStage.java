@@ -1,16 +1,14 @@
 package com.mygdx.game.stages;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
-import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.utils.BackgroundMusicMgr.backgroundMusicMgr;
@@ -25,9 +23,6 @@ public class GameStage extends Stage {
     public static final String MAIN_SCENE = "MainScene";
     public static final String MENU_SCENE = "MenuScene";
 
-    public static final int WORLD_WIDTH = 1200;
-    public static final int WORLD_HEIGHT = 786;
-
     public static Viewport viewport;
     public static ETFSceneLoader sceneLoader;
     public static boolean changedFlower;
@@ -38,25 +33,11 @@ public class GameStage extends Stage {
     private ResultScreenScript resultScript;
     private ShopScreenScript shopScript;
 
-    public GameStage() {
-        viewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        sceneLoader = new ETFSceneLoader(viewport);
+    public GameStage(ETFSceneLoader sceneLoader) {
+        this.sceneLoader = sceneLoader;
         getSoundMgr();
         getBackgroundMusicMgr();
         initMenu();
-
-    }
-
-    public static void updateFlowerAni() {
-        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
-        if (sceneLoader.rootEntity != null) {
-            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
-                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
-        }
-    }
-
-    public GameStage getInstance() {
-        return this;
     }
 
     public void initGame() {
@@ -94,10 +75,7 @@ public class GameStage extends Stage {
         }
         sceneLoader.setScene(MENU_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        if (menuScript == null) {
-            menuScript = new MenuScreenScript(this);
-            root.addScript(menuScript);
-        }
+        root.addScript(new MenuScreenScript(this));
         GlobalConstants.CUR_SCREEN = "MENU";
     }
 
@@ -113,7 +91,7 @@ public class GameStage extends Stage {
         GlobalConstants.CUR_SCREEN = "RESULT";
     }
 
-    public void initShopMenu() {
+    public void initShop() {
         sceneLoader.engineByScene.remove(SHOP_SCENE);
         sceneLoader.rootEntityByScene.remove(SHOP_SCENE);
         sceneLoader.loadScene(SHOP_SCENE, viewport);
@@ -123,44 +101,24 @@ public class GameStage extends Stage {
         GlobalConstants.CUR_SCREEN = "SHOP";
     }
 
-    public void initLoading() {
-        sceneLoader.loadScene("LoadingScene", viewport);
-        new ItemWrapper(sceneLoader.getRoot()).addScript(new IScript() {
-            boolean t = true;
-            int l = 0;
-
-            @Override
-            public void init(Entity entity) {
-
-            }
-
-            @Override
-            public void act(float delta) {
-
-                if (t) {
-                    Gdx.app.postRunnable(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((ResourceManager) sceneLoader.getRm()).initAllResources();
-                        }
-                    });
-                    t = false;
-                }
-                while (l <= 1000) {
-                    initMenu();
-                    l++;
-                }
-            }
-
-            @Override
-            public void dispose() {
-
-            }
-        });
-        GlobalConstants.CUR_SCREEN = "LOADING";
-    }
-
     public void update() {
         sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+    }
+
+    public static void updateFlowerAni() {
+        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
+        if (sceneLoader.rootEntity != null) {
+            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
+                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
+        }
+    }
+
+    public class Async implements AsyncTask<Void> {
+
+        @Override
+        public Void call() throws Exception {
+
+            return null;
+        }
     }
 }

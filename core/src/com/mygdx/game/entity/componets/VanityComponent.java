@@ -14,8 +14,8 @@ import java.util.Map;
 public class VanityComponent extends ShopItem implements Component {
 
     public static final String DEFAULT = "_default";
-    public static final String PATH_PREFIX = "orig\\spriter_animations\\flower_idle\\";
-    public static final String PATH_PREFIX_LOCAL = "orig\\spriter_animations\\flower_idle\\";
+    public static final String PATH_PREFIX_VANITY = "vanity\\";
+    public static final String PATH_PREFIX_LOCAL_ANI = "orig\\spriter_animations\\flower_idle\\";
     public static final String TYPE_SUFFIX = ".png";
 
     public static final String HEAD_TOP = "head_top";
@@ -79,7 +79,7 @@ public class VanityComponent extends ShopItem implements Component {
             for (Map.Entry entry : assetsToChange.entrySet()) {
 //                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
 //                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
-                Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
+                Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
             }
 
             if (this.pet != null){
@@ -108,7 +108,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            Gdx.files.local(PATH_PREFIX + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX + entry.getKey() + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey() + DEFAULT + TYPE_SUFFIX).readBytes(), false);
 
         }
         GameStage.updateFlowerAni();
