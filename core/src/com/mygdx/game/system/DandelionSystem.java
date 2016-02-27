@@ -28,6 +28,7 @@ public class DandelionSystem extends IteratingSystem {
     public static final String SPAWN_ANI_NAME = "Spawn";
     public static final String IDLE_ANI_NAME = "Idle";
     public static final String DIE_ANI_NAME = "Die";
+    public static final String UMBRELLA_ANI = "umbrellaAni";
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
     private FlowerPublicComponent fcc;
@@ -49,7 +50,7 @@ public class DandelionSystem extends IteratingSystem {
     private void spawnUmbrella(float x, float y){
 
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Entity umbrellaEntity = root.getChild("umbrellaAni").getEntity();
+        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
 
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = x;

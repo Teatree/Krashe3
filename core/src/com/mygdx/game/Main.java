@@ -4,35 +4,35 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.async.AsyncExecutor;
-import com.badlogic.gdx.utils.async.AsyncResult;
-import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.SaveMngr;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public class Main extends Game {
 
-    public static GameStage gameStage;
-    public Stage loadingStage;
-
-    public static int viewportWidth;
-    public static int viewportHeight;
-    public static AdsController adsController;
-    Array<Viewport> viewports;
-    Array<String> names;
-
-    AsyncExecutor asyncExecutor = new AsyncExecutor(10);
-    AsyncResult<Void> task;
-
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 786;
+
+    public static int viewportWidth = 1200;
+    public static int viewportHeight = 786;
+
+    public static GameStage gameStage;
+    public static AdsController adsController;
+    public Stage loadingStage;
+    Array<Viewport> viewports;
+    SpriteBatch batch;
+    Array<String> names;
+
+    Sprite tex;
+    Viewport oneViewport;
 
     public Main(AdsController adsController) {
         if (adsController != null) {
@@ -41,97 +41,6 @@ public class Main extends Game {
             Main.adsController = new DummyAdsController();
         }
     }
-
-    @Override
-    public void create() {
-        names = getViewportNames();
-
-        loadingStage = new Stage();
-        viewports = getViewports(loadingStage.getCamera());
-        loadingStage.setViewport(viewports.first());
-        Gdx.input.setInputProcessor(loadingStage);
-
-//        Gdx.app.postRunnable(new Runnable() {
-//            @Override
-//            public void run() {
-//                async();
-//            }
-//        });
-//        task = asyncExecutor.submit(new AsyncTask<Void>() {
-//            public Void call() {
-//
-//                async();
-//                return null;
-//            }
-//        });
-    }
-
-    public void async (){
-        SaveMngr.generateVanityJson();
-        SaveMngr.generatePetsJson();
-
-        GameScreenScript.fpc = SaveMngr.loadStats();
-
-        FillViewport viewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
-
-        ETFSceneLoader sceneLoader = new ETFSceneLoader(viewport);
-        gameStage = new GameStage(sceneLoader);
-        viewports = getViewports(gameStage.getCamera());
-        gameStage.setViewport(viewports.first());
-        GameStage.viewport = viewport;
-        Gdx.input.setInputProcessor(gameStage);
-    }
-
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(0, 0, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(gameStage != null) {
-            gameStage.update();
-            gameStage.act();
-            gameStage.getViewport().update(viewportWidth, viewportHeight, true);
-            gameStage.draw();
-        } else {
-            Gdx.graphics.requestRendering();
-            loadingStage.act();
-            loadingStage.draw();
-
-            Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                async();
-            }
-        });
-            return;
-        }
-        super.render();
-    }
-
-    public void resize(int width, int height) {
-        viewportWidth = width;
-        viewportHeight = height;
-        if (gameStage != null) {
-            gameStage.getViewport().update(width, height, true);
-        } else {
-            loadingStage.getViewport().update(width, height, true);
-        }
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        SaveMngr.saveStats(GameScreenScript.fpc);
-    }
-
 
     static public Array<String> getViewportNames() {
         Array<String> names = new Array();
@@ -167,5 +76,83 @@ public class Main extends Game {
 
         viewports.add(new ScalingViewport(Scaling.none, minWorldWidth, minWorldHeight, camera));
         return viewports;
+    }
+
+    @Override
+    public void create() {
+        names = getViewportNames();
+
+        oneViewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        loadingStage = new Stage(oneViewport);
+        Gdx.input.setInputProcessor(loadingStage);
+
+        batch = new SpriteBatch();
+        tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
+    }
+
+    public void async() {
+        SaveMngr.generateVanityJson();
+        SaveMngr.generatePetsJson();
+
+        GameScreenScript.fpc = SaveMngr.loadStats();
+
+        ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
+        gameStage = new GameStage(sceneLoader);
+        gameStage.setViewport(oneViewport);
+        GameStage.viewport = oneViewport;
+        Gdx.input.setInputProcessor(gameStage);
+    }
+
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
+        batch.begin();
+        tex.setSize(viewportWidth, viewportHeight);
+        tex.draw(batch);
+        batch.end();
+
+        if (gameStage != null) {
+            gameStage.update();
+            gameStage.act();
+            gameStage.getViewport().update(viewportWidth, viewportHeight, true);
+            GameStage.viewport.update(viewportWidth, viewportHeight, true);
+            gameStage.draw();
+        } else {
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    async();
+                }
+            });
+            return;
+        }
+//        super.render();
+    }
+
+    public void resize(int width, int height) {
+        viewportWidth = width;
+        viewportHeight = height;
+        oneViewport.update(width, height, true);
+        if (gameStage != null) {
+            gameStage.getViewport().update(width, height, true);
+        } else {
+            loadingStage.getViewport().update(width, height, true);
+        }
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        SaveMngr.saveStats(GameScreenScript.fpc);
     }
 }

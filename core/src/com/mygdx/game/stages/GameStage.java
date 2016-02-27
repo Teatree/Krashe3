@@ -2,7 +2,6 @@ package com.mygdx.game.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
@@ -34,10 +33,18 @@ public class GameStage extends Stage {
     private ShopScreenScript shopScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
-        this.sceneLoader = sceneLoader;
+        GameStage.sceneLoader = sceneLoader;
         getSoundMgr();
         getBackgroundMusicMgr();
         initMenu();
+    }
+
+    public static void updateFlowerAni() {
+        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
+        if (sceneLoader.rootEntity != null) {
+            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
+                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
+        }
     }
 
     public void initGame() {
@@ -103,22 +110,5 @@ public class GameStage extends Stage {
 
     public void update() {
         sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
-    }
-
-    public static void updateFlowerAni() {
-        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
-        if (sceneLoader.rootEntity != null) {
-            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
-                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
-        }
-    }
-
-    public class Async implements AsyncTask<Void> {
-
-        @Override
-        public Void call() throws Exception {
-
-            return null;
-        }
     }
 }
