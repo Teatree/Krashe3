@@ -29,7 +29,7 @@ public class SaveMngr {
         saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
-        for (DailyGoal goal : fc.goals){
+        for (DailyGoal goal : fc.goals.values()){
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
             dgs.description = goal.description;
@@ -86,24 +86,35 @@ public class SaveMngr {
 //            } catch (ParseException e) {
 //                e.printStackTrace();
 //            }
+        fc.pets = getAllPets();
 
-            for (DailyGoalStats dg : gameStats.goals){
-                DailyGoal goal = new DailyGoal();
-                goal.achieved = dg.achieved;
-                goal.type = DailyGoal.GoalType.valueOf(dg.type);
-                goal.n = dg.n;
-                goal.description = dg.description;
-                fc.goals.add(goal);
-            }
+        fc.currentPet = fc.pets.get(0);
+
+            addGoals(fc, gameStats);
 
             fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
         }
         fc.vanities = getAllVanity();
 
-        fc.pets = getAllPets();
-
-        fc.currentPet = fc.pets.get(0);
         return fc;
+    }
+
+    private static void addGoals(FlowerPublicComponent fc, GameStats gameStats) {
+        for (DailyGoalStats dg : gameStats.goals){
+            DailyGoal goal = new DailyGoal(fc);
+            goal.achieved = dg.achieved;
+            goal.type = DailyGoal.GoalType.valueOf(dg.type);
+            goal.n = dg.n;
+            goal.description = dg.description;
+            fc.goals.put(goal.type, goal);
+        }
+        DailyGoal goal = new DailyGoal(fc);
+        goal.achieved = false;
+        goal.type = DailyGoal.GoalType.EAT_N_BUGS;
+        goal.n = 3;
+        goal.description = DailyGoal.EAT_N_BUGS_DESK;
+        fc.goals.put(goal.type, goal);
+
     }
 
     public static List<VanityComponent> getAllVanity() {

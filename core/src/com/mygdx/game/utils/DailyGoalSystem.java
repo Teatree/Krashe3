@@ -1,40 +1,36 @@
 package com.mygdx.game.utils;
 
 import com.mygdx.game.entity.componets.DailyGoal;
+import com.mygdx.game.stages.GameScreenScript;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class DailyGoalSystem {
-    public static final int GOALS_AMOUNT_FOR_ONE_DAY = 3;
+    public static final int MAX_GOALS_AMOUNT = 3;
     public Random random;
     public static Calendar latestDate;
-    List<DailyGoal> goals;
+    HashMap<DailyGoal.GoalType, DailyGoal> goals;
 
     public DailyGoalSystem() {
     }
 
-    public List<DailyGoal> getGoalsForToday(){
-        Calendar today = Calendar.getInstance();
-        boolean sameDay = false;
-        if (latestDate !=null) {
-            sameDay = today.get(Calendar.YEAR) == latestDate.get(Calendar.YEAR) &&
-                    today.get(Calendar.DAY_OF_YEAR) == latestDate.get(Calendar.DAY_OF_YEAR);
-        }
-        if (!sameDay){
-            latestDate = today;
-            goals = new ArrayList<>();
-            for (int i = 0; i < GOALS_AMOUNT_FOR_ONE_DAY; i++){
-                goals.add(createGoal());
-            }
+    public HashMap<DailyGoal.GoalType, DailyGoal> getGoals(){
+        goals = new HashMap<>();
+        for (int i = 0; i < MAX_GOALS_AMOUNT; i++) {
+            DailyGoal dg = createGoal();
+            goals.put(dg.type,dg);
         }
         return goals;
     }
 
     private DailyGoal createGoal(){
         Random r = new Random();
-        return new DailyGoal(DailyGoal.GoalType.values()[r.nextInt(DailyGoal.GoalType.values().length-1)]);
+        if(GameScreenScript.fpc.level < 4){
+            return new DailyGoal(DailyGoal.GoalType.getEasyGoals().get(r.nextInt(DailyGoal.GoalType.getEasyGoals().size() - 1)));
+        }else if (GameScreenScript.fpc.level >= 4 && GameScreenScript.fpc.level < 8) {
+            return new DailyGoal(DailyGoal.GoalType.getMediumGoals().get(r.nextInt(DailyGoal.GoalType.getMediumGoals().size() - 1)));
+        }else{
+            return new DailyGoal(DailyGoal.GoalType.getHardGoals().get(r.nextInt(DailyGoal.GoalType.getHardGoals().size() - 1)));
+        }
     }
 }

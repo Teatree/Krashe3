@@ -230,7 +230,8 @@ public class GameScreenScript implements IScript {
         FlowerComponent fc = new FlowerComponent();
         dailyGoalGenerator = new DailyGoalSystem();
         if (fpc.goals == null || fpc.goals.isEmpty()) {
-            fpc.goals = dailyGoalGenerator.getGoalsForToday();
+            fpc.goals = dailyGoalGenerator.getGoals();
+            fpc.level++;
         }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);

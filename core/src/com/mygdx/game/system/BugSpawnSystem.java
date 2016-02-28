@@ -77,9 +77,9 @@ public class BugSpawnSystem extends EntitySystem {
                     createBug(BugType.DRUNK);
                 } else if (probabilityValue >= 10 && probabilityValue < 30) {
                     createBug(BugType.SIMPLE);
-                } else if (probabilityValue >= 31 && probabilityValue < 40) {
+                } else if (probabilityValue >= 31 && probabilityValue < 67) {
                     createBug(BugType.CHARGER);
-                } else if (probabilityValue >= 41 && probabilityValue < 70) {
+                } else if (probabilityValue >= 68 && probabilityValue < 70) {
                     if (!queenBeeOnStage) {
                         createBug(BugType.QUEENBEE);
                         queenBeeOnStage = true;

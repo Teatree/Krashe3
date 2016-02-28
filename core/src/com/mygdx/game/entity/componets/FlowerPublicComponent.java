@@ -18,18 +18,19 @@ public class FlowerPublicComponent implements Component {
     public long bestScore;
     public long totalScore;
     public long score;
+    public int level;
 
     public List<VanityComponent> vanities = new ArrayList<>();
-    public List<DailyGoal> goals = new ArrayList<>();
+    public HashMap<DailyGoal.GoalType, DailyGoal> goals = new HashMap<>();
     public List<PetComponent> pets = new ArrayList<>();
     public Map<Upgrade.UpgradeType, Upgrade> upgrades = new HashMap<>();
 
     public PetComponent currentPet;
 
-    public boolean checkGoals(int n) {
+    public boolean checkAllGoals() {
         boolean allAchieved = true;
-        for (DailyGoal goal : goals) {
-            allAchieved = allAchieved && goal.checkIfAchieved(n);
+        for (DailyGoal goal : goals.values()) {
+            allAchieved = allAchieved && goal.achieved;
         }
         return allAchieved;
     }

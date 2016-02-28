@@ -55,7 +55,7 @@ public class PauseDialog {
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
-        for (DailyGoal g : fpc.goals) {
+        for (DailyGoal g : fpc.goals.values()) {
             String achieved = g.achieved ? " achieved " : " not achieved ";
             goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
         }
