@@ -9,7 +9,6 @@ import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -17,21 +16,20 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
 
+    public static final String BUTTERFLY_ANI = "butterfly";
     FlowerPublicComponent fcc;
     Entity butterflyEntity;
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SpriterComponent sc = new SpriterComponent();
 
-    public CocoonSystem(SceneLoader sl) {
+    public CocoonSystem(ItemWrapper gameItem) {
         super(Family.all(CocoonComponent.class).get());
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        butterflyEntity = root.getChild("butterfly").getEntity();
+        butterflyEntity = gameItem.getChild(BUTTERFLY_ANI).getEntity();
     }
 
     @Override

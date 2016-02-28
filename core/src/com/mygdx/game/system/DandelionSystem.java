@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -20,7 +21,6 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class DandelionSystem extends IteratingSystem {
@@ -41,16 +41,16 @@ public class DandelionSystem extends IteratingSystem {
     private float stateTime;
 
     private boolean canPlayAnimation = true;
+    private ItemWrapper gameItem;
 
-    public DandelionSystem(FlowerPublicComponent fcc) {
+    public DandelionSystem(ItemWrapper gameItem) {
         super(Family.all(DandelionComponent.class).get());
-        this.fcc = fcc;
+        this.gameItem = gameItem;
     }
 
     private void spawnUmbrella(float x, float y){
 
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
+        Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
 
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = x;
@@ -60,7 +60,7 @@ public class DandelionSystem extends IteratingSystem {
         UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
         umbrellaEntity.add(umbrellaComponent);
 
-        umbrellaEntity.add(fcc);
+        umbrellaEntity.add(GameScreenScript.fpc);
     }
 
     @Override

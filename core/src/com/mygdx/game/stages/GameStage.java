@@ -28,9 +28,7 @@ public class GameStage extends Stage {
     public static boolean changedFlower2;
 
     private GameScreenScript gameScript;
-    private MenuScreenScript menuScript;
     private ResultScreenScript resultScript;
-    private ShopScreenScript shopScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
         GameStage.sceneLoader = sceneLoader;

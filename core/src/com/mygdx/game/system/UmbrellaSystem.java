@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -39,7 +38,9 @@ public class UmbrellaSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!GameScreenScript.isStarted){
-            GameStage.sceneLoader.getEngine().removeEntity(entity);
+            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            entity.remove(UmbrellaComponent.class);
+//            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
 

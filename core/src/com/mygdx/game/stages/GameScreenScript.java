@@ -37,6 +37,8 @@ public class GameScreenScript implements IScript {
     public static final String MEGA_FLOWER = "mega_flower";
     public static final String DANDELION_ANI = "dandelionAni";
     public static final String COCCOON = "coccoon";
+    public static final String BACKGROUND_LIB = "backgroundLib";
+    public static final String BTN_BACK = "btn_back";
 
     public static GameStage game;
     public static FlowerPublicComponent fpc;
@@ -125,7 +127,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initBackground() {
-        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary("backgroundLib");
+        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(BACKGROUND_LIB);
         background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), background, tempC.composite);
         sceneLoader.getEngine().addEntity(background);
@@ -141,10 +143,10 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-        sceneLoader.getEngine().addSystem(new DandelionSystem(fpc));
+        sceneLoader.getEngine().addSystem(new DandelionSystem(gameItem));
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         sceneLoader.getEngine().addSystem(new FlowerSystem());
-        sceneLoader.getEngine().addSystem(new CocoonSystem(sceneLoader));
+        sceneLoader.getEngine().addSystem(new CocoonSystem(gameItem));
         sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
         sceneLoader.getEngine().addSystem(new ButterflySystem());
         sceneLoader.getEngine().addSystem(new BugSystem());
@@ -156,7 +158,7 @@ public class GameScreenScript implements IScript {
 
     private void initBackButton() {
 
-        Entity backBtn = gameItem.getChild("btn_back").getEntity();
+        Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
 
         TransformComponent backBtnTc = backBtn.getComponent(TransformComponent.class);

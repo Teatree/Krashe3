@@ -2,12 +2,10 @@ package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +41,7 @@ public class VanityComponent extends ShopItem implements Component {
     public int dandelionChance;
     public int angeredBeesDuration;
 
-    public Map<String, String> assetsToChange = new HashMap<>();
+    public Map<String, String> assetsToChange = new HashMap<String, String>();
 
     public PetComponent pet;
 
@@ -108,7 +106,9 @@ public class VanityComponent extends ShopItem implements Component {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey() + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX)
+                    .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
+                            + DEFAULT + TYPE_SUFFIX).readBytes(), false);
 
         }
         GameStage.updateFlowerAni();
