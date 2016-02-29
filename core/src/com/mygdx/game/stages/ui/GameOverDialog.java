@@ -18,12 +18,15 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GameOverDialog {
 
     public static final String GAME_OVER_DIALOG = "game_over_dialog";
     public static final String BTN_WATCH_VIDEO = "btn_watch_video";
     public static final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
+    public static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
+
     public static Entity gameOverDialog;
     public static int gameOverCounter = 240;
     private static ItemWrapper gameItem;
@@ -41,7 +44,7 @@ public class GameOverDialog {
         dialogTc.y = 100;
         gameOverCounter = 240;
 
-        Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild("label_timer_gameover").getEntity();
+        Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
         gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
 
@@ -56,8 +59,8 @@ public class GameOverDialog {
     public void initGameOverDialog() {
         gameOverDialog = gameItem.getChild(GAME_OVER_DIALOG).getEntity();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
-        dialogTc.x = -3000;
-        dialogTc.y = -1000;
+        dialogTc.x = FAR_FAR_AWAY_X;
+        dialogTc.y = FAR_FAR_AWAY_Y;
 
         final Entity watchAdBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
         final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
@@ -112,7 +115,7 @@ public class GameOverDialog {
 
         fade(gameOverDialog, isGameOver);
         if (isGameOver) {
-            final Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild("label_timer_gameover").getEntity();
+            final Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
             final ActionComponent ac = new ActionComponent();

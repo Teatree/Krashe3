@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -126,8 +127,17 @@ public class BugSpawnSystem extends EntitySystem {
                 isAngeredBeesMode = false;
                 GameScreenScript.cameraShaker.initBlinking(40, 3);
                 angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+
+                checkAngeredBeesGoal();
             }
         }
     }
+
+    private void checkAngeredBeesGoal() {
+        if (GameScreenScript.fpc.goals.get(Goal.GoalType.SURVIVE_N_ANGERED_MODES) != null) {
+            GameScreenScript.fpc.goals.get(Goal.GoalType.SURVIVE_N_ANGERED_MODES).update();
+        }
+    }
+
 
 }

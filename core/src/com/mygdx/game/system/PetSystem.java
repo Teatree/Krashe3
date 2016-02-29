@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.PetComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
@@ -76,6 +77,7 @@ public class PetSystem extends IteratingSystem {
                         canPlayAnimation = true;
                         setDashAnimation(sc);
                         pc.state = DASH;
+                        checkPetDashGoal();
                     }
                 }
             }
@@ -118,7 +120,6 @@ public class PetSystem extends IteratingSystem {
                     && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)){
                 pc.state = TAPPED;
                 setTappedAnimation(sc);
-//                pc.animationCounter = TAP_DURATION;
 
                 EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
@@ -127,6 +128,8 @@ public class PetSystem extends IteratingSystem {
                 Actions.checkInit();
                 ac.dataArray.add(Actions.moveTo(1300, tc.y,0.7f));
                 entity.add(ac);
+
+                checkPetThePetGoal();
             }
         } else {
             sc.player.speed = 0;
@@ -164,5 +167,17 @@ public class PetSystem extends IteratingSystem {
 
     private void setTappedAnimation(SpriterComponent sc) {
         sc.player.setAnimation(2);
+    }
+
+    private void checkPetThePetGoal() {
+        if (GameScreenScript.fpc.goals.get(Goal.GoalType.PET_THE_PET) != null) {
+            GameScreenScript.fpc.goals.get(Goal.GoalType.PET_THE_PET).update();
+        }
+    }
+
+    private void checkPetDashGoal() {
+        if (GameScreenScript.fpc.goals.get(Goal.GoalType.PET_DASH_N_TIMES) != null) {
+            GameScreenScript.fpc.goals.get(Goal.GoalType.PET_DASH_N_TIMES).update();
+        }
     }
 }

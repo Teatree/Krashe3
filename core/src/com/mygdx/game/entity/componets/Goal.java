@@ -15,19 +15,19 @@ import static com.mygdx.game.entity.componets.GoalConstants.*;
  * 2. get n points +
  * 3. eat n umbrella +
  * 4. bounce umbrella +
- * 5. eat n queens
- * 6. survive n angered bees mode
+ * 5. eat n queens +
+ * 6. survive n angered bees mode +
  * 7. eat n bees +`
  * 8. eat n charge +
  * 9. eat n drunks +
  * 10. eat n simple bugs +
  * 11. eat n bugs +
- * 12. TAP
- * 13. EAT_N_BUG_UPPER
- * 14. EAT_N_BUG_LOWER
- * 15. PET_THE_PET
+ * 12. TAP +
+ * 13. EAT_N_BUG_UPPER +
+ * 14. EAT_N_BUG_LOWER +
+ * 15. PET_THE_PET +
  * 16. PET_EAT_N_BUGS
- * 17. PET_CHARGE_N_TIMES
+ * 17. PET_DASH_N_TIMES +
  */
 
 public class Goal {
@@ -140,7 +140,7 @@ public class Goal {
         SURVIVE_N_ANGERED_MODES(SURVIVE_N_ANGERED_MODES_MIN, SURVIVE_N_ANGERED_MODES_MAX, SURVIVE_N_ANGERED_MODES_DESC, 2),
         PET_THE_PET(PET_THE_PET_MIN, PET_THE_PET_MAX, PET_THE_PET_DESC, 2),
         PET_EAT_N_BUGS(PET_EAT_N_BUGS_MIN, PET_EAT_N_BUGS_MAX, PET_EAT_N_BUGS_DESC, 3),
-        PET_CHARGE_N_TIMES(PET_CHARGE_N_TIMES_MIN, PET_CHARGE_N_TIMES_MAX, PET_CHARGE_N_TIMES_DESC, 2);
+        PET_DASH_N_TIMES(PET_CHARGE_N_TIMES_MIN, PET_CHARGE_N_TIMES_MAX, PET_CHARGE_N_TIMES_DESC, 2);
 
         public int min;
         public int max;
@@ -209,7 +209,7 @@ public class Goal {
             result.add(EAT_N_QUEENS);
             result.add(SURVIVE_N_ANGERED_MODES);
             result.add(PET_EAT_N_BUGS);
-            result.add(PET_CHARGE_N_TIMES);
+            result.add(PET_DASH_N_TIMES);
             result.add(PET_THE_PET);
 
             return result;

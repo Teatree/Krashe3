@@ -81,6 +81,8 @@ public class BugSystem extends IteratingSystem {
                         checkGoals(bc);
                     }
 
+                    checkPetEatBugGoal(fcc, bc);
+
                     spawnBugJuiceBubble(bc);
                 }
                 if (isOutOfBounds(bc)) {
@@ -96,6 +98,14 @@ public class BugSystem extends IteratingSystem {
             }
         }
 
+    }
+
+    private void checkPetEatBugGoal(FlowerPublicComponent fcc, BugComponent bc) {
+        if (fcc.petCollisionCheck(bc.boundsRect)) {
+            if (fpc.goals.get(PET_EAT_N_BUGS) != null) {
+                fpc.goals.get(PET_EAT_N_BUGS).update();
+            }
+        }
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
@@ -268,6 +278,7 @@ public class BugSystem extends IteratingSystem {
         if (fpc.goals.get(EAT_N_BUG_LOWER) != null && fpc.boundsRect.getY() < 400) {
             fpc.goals.get(EAT_N_BUG_LOWER).update();
         }
+
         if (fpc.goals.get(EAT_N_BUG_UPPER) != null && fpc.boundsRect.getY() > 400) {
             fpc.goals.get(EAT_N_BUG_UPPER).update();
         }

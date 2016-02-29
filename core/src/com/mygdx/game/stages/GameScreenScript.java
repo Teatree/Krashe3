@@ -269,6 +269,8 @@ public class GameScreenScript implements IScript {
         if (!isStarted && Gdx.input.justTouched()) {
             startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
             isStarted = true;
+
+            updateTapGoal();
         }
 
         if (!isPause && !isGameOver && isStarted) {
@@ -290,6 +292,12 @@ public class GameScreenScript implements IScript {
 
         gameOverDialog.update();
         pauseDialog.update();
+    }
+
+    private void updateTapGoal() {
+        if (fpc.goals.get(Goal.GoalType.TAP) != null) {
+            fpc.goals.get(Goal.GoalType.TAP).update();
+        }
     }
 
     private void spawnDandelion() {

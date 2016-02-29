@@ -9,7 +9,7 @@ public class GoalConstants {
 
     public static final int PET_CHARGE_N_TIMES_MIN = 2;
     public static final int PET_CHARGE_N_TIMES_MAX = 5;
-    public static final String PET_CHARGE_N_TIMES_DESC = "PET_CHARGE_N_TIMES";
+    public static final String PET_CHARGE_N_TIMES_DESC = "PET_DASH_N_TIMES";
 
     public static final int DESTROY_N_COCOON_MIN = 2;
     public static final int DESTROY_N_COCOON_MAX = 5;
