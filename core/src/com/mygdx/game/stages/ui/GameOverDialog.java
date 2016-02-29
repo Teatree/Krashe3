@@ -4,6 +4,7 @@ package com.mygdx.game.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
+import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.system.BugSpawnSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -89,7 +90,9 @@ public class GameOverDialog {
         dialogTc.x = -1000;
         gameOverCounter = 240;
         BugSpawnSystem.isAngeredBeesMode = false;
-        fpc.currentPet.init();
+        if (fpc.currentPet != null) {
+            fpc.currentPet.init();
+        }
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {
@@ -152,5 +155,12 @@ public class GameOverDialog {
             fpc.bestScore = fpc.score;
         }
         fpc.resetPhoenix();
+
+        //reset goals with type "In one life"
+        for (Goal g : fpc.goals.values()) {
+            if (!g.periodType.equals(Goal.PeriodType.IN_TOTAL) && !g.achieved) {
+                g.counter = 0;
+            }
+        }
     }
 }

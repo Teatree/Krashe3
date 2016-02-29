@@ -9,13 +9,15 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.entity.componets.Goal;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
+import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class ButterflySystem extends IteratingSystem {
 
@@ -30,13 +32,13 @@ public class ButterflySystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
 
-        if(!GameScreenScript.isStarted){
+        if (!isStarted) {
             entity.getComponent(TransformComponent.class).x = -900;
             entity.getComponent(TransformComponent.class).y = -900;
         }
 
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
-//            sasc.paused = false;
+        if (!isPause && !isGameOver && isStarted) {
+            sasc.player.speed = FPS;
 
             ButterflyComponent bc = mapper.get(entity);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -49,13 +51,10 @@ public class ButterflySystem extends IteratingSystem {
             if (bc.state.equals(SPAWN)) {
                 bc.dataSet = new Vector2[3];
                 bc.dataSet[0] = new Vector2(tc.x, tc.y);
-//                bc.dataSet[1] = new Vector2(-500, stage.getViewport().getScreenHeight() / 2);
-//                bc.dataSet[2] = new Vector2(stage.getViewport().getScreenWidth() - 30,stage.getViewport().getScreenHeight() / 2);
                 bc.dataSet[1] = new Vector2(-500, 400);
                 bc.dataSet[2] = new Vector2(1170,400);
 
                 bc.myCatmull = new Bezier<>(bc.dataSet);
-//                bc.out = new Vector2(340, stage.getViewport().getScreenHeight() / 4);
                 bc.out = new Vector2(340, 200);
                 bc.myCatmull.valueAt(bc.out, 5);
                 bc.myCatmull.derivativeAt(bc.out, 5);
@@ -81,7 +80,6 @@ public class ButterflySystem extends IteratingSystem {
             updateRectangle(bc, tc, dc);
             if (checkCollision(bc, fcc)) {
                 fcc.isCollision = true;
-//                GameStage.sceneLoader.getEngine().removeEntity(entity);
                 tc.x = -300;
                 tc.y = -300;
                 entity.remove(ButterflyComponent.class);
@@ -89,17 +87,16 @@ public class ButterflySystem extends IteratingSystem {
                 fcc.score += bc.points;
                 fcc.totalScore += bc.points;
 
-                GameScreenScript.reloadScoreLabel(fcc);
+                reloadScoreLabel(fcc);
             }
-//            sceneLoader.renderer.drawDebug(tc.x,tc.y,dc.width,dc.height);
         } else {
-//            sasc.paused = true;
+            sasc.player.speed = 0;
         }
     }
 
     private void die(ButterflyComponent bc, TransformComponent tc) {
-        tc.x = -900;
-        tc.y = -900;
+        tc.x = FAR_FAR_AWAY_X;
+        tc.y = FAR_FAR_AWAY_Y;
         bc.state = DEAD;
     }
 
@@ -111,11 +108,19 @@ public class ButterflySystem extends IteratingSystem {
     }
 
     public boolean isOutOfBounds(ButterflyComponent bc) {
-//        return bc.boundsRect.getX() >= stage.getViewport().getScreenWidth();
         return bc.boundsRect.getX() >= 1200;
     }
 
     private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {
+        checkGoal(bc, fcc);
         return fcc.petAndFlowerCollisionCheck(bc.boundsRect);
+    }
+
+    private void checkGoal(ButterflyComponent bc, FlowerPublicComponent fcc) {
+        if (fcc.flowerCollisionCheck(bc.boundsRect)) {
+            if (fcc.goals.get(Goal.GoalType.EAT_N_BUTTERFLIES) != null) {
+                fcc.goals.get(Goal.GoalType.EAT_N_BUTTERFLIES).update();
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ public class SaveMngr {
         saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
-        for (DailyGoal goal : fc.goals.values()){
+        for (Goal goal : fc.goals.values()) {
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
             dgs.description = goal.description;
@@ -43,7 +43,7 @@ public class SaveMngr {
 
     private static void saveVanities(FlowerPublicComponent fc) {
         List<VanityJson> vanities = new ArrayList<VanityJson>();
-        for (VanityComponent vc : fc.vanities){
+        for (VanityComponent vc : fc.vanities) {
             VanityJson vs = new VanityJson(vc);
             vanities.add(vs);
         }
@@ -53,7 +53,7 @@ public class SaveMngr {
 
     private static void saveOtherPets(FlowerPublicComponent fc) {
         List<PetJson> vanities = new ArrayList<PetJson>();
-        for (PetComponent petComp : fc.pets){
+        for (PetComponent petComp : fc.pets) {
             PetJson pet = new PetJson(petComp);
             vanities.add(pet);
         }
@@ -61,8 +61,9 @@ public class SaveMngr {
         writeFile(PETS_FILE, json2.toJson(vanities));
     }
 
-    public static FlowerPublicComponent loadStats(){
+    public static FlowerPublicComponent loadStats() {
         FlowerPublicComponent fc = new FlowerPublicComponent();
+        Goal.init(fc);
         String saved = readFile(DATA_FILE);
         if (!"".equals(saved)) {
             Json json = new Json();
@@ -86,13 +87,11 @@ public class SaveMngr {
 //            } catch (ParseException e) {
 //                e.printStackTrace();
 //            }
-        fc.pets = getAllPets();
-
-        fc.currentPet = fc.pets.get(0);
+            fc.pets = getAllPets();
+            fc.currentPet = fc.pets.get(0);
+            fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
 
             addGoals(fc, gameStats);
-
-            fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
         }
         fc.vanities = getAllVanity();
 
@@ -100,19 +99,21 @@ public class SaveMngr {
     }
 
     private static void addGoals(FlowerPublicComponent fc, GameStats gameStats) {
-        for (DailyGoalStats dg : gameStats.goals){
-            DailyGoal goal = new DailyGoal(fc);
+        for (DailyGoalStats dg : gameStats.goals) {
+            Goal goal = new Goal();
             goal.achieved = dg.achieved;
-            goal.type = DailyGoal.GoalType.valueOf(dg.type);
+            goal.type = Goal.GoalType.valueOf(dg.type);
+            goal.periodType = Goal.PeriodType.valueOf(dg.type);
             goal.n = dg.n;
             goal.description = dg.description;
             fc.goals.put(goal.type, goal);
         }
-        DailyGoal goal = new DailyGoal(fc);
+        Goal goal = new Goal();
         goal.achieved = false;
-        goal.type = DailyGoal.GoalType.EAT_N_BUGS;
+        goal.periodType = Goal.PeriodType.IN_A_ROW;
+        goal.type = Goal.GoalType.EAT_N_BUGS;
         goal.n = 3;
-        goal.description = DailyGoal.EAT_N_BUGS_DESK;
+        goal.description = GoalConstants.EAT_N_BUGS_DESC;
         fc.goals.put(goal.type, goal);
 
     }
@@ -125,7 +126,7 @@ public class SaveMngr {
             Json json = new Json();
             List<VanityJson> vinitys = json.fromJson(List.class, saved);
 
-            for (VanityJson vs : vinitys){
+            for (VanityJson vs : vinitys) {
                 VanityComponent vc = new VanityComponent(vs);
                 vanComps.add(vc);
             }
@@ -157,7 +158,7 @@ public class SaveMngr {
             Json json = new Json();
             List<PetJson> pets = json.fromJson(List.class, saved);
 
-            for (PetJson p : pets){
+            for (PetJson p : pets) {
                 petComps.add(new PetComponent(p));
             }
         }
@@ -295,7 +296,7 @@ public class SaveMngr {
         public boolean phoenix;
     }
 
-    private static class DailyGoalStats{
+    private static class DailyGoalStats {
         public int n;
         public String type;
         public String description;

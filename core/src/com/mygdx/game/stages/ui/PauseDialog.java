@@ -1,7 +1,7 @@
 package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
-import com.mygdx.game.entity.componets.DailyGoal;
+import com.mygdx.game.entity.componets.Goal;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -55,7 +55,7 @@ public class PauseDialog {
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
-        for (DailyGoal g : fpc.goals.values()) {
+        for (Goal g : fpc.goals.values()) {
             String achieved = g.achieved ? " achieved " : " not achieved ";
             goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
         }

@@ -16,6 +16,7 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponen
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.State.*;
+import static com.mygdx.game.entity.componets.Goal.GoalType.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.BugPool.*;
@@ -65,27 +66,6 @@ public class BugSystem extends IteratingSystem {
 
                 if (checkFlowerCollision(fcc, bc)) {
                     bc.state = DEAD;
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_BUGS)!= null){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_BUGS).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_BEES)!= null && bc.type.equals(BugType.BEE)){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_BEES).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_DRUNKS)!= null && bc.type.equals(BugType.DRUNK)){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_DRUNKS).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_SIMPLE)!= null && bc.type.equals(BugType.SIMPLE)){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_SIMPLE).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_QUEENS)!= null && bc.type.equals(BugType.QUEENBEE)){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_QUEENS).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_BUG_LOWER)!= null && fpc.boundsRect.getY() < 400){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_BUG_LOWER).update();
-                    }
-                    if(fpc.goals.get(DailyGoal.GoalType.EAT_N_BUG_UPPER)!= null && fpc.boundsRect.getY() > 400){
-                        fpc.goals.get(DailyGoal.GoalType.EAT_N_BUG_UPPER).update();
-                    }
 
                     fcc.score += fcc.haveBugJuiceDouble() ? 2 * bc.points : bc.points;
                     fcc.totalScore += bc.points;
@@ -97,6 +77,7 @@ public class BugSystem extends IteratingSystem {
 
                     if (fcc.flowerCollisionCheck(bc.boundsRect)) {
                         fcc.isCollision = true;
+                        checkGoals(bc);
                     }
 
                     spawnBugJuiceBubble(bc);
@@ -197,11 +178,11 @@ public class BugSystem extends IteratingSystem {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
-            if(fpc.goals.get(DailyGoal.GoalType.EAT_N_BUGS)!= null && checkFlowerCollision(fpc, bc)){
-                fpc.goals.get(DailyGoal.GoalType.EAT_N_BUGS).update();
+            if (fpc.goals.get(EAT_N_BUGS) != null && checkFlowerCollision(fpc, bc)) {
+                fpc.goals.get(EAT_N_BUGS).update();
             }
-            if(fpc.goals.get(DailyGoal.GoalType.EAT_N_CHARGERS)!= null && checkFlowerCollision(fpc, bc)){
-                fpc.goals.get(DailyGoal.GoalType.EAT_N_CHARGERS).update();
+            if (fpc.goals.get(EAT_N_CHARGERS) != null && checkFlowerCollision(fpc, bc)) {
+                fpc.goals.get(EAT_N_CHARGERS).update();
             }
         }
     }
@@ -222,7 +203,6 @@ public class BugSystem extends IteratingSystem {
             if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
         }
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
-
     }
 
     public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
@@ -259,5 +239,36 @@ public class BugSystem extends IteratingSystem {
     public void setPosition(TransformComponent tc, float x, float y) {
         tc.x = x;
         tc.y = y;
+    }
+
+
+    private void checkGoals(BugComponent bc) {
+
+        for (Goal g : fpc.goals.values()) {
+            g.updateInARowGoals(bc);
+        }
+
+        if (fpc.goals.get(EAT_N_BUGS) != null) {
+            fpc.goals.get(EAT_N_BUGS).update();
+        }
+        if (fpc.goals.get(EAT_N_BEES) != null && bc.type.equals(BugType.BEE)) {
+            fpc.goals.get(EAT_N_BEES).update();
+        }
+        if (fpc.goals.get(EAT_N_DRUNKS) != null && bc.type.equals(BugType.DRUNK)) {
+            fpc.goals.get(EAT_N_DRUNKS).update();
+        }
+        if (fpc.goals.get(EAT_N_SIMPLE) != null && bc.type.equals(BugType.SIMPLE)) {
+            fpc.goals.get(EAT_N_SIMPLE).update();
+        }
+        if (fpc.goals.get(EAT_N_QUEENS) != null && bc.type.equals(BugType.QUEENBEE)) {
+            fpc.goals.get(EAT_N_QUEENS).update();
+        }
+
+        if (fpc.goals.get(EAT_N_BUG_LOWER) != null && fpc.boundsRect.getY() < 400) {
+            fpc.goals.get(EAT_N_BUG_LOWER).update();
+        }
+        if (fpc.goals.get(EAT_N_BUG_UPPER) != null && fpc.boundsRect.getY() > 400) {
+            fpc.goals.get(EAT_N_BUG_UPPER).update();
+        }
     }
 }
