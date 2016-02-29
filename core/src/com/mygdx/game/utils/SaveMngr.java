@@ -89,8 +89,8 @@ public class SaveMngr {
 //                e.printStackTrace();
 //            }
             fc.pets = getAllPets();
-            fc.currentPet = fc.pets.get(0);
             fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
+            fc.currentPet = fc.pets.get(0);
             Goal.init(fc);
             addGoals(fc, gameStats);
         }

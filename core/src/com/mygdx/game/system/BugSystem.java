@@ -67,8 +67,9 @@ public class BugSystem extends IteratingSystem {
                 if (checkFlowerCollision(fcc, bc)) {
                     bc.state = DEAD;
 
-                    fcc.score += fcc.haveBugJuiceDouble() ? 2 * bc.points : bc.points;
-                    fcc.totalScore += bc.points;
+                    fcc.addScore(bc.points);
+//                    fcc.score += fcc.haveBugJuiceDouble() ? 2 * bc.points : bc.points;
+//                    fcc.totalScore += bc.points;
 
                     if (bc.type.equals(BugType.QUEENBEE)) {
                         angerBees();

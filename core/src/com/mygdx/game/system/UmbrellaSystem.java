@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
 import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.EffectUtils;
@@ -66,7 +67,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.state = UmbrellaComponent.State.FLY;
             }
 
-            if (uc.current >= 1 && uc.state == UmbrellaComponent.State.FLY) {
+            if (uc.current >= 1 && uc.state.equals(UmbrellaComponent.State.FLY)) {
                 uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
                 uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
                 uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
@@ -77,6 +78,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.myCatmull.derivativeAt(uc.out, 5);
 
                 uc.current -= 1;
+                checkBounceGoal();
             }
 
             uc.myCatmull.valueAt(uc.out, uc.current);
@@ -91,16 +93,14 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (checkCollision(uc, fcc)) {
                 fcc.isCollision = true;
-
                 hide(entity, tc);
 
-                fcc.totalScore -= fcc.score;
-                fcc.score *= uc.pointsMult;
-                fcc.totalScore += fcc.score;
-
+                fcc.umbrellaMult(uc.pointsMult);
                 GameScreenScript.reloadScoreLabel(fcc);
 
                 playParticleEffectFor();
+
+                checkEatGoal(uc, fcc);
             }
         } else {
             sasc.paused = true;
@@ -126,5 +126,19 @@ public class UmbrellaSystem extends IteratingSystem {
 
     private boolean checkCollision(UmbrellaComponent bc, FlowerPublicComponent fcc) {
         return fcc.flowerCollisionCheck(bc.boundsRect);
+    }
+
+    private void checkEatGoal(UmbrellaComponent uc, FlowerPublicComponent fcc) {
+        if (fcc.flowerCollisionCheck(uc.boundsRect)) {
+            if (fcc.goals.get(Goal.GoalType.EAT_N_UMBRELLA) != null) {
+                fcc.goals.get(Goal.GoalType.EAT_N_UMBRELLA).update();
+            }
+        }
+    }
+
+    private void checkBounceGoal() {
+        if (GameScreenScript.fpc.goals.get(Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES) != null) {
+            GameScreenScript.fpc.goals.get(Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES).update();
+        }
     }
 }

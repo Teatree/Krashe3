@@ -158,7 +158,7 @@ public class GameOverDialog {
 
         //reset goals with type "In one life"
         for (Goal g : fpc.goals.values()) {
-            if (!g.periodType.equals(Goal.PeriodType.IN_TOTAL) && !g.achieved) {
+            if (!g.periodType.equals(Goal.PeriodType.TOTAL) && !g.achieved) {
                 g.counter = 0;
             }
         }

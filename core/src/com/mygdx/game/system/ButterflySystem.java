@@ -84,9 +84,7 @@ public class ButterflySystem extends IteratingSystem {
                 tc.y = -300;
                 entity.remove(ButterflyComponent.class);
 
-                fcc.score += bc.points;
-                fcc.totalScore += bc.points;
-
+                fcc.addScore(bc.points);
                 reloadScoreLabel(fcc);
             }
         } else {

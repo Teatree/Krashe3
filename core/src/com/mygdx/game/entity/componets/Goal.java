@@ -12,9 +12,9 @@ import static com.mygdx.game.entity.componets.GoalConstants.*;
 /**
  * goals:
  * 1. eat n butterflies +
- * 2. get n points
- * 3. eat n dandelions
- * 4. bounce umbrella
+ * 2. get n points +
+ * 3. eat n umbrella +
+ * 4. bounce umbrella +
  * 5. eat n queens
  * 6. survive n angered bees mode
  * 7. eat n bees +`
@@ -59,7 +59,7 @@ public class Goal {
     public static void init(FlowerPublicComponent fpc) {
         periodTypeMap = new HashMap<>();
         periodTypeMap.put(0, PeriodType.IN_ONE_LIFE);
-        periodTypeMap.put(1, PeriodType.IN_TOTAL);
+        periodTypeMap.put(1, PeriodType.TOTAL);
         periodTypeMap.put(2, PeriodType.IN_A_ROW);
 
         levelMultipliers = new HashMap<>();
@@ -113,7 +113,7 @@ public class Goal {
     public enum PeriodType {
         IN_A_ROW(10),
         IN_ONE_LIFE(5),
-        IN_TOTAL(1);
+        TOTAL(1);
 
         public int adjustByTypeDivider;
 

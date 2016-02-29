@@ -78,5 +78,30 @@ public class FlowerPublicComponent implements Component {
             phoenix.counter = 0;
         }
     }
+
+    public void addScore(int points) {
+        score += haveBugJuiceDouble() ? 2 * points : points;
+        totalScore += haveBugJuiceDouble() ? 2 * points : points;
+        updateScoreGoal();
+    }
+
+
+    public void umbrellaMult(int pointsMult) {
+        totalScore -= score;
+        score *= pointsMult;
+        totalScore += score;
+        updateScoreGoal();
+    }
+
+    private void updateScoreGoal() {
+        Goal scoreGoal = goals.get(Goal.GoalType.GET_N_POINTS);
+        if (scoreGoal != null) {
+            if (scoreGoal.periodType.equals(Goal.PeriodType.IN_ONE_LIFE)) {
+                scoreGoal.counter = (int) score;
+            }
+            if (scoreGoal.periodType.equals(Goal.PeriodType.TOTAL)) {
+                scoreGoal.counter = (int) totalScore;
+            }
+        }
+    }
 }
-          
