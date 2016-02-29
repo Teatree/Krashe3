@@ -82,32 +82,6 @@ public class Goal {
         }
     }
 
-    public static void init(FlowerPublicComponent fpc) {
-        periodTypeMap = new HashMap<>();
-        periodTypeMap.put(0, PeriodType.IN_ONE_LIFE);
-        periodTypeMap.put(1, PeriodType.IN_TOTAL);
-        periodTypeMap.put(2, PeriodType.IN_A_ROW);
-
-        levelMultipliers = new HashMap<>();
-        levelMultipliers.put(0, 1.03f);
-        levelMultipliers.put(1, 1.26f);
-        levelMultipliers.put(2, 1.8f);
-        levelMultipliers.put(3, 2.6f);
-        levelMultipliers.put(4, 3.4f);
-        levelMultipliers.put(5, 4.2f);
-        levelMultipliers.put(6, 5f);
-        levelMultipliers.put(7, 5.8f);
-        levelMultipliers.put(8, 6.6f);
-        levelMultipliers.put(9, 7.4f);
-        levelMultipliers.put(10, 8.2f);
-
-        petType = new HashMap<>();
-        int ba = 0;
-        for (PetComponent p : fpc.pets) {
-            petType.put(ba++, p);
-        }
-    }
-
     public void update() {
         counter++;
         if (counter == n) {

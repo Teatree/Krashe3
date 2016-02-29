@@ -35,6 +35,7 @@ public class SaveMngr {
             dgs.description = goal.description;
             dgs.n = goal.n;
             dgs.type = goal.type.toString();
+            dgs.periodType = goal.periodType.toString();
             gameStats.goals.add(dgs);
         }
         Json json = new Json();
@@ -90,7 +91,7 @@ public class SaveMngr {
             fc.pets = getAllPets();
             fc.currentPet = fc.pets.get(0);
             fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
-
+            Goal.init(fc);
             addGoals(fc, gameStats);
         }
         fc.vanities = getAllVanity();
@@ -103,7 +104,7 @@ public class SaveMngr {
             Goal goal = new Goal();
             goal.achieved = dg.achieved;
             goal.type = Goal.GoalType.valueOf(dg.type);
-            goal.periodType = Goal.PeriodType.valueOf(dg.type);
+            goal.periodType = Goal.PeriodType.valueOf(dg.periodType);
             goal.n = dg.n;
             goal.description = dg.description;
             fc.goals.put(goal.type, goal);
@@ -299,6 +300,7 @@ public class SaveMngr {
     private static class DailyGoalStats {
         public int n;
         public String type;
+        public String periodType;
         public String description;
         public boolean achieved;
     }
