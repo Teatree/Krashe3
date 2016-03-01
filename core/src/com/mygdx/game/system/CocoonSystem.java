@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -16,6 +15,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
+import static com.mygdx.game.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
+import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
@@ -35,11 +36,11 @@ public class CocoonSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         sc = entity.getComponent(SpriterComponent.class);
-        if(!GameScreenScript.isStarted){
+        if (!isStarted) {
             entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
 
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
+        if (!isPause && !isGameOver && isStarted) {
             CocoonComponent cc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -68,11 +69,12 @@ public class CocoonSystem extends IteratingSystem {
                 }
             }
 
-            if (cc.state == HIT) {
+            if (cc.state.equals(HIT)) {
                 if (isAnimationFinished()) {
                     if (cc.hitCounter >= GlobalConstants.COCOON_HIT_AMOUNT) {
                         cc.state = DEAD;
                         spawnButterfly();
+                        checkCocoonGoal();
                     } else {
                         cc.state = IDLE;
                         if(cc.hitCounter+1<4) {
@@ -83,7 +85,7 @@ public class CocoonSystem extends IteratingSystem {
                 }
             }
 
-            if (cc.state == DEAD) {
+            if (cc.state.equals(DEAD)) {
 //                GameStage.sceneLoader.getEngine().removeEntity(entity);
                 sc.player.setAnimation(3);
                 if (isAnimationFinished()) {
@@ -100,7 +102,7 @@ public class CocoonSystem extends IteratingSystem {
     public void hit(CocoonComponent cc) {
 
         cc.canHit = true;
-        if (cc.state != DEAD) {
+        if (!cc.state.equals(DEAD)) {
             cc.state = HIT;
 //            cc.hitCounter+=1;
             cc.canHit = true;
@@ -133,5 +135,11 @@ public class CocoonSystem extends IteratingSystem {
         ButterflyComponent bc = new ButterflyComponent();
         butterflyEntity.add(fcc);
         butterflyEntity.add(bc);
+    }
+
+    public void checkCocoonGoal() {
+        if (fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
+            fpc.level.getGoalByType(DESTROY_N_COCOON).update();
+        }
     }
 }

@@ -108,6 +108,8 @@ public class GameScreenScript implements IScript {
         gameOverDialog.initGameOverDialog();
 
         pauseDialog = new PauseDialog(gameItem);
+
+        fpc.level.updateLevel();
         pauseDialog.init();
     }
 
@@ -228,10 +230,9 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(tc);
 
         FlowerComponent fc = new FlowerComponent();
-        dailyGoalGenerator = new DailyGoalSystem();
-        if (fpc.goals == null || fpc.goals.isEmpty()) {
-            fpc.goals = dailyGoalGenerator.getGoals();
-            fpc.level++;
+
+        if (fpc.level.getGoals() == null || fpc.level.getGoals().isEmpty()) {
+            fpc.level.updateLevel();
         }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
@@ -295,8 +296,8 @@ public class GameScreenScript implements IScript {
     }
 
     private void updateTapGoal() {
-        if (fpc.goals.get(Goal.GoalType.TAP) != null) {
-            fpc.goals.get(Goal.GoalType.TAP).update();
+        if (fpc.level.getGoalByType(Goal.GoalType.TAP) != null) {
+            fpc.level.getGoalByType(Goal.GoalType.TAP).update();
         }
     }
 

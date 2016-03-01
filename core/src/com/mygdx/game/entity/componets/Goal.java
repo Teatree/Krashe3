@@ -1,6 +1,5 @@
 package com.mygdx.game.entity.componets;
 
-import com.mygdx.game.stages.GameScreenScript;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.GoalConstants.*;
+import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 /**
  * goals:
@@ -28,6 +28,7 @@ import static com.mygdx.game.entity.componets.GoalConstants.*;
  * 15. PET_THE_PET +
  * 16. PET_EAT_N_BUGS
  * 17. PET_DASH_N_TIMES +
+ * 18. DESTROY_N_COCOON +
  */
 
 public class Goal {
@@ -53,7 +54,7 @@ public class Goal {
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
         n /= periodType.adjustByTypeDivider;
-        n = changeByLevel(GameScreenScript.fpc.level, n);
+        n = changeByLevel(fpc.level.difficultyLevel, n);
     }
 
     public static void init(FlowerPublicComponent fpc) {
@@ -84,23 +85,23 @@ public class Goal {
 
     public void update() {
         counter++;
-        if (counter == n) {
+        if (counter >= n) {
             achieved = true;
         }
     }
 
     public void updateInARowGoals(BugComponent bc) {
         if (periodType.equals(PeriodType.IN_A_ROW)) {
-            if (type.equals(GoalType.EAT_N_DRUNKS) && !bc.type.equals(BugType.DRUNK)) {
+            if (type.equals(GoalType.EAT_N_DRUNKS) && !bc.type.equals(BugComponent.BugType.DRUNK)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_BEES) && !bc.type.equals(BugType.BEE)) {
+            if (type.equals(GoalType.EAT_N_BEES) && !bc.type.equals(BugComponent.BugType.BEE)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_CHARGERS) && !bc.type.equals(BugType.CHARGER)) {
+            if (type.equals(GoalType.EAT_N_CHARGERS) && !bc.type.equals(BugComponent.BugType.CHARGER)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_SIMPLE) && !bc.type.equals(BugType.SIMPLE)) {
+            if (type.equals(GoalType.EAT_N_SIMPLE) && !bc.type.equals(BugComponent.BugType.SIMPLE)) {
                 counter = 0;
             }
         }
@@ -108,6 +109,10 @@ public class Goal {
 
     public int changeByLevel(int level, int n) {
         return Math.round(n * levelMultipliers.get(level));
+    }
+
+    public String getDescription() {
+        return description.replace("#", " " + n + " ") + " " + periodType;
     }
 
     public enum PeriodType {

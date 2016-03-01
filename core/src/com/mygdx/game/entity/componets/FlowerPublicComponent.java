@@ -18,22 +18,13 @@ public class FlowerPublicComponent implements Component {
     public long bestScore;
     public long totalScore;
     public long score;
-    public int level;
 
     public List<VanityComponent> vanities = new ArrayList<>();
-    public HashMap<Goal.GoalType, Goal> goals = new HashMap<>();
     public List<PetComponent> pets = new ArrayList<>();
     public Map<Upgrade.UpgradeType, Upgrade> upgrades = new HashMap<>();
-
+    public Level level = new Level();
     public PetComponent currentPet;
 
-    public boolean checkAllGoals() {
-        boolean allAchieved = true;
-        for (Goal goal : goals.values()) {
-            allAchieved = allAchieved && goal.achieved;
-        }
-        return allAchieved;
-    }
 
     public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
 //        if (currentPet != null) {
@@ -94,7 +85,7 @@ public class FlowerPublicComponent implements Component {
     }
 
     private void updateScoreGoal() {
-        Goal scoreGoal = goals.get(Goal.GoalType.GET_N_POINTS);
+        Goal scoreGoal = level.getGoalByType(Goal.GoalType.GET_N_POINTS);
         if (scoreGoal != null) {
             if (scoreGoal.periodType.equals(Goal.PeriodType.IN_ONE_LIFE)) {
                 scoreGoal.counter = (int) score;

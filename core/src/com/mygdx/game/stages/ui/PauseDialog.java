@@ -2,6 +2,7 @@ package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.Goal;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -42,8 +43,8 @@ public class PauseDialog {
         });
 
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = -3000;
-        dialogTc.y = -1000;
+        dialogTc.x = GlobalConstants.FAR_FAR_AWAY_X;
+        dialogTc.y = GlobalConstants.FAR_FAR_AWAY_Y;
     }
 
     public void pause() {
@@ -55,9 +56,10 @@ public class PauseDialog {
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
         StringBuilder goalsList = new StringBuilder();
-        for (Goal g : fpc.goals.values()) {
+        goalsList.append(" \n     " + fpc.level.name + " \n ");
+        for (Goal g : fpc.level.getGoals()) {
             String achieved = g.achieved ? " achieved " : " not achieved ";
-            goalsList.append(" \n  - ").append(g.description).append(" - ").append(achieved);
+            goalsList.append(" \n  - ").append(g.getDescription()).append(" - ").append(achieved);
         }
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "GOALS FOR TODAY!" + goalsList);
         isPause = true;

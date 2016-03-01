@@ -7,9 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.PetComponent;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -20,8 +18,11 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.Goal.GoalType.PET_DASH_N_TIMES;
+import static com.mygdx.game.entity.componets.Goal.GoalType.PET_THE_PET;
 import static com.mygdx.game.entity.componets.PetComponent.State.*;
 import static com.mygdx.game.entity.componets.PetComponent.X_SPAWN_POSITION;
+import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FPS;
@@ -48,7 +49,7 @@ public class PetSystem extends IteratingSystem {
         dc.width = 56;
         dc.height = 100;
         updateRect(pc, tc, dc);
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+        if (!isPause && !isGameOver) {
             sc.player.speed = FPS;
 //            pc.animationCounter--;
 
@@ -170,14 +171,14 @@ public class PetSystem extends IteratingSystem {
     }
 
     private void checkPetThePetGoal() {
-        if (GameScreenScript.fpc.goals.get(Goal.GoalType.PET_THE_PET) != null) {
-            GameScreenScript.fpc.goals.get(Goal.GoalType.PET_THE_PET).update();
+        if (fpc.level.getGoalByType(PET_THE_PET) != null) {
+            fpc.level.getGoalByType(PET_THE_PET).update();
         }
     }
 
     private void checkPetDashGoal() {
-        if (GameScreenScript.fpc.goals.get(Goal.GoalType.PET_DASH_N_TIMES) != null) {
-            GameScreenScript.fpc.goals.get(Goal.GoalType.PET_DASH_N_TIMES).update();
+        if (fpc.level.getGoalByType(PET_DASH_N_TIMES) != null) {
+            fpc.level.getGoalByType(PET_DASH_N_TIMES).update();
         }
     }
 }

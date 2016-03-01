@@ -2,9 +2,8 @@ package com.mygdx.game.utils;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.BugType;
+import com.mygdx.game.entity.componets.BugComponent.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -21,16 +20,60 @@ public class BugPool {
     public static final String CHARGER = "CHARGER";
     public static final String BEE = "BEE";
     public static final String QUEENBEE = "QUEENBEE";
-
+    private static ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
+    private static BugPool instance;
     private Stack<Entity> simpleBugs = new Stack<>();
     private Stack<Entity> bees = new Stack<>();
     private Stack<Entity> drunkBugs = new Stack<>();
     private Stack<Entity> chargerBugs = new Stack<>();
     private Entity queenBee;
 
-    private static ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
+    private BugPool() {
+        final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        simpleBugs.add(root.getChild("simpleBugAni1").getEntity());
+        bees.add(root.getChild("beeAni1").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni1").getEntity());
+        chargerBugs.add(root.getChild("chargerAni1").getEntity());
+        queenBee = root.getChild("queenBeeAni1").getEntity();
 
-    private static BugPool instance;
+        simpleBugs.add(root.getChild("simpleBugAni2").getEntity());
+        bees.add(root.getChild("beeAni2").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni2").getEntity());
+        chargerBugs.add(root.getChild("chargerAni2").getEntity());
+
+        simpleBugs.add(root.getChild("simpleBugAni3").getEntity());
+        bees.add(root.getChild("beeAni3").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni3").getEntity());
+        chargerBugs.add(root.getChild("chargerAni3").getEntity());
+
+        simpleBugs.add(root.getChild("simpleBugAni4").getEntity());
+        simpleBugs.add(root.getChild("simpleBugAni5").getEntity());
+        simpleBugs.add(root.getChild("simpleBugAni6").getEntity());
+        simpleBugs.add(root.getChild("simpleBugAni7").getEntity());
+        simpleBugs.add(root.getChild("simpleBugAni8").getEntity());
+
+
+        bees.add(root.getChild("beeAni4").getEntity());
+        bees.add(root.getChild("beeAni5").getEntity());
+        bees.add(root.getChild("beeAni6").getEntity());
+        bees.add(root.getChild("beeAni7").getEntity());
+        bees.add(root.getChild("beeAni8").getEntity());
+
+
+        drunkBugs.add(root.getChild("drunkBugAni4").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni5").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni6").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni7").getEntity());
+        drunkBugs.add(root.getChild("drunkBugAni8").getEntity());
+
+
+        chargerBugs.add(root.getChild("chargerAni4").getEntity());
+        chargerBugs.add(root.getChild("chargerAni5").getEntity());
+        chargerBugs.add(root.getChild("chargerAni6").getEntity());
+        chargerBugs.add(root.getChild("chargerAni7").getEntity());
+        chargerBugs.add(root.getChild("chargerAni8").getEntity());
+
+    }
 
     public static BugPool getInstance() {
         if (instance == null) {
@@ -41,57 +84,6 @@ public class BugPool {
 
     public static void resetBugPool() {
         instance = new BugPool();
-    }
-
-    private BugPool() {
-        final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        Gdx.app.postRunnable(new Runnable() {
-//            @Override
-//            public void run() {
-                simpleBugs.add(root.getChild("simpleBugAni1").getEntity());
-                bees.add(root.getChild("beeAni1").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni1").getEntity());
-                chargerBugs.add(root.getChild("chargerAni1").getEntity());
-                queenBee = root.getChild("queenBeeAni1").getEntity();
-
-                simpleBugs.add(root.getChild("simpleBugAni2").getEntity());
-                bees.add(root.getChild("beeAni2").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni2").getEntity());
-                chargerBugs.add(root.getChild("chargerAni2").getEntity());
-
-                simpleBugs.add(root.getChild("simpleBugAni3").getEntity());
-                bees.add(root.getChild("beeAni3").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni3").getEntity());
-                chargerBugs.add(root.getChild("chargerAni3").getEntity());
-
-                simpleBugs.add(root.getChild("simpleBugAni4").getEntity());
-                simpleBugs.add(root.getChild("simpleBugAni5").getEntity());
-                simpleBugs.add(root.getChild("simpleBugAni6").getEntity());
-                simpleBugs.add(root.getChild("simpleBugAni7").getEntity());
-                simpleBugs.add(root.getChild("simpleBugAni8").getEntity());
-
-
-                bees.add(root.getChild("beeAni4").getEntity());
-                bees.add(root.getChild("beeAni5").getEntity());
-                bees.add(root.getChild("beeAni6").getEntity());
-                bees.add(root.getChild("beeAni7").getEntity());
-                bees.add(root.getChild("beeAni8").getEntity());
-
-
-                drunkBugs.add(root.getChild("drunkBugAni4").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni5").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni6").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni7").getEntity());
-                drunkBugs.add(root.getChild("drunkBugAni8").getEntity());
-
-
-                chargerBugs.add(root.getChild("chargerAni4").getEntity());
-                chargerBugs.add(root.getChild("chargerAni5").getEntity());
-                chargerBugs.add(root.getChild("chargerAni6").getEntity());
-                chargerBugs.add(root.getChild("chargerAni7").getEntity());
-                chargerBugs.add(root.getChild("chargerAni8").getEntity());
-//            }
-//        });
     }
 
     public Entity get(BugType type) {
@@ -120,8 +112,8 @@ public class BugPool {
         bc.velocity = 0;
 
         TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
-        tc.x = -300;
-        tc.y = -300;
+        tc.x = GlobalConstants.FAR_FAR_AWAY_X;
+        tc.y = GlobalConstants.FAR_FAR_AWAY_Y;
 
         switch (bc.type.toString()) {
             case SIMPLE: {

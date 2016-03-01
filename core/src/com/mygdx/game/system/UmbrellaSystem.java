@@ -8,9 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -19,6 +17,9 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES;
+import static com.mygdx.game.entity.componets.Goal.GoalType.EAT_N_UMBRELLA;
+import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -38,12 +39,12 @@ public class UmbrellaSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (!GameScreenScript.isStarted){
+        if (!isStarted) {
             entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             entity.remove(UmbrellaComponent.class);
 //            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver && GameScreenScript.isStarted) {
+        if (!isPause && !isGameOver && isStarted) {
 
             UmbrellaComponent uc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
@@ -96,7 +97,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 hide(entity, tc);
 
                 fcc.umbrellaMult(uc.pointsMult);
-                GameScreenScript.reloadScoreLabel(fcc);
+                reloadScoreLabel(fcc);
 
                 playParticleEffectFor();
 
@@ -130,15 +131,15 @@ public class UmbrellaSystem extends IteratingSystem {
 
     private void checkEatGoal(UmbrellaComponent uc, FlowerPublicComponent fcc) {
         if (fcc.flowerCollisionCheck(uc.boundsRect)) {
-            if (fcc.goals.get(Goal.GoalType.EAT_N_UMBRELLA) != null) {
-                fcc.goals.get(Goal.GoalType.EAT_N_UMBRELLA).update();
+            if (fcc.level.getGoalByType(EAT_N_UMBRELLA) != null) {
+                fcc.level.getGoalByType(EAT_N_UMBRELLA).update();
             }
         }
     }
 
     private void checkBounceGoal() {
-        if (GameScreenScript.fpc.goals.get(Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES) != null) {
-            GameScreenScript.fpc.goals.get(Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES).update();
+        if (fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
+            fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
         }
     }
 }

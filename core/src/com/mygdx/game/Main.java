@@ -93,6 +93,8 @@ public class Main extends Game {
     public void async() {
         SaveMngr.generateVanityJson();
         SaveMngr.generatePetsJson();
+        SaveMngr.generateLevelsJson();
+
 
         GameScreenScript.fpc = SaveMngr.loadStats();
 

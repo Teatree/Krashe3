@@ -160,7 +160,7 @@ public class GameOverDialog {
         fpc.resetPhoenix();
 
         //reset goals with type "In one life"
-        for (Goal g : fpc.goals.values()) {
+        for (Goal g : fpc.level.getGoals()) {
             if (!g.periodType.equals(Goal.PeriodType.TOTAL) && !g.achieved) {
                 g.counter = 0;
             }

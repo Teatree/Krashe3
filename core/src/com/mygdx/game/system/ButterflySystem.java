@@ -9,13 +9,13 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.entity.componets.Goal;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.ButterflyComponent.State.*;
+import static com.mygdx.game.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
@@ -116,8 +116,8 @@ public class ButterflySystem extends IteratingSystem {
 
     private void checkGoal(ButterflyComponent bc, FlowerPublicComponent fcc) {
         if (fcc.flowerCollisionCheck(bc.boundsRect)) {
-            if (fcc.goals.get(Goal.GoalType.EAT_N_BUTTERFLIES) != null) {
-                fcc.goals.get(Goal.GoalType.EAT_N_BUTTERFLIES).update();
+            if (fcc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
+                fcc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
             }
         }
     }

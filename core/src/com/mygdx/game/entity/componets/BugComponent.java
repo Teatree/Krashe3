@@ -3,10 +3,11 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Align;
 
 import java.util.Random;
-import static com.mygdx.game.utils.GlobalConstants.*;
+
+import static com.mygdx.game.utils.GlobalConstants.MAX_IDLE_COUNT;
+import static com.mygdx.game.utils.GlobalConstants.MIN_IDLE_COUNTER;
 
 public class BugComponent implements Component {
 
@@ -68,5 +69,14 @@ public class BugComponent implements Component {
         SCARED,
         DEAD
     }
+
+    public enum BugType {
+        SIMPLE,
+        DRUNK,
+        CHARGER,
+        BEE,
+        QUEENBEE
+    }
+
 
 }

@@ -13,7 +13,7 @@ public class SaveMngr {
     public static final String VANITIES_FILE = "vanity.params";
     public static final String PETS_FILE = "pets.params";
     public static final String UPGRADES_FILE = "upgrades.params";
-    //    public static SimpleDateFormat sdf = getDateFormat();
+    public static final String LEVELS_JSON = "levels.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -24,18 +24,21 @@ public class SaveMngr {
         gameStats.noSound = fc.settings.noSound;
         gameStats.doubleJuice = fc.haveBugJuiceDouble();
         gameStats.phoenix = fc.havePhoenix();
-//        gameStats.lastGoalsDate = sdf.format(DailyGoalSystem.latestDate.getTime());
         saveVanities(fc);
         saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
-        for (Goal goal : fc.goals.values()) {
+        for (Goal goal : fc.level.goals.values()) {
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
             dgs.description = goal.description;
             dgs.n = goal.n;
             dgs.type = goal.type.toString();
             dgs.periodType = goal.periodType.toString();
+            dgs.difficultyLevel = fc.level.difficultyLevel;
+            if (goal.periodType.equals(Goal.PeriodType.TOTAL)) {
+                dgs.counter = goal.counter;
+            }
             gameStats.goals.add(dgs);
         }
         Json json = new Json();
@@ -63,6 +66,7 @@ public class SaveMngr {
     }
 
     public static FlowerPublicComponent loadStats() {
+        initAllLevels();
         FlowerPublicComponent fc = new FlowerPublicComponent();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
@@ -81,13 +85,6 @@ public class SaveMngr {
             if (gameStats.phoenix) {
                 fc.upgrades.put(Upgrade.UpgradeType.PHOENIX, Upgrade.getPhoenix());
             }
-//            try {
-//                Calendar lastGoalsDate = Calendar.getInstance();
-//                lastGoalsDate.setTime(sdf.parse(gameStats.lastGoalsDate));
-//                DailyGoalSystem.latestDate = lastGoalsDate;
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
             fc.pets = getAllPets();
             fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
             fc.currentPet = fc.pets.get(0);
@@ -95,7 +92,6 @@ public class SaveMngr {
             addGoals(fc, gameStats);
         }
         fc.vanities = getAllVanity();
-
         return fc;
     }
 
@@ -107,7 +103,8 @@ public class SaveMngr {
             goal.periodType = Goal.PeriodType.valueOf(dg.periodType);
             goal.n = dg.n;
             goal.description = dg.description;
-            fc.goals.put(goal.type, goal);
+            fc.level.goals.put(goal.type, goal);
+            fc.level.difficultyLevel = dg.difficultyLevel;
         }
         Goal goal = new Goal();
         goal.achieved = false;
@@ -115,7 +112,7 @@ public class SaveMngr {
         goal.type = Goal.GoalType.EAT_N_BUGS;
         goal.n = 3;
         goal.description = GoalConstants.EAT_N_BUGS_DESC;
-        fc.goals.put(goal.type, goal);
+        fc.level.goals.put(goal.type, goal);
 
     }
 
@@ -284,13 +281,49 @@ public class SaveMngr {
         writeFile(PETS_FILE, jsonPetsObj.toJson(allPets));
     }
 
+    public static void generateLevelsJson() {
+        List<LevelInfo> levels = new ArrayList<>();
+        LevelInfo l = new LevelInfo();
+        l.difficultyLevel = 1;
+        l.difficultyMultiplier = 0.5f;
+        l.name = "Novice";
+
+        LevelInfo l1 = new LevelInfo();
+        l1.difficultyLevel = 2;
+        l1.difficultyMultiplier = 0.8f;
+        l1.name = "Pro";
+
+        levels.add(l);
+        levels.add(l1);
+
+        writeFile(LEVELS_JSON, new Json().toJson(levels));
+
+    }
+
+    public static List<LevelInfo> initAllLevels() {
+        String saved = readFile(LEVELS_JSON);
+        List<LevelInfo> levels = new Json().fromJson(List.class, saved);
+        Level.levelsInfo = levels;
+        return levels;
+    }
+
+    public static class LevelInfo {
+        public String name;
+        public int difficultyLevel;
+        public float difficultyMultiplier;
+        public String type;
+
+        public LevelInfo() {
+
+        }
+    }
+
     private static class GameStats {
         public boolean noAds;
         public boolean noSound;
         public boolean noMusic;
         public long bestScore;
         public long totalScore;
-        public String lastGoalsDate;
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
         public boolean doubleJuice;
@@ -303,6 +336,8 @@ public class SaveMngr {
         public String periodType;
         public String description;
         public boolean achieved;
+        public int difficultyLevel;
+        public int counter;
     }
 
     public static class VanityJson {
