@@ -2,7 +2,6 @@ package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.Goal;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.game.stages.GameScreenScript.fpc;
-import static com.mygdx.game.stages.GameStage.*;
 import static com.mygdx.game.stages.GameScreenScript.isPause;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.EffectUtils.fade;
 
 public class PauseDialog {
@@ -32,13 +31,20 @@ public class PauseDialog {
     public static final String GOAL_LBL_TAG = "goal_lbl";
     public static final String STAR_TAG = "star";
     public static final String BTN_CLOSE = "btn_close";
-
+    private static List<Entity> tiles;
     private ItemWrapper gameItem;
     private Entity pauseDialog;
-    private List<Entity> tiles = new ArrayList<>();
 
 
     public PauseDialog(ItemWrapper gameItem) {
+        if (tiles != null) {
+            for (Entity tile : tiles) {
+                System.out.println("tiles not empty");
+                tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+                sceneLoader.getEngine().removeEntity(tile);
+            }
+        }
+        tiles = new ArrayList<>();
         this.gameItem = gameItem;
     }
 
@@ -127,5 +133,4 @@ public class PauseDialog {
             fade(tile, isPause);
         }
     }
-
 }
