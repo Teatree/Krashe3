@@ -51,7 +51,7 @@ public class FlowerPublicComponent implements Component {
     }
 
     public boolean haveBugJuiceDouble() {
-        return upgrades.get(Upgrade.UpgradeType.DOUBLE_JUICE) != null;
+        return upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE) != null;
     }
 
     public boolean canUsePhoenix() {

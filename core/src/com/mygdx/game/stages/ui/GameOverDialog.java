@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.Upgrade;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.system.BugSpawnSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -135,7 +136,11 @@ public class GameOverDialog {
         if (gameOverCounter <= 0) {
             if (!fpc.canUsePhoenix()) {
                 resetGameData();
-                game.initResult();
+                if (fpc.level.checkAllGoals()) {
+                    GameScreenScript.giftScreen.show();
+                } else {
+                    game.initResult();
+                }
             } else {
                 usePhoenix();
             }

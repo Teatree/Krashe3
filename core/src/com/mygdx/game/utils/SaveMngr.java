@@ -80,7 +80,7 @@ public class SaveMngr {
             fc.settings.noSound = gameStats.noSound;
 
             if (gameStats.doubleJuice) {
-                fc.upgrades.put(Upgrade.UpgradeType.DOUBLE_JUICE, Upgrade.getBJDouble());
+                fc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE, Upgrade.getBJDouble());
             }
             if (gameStats.phoenix) {
                 fc.upgrades.put(Upgrade.UpgradeType.PHOENIX, Upgrade.getPhoenix());

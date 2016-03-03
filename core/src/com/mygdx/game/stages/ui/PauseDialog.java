@@ -39,7 +39,6 @@ public class PauseDialog {
     public PauseDialog(ItemWrapper gameItem) {
         if (tiles != null) {
             for (Entity tile : tiles) {
-                System.out.println("tiles not empty");
                 tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
                 sceneLoader.getEngine().removeEntity(tile);
             }
@@ -123,9 +122,9 @@ public class PauseDialog {
                 e.getComponent(ZIndexComponent.class).setZIndex(140);
             }
         }
+        tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
     }
-
 
     public void update() {
         fade(pauseDialog, isPause);

@@ -5,10 +5,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.stages.ui.GameOverDialog;
+import com.mygdx.game.stages.ui.GiftScreen;
 import com.mygdx.game.stages.ui.PauseDialog;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
-import com.mygdx.game.utils.DailyGoalSystem;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -49,11 +49,11 @@ public class GameScreenScript implements IScript {
     public static boolean isGameOver;
     public static boolean isStarted;
     public static Entity background;
+    public static GiftScreen giftScreen;
     private static GameOverDialog gameOverDialog;
     public Random random = new Random();
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
-    public DailyGoalSystem dailyGoalGenerator;
     private ItemWrapper gameItem;
     private PauseDialog pauseDialog;
 
@@ -84,8 +84,6 @@ public class GameScreenScript implements IScript {
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
 
-//        GameStage.sceneLoader.addComponentsByTagName("button", ButtonComponent.class);
-
         Entity scoreLabel = gameItem.getChild(LBL_SCORE).getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "0");
@@ -111,6 +109,9 @@ public class GameScreenScript implements IScript {
 
         fpc.level.updateLevel();
         pauseDialog.init();
+
+        giftScreen = new GiftScreen(gameItem);
+        giftScreen.init();
     }
 
     public void reset() {
@@ -293,6 +294,7 @@ public class GameScreenScript implements IScript {
 
         gameOverDialog.update();
         pauseDialog.update();
+        giftScreen.update();
     }
 
     private void updateTapGoal() {

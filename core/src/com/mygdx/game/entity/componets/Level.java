@@ -44,8 +44,10 @@ public class Level {
     }
 
     public void resetNewInfo() {
-        SaveMngr.LevelInfo info = levelsInfo.get(difficultyLevel++);
-        name = info.name;
-        difficultyMultiplier = info.difficultyMultiplier;
+        if (difficultyLevel < levelsInfo.size() - 1) {
+            SaveMngr.LevelInfo info = levelsInfo.get(difficultyLevel++);
+            name = info.name;
+            difficultyMultiplier = info.difficultyMultiplier;
+        }
     }
 }

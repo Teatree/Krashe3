@@ -30,7 +30,7 @@ public class Upgrade extends ShopItem{
 
     public static Upgrade getBJDouble() {
         Upgrade bjd = new Upgrade();
-        bjd.upgradeType = UpgradeType.DOUBLE_JUICE;
+        bjd.upgradeType = UpgradeType.BJ_DOUBLE;
         bjd.cost = 13;
         bjd.name = "bj_double";
         bjd.bought = false;
@@ -44,7 +44,7 @@ public class Upgrade extends ShopItem{
     public void apply(FlowerPublicComponent fpc) {
         this.enabled = true;
         fpc.upgrades.put(this.upgradeType, this);
-//        if (upgradeType.equals(UpgradeType.DOUBLE_JUICE)){
+//        if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
 //            fpc.upgrades.add(this);
 //        }
 //        if (upgradeType.equals(UpgradeType.PHOENIX)){
@@ -70,6 +70,6 @@ public class Upgrade extends ShopItem{
     }
 
     public enum UpgradeType {
-        PHOENIX, DOUBLE_JUICE
+        PHOENIX, BJ_DOUBLE
     }
 }
