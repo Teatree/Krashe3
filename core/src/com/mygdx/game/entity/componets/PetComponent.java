@@ -1,6 +1,7 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.utils.SaveMngr;
 
@@ -8,11 +9,8 @@ import java.util.Random;
 
 public class PetComponent extends ShopItem implements Component {
 
-    public static final int DEFAULT_BITE_DURATION = 26;
     public static final int OUTSIDE_DURATION_MAX = 1000;
     public static final int OUTSIDE_DURATION_MIN = 500;
-    public static final int SPAWN_DURATION = 40;
-    public static final int TAP_DURATION = 100;
 
     public static final float X_SPAWN_POSITION = 1200;
     public static final int Y_SPAWN_POSITION_MAX = 568;
@@ -35,7 +33,9 @@ public class PetComponent extends ShopItem implements Component {
     public int eatenBugsCounter;
 
     public boolean tryPeriod;
-    public int tryPeriodDuration;
+    public long tryPeriodDuration;
+    public long tryPeriodStart;
+    public long tryPeriodTimer;
 
     public boolean isCollision;
 
@@ -51,10 +51,12 @@ public class PetComponent extends ShopItem implements Component {
         this.bought = pet.bought;
         this.cost = pet.cost;
         this.tryPeriod = pet.tryPeriod;
-        this.tryPeriodDuration = pet.tryPeriodDuration;
+        this.tryPeriodDuration = tryPeriodDuration - (tryPeriodStart - System.currentTimeMillis()) / 1000;
         this.amountBugsBeforeCharging = pet.amountBugsBeforeCharging;
         this.totalEatenBugs = pet.totalEatenBugs;
         this.shopIcon = pet.shopIcon;
+        this.tryPeriodTimer = pet.tryPeriodTimer;
+        this.tryPeriodStart = pet.tryPeriodStart;
         init();
     }
 
@@ -78,7 +80,6 @@ public class PetComponent extends ShopItem implements Component {
     public void init() {
         this.state = State.SPAWNING;
         this.boundsRect = new Rectangle();
-//        this.animationCounter = SPAWN_DURATION;
         eatenBugsCounter = 0;
     }
 
@@ -102,6 +103,16 @@ public class PetComponent extends ShopItem implements Component {
 
     public void setOutsideStateDuration() {
         this.outsideCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
+    }
+
+    public String updateTryPeriodTimer() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+
+        int minutes = ((int) tryPeriodTimer) / 60;
+        int seconds = ((int) tryPeriodTimer) % 60;
+        return "" + minutes + " : " + seconds;
     }
 
     public enum State {

@@ -22,12 +22,14 @@ public class SaveMngr {
         gameStats.noAds = fc.settings.noAds;
         gameStats.noMusic = fc.settings.noMusic;
         gameStats.noSound = fc.settings.noSound;
-        gameStats.doubleJuice = fc.haveBugJuiceDouble();
-        gameStats.phoenix = fc.havePhoenix();
+        for (Upgrade u : fc.upgrades.values()) {
+            gameStats.upgrades.put(u.upgradeType.toString(), new UpgradeStats(u));
+        }
         saveVanities(fc);
         saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
+
         for (Goal goal : fc.level.goals.values()) {
             DailyGoalStats dgs = new DailyGoalStats();
             dgs.achieved = goal.achieved;
@@ -79,20 +81,31 @@ public class SaveMngr {
             fc.settings.noMusic = gameStats.noMusic;
             fc.settings.noSound = gameStats.noSound;
 
-            if (gameStats.doubleJuice) {
-                fc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE, Upgrade.getBJDouble());
-            }
-            if (gameStats.phoenix) {
-                fc.upgrades.put(Upgrade.UpgradeType.PHOENIX, Upgrade.getPhoenix());
+            for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
+                fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
             }
             fc.pets = getAllPets();
-            fc.currentPet = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
-            fc.currentPet = fc.pets.get(0);
+            PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
+            if (petComponent != null && petComponent.tryPeriod) {
+                long now = System.currentTimeMillis();
+                if (now - petComponent.tryPeriodStart >= petComponent.tryPeriodDuration * 1000) {
+                    petComponent = null;
+                }
+            }
+            fc.currentPet = petComponent;
+//            dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
         }
         fc.vanities = getAllVanity();
         return fc;
+    }
+
+    private static void dummyPet(FlowerPublicComponent fc) {
+        fc.currentPet = fc.pets.get(0);
+        fc.currentPet.tryPeriod = true;
+        fc.currentPet.tryPeriodDuration = 15 * 60;
+        fc.currentPet.tryPeriodStart = System.currentTimeMillis();
     }
 
     private static void addGoals(FlowerPublicComponent fc, GameStats gameStats) {
@@ -326,8 +339,7 @@ public class SaveMngr {
         public long totalScore;
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
-        public boolean doubleJuice;
-        public boolean phoenix;
+        public Map<String, UpgradeStats> upgrades = new HashMap<>();
     }
 
     private static class DailyGoalStats {
@@ -338,6 +350,25 @@ public class SaveMngr {
         public boolean achieved;
         public int difficultyLevel;
         public int counter;
+    }
+
+    public static class UpgradeStats {
+        public String upgradeType;
+        public boolean tryPeriod;
+        public int tryPeriodDuration;
+        public long tryPeriodStart;
+        public int tryPeriodTimer;
+
+        public UpgradeStats() {
+        }
+
+        public UpgradeStats(Upgrade us) {
+            this.upgradeType = us.upgradeType.toString();
+            this.tryPeriod = us.tryPeriod;
+            this.tryPeriodDuration = us.tryPeriodDuration;
+            this.tryPeriodTimer = us.tryPeriodTimer;
+            this.tryPeriodStart = us.tryPeriodStart;
+        }
     }
 
     public static class VanityJson {
@@ -387,10 +418,12 @@ public class SaveMngr {
         public boolean activated;
         public long cost;
         public boolean tryPeriod;
-        public int tryPeriodDuration;
+        public long tryPeriodDuration;
         public int amountBugsBeforeCharging;
         public int totalEatenBugs;
         public String shopIcon;
+        public long tryPeriodTimer;
+        public long tryPeriodStart;
 
         public PetJson() {
         }
@@ -400,11 +433,14 @@ public class SaveMngr {
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;
-            this.tryPeriod = petComponent.tryPeriod;
-            this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
             this.totalEatenBugs = petComponent.totalEatenBugs;
             this.shopIcon = petComponent.shopIcon;
+
+            this.tryPeriod = petComponent.tryPeriod;
+            this.tryPeriodDuration = petComponent.tryPeriodDuration;
+            this.tryPeriodTimer = petComponent.tryPeriodTimer;
+            this.tryPeriodStart = petComponent.tryPeriodStart;
         }
     }
 }

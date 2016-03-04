@@ -70,6 +70,8 @@ public class GameStage extends Stage {
         backgroundMusicMgr.stop();
 
         GameScreenScript.isStarted = false;
+        GameScreenScript.isPause = false;
+        GameScreenScript.isGameOver = false;
         BugPool.getInstance();
     }
 

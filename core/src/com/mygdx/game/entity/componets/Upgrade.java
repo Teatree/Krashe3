@@ -1,5 +1,8 @@
 package com.mygdx.game.entity.componets;
 
+import com.badlogic.gdx.Gdx;
+import com.mygdx.game.utils.SaveMngr;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,22 @@ public class Upgrade extends ShopItem{
     public static boolean blowUpAllBugs;
     public UpgradeType upgradeType;
     public int counter;
+
+    public boolean tryPeriod;
+    public int tryPeriodDuration;
+    public long tryPeriodStart;
+    public int tryPeriodTimer;
+
+    public Upgrade() {
+    }
+
+    public Upgrade(SaveMngr.UpgradeStats us) {
+        this.upgradeType = UpgradeType.valueOf(us.upgradeType);
+        this.tryPeriod = us.tryPeriod;
+        this.tryPeriodDuration = us.tryPeriodDuration;
+        this.tryPeriodTimer = us.tryPeriodTimer;
+        this.tryPeriodStart = us.tryPeriodStart;
+    }
 
     public static List<Upgrade> getAllUpgrades() {
         List<Upgrade> all = new ArrayList<>();
@@ -44,12 +63,6 @@ public class Upgrade extends ShopItem{
     public void apply(FlowerPublicComponent fpc) {
         this.enabled = true;
         fpc.upgrades.put(this.upgradeType, this);
-//        if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
-//            fpc.upgrades.add(this);
-//        }
-//        if (upgradeType.equals(UpgradeType.PHOENIX)){
-//            fpc.phoenix = true;
-//        }
     }
 
     @Override
@@ -67,6 +80,16 @@ public class Upgrade extends ShopItem{
         blowUpAllBugs = true;
         FlowerComponent.state = FlowerComponent.State.PHOENIX;
         counter++;
+    }
+
+    public String updateTryPeriodTimer() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        tryPeriodTimer -= (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+
+        int minutes = (tryPeriodTimer) / 60;
+        int seconds = (tryPeriodTimer) % 60;
+        return "" + minutes + " : " + seconds;
     }
 
     public enum UpgradeType {

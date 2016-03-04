@@ -1,1 +1,1 @@
-[{class:com.mygdx.game.utils.SaveMngr$PetJson,name:pet,bought:true,activated:true,cost:42,amountBugsBeforeCharging:3,totalEatenBugs:10,shopIcon:btn_back_GUI_lib}]
+[{class:com.mygdx.game.utils.SaveMngr$PetJson,name:pet,bought:true,activated:true,cost:42,amountBugsBeforeCharging:3,shopIcon:btn_back_GUI_lib}]

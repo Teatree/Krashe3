@@ -172,6 +172,9 @@ public class GiftScreen {
                 }
                 case (PET): {
                     fpc.currentPet = pet;
+                    fpc.currentPet.tryPeriod = true;
+                    fpc.currentPet.tryPeriodDuration = 1 * 60;
+                    fpc.currentPet.tryPeriodStart = System.currentTimeMillis();
                     break;
                 }
                 case (PHOENIX): {
