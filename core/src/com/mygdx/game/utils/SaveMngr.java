@@ -93,7 +93,7 @@ public class SaveMngr {
                 }
             }
             fc.currentPet = petComponent;
-//            dummyPet(fc);
+            dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
         }
