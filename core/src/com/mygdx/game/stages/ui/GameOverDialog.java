@@ -139,6 +139,7 @@ public class GameOverDialog {
                 if (fpc.level.checkAllGoals()) {
                     GameScreenScript.giftScreen.show();
                 } else {
+                    isGameOver = false;
                     game.initResult();
                 }
             } else {
@@ -154,7 +155,6 @@ public class GameOverDialog {
 
     private void resetGameData() {
         gameOverCounter = 240;
-        isGameOver = false;
         isStarted = false;
         isPause = false;
         BugSpawnSystem.isAngeredBeesMode = false;

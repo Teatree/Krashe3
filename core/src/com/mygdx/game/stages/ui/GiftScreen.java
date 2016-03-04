@@ -16,7 +16,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
-import static com.mygdx.game.stages.GameScreenScript.fpc;
+import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
@@ -108,6 +108,10 @@ public class GiftScreen {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT " + gift.money + " " + gift.type + " !!!");
+            if (Gdx.input.justTouched() && isGameOver) {
+                isGameOver = false;
+                game.initResult();
+            }
         }
         fade(giftScreen, true);
     }

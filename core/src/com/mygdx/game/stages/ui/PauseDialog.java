@@ -85,7 +85,6 @@ public class PauseDialog {
                 tiles.add(createGoalTile(g, y));
                 y -= 130;
             }
-
         }
         isPause = true;
     }
