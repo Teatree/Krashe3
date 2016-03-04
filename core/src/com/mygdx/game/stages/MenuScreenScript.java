@@ -107,6 +107,12 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
+            long now = System.currentTimeMillis();
+            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
+                fpc.currentPet = null;
+            }
+        }
         timer(menuItem);
     }
 }

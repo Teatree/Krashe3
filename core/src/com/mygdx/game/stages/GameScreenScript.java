@@ -113,10 +113,10 @@ public class GameScreenScript implements IScript {
         giftScreen = new GiftScreen(gameItem);
         giftScreen.init();
 
-        checkTryPerid();
+        checkTryPeriod();
     }
 
-    private void checkTryPerid() {
+    private void checkTryPeriod() {
         if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
             long now = System.currentTimeMillis();
             if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {

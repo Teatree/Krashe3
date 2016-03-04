@@ -51,7 +51,7 @@ public class PetComponent extends ShopItem implements Component {
         this.bought = pet.bought;
         this.cost = pet.cost;
         this.tryPeriod = pet.tryPeriod;
-        this.tryPeriodDuration = tryPeriodDuration - (tryPeriodStart - System.currentTimeMillis()) / 1000;
+        this.tryPeriodDuration = pet.tryPeriodDuration - (System.currentTimeMillis() - pet.tryPeriodStart) / 1000;
         this.amountBugsBeforeCharging = pet.amountBugsBeforeCharging;
         this.totalEatenBugs = pet.totalEatenBugs;
         this.shopIcon = pet.shopIcon;
