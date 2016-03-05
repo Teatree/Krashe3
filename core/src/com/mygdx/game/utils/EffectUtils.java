@@ -35,8 +35,8 @@ public class EffectUtils {
         NodeComponent nc = entity.getComponent(NodeComponent.class);
         TintComponent tcp = entity.getComponent(TintComponent.class);
 
-        boolean appear = (tcp.color.a < 1 && isPause) ||
-                (tcp.color.a > 0 && !isPause);
+        boolean appear = ((tcp.color.a < 1 && isPause) ||
+                (tcp.color.a > 0 && !isPause));
 
         int fadeCoefficient = isPause ? 1 : -1;
 
@@ -91,12 +91,14 @@ public class EffectUtils {
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
         sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
 
+        bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(200);
+
         TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
         bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
         tc.x = x;
         tc.y = y;
 
-        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+//        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         bugJuiceBubbleE.add(fpc);
     }
 

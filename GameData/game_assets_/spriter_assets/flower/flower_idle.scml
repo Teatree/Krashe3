@@ -11,7 +11,7 @@
         <file id="7" name="peducle_middle_aboveLeaf.png" width="402" height="456" pivot_x="0" pivot_y="1"/>
         <file id="8" name="peducle_top.png" width="402" height="456" pivot_x="0" pivot_y="1"/>
         <file id="9" name="peducle_top_under.png" width="402" height="456" pivot_x="0" pivot_y="1"/>
-        <file id="10" name="item_back_shine.png" width="120" height="120" pivot_x="0" pivot_y="1"/>
+        <file id="10" name="item_back_shine.png" width="159" height="160" pivot_x="0" pivot_y="1"/>
     </folder>
     <folder id="1" name="flower_peducle_">
         <file id="0" name="flower_peducle_/flower_peducle.png" width="63" height="1550" pivot_x="0" pivot_y="1"/>
@@ -984,7 +984,7 @@
                     <object_ref id="5" timeline="7" key="3" z_index="5"/>
                     <object_ref id="6" timeline="8" key="3" z_index="6"/>
                 </key>
-                <key id="9" time="484">
+                <key id="9" time="483">
                     <bone_ref id="0" timeline="4" key="1"/>
                     <bone_ref id="1" parent="0" timeline="5" key="7"/>
                     <bone_ref id="2" parent="0" timeline="6" key="7"/>
@@ -1101,7 +1101,7 @@
                     <bone x="7.523629" y="-12.304268" angle="341.984045" scale_x="1.026333" scale_y="1.030267"/>
                 </key>
                 <key id="4" time="136" spin="-1">
-                    <bone x="7.523629" y="-12.304268" angle="355.382626" scale_x="1.237676" scale_y="1"/>
+                    <bone x="7.523629" y="-12.304268" angle="355.382626" scale_x="1.237676"/>
                 </key>
                 <key id="5" time="162">
                     <bone x="7.523629" y="-12.304268" angle="345.480466"/>
@@ -1193,19 +1193,19 @@
             </timeline>
             <timeline id="9" name="item_back_shine">
                 <key id="0" time="162" spin="0">
-                    <object folder="0" file="10" x="95.870791" y="39.606852" angle="261.654215"/>
+                    <object folder="0" file="10" x="110.074935" y="56.052657" angle="261.654215"/>
                 </key>
-                <key id="1" time="259" spin="0">
-                    <object folder="0" file="10" x="147.647186" y="97.155072" angle="261.654215" scale_x="2.042757" scale_y="1.699193"/>
+                <key id="1" time="259">
+                    <object folder="0" file="10" x="328.521955" y="172.807754" angle="261.654215" scale_x="2.676644" scale_y="2.745788"/>
                 </key>
-                <key id="2" time="343" spin="0">
-                    <object folder="0" file="10" x="157.665912" y="111.022834" angle="261.654215" scale_x="2.259761" scale_y="1.818652"/>
+                <key id="2" time="343" spin="-1">
+                    <object folder="0" file="10" x="292.360539" y="149.696041" angle="263.352809" scale_x="2.259761" scale_y="2.286832"/>
                 </key>
-                <key id="3" time="484" spin="0">
-                    <object folder="0" file="10" x="147.647186" y="97.155072" angle="261.654215" scale_x="2.042757" scale_y="1.699193"/>
+                <key id="3" time="483" spin="0">
+                    <object folder="0" file="10" x="328.521955" y="172.807754" angle="261.654215" scale_x="2.676644" scale_y="2.745788"/>
                 </key>
                 <key id="4" time="599" spin="0">
-                    <object folder="0" file="10" x="157.665912" y="111.022834" angle="261.654215" scale_x="2.259761" scale_y="1.818652"/>
+                    <object folder="0" file="10" x="211.162212" y="127.492991" angle="261.654215" scale_x="2.02144" scale_y="1.818652"/>
                 </key>
                 <key id="5" time="700" spin="0">
                     <object folder="0" file="10" x="95.870791" y="39.606852" angle="261.654215"/>

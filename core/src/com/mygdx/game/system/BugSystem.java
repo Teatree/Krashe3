@@ -119,7 +119,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void destroyBug(Entity bugE, TransformComponent tc) {
-        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+//        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         BugPool.getInstance().release(bugE);
     }
 

@@ -3,6 +3,7 @@ package com.uwsoft.editor.renderer.resources;
 import java.io.File;
 import java.util.*;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -248,8 +249,10 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     }
 
     public void moveToLocal() {
-        if (!Gdx.files.local("\\orig\\spriter_animations\\").exists()) {
-            Gdx.files.internal("orig\\spriter_animations\\").copyTo(Gdx.files.local("\\orig\\spriter_animations\\"));
+        if(Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+            if (!Gdx.files.local("\\orig\\spriter_animations\\").exists()) {
+                Gdx.files.internal("orig\\spriter_animations\\").copyTo(Gdx.files.local("\\orig\\spriter_animations\\"));
+            }
         }
     }
 

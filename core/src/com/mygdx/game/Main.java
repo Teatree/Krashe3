@@ -107,28 +107,32 @@ public class Main extends Game {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
-        batch.begin();
-        tex.setSize(viewportWidth, viewportHeight);
-        tex.draw(batch);
-        batch.end();
+        try {
+            Gdx.gl.glClearColor(0, 0, 1, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
+            batch.begin();
+            tex.setSize(viewportWidth, viewportHeight);
+            tex.draw(batch);
+            batch.end();
 
-        if (gameStage != null) {
-            gameStage.update();
-            gameStage.act();
-            gameStage.getViewport().update(viewportWidth, viewportHeight, true);
-            GameStage.viewport.update(viewportWidth, viewportHeight, true);
-            gameStage.draw();
-        } else {
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    async();
-                }
-            });
-            return;
+            if (gameStage != null) {
+                gameStage.update();
+                gameStage.act();
+                gameStage.getViewport().update(viewportWidth, viewportHeight, true);
+                GameStage.viewport.update(viewportWidth, viewportHeight, true);
+                gameStage.draw();
+            } else {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        async();
+                    }
+                });
+                return;
+            }
+        }catch (Exception e){
+            System.out.println(e);
         }
 //        super.render();
     }

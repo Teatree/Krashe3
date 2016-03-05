@@ -39,6 +39,8 @@ public class GameScreenScript implements IScript {
     public static final String COCCOON = "coccoon";
     public static final String BACKGROUND_LIB = "backgroundLib";
     public static final String BTN_BACK = "btn_back";
+    public static final int FLOWER_Y_POS = 144;
+    public static final int FLOWER_X_POS = 1023;
 
     public static GameStage game;
     public static FlowerPublicComponent fpc;
@@ -100,9 +102,9 @@ public class GameScreenScript implements IScript {
         initPet();
         initDoubleBJbadge();
 
-        if (gameOverDialog == null) {
+//        if (gameOverDialog == null) {
             gameOverDialog = new GameOverDialog(gameItem);
-        }
+//        }
         gameOverDialog.initGameOverDialog();
 
         pauseDialog = new PauseDialog(gameItem);
@@ -235,8 +237,8 @@ public class GameScreenScript implements IScript {
         fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
-        tc.x = 988;
-        tc.y = 105;
+        tc.x = FLOWER_X_POS;
+        tc.y = FLOWER_Y_POS;
         tc.scaleX = BUG_SCALE;
         tc.scaleY = BUG_SCALE;
         flowerEntity.add(tc);

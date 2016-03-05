@@ -16,12 +16,12 @@ public abstract class GlobalConstants {
     public static final int COCOON_SPAWN_MAX = 3000;
     public static final int COCOON_SPAWN_MIN = 2500;
 
-    public static final int MAX_IDLE_COUNT = 500;
-    public static final int MIN_IDLE_COUNTER = 290;
+    public static final int MAX_IDLE_COUNT = 240;
+    public static final int MIN_IDLE_COUNTER = 100;
     public static final int IDLE_MVMNT_SPEED = 115;
     public static final int PREPARING_MVMNT_SPEED = 40;
     public static final int CHARGING_MVMNT_SPEED = 505;
-    public static final int PREPARATION_TIME = 50;
+    public static final int PREPARATION_TIME = 100;
 
     public static final int BEE_SPAWN_INTERVAL_ANGERED = 50;
     public static final int DEFAULT_MAX_HP = 2;

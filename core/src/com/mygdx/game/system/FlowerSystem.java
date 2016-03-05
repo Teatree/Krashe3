@@ -115,7 +115,7 @@ public class FlowerSystem extends IteratingSystem {
                     if (tc.y >= 660 && state.equals(ATTACK)) {
                         state = RETREAT;
                     }
-                    if (tc.y <= 106 && state.equals(RETREAT)) {
+                    if (tc.y <= GameScreenScript.FLOWER_Y_POS && state.equals(RETREAT)) {
                         sc.player.setTime(sc.player.getAnimation().length);
                         state = TRANSITION_BACK;
                     }
