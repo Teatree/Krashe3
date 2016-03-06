@@ -13,9 +13,9 @@ public class Upgrade extends ShopItem{
     public int counter;
 
     public boolean tryPeriod;
-    public int tryPeriodDuration;
+    public long tryPeriodDuration;
     public long tryPeriodStart;
-    public int tryPeriodTimer;
+    public long tryPeriodTimer;
 
     public Upgrade() {
     }
@@ -85,10 +85,10 @@ public class Upgrade extends ShopItem{
     public String updateTryPeriodTimer() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        tryPeriodTimer -= (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
 
-        int minutes = (tryPeriodTimer) / 60;
-        int seconds = (tryPeriodTimer) % 60;
+        int minutes = ((int) tryPeriodTimer) / 60;
+        int seconds = ((int) tryPeriodTimer) % 60;
         return "" + minutes + " : " + seconds;
     }
 

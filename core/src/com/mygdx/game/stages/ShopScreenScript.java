@@ -82,7 +82,7 @@ public class ShopScreenScript implements IScript {
     private void getAllAllVanities() {
         TransformComponent previousTc = null;
         if (allShopItems.isEmpty()) {
-            allShopItems.addAll(Upgrade.getAllUpgrades());
+            allShopItems.addAll(getAllUpgrades());
             allShopItems.addAll(fpc.pets);
             allShopItems.addAll(fpc.vanities);
         }
@@ -166,6 +166,25 @@ public class ShopScreenScript implements IScript {
                 }
             });
         }
+    }
+
+    public List<Upgrade> getAllUpgrades(){
+        List<Upgrade> upgrades = Upgrade.getAllUpgrades();
+        if(!fpc.upgrades.isEmpty()){
+            for(Upgrade u: fpc.upgrades.values()){
+                for(Upgrade u2: upgrades){
+                    if(u.upgradeType.equals(u2.upgradeType)){
+                        u2.tryPeriod = u.tryPeriod;
+                        u2.tryPeriodDuration = u.tryPeriodDuration;
+                        u2.tryPeriodStart = u.tryPeriodStart;
+                        u2.tryPeriodTimer = u.tryPeriodTimer;
+                        u2.enabled = u.enabled;
+                        u2.bought = u.bought;
+                    }
+                }
+            }
+        }
+        return upgrades;
     }
 
     public void skipLayersOverride(LayerMapComponent lc) {

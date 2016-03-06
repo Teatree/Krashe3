@@ -93,7 +93,7 @@ public class SaveMngr {
                 }
             }
             fc.currentPet = petComponent;
-            dummyPet(fc);
+            dummyUpgrade(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
         }
@@ -106,6 +106,16 @@ public class SaveMngr {
         fc.currentPet.tryPeriod = true;
         fc.currentPet.tryPeriodDuration = 2 * 60;
         fc.currentPet.tryPeriodStart = System.currentTimeMillis();
+    }
+
+    private static void dummyUpgrade(FlowerPublicComponent fc) {
+        Upgrade u = Upgrade.getBJDouble();
+        u.tryPeriod = true;
+        u.tryPeriodDuration = 2 * 60;
+        u.tryPeriodStart = System.currentTimeMillis();
+        u.bought = true;
+        u.enabled = true;
+        fc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE,u);
     }
 
     private static void addGoals(FlowerPublicComponent fc, GameStats gameStats) {
@@ -355,9 +365,9 @@ public class SaveMngr {
     public static class UpgradeStats {
         public String upgradeType;
         public boolean tryPeriod;
-        public int tryPeriodDuration;
+        public long tryPeriodDuration;
         public long tryPeriodStart;
-        public int tryPeriodTimer;
+        public long tryPeriodTimer;
 
         public UpgradeStats() {
         }

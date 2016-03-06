@@ -79,8 +79,8 @@ public class GameScreenScript implements IScript {
     }
 
     public static void checkTryPeriod() {
+        long now = System.currentTimeMillis();
         if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-            long now = System.currentTimeMillis();
             if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
                 fpc.currentPet.enabled = false;
                 fpc.currentPet.bought = false;
@@ -89,6 +89,20 @@ public class GameScreenScript implements IScript {
                 if (allShopItems.indexOf(fpc.currentPet) >= 0) {
                     allShopItems.get(allShopItems.indexOf(fpc.currentPet)).bought = false;
                     allShopItems.get(allShopItems.indexOf(fpc.currentPet)).enabled = false;
+                }
+            }
+        }
+        if (fpc.upgrades != null && !fpc.upgrades.isEmpty()) {
+            for (Upgrade u: fpc.upgrades.values()) {
+                if (u.tryPeriod && now - u.tryPeriodStart >= u.tryPeriodDuration * 1000) {
+                    u.enabled = false;
+                    u.bought = false;
+                    u.tryPeriod = false;
+
+                    if (allShopItems.indexOf(u) >= 0) {
+                        allShopItems.get(allShopItems.indexOf(u)).bought = false;
+                        allShopItems.get(allShopItems.indexOf(u)).enabled = false;
+                    }
                 }
             }
         }

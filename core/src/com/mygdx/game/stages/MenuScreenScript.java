@@ -85,20 +85,22 @@ public class MenuScreenScript implements IScript {
     private void timer(ItemWrapper menuItem) {
         final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
         LabelComponent lc = timerE.getComponent(LabelComponent.class);
-        boolean tryPeriod = false;
+        boolean showTimer = false;
         if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
             lc.text.replace(0, lc.text.length, fpc.currentPet.updateTryPeriodTimer());
-            tryPeriod = true;
-        }
-        for (Upgrade u : fpc.upgrades.values()) {
-            if (u.tryPeriod) {
-                lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
-                tryPeriod = true;
+            showTimer = true;
+        } else {
+            for (Upgrade u : fpc.upgrades.values()) {
+                if (u.tryPeriod) {
+                    lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
+                    showTimer = true;
+                }
             }
         }
-        if (!tryPeriod) {
+        if (!showTimer) {
             timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         }
+
     }
 
     @Override

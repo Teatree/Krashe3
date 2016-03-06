@@ -175,13 +175,25 @@ public class GiftScreen {
                     fpc.currentPet.tryPeriod = true;
                     fpc.currentPet.tryPeriodDuration = 1 * 60;
                     fpc.currentPet.tryPeriodStart = System.currentTimeMillis();
+                    fpc.currentPet.bought = true;
+                    fpc.currentPet.enabled = true;
                     break;
                 }
                 case (PHOENIX): {
+                    upgrade.tryPeriod = true;
+                    upgrade.tryPeriodDuration = 1 * 60;
+                    upgrade.tryPeriodStart = System.currentTimeMillis();
+                    upgrade.bought = true;
+                    upgrade.enabled = true;
                     fpc.upgrades.put(Upgrade.UpgradeType.PHOENIX, upgrade);
                     break;
                 }
                 case (BJ_DOUBLE): {
+                    upgrade.tryPeriod = true;
+                    upgrade.tryPeriodDuration = 1 * 60;
+                    upgrade.tryPeriodStart = System.currentTimeMillis();
+                    upgrade.bought = true;
+                    upgrade.enabled = true;
                     fpc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE, upgrade);
                     break;
                 }
