@@ -48,13 +48,21 @@ public class GameStage extends Stage {
     public void initGame() {
 
         if (changedFlower || changedFlower2) {
-            sceneLoader.loadScene(MAIN_SCENE, viewport);
-            changedFlower = false;
-            sceneLoader.setScene(MAIN_SCENE);
-            BugPool.resetBugPool();
-            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            root.addScript(gameScript);
+            try {
+                sceneLoader.loadScene(MAIN_SCENE, viewport);
+                changedFlower = false;
+                sceneLoader.setScene(MAIN_SCENE);
+                BugPool.resetBugPool();
+                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                root.addScript(gameScript);
+            } catch (Exception e) {
+                System.err.println(
+                        e
+                );
+
+                throw e;
+            }
         } else {
             sceneLoader.setScene(MAIN_SCENE);
             if (gameScript == null) {

@@ -22,6 +22,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.stages.ShopScreenScript.allShopItems;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
 
@@ -77,6 +78,22 @@ public class GameScreenScript implements IScript {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
+    public static void checkTryPeriod() {
+        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
+            long now = System.currentTimeMillis();
+            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
+                fpc.currentPet.enabled = false;
+                fpc.currentPet.bought = false;
+                fpc.currentPet.tryPeriod = false;
+
+                if (allShopItems.indexOf(fpc.currentPet) >= 0) {
+                    allShopItems.get(allShopItems.indexOf(fpc.currentPet)).bought = false;
+                    allShopItems.get(allShopItems.indexOf(fpc.currentPet)).enabled = false;
+                }
+            }
+        }
+    }
+
     @Override
     public void init(Entity item) {
 
@@ -102,9 +119,7 @@ public class GameScreenScript implements IScript {
         initPet();
         initDoubleBJbadge();
 
-//        if (gameOverDialog == null) {
             gameOverDialog = new GameOverDialog(gameItem);
-//        }
         gameOverDialog.initGameOverDialog();
 
         pauseDialog = new PauseDialog(gameItem);
@@ -116,15 +131,6 @@ public class GameScreenScript implements IScript {
         giftScreen.init();
 
         checkTryPeriod();
-    }
-
-    private void checkTryPeriod() {
-        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-            long now = System.currentTimeMillis();
-            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
-                fpc.currentPet = null;
-            }
-        }
     }
 
     public void reset() {
@@ -258,8 +264,8 @@ public class GameScreenScript implements IScript {
                 && fpc.currentPet.enabled) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);
-            tc.x = 1200;
-            tc.y = 455;
+            tc.x = PetComponent.X_SPAWN_POSITION;
+            tc.y = PetComponent.getNewPositionY();
             tc.scaleX = 1.3f;
             tc.scaleY = 1.3f;
 

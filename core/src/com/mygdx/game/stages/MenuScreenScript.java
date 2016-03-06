@@ -107,12 +107,17 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-            long now = System.currentTimeMillis();
-            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
-                fpc.currentPet = null;
-            }
-        }
+        GameScreenScript.checkTryPeriod();
+//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
+//            long now = System.currentTimeMillis();
+//            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
+//                fpc.currentPet.enabled = false;
+//                fpc.currentPet.bought = false;
+//                ShopScreenScript.allShopItems.get(ShopScreenScript.allShopItems.indexOf(fpc.currentPet)).bought = false;
+//                ShopScreenScript.allShopItems.get(ShopScreenScript.allShopItems.indexOf(fpc.currentPet)).enabled = false;
+//
+//            }
+//        }
         timer(menuItem);
     }
 }

@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.BugComponent.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
@@ -237,7 +236,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     public boolean isOutOfBounds(BugComponent bc) {
-        return bc.boundsRect.getX() >= Main.viewportWidth;
+        return bc.boundsRect.getX() >= 1200;
     }
 
     public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {

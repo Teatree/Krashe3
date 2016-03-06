@@ -81,6 +81,7 @@ public class PetComponent extends ShopItem implements Component {
         this.state = State.SPAWNING;
         this.boundsRect = new Rectangle();
         eatenBugsCounter = 0;
+
     }
 
     @Override

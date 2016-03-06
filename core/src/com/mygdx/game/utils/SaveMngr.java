@@ -104,7 +104,7 @@ public class SaveMngr {
     private static void dummyPet(FlowerPublicComponent fc) {
         fc.currentPet = fc.pets.get(0);
         fc.currentPet.tryPeriod = true;
-        fc.currentPet.tryPeriodDuration = 15 * 60;
+        fc.currentPet.tryPeriodDuration = 2 * 60;
         fc.currentPet.tryPeriodStart = System.currentTimeMillis();
     }
 

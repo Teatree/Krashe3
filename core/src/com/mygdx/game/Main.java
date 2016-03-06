@@ -82,7 +82,7 @@ public class Main extends Game {
     public void create() {
         names = getViewportNames();
 
-        oneViewport = new FillViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        oneViewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT);
         loadingStage = new Stage(oneViewport);
         Gdx.input.setInputProcessor(loadingStage);
 
@@ -94,8 +94,6 @@ public class Main extends Game {
         SaveMngr.generateVanityJson();
         SaveMngr.generatePetsJson();
         SaveMngr.generateLevelsJson();
-
-
         GameScreenScript.fpc = SaveMngr.loadStats();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
@@ -107,7 +105,8 @@ public class Main extends Game {
 
     @Override
     public void render() {
-        try {
+
+//        try {
             Gdx.gl.glClearColor(0, 0, 1, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
@@ -131,18 +130,19 @@ public class Main extends Game {
                 });
                 return;
             }
-        }catch (Exception e){
-            System.out.println(e);
-        }
-//        super.render();
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
     }
 
     public void resize(int width, int height) {
+        super.resize(width, height);
         viewportWidth = width;
         viewportHeight = height;
-        oneViewport.update(width, height, true);
+//        oneViewport.update(width, height, true);
         if (gameStage != null) {
             gameStage.getViewport().update(width, height, true);
+            GameStage.viewport.update(width, height, true);
         } else {
             loadingStage.getViewport().update(width, height, true);
         }

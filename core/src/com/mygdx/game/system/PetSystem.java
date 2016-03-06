@@ -84,6 +84,7 @@ public class PetSystem extends IteratingSystem {
             }
 
             if (pc.state.equals(SPAWNING)) {
+                tc.x = 1200;
                 setSpawnAnimation(sc);
                 pc.velocity = 0;
                 if (isAnimationFinished(sc)) {
