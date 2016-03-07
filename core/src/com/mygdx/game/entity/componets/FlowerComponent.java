@@ -3,7 +3,7 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 
 public class FlowerComponent implements Component {
-    public static final float FLOWER_MOVE_SPEED = 13.5f;
+    public static final float FLOWER_MOVE_SPEED = 33.5f;
     public static State state = State.IDLE;
 
     public FlowerComponent() {

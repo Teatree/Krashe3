@@ -8,6 +8,7 @@ import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.stages.ui.Preview;
 import com.mygdx.game.system.ParticleLifespanSystem;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -254,12 +255,12 @@ public class ShopScreenScript implements IScript {
                 if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x -= (tempGdx.x - Gdx.input.getX()) / SENSITIVITY;
+                        bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY)* delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
-                    tempGdx.x -= (tempGdx.x - Gdx.input.getX()) / SENSITIVITY;
+                    tempGdx.x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
 
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
@@ -267,12 +268,12 @@ public class ShopScreenScript implements IScript {
                 if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+                        bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY)* delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
-                    tempGdx.x += (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+                    tempGdx.x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY)* delta * GlobalConstants.FPS;
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
             } else {
@@ -280,7 +281,7 @@ public class ShopScreenScript implements IScript {
                 if (stopVelocity != 0 && (canMoveBagsLeft() && canMoveBagsRight())) {
                         int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += stopVelocity;
+                        bags.get(i).getComponent(TransformComponent.class).x += stopVelocity * delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
                                 .getComponent(TransformComponent.class).x;
                         i++;

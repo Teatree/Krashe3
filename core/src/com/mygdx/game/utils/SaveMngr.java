@@ -287,8 +287,8 @@ public class SaveMngr {
     public static void generatePetsJson() {
         PetJson dummyPet = new PetJson();
 
-        dummyPet.activated = true;
-        dummyPet.bought = true;
+//        dummyPet.activated = true;
+//        dummyPet.bought = true;
 
         dummyPet.name = "pet";
         dummyPet.cost = 42;

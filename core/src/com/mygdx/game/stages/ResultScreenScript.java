@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.stages.ui.Showcase;
+import com.mygdx.game.utils.GlobalConstants;
 import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -24,7 +25,7 @@ public class ResultScreenScript implements IScript {
 
     public static final int MAX_PROGRESS_BAR_WIDTH = 690;
     public static final double PERCENTS_TO_OFFER_AD = 0.01;
-    public static final int PROGRESS_BAR_STEP = 2;
+    public static final int PROGRESS_BAR_STEP = 12;
     public static final String IMG_PROGRESS_BAR = "img_progress_bar";
     public static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
     public static final String YOU_EARNED = "YOU EARNED: ";
@@ -220,7 +221,7 @@ public class ResultScreenScript implements IScript {
                 updateScore();
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(fpc.score));
-                updateProgressBar();
+                updateProgressBar(delta);
             }
         } else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(fpc.score));
@@ -229,12 +230,12 @@ public class ResultScreenScript implements IScript {
         showcase.showFading();
     }
 
-    private void updateProgressBar() {
+    private void updateProgressBar(float deltaTime) {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
 
         if (dcProgressBar.width <= getProgressBarActualLength() &&
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
-            dcProgressBar.width += PROGRESS_BAR_STEP;
+            dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
             if (!show && showCaseVanity != null) {
                 initShowcase();

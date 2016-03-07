@@ -14,6 +14,7 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import static com.mygdx.game.stages.GameScreenScript.*;
@@ -37,6 +38,7 @@ public class GiftScreen {
     private ItemWrapper gameItem;
     private Entity giftScreen;
     private Entity pinataBtn;
+    public static boolean isGiftScreenOpen = false;
 
     private int pinataHitCounter;
     private Gift gift;
@@ -89,7 +91,7 @@ public class GiftScreen {
 
     public void show() {
 
-        gift = Gift.getRandomMoneyGift();
+        gift = Gift.getRandomGift();
 
         final TransformComponent screenTc = giftScreen.getComponent(TransformComponent.class);
         screenTc.x = GIFT_SCREEN_X;
@@ -110,6 +112,7 @@ public class GiftScreen {
                     "YOU GOT " + gift.money + " " + gift.type + " !!!");
             if (Gdx.input.justTouched() && isGameOver) {
                 isGameOver = false;
+                isGiftScreenOpen = false;
                 game.initResult();
             }
         }
@@ -124,9 +127,35 @@ public class GiftScreen {
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
         private static Random random = new Random();
         public PetComponent pet;
+        public static HashMap<String, Integer> chanceGroups;
         public int money;
         private String type;
         private Upgrade upgrade;
+
+        static {
+            chanceGroups = new HashMap<>();
+            chanceGroups.put(Gift.PET, 0);
+            chanceGroups.put(Gift.PHOENIX, 15);
+            chanceGroups.put(Gift.BJ_DOUBLE, 30);
+            chanceGroups.put(Gift.MONEY, 100);
+        }
+
+        public static Gift getRandomGift(){
+            Gift gift = new Gift();
+            if(GameScreenScript.fpc.level.difficultyLevel < 3){
+                int i = random.nextInt(100);
+                if(i > 0 && i <= chanceGroups.get(PET)){
+                    gift = getPetGift();
+                }else if(i > chanceGroups.get(PET) && i <= chanceGroups.get(PHOENIX)){
+                    gift = getPhoenixGift();
+                }else if(i > chanceGroups.get(PHOENIX) && i <= chanceGroups.get(BJ_DOUBLE)){
+                    gift = getDoubleJuiceGift();
+                }else if(i > chanceGroups.get(BJ_DOUBLE) && i <= chanceGroups.get(MONEY)){
+                    gift = getRandomMoneyGift();
+                }
+            }
+            return gift;
+        }
 
         public static Gift getRandomMoneyGift() {
             Gift gift = new Gift();
@@ -146,21 +175,19 @@ public class GiftScreen {
 
         public static Gift getPhoenixGift() {
             Gift gift = new Gift();
-            gift.pet = GameScreenScript.fpc.pets.get(0);
-            gift.pet.tryPeriod = true;
-            gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = PHOENIX;
             gift.upgrade = Upgrade.getPhoenix();
+            gift.upgrade.tryPeriod = true;
+            gift.upgrade.tryPeriodDuration = ONE_HOUR;
+            gift.type = PHOENIX;
             return gift;
         }
 
         public static Gift getDoubleJuiceGift() {
             Gift gift = new Gift();
-            gift.pet = GameScreenScript.fpc.pets.get(0);
-            gift.pet.tryPeriod = true;
-            gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = BJ_DOUBLE;
             gift.upgrade = Upgrade.getBJDouble();
+            gift.upgrade.tryPeriod = true;
+            gift.upgrade.tryPeriodDuration = ONE_HOUR;
+            gift.type = BJ_DOUBLE;
             return gift;
         }
 

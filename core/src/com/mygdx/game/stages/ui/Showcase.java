@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.ResultScreenScript;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -95,7 +96,7 @@ public class Showcase {
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
-        sc.player.speed = 6;
+        sc.player.speed = GlobalConstants.FPS/4;
 //        sc.player.time = 0;
 
         initShowCaseItem();

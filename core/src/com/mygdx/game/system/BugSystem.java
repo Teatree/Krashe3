@@ -13,6 +13,7 @@ import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.stages.ui.GameOverDialog;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
+import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;

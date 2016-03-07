@@ -29,7 +29,8 @@ public class GameOverDialog {
     public static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
 
     public static Entity gameOverDialog;
-    public static int gameOverCounter = 240;
+    public static float gameOverTimer = 0;
+    public static int gameOverCounter = 5;
     private static ItemWrapper gameItem;
 
 
@@ -43,7 +44,8 @@ public class GameOverDialog {
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
-        gameOverCounter = 240;
+        gameOverTimer = 0;
+        gameOverCounter = 5;
 
         Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
@@ -92,7 +94,8 @@ public class GameOverDialog {
     public void continueGame(TransformComponent dialogTc) {
         isGameOver = false;
         dialogTc.x = -1000;
-        gameOverCounter = 240;
+        gameOverTimer = 0;
+        gameOverCounter = 5;
         BugSpawnSystem.isAngeredBeesMode = false;
         if (fpc.currentPet != null) {
             fpc.currentPet.init();
@@ -112,7 +115,7 @@ public class GameOverDialog {
         }
     }
 
-    public void update() {
+    public void update(float deltaTime) {
 
         fade(gameOverDialog, isGameOver);
         if (isGameOver) {
@@ -124,9 +127,10 @@ public class GameOverDialog {
             ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
             gameOverTimerLbl.add(ac);
 
-            gameOverCounter--;
-            if (gameOverCounter % 48 == 0) {
-                gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter / 48));
+            gameOverTimer += deltaTime ;
+            if (gameOverTimer >= 1){
+                gameOverTimer =0;
+                gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter--));
             }
             finishGame();
         }
@@ -136,8 +140,9 @@ public class GameOverDialog {
         if (gameOverCounter <= 0) {
             if (!fpc.canUsePhoenix()) {
                 resetGameData();
-                if (fpc.level.checkAllGoals()) {
+                if (fpc.level.checkAllGoals() && !GameScreenScript.giftScreen.isGiftScreenOpen) {
                     GameScreenScript.giftScreen.show();
+                    GameScreenScript.giftScreen.isGiftScreenOpen = true;
                 } else {
                     isGameOver = false;
                     game.initResult();
@@ -154,7 +159,8 @@ public class GameOverDialog {
     }
 
     private void resetGameData() {
-        gameOverCounter = 240;
+        gameOverTimer = 0;
+        gameOverCounter = 5;
         isStarted = false;
         isPause = false;
         BugSpawnSystem.isAngeredBeesMode = false;

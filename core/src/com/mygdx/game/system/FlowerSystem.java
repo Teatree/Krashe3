@@ -111,7 +111,7 @@ public class FlowerSystem extends IteratingSystem {
 
                     soundMgr.play("eat");
                 } else {
-                    move(tc);
+                    move(tc, delta);
                     if (tc.y >= 660 && state.equals(ATTACK)) {
                         state = RETREAT;
                     }
@@ -194,7 +194,7 @@ public class FlowerSystem extends IteratingSystem {
         sc.player.setAnimation(4);
     }
 
-    public void move(TransformComponent tc) {
-        tc.y += state.equals(ATTACK) ? FLOWER_MOVE_SPEED : -FLOWER_MOVE_SPEED;
+    public void move(TransformComponent tc, float deltaTime) {
+        tc.y += state.equals(ATTACK) ? FLOWER_MOVE_SPEED * deltaTime * FPS : -FLOWER_MOVE_SPEED * deltaTime * FPS;
     }
 }
