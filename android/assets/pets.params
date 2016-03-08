@@ -1,1 +1,1 @@
-[{class:com.mygdx.game.utils.SaveMngr$PetJson,name:pet,bought:true,activated:true,cost:42,tryPeriodDuration:-1457274849,amountBugsBeforeCharging:3,shopIcon:btn_back_GUI_lib}]
+[{class:com.mygdx.game.utils.SaveMngr$PetJson,name:pet,cost:42,tryPeriodDuration:-1457446144,amountBugsBeforeCharging:3,shopIcon:btn_back_GUI_lib}]

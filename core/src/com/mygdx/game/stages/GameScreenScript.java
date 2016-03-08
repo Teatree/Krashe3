@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.stages.ui.GameOverDialog;
 import com.mygdx.game.stages.ui.GiftScreen;
+import com.mygdx.game.stages.ui.GoalFeedbackScreen;
 import com.mygdx.game.stages.ui.PauseDialog;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
@@ -53,6 +54,7 @@ public class GameScreenScript implements IScript {
     public static boolean isStarted;
     public static Entity background;
     public static GiftScreen giftScreen;
+    public static GoalFeedbackScreen goalFeedbackScreen;
     private static GameOverDialog gameOverDialog;
     public Random random = new Random();
     public int dandelionSpawnCounter;
@@ -143,6 +145,9 @@ public class GameScreenScript implements IScript {
 
         giftScreen = new GiftScreen(gameItem);
         giftScreen.init();
+
+        goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
+        goalFeedbackScreen.init();
 
         checkTryPeriod();
     }
@@ -328,6 +333,7 @@ public class GameScreenScript implements IScript {
         gameOverDialog.update(delta);
         pauseDialog.update();
         giftScreen.update();
+        goalFeedbackScreen.update();
     }
 
     private void updateTapGoal() {

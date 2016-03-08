@@ -1,10 +1,14 @@
 package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.entity.componets.Goal;
+import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
-import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -19,23 +23,26 @@ import static com.mygdx.game.stages.GameScreenScript.isPause;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.EffectUtils.fade;
 
-public class PauseDialog {
+public class GoalFeedbackScreen {
 
-    public static final String PAUSE_DIALOG = "dialog";
-    public static final String LBL_DIALOG = "lbl_dialog";
-    public static final int PAUSE_X = 300;
-    public static final int PAUSE_Y = 30;
+    public static final String GOALFEEDBACK = "gift_feedbacker";
+    public static final String LBL_DIALOG = "lbl_level";
+    public static final int POS_X = -22;
+    public static final int POS_Y = -19;
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
-    public static final String NOT_ACHIEVED_GOAL_LIB = "not_achieved_goal_lib";
-    public static final String GOAL_LBL_TAG = "goal_lbl";
-    public static final String STAR_TAG = "star";
-    public static final String BTN_CLOSE = "btn_close";
+//    public static final String NOT_ACHIEVED_GOAL_LIB = "not_achieved_goal_lib";
+//    public static final String GOAL_LBL_TAG = "goal_lbl";
+//    public static final String STAR_TAG = "star";
+//    public static final String BTN_CLOSE = "btn_close";
     private static List<Entity> tiles;
     private ItemWrapper gameItem;
     private Entity pauseDialog;
+    public static boolean shouldShow;
+    public boolean isGoalFeedbackOpen;
+    public List<SpriterComponent> tilesScs = new ArrayList<>();
 
 
-    public PauseDialog(ItemWrapper gameItem) {
+    public GoalFeedbackScreen(ItemWrapper gameItem) {
         if (tiles != null) {
             for (Entity tile : tiles) {
                 tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
@@ -47,34 +54,20 @@ public class PauseDialog {
     }
 
     public void init() {
-        pauseDialog = gameItem.getChild(PAUSE_DIALOG).getEntity();
-        Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
-        closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                isPause = false;
-            }
-        });
+        pauseDialog = gameItem.getChild(GOALFEEDBACK).getEntity();
 
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = GlobalConstants.FAR_FAR_AWAY_X;
         dialogTc.y = GlobalConstants.FAR_FAR_AWAY_Y;
     }
 
-    public void pause() {
+    public void show() {
+        shouldShow = false;
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = PAUSE_X;
-        dialogTc.y = PAUSE_Y;
+        dialogTc.x = POS_X;
+        dialogTc.y = POS_Y;
 
-        final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
+        final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + fpc.level.name + " \n ");
 
@@ -85,19 +78,22 @@ public class PauseDialog {
                 y -= 130;
             }
         }
-        isPause = true;
+//        isPause = true;
+        isGoalFeedbackOpen = true;
     }
 
     private Entity createGoalTile(Goal goal, int y){
         CompositeItemVO tempC;
+//        if (goal.achieved){
             tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
+//        }
 
         final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
         sceneLoader.getEngine().addEntity(tile);
 
         TransformComponent tc = new TransformComponent();
-        tc.x = PAUSE_X + 61;
+        tc.x = POS_X + 61;
         tc.y = y;
 
         tile.add(tc);
@@ -113,22 +109,56 @@ public class PauseDialog {
             if (sc != null){
                 sc.scale = 0.8f;
                 if (goal.achieved){
-                    sc.player.setTime(sc.player.getAnimation().length);
-                    sc.player.speed = 0;
+                    if(goal.justAchieved) {
+                        ActionComponent ac = new ActionComponent();
+                        Actions.checkInit();
+                        ac.dataArray.add(Actions.delay(5000));
+                        tile.add(ac);
+
+                        sc.player.speed = 12;
+                        goal.justAchieved = false;
+                    }else{
+                        sc.player.setTime(sc.player.getAnimation().length);
+                        sc.player.speed = 0;
+                    }
                 }else{
                     sc.player.setTime(0);
                     sc.player.speed = 0;
                 }
+                tilesScs.add(sc);
             }
+//            } else if (e.getComponent(MainItemComponent.class).tags.contains(STAR_TAG)){
+//                e.getComponent(TransformComponent.class).scaleX = 0.2f;
+//                e.getComponent(TransformComponent.class).scaleY = 0.2f;
+//                e.getComponent(TransformComponent.class).x = -70;
+//                e.getComponent(TransformComponent.class).y = -60;
+//                e.getComponent(ZIndexComponent.class).setZIndex(140);
+//            }
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
     }
 
     public void update() {
-        fade(pauseDialog, isPause);
-        for (Entity tile : tiles) {
-            fade(tile, isPause);
+        fade(pauseDialog, isGoalFeedbackOpen);
+        int i = 0;
+        while (i < tiles.size()) {
+            fade(tiles.get(i), isGoalFeedbackOpen);
+            if (tilesScs.get(i).player.getTime() >=
+                    tilesScs.get(i).player.getAnimation().length-20) {
+                tilesScs.get(i).player.speed = 0;
+                tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length-20);
+            }
+            i++;
+        }
+
+        if(Gdx.input.justTouched() && isGoalFeedbackOpen){
+            if(fpc.level.checkAllGoals()){
+                GameScreenScript.giftScreen.show();
+            }else{
+                GameScreenScript.game.initResult();
+            }
+            isGoalFeedbackOpen = false;
         }
     }
 }

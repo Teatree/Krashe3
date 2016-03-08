@@ -140,10 +140,11 @@ public class GameOverDialog {
         if (gameOverCounter <= 0) {
             if (!fpc.canUsePhoenix()) {
                 resetGameData();
-                if (fpc.level.checkAllGoals() && !GameScreenScript.giftScreen.isGiftScreenOpen) {
-                    GameScreenScript.giftScreen.show();
-                    GameScreenScript.giftScreen.isGiftScreenOpen = true;
-                } else {
+                if (GoalFeedbackScreen.shouldShow && !GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen) {
+                    GameScreenScript.goalFeedbackScreen.show();
+//                    GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen = true;
+                    isGameOver = true;
+                } else if (!GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen){
                     isGameOver = false;
                     game.initResult();
                 }

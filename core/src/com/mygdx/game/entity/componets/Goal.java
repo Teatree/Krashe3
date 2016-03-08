@@ -1,6 +1,8 @@
 package com.mygdx.game.entity.componets;
 
 
+import com.mygdx.game.stages.ui.GoalFeedbackScreen;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,7 @@ public class Goal {
     public static HashMap<Integer, Float> levelMultipliers;
     public int counter;
     public boolean achieved;
+    public boolean justAchieved;
     public String description;
     public GoalType type;
     public PeriodType periodType;
@@ -85,8 +88,10 @@ public class Goal {
 
     public void update() {
         counter++;
-        if (counter >= n) {
+        if (counter >= n && !GoalFeedbackScreen.shouldShow) {
             achieved = true;
+            justAchieved = true;
+            GoalFeedbackScreen.shouldShow = true;
         }
     }
 

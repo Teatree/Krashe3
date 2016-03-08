@@ -122,6 +122,7 @@ public class SaveMngr {
         for (DailyGoalStats dg : gameStats.goals) {
             Goal goal = new Goal();
             goal.achieved = dg.achieved;
+            goal.justAchieved = dg.justAchieved;
             goal.type = Goal.GoalType.valueOf(dg.type);
             goal.periodType = Goal.PeriodType.valueOf(dg.periodType);
             goal.n = dg.n;
@@ -131,6 +132,7 @@ public class SaveMngr {
         }
         Goal goal = new Goal();
         goal.achieved = false;
+        goal.justAchieved = false;
         goal.periodType = Goal.PeriodType.IN_A_ROW;
         goal.type = Goal.GoalType.EAT_N_BUGS;
         goal.n = 3;
@@ -358,6 +360,7 @@ public class SaveMngr {
         public String periodType;
         public String description;
         public boolean achieved;
+        public boolean justAchieved;
         public int difficultyLevel;
         public int counter;
     }

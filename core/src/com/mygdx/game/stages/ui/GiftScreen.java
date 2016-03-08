@@ -100,6 +100,8 @@ public class GiftScreen {
         final TransformComponent pinataTc = pinataBtn.getComponent(TransformComponent.class);
         pinataTc.x = PINATA_X;
         pinataTc.y = PINATA_Y;
+
+        isGiftScreenOpen = true;
     }
 
     public void update() {
