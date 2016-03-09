@@ -100,8 +100,9 @@ public class GameStage extends Stage {
         if (resultScript == null) {
             resultScript = new ResultScreenScript(this);
             root.addScript(resultScript);
-        } else {
-            resultScript.reset();
+        }
+        else {
+            resultScript.initResultScreen();
         }
         GlobalConstants.CUR_SCREEN = "RESULT";
     }

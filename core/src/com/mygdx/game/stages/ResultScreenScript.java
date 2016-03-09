@@ -33,6 +33,9 @@ public class ResultScreenScript implements IScript {
     public static final String YOUR_BEST = "YOUR BEST: ";
     public static final String YOU_NEED = "YOU NEED ";
     public static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
+    public static final String BTN_BACK = "btn_back";
+    public static final String BTN_PLAY = "btn_play";
+    public static final String BTN_SHOP = "btn_shop";
 
     public static VanityComponent showCaseVanity;
     public static boolean show;
@@ -80,6 +83,8 @@ public class ResultScreenScript implements IScript {
     }
 
     public void initResultScreen() {
+        show = false;
+
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), TOTAL + String.valueOf(fpc.totalScore));
         setProgressBar();
@@ -121,7 +126,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initBackButton() {
-        Entity backBtn = resultScreenItem.getChild("btn_back").getEntity();
+        Entity backBtn = resultScreenItem.getChild(BTN_BACK).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -140,7 +145,6 @@ public class ResultScreenScript implements IScript {
             public void clicked() {
                 if (!showcasePopup && !show) {
                     stage.initMenu();
-                    show = false;
                 }
                 isWasShowcase = false;
             }
@@ -148,7 +152,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initPlayBtn() {
-        final Entity backPlay = resultScreenItem.getChild("btn_play").getEntity();
+        final Entity backPlay = resultScreenItem.getChild(BTN_PLAY).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
         backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -165,30 +169,38 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                //TODO: Show ads
                 if (!show) {
-                    if (new Random().nextInt(10) <= 3) {
-                        Main.adsController.showInterstitialGeneralAd(new Runnable() {
-                            @Override
-                            public void run() {
-                                backToGame();
-                            }
-                        });
+                    if (Main.adsController.isWifiConnected()) {
+                        ShowAdsWithChance();
                     } else {
                         backToGame();
                     }
                 }
             }
 
+            private void ShowAdsWithChance() {
+                if (new Random().nextInt(10) <= 3) {
+                    Main.adsController.showInterstitialGeneralAd(new Runnable() {
+                        @Override
+                        public void run() {
+                            backToGame();
+                        }
+                    });
+                } else {
+                    backToGame();
+                }
+            }
+
             private void backToGame() {
                 stage.initGame();
-                show = false;
                 isWasShowcase = false;
             }
         });
     }
 
     private void initShopBtn() {
-        Entity shopBtn = resultScreenItem.getChild("btn_shop").getEntity();
+        Entity shopBtn = resultScreenItem.getChild(BTN_SHOP).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(shopBtn, LayerMapComponent.class);
         shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -207,7 +219,6 @@ public class ResultScreenScript implements IScript {
             public void clicked() {
                 if (!show) {
                     stage.initShop();
-                    show = false;
                     isWasShowcase = false;
                 }
             }
@@ -242,7 +253,9 @@ public class ResultScreenScript implements IScript {
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
                 setProgressBar();
             }
-            if (!show && fpc.totalScore >= PERCENTS_TO_OFFER_AD * nextVanityCost && adsBtn == null) {
+            if (!show && fpc.totalScore < PERCENTS_TO_OFFER_AD
+                    && fpc.totalScore >= PERCENTS_TO_OFFER_AD * nextVanityCost
+                    && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
             }
         }
@@ -283,8 +296,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initShowcase() {
-        if (!show) {
-            show = true;
+        if (!show && fpc.score > 0) {
             showcase.initShowCase();
         }
     }
@@ -348,7 +360,6 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void dispose() {
-        SaveMngr.saveStats(fpc);
     }
 
     public void reset() {
