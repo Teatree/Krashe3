@@ -65,6 +65,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
 
+        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
 //        compile 'com.google.android.gms:play-services-ads:8.4.0'
     }
 }
@@ -83,6 +84,8 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
 
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
+
+        compile "com.badlogicgames.gdxpay:gdx-pay-iosrobovm-apple:0.9.1"
     }
 }
 
@@ -99,6 +102,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
+        compile "com.badlogicgames.gdxpay:gdx-pay-android:0.9.1"
+        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
         //compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.1-SNAPSHOT"
         compile project(":Overlap2dRuntime")
     }
