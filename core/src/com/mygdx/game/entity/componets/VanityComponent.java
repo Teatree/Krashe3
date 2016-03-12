@@ -69,7 +69,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.pet = vc.pet != null ? new PetComponent(vc.pet) : pet;
     }
 
-    public void apply (FlowerPublicComponent fc){
+    public void apply(FlowerPublicComponent fc) {
 //        moveToLocal();
 
         if (bought) {
@@ -77,10 +77,12 @@ public class VanityComponent extends ShopItem implements Component {
             for (Map.Entry entry : assetsToChange.entrySet()) {
 //                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
 //                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
-                Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
+                if (!entry.getKey().equals("class")) {
+                    Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
+                }
             }
 
-            if (this.pet != null){
+            if (this.pet != null) {
                 GameScreenScript.fpc.currentPet = this.pet;
             }
             GameStage.updateFlowerAni();
@@ -88,27 +90,29 @@ public class VanityComponent extends ShopItem implements Component {
         }
     }
 
-    public void buy(FlowerPublicComponent fc){
+    public void buy(FlowerPublicComponent fc) {
         fc.totalScore -= this.cost;
         this.bought = true;
     }
 
-    public void buyAndUse(FlowerPublicComponent fc){
+    public void buyAndUse(FlowerPublicComponent fc) {
         buy(fc);
         apply(fc);
     }
 
-    public boolean canBuy(){
+    public boolean canBuy() {
         return GameScreenScript.fpc.totalScore >= this.cost;
     }
 
-    public void disable(FlowerPublicComponent fc){
+    public void disable(FlowerPublicComponent fc) {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX)
-                    .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
-                            + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            if (!entry.getKey().equals("class")) {
+                Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX)
+                        .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
+                                + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            }
 
         }
         GameStage.updateFlowerAni();
