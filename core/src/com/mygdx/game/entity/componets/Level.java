@@ -1,6 +1,6 @@
 package com.mygdx.game.entity.componets;
 
-import com.mygdx.game.utils.DailyGoalSystem;
+import com.mygdx.game.utils.GoalGenerator;
 import com.mygdx.game.utils.SaveMngr;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Level {
     public float difficultyMultiplier;
     public String name;
     public HashMap<Goal.GoalType, Goal> goals = new HashMap<>();
-    public DailyGoalSystem goalGenerator = new DailyGoalSystem();
+    public GoalGenerator goalGenerator = new GoalGenerator();
 
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;

@@ -131,14 +131,14 @@ public class SaveMngr {
             fc.level.goals.put(goal.type, goal);
             fc.level.difficultyLevel = dg.difficultyLevel;
         }
-        Goal goal = new Goal();
-        goal.achieved = false;
-        goal.justAchieved = false;
-        goal.periodType = Goal.PeriodType.IN_A_ROW;
-        goal.type = Goal.GoalType.EAT_N_BUGS;
-        goal.n = 3;
-        goal.description = GoalConstants.EAT_N_BUGS_DESC;
-        fc.level.goals.put(goal.type, goal);
+//        Goal goal = new Goal();
+//        goal.achieved = false;
+//        goal.justAchieved = false;
+//        goal.periodType = Goal.PeriodType.IN_A_ROW;
+//        goal.type = Goal.GoalType.EAT_N_BUGS;
+//        goal.n = 3;
+//        goal.description = GoalConstants.EAT_N_BUGS_DESC;
+//        fc.level.goals.put(goal.type, goal);
 
     }
 
@@ -319,8 +319,20 @@ public class SaveMngr {
         l1.difficultyMultiplier = 0.8f;
         l1.name = "Pro";
 
+        LevelInfo l2 = new LevelInfo();
+        l2.difficultyLevel = 3;
+        l2.difficultyMultiplier = 0.8f;
+        l2.name = "Prorer Pro";
+
+        LevelInfo l3 = new LevelInfo();
+        l3.difficultyLevel = 4;
+        l3.difficultyMultiplier = 0.8f;
+        l3.name = "Prorest Pro";
+
         levels.add(l);
         levels.add(l1);
+        levels.add(l2);
+        levels.add(l3);
 
         writeFile(LEVELS_JSON, new Json().toJson(levels));
 
