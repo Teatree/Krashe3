@@ -107,7 +107,6 @@ public class ShopScreenScript implements IScript {
             }
         });
         Collections.reverse(allShopItems);
-
         for (final ShopItem vc : allShopItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);

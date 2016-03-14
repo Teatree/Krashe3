@@ -46,7 +46,7 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if(!isStarted){
+        if (!isStarted) {
             BugPool.getInstance().release(entity);
         }
 
@@ -194,12 +194,20 @@ public class BugSystem extends IteratingSystem {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
-            if (fpc.level.getGoalByType(EAT_N_BUGS) != null && checkFlowerCollision(fpc, bc)) {
-                fpc.level.getGoalByType(EAT_N_BUGS).update();
-            }
-            if (fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkFlowerCollision(fpc, bc)) {
-                fpc.level.getGoalByType(EAT_N_CHARGERS).update();
-            }
+            updateChargerGoals(bc);
+            updateBugGoals(bc);
+        }
+    }
+
+    private void updateChargerGoals(BugComponent bc) {
+        if (fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkFlowerCollision(fpc, bc)) {
+            fpc.level.getGoalByType(EAT_N_CHARGERS).update();
+        }
+    }
+
+    private void updateBugGoals(BugComponent bc) {
+        if (fpc.level.getGoalByType(EAT_N_BUGS) != null && checkFlowerCollision(fpc, bc)) {
+            fpc.level.getGoalByType(EAT_N_BUGS).update();
         }
     }
 
@@ -263,9 +271,8 @@ public class BugSystem extends IteratingSystem {
             g.updateInARowGoals(bc);
         }
 
-        if (fpc.level.getGoalByType(EAT_N_BUGS) != null) {
-            fpc.level.getGoalByType(EAT_N_BUGS).update();
-        }
+        updateBugGoals(bc);
+
         if (fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BugType.BEE)) {
             fpc.level.getGoalByType(EAT_N_BEES).update();
         }

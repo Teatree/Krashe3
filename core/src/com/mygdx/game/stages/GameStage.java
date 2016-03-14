@@ -37,6 +37,9 @@ public class GameStage extends Stage {
         initMenu();
     }
 
+    public static void unloadScenes(){
+    }
+
     public static void updateFlowerAni() {
         ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
         if (sceneLoader.rootEntity != null) {
@@ -47,8 +50,8 @@ public class GameStage extends Stage {
 
     public void initGame() {
 
-        if (changedFlower || changedFlower2) {
-            try {
+        try {
+            if (changedFlower || changedFlower2) {
                 sceneLoader.loadScene(MAIN_SCENE, viewport);
                 changedFlower = false;
                 sceneLoader.setScene(MAIN_SCENE);
@@ -56,24 +59,23 @@ public class GameStage extends Stage {
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
                 root.addScript(gameScript);
-            } catch (Exception e) {
-                System.err.println(
-                        e
-                );
 
-                throw e;
+            } else {
+                sceneLoader.setScene(MAIN_SCENE);
+                if (gameScript == null) {
+                    gameScript = new GameScreenScript(this);
+                    ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                    sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+                    root.addScript(gameScript);
+                }
+                gameScript.reset();
+
             }
-        } else {
-            sceneLoader.setScene(MAIN_SCENE);
-            if (gameScript == null) {
-                gameScript = new GameScreenScript(this);
-                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-                root.addScript(gameScript);
-            }
-            gameScript.reset();
+        } catch (Exception e) {
+            System.err.println(e);
+//                throw e;
+
         }
-
         GlobalConstants.CUR_SCREEN = "GAME";
         backgroundMusicMgr.stop();
 
@@ -100,8 +102,7 @@ public class GameStage extends Stage {
         if (resultScript == null) {
             resultScript = new ResultScreenScript(this);
             root.addScript(resultScript);
-        }
-        else {
+        } else {
             resultScript.initResultScreen();
         }
         GlobalConstants.CUR_SCREEN = "RESULT";

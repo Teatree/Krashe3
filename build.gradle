@@ -102,6 +102,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
+//        compile "commons-collections:commons-collections:3.2.2"
+
         compile "com.badlogicgames.gdxpay:gdx-pay-android:0.9.1"
         compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
         //compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.1-SNAPSHOT"

@@ -172,7 +172,7 @@ public class ETFSceneLoader extends SceneLoader {
         pixelsPerWU = rm.getProjectVO().pixelToWorld;
 
         sceneVO = rm.getSceneVO(sceneName);
-        world.setGravity(new Vector2(sceneVO.physicsPropertiesVO.gravityX, sceneVO.physicsPropertiesVO.gravityY));
+//        world.setGravity(new Vector2(sceneVO.physicsPropertiesVO.gravityX, sceneVO.physicsPropertiesVO.gravityY));
         if (sceneVO.composite == null) {
             sceneVO.composite = new CompositeVO();
         }

@@ -26,9 +26,6 @@ public class PauseDialog {
     public static final int PAUSE_X = 300;
     public static final int PAUSE_Y = 30;
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
-    public static final String NOT_ACHIEVED_GOAL_LIB = "not_achieved_goal_lib";
-    public static final String GOAL_LBL_TAG = "goal_lbl";
-    public static final String STAR_TAG = "star";
     public static final String BTN_CLOSE = "btn_close";
     private static List<Entity> tiles;
     private ItemWrapper gameItem;
@@ -88,9 +85,9 @@ public class PauseDialog {
         isPause = true;
     }
 
-    private Entity createGoalTile(Goal goal, int y){
+    private Entity createGoalTile(Goal goal, int y) {
         CompositeItemVO tempC;
-            tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
+        tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
 
         final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
@@ -103,19 +100,19 @@ public class PauseDialog {
         tile.add(tc);
 
         NodeComponent nc = tile.getComponent(NodeComponent.class);
-        for (Entity e : nc.children){
-            if (e.getComponent(LabelComponent.class)!= null) {
+        for (Entity e : nc.children) {
+            if (e.getComponent(LabelComponent.class) != null) {
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
                 e.getComponent(ZIndexComponent.class).setZIndex(120);
             }
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
-            if (sc != null){
+            if (sc != null) {
                 sc.scale = 0.8f;
-                if (goal.achieved){
-                    sc.player.setTime(sc.player.getAnimation().length);
+                if (goal.achieved) {
+                    sc.player.setTime(sc.player.getAnimation().length-2);
                     sc.player.speed = 0;
-                }else{
+                } else {
                     sc.player.setTime(0);
                     sc.player.speed = 0;
                 }

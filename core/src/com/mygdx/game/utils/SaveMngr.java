@@ -122,6 +122,7 @@ public class SaveMngr {
         for (DailyGoalStats dg : gameStats.goals) {
             Goal goal = new Goal();
             goal.achieved = dg.achieved;
+            goal.counter = dg.counter;
             goal.justAchieved = dg.justAchieved;
             goal.type = Goal.GoalType.valueOf(dg.type);
             goal.periodType = Goal.PeriodType.valueOf(dg.periodType);

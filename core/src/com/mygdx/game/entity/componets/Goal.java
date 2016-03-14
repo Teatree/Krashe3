@@ -88,10 +88,12 @@ public class Goal {
 
     public void update() {
         counter++;
-        if (counter >= n && !GoalFeedbackScreen.shouldShow) {
+        if (counter >= n) {
             achieved = true;
             justAchieved = true;
-            GoalFeedbackScreen.shouldShow = true;
+            if (!GoalFeedbackScreen.shouldShow) {
+                GoalFeedbackScreen.shouldShow = true;
+            }
         }
     }
 

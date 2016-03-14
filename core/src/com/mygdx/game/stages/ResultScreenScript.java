@@ -169,7 +169,6 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                //TODO: Show ads
                 if (!show) {
                     if (Main.adsController.isWifiConnected()) {
                         ShowAdsWithChance();
