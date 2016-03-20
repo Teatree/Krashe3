@@ -148,15 +148,8 @@ public class GameOverDialog {
                     isGameOver = false;
                     game.initResult();
                 }
-            } else {
-                usePhoenix();
             }
         }
-    }
-
-    public void usePhoenix() {
-        fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(fpc);
-        continueGame(gameOverDialog.getComponent(TransformComponent.class));
     }
 
     private void resetGameData() {

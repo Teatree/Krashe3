@@ -93,6 +93,7 @@ public class FlowerPublicComponent implements Component {
             if (scoreGoal.periodType.equals(Goal.PeriodType.TOTAL)) {
                 scoreGoal.counter = (int) totalScore;
             }
+            scoreGoal.update();
         }
     }
 }

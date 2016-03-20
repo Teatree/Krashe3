@@ -7,14 +7,15 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.mygdx.game.entity.componets.FlowerComponent.FLOWER_MOVE_SPEED;
+import static com.mygdx.game.entity.componets.FlowerComponent.*;
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
-import static com.mygdx.game.entity.componets.FlowerComponent.state;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.FPS;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
@@ -65,7 +66,7 @@ public class FlowerSystem extends IteratingSystem {
                     state = IDLE_BITE;
                     fcc.isCollision = false;
 
-                    soundMgr.play("eat");
+                    soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     setIdleAnimation(sc);
                 }
@@ -109,13 +110,14 @@ public class FlowerSystem extends IteratingSystem {
                     setBiteAttackAnimation(sc);
                     fcc.isCollision = false;
 
-                    soundMgr.play("eat");
+                    soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     move(tc, delta);
-                    if (tc.y >= 660 && state.equals(ATTACK)) {
+                    if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK)) {
                         state = RETREAT;
                     }
-                    if (tc.y <= GameScreenScript.FLOWER_Y_POS && state.equals(RETREAT)) {
+                    if (tc.y <= FLOWER_Y_POS + FLOWER_MOVE_SPEED * delta * FPS && state.equals(RETREAT)) {
+                        tc.y = FLOWER_Y_POS;
                         sc.player.setTime(sc.player.getAnimation().length);
                         state = TRANSITION_BACK;
                     }
@@ -143,12 +145,13 @@ public class FlowerSystem extends IteratingSystem {
             }
 
             if (state.equals(PHOENIX)) {
-                tc.x = 988;
-                tc.y = 105;
+                tc.x = FLOWER_X_POS;
+                tc.y = FLOWER_Y_POS;
                 setBiteIdleAnimation(sc);
                 if (isAnimationFinished(sc)) {
                     state = IDLE;
                     setIdleAnimation(sc);
+                    Upgrade.blowUpAllBugs = false;
                 }
             }
         } else {
@@ -194,7 +197,7 @@ public class FlowerSystem extends IteratingSystem {
         sc.player.setAnimation(4);
     }
 
-    public void move(TransformComponent tc, float deltaTime) {
-        tc.y += state.equals(ATTACK) ? FLOWER_MOVE_SPEED * deltaTime * FPS : -FLOWER_MOVE_SPEED * deltaTime * FPS;
+    public void move(TransformComponent tc, float delta) {
+        tc.y += state.equals(ATTACK) ? FLOWER_MOVE_SPEED * delta * FPS : -FLOWER_MOVE_SPEED * delta * FPS;
     }
 }

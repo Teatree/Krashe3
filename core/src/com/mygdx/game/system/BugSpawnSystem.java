@@ -25,7 +25,7 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MIN_X = 300;
     private int SPAWN_MIN_Y = -200;
     private int SPAWN_MAX_Y = 600;
-    private int SPAWN_INTERVAL = 200;
+    private int SPAWN_INTERVAL = 100;
 
     private Random rand = new Random();
 

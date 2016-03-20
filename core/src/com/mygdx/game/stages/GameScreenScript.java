@@ -22,10 +22,10 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.FlowerComponent.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ShopScreenScript.allShopItems;
 import static com.mygdx.game.utils.GlobalConstants.*;
-
 
 public class GameScreenScript implements IScript {
 
@@ -41,17 +41,17 @@ public class GameScreenScript implements IScript {
     public static final String COCCOON = "coccoon";
     public static final String BACKGROUND_LIB = "backgroundLib";
     public static final String BTN_BACK = "btn_back";
-    public static final int FLOWER_Y_POS = 144;
-    public static final int FLOWER_X_POS = 1023;
 
     public static GameStage game;
     public static FlowerPublicComponent fpc;
+
     public static LabelComponent scoreLabelComponent;
     public static LabelComponent startLabelComponent;
 
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
+
     public static Entity background;
     public static GiftScreen giftScreen;
     public static GoalFeedbackScreen goalFeedbackScreen;
@@ -66,8 +66,12 @@ public class GameScreenScript implements IScript {
         GameScreenScript.game = game;
     }
 
-    public static void showGameOver() {
-        GameOverDialog.show();
+    public static void onBugOutOfBounds() {
+        if (fpc.canUsePhoenix()) {
+            usePhoenix();
+        } else {
+            GameOverDialog.show();
+        }
     }
 
     public static void angerBees() {
@@ -108,6 +112,11 @@ public class GameScreenScript implements IScript {
                 }
             }
         }
+    }
+
+    public static void usePhoenix() {
+        fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(fpc);
+//        continueGame(gameOverDialog.getComponent(TransformComponent.class));
     }
 
     @Override
@@ -264,8 +273,8 @@ public class GameScreenScript implements IScript {
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
         tc.y = FLOWER_Y_POS;
-        tc.scaleX = BUG_SCALE;
-        tc.scaleY = BUG_SCALE;
+        tc.scaleX = FLOWER_SCALE;
+        tc.scaleY = FLOWER_SCALE;
         flowerEntity.add(tc);
 
         FlowerComponent fc = new FlowerComponent();

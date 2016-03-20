@@ -13,7 +13,6 @@ import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.stages.ui.GameOverDialog;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
-import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -63,7 +62,7 @@ public class BugSystem extends IteratingSystem {
 
             if (BugSpawnSystem.isBlewUp() || Upgrade.blowUpAllBugs) {
                 destroyBug(entity, transformComponent);
-                Upgrade.blowUpAllBugs = false;
+//                Upgrade.blowUpAllBugs = false;
 
             } else if (bc.state != DEAD) {
                 updateRect(bc, transformComponent, dimensionsComponent);
@@ -92,7 +91,7 @@ public class BugSystem extends IteratingSystem {
                 }
                 if (isOutOfBounds(bc)) {
                     BugPool.getInstance().release(entity);
-                    showGameOver();
+                    onBugOutOfBounds();
                 }
             }
             sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
@@ -119,7 +118,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void destroyBug(Entity bugE, TransformComponent tc) {
-//        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         BugPool.getInstance().release(bugE);
     }
 
@@ -230,7 +229,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
-        bc.boundsRect.x = (int) tc.x + 50; //Nastya can not see this
+        bc.boundsRect.x = (int) tc.x + 50; //Nastya can not see this. I can.
         bc.boundsRect.y = (int) tc.y + 30;
         bc.boundsRect.width = (int) dc.width * tc.scaleX - 50;
         bc.boundsRect.height = (int) dc.height * tc.scaleY - 30;

@@ -34,12 +34,10 @@ public class GiftScreen {
     public static final int PINATA_Y = 275;
     public static final int HIT_COUNTER_MAX = 10;
     public static final int HIT_COUNTER_MIN = 5;
-
+    public static boolean isGiftScreenOpen = false;
     private ItemWrapper gameItem;
     private Entity giftScreen;
     private Entity pinataBtn;
-    public static boolean isGiftScreenOpen = false;
-
     private int pinataHitCounter;
     private Gift gift;
 
@@ -127,12 +125,8 @@ public class GiftScreen {
         public static final String PET = "PET";
         public static final String PHOENIX = "PHOENIX";
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
-        private static Random random = new Random();
-        public PetComponent pet;
         public static HashMap<String, Integer> chanceGroups;
-        public int money;
-        private String type;
-        private Upgrade upgrade;
+        private static Random random = new Random();
 
         static {
             chanceGroups = new HashMap<>();
@@ -142,17 +136,22 @@ public class GiftScreen {
             chanceGroups.put(Gift.MONEY, 100);
         }
 
-        public static Gift getRandomGift(){
+        public PetComponent pet;
+        public int money;
+        private String type;
+        private Upgrade upgrade;
+
+        public static Gift getRandomGift() {
             Gift gift = new Gift();
-            if(GameScreenScript.fpc.level.difficultyLevel < 3){
+            if (GameScreenScript.fpc.level.difficultyLevel < 3) {
                 int i = random.nextInt(100);
-                if(i > 0 && i <= chanceGroups.get(PET)){
+                if (i > 0 && i <= chanceGroups.get(PET)) {
                     gift = getPetGift();
-                }else if(i > chanceGroups.get(PET) && i <= chanceGroups.get(PHOENIX)){
+                } else if (i > chanceGroups.get(PET) && i <= chanceGroups.get(PHOENIX)) {
                     gift = getPhoenixGift();
-                }else if(i > chanceGroups.get(PHOENIX) && i <= chanceGroups.get(BJ_DOUBLE)){
+                } else if (i > chanceGroups.get(PHOENIX) && i <= chanceGroups.get(BJ_DOUBLE)) {
                     gift = getDoubleJuiceGift();
-                }else if(i > chanceGroups.get(BJ_DOUBLE) && i <= chanceGroups.get(MONEY)){
+                } else if (i > chanceGroups.get(BJ_DOUBLE) && i <= chanceGroups.get(MONEY)) {
                     gift = getRandomMoneyGift();
                 }
             }
@@ -228,7 +227,5 @@ public class GiftScreen {
                 }
             }
         }
-
-
     }
 }

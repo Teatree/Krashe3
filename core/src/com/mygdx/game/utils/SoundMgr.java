@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class SoundMgr {
 
+    public static final String EAT_SOUND = "eat";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 
@@ -17,16 +18,16 @@ public class SoundMgr {
         loadSound("tuturu");
     }
 
-    private void loadSound(String name) {
-        fx.put(name, Gdx.audio.newSound(Gdx.files.internal("sound/"+name+".mp3")));
-    }
-
     public static SoundMgr getSoundMgr() {
         if(soundMgr == null) {
             soundMgr = new SoundMgr();
         }
 
         return soundMgr;
+    }
+
+    private void loadSound(String name) {
+        fx.put(name, Gdx.audio.newSound(Gdx.files.internal("sound/" + name + ".mp3")));
     }
 
     public void play(String name) {
