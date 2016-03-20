@@ -2,13 +2,13 @@ package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.stages.GameScreenScript;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.NodeComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -30,16 +30,18 @@ public class GoalFeedbackScreen {
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
+    public static boolean shouldShow;
 //    public static final String NOT_ACHIEVED_GOAL_LIB = "not_achieved_goal_lib";
 //    public static final String GOAL_LBL_TAG = "goal_lbl";
 //    public static final String STAR_TAG = "star";
 //    public static final String BTN_CLOSE = "btn_close";
     private static List<Entity> tiles;
-    private ItemWrapper gameItem;
-    private Entity pauseDialog;
-    public static boolean shouldShow;
+    public boolean isAniPlaying;
+    public int aniPlayingIndex;
     public boolean isGoalFeedbackOpen;
     public List<SpriterComponent> tilesScs = new ArrayList<>();
+    private ItemWrapper gameItem;
+    private Entity pauseDialog;
 
 
     public GoalFeedbackScreen(ItemWrapper gameItem) {
@@ -109,14 +111,14 @@ public class GoalFeedbackScreen {
             if (sc != null){
                 sc.scale = 0.8f;
                 if (goal.achieved){
-                    if(goal.justAchieved) {
+                    if (goal.justAchieved) {
                         ActionComponent ac = new ActionComponent();
                         Actions.checkInit();
                         ac.dataArray.add(Actions.delay(5000));
                         tile.add(ac);
 
-                        sc.player.speed = 12;
-                        goal.justAchieved = false;
+                        sc.player.speed = 0;
+//                        goal.justAchieved = false;
                     }else{
                         sc.player.setTime(sc.player.getAnimation().length);
                         sc.player.speed = 0;
@@ -144,12 +146,22 @@ public class GoalFeedbackScreen {
         int i = 0;
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
-            if (tilesScs.get(i).player.getTime() >=
-                    tilesScs.get(i).player.getAnimation().length-20) {
+            if (fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
+                tilesScs.get(i).player.speed = 4;
+                isAniPlaying = true;
+                aniPlayingIndex = i;
+                fpc.level.getGoals().get(i).justAchieved = false;
+            } else if (tilesScs.get(i).player.getTime() >=
+                    tilesScs.get(i).player.getAnimation().length - 20) {
                 tilesScs.get(i).player.speed = 0;
-                tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length-20);
+                tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length - 20);
+//                isAniPlaying = false;
             }
             i++;
+        }
+        if (!tilesScs.isEmpty() && tilesScs.get(aniPlayingIndex).player.getTime() >=
+                tilesScs.get(aniPlayingIndex).player.getAnimation().length - 20) {
+            isAniPlaying = false;
         }
 
         if(Gdx.input.justTouched() && isGoalFeedbackOpen){

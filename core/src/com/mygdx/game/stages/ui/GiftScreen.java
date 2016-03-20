@@ -143,7 +143,7 @@ public class GiftScreen {
 
         public static Gift getRandomGift() {
             Gift gift = new Gift();
-            if (GameScreenScript.fpc.level.difficultyLevel < 3) {
+//            if (GameScreenScript.fpc.level.difficultyLevel < 3) {
                 int i = random.nextInt(100);
                 if (i > 0 && i <= chanceGroups.get(PET)) {
                     gift = getPetGift();
@@ -154,7 +154,7 @@ public class GiftScreen {
                 } else if (i > chanceGroups.get(BJ_DOUBLE) && i <= chanceGroups.get(MONEY)) {
                     gift = getRandomMoneyGift();
                 }
-            }
+//            }
             return gift;
         }
 
@@ -226,6 +226,7 @@ public class GiftScreen {
                     break;
                 }
             }
+            fpc.level.updateLevel();
         }
     }
 }

@@ -279,9 +279,9 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
 
-        if (fpc.level.getGoals() == null || fpc.level.getGoals().isEmpty()) {
-            fpc.level.updateLevel();
-        }
+//        if (fpc.level.getGoals() == null || fpc.level.getGoals().isEmpty()) {
+////            fpc.level.updateLevel();
+//        }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
     }
