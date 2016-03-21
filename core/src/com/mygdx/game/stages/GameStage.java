@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.GlobalConstants;
+import com.mygdx.game.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -22,22 +23,31 @@ public class GameStage extends Stage {
     public static final String MAIN_SCENE = "MainScene";
     public static final String MENU_SCENE = "MenuScene";
 
+    public static final String MENU = "MENU";
+    public static final String SHOP = "SHOP";
+    public static final String RESULT = "RESULT";
+    public static final String GAME = "GAME";
+
     public static Viewport viewport;
     public static ETFSceneLoader sceneLoader;
     public static boolean changedFlower;
     public static boolean changedFlower2;
 
-    private GameScreenScript gameScript;
+    public static GameScreenScript gameScript;
+    public static boolean justCreated;
     private ResultScreenScript resultScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
         GameStage.sceneLoader = sceneLoader;
         getSoundMgr();
         getBackgroundMusicMgr();
+        gameScript = new GameScreenScript(this);
+        gameScript.fpc = SaveMngr.loadStats();
+        justCreated = true;
         initMenu();
     }
 
-    public static void unloadScenes(){
+    public static void unloadScenes() {
     }
 
     public static void updateFlowerAni() {
@@ -49,7 +59,6 @@ public class GameStage extends Stage {
     }
 
     public void initGame() {
-
         try {
             if (changedFlower || changedFlower2) {
                 sceneLoader.loadScene(MAIN_SCENE, viewport);
@@ -59,14 +68,15 @@ public class GameStage extends Stage {
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
                 root.addScript(gameScript);
-
+                System.gc();
             } else {
                 sceneLoader.setScene(MAIN_SCENE);
-                if (gameScript == null) {
-                    gameScript = new GameScreenScript(this);
+                if (justCreated) {
+//                    gameScript = new GameScreenScript(this);
                     ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
                     sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                     root.addScript(gameScript);
+                    justCreated = false;
                 }
                 gameScript.reset();
 
@@ -76,7 +86,7 @@ public class GameStage extends Stage {
 //                throw e;
 
         }
-        GlobalConstants.CUR_SCREEN = "GAME";
+        GlobalConstants.CUR_SCREEN = GAME;
         backgroundMusicMgr.stop();
 
         GameScreenScript.isStarted = false;
@@ -93,7 +103,7 @@ public class GameStage extends Stage {
         sceneLoader.setScene(MENU_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(new MenuScreenScript(this));
-        GlobalConstants.CUR_SCREEN = "MENU";
+        GlobalConstants.CUR_SCREEN = MENU;
     }
 
     public void initResult() {
@@ -105,7 +115,7 @@ public class GameStage extends Stage {
         } else {
             resultScript.initResultScreen();
         }
-        GlobalConstants.CUR_SCREEN = "RESULT";
+        GlobalConstants.CUR_SCREEN = RESULT;
     }
 
     public void initShop() {
@@ -115,7 +125,7 @@ public class GameStage extends Stage {
         sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         root.addScript(new ShopScreenScript(this));
-        GlobalConstants.CUR_SCREEN = "SHOP";
+        GlobalConstants.CUR_SCREEN = SHOP;
     }
 
     public void update() {

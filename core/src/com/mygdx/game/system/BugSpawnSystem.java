@@ -3,13 +3,14 @@ package com.mygdx.game.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.BugComponent.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.BugComponent.*;
 import static com.mygdx.game.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -58,22 +59,22 @@ public class BugSpawnSystem extends EntitySystem {
     public void spawn() {
         if (SPAWN_INTERVAL == 0) {
             if (isAngeredBeesMode) {
-                createBug(BugComponent.BugType.BEE);
+                createBug(BEE);
             } else {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue < 10) {
-                    createBug(BugType.DRUNK);
+                    createBug(DRUNK);
                 } else if (probabilityValue >= 10 && probabilityValue < 60) {
-                    createBug(BugType.SIMPLE);
+                    createBug(SIMPLE);
                 } else if (probabilityValue >= 61 && probabilityValue < 67) {
-                    createBug(BugType.CHARGER);
+                    createBug(CHARGER);
                 } else if (probabilityValue >= 68 && probabilityValue < 70) {
                     if (!queenBeeOnStage) {
-                        createBug(BugType.QUEENBEE);
+                        createBug(QUEENBEE);
                         queenBeeOnStage = true;
                     }
                 } else {
-                    createBug(BugType.BEE);
+                    createBug(BEE);
                 }
             }
 
@@ -83,7 +84,7 @@ public class BugSpawnSystem extends EntitySystem {
         }
     }
 
-    private void createBug(BugType tempType) {
+    private void createBug(String tempType) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
         BugComponent bc = new BugComponent(tempType);
         bugEntity.add(bc);
@@ -120,8 +121,8 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void checkAngeredBeesGoal() {
-        if (fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES) != null) {
-            fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES) != null) {
+            GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES).update();
         }
     }
 }

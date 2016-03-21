@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.SaveMngr;
@@ -94,7 +93,6 @@ public class Main extends Game {
         SaveMngr.generateVanityJson();
         SaveMngr.generatePetsJson();
         SaveMngr.generateLevelsJson();
-        GameScreenScript.fpc = SaveMngr.loadStats();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
         gameStage = new GameStage(sceneLoader);
@@ -159,6 +157,6 @@ public class Main extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        SaveMngr.saveStats(GameScreenScript.fpc);
+        SaveMngr.saveStats(GameStage.gameScript.fpc);
     }
 }

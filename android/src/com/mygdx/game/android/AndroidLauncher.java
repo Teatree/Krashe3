@@ -15,7 +15,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.mygdx.game.AdsController;
 import com.mygdx.game.Main;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController {
 
@@ -87,7 +87,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null && !GameScreenScript.fpc.settings.noAds) {
+                if (then != null && !GameStage.gameScript.fpc.settings.noAds) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {

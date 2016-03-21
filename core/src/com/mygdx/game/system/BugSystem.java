@@ -6,10 +6,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.entity.componets.BugComponent;
-import com.mygdx.game.entity.componets.BugComponent.BugType;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.Upgrade;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.ui.GameOverDialog;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.EffectUtils;
@@ -19,11 +19,11 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.mygdx.game.entity.componets.BugComponent.State.*;
+import static com.mygdx.game.entity.componets.BugComponent.*;
 import static com.mygdx.game.entity.componets.Goal.GoalType.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.GameStage.gameScript;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
-import static com.mygdx.game.utils.BugPool.*;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class BugSystem extends IteratingSystem {
@@ -62,7 +62,6 @@ public class BugSystem extends IteratingSystem {
 
             if (BugSpawnSystem.isBlewUp() || Upgrade.blowUpAllBugs) {
                 destroyBug(entity, transformComponent);
-//                Upgrade.blowUpAllBugs = false;
 
             } else if (bc.state != DEAD) {
                 updateRect(bc, transformComponent, dimensionsComponent);
@@ -72,10 +71,8 @@ public class BugSystem extends IteratingSystem {
                     bc.state = DEAD;
 
                     fcc.addScore(bc.points);
-//                    fcc.score += fcc.haveBugJuiceDouble() ? 2 * bc.points : bc.points;
-//                    fcc.totalScore += bc.points;
 
-                    if (bc.type.equals(BugType.QUEENBEE)) {
+                    if (bc.type.equals(QUEENBEE)) {
                         angerBees();
                     }
                     BugPool.getInstance().release(entity);
@@ -91,7 +88,7 @@ public class BugSystem extends IteratingSystem {
                 }
                 if (isOutOfBounds(bc)) {
                     BugPool.getInstance().release(entity);
-                    onBugOutOfBounds();
+                    gameScript.onBugOutOfBounds();
                 }
             }
             sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
@@ -106,8 +103,8 @@ public class BugSystem extends IteratingSystem {
 
     private void checkPetEatBugGoal(FlowerPublicComponent fcc, BugComponent bc) {
         if (fcc.petCollisionCheck(bc.boundsRect)) {
-            if (fpc.level.getGoalByType(PET_EAT_N_BUGS) != null) {
-                fpc.level.getGoalByType(PET_EAT_N_BUGS).update();
+            if (GameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS) != null) {
+                GameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS).update();
             }
         }
     }
@@ -132,7 +129,7 @@ public class BugSystem extends IteratingSystem {
                             SpriteAnimationStateComponent sasc,
                             SpriteAnimationComponent sac) {
 
-        switch (bugComponent.type.toString()) {
+        switch (bugComponent.type) {
             case SIMPLE:
                 moveSimple(deltaTime, transformComponent, bugComponent);
                 break;
@@ -189,7 +186,7 @@ public class BugSystem extends IteratingSystem {
             bc.velocity += deltaTime * 3.4;
         }
 
-        if (checkFlowerCollision(fpc, bc) || isOutOfBounds(bc)) {
+        if (checkFlowerCollision(GameStage.gameScript.fpc, bc) || isOutOfBounds(bc)) {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
@@ -199,14 +196,14 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void updateChargerGoals(BugComponent bc) {
-        if (fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkFlowerCollision(fpc, bc)) {
-            fpc.level.getGoalByType(EAT_N_CHARGERS).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkFlowerCollision(GameStage.gameScript.fpc, bc)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS).update();
         }
     }
 
     private void updateBugGoals(BugComponent bc) {
-        if (fpc.level.getGoalByType(EAT_N_BUGS) != null && checkFlowerCollision(fpc, bc)) {
-            fpc.level.getGoalByType(EAT_N_BUGS).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkFlowerCollision(GameStage.gameScript.fpc, bc)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS).update();
         }
     }
 
@@ -266,30 +263,30 @@ public class BugSystem extends IteratingSystem {
 
     private void checkGoals(BugComponent bc) {
 
-        for (Goal g : fpc.level.getGoals()) {
+        for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
             g.updateInARowGoals(bc);
         }
 
         updateBugGoals(bc);
 
-        if (fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BugType.BEE)) {
-            fpc.level.getGoalByType(EAT_N_BEES).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BEE)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES).update();
         }
-        if (fpc.level.getGoalByType(EAT_N_DRUNKS) != null && bc.type.equals(BugType.DRUNK)) {
-            fpc.level.getGoalByType(EAT_N_DRUNKS).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS) != null && bc.type.equals(DRUNK)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS).update();
         }
-        if (fpc.level.getGoalByType(EAT_N_SIMPLE) != null && bc.type.equals(BugType.SIMPLE)) {
-            fpc.level.getGoalByType(EAT_N_SIMPLE).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE) != null && bc.type.equals(SIMPLE)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE).update();
         }
-        if (fpc.level.getGoalByType(EAT_N_QUEENS) != null && bc.type.equals(BugType.QUEENBEE)) {
-            fpc.level.getGoalByType(EAT_N_QUEENS).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS) != null && bc.type.equals(QUEENBEE)) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS).update();
         }
 
-        if (fpc.level.getGoalByType(EAT_N_BUG_LOWER) != null && fpc.boundsRect.getY() < 400) {
-            fpc.level.getGoalByType(EAT_N_BUG_LOWER).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_LOWER) != null && GameStage.gameScript.fpc.boundsRect.getY() < 400) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_LOWER).update();
         }
-        if (fpc.level.getGoalByType(EAT_N_BUG_UPPER) != null && fpc.boundsRect.getY() > 400) {
-            fpc.level.getGoalByType(EAT_N_BUG_UPPER).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_UPPER) != null && GameStage.gameScript.fpc.boundsRect.getY() > 400) {
+            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_UPPER).update();
         }
     }
 }

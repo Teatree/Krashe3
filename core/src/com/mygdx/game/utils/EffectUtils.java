@@ -12,7 +12,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 
 public class EffectUtils {
@@ -20,6 +19,7 @@ public class EffectUtils {
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
     public static final String GREEN_SPLATTER = "splatter.party";
     public static final String DEFAULT_LAYER = "Default";
+    public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -85,7 +85,7 @@ public class EffectUtils {
     }
 
     public static void spawnBugJuiceBubble(float x, float y) {
-        CompositeItemVO bugJuiceBubbleC = sceneLoader.loadVoFromLibrary("bug_juice_bubble_lib");
+        CompositeItemVO bugJuiceBubbleC = sceneLoader.loadVoFromLibrary(BUG_JUICE_BUBBLE_LIB);
 
         Entity bugJuiceBubbleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), bugJuiceBubbleC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
@@ -99,7 +99,7 @@ public class EffectUtils {
         tc.y = y;
 
 //        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
-        bugJuiceBubbleE.add(fpc);
+        bugJuiceBubbleE.add(GameStage.gameScript.fpc);
     }
 
     public static Vector2 getTouchCoordinates() {

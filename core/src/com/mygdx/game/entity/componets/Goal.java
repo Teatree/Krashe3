@@ -1,6 +1,7 @@
 package com.mygdx.game.entity.componets;
 
 
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.ui.GoalFeedbackScreen;
 
 import java.util.ArrayList;
@@ -8,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import static com.mygdx.game.entity.componets.BugComponent.*;
 import static com.mygdx.game.entity.componets.GoalConstants.*;
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 /**
  * goals:
@@ -57,7 +58,7 @@ public class Goal {
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
         n /= periodType.adjustByTypeDivider;
-        n = changeByLevel(fpc.level.difficultyLevel, n);
+        n = changeByLevel(GameStage.gameScript.fpc.level.difficultyLevel, n);
     }
 
     public static void init(FlowerPublicComponent fpc) {
@@ -99,16 +100,16 @@ public class Goal {
 
     public void updateInARowGoals(BugComponent bc) {
         if (periodType.equals(PeriodType.IN_A_ROW)) {
-            if (type.equals(GoalType.EAT_N_DRUNKS) && !bc.type.equals(BugComponent.BugType.DRUNK)) {
+            if (type.equals(GoalType.EAT_N_DRUNKS) && !bc.type.equals(DRUNK)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_BEES) && !bc.type.equals(BugComponent.BugType.BEE)) {
+            if (type.equals(GoalType.EAT_N_BEES) && !bc.type.equals(BEE)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_CHARGERS) && !bc.type.equals(BugComponent.BugType.CHARGER)) {
+            if (type.equals(GoalType.EAT_N_CHARGERS) && !bc.type.equals(CHARGER)) {
                 counter = 0;
             }
-            if (type.equals(GoalType.EAT_N_SIMPLE) && !bc.type.equals(BugComponent.BugType.SIMPLE)) {
+            if (type.equals(GoalType.EAT_N_SIMPLE) && !bc.type.equals(SIMPLE)) {
                 counter = 0;
             }
         }

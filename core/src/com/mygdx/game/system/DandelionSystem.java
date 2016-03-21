@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -60,7 +60,7 @@ public class DandelionSystem extends IteratingSystem {
         UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
         umbrellaEntity.add(umbrellaComponent);
 
-        umbrellaEntity.add(GameScreenScript.fpc);
+        umbrellaEntity.add(GameStage.gameScript.fpc);
     }
 
     @Override

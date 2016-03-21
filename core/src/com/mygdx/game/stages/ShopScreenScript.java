@@ -21,7 +21,6 @@ import java.util.*;
 
 import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
 import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
@@ -40,6 +39,7 @@ public class ShopScreenScript implements IScript {
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
     public static List<ShopItem> allShopItems = new ArrayList<>();
+
     public Entity touchZone;
     public LabelComponent lc;
     public Vector2 tempGdx = new Vector2();
@@ -54,6 +54,7 @@ public class ShopScreenScript implements IScript {
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
+        getAllAllVanities();
     }
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
@@ -63,6 +64,9 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+        System.err.print("init shop ");
+        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+                Gdx.app.getNativeHeap());
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
@@ -73,19 +77,16 @@ public class ShopScreenScript implements IScript {
         lc = scoreLbl.getComponent(LabelComponent.class);
         touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
-
-        getAllAllVanities();
-
+        createIconsForAllShopIcons();
         bagPosId = 0;
         isPreviewOn = false;
     }
 
     private void getAllAllVanities() {
-        TransformComponent previousTc = null;
         if (allShopItems.isEmpty()) {
             allShopItems.addAll(getAllUpgrades());
-            allShopItems.addAll(fpc.pets);
-            allShopItems.addAll(fpc.vanities);
+            allShopItems.addAll(GameStage.gameScript.fpc.pets);
+            allShopItems.addAll(GameStage.gameScript.fpc.vanities);
         }
 
         Collections.sort(allShopItems, new Comparator<ShopItem>() {
@@ -107,6 +108,10 @@ public class ShopScreenScript implements IScript {
             }
         });
         Collections.reverse(allShopItems);
+    }
+
+    private void createIconsForAllShopIcons() {
+        TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
@@ -170,8 +175,8 @@ public class ShopScreenScript implements IScript {
 
     public List<Upgrade> getAllUpgrades(){
         List<Upgrade> upgrades = Upgrade.getAllUpgrades();
-        if(!fpc.upgrades.isEmpty()){
-            for(Upgrade u: fpc.upgrades.values()){
+        if (!GameStage.gameScript.fpc.upgrades.isEmpty()) {
+            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
                 for(Upgrade u2: upgrades){
                     if(u.upgradeType.equals(u2.upgradeType)){
                         u2.tryPeriod = u.tryPeriod;
@@ -290,7 +295,7 @@ public class ShopScreenScript implements IScript {
             }
         }
         preview.checkAndClose();
-        lc.text.replace(0, lc.text.length(), String.valueOf(fpc.totalScore));
+        lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
     }
 
     public boolean canMoveBagsLeft() {
@@ -391,5 +396,6 @@ public class ShopScreenScript implements IScript {
         preview = null;
         stage = null;
         shopItem = null;
+        System.gc();
     }
 }

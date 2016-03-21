@@ -29,49 +29,36 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class GameScreenScript implements IScript {
 
-    public static final String START_MESSAGE = "TAP TO START";
-    public static final String DOUBLE_BJ_BADGE = "double_bj_badge";
-
     public static final CameraShaker cameraShaker = new CameraShaker();
-    public static final String LBL_SCORE = "lbl_score";
-    public static final String LBL_TAP_2_START = "lbl_tap2start";
-    public static final String BTN_PAUSE = "btn_pause";
-    public static final String MEGA_FLOWER = "mega_flower";
-    public static final String DANDELION_ANI = "dandelionAni";
-    public static final String COCCOON = "coccoon";
-    public static final String BACKGROUND_LIB = "backgroundLib";
-    public static final String BTN_BACK = "btn_back";
-
-    public static GameStage game;
-    public static FlowerPublicComponent fpc;
-
-    public static LabelComponent scoreLabelComponent;
-    public static LabelComponent startLabelComponent;
-
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
-
-    public static Entity background;
-    public static GiftScreen giftScreen;
-    public static GoalFeedbackScreen goalFeedbackScreen;
-    private static GameOverDialog gameOverDialog;
+    public final String START_MESSAGE = "TAP TO START";
+    public final String DOUBLE_BJ_ICON = "double_bj_badge";
+    public final String LBL_SCORE = "lbl_score";
+    public final String LBL_TAP_2_START = "lbl_tap2start";
+    public final String BTN_PAUSE = "btn_pause";
+    public final String MEGA_FLOWER = "mega_flower";
+    public final String DANDELION_ANI = "dandelionAni";
+    public final String COCCOON = "coccoon";
+    public final String BACKGROUND_LIB = "backgroundLib";
+    public final String BTN_BACK = "btn_back";
+    public GameStage game;
+    public FlowerPublicComponent fpc;
+    public LabelComponent scoreLabelComponent;
+    public LabelComponent startLabelComponent;
+    public Entity background;
+    public GiftScreen giftScreen;
+    public GoalFeedbackScreen goalFeedbackScreen;
     public Random random = new Random();
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
+    private GameOverDialog gameOverDialog;
     private ItemWrapper gameItem;
     private PauseDialog pauseDialog;
 
     public GameScreenScript(GameStage game) {
-        GameScreenScript.game = game;
-    }
-
-    public static void onBugOutOfBounds() {
-        if (fpc.canUsePhoenix()) {
-            usePhoenix();
-        } else {
-            GameOverDialog.show();
-        }
+        this.game = game;
     }
 
     public static void angerBees() {
@@ -80,26 +67,22 @@ public class GameScreenScript implements IScript {
         BugSpawnSystem.queenBeeOnStage = false;
     }
 
-    public static void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
-    }
-
     public static void checkTryPeriod() {
         long now = System.currentTimeMillis();
-        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
-                fpc.currentPet.enabled = false;
-                fpc.currentPet.bought = false;
-                fpc.currentPet.tryPeriod = false;
+        if (GameStage.gameScript.fpc.currentPet != null && GameStage.gameScript.fpc.currentPet.tryPeriod) {
+            if (now - GameStage.gameScript.fpc.currentPet.tryPeriodStart >= GameStage.gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
+                GameStage.gameScript.fpc.currentPet.enabled = false;
+                GameStage.gameScript.fpc.currentPet.bought = false;
+                GameStage.gameScript.fpc.currentPet.tryPeriod = false;
 
-                if (allShopItems.indexOf(fpc.currentPet) >= 0) {
-                    allShopItems.get(allShopItems.indexOf(fpc.currentPet)).bought = false;
-                    allShopItems.get(allShopItems.indexOf(fpc.currentPet)).enabled = false;
+                if (allShopItems.indexOf(GameStage.gameScript.fpc.currentPet) >= 0) {
+                    allShopItems.get(allShopItems.indexOf(GameStage.gameScript.fpc.currentPet)).bought = false;
+                    allShopItems.get(allShopItems.indexOf(GameStage.gameScript.fpc.currentPet)).enabled = false;
                 }
             }
         }
-        if (fpc.upgrades != null && !fpc.upgrades.isEmpty()) {
-            for (Upgrade u: fpc.upgrades.values()) {
+        if (GameStage.gameScript.fpc.upgrades != null && !GameStage.gameScript.fpc.upgrades.isEmpty()) {
+            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod && now - u.tryPeriodStart >= u.tryPeriodDuration * 1000) {
                     u.enabled = false;
                     u.bought = false;
@@ -115,12 +98,27 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
-        fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(fpc);
-//        continueGame(gameOverDialog.getComponent(TransformComponent.class));
+        GameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(GameStage.gameScript.fpc);
+    }
+
+    public void onBugOutOfBounds() {
+        if (fpc.canUsePhoenix()) {
+            usePhoenix();
+        } else {
+            gameOverDialog.show();
+        }
+    }
+
+    public void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
     @Override
     public void init(Entity item) {
+
+        System.err.print("init game ");
+        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+                Gdx.app.getNativeHeap());
 
         ResultScreenScript.showCaseVanity = null;
 
@@ -142,14 +140,14 @@ public class GameScreenScript implements IScript {
         initBackButton();
         initBackground();
         initPet();
-        initDoubleBJbadge();
+        initDoubleBJIcon();
 
-            gameOverDialog = new GameOverDialog(gameItem);
+        gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
 
         pauseDialog = new PauseDialog(gameItem);
 
-        fpc.level.updateLevel();
+        GameStage.gameScript.fpc.level.updateLevel();
         pauseDialog.init();
 
         giftScreen = new GiftScreen(gameItem);
@@ -165,10 +163,10 @@ public class GameScreenScript implements IScript {
         init(gameItem.getEntity());
     }
 
-    private void initDoubleBJbadge() {
-        if (fpc.haveBugJuiceDouble()) {
-            Entity badge = gameItem.getChild(DOUBLE_BJ_BADGE).getEntity();
-            TransformComponent tc = badge.getComponent(TransformComponent.class);
+    private void initDoubleBJIcon() {
+        if (GameStage.gameScript.fpc.haveBugJuiceDouble()) {
+            Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
+            TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
             tc.scaleX = 0.6f;
             tc.scaleY = 0.6f;
             tc.x = 953;
@@ -197,13 +195,12 @@ public class GameScreenScript implements IScript {
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         sceneLoader.getEngine().addSystem(new FlowerSystem());
         sceneLoader.getEngine().addSystem(new CocoonSystem(gameItem));
-        sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
+        sceneLoader.getEngine().addSystem(new BugSpawnSystem(GameStage.gameScript.fpc));
         sceneLoader.getEngine().addSystem(new ButterflySystem());
         sceneLoader.getEngine().addSystem(new BugSystem());
         sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
         sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
         sceneLoader.getEngine().addSystem(new PetSystem());
-
     }
 
     private void initBackButton() {
@@ -268,7 +265,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initFlower() {
-        fpc.score = 0;
+        GameStage.gameScript.fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
@@ -305,44 +302,49 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void dispose() {
+//        System.gc();
     }
 
     @Override
     public void act(float delta) {
 
-        if (cameraShaker.time > 0) {
-            cameraShaker.shake(delta);
-            cameraShaker.blink();
+        if (!GameStage.justCreated) {
+            if (cameraShaker.time > 0) {
+                cameraShaker.shake(delta);
+                cameraShaker.blink();
+            }
+
+            if (!isStarted && Gdx.input.justTouched()) {
+                startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
+                isStarted = true;
+
+                updateTapGoal();
+            }
+
+            if (!isPause && !isGameOver && isStarted) {
+                if (canDandelionSpawn()) {
+                    dandelionSpawnCounter--;
+                }
+                if (canCocoonSpawn()) {
+                    cocoonSpawnCounter--;
+                }
+                //Spawn dandelion
+                if (dandelionSpawnCounter <= 0) {
+                    spawnDandelion();
+                }
+                //spawn Cocoon
+                if (cocoonSpawnCounter <= 0) {
+                    spawnCocoon();
+                }
+            }
+
+            if (gameOverDialog != null) {
+                gameOverDialog.update(delta);
+                pauseDialog.update();
+                giftScreen.update();
+                goalFeedbackScreen.update();
+            }
         }
-
-        if (!isStarted && Gdx.input.justTouched()) {
-            startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
-            isStarted = true;
-
-            updateTapGoal();
-        }
-
-        if (!isPause && !isGameOver && isStarted) {
-            if (canDandelionSpawn()) {
-                dandelionSpawnCounter--;
-            }
-            if (canCocoonSpawn()) {
-                cocoonSpawnCounter--;
-            }
-            //Spawn dandelion
-            if (dandelionSpawnCounter <= 0) {
-                spawnDandelion();
-            }
-            //spawn Cocoon
-            if (cocoonSpawnCounter <= 0) {
-                spawnCocoon();
-            }
-        }
-
-        gameOverDialog.update(delta);
-        pauseDialog.update();
-        giftScreen.update();
-        goalFeedbackScreen.update();
     }
 
     private void updateTapGoal() {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.entity.componets.Upgrade;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.system.BugSpawnSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -17,30 +17,34 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.GameStage.gameScript;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GameOverDialog {
 
-    public static final String GAME_OVER_DIALOG = "game_over_dialog";
-    public static final String BTN_WATCH_VIDEO = "btn_watch_video";
-    public static final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
-    public static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
-
     public static Entity gameOverDialog;
     public static float gameOverTimer = 0;
     public static int gameOverCounter = 5;
     private static ItemWrapper gameItem;
+    public final String GAME_OVER_DIALOG = "game_over_dialog";
+    public final String BTN_WATCH_VIDEO = "btn_watch_video";
+    public final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
+    public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
 
 
     public GameOverDialog(ItemWrapper gameItem) {
         GameOverDialog.gameItem = gameItem;
     }
 
-    public static void show() {
-        isGameOver = true;
+    public static boolean releaseAllBugs() {
+        return isGameOver && gameOverCounter <= 0 && !Upgrade.blowUpAllBugs;
+    }
 
+    public void show() {
+        isGameOver = true;
+        System.gc();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
@@ -53,10 +57,6 @@ public class GameOverDialog {
 
         TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
         tc.color.a = 0;
-    }
-
-    public static boolean releaseAllBugs() {
-        return isGameOver && gameOverCounter <= 0 && !Upgrade.blowUpAllBugs;
     }
 
     public void initGameOverDialog() {
@@ -97,8 +97,8 @@ public class GameOverDialog {
         gameOverTimer = 0;
         gameOverCounter = 5;
         BugSpawnSystem.isAngeredBeesMode = false;
-        if (fpc.currentPet != null) {
-            fpc.currentPet.init();
+        if (GameStage.gameScript.fpc.currentPet != null) {
+            GameStage.gameScript.fpc.currentPet.init();
         }
     }
 
@@ -138,15 +138,15 @@ public class GameOverDialog {
 
     private void finishGame() {
         if (gameOverCounter <= 0) {
-            if (!fpc.canUsePhoenix()) {
+            if (!GameStage.gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
-                if (GoalFeedbackScreen.shouldShow && !GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen) {
-                    GameScreenScript.goalFeedbackScreen.show();
-//                    GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen = true;
+                if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
+                    gameScript.goalFeedbackScreen.show();
+//                    gameScript.goalFeedbackScreen.isGoalFeedbackOpen = true;
                     isGameOver = true;
-                } else if (!GameScreenScript.goalFeedbackScreen.isGoalFeedbackOpen){
+                } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     isGameOver = false;
-                    game.initResult();
+                    gameScript.game.initResult();
                 }
             }
         }
@@ -159,13 +159,13 @@ public class GameOverDialog {
         isPause = false;
         BugSpawnSystem.isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;
-        if (fpc.bestScore < fpc.score) {
-            fpc.bestScore = fpc.score;
+        if (GameStage.gameScript.fpc.bestScore < GameStage.gameScript.fpc.score) {
+            GameStage.gameScript.fpc.bestScore = GameStage.gameScript.fpc.score;
         }
-        fpc.resetPhoenix();
+        GameStage.gameScript.fpc.resetPhoenix();
 
         //reset goals with type "In one life"
-        for (Goal g : fpc.level.getGoals()) {
+        for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
             if (!g.periodType.equals(Goal.PeriodType.TOTAL) && !g.achieved) {
                 g.counter = 0;
             }

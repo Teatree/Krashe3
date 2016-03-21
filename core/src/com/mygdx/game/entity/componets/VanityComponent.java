@@ -2,7 +2,6 @@ package com.mygdx.game.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
@@ -83,7 +82,7 @@ public class VanityComponent extends ShopItem implements Component {
             }
 
             if (this.pet != null) {
-                GameScreenScript.fpc.currentPet = this.pet;
+                fc.currentPet = this.pet;
             }
             GameStage.updateFlowerAni();
             GameStage.changedFlower = true;
@@ -101,7 +100,7 @@ public class VanityComponent extends ShopItem implements Component {
     }
 
     public boolean canBuy() {
-        return GameScreenScript.fpc.totalScore >= this.cost;
+        return GameStage.gameScript.fpc.totalScore >= this.cost;
     }
 
     public void disable(FlowerPublicComponent fc) {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -38,6 +39,7 @@ public class UmbrellaSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
+        FlowerPublicComponent fcc = fccMapper.get(entity);
 
         if (!isStarted) {
             entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -79,7 +81,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.myCatmull.derivativeAt(uc.out, 5);
 
                 uc.current -= 1;
-                checkBounceGoal();
+                checkBounceGoal(fcc);
             }
 
             uc.myCatmull.valueAt(uc.out, uc.current);
@@ -88,7 +90,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
             sasc.paused = false;
 //
-            FlowerPublicComponent fcc = fccMapper.get(entity);
 //
             updateRect(uc, tc, dc);
 
@@ -97,7 +98,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 hide(entity, tc);
 
                 fcc.umbrellaMult(uc.pointsMult);
-                reloadScoreLabel(fcc);
+                GameStage.gameScript.reloadScoreLabel(fcc);
 
                 playParticleEffectFor();
 
@@ -137,7 +138,7 @@ public class UmbrellaSystem extends IteratingSystem {
         }
     }
 
-    private void checkBounceGoal() {
+    private void checkBounceGoal(FlowerPublicComponent fpc) {
         if (fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
             fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
         }

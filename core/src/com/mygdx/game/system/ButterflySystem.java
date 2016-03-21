@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -85,7 +86,7 @@ public class ButterflySystem extends IteratingSystem {
                 entity.remove(ButterflyComponent.class);
 
                 fcc.addScore(bc.points);
-                reloadScoreLabel(fcc);
+                GameStage.gameScript.reloadScoreLabel(fcc);
             }
         } else {
             sasc.player.speed = 0;

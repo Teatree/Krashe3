@@ -1,12 +1,12 @@
 package com.mygdx.game.utils;
 
 import com.mygdx.game.entity.componets.Goal;
+import com.mygdx.game.stages.GameStage;
 
 import java.util.HashMap;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.Goal.GoalType.*;
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 
 public class GoalGenerator {
 
@@ -30,9 +30,9 @@ public class GoalGenerator {
     }
 
     private Goal createGoal() {
-        if (fpc.level.difficultyLevel < 4) {
+        if (GameStage.gameScript.fpc.level.difficultyLevel < 4) {
             return new Goal(getEasyGoals().get(random.nextInt(getEasyGoals().size() - 1)));
-        } else if (fpc.level.difficultyLevel >= 4 && fpc.level.difficultyLevel < 8) {
+        } else if (GameStage.gameScript.fpc.level.difficultyLevel >= 4 && GameStage.gameScript.fpc.level.difficultyLevel < 8) {
             return new Goal(getMediumGoals().get(random.nextInt(getMediumGoals().size() - 1)));
         }else{
             return new Goal(getHardGoals().get(random.nextInt(getHardGoals().size() - 1)));

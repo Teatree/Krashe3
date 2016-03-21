@@ -9,7 +9,6 @@ import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import static com.mygdx.game.stages.GameScreenScript.scoreLabelComponent;
 
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
@@ -62,7 +61,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     protected void end(FlowerPublicComponent fcc, Entity entity) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+        GameStage.gameScript.scoreLabelComponent.text.replace(0, GameStage.gameScript.scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
         GameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 

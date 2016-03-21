@@ -11,8 +11,21 @@ import static com.mygdx.game.utils.GlobalConstants.MIN_IDLE_COUNTER;
 
 public class BugComponent implements Component {
 
-    public BugType type;
-    public State state = State.IDLE;
+
+    public static final String IDLE = "IDLE";
+    public static final String PREPARING = "PREPARING";
+    public static final String CHARGING = "CHARGING";
+    public static final String SCARED = "SCARED";
+    public static final String DEAD = "DEAD";
+
+    public static final String SIMPLE = "SIMPLE";
+    public static final String DRUNK = "DRUNK";
+    public static final String CHARGER = "CHARGER";
+    public static final String BEE = "BEE";
+    public static final String QUEENBEE = "QUEENBEE";
+
+    public String type;
+    public String state = IDLE;
 
     public float startX, startY;
     public float endX;
@@ -32,13 +45,13 @@ public class BugComponent implements Component {
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
 
     public BugComponent() {
-        state = State.IDLE;
+        state = IDLE;
     }
 
-    public BugComponent(BugType type) {
+    public BugComponent(String type) {
         this.type = type;
-        this.state = State.IDLE;
-        switch (type){
+        this.state = IDLE;
+        switch (type) {
             case DRUNK: {
                 points = 10;
                 break;
@@ -55,28 +68,26 @@ public class BugComponent implements Component {
                 points = 33;
                 break;
             }
-            default:{
+            default: {
                 points = 10;
                 break;
             }
         }
     }
+//
+//    public enum State {
+//        IDLE,
+//        PREPARING,
+//        CHARGING,
+//        SCARED,
+//        DEAD
+//    }
 
-    public enum State {
-        IDLE,
-        PREPARING,
-        CHARGING,
-        SCARED,
-        DEAD
-    }
-
-    public enum BugType {
-        SIMPLE,
-        DRUNK,
-        CHARGER,
-        BEE,
-        QUEENBEE
-    }
-
-
+//    public enum BugType {
+//        SIMPLE,
+//        DRUNK,
+//        CHARGER,
+//        BEE,
+//        QUEENBEE
+//    }
 }

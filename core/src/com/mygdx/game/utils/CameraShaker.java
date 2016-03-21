@@ -1,12 +1,14 @@
 package com.mygdx.game.utils;
 
 import com.mygdx.game.Main;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
+
+import static com.mygdx.game.stages.GameStage.gameScript;
+
 
 public class CameraShaker {
 
@@ -42,7 +44,7 @@ public class CameraShaker {
             current_time += delta;
         } else {
             GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
-            ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
+            ComponentRetriever.get(gameScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
             Main.gameStage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
         }
 
@@ -50,7 +52,7 @@ public class CameraShaker {
 
     public void blink() {
         this.blinkIntervalCounter--;
-        LayerMapComponent lc = ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class);
+        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
         if (this.blinkIntervalCounter == 0 && blinkCounter != 0) {
             lc.getLayer(BLINK).isVisible = !lc.getLayer(BLINK).isVisible;
             this.blinkIntervalCounter = blinkInterval;
@@ -66,7 +68,7 @@ public class CameraShaker {
         this.blinkInterval = blinkInterval;
         this.blinkCounter = amount;
 
-        LayerMapComponent lc = ComponentRetriever.get(GameScreenScript.background, LayerMapComponent.class);
+        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
         lc.getLayer(BLINK).isVisible = true;
     }
 }

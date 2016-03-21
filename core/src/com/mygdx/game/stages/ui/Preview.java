@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -253,12 +253,12 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
-                        vc.buyAndUse(GameScreenScript.fpc);
+                        vc.buyAndUse(GameStage.gameScript.fpc);
                         showPreview(vc, false, true);
                         if (vc.currencyType.equals(SOFT)) {
                             changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon));
                         }
-                        ShopScreenScript.reloadScoreLabel(GameScreenScript.fpc);
+                        ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
                 }
             });
@@ -289,7 +289,7 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.apply(GameScreenScript.fpc);
+                        vc.apply(GameStage.gameScript.fpc);
                         showPreview(vc, false, false);
                     }
                 }
@@ -322,7 +322,7 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.disable(GameScreenScript.fpc);
+                        vc.disable(GameStage.gameScript.fpc);
                         showPreview(vc, false, false);
                     }
                 }

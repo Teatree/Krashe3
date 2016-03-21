@@ -14,7 +14,6 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ResultScreenScript.show;
 import static com.mygdx.game.stages.ResultScreenScript.showCaseVanity;
@@ -164,7 +163,7 @@ public class Showcase {
 
             @Override
             public void clicked() {
-                showCaseVanity.buyAndUse(fpc);
+                showCaseVanity.buyAndUse(GameStage.gameScript.fpc);
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();

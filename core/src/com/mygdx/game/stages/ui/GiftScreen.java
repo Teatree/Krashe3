@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.PetComponent;
 import com.mygdx.game.entity.componets.Upgrade;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -17,24 +17,25 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.HashMap;
 import java.util.Random;
 
-import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.GameScreenScript.isGameOver;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GiftScreen {
-    public static final String GIFT_SCREEN = "gift_screen";
-    public static final String BTN_PINATA = "btn_pinata";
-    public static final int GIFT_SCREEN_X = -20;
-    public static final int GIFT_SCREEN_Y = -20;
-    public static final int ONE_HOUR = 3600000;
-    public static final String LBL_GIFT_SCREEN = "lbl_gift_screen";
-    public static final int PINATA_X = 363;
-    public static final int PINATA_Y = 275;
-    public static final int HIT_COUNTER_MAX = 10;
-    public static final int HIT_COUNTER_MIN = 5;
-    public static boolean isGiftScreenOpen = false;
+    public final String GIFT_SCREEN = "gift_screen";
+    public final String BTN_PINATA = "btn_pinata";
+    public final int GIFT_SCREEN_X = -20;
+    public final int GIFT_SCREEN_Y = -20;
+
+    public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
+    public final int PINATA_X = 363;
+    public final int PINATA_Y = 275;
+    public final int HIT_COUNTER_MAX = 10;
+    public final int HIT_COUNTER_MIN = 5;
+    public boolean isGiftScreenOpen = false;
+
     private ItemWrapper gameItem;
     private Entity giftScreen;
     private Entity pinataBtn;
@@ -105,7 +106,7 @@ public class GiftScreen {
     public void update() {
         if (pinataHitCounter <= 0) {
             pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            gift.takeGift(fpc);
+            gift.takeGift(GameStage.gameScript.fpc);
             Entity lbl = gameItem.getChild(GIFT_SCREEN).getChild(LBL_GIFT_SCREEN).getEntity();
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
@@ -113,7 +114,7 @@ public class GiftScreen {
             if (Gdx.input.justTouched() && isGameOver) {
                 isGameOver = false;
                 isGiftScreenOpen = false;
-                game.initResult();
+                GameStage.gameScript.game.initResult();
             }
         }
         fade(giftScreen, true);
@@ -125,6 +126,9 @@ public class GiftScreen {
         public static final String PET = "PET";
         public static final String PHOENIX = "PHOENIX";
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
+
+        public static final int ONE_HOUR = 3600000;
+
         public static HashMap<String, Integer> chanceGroups;
         private static Random random = new Random();
 
@@ -143,7 +147,6 @@ public class GiftScreen {
 
         public static Gift getRandomGift() {
             Gift gift = new Gift();
-//            if (GameScreenScript.fpc.level.difficultyLevel < 3) {
                 int i = random.nextInt(100);
                 if (i > 0 && i <= chanceGroups.get(PET)) {
                     gift = getPetGift();
@@ -154,7 +157,6 @@ public class GiftScreen {
                 } else if (i > chanceGroups.get(BJ_DOUBLE) && i <= chanceGroups.get(MONEY)) {
                     gift = getRandomMoneyGift();
                 }
-//            }
             return gift;
         }
 
@@ -167,7 +169,7 @@ public class GiftScreen {
 
         public static Gift getPetGift() {
             Gift gift = new Gift();
-            gift.pet = GameScreenScript.fpc.pets.get(0);
+            gift.pet = GameStage.gameScript.fpc.pets.get(0);
             gift.pet.tryPeriod = true;
             gift.pet.tryPeriodDuration = ONE_HOUR;
             gift.type = PET;

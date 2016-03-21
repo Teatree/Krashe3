@@ -3,7 +3,7 @@ package com.mygdx.game.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.Goal;
-import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -18,8 +18,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mygdx.game.stages.GameScreenScript.fpc;
 import static com.mygdx.game.stages.GameScreenScript.isPause;
+import static com.mygdx.game.stages.GameStage.gameScript;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.EffectUtils.fade;
 
@@ -71,11 +71,11 @@ public class GoalFeedbackScreen {
 
         final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + fpc.level.name + " \n ");
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + GameStage.gameScript.fpc.level.name + " \n ");
 
         if (tiles == null || tiles.isEmpty() || !isPause) {
             int y = 416;
-            for (Goal g : fpc.level.getGoals()) {
+            for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
                 tiles.add(createGoalTile(g, y));
                 y -= 130;
             }
@@ -146,11 +146,11 @@ public class GoalFeedbackScreen {
         int i = 0;
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
-            if (fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
+            if (GameStage.gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
                 tilesScs.get(i).player.speed = 4;
                 isAniPlaying = true;
                 aniPlayingIndex = i;
-                fpc.level.getGoals().get(i).justAchieved = false;
+                GameStage.gameScript.fpc.level.getGoals().get(i).justAchieved = false;
             } else if (tilesScs.get(i).player.getTime() >=
                     tilesScs.get(i).player.getAnimation().length - 20) {
                 tilesScs.get(i).player.speed = 0;
@@ -165,10 +165,10 @@ public class GoalFeedbackScreen {
         }
 
         if(Gdx.input.justTouched() && isGoalFeedbackOpen){
-            if(fpc.level.checkAllGoals()){
-                GameScreenScript.giftScreen.show();
+            if (GameStage.gameScript.fpc.level.checkAllGoals()) {
+                gameScript.giftScreen.show();
             }else{
-                GameScreenScript.game.initResult();
+                GameStage.gameScript.game.initResult();
             }
             isGoalFeedbackOpen = false;
         }

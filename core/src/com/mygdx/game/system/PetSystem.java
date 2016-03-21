@@ -22,7 +22,8 @@ import static com.mygdx.game.entity.componets.Goal.GoalType.PET_DASH_N_TIMES;
 import static com.mygdx.game.entity.componets.Goal.GoalType.PET_THE_PET;
 import static com.mygdx.game.entity.componets.PetComponent.State.*;
 import static com.mygdx.game.entity.componets.PetComponent.X_SPAWN_POSITION;
-import static com.mygdx.game.stages.GameScreenScript.*;
+import static com.mygdx.game.stages.GameScreenScript.isGameOver;
+import static com.mygdx.game.stages.GameScreenScript.isPause;
 import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FPS;
@@ -172,14 +173,14 @@ public class PetSystem extends IteratingSystem {
     }
 
     private void checkPetThePetGoal() {
-        if (fpc.level.getGoalByType(PET_THE_PET) != null) {
-            fpc.level.getGoalByType(PET_THE_PET).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET) != null) {
+            GameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET).update();
         }
     }
 
     private void checkPetDashGoal() {
-        if (fpc.level.getGoalByType(PET_DASH_N_TIMES) != null) {
-            fpc.level.getGoalByType(PET_DASH_N_TIMES).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES) != null) {
+            GameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES).update();
         }
     }
 }

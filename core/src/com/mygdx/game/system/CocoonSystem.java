@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -138,8 +139,8 @@ public class CocoonSystem extends IteratingSystem {
     }
 
     public void checkCocoonGoal() {
-        if (fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
-            fpc.level.getGoalByType(DESTROY_N_COCOON).update();
+        if (GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
+            GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON).update();
         }
     }
 }
