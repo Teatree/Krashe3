@@ -31,10 +31,7 @@ public class GoalFeedbackScreen {
     public static final int POS_Y = -19;
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static boolean shouldShow;
-//    public static final String NOT_ACHIEVED_GOAL_LIB = "not_achieved_goal_lib";
-//    public static final String GOAL_LBL_TAG = "goal_lbl";
-//    public static final String STAR_TAG = "star";
-//    public static final String BTN_CLOSE = "btn_close";
+
     private static List<Entity> tiles;
     public boolean isAniPlaying;
     public int aniPlayingIndex;
@@ -84,10 +81,10 @@ public class GoalFeedbackScreen {
         isGoalFeedbackOpen = true;
     }
 
-    private Entity createGoalTile(Goal goal, int y){
+    private Entity createGoalTile(Goal goal, int y) {
         CompositeItemVO tempC;
 //        if (goal.achieved){
-            tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
+        tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
 //        }
 
         final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -101,16 +98,16 @@ public class GoalFeedbackScreen {
         tile.add(tc);
 
         NodeComponent nc = tile.getComponent(NodeComponent.class);
-        for (Entity e : nc.children){
-            if (e.getComponent(LabelComponent.class)!= null) {
+        for (Entity e : nc.children) {
+            if (e.getComponent(LabelComponent.class) != null) {
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
                 e.getComponent(ZIndexComponent.class).setZIndex(120);
             }
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
-            if (sc != null){
+            if (sc != null) {
                 sc.scale = 0.8f;
-                if (goal.achieved){
+                if (goal.achieved) {
                     if (goal.justAchieved) {
                         ActionComponent ac = new ActionComponent();
                         Actions.checkInit();
@@ -119,11 +116,11 @@ public class GoalFeedbackScreen {
 
                         sc.player.speed = 0;
 //                        goal.justAchieved = false;
-                    }else{
+                    } else {
                         sc.player.setTime(sc.player.getAnimation().length);
                         sc.player.speed = 0;
                     }
-                }else{
+                } else {
                     sc.player.setTime(0);
                     sc.player.speed = 0;
                 }
@@ -164,11 +161,12 @@ public class GoalFeedbackScreen {
             isAniPlaying = false;
         }
 
-        if(Gdx.input.justTouched() && isGoalFeedbackOpen){
+        if (Gdx.input.justTouched() && isGoalFeedbackOpen) {
             if (GameStage.gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
-            }else{
-                GameStage.gameScript.game.initResult();
+            } else {
+//                GameStage.init = !GameStage.init;
+                GameStage.gameScript.stage.initResult();
             }
             isGoalFeedbackOpen = false;
         }

@@ -147,6 +147,7 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!showcasePopup && !show) {
+//                    GameStage.init = !GameStage.init;
                     stage.initMenu();
                 }
                 isWasShowcase = false;
@@ -195,6 +196,7 @@ public class ResultScreenScript implements IScript {
             }
 
             private void backToGame() {
+//                GameStage.init = !GameStage.init;
                 stage.initGame();
                 isWasShowcase = false;
             }
@@ -220,6 +222,7 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!show) {
+//                    GameStage.init = !GameStage.init;
                     stage.initShop();
                     isWasShowcase = false;
                 }

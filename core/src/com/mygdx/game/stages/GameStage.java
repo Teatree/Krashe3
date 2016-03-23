@@ -33,9 +33,13 @@ public class GameStage extends Stage {
     public static boolean changedFlower;
     public static boolean changedFlower2;
 
-    public static GameScreenScript gameScript;
     public static boolean justCreated;
+//    public static volatile boolean init = true;
+
+    public static GameScreenScript gameScript;
     private ResultScreenScript resultScript;
+    private ShopScreenScript shopScript;
+    private MenuScreenScript menuScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
         GameStage.sceneLoader = sceneLoader;
@@ -47,9 +51,6 @@ public class GameStage extends Stage {
         initMenu();
     }
 
-    public static void unloadScenes() {
-    }
-
     public static void updateFlowerAni() {
         ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
         if (sceneLoader.rootEntity != null) {
@@ -59,33 +60,37 @@ public class GameStage extends Stage {
     }
 
     public void initGame() {
-        try {
-            if (changedFlower || changedFlower2) {
-                sceneLoader.loadScene(MAIN_SCENE, viewport);
-                changedFlower = false;
-                sceneLoader.setScene(MAIN_SCENE);
-                BugPool.resetBugPool();
-                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+//        if (init) {
+        if (changedFlower || changedFlower2) {
+//            init = false;
+            changedFlower = false;
+            sceneLoader.loadScene(MAIN_SCENE, viewport);
+            sceneLoader.setScene(MAIN_SCENE);
+
+            BugPool.resetBugPool();
+
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+
+            root.addScript(gameScript);
+            gameScript.initButtons();
+            gameScript.reset();
+
+            System.gc();
+        } else {
+            sceneLoader.setScene(MAIN_SCENE);
+            if (justCreated) {
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 root.addScript(gameScript);
-                System.gc();
+                gameScript.initButtons();
+                justCreated = false;
             } else {
-                sceneLoader.setScene(MAIN_SCENE);
-                if (justCreated) {
-//                    gameScript = new GameScreenScript(this);
-                    ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-                    sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-                    root.addScript(gameScript);
-                    justCreated = false;
-                }
                 gameScript.reset();
-
             }
-        } catch (Exception e) {
-            System.err.println(e);
-//                throw e;
-
         }
+//        }
+
         GlobalConstants.CUR_SCREEN = GAME;
         backgroundMusicMgr.stop();
 
@@ -96,17 +101,29 @@ public class GameStage extends Stage {
     }
 
     public void initMenu() {
+//        if (init) {
+//        init = false;
         if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
+            menuScript = null;
         }
         sceneLoader.setScene(MENU_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        root.addScript(new MenuScreenScript(this));
+        if (menuScript == null) {
+            menuScript = new MenuScreenScript(this);
+            root.addScript(menuScript);
+            menuScript.initButtons();
+        } else {
+            menuScript.init(menuScript.menuItem.getEntity());
+        }
         GlobalConstants.CUR_SCREEN = MENU;
+//        }
     }
 
     public void initResult() {
+//        if (init) {
+//        init = false;
         sceneLoader.setScene(RESULT_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
@@ -116,16 +133,25 @@ public class GameStage extends Stage {
             resultScript.initResultScreen();
         }
         GlobalConstants.CUR_SCREEN = RESULT;
+//        }
     }
 
     public void initShop() {
-        sceneLoader.engineByScene.remove(SHOP_SCENE);
-        sceneLoader.rootEntityByScene.remove(SHOP_SCENE);
-        sceneLoader.loadScene(SHOP_SCENE, viewport);
+//        if (init) {
+//        init = false;
         sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        root.addScript(new ShopScreenScript(this));
+        ShopScreenScript.isPreviewOn = false;
+        if (shopScript == null) {
+            shopScript = new ShopScreenScript(this);
+            root.addScript(shopScript);
+//            shopScript.addBackButtonPlease();
+        }
+//        else {
+//            shopScript.reset();
+//        }
         GlobalConstants.CUR_SCREEN = SHOP;
+//        }
     }
 
     public void update() {

@@ -43,22 +43,25 @@ public class GameScreenScript implements IScript {
     public final String COCCOON = "coccoon";
     public final String BACKGROUND_LIB = "backgroundLib";
     public final String BTN_BACK = "btn_back";
-    public GameStage game;
+
+    public GameStage stage;
+    public Random random = new Random();
     public FlowerPublicComponent fpc;
     public LabelComponent scoreLabelComponent;
     public LabelComponent startLabelComponent;
     public Entity background;
     public GiftScreen giftScreen;
     public GoalFeedbackScreen goalFeedbackScreen;
-    public Random random = new Random();
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
-    private GameOverDialog gameOverDialog;
     private ItemWrapper gameItem;
+    private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
+    private Entity backBtn;
+    private Entity pauseBtn;
 
-    public GameScreenScript(GameStage game) {
-        this.game = game;
+    public GameScreenScript(GameStage gamestage) {
+        this.stage = gamestage;
     }
 
     public static void angerBees() {
@@ -101,18 +104,6 @@ public class GameScreenScript implements IScript {
         GameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(GameStage.gameScript.fpc);
     }
 
-    public void onBugOutOfBounds() {
-        if (fpc.canUsePhoenix()) {
-            usePhoenix();
-        } else {
-            gameOverDialog.show();
-        }
-    }
-
-    public void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
-    }
-
     @Override
     public void init(Entity item) {
 
@@ -136,8 +127,6 @@ public class GameScreenScript implements IScript {
 
         addSystems();
         initFlower();
-        initPauseBtn();
-        initBackButton();
         initBackground();
         initPet();
         initDoubleBJIcon();
@@ -157,6 +146,11 @@ public class GameScreenScript implements IScript {
         goalFeedbackScreen.init();
 
         checkTryPeriod();
+    }
+
+    public void initButtons() {
+        initPauseBtn();
+        initBackButton();
     }
 
     public void reset() {
@@ -205,15 +199,13 @@ public class GameScreenScript implements IScript {
 
     private void initBackButton() {
 
-        Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
+        backBtn = gameItem.getChild(BTN_BACK).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
 
-        TransformComponent backBtnTc = backBtn.getComponent(TransformComponent.class);
-        backBtnTc.scaleX = 0.7f;
-        backBtnTc.scaleY = 0.7f;
-        backBtnTc.x = 90;
-        backBtnTc.y = 680;
-
+        backBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
+        backBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
+        backBtn.getComponent(TransformComponent.class).x = 90;
+        backBtn.getComponent(TransformComponent.class).y = 680;
 
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -230,17 +222,17 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                game.initMenu();
+//                GameStage.init = !GameStage.init;
+                stage.initMenu();
             }
         });
     }
 
     private void initPauseBtn() {
-        final Entity pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
+        pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
 
-        TransformComponent pauseBtnTc = pauseBtn.getComponent(TransformComponent.class);
-        pauseBtnTc.scaleX = 0.7f;
-        pauseBtnTc.scaleY = 0.7f;
+        pauseBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
+        pauseBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
 
         pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
@@ -276,9 +268,6 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
 
-//        if (fpc.level.getGoals() == null || fpc.level.getGoals().isEmpty()) {
-////            fpc.level.updateLevel();
-//        }
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
     }
@@ -351,6 +340,18 @@ public class GameScreenScript implements IScript {
         if (fpc.level.getGoalByType(Goal.GoalType.TAP) != null) {
             fpc.level.getGoalByType(Goal.GoalType.TAP).update();
         }
+    }
+
+    public void onBugOutOfBounds() {
+        if (fpc.canUsePhoenix()) {
+            usePhoenix();
+        } else {
+            gameOverDialog.show();
+        }
+    }
+
+    public void reloadScoreLabel(FlowerPublicComponent fcc) {
+        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
     private void spawnDandelion() {

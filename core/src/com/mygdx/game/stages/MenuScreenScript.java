@@ -22,6 +22,7 @@ public class MenuScreenScript implements IScript {
     private GameStage stage;
 
     public MenuScreenScript(GameStage stage) {
+        GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         this.stage = stage;
     }
 
@@ -34,10 +35,12 @@ public class MenuScreenScript implements IScript {
 
         menuItem = new ItemWrapper(item);
 
-        GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-        final Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
-        final Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
-        final Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
+    }
+
+    public void initButtons() {
+        Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
+        Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
+        Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
 
         btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -65,27 +68,26 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
+//                GameStage.init = !GameStage.init;
                 stage.initGame();
             }
         });
         btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-
             }
 
             @Override
             public void touchDown() {
+//                GameStage.init = !GameStage.init;
                 stage.initShop();
             }
 
             @Override
             public void clicked() {
-
             }
         });
     }
-
     private void timer(ItemWrapper menuItem) {
         final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
         LabelComponent lc = timerE.getComponent(LabelComponent.class);
@@ -115,16 +117,6 @@ public class MenuScreenScript implements IScript {
     @Override
     public void act(float delta) {
         GameScreenScript.checkTryPeriod();
-//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-//            long now = System.currentTimeMillis();
-//            if (now - fpc.currentPet.tryPeriodStart >= fpc.currentPet.tryPeriodDuration * 1000) {
-//                fpc.currentPet.enabled = false;
-//                fpc.currentPet.bought = false;
-//                ShopScreenScript.allShopItems.get(ShopScreenScript.allShopItems.indexOf(fpc.currentPet)).bought = false;
-//                ShopScreenScript.allShopItems.get(ShopScreenScript.allShopItems.indexOf(fpc.currentPet)).enabled = false;
-//
-//            }
-//        }
         timer(menuItem);
     }
 }

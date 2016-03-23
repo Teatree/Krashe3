@@ -114,7 +114,8 @@ public class GiftScreen {
             if (Gdx.input.justTouched() && isGameOver) {
                 isGameOver = false;
                 isGiftScreenOpen = false;
-                GameStage.gameScript.game.initResult();
+//                GameStage.init = !GameStage.init;
+                GameStage.gameScript.stage.initResult();
             }
         }
         fade(giftScreen, true);
