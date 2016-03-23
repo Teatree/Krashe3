@@ -222,7 +222,6 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                GameStage.init = !GameStage.init;
                 stage.initMenu();
             }
         });

@@ -114,7 +114,6 @@ public class GiftScreen {
             if (Gdx.input.justTouched() && isGameOver) {
                 isGameOver = false;
                 isGiftScreenOpen = false;
-//                GameStage.init = !GameStage.init;
                 GameStage.gameScript.stage.initResult();
             }
         }

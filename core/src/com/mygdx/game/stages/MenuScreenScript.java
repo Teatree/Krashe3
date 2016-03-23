@@ -68,7 +68,6 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-//                GameStage.init = !GameStage.init;
                 stage.initGame();
             }
         });
@@ -79,7 +78,6 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-//                GameStage.init = !GameStage.init;
                 stage.initShop();
             }
 

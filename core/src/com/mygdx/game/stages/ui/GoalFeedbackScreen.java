@@ -165,7 +165,6 @@ public class GoalFeedbackScreen {
             if (GameStage.gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
             } else {
-//                GameStage.init = !GameStage.init;
                 GameStage.gameScript.stage.initResult();
             }
             isGoalFeedbackOpen = false;

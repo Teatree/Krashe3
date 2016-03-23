@@ -34,7 +34,6 @@ public class GameStage extends Stage {
     public static boolean changedFlower2;
 
     public static boolean justCreated;
-//    public static volatile boolean init = true;
 
     public static GameScreenScript gameScript;
     private ResultScreenScript resultScript;
@@ -60,9 +59,7 @@ public class GameStage extends Stage {
     }
 
     public void initGame() {
-//        if (init) {
         if (changedFlower || changedFlower2) {
-//            init = false;
             changedFlower = false;
             sceneLoader.loadScene(MAIN_SCENE, viewport);
             sceneLoader.setScene(MAIN_SCENE);
@@ -89,7 +86,6 @@ public class GameStage extends Stage {
                 gameScript.reset();
             }
         }
-//        }
 
         GlobalConstants.CUR_SCREEN = GAME;
         backgroundMusicMgr.stop();
@@ -101,8 +97,6 @@ public class GameStage extends Stage {
     }
 
     public void initMenu() {
-//        if (init) {
-//        init = false;
         if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
@@ -118,40 +112,30 @@ public class GameStage extends Stage {
             menuScript.init(menuScript.menuItem.getEntity());
         }
         GlobalConstants.CUR_SCREEN = MENU;
-//        }
     }
 
     public void initResult() {
-//        if (init) {
-//        init = false;
         sceneLoader.setScene(RESULT_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
             resultScript = new ResultScreenScript(this);
             root.addScript(resultScript);
+            resultScript.initButtons();
         } else {
             resultScript.initResultScreen();
         }
         GlobalConstants.CUR_SCREEN = RESULT;
-//        }
     }
 
     public void initShop() {
-//        if (init) {
-//        init = false;
         sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         ShopScreenScript.isPreviewOn = false;
         if (shopScript == null) {
             shopScript = new ShopScreenScript(this);
             root.addScript(shopScript);
-//            shopScript.addBackButtonPlease();
         }
-//        else {
-//            shopScript.reset();
-//        }
         GlobalConstants.CUR_SCREEN = SHOP;
-//        }
     }
 
     public void update() {

@@ -51,6 +51,7 @@ public class ResultScreenScript implements IScript {
     long nextVanityCost;
     int i = 0;
     int j = 0;
+    Entity backPlay;
     private GameStage stage;
     private ItemWrapper resultScreenItem;
     private Entity adsBtn;
@@ -71,9 +72,6 @@ public class ResultScreenScript implements IScript {
         j = 0;
         resultScreenItem = new ItemWrapper(item);
         sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-        initBackButton();
-        initPlayBtn();
-        initShopBtn();
 
         txtTotalE = resultScreenItem.getChild("lbl_TOTAL").getEntity();
         txtEarnedE = resultScreenItem.getChild("lbl_YOU_EARNED").getEntity();
@@ -85,6 +83,11 @@ public class ResultScreenScript implements IScript {
         showcase = new Showcase(resultScreenItem, this);
     }
 
+    public void initButtons() {
+        initBackButton();
+        initPlayBtn();
+        initShopBtn();
+    }
     public void initResultScreen() {
         show = false;
 
@@ -147,7 +150,6 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!showcasePopup && !show) {
-//                    GameStage.init = !GameStage.init;
                     stage.initMenu();
                 }
                 isWasShowcase = false;
@@ -156,7 +158,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initPlayBtn() {
-        final Entity backPlay = resultScreenItem.getChild(BTN_PLAY).getEntity();
+        backPlay = resultScreenItem.getChild(BTN_PLAY).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
         backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -196,7 +198,6 @@ public class ResultScreenScript implements IScript {
             }
 
             private void backToGame() {
-//                GameStage.init = !GameStage.init;
                 stage.initGame();
                 isWasShowcase = false;
             }
@@ -222,7 +223,6 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!show) {
-//                    GameStage.init = !GameStage.init;
                     stage.initShop();
                     isWasShowcase = false;
                 }

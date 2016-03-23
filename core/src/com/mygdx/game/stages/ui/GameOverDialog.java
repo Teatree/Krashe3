@@ -142,11 +142,9 @@ public class GameOverDialog {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     gameScript.goalFeedbackScreen.show();
-//                    gameScript.goalFeedbackScreen.isGoalFeedbackOpen = true;
                     isGameOver = true;
                 } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     isGameOver = false;
-//                    GameStage.init = !GameStage.init;
                     gameScript.stage.initResult();
                 }
             }
