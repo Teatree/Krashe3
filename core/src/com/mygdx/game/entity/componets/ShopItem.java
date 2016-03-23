@@ -2,11 +2,13 @@ package com.mygdx.game.entity.componets;
 
 public abstract class ShopItem {
 
+    public static String SOFT = "SOFT";
+    public static String HARD = "HARD";
     public String shopIcon;
     public String name;
     public long cost;
     public String description;
-    public CurrencyType currencyType;
+    public String currencyType;
 
     //true when was bought (could be not applied)
     public boolean bought;
@@ -19,7 +21,7 @@ public abstract class ShopItem {
 
     public abstract void buyAndUse(FlowerPublicComponent fpc);
 
-    public enum CurrencyType {
-        SOFT, HARD
-    }
+//    public enum CurrencyType {
+//        SOFT, HARD
+//    }
 }

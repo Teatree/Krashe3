@@ -54,11 +54,9 @@ public class GameScreenScript implements IScript {
     public GoalFeedbackScreen goalFeedbackScreen;
     public int dandelionSpawnCounter;
     public int cocoonSpawnCounter;
-    private ItemWrapper gameItem;
+    public ItemWrapper gameItem;
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
-    private Entity backBtn;
-    private Entity pauseBtn;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -185,23 +183,22 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-        sceneLoader.getEngine().addSystem(new DandelionSystem(gameItem));
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         sceneLoader.getEngine().addSystem(new FlowerSystem());
-        sceneLoader.getEngine().addSystem(new CocoonSystem(gameItem));
-        sceneLoader.getEngine().addSystem(new BugSpawnSystem(GameStage.gameScript.fpc));
         sceneLoader.getEngine().addSystem(new ButterflySystem());
         sceneLoader.getEngine().addSystem(new BugSystem());
         sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
         sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
         sceneLoader.getEngine().addSystem(new PetSystem());
+        sceneLoader.getEngine().addSystem(new DandelionSystem(this));
+        sceneLoader.getEngine().addSystem(new CocoonSystem(this));
+        sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
     }
 
     private void initBackButton() {
+        Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
 
-        backBtn = gameItem.getChild(BTN_BACK).getEntity();
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-
         backBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
         backBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
         backBtn.getComponent(TransformComponent.class).x = 90;
@@ -222,13 +219,18 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                resetPauseDialog();
                 stage.initMenu();
             }
         });
     }
 
+    public void resetPauseDialog() {
+        pauseDialog.deleteTiles();
+    }
+
     private void initPauseBtn() {
-        pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
+        final Entity pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
 
         pauseBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
         pauseBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
@@ -250,7 +252,7 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                pauseDialog.pause();
+                pauseDialog.show();
             }
         });
     }

@@ -43,7 +43,7 @@ public class Upgrade extends ShopItem{
         phoenix.bought = false;
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
-        phoenix.currencyType = CurrencyType.HARD;
+        phoenix.currencyType = HARD;
         return phoenix;
     }
 
@@ -55,7 +55,7 @@ public class Upgrade extends ShopItem{
         bjd.bought = false;
         bjd.description = "more juice \\0/";
         bjd.enabled = false;
-        bjd.currencyType = CurrencyType.HARD;
+        bjd.currencyType = HARD;
         return bjd;
     }
 

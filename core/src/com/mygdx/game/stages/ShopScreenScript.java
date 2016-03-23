@@ -19,8 +19,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.*;
 
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
+import static com.mygdx.game.entity.componets.ShopItem.HARD;
+import static com.mygdx.game.entity.componets.ShopItem.SOFT;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 

@@ -28,6 +28,7 @@ public class VanityComponent extends ShopItem implements Component {
     public static final String item_back_shine = "item_back_shine";
     public static final String flower_peducle = "flower_peducle";
     public static final String flower_idle = "flower_idle.scml";
+    public static final String CLASS = "class";
 
 
     //true when was presented in showcase
@@ -45,11 +46,11 @@ public class VanityComponent extends ShopItem implements Component {
     public PetComponent pet;
 
     public VanityComponent() {
-        currencyType = CurrencyType.SOFT;
+        currencyType = SOFT;
     }
 
     public VanityComponent(SaveMngr.VanityJson vc) {
-        currencyType = CurrencyType.SOFT;
+        currencyType = SOFT;
         this.shopIcon = vc.shopIcon;
         this.name = vc.name;
         this.cost = vc.cost;
@@ -76,7 +77,7 @@ public class VanityComponent extends ShopItem implements Component {
             for (Map.Entry entry : assetsToChange.entrySet()) {
 //                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
 //                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
-                if (!entry.getKey().equals("class")) {
+                if (!entry.getKey().equals(CLASS)) {
                     Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
                 }
             }
@@ -107,7 +108,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            if (!entry.getKey().equals("class")) {
+            if (!entry.getKey().equals(CLASS)) {
                 Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX)
                         .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
                                 + DEFAULT + TYPE_SUFFIX).readBytes(), false);

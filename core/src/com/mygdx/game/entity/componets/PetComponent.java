@@ -41,11 +41,11 @@ public class PetComponent extends ShopItem implements Component {
 
     public PetComponent() {
         init();
-        currencyType = CurrencyType.HARD;
+        currencyType = HARD;
     }
 
     public PetComponent(SaveMngr.PetJson pet) {
-        currencyType = CurrencyType.HARD;
+        currencyType = HARD;
         this.name = pet.name;
         this.enabled = pet.activated;
         this.bought = pet.bought;

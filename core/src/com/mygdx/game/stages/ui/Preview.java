@@ -16,8 +16,8 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.HARD;
-import static com.mygdx.game.entity.componets.ShopItem.CurrencyType.SOFT;
+import static com.mygdx.game.entity.componets.ShopItem.HARD;
+import static com.mygdx.game.entity.componets.ShopItem.SOFT;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ShopScreenScript.*;
 import static com.mygdx.game.utils.EffectUtils.getTouchCoordinates;

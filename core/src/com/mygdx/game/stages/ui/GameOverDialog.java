@@ -145,6 +145,7 @@ public class GameOverDialog {
                     isGameOver = true;
                 } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     isGameOver = false;
+                    gameScript.resetPauseDialog();
                     gameScript.stage.initResult();
                 }
             }

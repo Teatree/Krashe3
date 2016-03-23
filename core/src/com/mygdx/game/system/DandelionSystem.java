@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.DandelionComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.UmbrellaComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -39,19 +40,18 @@ public class DandelionSystem extends IteratingSystem {
     //Use to check if Animation finished in BTN_NORMAL mode
     //Should be set to 0 when current animation finished
     private float stateTime;
-
-    private boolean canPlayAnimation = true;
     private ItemWrapper gameItem;
 
-    public DandelionSystem(ItemWrapper gameItem) {
+    private boolean canPlayAnimation = true;
+
+    public DandelionSystem(GameScreenScript gameScript) {
         super(Family.all(DandelionComponent.class).get());
-        this.gameItem = gameItem;
+        this.gameItem = gameScript.gameItem;
     }
 
     private void spawnUmbrella(float x, float y){
 
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
-
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = x;
         transformComponent.y = y;

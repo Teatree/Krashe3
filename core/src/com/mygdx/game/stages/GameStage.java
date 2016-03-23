@@ -36,6 +36,7 @@ public class GameStage extends Stage {
     public static boolean justCreated;
 
     public static GameScreenScript gameScript;
+
     private ResultScreenScript resultScript;
     private ShopScreenScript shopScript;
     private MenuScreenScript menuScript;

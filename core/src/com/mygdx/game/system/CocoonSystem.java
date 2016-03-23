@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entity.componets.ButterflyComponent;
 import com.mygdx.game.entity.componets.CocoonComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -23,15 +24,17 @@ import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 public class CocoonSystem extends IteratingSystem {
 
     public static final String BUTTERFLY_ANI = "butterfly";
+
     FlowerPublicComponent fcc;
-    Entity butterflyEntity;
+    ItemWrapper gameItem;
+
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
     private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SpriterComponent sc = new SpriterComponent();
 
-    public CocoonSystem(ItemWrapper gameItem) {
+    public CocoonSystem(GameScreenScript gameScript) {
         super(Family.all(CocoonComponent.class).get());
-        butterflyEntity = gameItem.getChild(BUTTERFLY_ANI).getEntity();
+        this.gameItem = gameScript.gameItem;
     }
 
     @Override
@@ -87,7 +90,6 @@ public class CocoonSystem extends IteratingSystem {
             }
 
             if (cc.state.equals(DEAD)) {
-//                GameStage.sceneLoader.getEngine().removeEntity(entity);
                 sc.player.setAnimation(3);
                 if (isAnimationFinished()) {
                     entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
@@ -128,7 +130,7 @@ public class CocoonSystem extends IteratingSystem {
     }
 
     private void spawnButterfly() {
-
+        Entity butterflyEntity = gameItem.getChild(BUTTERFLY_ANI).getEntity();
         TransformComponent tc = butterflyEntity.getComponent(TransformComponent.class);
         tc.x = 700;
         tc.y = 750;
