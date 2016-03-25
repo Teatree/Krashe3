@@ -328,12 +328,10 @@ public class GameScreenScript implements IScript {
                 }
             }
 
-            if (gameOverDialog != null) {
-                gameOverDialog.update(delta);
-                pauseDialog.update();
-                giftScreen.update();
-                goalFeedbackScreen.update();
-            }
+            gameOverDialog.update(delta);
+            pauseDialog.update();
+            giftScreen.update();
+            goalFeedbackScreen.update();
         }
     }
 

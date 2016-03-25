@@ -30,15 +30,20 @@ public class GoalFeedbackScreen {
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
+    public static final int GOAL_STEP_Y = 110;
+    public static final int GOAL_INIT_POS_X = 381;
+    public static final float GOAL_SCALE = 0.75f;
+    public static final int DELAY_ON_ANIMATION = 5000;
+    public static final int GOAL_INIT_POS_Y = 556;
     public static boolean shouldShow;
 
-    private static List<Entity> tiles;
+    private List<Entity> tiles;
     public boolean isAniPlaying;
     public int aniPlayingIndex;
     public boolean isGoalFeedbackOpen;
     public List<SpriterComponent> tilesScs = new ArrayList<>();
     private ItemWrapper gameItem;
-    private Entity pauseDialog;
+    private Entity feedbackEntity;
 
 
     public GoalFeedbackScreen(ItemWrapper gameItem) {
@@ -53,49 +58,50 @@ public class GoalFeedbackScreen {
     }
 
     public void init() {
-        pauseDialog = gameItem.getChild(GOALFEEDBACK).getEntity();
+        if (tiles != null) {
+            for (Entity tile : tiles) {
+                tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+                sceneLoader.getEngine().removeEntity(tile);
+            }
+        }
+        tiles = new ArrayList<>();
+        feedbackEntity = gameItem.getChild(GOALFEEDBACK).getEntity();
 
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = GlobalConstants.FAR_FAR_AWAY_X;
-        dialogTc.y = GlobalConstants.FAR_FAR_AWAY_Y;
+        feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
     }
 
     public void show() {
         shouldShow = false;
-        final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
-        dialogTc.x = POS_X;
-        dialogTc.y = POS_Y;
+        feedbackEntity.getComponent(TransformComponent.class).x = POS_X;
+        feedbackEntity.getComponent(TransformComponent.class).y = POS_Y;
+        feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
 
         final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + GameStage.gameScript.fpc.level.name + " \n ");
 
         if (tiles == null || tiles.isEmpty() || !isPause) {
-            int y = 416;
+            int y = GOAL_INIT_POS_Y;
             for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
                 tiles.add(createGoalTile(g, y));
-                y -= 130;
+                y -= GOAL_STEP_Y;
             }
         }
-//        isPause = true;
         isGoalFeedbackOpen = true;
     }
 
     private Entity createGoalTile(Goal goal, int y) {
         CompositeItemVO tempC;
-//        if (goal.achieved){
         tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
-//        }
 
         final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
         sceneLoader.getEngine().addEntity(tile);
 
-        TransformComponent tc = new TransformComponent();
-        tc.x = POS_X + 61;
-        tc.y = y;
-
-        tile.add(tc);
+        tile.getComponent(TransformComponent.class).x = POS_X + GOAL_INIT_POS_X;
+        tile.getComponent(TransformComponent.class).y = y;
+        tile.getComponent(TransformComponent.class).scaleY = GOAL_SCALE;
 
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         for (Entity e : nc.children) {
@@ -106,16 +112,15 @@ public class GoalFeedbackScreen {
             }
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
             if (sc != null) {
-                sc.scale = 0.8f;
+                sc.scale = GOAL_SCALE;
                 if (goal.achieved) {
                     if (goal.justAchieved) {
                         ActionComponent ac = new ActionComponent();
                         Actions.checkInit();
-                        ac.dataArray.add(Actions.delay(5000));
+                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
                         tile.add(ac);
 
                         sc.player.speed = 0;
-//                        goal.justAchieved = false;
                     } else {
                         sc.player.setTime(sc.player.getAnimation().length);
                         sc.player.speed = 0;
@@ -126,20 +131,13 @@ public class GoalFeedbackScreen {
                 }
                 tilesScs.add(sc);
             }
-//            } else if (e.getComponent(MainItemComponent.class).tags.contains(STAR_TAG)){
-//                e.getComponent(TransformComponent.class).scaleX = 0.2f;
-//                e.getComponent(TransformComponent.class).scaleY = 0.2f;
-//                e.getComponent(TransformComponent.class).x = -70;
-//                e.getComponent(TransformComponent.class).y = -60;
-//                e.getComponent(ZIndexComponent.class).setZIndex(140);
-//            }
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
     }
 
     public void update() {
-        fade(pauseDialog, isGoalFeedbackOpen);
+        fade(feedbackEntity, isGoalFeedbackOpen);
         int i = 0;
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
@@ -152,7 +150,6 @@ public class GoalFeedbackScreen {
                     tilesScs.get(i).player.getAnimation().length - 20) {
                 tilesScs.get(i).player.speed = 0;
                 tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length - 20);
-//                isAniPlaying = false;
             }
             i++;
         }
@@ -164,10 +161,16 @@ public class GoalFeedbackScreen {
         if (Gdx.input.justTouched() && isGoalFeedbackOpen) {
             if (GameStage.gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
+                isGoalFeedbackOpen = false;
             } else {
-                GameStage.gameScript.stage.initResult();
+                if (GameStage.gameScript.giftScreen.isGiftScreenOpen){
+                    GameStage.gameScript.giftScreen.isGiftScreenOpen = false;
+                    GameStage.gameScript.giftScreen.hide();
+                } else {
+                    GameStage.gameScript.stage.initResult();
+                    isGoalFeedbackOpen = false;
+                }
             }
-            isGoalFeedbackOpen = false;
         }
     }
 }

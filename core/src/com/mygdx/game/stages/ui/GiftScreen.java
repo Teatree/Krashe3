@@ -103,18 +103,22 @@ public class GiftScreen {
         isGiftScreenOpen = true;
     }
 
+    public void hide (){
+        giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+    }
     public void update() {
         if (pinataHitCounter <= 0) {
             pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            gift.takeGift(GameStage.gameScript.fpc);
             Entity lbl = gameItem.getChild(GIFT_SCREEN).getChild(LBL_GIFT_SCREEN).getEntity();
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT " + gift.money + " " + gift.type + " !!!");
             if (Gdx.input.justTouched() && isGameOver) {
-                isGameOver = false;
-                isGiftScreenOpen = false;
-                GameStage.gameScript.stage.initResult();
+                gift.takeGift(GameStage.gameScript.fpc);
+                giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                GameStage.gameScript.goalFeedbackScreen.init();
+                GameStage.gameScript.goalFeedbackScreen.show();
             }
         }
         fade(giftScreen, true);

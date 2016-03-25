@@ -47,7 +47,7 @@ public class EffectUtils {
 
         if (!isPause && tcp.color.a <= 0) {
             TransformComponent dialogTc = entity.getComponent(TransformComponent.class);
-            dialogTc.x = -1000;
+            dialogTc.x = GlobalConstants.FAR_FAR_AWAY_X;
         }
     }
 

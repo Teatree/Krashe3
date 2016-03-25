@@ -143,7 +143,7 @@ public class GameOverDialog {
                 if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     gameScript.goalFeedbackScreen.show();
                     isGameOver = true;
-                } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
+                } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen && !gameScript.giftScreen.isGiftScreenOpen) {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
                     gameScript.stage.initResult();
