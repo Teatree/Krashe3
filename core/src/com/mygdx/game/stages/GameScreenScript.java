@@ -114,8 +114,6 @@ public class GameScreenScript implements IScript {
         System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
                 Gdx.app.getNativeHeap());
 
-        ResultScreenScript.showCaseVanity = null;
-
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
         cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;

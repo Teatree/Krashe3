@@ -78,7 +78,6 @@ public class Showcase {
                 tcItem = null;
             }
             tcShowCase.x = FAR_FAR_AWAY_X;
-            showCaseVanity = null;
         }
     }
 
@@ -142,6 +141,7 @@ public class Showcase {
             public void clicked() {
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
+//                showCaseVanity = null;
             }
         });
     }
@@ -168,6 +168,7 @@ public class Showcase {
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
+//                showCaseVanity = null;
             }
         });
     }

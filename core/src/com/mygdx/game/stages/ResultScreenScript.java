@@ -48,7 +48,7 @@ public class ResultScreenScript implements IScript {
     LabelComponent earnedLabel;
 
     boolean showcasePopup;
-    long nextVanityCost;
+    static long nextVanityCost;
     int i = 0;
     int j = 0;
     Entity backPlay;
@@ -93,14 +93,14 @@ public class ResultScreenScript implements IScript {
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), TOTAL + String.valueOf(GameStage.gameScript.fpc.totalScore));
-        setProgressBar();
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
 
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(GameStage.gameScript.fpc.bestScore));
 
-        long need = getNeedForNextItem();
+        long need = nextVanityCost == 0 ? getNeedForNextItem() : nextVanityCost;
+        setProgressBar();
 
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
         if (need > 0) {
@@ -111,7 +111,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private long getNeedForNextItem() {
-        nextVanityCost = 0;
+//        nextVanityCost = 0;
         VanityComponent tempVc = null;
         for (VanityComponent vc : GameStage.gameScript.fpc.vanities) {
             if (!vc.advertised) {
@@ -119,6 +119,7 @@ public class ResultScreenScript implements IScript {
                     nextVanityCost = vc.cost;
                     break;
                 } else {
+                    nextVanityCost = 0;
                     tempVc = vc;
                 }
             }
@@ -280,7 +281,8 @@ public class ResultScreenScript implements IScript {
 
     private void setProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        long scoreDiff = GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score;
+        long vanityCostTemp = showCaseVanity != null ? showCaseVanity.cost : nextVanityCost;
+        long scoreDiff = (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/vanityCostTemp;
         if (scoreDiff < 0) {
             dcProgressBar.width = 0;
         } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
@@ -303,6 +305,7 @@ public class ResultScreenScript implements IScript {
     private void initShowcase() {
         if (!show && GameStage.gameScript.fpc.score > 0) {
             showcase.initShowCase();
+            txtNeedE.getComponent(LabelComponent.class).text.replace(0,txtNeedE.getComponent(LabelComponent.class).text.length,"");
         }
     }
 
