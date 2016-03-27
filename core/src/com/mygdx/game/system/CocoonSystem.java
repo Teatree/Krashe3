@@ -20,6 +20,7 @@ import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.game.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
+import static com.mygdx.game.utils.GlobalConstants.FPS;
 
 public class CocoonSystem extends IteratingSystem {
 
@@ -57,6 +58,8 @@ public class CocoonSystem extends IteratingSystem {
                 hit(cc);
             }
 
+        }else{
+            sc.player.speed = 0;
         }
     }
 
@@ -109,7 +112,9 @@ public class CocoonSystem extends IteratingSystem {
             cc.state = HIT;
 //            cc.hitCounter+=1;
             cc.canHit = true;
-            sc.player.speed = 24;
+            if(!isPause && !isGameOver) {
+                sc.player.speed = 24;
+            }
             sc.player.setAnimation(cc.hitCounter++);
         }
     }

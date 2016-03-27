@@ -77,7 +77,7 @@ public class ShopScreenScript implements IScript {
         lc = scoreLbl.getComponent(LabelComponent.class);
         touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
-        createIconsForAllShopIcons();
+        createIconsForAllShopItems();
         bagPosId = 0;
         isPreviewOn = false;
     }
@@ -110,7 +110,7 @@ public class ShopScreenScript implements IScript {
         Collections.reverse(allShopItems);
     }
 
-    private void createIconsForAllShopIcons() {
+    private void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_SHOP_ICON_LIB).clone();

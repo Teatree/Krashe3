@@ -25,17 +25,29 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     InterstitialAd interstitialVideoAd;
     InterstitialAd interstitialGeneralAd;
 
+    private Main game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        game = new Main(this);
+
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        View gameView = initializeForView(new Main(this), config);
+        View gameView = initializeForView(game, config);
         setupAds();
 
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         setContentView(layout);
+
+        //===== detect operating system and Configure platform dependent code ==========================
+        if(game.getAppStore() == Main.APPSTORE_GOOGLE) {
+            Main.setPlatformResolver(new GooglePlayResolver(game));
+        }
+
+        game.getPlatformResolver().installIAP();
     }
 
     public void setupAds() {

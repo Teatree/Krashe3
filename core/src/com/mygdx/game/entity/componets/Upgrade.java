@@ -1,6 +1,7 @@
 package com.mygdx.game.entity.componets;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Main;
 import com.mygdx.game.utils.SaveMngr;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class Upgrade extends ShopItem{
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
+        phoenix.transactionId = Main.phoenix_trans_ID;
         return phoenix;
     }
 
@@ -56,6 +58,7 @@ public class Upgrade extends ShopItem{
         bjd.description = "more juice \\0/";
         bjd.enabled = false;
         bjd.currencyType = HARD;
+        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }
 

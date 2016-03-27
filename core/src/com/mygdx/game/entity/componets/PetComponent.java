@@ -16,12 +16,6 @@ public class PetComponent extends ShopItem implements Component {
     public static final int Y_SPAWN_POSITION_MAX = 568;
     public static final int Y_SPAWN_POSITION_MIN = 370;
 
-    public static final String CHARGING_ANI = "dash";
-    public static final String IDLE_ANI = "idle";
-    public static final String SPAWN_ANI = "spawn";
-    public static final String TACK_ANI = "tapped";
-    public static final String EAt_ANI = "bite";
-
     public State state;
     public Rectangle boundsRect;
     public float velocity;
@@ -57,6 +51,7 @@ public class PetComponent extends ShopItem implements Component {
         this.shopIcon = pet.shopIcon;
         this.tryPeriodTimer = pet.tryPeriodTimer;
         this.tryPeriodStart = pet.tryPeriodStart;
+        this.transactionId = pet.transactionId;
         init();
     }
 

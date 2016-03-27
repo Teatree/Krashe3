@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -53,7 +54,8 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                GameStage.gameScript.fpc.settings.noAds = true;
+                Main.getPlatformResolver().requestPurchase(Main.no_ads_trans_ID);
+//                GameStage.gameScript.fpc.settings.noAds = true;
             }
         });
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {

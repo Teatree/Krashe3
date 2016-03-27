@@ -10,6 +10,8 @@ public abstract class ShopItem {
     public String description;
     public String currencyType;
 
+    public String transactionId;
+
     //true when was bought (could be not applied)
     public boolean bought;
     //true when is applied now

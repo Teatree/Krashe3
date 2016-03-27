@@ -9,7 +9,11 @@ import com.mygdx.game.entity.componets.FlowerComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.Upgrade;
 import com.mygdx.game.stages.GameScreenScript;
+import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.utils.EffectUtils;
 import com.mygdx.game.utils.SoundMgr;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -17,6 +21,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.game.entity.componets.FlowerComponent.*;
 import static com.mygdx.game.entity.componets.FlowerComponent.State.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FPS;
 import static com.mygdx.game.utils.SoundMgr.soundMgr;
 
@@ -71,14 +76,15 @@ public class FlowerSystem extends IteratingSystem {
                     setIdleAnimation(sc);
                 }
             }
-            if (Gdx.input.justTouched() && state.equals(IDLE)) {
+            if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord(fcc)) {
                 state = TRANSITION;
             }
 
-            if (Gdx.input.justTouched()
+            if (Gdx.input.isTouched()
                     && !state.equals(TRANSITION)
-                    && !state.equals(ATTACK)) {
+                    && !state.equals(ATTACK) && canAttackCoord(fcc)) {
                 state = ATTACK;
+
                 setAttackAnimation(sc);
             }
 
@@ -93,7 +99,7 @@ public class FlowerSystem extends IteratingSystem {
             if (state.equals(TRANSITION_BACK)) {
                 setTransitionBackAnimation(sc);
 
-                if (Gdx.input.justTouched()) {  // This is added for quick breaking of an animation
+                if (Gdx.input.isTouched() && canAttackCoord(fcc)) {  // This is added for quick breaking of an animation
                     setAttackAnimation(sc);
                     state = ATTACK;
                 }
@@ -105,6 +111,7 @@ public class FlowerSystem extends IteratingSystem {
             }
 
             if (state.equals(ATTACK) || state.equals(RETREAT)) {
+
                 if (fcc.isCollision) {
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
@@ -115,6 +122,7 @@ public class FlowerSystem extends IteratingSystem {
                     move(tc, delta);
                     if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK)) {
                         state = RETREAT;
+                        hideTutorialLine();
                     }
                     if (tc.y <= FLOWER_Y_POS + FLOWER_MOVE_SPEED * delta * FPS && state.equals(RETREAT)) {
                         tc.y = FLOWER_Y_POS;
@@ -156,6 +164,19 @@ public class FlowerSystem extends IteratingSystem {
             }
         } else {
             sc.player.speed = 0;
+        }
+    }
+
+    private boolean canAttackCoord(FlowerPublicComponent fcc) {
+        return (fcc.currentPet == null || !fcc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                && !GameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates());
+    }
+
+    private void hideTutorialLine() {
+        if(GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a > 0.3f){
+            GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a -= 0.3f;
+        }else{
+            GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 

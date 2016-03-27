@@ -7,9 +7,17 @@ import com.mygdx.game.Main;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+
+		Main game = new Main(null);
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1200;
 		config.height = 800;
-		new LwjglApplication(new Main(null), config);
+
+		// Configure platform dependent code
+		DesktopResolver res = new DesktopResolver(game);
+		Main.setPlatformResolver(res);
+
+		new LwjglApplication(game, config);
 	}
 }

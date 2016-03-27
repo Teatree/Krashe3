@@ -47,13 +47,13 @@ public class GoalFeedbackScreen {
 
 
     public GoalFeedbackScreen(ItemWrapper gameItem) {
-        if (tiles != null) {
-            for (Entity tile : tiles) {
-                tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-                sceneLoader.getEngine().removeEntity(tile);
-            }
-        }
-        tiles = new ArrayList<>();
+//        if (tiles != null) {
+//            for (Entity tile : tiles) {
+//                tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//                sceneLoader.getEngine().removeEntity(tile);
+//            }
+//        }
+//        tiles = new ArrayList<>();
         this.gameItem = gameItem;
     }
 

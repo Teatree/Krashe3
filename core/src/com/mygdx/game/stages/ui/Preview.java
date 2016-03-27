@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.stages.GameStage;
@@ -289,7 +290,11 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.apply(GameStage.gameScript.fpc);
+                        if (vc.currencyType != HARD) {
+                            vc.apply(GameStage.gameScript.fpc);
+                        } else {
+                            Main.getPlatformResolver().requestPurchase(vc.transactionId);
+                        }
                         showPreview(vc, false, false);
                     }
                 }

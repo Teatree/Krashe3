@@ -78,6 +78,7 @@ public class Showcase {
                 tcItem = null;
             }
             tcShowCase.x = FAR_FAR_AWAY_X;
+            showCaseVanity = null;
         }
     }
 

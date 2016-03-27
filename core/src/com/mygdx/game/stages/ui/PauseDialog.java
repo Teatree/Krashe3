@@ -3,9 +3,7 @@ package com.mygdx.game.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.stages.GameStage;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -26,6 +24,7 @@ public class PauseDialog {
     public static final String LBL_DIALOG = "lbl_dialog";
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
+    public static final String LIB_SHADOW = "lib_shadow";
 
     public static final int PAUSE_Y = 30;
     public static final int PAUSE_X = 300;
@@ -37,14 +36,16 @@ public class PauseDialog {
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
     private Entity pauseDialog;
+    private Entity shadowE;
 
     public PauseDialog(ItemWrapper gameItem) {
 //        if (tiles != null) {
-//            for (Entity tile : tiles.values()) {
+//            for (Entitytile : tiles.values()) {
 //                tile.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //                sceneLoader.getEngine().removeEntity(tile);
 //            }
 //        }
+
         tiles = new HashMap<>();
         this.gameItem = gameItem;
     }
@@ -52,6 +53,17 @@ public class PauseDialog {
     public void init() {
         pauseDialog = gameItem.getChild(PAUSE_DIALOG).getEntity();
         Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
+
+        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
+
+        if(shadowE == null) {
+            shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(shadowE);
+        }else{
+            GameStage.sceneLoader.getEngine().removeEntity(shadowE);
+        }
+
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
@@ -78,6 +90,11 @@ public class PauseDialog {
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = PAUSE_X;
         dialogTc.y = PAUSE_Y;
+
+        shadowE.getComponent(TransformComponent.class).x = 0;
+        shadowE.getComponent(TransformComponent.class).y = 0;
+
+        shadowE.getComponent(ZIndexComponent.class).setZIndex(49);
 
         final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
@@ -139,6 +156,7 @@ public class PauseDialog {
 
     public void update() {
         fade(pauseDialog, isPause);
+        fade(shadowE, isPause);
         for (Entity tile : tiles.values()) {
             fade(tile, isPause);
         }

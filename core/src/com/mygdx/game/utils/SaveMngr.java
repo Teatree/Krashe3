@@ -3,6 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
 
 import java.util.*;
@@ -93,7 +94,8 @@ public class SaveMngr {
                 }
             }
             fc.currentPet = petComponent;
-            dummyUpgrade(fc);
+//            dummyUpgrade(fc);
+            dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
         }
@@ -104,6 +106,7 @@ public class SaveMngr {
     private static void dummyPet(FlowerPublicComponent fc) {
         fc.currentPet = fc.pets.get(0);
         fc.currentPet.tryPeriod = true;
+        fc.currentPet.enabled = true;
         fc.currentPet.tryPeriodDuration = 2 * 60;
         fc.currentPet.tryPeriodStart = System.currentTimeMillis();
     }
@@ -291,14 +294,11 @@ public class SaveMngr {
     public static void generatePetsJson() {
         PetJson dummyPet = new PetJson();
 
-//        dummyPet.activated = true;
-//        dummyPet.bought = true;
-
         dummyPet.name = "pet";
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
-        dummyPet.shopIcon = "btn_back_GUI_lib";
+        dummyPet.transactionId = Main.pet_bird_trans_ID;
 
         ArrayList<PetJson> allPets = new ArrayList<PetJson>();
         allPets.add(dummyPet);
@@ -336,7 +336,6 @@ public class SaveMngr {
         levels.add(l3);
 
         writeFile(LEVELS_JSON, new Json().toJson(levels));
-
     }
 
     public static List<LevelInfo> initAllLevels() {
@@ -352,9 +351,7 @@ public class SaveMngr {
         public float difficultyMultiplier;
         public String type;
 
-        public LevelInfo() {
-
-        }
+        public LevelInfo() {}
     }
 
     private static class GameStats {
@@ -451,6 +448,7 @@ public class SaveMngr {
         public String shopIcon;
         public long tryPeriodTimer;
         public long tryPeriodStart;
+        public String transactionId;
 
         public PetJson() {
         }
@@ -468,6 +466,7 @@ public class SaveMngr {
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.tryPeriodTimer = petComponent.tryPeriodTimer;
             this.tryPeriodStart = petComponent.tryPeriodStart;
+            this.transactionId = petComponent.transactionId;
         }
     }
 }

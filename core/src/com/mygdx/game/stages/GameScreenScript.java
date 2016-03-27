@@ -11,6 +11,7 @@ import com.mygdx.game.stages.ui.PauseDialog;
 import com.mygdx.game.system.*;
 import com.mygdx.game.utils.CameraShaker;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -24,6 +25,7 @@ import java.util.Random;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.*;
 import static com.mygdx.game.stages.GameStage.sceneLoader;
+import static com.mygdx.game.stages.GameStage.gameScript;
 import static com.mygdx.game.stages.ShopScreenScript.allShopItems;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
@@ -57,6 +59,7 @@ public class GameScreenScript implements IScript {
     public ItemWrapper gameItem;
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
+    public Entity pauseBtn;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -70,24 +73,26 @@ public class GameScreenScript implements IScript {
 
     public static void checkTryPeriod() {
         long now = System.currentTimeMillis();
-        if (GameStage.gameScript.fpc.currentPet != null && GameStage.gameScript.fpc.currentPet.tryPeriod) {
-            if (now - GameStage.gameScript.fpc.currentPet.tryPeriodStart >= GameStage.gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
-                GameStage.gameScript.fpc.currentPet.enabled = false;
-                GameStage.gameScript.fpc.currentPet.bought = false;
-                GameStage.gameScript.fpc.currentPet.tryPeriod = false;
+        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
+            if (now - gameScript.fpc.currentPet.tryPeriodStart >= gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
+                gameScript.fpc.currentPet.enabled = false;
+                gameScript.fpc.currentPet.bought = false;
+                gameScript.fpc.currentPet.tryPeriod = false;
+                gameScript.fpc.currentPet.disable(gameScript.fpc);
 
-                if (allShopItems.indexOf(GameStage.gameScript.fpc.currentPet) >= 0) {
-                    allShopItems.get(allShopItems.indexOf(GameStage.gameScript.fpc.currentPet)).bought = false;
-                    allShopItems.get(allShopItems.indexOf(GameStage.gameScript.fpc.currentPet)).enabled = false;
+                if (allShopItems.indexOf(gameScript.fpc.currentPet) >= 0) {
+                    allShopItems.get(allShopItems.indexOf(gameScript.fpc.currentPet)).bought = false;
+                    allShopItems.get(allShopItems.indexOf(gameScript.fpc.currentPet)).enabled = false;
                 }
             }
         }
-        if (GameStage.gameScript.fpc.upgrades != null && !GameStage.gameScript.fpc.upgrades.isEmpty()) {
-            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
+        if (gameScript.fpc.upgrades != null && !gameScript.fpc.upgrades.isEmpty()) {
+            for (Upgrade u : gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod && now - u.tryPeriodStart >= u.tryPeriodDuration * 1000) {
                     u.enabled = false;
                     u.bought = false;
                     u.tryPeriod = false;
+                    u.disable(gameScript.fpc);
 
                     if (allShopItems.indexOf(u) >= 0) {
                         allShopItems.get(allShopItems.indexOf(u)).bought = false;
@@ -99,7 +104,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
-        GameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(GameStage.gameScript.fpc);
+        gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(gameScript.fpc);
     }
 
     @Override
@@ -134,13 +139,15 @@ public class GameScreenScript implements IScript {
 
         pauseDialog = new PauseDialog(gameItem);
 
-        GameStage.gameScript.fpc.level.updateLevel();
+        gameScript.fpc.level.updateLevel();
         pauseDialog.init();
 
         giftScreen = new GiftScreen(gameItem);
         giftScreen.init();
 
-        goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
+        if (goalFeedbackScreen == null) {
+            goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
+        }
         goalFeedbackScreen.init();
 
         checkTryPeriod();
@@ -156,13 +163,15 @@ public class GameScreenScript implements IScript {
     }
 
     private void initDoubleBJIcon() {
-        if (GameStage.gameScript.fpc.haveBugJuiceDouble()) {
-            Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
+        Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
+        if (gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
             tc.scaleX = 0.6f;
             tc.scaleY = 0.6f;
             tc.x = 953;
             tc.y = 647;
+        } else {
+            bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -230,7 +239,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initPauseBtn() {
-        final Entity pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
+        pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
 
         pauseBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
         pauseBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
@@ -252,13 +261,15 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                pauseDialog.show();
+                if(!isGameOver) {
+                    pauseDialog.show();
+                }
             }
         });
     }
 
     private void initFlower() {
-        GameStage.gameScript.fpc.score = 0;
+        gameScript.fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
@@ -269,13 +280,15 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
 
+        gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a = 0.7f;
+        gameItem.getChild("tutorial_line").getEntity().getComponent(TransformComponent.class).x = 975;
+
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
     }
 
     public void initPet() {
         if (fpc.currentPet != null
-                && fpc.currentPet.bought
                 && fpc.currentPet.enabled) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             TransformComponent tc = pet.getComponent(TransformComponent.class);

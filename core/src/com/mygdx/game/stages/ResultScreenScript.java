@@ -123,7 +123,7 @@ public class ResultScreenScript implements IScript {
                 }
             }
         }
-        if (tempVc != null) {
+        if (tempVc != null && showCaseVanity == null) {
             showCaseVanity = tempVc;
             showCaseVanity.advertised = true;
             nextVanityCost = showCaseVanity.cost;
