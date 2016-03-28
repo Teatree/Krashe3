@@ -48,7 +48,8 @@ public class ResultScreenScript implements IScript {
     LabelComponent earnedLabel;
 
     boolean showcasePopup;
-    static long nextVanityCost;
+//    static long nextVanityCost;
+    long need;
     int i = 0;
     int j = 0;
     Entity backPlay;
@@ -99,7 +100,12 @@ public class ResultScreenScript implements IScript {
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(GameStage.gameScript.fpc.bestScore));
 
-        long need = nextVanityCost == 0 ? getNeedForNextItem() : nextVanityCost;
+//        long need = nextVanityCost == 0 ? getNeedForNextItem() : nextVanityCost;
+        if (showCaseVanity == null && !isWasShowcase) {
+            getNeedForNextItem();
+            isWasShowcase = false;
+        }
+        need = showCaseVanity.cost - GameStage.gameScript.fpc.totalScore;
         setProgressBar();
 
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
@@ -115,21 +121,23 @@ public class ResultScreenScript implements IScript {
         VanityComponent tempVc = null;
         for (VanityComponent vc : GameStage.gameScript.fpc.vanities) {
             if (!vc.advertised) {
-                if (vc.cost > GameStage.gameScript.fpc.totalScore) {
-                    nextVanityCost = vc.cost;
+                if (vc.cost >= GameStage.gameScript.fpc.totalScore) {
+                    showCaseVanity = vc;
+//                    nextVanityCost = vc.cost;
                     break;
                 } else {
-                    nextVanityCost = 0;
+                    showCaseVanity = vc;
+//                    nextVanityCost = 0;
                     tempVc = vc;
                 }
             }
         }
-        if (tempVc != null && showCaseVanity == null) {
-            showCaseVanity = tempVc;
-            showCaseVanity.advertised = true;
-            nextVanityCost = showCaseVanity.cost;
-        }
-        return nextVanityCost - GameStage.gameScript.fpc.totalScore;
+//        if (tempVc != null && showCaseVanity == null) {
+//            showCaseVanity = tempVc;
+//            showCaseVanity.advertised = true;
+//            nextVanityCost = showCaseVanity.cost;
+//        }
+        return showCaseVanity.cost - GameStage.gameScript.fpc.totalScore;
     }
 
     private void initBackButton() {
@@ -242,7 +250,8 @@ public class ResultScreenScript implements IScript {
             }
         } else {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(GameStage.gameScript.fpc.score));
-            progressBarE.getComponent(DimensionsComponent.class).width = getProgressBarActualLength();
+            progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
+            txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
         }
         showcase.showFading();
     }
@@ -254,13 +263,13 @@ public class ResultScreenScript implements IScript {
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
-            if (!show && showCaseVanity != null) {
+            if (!show && showCaseVanity!= null && showCaseVanity.cost <= GameStage.gameScript.fpc.totalScore) {
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
                 setProgressBar();
             }
             if (!show && GameStage.gameScript.fpc.totalScore < PERCENTS_TO_OFFER_AD
-                    && GameStage.gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * nextVanityCost
+                    && GameStage.gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need
                     && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
             }
@@ -274,15 +283,14 @@ public class ResultScreenScript implements IScript {
     }
 
     private float getProgressBarActualLength() {
-        return GameStage.gameScript.fpc.totalScore < nextVanityCost ?
-                ((float) GameStage.gameScript.fpc.totalScore / (float) nextVanityCost) * 100 * 6.9f :
+        return GameStage.gameScript.fpc.totalScore < showCaseVanity.cost ?
+                ((float) GameStage.gameScript.fpc.totalScore / (float) showCaseVanity.cost) * 100 * 6.9f :
                 MAX_PROGRESS_BAR_WIDTH;
     }
 
     private void setProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        long vanityCostTemp = showCaseVanity != null ? showCaseVanity.cost : nextVanityCost;
-        long scoreDiff = (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/vanityCostTemp;
+        long scoreDiff = (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/showCaseVanity.cost;
         if (scoreDiff < 0) {
             dcProgressBar.width = 0;
         } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
@@ -339,14 +347,14 @@ public class ResultScreenScript implements IScript {
                             @Override
                             public void run() {
                                 //give that money!
-                                GameStage.gameScript.fpc.totalScore = nextVanityCost;
+                                GameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
                                 adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                                 init(resultScreenItem.getEntity());
                             }
                         });
                     } else {
-                        GameStage.gameScript.fpc.score = nextVanityCost - GameStage.gameScript.fpc.totalScore;
-                        GameStage.gameScript.fpc.totalScore = nextVanityCost;
+                        GameStage.gameScript.fpc.score = showCaseVanity.cost - GameStage.gameScript.fpc.totalScore;
+                        GameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
 
                         adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                         init(resultScreenItem.getEntity());

@@ -141,7 +141,7 @@ public class Showcase {
             public void clicked() {
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
-//                showCaseVanity = null;
+                showCaseVanity = null;
             }
         });
     }
@@ -168,7 +168,7 @@ public class Showcase {
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
-//                showCaseVanity = null;
+                showCaseVanity = null;
             }
         });
     }

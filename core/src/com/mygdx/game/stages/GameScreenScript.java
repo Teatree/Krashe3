@@ -32,6 +32,7 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 public class GameScreenScript implements IScript {
 
     public static final CameraShaker cameraShaker = new CameraShaker();
+    public static final String TUTORIAL_LINE = "tutorial_line";
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
@@ -278,8 +279,8 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
 
-        gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a = 0.7f;
-        gameItem.getChild("tutorial_line").getEntity().getComponent(TransformComponent.class).x = 975;
+        gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0.7f;
+        gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TransformComponent.class).x = 975;
 
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
