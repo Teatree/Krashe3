@@ -266,7 +266,7 @@ public class ResultScreenScript implements IScript {
             if (!show && showCaseVanity!= null && showCaseVanity.cost <= GameStage.gameScript.fpc.totalScore) {
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
-                setProgressBar();
+//                setProgressBar();
             }
             if (!show && GameStage.gameScript.fpc.totalScore < PERCENTS_TO_OFFER_AD
                     && GameStage.gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need
@@ -311,6 +311,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void initShowcase() {
+        progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
         if (!show && GameStage.gameScript.fpc.score > 0) {
             showcase.initShowCase();
             txtNeedE.getComponent(LabelComponent.class).text.replace(0,txtNeedE.getComponent(LabelComponent.class).text.length,"");
