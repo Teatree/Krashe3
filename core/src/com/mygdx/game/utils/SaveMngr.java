@@ -37,6 +37,7 @@ public class SaveMngr {
             dgs.description = goal.description;
             dgs.n = goal.n;
             dgs.type = goal.type.toString();
+            dgs.justAchieved = goal.justAchieved;
             dgs.periodType = goal.periodType.toString();
             dgs.difficultyLevel = fc.level.difficultyLevel;
             if (goal.periodType.equals(Goal.PeriodType.TOTAL)) {

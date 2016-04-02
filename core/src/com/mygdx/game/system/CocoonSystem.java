@@ -115,7 +115,9 @@ public class CocoonSystem extends IteratingSystem {
             if(!isPause && !isGameOver) {
                 sc.player.speed = 24;
             }
-            sc.player.setAnimation(cc.hitCounter++);
+            if(cc.hitCounter<=3) {
+                sc.player.setAnimation(cc.hitCounter++);
+            }
         }
     }
 
