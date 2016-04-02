@@ -60,9 +60,9 @@ public class PauseDialog {
             shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(shadowE);
-        }else{
-            GameStage.sceneLoader.getEngine().removeEntity(shadowE);
         }
+        shadowE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        shadowE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
 
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
