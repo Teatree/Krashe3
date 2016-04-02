@@ -120,7 +120,7 @@ public class ResultScreenScript implements IScript {
 //        nextVanityCost = 0;
         VanityComponent tempVc = null;
         for (VanityComponent vc : GameStage.gameScript.fpc.vanities) {
-            if (!vc.advertised) {
+            if (!vc.bought) {
                 if (vc.cost >= GameStage.gameScript.fpc.totalScore) {
                     showCaseVanity = vc;
 //                    nextVanityCost = vc.cost;
@@ -277,7 +277,7 @@ public class ResultScreenScript implements IScript {
 
         if (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score < 0) {
             dcProgressBar.width = 0;
-        } else if (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score > MAX_PROGRESS_BAR_WIDTH) {
+        } else if ((GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
     }
