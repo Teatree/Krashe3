@@ -64,9 +64,9 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-        System.err.print("init shop ");
-        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-                Gdx.app.getNativeHeap());
+//        System.err.print("init shop ");
+//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+//                Gdx.app.getNativeHeap());
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);

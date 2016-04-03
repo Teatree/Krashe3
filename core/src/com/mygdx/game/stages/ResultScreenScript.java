@@ -65,9 +65,9 @@ public class ResultScreenScript implements IScript {
     @Override
     public void init(Entity item) {
 
-        System.err.print("init res ");
-        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-                Gdx.app.getNativeHeap());
+//        System.err.print("init res ");
+//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+//                Gdx.app.getNativeHeap());
 
         i = 0;
         j = 0;

@@ -38,7 +38,7 @@ public class GameStage extends Stage {
     public static GameScreenScript gameScript;
 
     private ResultScreenScript resultScript;
-    private ShopScreenScript shopScript;
+    public static ShopScreenScript shopScript;
     private MenuScreenScript menuScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
@@ -131,11 +131,13 @@ public class GameStage extends Stage {
     public void initShop() {
         sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        ShopScreenScript.isPreviewOn = false;
+//        if (Gdx.input.isTouched()) {
+//        }
         if (shopScript == null) {
             shopScript = new ShopScreenScript(this);
             root.addScript(shopScript);
         }
+        ShopScreenScript.isPreviewOn = false;
         GlobalConstants.CUR_SCREEN = SHOP;
     }
 

@@ -30,9 +30,9 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-        System.err.print("init menu ");
-        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-                Gdx.app.getNativeHeap());
+//        System.err.print("init menu ");
+//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+//                Gdx.app.getNativeHeap());
 
         menuItem = new ItemWrapper(item);
 

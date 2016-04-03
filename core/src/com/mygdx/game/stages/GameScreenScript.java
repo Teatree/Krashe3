@@ -110,10 +110,10 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-
-        System.err.print("init game ");
-        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-                Gdx.app.getNativeHeap());
+//
+//        System.err.print("init game ");
+//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
+//                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
         dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
@@ -147,7 +147,7 @@ public class GameScreenScript implements IScript {
         if (goalFeedbackScreen == null) {
             goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
         }
-        goalFeedbackScreen.init();
+        goalFeedbackScreen.init(false);
 
         checkTryPeriod();
     }

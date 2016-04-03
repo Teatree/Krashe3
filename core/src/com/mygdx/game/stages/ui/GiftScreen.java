@@ -117,8 +117,8 @@ public class GiftScreen {
             if (Gdx.input.justTouched() && isGameOver) {
                 gift.takeGift(GameStage.gameScript.fpc);
                 giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                GameStage.gameScript.goalFeedbackScreen.init();
-                GameStage.gameScript.goalFeedbackScreen.show();
+                GameStage.gameScript.goalFeedbackScreen.init(true);
+                GameStage.gameScript.goalFeedbackScreen.showNewLevel();
             }
         }
         fade(giftScreen, true);

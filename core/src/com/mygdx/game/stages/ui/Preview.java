@@ -257,7 +257,11 @@ public class Preview {
                         vc.buyAndUse(GameStage.gameScript.fpc);
                         showPreview(vc, false, true);
                         if (vc.currencyType.equals(SOFT)) {
-                            changeBagIcon(sceneLoader.loadVoFromLibrary(vc.shopIcon));
+                            changeBagIcon(vc);
+                            sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
+                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
+                            itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
                         }
                         ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
@@ -433,16 +437,13 @@ public class Preview {
         }
     }
 
-    private void changeBagIcon(CompositeItemVO tempItemC) {
+    public void changeBagIcon(ShopItem vc) {
         if (vc.currencyType.equals(SOFT)) {
+            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
             Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
-            sceneLoader.getEngine().addEntity(iconBagClone);
-            iconBagClone.getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
-            iconBagClone.getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
             sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
             itemIcons.put(vc.shopIcon, iconBagClone);
-            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(36);
         }
     }
 

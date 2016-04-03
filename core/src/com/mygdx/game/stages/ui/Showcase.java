@@ -168,6 +168,9 @@ public class Showcase {
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
+                if (GameStage.shopScript != null) {
+                    GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
+                }
                 showCaseVanity = null;
             }
         });

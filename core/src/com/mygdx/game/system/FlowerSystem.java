@@ -99,7 +99,7 @@ public class FlowerSystem extends IteratingSystem {
             if (state.equals(TRANSITION_BACK)) {
                 setTransitionBackAnimation(sc);
 
-                if (Gdx.input.isTouched() && canAttackCoord(fcc)) {  // This is added for quick breaking of an animation
+                if (Gdx.input.justTouched() && canAttackCoord(fcc)) {  // This is added for quick breaking of an animation
                     setAttackAnimation(sc);
                     state = ATTACK;
                 }
