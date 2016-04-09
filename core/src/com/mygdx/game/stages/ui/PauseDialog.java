@@ -1,6 +1,7 @@
 package com.mygdx.game.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.entity.componets.Goal;
 import com.mygdx.game.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
@@ -25,6 +26,7 @@ public class PauseDialog {
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LIB_SHADOW = "lib_shadow";
+    public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
 
     public static final int PAUSE_Y = 30;
     public static final int PAUSE_X = 300;
@@ -32,20 +34,20 @@ public class PauseDialog {
     public static final int GOAL_TILE_SPACE_X = 100;
     public static final float GOAL_TILE_SCALE = 0.7f;
     public static final int GOAL_TILE_STEP_Y = 110;
+    public static final int TAP_COOLDOWN = 30;
+    public static final int PAUSE_COUNT = 3;
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
     private Entity pauseDialog;
     private Entity shadowE;
 
-    public PauseDialog(ItemWrapper gameItem) {
-//        if (tiles != null) {
-//            for (Entitytile : tiles.values()) {
-//                tile.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//                sceneLoader.getEngine().removeEntity(tile);
-//            }
-//        }
+    private Entity lblPauseTimer;
+    public float pauseTimer = 0;
+    public int pauseCounter = 10;
+    private int tapCoolDown = 30;
 
+    public PauseDialog(ItemWrapper gameItem) {
         tiles = new HashMap<>();
         this.gameItem = gameItem;
     }
@@ -56,7 +58,7 @@ public class PauseDialog {
 
         CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
 
-        if(shadowE == null) {
+        if (shadowE == null) {
             shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(shadowE);
@@ -75,7 +77,7 @@ public class PauseDialog {
 
             @Override
             public void clicked() {
-                isPause = false;
+                pauseCounter = PAUSE_COUNT;
             }
         });
 
@@ -83,17 +85,26 @@ public class PauseDialog {
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
 
+        lblPauseTimer = gameItem.getChild(LBL_PAUSE_TIMER).getEntity();
+        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+
         createGoalTiles();
     }
 
     public void show() {
+
+        pauseCounter = 10;
+
         final TransformComponent dialogTc = pauseDialog.getComponent(TransformComponent.class);
         dialogTc.x = PAUSE_X;
         dialogTc.y = PAUSE_Y;
 
+        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
-
         shadowE.getComponent(ZIndexComponent.class).setZIndex(49);
 
         final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
@@ -154,11 +165,38 @@ public class PauseDialog {
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
     }
 
-    public void update() {
-        fade(pauseDialog, isPause);
-        fade(shadowE, isPause);
+    public void update(float delta) {
+        fade(pauseDialog, pauseCounter > PAUSE_COUNT);
+        fade(shadowE, pauseCounter > PAUSE_COUNT);
         for (Entity tile : tiles.values()) {
-            fade(tile, isPause);
+            fade(tile, pauseCounter > PAUSE_COUNT);
+        }
+
+        if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0) {
+            if (Gdx.input.justTouched() && tapCoolDown <= 0) {
+                pauseTimer = 1;
+                tapCoolDown = TAP_COOLDOWN;
+            }
+            tapCoolDown--;
+
+            pauseTimer += delta;
+            if (pauseTimer >= 1) {
+                pauseTimer = 0;
+                lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                        lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                        String.valueOf(pauseCounter--));
+            }
+        } else {
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                    "");
+        }
+
+        if (pauseCounter == 0) {
+            isPause = false;
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                    "");
         }
     }
 

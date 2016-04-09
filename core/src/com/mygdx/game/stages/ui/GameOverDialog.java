@@ -25,15 +25,19 @@ import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GameOverDialog {
 
-    public static Entity gameOverDialog;
-    public static float gameOverTimer = 0;
-    public static int gameOverCounter = 5;
-    private static ItemWrapper gameItem;
+    public static final int TAP_COOL = 30;
     public final String GAME_OVER_DIALOG = "game_over_dialog";
     public final String BTN_WATCH_VIDEO = "btn_watch_video";
     public final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
     public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
-    private int tapCoolDown = 30;
+
+    public static float gameOverTimer = 0;
+    public static final int GAME_OVER_COUNT = 5;
+    public static int gameOverCounter = GAME_OVER_COUNT;
+    private int tapCoolDown = TAP_COOL;
+
+    private static ItemWrapper gameItem;
+    public static Entity gameOverDialog;
 
 
     public GameOverDialog(ItemWrapper gameItem) {
@@ -45,18 +49,19 @@ public class GameOverDialog {
     }
 
     public void show() {
-        tapCoolDown = 30;
         isGameOver = true;
         System.gc();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
+
+        tapCoolDown = TAP_COOL;
         gameOverTimer = 0;
-        gameOverCounter = 5;
+        gameOverCounter = GAME_OVER_COUNT;
 
         Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), "5");
+        gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), Integer.toString(GAME_OVER_COUNT));
 
         TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
         tc.color.a = 0;
@@ -98,7 +103,7 @@ public class GameOverDialog {
         isGameOver = false;
         dialogTc.x = -1000;
         gameOverTimer = 0;
-        gameOverCounter = 5;
+        gameOverCounter = GAME_OVER_COUNT;
         BugSpawnSystem.isAngeredBeesMode = false;
     }
 
@@ -130,7 +135,7 @@ public class GameOverDialog {
 
             if(Gdx.input.justTouched() && tapCoolDown <= 0){
                 gameOverTimer = 1;
-                tapCoolDown = 30;
+                tapCoolDown = TAP_COOL;
             }
             tapCoolDown--;
 
@@ -161,7 +166,7 @@ public class GameOverDialog {
 
     private void resetGameData() {
         gameOverTimer = 0;
-        gameOverCounter = 5;
+        gameOverCounter = GAME_OVER_COUNT;
         isStarted = false;
         isPause = false;
         BugSpawnSystem.isAngeredBeesMode = false;
