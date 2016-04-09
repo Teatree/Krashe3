@@ -341,7 +341,7 @@ public class GameScreenScript implements IScript {
             }
 
             gameOverDialog.update(delta);
-            pauseDialog.update();
+            pauseDialog.update(delta);
             giftScreen.update();
             goalFeedbackScreen.update();
         }

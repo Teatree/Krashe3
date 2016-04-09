@@ -29,6 +29,8 @@ public class Showcase {
     public static final String INTRO = "intro";
     public static final String SHOWCASE = "showcase";
     public static final String LBL_ITEM_NAME = "lbl_item_name";
+    public static final String LBL_ITEM_DESC = "lbl_item_desc";
+    public static final String LBL_ITEM_PRICE = "lbl_item_price";
     public static final String SHOWCASE_ANI = "showcase_ani";
     public static final String BTN_NO = "btn_no";
     public TransformComponent tcShowCase;
@@ -85,7 +87,19 @@ public class Showcase {
         show = true;
         Entity lbl_nameE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_NAME).getEntity();
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.capacity(), "BUY " + showCaseVanity.name);
+        lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
+
+        Entity lbl_descE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_DESC).getEntity();
+        LabelComponent lc2 = lbl_descE.getComponent(LabelComponent.class);
+        if (showCaseVanity.description != null) {
+            lc2.text.replace(0, lc2.text.capacity(), showCaseVanity.description);
+        } else {
+            lc2.text.replace(0, lc2.text.capacity(), "");
+        }
+
+        Entity lbl_priceE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_PRICE).getEntity();
+        LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
+        lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
 
         Entity aniE = screenItem.getChild(SHOWCASE).getChild(SHOWCASE_ANI).getEntity();
 

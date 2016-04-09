@@ -2,6 +2,7 @@ package com.mygdx.game.stages.ui;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.Goal;
@@ -32,6 +33,7 @@ public class GameOverDialog {
     public final String BTN_WATCH_VIDEO = "btn_watch_video";
     public final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
     public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
+    private int tapCoolDown = 30;
 
 
     public GameOverDialog(ItemWrapper gameItem) {
@@ -43,6 +45,7 @@ public class GameOverDialog {
     }
 
     public void show() {
+        tapCoolDown = 30;
         isGameOver = true;
         System.gc();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
@@ -97,9 +100,6 @@ public class GameOverDialog {
         gameOverTimer = 0;
         gameOverCounter = 5;
         BugSpawnSystem.isAngeredBeesMode = false;
-        if (GameStage.gameScript.fpc.currentPet != null) {
-            GameStage.gameScript.fpc.currentPet.init();
-        }
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {
@@ -126,6 +126,13 @@ public class GameOverDialog {
             Actions.checkInit();
             ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
             gameOverTimerLbl.add(ac);
+
+
+            if(Gdx.input.justTouched() && tapCoolDown <= 0){
+                gameOverTimer = 1;
+                tapCoolDown = 30;
+            }
+            tapCoolDown--;
 
             gameOverTimer += deltaTime ;
             if (gameOverTimer >= 1){
