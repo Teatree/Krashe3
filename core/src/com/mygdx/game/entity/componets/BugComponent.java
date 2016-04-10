@@ -38,6 +38,7 @@ public class BugComponent implements Component {
     public int points;
 
     public Rectangle boundsRect = new Rectangle();
+    public Rectangle boundsRectScary = new Rectangle();
 
     public float velocity = 0;
     public float startYPosition;

@@ -14,6 +14,7 @@ public class FlowerPublicComponent implements Component {
 
     public Rectangle boundsRect = new Rectangle();
     public boolean isCollision;
+    public boolean isScary;
 
     public long bestScore;
     public long totalScore;
