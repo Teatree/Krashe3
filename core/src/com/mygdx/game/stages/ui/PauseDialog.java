@@ -77,7 +77,11 @@ public class PauseDialog {
 
             @Override
             public void clicked() {
-                pauseCounter = PAUSE_COUNT;
+                pauseTimer = 0;
+                pauseCounter = PAUSE_COUNT - 1;
+                lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                        lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                        String.valueOf(PAUSE_COUNT));
             }
         });
 
@@ -172,6 +176,13 @@ public class PauseDialog {
             fade(tile, pauseCounter > PAUSE_COUNT);
         }
 
+        if (pauseCounter == 0 && isPause && pauseTimer >= 1) {
+            isPause = false;
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                    "");
+        }
+        pauseTimer += delta;
         if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0) {
             if (Gdx.input.justTouched() && tapCoolDown <= 0) {
                 pauseTimer = 1;
@@ -179,25 +190,19 @@ public class PauseDialog {
             }
             tapCoolDown--;
 
-            pauseTimer += delta;
+
             if (pauseTimer >= 1) {
                 pauseTimer = 0;
                 lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                         lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                         String.valueOf(pauseCounter--));
             }
-        } else {
+        } else if (pauseTimer >= 1){
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
         }
 
-        if (pauseCounter == 0) {
-            isPause = false;
-            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
-                    lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
-                    "");
-        }
     }
 
     public void deleteTiles() {
