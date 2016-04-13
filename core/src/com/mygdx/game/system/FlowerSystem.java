@@ -111,14 +111,11 @@ public class FlowerSystem extends IteratingSystem {
 
             if (state.equals(ATTACK) || state.equals(RETREAT)) {
 
-                if (fcc.isScary ){
+                if (fcc.isCollision) {
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
-                    fcc.isScary = false;
-                }
-
-                if (fcc.isCollision) {
                     fcc.isCollision = false;
+
                     soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     move(tc, delta);
