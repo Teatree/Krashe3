@@ -39,7 +39,6 @@ public class FlowerSystem extends IteratingSystem {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
         spriterComponent.scale = 0.6f;
-        FlowerComponent flowerComponent = mapper.get(entity);
         FlowerPublicComponent fcc = collisionMapper.get(entity);
         updateRect(fcc, transformComponent);
         act(fcc, transformComponent, spriterComponent, deltaTime);
@@ -112,17 +111,14 @@ public class FlowerSystem extends IteratingSystem {
 
             if (state.equals(ATTACK) || state.equals(RETREAT)) {
 
-                if (fcc.isScary){
+                if (fcc.isScary ){
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
                     fcc.isScary = false;
                 }
 
                 if (fcc.isCollision) {
-//                    state = ATTACK_BITE;
-//                    setBiteAttackAnimation(sc);
                     fcc.isCollision = false;
-
                     soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     move(tc, delta);

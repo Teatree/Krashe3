@@ -247,8 +247,8 @@ public class BugSystem extends IteratingSystem {
     public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sac) {
         bc.boundsRectScary.x = (int) tc.x - ((int) dc.width * sac.scale);
         bc.boundsRectScary.y = (int) tc.y - ((int) dc.height * sac.scale)*2;
-        bc.boundsRectScary.width = (int) dc.width * sac.scale*2;
-        bc.boundsRectScary.height = (int) dc.height * sac.scale*4;
+        bc.boundsRectScary.width = (int) dc.width;
+        bc.boundsRectScary.height = (int) dc.height;
     }
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
