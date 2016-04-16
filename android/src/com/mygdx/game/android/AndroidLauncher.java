@@ -47,7 +47,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
             Main.setPlatformResolver(new GooglePlayResolver(game));
         }
 
-        game.getPlatformResolver().installIAP();
+//        game.getPlatformResolver().installIAP();
     }
 
     public void setupAds() {
