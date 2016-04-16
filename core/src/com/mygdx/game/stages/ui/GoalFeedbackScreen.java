@@ -24,7 +24,7 @@ import static com.mygdx.game.utils.EffectUtils.fade;
 
 public class GoalFeedbackScreen {
 
-    public static final String GOALFEEDBACK = "gift_feedbacker";
+    public static final String GOALFEEDBACK = "lib_gift_feedbacker";
     public static final String LBL_DIALOG = "lbl_level";
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
@@ -90,7 +90,11 @@ public class GoalFeedbackScreen {
 
         tiles = new ArrayList<>();
 
-        feedbackEntity = gameItem.getChild(GOALFEEDBACK).getEntity();
+//        feedbackEntity = gameItem.getChild(GOALFEEDBACK).getEntity();
+        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GOALFEEDBACK);
+        feedbackEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), feedbackEntity, tempC.composite);
+        sceneLoader.getEngine().addEntity(feedbackEntity);
 
         feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;

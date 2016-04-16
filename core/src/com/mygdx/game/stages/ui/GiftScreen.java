@@ -11,6 +11,7 @@ import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -18,13 +19,14 @@ import java.util.HashMap;
 import java.util.Random;
 
 import static com.mygdx.game.stages.GameScreenScript.isGameOver;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GiftScreen {
-    public final String GIFT_SCREEN = "gift_screen";
+    public final String GIFT_SCREEN = "lib_gift_screen";
     public final String BTN_PINATA = "btn_pinata";
     public final int GIFT_SCREEN_X = -20;
     public final int GIFT_SCREEN_Y = -20;
@@ -47,14 +49,20 @@ public class GiftScreen {
     }
 
     public void init() {
-        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
+//        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
+
+        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
+        giftScreen = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), giftScreen, tempC.composite);
+        sceneLoader.getEngine().addEntity(giftScreen);
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
 
-        pinataBtn = gameItem.getChild(GIFT_SCREEN).getChild(BTN_PINATA).getEntity();
+        pinataBtn = new ItemWrapper(giftScreen).getChild(BTN_PINATA).getEntity();
         pinataBtn.getComponent(TransformComponent.class).scaleX = 1.4f;
         pinataBtn.getComponent(TransformComponent.class).scaleY = 1.4f;
+        pinataBtn.add(new ButtonComponent());
         pinataBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             float previousX;
             float previousY;
