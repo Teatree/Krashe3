@@ -45,15 +45,15 @@ public class BugPool {
     public static final String BEE_ANI_7 = "beeAni7";
     public static final String BEE_ANI_8 = "beeAni8";
     public static final String DRUNK_BUG_ANI_4 = "drunkBugAni4";
-    public static final String DRUNK_BUG_ANI_5 = "drunkBugAni5";
-    public static final String DRUNK_BUG_ANI_6 = "drunkBugAni6";
-    public static final String DRUNK_BUG_ANI_7 = "drunkBugAni7";
-    public static final String DRUNK_BUG_ANI_8 = "drunkBugAni8";
+//    public static final String DRUNK_BUG_ANI_5 = "drunkBugAni5";
+//    public static final String DRUNK_BUG_ANI_6 = "drunkBugAni6";
+//    public static final String DRUNK_BUG_ANI_7 = "drunkBugAni7";
+//    public static final String DRUNK_BUG_ANI_8 = "drunkBugAni8";
     public static final String CHARGER_ANI_4 = "chargerAni4";
-    public static final String CHARGER_ANI_5 = "chargerAni5";
-    public static final String CHARGER_ANI_6 = "chargerAni6";
-    public static final String CHARGER_ANI_7 = "chargerAni7";
-    public static final String CHARGER_ANI_8 = "chargerAni8";
+//    public static final String CHARGER_ANI_5 = "chargerAni5";
+//    public static final String CHARGER_ANI_6 = "chargerAni6";
+//    public static final String CHARGER_ANI_7 = "chargerAni7";
+//    public static final String CHARGER_ANI_8 = "chargerAni8";
     private static BugPool instance;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private Stack<Entity> simpleBugs = new Stack<>();
@@ -96,17 +96,17 @@ public class BugPool {
 
 
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_4).getEntity());
-        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_5).getEntity());
-        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_6).getEntity());
-        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_7).getEntity());
-        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_8).getEntity());
+//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_5).getEntity());
+//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_6).getEntity());
+//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_7).getEntity());
+//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_8).getEntity());
 
 
         chargerBugs.add(root.getChild(CHARGER_ANI_4).getEntity());
-        chargerBugs.add(root.getChild(CHARGER_ANI_5).getEntity());
-        chargerBugs.add(root.getChild(CHARGER_ANI_6).getEntity());
-        chargerBugs.add(root.getChild(CHARGER_ANI_7).getEntity());
-        chargerBugs.add(root.getChild(CHARGER_ANI_8).getEntity());
+//        chargerBugs.add(root.getChild(CHARGER_ANI_5).getEntity());
+//        chargerBugs.add(root.getChild(CHARGER_ANI_6).getEntity());
+//        chargerBugs.add(root.getChild(CHARGER_ANI_7).getEntity());
+//        chargerBugs.add(root.getChild(CHARGER_ANI_8).getEntity());
 
     }
 

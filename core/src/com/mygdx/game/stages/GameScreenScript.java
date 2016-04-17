@@ -141,13 +141,13 @@ public class GameScreenScript implements IScript {
         gameScript.fpc.level.updateLevel();
         pauseDialog.init();
 
-//        giftScreen = new GiftScreen(gameItem);
-//        giftScreen.init();
+        giftScreen = new GiftScreen(gameItem);
+        giftScreen.init();
 
-//        if (goalFeedbackScreen == null) {
-//            goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
-//        }
-//        goalFeedbackScreen.init(false);
+        if (goalFeedbackScreen == null) {
+            goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
+        }
+        goalFeedbackScreen.init(false);
 
         checkTryPeriod();
     }

@@ -17,12 +17,9 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.game.entity.componets.BugComponent.*;
-import static com.mygdx.game.entity.componets.FlowerComponent.State.ATTACK_BITE;
-import static com.mygdx.game.entity.componets.FlowerComponent.state;
 import static com.mygdx.game.entity.componets.Goal.GoalType.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.stages.GameStage.gameScript;
@@ -31,21 +28,22 @@ import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class BugSystem extends IteratingSystem {
 
-    public static final String CHARGING_ANI = "Charging";
-    public static final String IDLE_ANI = "Idle";
-    public static final String PREPARING_ANI = "Preparing";
+    public static final String CHARGING_ANI = "CHARGING";
+    public static final String IDLE_ANI = "IDLE";
+    public static final String PREPARING_ANI = "PREPARING";
 
     boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private ComponentMapper<FlowerPublicComponent> fMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
-    
+
     public BugSystem() {
         super(Family.all(BugComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        SpriterComponent sac = ComponentRetriever.get(entity, SpriterComponent.class);
+        SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
+        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!isStarted) {
             BugPool.getInstance().release(entity);
@@ -53,13 +51,12 @@ public class BugSystem extends IteratingSystem {
 
         if (!isPause && !isGameOver && isStarted) {
 
-            sac.player.speed = 24;
+            sasc.paused = false;
 
             DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-            sac.scale = BUG_SCALE;
             TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-//            transformComponent.scaleX = BUG_SCALE;
-//            transformComponent.scaleY = BUG_SCALE;
+            transformComponent.scaleX = BUG_SCALE;
+            transformComponent.scaleY = BUG_SCALE;
             FlowerPublicComponent fcc = fMapper.get(entity);
             BugComponent bc = mapper.get(entity);
 
@@ -67,13 +64,11 @@ public class BugSystem extends IteratingSystem {
                 destroyBug(entity, transformComponent);
 
             } else if (bc.state != DEAD) {
-                updateRect(bc, transformComponent, dimensionsComponent, sac);
-                updateRectScary(bc, transformComponent, dimensionsComponent, sac);
-
-                moveEntity(deltaTime, transformComponent, bc, sac);
-                
+                updateRect(bc, transformComponent, dimensionsComponent);
+                updateRectScary(bc, transformComponent, dimensionsComponent);
+                moveEntity(deltaTime, transformComponent, bc, sasc, sac);
                 if (fcc.flowerCollisionCheck(bc.boundsRectScary)) {
-                    sac.scale+= 0.5f;
+                    transformComponent.scaleX+= 0.5f;
 //                    fcc.state = ATTACK_BITE;
                     fcc.isScary = true;
                 }
@@ -106,7 +101,7 @@ public class BugSystem extends IteratingSystem {
             sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
                     bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         } else {
-            sac.player.speed = 24;
+            sasc.paused = true;
             if (GameOverDialog.releaseAllBugs()) {
                 BugPool.getInstance().release(entity);
             }
@@ -139,7 +134,8 @@ public class BugSystem extends IteratingSystem {
     private void moveEntity(float deltaTime,
                             TransformComponent transformComponent,
                             BugComponent bugComponent,
-                            SpriterComponent sac) {
+                            SpriteAnimationStateComponent sasc,
+                            SpriteAnimationComponent sac) {
 
         switch (bugComponent.type) {
             case SIMPLE:
@@ -149,7 +145,7 @@ public class BugSystem extends IteratingSystem {
                 moveSimple(deltaTime, transformComponent, bugComponent);
                 break;
             case CHARGER:
-                moveCharger(deltaTime, transformComponent, bugComponent, sac);
+                moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
                 break;
             case BEE:
                 moveSimple(deltaTime, transformComponent, bugComponent);
@@ -165,7 +161,8 @@ public class BugSystem extends IteratingSystem {
     private void moveCharger(float deltaTime,
                              TransformComponent tc,
                              BugComponent bc,
-                             SpriterComponent sac) {
+                             SpriteAnimationStateComponent sasc,
+                             SpriteAnimationComponent sac) {
 
         bc.counter--;
         // Move
@@ -173,11 +170,11 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
-            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sac);
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
-                setAnimation(PREPARING_ANI, Animation.PlayMode.LOOP, sac);
+                setAnimation(PREPARING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.counter = PREPARATION_TIME;
                 bc.state = PREPARING;
             }
@@ -188,7 +185,7 @@ public class BugSystem extends IteratingSystem {
             if (bc.counter == 0) {
                 bc.state = CHARGING;
                 canPlayAnimation = true;
-                setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sac);
+                setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
                 bc.velocity = deltaTime * CHARGING_MVMNT_SPEED;
             }
         }
@@ -200,7 +197,7 @@ public class BugSystem extends IteratingSystem {
         if (checkFlowerCollision(GameStage.gameScript.fpc, bc) || isOutOfBounds(bc)) {
             bc.state = DEAD;
             canPlayAnimation = true;
-            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sac);
+            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
             updateChargerGoals(bc);
             updateBugGoals(bc);
         }
@@ -237,19 +234,20 @@ public class BugSystem extends IteratingSystem {
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
     }
 
-    public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sac) {
-        bc.boundsRect.x = (int) tc.x - ((int) dc.width/2 * sac.scale)/2;
-        bc.boundsRect.y = (int) tc.y - ((int) dc.height/2 * sac.scale)/2;
-        bc.boundsRect.width = (int) dc.width/2 * sac.scale;
-        bc.boundsRect.height = (int) dc.height/2 * sac.scale;
+    public void updateRect(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
+        bc.boundsRect.x = (int) tc.x + 50; //Nastya can not see this. I can.
+        bc.boundsRect.y = (int) tc.y + 30;
+        bc.boundsRect.width = (int) dc.width * tc.scaleX - 50;
+        bc.boundsRect.height = (int) dc.height * tc.scaleY - 30;
     }
 
-    public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc, SpriterComponent sac) {
-        bc.boundsRectScary.x = (int) tc.x - ((int) dc.width * sac.scale);
-        bc.boundsRectScary.y = (int) tc.y - ((int) dc.height * sac.scale)*2;
+    public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
+        bc.boundsRectScary.x = (int) tc.x;
+        bc.boundsRectScary.y = (int) tc.y-dc.height;
         bc.boundsRectScary.width = (int) dc.width;
-        bc.boundsRectScary.height = (int) dc.height;
+        bc.boundsRectScary.height = (int) dc.height*2;
     }
+
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
         float step = percent <= 0.3 ? 5 : 0;
@@ -263,9 +261,9 @@ public class BugSystem extends IteratingSystem {
         return bc.boundsRect.getX() >= 1200;
     }
 
-    public void setAnimation(String animationName, Animation.PlayMode mode, SpriterComponent spriterC) {
+    public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {
         if (canPlayAnimation) {
-            spriterC.player.setAnimation(animationName);
+            sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
         }
     }
