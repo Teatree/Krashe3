@@ -3,6 +3,7 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.utils.GlobalConstants;
 
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class BugComponent implements Component {
     public float startX, startY;
     public float endX;
     public float endY;
-    public float duration = 14;
+    public float duration = GlobalConstants.BUGSPEED_DURATION_FROM_A_TO_B;
     public float time;
     public Interpolation interpolation = Interpolation.exp5;
     public boolean reverse, began, complete;
