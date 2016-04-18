@@ -106,7 +106,7 @@ public class GoalFeedbackScreen {
         feedbackEntity.getComponent(TransformComponent.class).y = POS_Y;
         feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
 
-        final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
+        final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + GameStage.gameScript.fpc.level.name + " \n ");
 
@@ -285,7 +285,7 @@ public class GoalFeedbackScreen {
 
         if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size()-1).getComponent(TransformComponent.class).x <=
                 -prevLvlTiles.get(prevLvlTiles.size()-1).getComponent(DimensionsComponent.class).width ){
-            final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
+            final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
             if(!goalsLabelComp.text.toString().equals(GameStage.gameScript.fpc.level.name)) {
@@ -294,8 +294,7 @@ public class GoalFeedbackScreen {
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), GameStage.gameScript.fpc.level.name);
             }
         }
-
-
+        
         if (Gdx.input.justTouched() && isGoalFeedbackOpen) {
             if (GameStage.gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
