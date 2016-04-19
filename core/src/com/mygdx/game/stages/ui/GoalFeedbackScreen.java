@@ -294,7 +294,7 @@ public class GoalFeedbackScreen {
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), GameStage.gameScript.fpc.level.name);
             }
         }
-        
+
         if (Gdx.input.justTouched() && isGoalFeedbackOpen) {
             if (GameStage.gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
