@@ -16,6 +16,14 @@ import static com.mygdx.game.stages.GameScreenScript.*;
 
 public class BugSpawnSystem extends EntitySystem {
 
+    // spawn probability
+    // combined has to be equal to 100
+    public static final int DRUNK_SPAWN_PROB = 10;
+    public static final int SIMPLE_SPAWN_PROB = 50;
+    public static final int CHARGER_SPAWN_PROB = 7;
+    public static final int QUEENBEE_SPAWN_PROB = 3;
+    public static final int BEE_SPAWN_PROB = 30;
+
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean isAngeredBeesMode = false;
     public static boolean queenBeeOnStage = false;
@@ -26,6 +34,7 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MIN_X = 300;
     private int SPAWN_MIN_Y = 100;
     private int SPAWN_MAX_Y = 620;
+
     private int SPAWN_INTERVAL = 100;
 
     private Random rand = new Random();
@@ -62,18 +71,18 @@ public class BugSpawnSystem extends EntitySystem {
                 createBug(BEE);
             } else {
                 int probabilityValue = rand.nextInt(100);
-                if (probabilityValue < 10) {
+                if (probabilityValue < DRUNK_SPAWN_PROB) {
                     createBug(DRUNK);
-                } else if (probabilityValue >= 10 && probabilityValue < 60) {
+                } else if (probabilityValue >= DRUNK_SPAWN_PROB +1  && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB) {
                     createBug(SIMPLE);
-                } else if (probabilityValue >= 61 && probabilityValue < 67) {
+                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB) {
                     createBug(CHARGER);
-                } else if (probabilityValue >= 68 && probabilityValue < 70) {
+                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB) {
                     if (!queenBeeOnStage) {
                         createBug(QUEENBEE);
                         queenBeeOnStage = true;
                     }
-                } else {
+                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + BEE_SPAWN_PROB) {
                     createBug(BEE);
                 }
             }

@@ -253,7 +253,7 @@ public class BugSystem extends IteratingSystem {
         float step = percent <= 0.3 ? 5 : 0;
         float x = uc.startX + (uc.endX - uc.startX) * percent * (percent + step);
 
-        double y = (Math.sin(x / 100) * 50) + uc.startY;
+        double y = (Math.sin(x / 100) * BUGPATH_AMPLITUDE) + uc.startY;
         setPosition(tc, x, (float) y);
     }
 
