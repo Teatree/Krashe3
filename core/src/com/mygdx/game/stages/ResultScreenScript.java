@@ -194,7 +194,9 @@ public class ResultScreenScript implements IScript {
             }
 
             private void ShowAdsWithChance() {
+                System.err.println("ADS ARE GREAT!!!");
                 if (new Random().nextInt(10) <= 3) {
+
                     Main.adsController.showInterstitialGeneralAd(new Runnable() {
                         @Override
                         public void run() {

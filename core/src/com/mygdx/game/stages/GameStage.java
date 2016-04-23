@@ -74,7 +74,6 @@ public class GameStage extends Stage {
             gameScript.initButtons();
             gameScript.reset();
 
-            System.gc();
         } else {
             sceneLoader.setScene(MAIN_SCENE);
             if (justCreated) {

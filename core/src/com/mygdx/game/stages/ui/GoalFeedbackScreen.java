@@ -200,9 +200,7 @@ public class GoalFeedbackScreen {
                 ac.dataArray.add(Actions.sequence(Actions.delay(delay),
                         Actions.moveTo(GOAL_INIT_POS_X, newTile.getComponent(TransformComponent.class).y, 1.5f, Interpolation.exp10Out)));
                 newTile.add(ac);
-
                 tiles.add(newTile);
-
                 y -= GOAL_STEP_Y;
             }
         }
