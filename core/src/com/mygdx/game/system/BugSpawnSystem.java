@@ -35,11 +35,18 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MIN_Y = 100;
     private int SPAWN_MAX_Y = 620;
 
-    private int SPAWN_INTERVAL = 100;
+    private float spawner = 0;
+    private float break_counter = 0;
+    private float SPAWN_INTERVAL_BASE = 1.5f;
+    private int BREAK_FREQ_BASE_MIN = 10;
+    private int BREAK_FREQ_BASE_MAX = 15;
+    private int BREAK_LENGTH_BASE_MIN = 3;
+    private int BREAK_LENGTH_BASE_MAX = 6;
 
     private Random rand = new Random();
 
     public BugSpawnSystem(FlowerPublicComponent fcc) {
+        this.fcc = fcc;
         this.fcc = fcc;
         init();
     }
@@ -53,6 +60,8 @@ public class BugSpawnSystem extends EntitySystem {
         SPAWN_MIN_Y = 100;
         SPAWN_MAX_X = -200;
         SPAWN_MAX_Y = 700;
+
+        break_counter = rand.nextInt(BREAK_FREQ_BASE_MAX - BREAK_FREQ_BASE_MIN)+ BREAK_FREQ_BASE_MIN;
     }
 
     private TransformComponent getPos(BugComponent bc) {
@@ -65,32 +74,40 @@ public class BugSpawnSystem extends EntitySystem {
         return transformComponent;
     }
 
-    public void spawn() {
-        if (SPAWN_INTERVAL == 0) {
-            if (isAngeredBeesMode) {
-                createBug(BEE);
-            } else {
-                int probabilityValue = rand.nextInt(100);
-                if (probabilityValue < DRUNK_SPAWN_PROB) {
-                    createBug(DRUNK);
-                } else if (probabilityValue >= DRUNK_SPAWN_PROB +1  && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB) {
-                    createBug(SIMPLE);
-                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB) {
-                    createBug(CHARGER);
-                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB) {
-                    if (!queenBeeOnStage) {
-                        createBug(QUEENBEE);
-                        queenBeeOnStage = true;
-                    }
-                } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + BEE_SPAWN_PROB) {
+    public void spawn(float delta) {
+        break_counter -= delta;
+            if (spawner <= 0) {
+                if (isAngeredBeesMode) {
                     createBug(BEE);
+                } else {
+                    int probabilityValue = rand.nextInt(100);
+                    if (probabilityValue <= DRUNK_SPAWN_PROB) {
+                        createBug(DRUNK);
+                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB) {
+                        createBug(SIMPLE);
+                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB) {
+                        createBug(CHARGER);
+                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB) {
+                        if (!queenBeeOnStage) {
+                            createBug(QUEENBEE);
+                            queenBeeOnStage = true;
+                        }
+                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + BEE_SPAWN_PROB) {
+                        createBug(BEE);
+                    }
                 }
-            }
 
-            SPAWN_INTERVAL = 100;
-        } else {
-            SPAWN_INTERVAL--;
-        }
+                if(break_counter > 0) {
+                    spawner = SPAWN_INTERVAL_BASE;
+                }else{
+                    spawner = rand.nextInt(BREAK_LENGTH_BASE_MAX-BREAK_LENGTH_BASE_MIN)+BREAK_LENGTH_BASE_MIN;;
+                    break_counter = rand.nextInt(BREAK_FREQ_BASE_MAX - BREAK_FREQ_BASE_MIN)+ BREAK_FREQ_BASE_MIN;;
+                }
+            } else {
+                spawner -= delta;
+            }
+//        System.out.println("spanwer: " + spawner);
+//        System.out.println("break_counter: " + break_counter);
     }
 
     private void createBug(String tempType) {
@@ -110,7 +127,7 @@ public class BugSpawnSystem extends EntitySystem {
         if (!isPause && !isGameOver) {
             if (isStarted) {
                 super.update(deltaTime);
-                spawn();
+                    spawn(deltaTime);
                 updateAngeredBeesMode();
             }
         }

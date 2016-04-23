@@ -31,7 +31,8 @@ public class BugComponent implements Component {
     public float startX, startY;
     public float endX;
     public float endY;
-    public float duration = GlobalConstants.BUGSPEED_DURATION_FROM_A_TO_B;
+    public float duration = 14;
+    public float amplitude = 50;
     public float time;
     public Interpolation interpolation = Interpolation.exp5;
     public boolean reverse, began, complete;
@@ -55,10 +56,14 @@ public class BugComponent implements Component {
         this.state = IDLE;
         switch (type) {
             case DRUNK: {
+                duration = 12;
+                amplitude = 50;
                 points = 10;
                 break;
             }
             case BEE: {
+                duration = 14;
+                amplitude = 0;
                 points = 15;
                 break;
             }
@@ -67,10 +72,14 @@ public class BugComponent implements Component {
                 break;
             }
             case QUEENBEE: {
+                duration = 12;
+                amplitude = 50;
                 points = 33;
                 break;
             }
             default: {
+                duration = 14;
+                amplitude = 0;
                 points = 10;
                 break;
             }
