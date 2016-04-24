@@ -16,8 +16,29 @@ public class Level {
     public HashMap<Goal.GoalType, Goal> goals = new HashMap<>();
     public GoalGenerator goalGenerator = new GoalGenerator();
 
+    public float spawnInterval = 1;
+    public float breakFreqMin = 1;
+    public float breakFreqMax = 1;
+    public float breakLengthMin = 1;
+    public float breakLengthMax = 1;
+    public float simpleBugSpawnChance = 1;
+    public float drunkBugSpawnChance = 1;
+    public float chargerBugSpawnChance = 1;
+    public float queenBeeSpawnChance = 1;
+    public float beeSpawnChance = 1;
+
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;
+        spawnInterval = levelsInfo.get(difficultyLevel).spawnInterval;
+        breakFreqMin = levelsInfo.get(difficultyLevel).breakFreqMin;
+        breakFreqMax = levelsInfo.get(difficultyLevel).breakFreqMax;
+        breakLengthMin = levelsInfo.get(difficultyLevel).breakLengthMin;
+        breakLengthMax = levelsInfo.get(difficultyLevel).breakLengthMax;
+        simpleBugSpawnChance = levelsInfo.get(difficultyLevel).simpleBugSpawnChance;
+        drunkBugSpawnChance = levelsInfo.get(difficultyLevel).drunkBugSpawnChance;
+        chargerBugSpawnChance = levelsInfo.get(difficultyLevel).chargerBugSpawnChance;
+        queenBeeSpawnChance = levelsInfo.get(difficultyLevel).queenBeeSpawnChance;
+        beeSpawnChance = levelsInfo.get(difficultyLevel).beeSpawnChance;
     }
 
     public Goal getGoalByType(Goal.GoalType type) {
@@ -48,7 +69,16 @@ public class Level {
             difficultyLevel++;
             SaveMngr.LevelInfo info = levelsInfo.get(difficultyLevel - 1);
             name = info.name;
-            difficultyMultiplier = info.difficultyMultiplier;
+            spawnInterval = info.spawnInterval;
+            breakFreqMin = info.breakFreqMin;
+            breakFreqMax = info.breakFreqMax;
+            breakLengthMin = info.breakLengthMin;
+            breakLengthMax = info.breakLengthMax;
+            simpleBugSpawnChance = info.simpleBugSpawnChance;
+            drunkBugSpawnChance = info.drunkBugSpawnChance;
+            chargerBugSpawnChance = info.chargerBugSpawnChance;
+            queenBeeSpawnChance = info.queenBeeSpawnChance;
+            beeSpawnChance = info.beeSpawnChance;
         }
     }
 }

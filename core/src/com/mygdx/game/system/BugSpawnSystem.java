@@ -4,10 +4,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
+import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.BugComponent.*;
@@ -24,6 +26,12 @@ public class BugSpawnSystem extends EntitySystem {
     public static final int QUEENBEE_SPAWN_PROB = 3;
     public static final int BEE_SPAWN_PROB = 30;
 
+    public static int curDrunkProb = DRUNK_SPAWN_PROB;
+    public static int curSimpleProb = SIMPLE_SPAWN_PROB;
+    public static int curChargerProb = CHARGER_SPAWN_PROB;
+    public static int curQueenBeeProb = QUEENBEE_SPAWN_PROB;
+    public static int curBeeProb = BEE_SPAWN_PROB;
+
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean isAngeredBeesMode = false;
     public static boolean queenBeeOnStage = false;
@@ -38,10 +46,20 @@ public class BugSpawnSystem extends EntitySystem {
     private float spawner = 0;
     private float break_counter = 0;
     private float SPAWN_INTERVAL_BASE = 1.5f;
-    private int BREAK_FREQ_BASE_MIN = 10;
-    private int BREAK_FREQ_BASE_MAX = 15;
-    private int BREAK_LENGTH_BASE_MIN = 3;
-    private int BREAK_LENGTH_BASE_MAX = 6;
+    private float BREAK_FREQ_BASE_MIN = 10;
+    private float BREAK_FREQ_BASE_MAX = 15;
+    private float BREAK_LENGTH_BASE_MIN = 3;
+    private float BREAK_LENGTH_BASE_MAX = 6;
+
+    private float curSpawnInterval = SPAWN_INTERVAL_BASE;
+    private float curBreakFreqMin = BREAK_FREQ_BASE_MIN;
+    private float curBreakFreqMax = BREAK_FREQ_BASE_MAX;
+    private float curBreakLengthMin = BREAK_LENGTH_BASE_MIN;
+    private float curBreakLengthMax = BREAK_LENGTH_BASE_MAX;
+
+    public static List<Multiplier> mulipliers;
+    public static Multiplier currentMultiplier;
+    public int bugsSpawned;
 
     private Random rand = new Random();
 
@@ -61,7 +79,8 @@ public class BugSpawnSystem extends EntitySystem {
         SPAWN_MAX_X = -200;
         SPAWN_MAX_Y = 700;
 
-        break_counter = rand.nextInt(BREAK_FREQ_BASE_MAX - BREAK_FREQ_BASE_MIN)+ BREAK_FREQ_BASE_MIN;
+        break_counter = rand.nextInt((int)curBreakFreqMax- (int)curBreakFreqMin)+ curBreakFreqMin;
+        currentMultiplier = mulipliers.get(0);
     }
 
     private TransformComponent getPos(BugComponent bc) {
@@ -76,32 +95,36 @@ public class BugSpawnSystem extends EntitySystem {
 
     public void spawn(float delta) {
         break_counter -= delta;
-            if (spawner <= 0) {
-                if (isAngeredBeesMode) {
-                    createBug(BEE);
-                } else {
-                    int probabilityValue = rand.nextInt(100);
-                    if (probabilityValue <= DRUNK_SPAWN_PROB) {
-                        createBug(DRUNK);
-                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB) {
-                        createBug(SIMPLE);
-                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB) {
-                        createBug(CHARGER);
-                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB) {
-                        if (!queenBeeOnStage) {
-                            createBug(QUEENBEE);
-                            queenBeeOnStage = true;
-                        }
-                    } else if (probabilityValue >= DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + 1 && probabilityValue < DRUNK_SPAWN_PROB + SIMPLE_SPAWN_PROB + CHARGER_SPAWN_PROB + QUEENBEE_SPAWN_PROB + BEE_SPAWN_PROB) {
-                        createBug(BEE);
+        if (spawner <= 0) {
+            if (isAngeredBeesMode) {
+                createBug(BEE);
+            } else {
+                int probabilityValue = rand.nextInt(100);
+                if (probabilityValue <= curDrunkProb) {
+                    createBug(DRUNK);
+                } else if (probabilityValue >= curDrunkProb + 1 && probabilityValue < curDrunkProb + curSimpleProb) {
+                    createBug(SIMPLE);
+                } else if (probabilityValue >= curDrunkProb + curSimpleProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb) {
+                    createBug(CHARGER);
+                } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb) {
+                    if (!queenBeeOnStage) {
+                        createBug(QUEENBEE);
+                        queenBeeOnStage = true;
                     }
+                } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + 1 &&
+                        probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + curBeeProb) {
+                    createBug(BEE);
                 }
+                bugsSpawned++;
+                System.out.println("bugSpawned: " + bugsSpawned);
+                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
+            }
 
                 if(break_counter > 0) {
-                    spawner = SPAWN_INTERVAL_BASE;
+                    spawner = curSpawnInterval;
                 }else{
-                    spawner = rand.nextInt(BREAK_LENGTH_BASE_MAX-BREAK_LENGTH_BASE_MIN)+BREAK_LENGTH_BASE_MIN;;
-                    break_counter = rand.nextInt(BREAK_FREQ_BASE_MAX - BREAK_FREQ_BASE_MIN)+ BREAK_FREQ_BASE_MIN;;
+                    spawner = rand.nextInt((int)curBreakLengthMax-(int)curBreakLengthMin)+curBreakLengthMin;;
+                    break_counter = rand.nextInt((int)curBreakFreqMax - (int)curBreakFreqMin)+ curBreakFreqMin;;
                 }
             } else {
                 spawner -= delta;
@@ -124,10 +147,26 @@ public class BugSpawnSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
+        curSpawnInterval = SPAWN_INTERVAL_BASE * currentMultiplier.spawnInterval * GameStage.gameScript.fpc.level.spawnInterval;
+        curBreakFreqMin = BREAK_FREQ_BASE_MIN * currentMultiplier.breakFreqMin * GameStage.gameScript.fpc.level.breakFreqMin;
+        curBreakFreqMax = BREAK_FREQ_BASE_MAX * currentMultiplier.breakFreqMax * GameStage.gameScript.fpc.level.breakFreqMax;
+        curBreakLengthMin = BREAK_LENGTH_BASE_MIN * currentMultiplier.breakLengthMin * GameStage.gameScript.fpc.level.breakLengthMin;
+        curBreakLengthMax = BREAK_LENGTH_BASE_MAX * currentMultiplier.breakLengthMax * GameStage.gameScript.fpc.level.breakLengthMax;
+
+        curDrunkProb = (int)(DRUNK_SPAWN_PROB * currentMultiplier.drunkBugSpawnChance * GameStage.gameScript.fpc.level.drunkBugSpawnChance);
+        curSimpleProb = (int)(SIMPLE_SPAWN_PROB * currentMultiplier.simpleBugSpawnChance * GameStage.gameScript.fpc.level.simpleBugSpawnChance);
+        curChargerProb = (int)(CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * GameStage.gameScript.fpc.level.chargerBugSpawnChance);
+        curQueenBeeProb = (int)(QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * GameStage.gameScript.fpc.level.queenBeeSpawnChance);
+        curBeeProb = (int)(BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * GameStage.gameScript.fpc.level.beeSpawnChance);
+
         if (!isPause && !isGameOver) {
             if (isStarted) {
                 super.update(deltaTime);
-                    spawn(deltaTime);
+                if(bugsSpawned >= currentMultiplier.finishOn){
+                    int index = mulipliers.indexOf(currentMultiplier);
+                    currentMultiplier = mulipliers.get(index < mulipliers.size()-1 ? index+1 : index);
+                }
+                spawn(deltaTime);
                 updateAngeredBeesMode();
             }
         }
@@ -150,5 +189,21 @@ public class BugSpawnSystem extends EntitySystem {
         if (GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES) != null) {
             GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES).update();
         }
+    }
+
+    public static class Multiplier{
+        public int startOn = 0;
+        public int finishOn = 20;
+
+        public float spawnInterval = 1;
+        public float breakFreqMin = 1;
+        public float breakFreqMax = 1;
+        public float breakLengthMin = 1;
+        public float breakLengthMax = 1;
+        public float simpleBugSpawnChance = 1;
+        public float drunkBugSpawnChance = 1;
+        public float chargerBugSpawnChance = 1;
+        public float queenBeeSpawnChance = 1;
+        public float beeSpawnChance = 1;
     }
 }

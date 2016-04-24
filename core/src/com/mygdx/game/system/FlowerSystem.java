@@ -46,10 +46,10 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void updateRect(FlowerPublicComponent fcc, TransformComponent tc) {
-        fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
-        fcc.boundsRect.y = (int) tc.y + 95 * tc.scaleY;
-        fcc.boundsRect.width = 150 * tc.scaleX;
-        fcc.boundsRect.height = 150 * tc.scaleY;
+        fcc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
+        fcc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
+        fcc.boundsRect.width = 200 * tc.scaleX;
+        fcc.boundsRect.height = 200 * tc.scaleY;
         if (state.equals(IDLE) || state.equals(IDLE_BITE)) {
             fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
             fcc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;

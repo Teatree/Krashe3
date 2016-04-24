@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.*;
+import com.mygdx.game.system.BugSpawnSystem;
 
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class SaveMngr {
     public static final String PETS_FILE = "pets.params";
     public static final String UPGRADES_FILE = "upgrades.params";
     public static final String LEVELS_JSON = "levels.json";
+    public static final String MULTIPLIERS_JSON = "multipliers.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -71,6 +73,7 @@ public class SaveMngr {
 
     public static FlowerPublicComponent loadStats() {
         initAllLevels();
+        initAllMultipliers();
         FlowerPublicComponent fc = new FlowerPublicComponent();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
@@ -313,22 +316,18 @@ public class SaveMngr {
         List<LevelInfo> levels = new ArrayList<>();
         LevelInfo l = new LevelInfo();
         l.difficultyLevel = 1;
-        l.difficultyMultiplier = 0.5f;
         l.name = "Novice";
 
         LevelInfo l1 = new LevelInfo();
         l1.difficultyLevel = 2;
-        l1.difficultyMultiplier = 0.8f;
         l1.name = "Pro";
 
         LevelInfo l2 = new LevelInfo();
         l2.difficultyLevel = 3;
-        l2.difficultyMultiplier = 0.8f;
         l2.name = "Prorer Pro";
 
         LevelInfo l3 = new LevelInfo();
         l3.difficultyLevel = 4;
-        l3.difficultyMultiplier = 0.8f;
         l3.name = "Prorest Pro";
 
         levels.add(l);
@@ -346,11 +345,28 @@ public class SaveMngr {
         return levels;
     }
 
+    public static List<BugSpawnSystem.Multiplier> initAllMultipliers() {
+        String file = readFile(MULTIPLIERS_JSON);
+        List<BugSpawnSystem.Multiplier> multipliers = new Json().fromJson(List.class, file);
+        BugSpawnSystem.mulipliers = multipliers;
+        return multipliers;
+    }
+
     public static class LevelInfo {
         public String name;
         public int difficultyLevel;
-        public float difficultyMultiplier;
         public String type;
+
+        public float spawnInterval = 1;
+        public float breakFreqMin = 1;
+        public float breakFreqMax = 1;
+        public float breakLengthMin = 1;
+        public float breakLengthMax = 1;
+        public float simpleBugSpawnChance = 1;
+        public float drunkBugSpawnChance = 1;
+        public float chargerBugSpawnChance = 1;
+        public float queenBeeSpawnChance = 1;
+        public float beeSpawnChance = 1;
 
         public LevelInfo() {}
     }
