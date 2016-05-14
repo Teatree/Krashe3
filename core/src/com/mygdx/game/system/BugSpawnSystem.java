@@ -102,7 +102,7 @@ public class BugSpawnSystem extends EntitySystem {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue <= curDrunkProb) {
                     createBug(DRUNK);
-                } else if (probabilityValue >= curDrunkProb + 1 && probabilityValue < curDrunkProb + curSimpleProb) {
+                } else if (probabilityValue > curDrunkProb && probabilityValue < curDrunkProb + curSimpleProb) {
                     createBug(SIMPLE);
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb) {
                     createBug(CHARGER);
@@ -116,8 +116,8 @@ public class BugSpawnSystem extends EntitySystem {
                     createBug(BEE);
                 }
                 bugsSpawned++;
-                System.out.println("bugSpawned: " + bugsSpawned);
-                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
+//                System.out.println("bugSpawned: " + bugsSpawned);
+//                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
             }
 
                 if(break_counter > 0) {
@@ -147,6 +147,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
+        System.out.println("level multiplier:" + GameStage.gameScript.fpc.level.spawnInterval);
         curSpawnInterval = SPAWN_INTERVAL_BASE * currentMultiplier.spawnInterval * GameStage.gameScript.fpc.level.spawnInterval;
         curBreakFreqMin = BREAK_FREQ_BASE_MIN * currentMultiplier.breakFreqMin * GameStage.gameScript.fpc.level.breakFreqMin;
         curBreakFreqMax = BREAK_FREQ_BASE_MAX * currentMultiplier.breakFreqMax * GameStage.gameScript.fpc.level.breakFreqMax;

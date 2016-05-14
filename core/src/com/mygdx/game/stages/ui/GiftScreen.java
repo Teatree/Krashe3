@@ -12,6 +12,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.factory.component.LabelComponentFactory;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -118,7 +119,9 @@ public class GiftScreen {
     public void update() {
         if (pinataHitCounter <= 0) {
             pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity lbl = gameItem.getChild(GIFT_SCREEN).getChild(LBL_GIFT_SCREEN).getEntity();
+            Entity lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
+
+//            lbl.add(new LabelComponent("YOU GOT " + gift.money + " " + gift.type + " !!!", LabelComponentFactory.defaultLabelStyle));
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT " + gift.money + " " + gift.type + " !!!");
@@ -126,6 +129,7 @@ public class GiftScreen {
                 gift.takeGift(GameStage.gameScript.fpc);
                 giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 GameStage.gameScript.goalFeedbackScreen.init(true);
+                pinataHitCounter = 1;
                 GameStage.gameScript.goalFeedbackScreen.showNewLevel();
             }
         }

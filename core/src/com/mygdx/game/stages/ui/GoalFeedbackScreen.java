@@ -46,7 +46,6 @@ public class GoalFeedbackScreen {
     public boolean isGoalFeedbackOpen;
     public List<SpriterComponent> tilesScs = new ArrayList<>();
     public List<SpriterComponent> tilesScs2 = new ArrayList<>();
-    private ItemWrapper gameItem;
     private Entity feedbackEntity;
 
 
@@ -58,7 +57,6 @@ public class GoalFeedbackScreen {
 //            }
 //        }
 //        tiles = new ArrayList<>();
-        this.gameItem = gameItem;
     }
 
     public void init(boolean isNewLevel) {
@@ -207,6 +205,7 @@ public class GoalFeedbackScreen {
 
 
         isGoalFeedbackOpen = true;
+        isNewLevel = false;
     }
 
     private Entity createGoalTile(Goal goal, int y) {
@@ -302,9 +301,14 @@ public class GoalFeedbackScreen {
                 if (GameStage.gameScript.giftScreen.isGiftScreenOpen) {
                     GameStage.gameScript.giftScreen.isGiftScreenOpen = false;
                     GameStage.gameScript.giftScreen.hide();
-                } else {
-                    GameStage.gameScript.stage.initResult();
+
+                } else if (tiles.get(tiles.size()-1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X+20){
                     isGoalFeedbackOpen = false;
+                    feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+                    feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+                    sceneLoader.getEngine().removeEntity(feedbackEntity);
+                    prevLvlTiles = null;
+                    GameStage.gameScript.stage.initResult();
                 }
             }
         }

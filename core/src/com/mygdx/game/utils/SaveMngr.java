@@ -136,8 +136,9 @@ public class SaveMngr {
             goal.n = dg.n;
             goal.description = dg.description;
             fc.level.goals.put(goal.type, goal);
-            fc.level.difficultyLevel = dg.difficultyLevel;
-            fc.level.name = Level.levelsInfo.get(dg.difficultyLevel - 1).name;
+            fc.level.difficultyLevel = dg.difficultyLevel-1;
+            fc.level.name = Level.levelsInfo.get(dg.difficultyLevel-1).name;
+            fc.level.resetNewInfo();
         }
 //        Goal goal = new Goal();
 //        goal.achieved = false;
