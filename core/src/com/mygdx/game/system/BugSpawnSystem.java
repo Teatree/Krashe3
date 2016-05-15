@@ -147,7 +147,6 @@ public class BugSpawnSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        System.out.println("level multiplier:" + GameStage.gameScript.fpc.level.spawnInterval);
         curSpawnInterval = SPAWN_INTERVAL_BASE * currentMultiplier.spawnInterval * GameStage.gameScript.fpc.level.spawnInterval;
         curBreakFreqMin = BREAK_FREQ_BASE_MIN * currentMultiplier.breakFreqMin * GameStage.gameScript.fpc.level.breakFreqMin;
         curBreakFreqMax = BREAK_FREQ_BASE_MAX * currentMultiplier.breakFreqMax * GameStage.gameScript.fpc.level.breakFreqMax;

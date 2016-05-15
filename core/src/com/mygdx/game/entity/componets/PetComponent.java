@@ -3,6 +3,7 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.SaveMngr;
 
 import java.util.Random;
@@ -88,12 +89,15 @@ public class PetComponent extends ShopItem implements Component {
     @Override
     public void disable(FlowerPublicComponent fpc) {
         this.enabled = false;
-        fpc.currentPet = null;
+//        fpc.currentPet = null;
     }
 
     @Override
     public void buyAndUse(FlowerPublicComponent fpc) {
         this.bought = true;
+        if (GameStage.gameScript.fpc.currentPet != null) {
+            GameStage.gameScript.fpc.currentPet.tryPeriod = false;
+        }
         apply(fpc);
     }
 

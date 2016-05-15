@@ -294,11 +294,11 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        if (vc.currencyType != HARD) {
+//                        if (vc.currencyType != HARD) {
                             vc.apply(GameStage.gameScript.fpc);
-                        } else {
-                            Main.getPlatformResolver().requestPurchase(vc.transactionId);
-                        }
+//                        } else {
+//                            Main.getPlatformResolver().requestPurchase(vc.transactionId);
+//                        }
                         showPreview(vc, false, false);
                     }
                 }
