@@ -97,23 +97,23 @@ public class BugSpawnSystem extends EntitySystem {
         break_counter -= delta;
         if (spawner <= 0) {
             if (isAngeredBeesMode) {
-                createBug(BEE);
+                createBug(BEE, currentMultiplier);
             } else {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue <= curDrunkProb) {
-                    createBug(DRUNK);
+                    createBug(DRUNK, currentMultiplier);
                 } else if (probabilityValue > curDrunkProb && probabilityValue < curDrunkProb + curSimpleProb) {
-                    createBug(SIMPLE);
+                    createBug(SIMPLE, currentMultiplier);
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb) {
-                    createBug(CHARGER);
+                    createBug(CHARGER, currentMultiplier);
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb) {
                     if (!queenBeeOnStage) {
-                        createBug(QUEENBEE);
+                        createBug(QUEENBEE, currentMultiplier);
                         queenBeeOnStage = true;
                     }
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + 1 &&
                         probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + curBeeProb) {
-                    createBug(BEE);
+                    createBug(BEE, currentMultiplier);
                 }
                 bugsSpawned++;
 //                System.out.println("bugSpawned: " + bugsSpawned);
@@ -133,9 +133,9 @@ public class BugSpawnSystem extends EntitySystem {
 //        System.out.println("break_counter: " + break_counter);
     }
 
-    private void createBug(String tempType) {
+    private void createBug(String tempType, Multiplier currentMultiplier) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
-        BugComponent bc = new BugComponent(tempType);
+        BugComponent bc = new BugComponent(tempType, currentMultiplier);
         bugEntity.add(bc);
         bugEntity.add(fcc);
 
@@ -205,5 +205,15 @@ public class BugSpawnSystem extends EntitySystem {
         public float chargerBugSpawnChance = 1;
         public float queenBeeSpawnChance = 1;
         public float beeSpawnChance = 1;
+
+        public float simpleBugMoveDuration = 1;
+        public float simpleBugAmplitude = 1;
+        public float drunkBugMoveDuration = 1;
+        public float drunkBugAmplitude = 1;
+        public float beeMoveDuration = 1;
+        public float beeAmplitude = 1;
+        public float queenBeeMoveDuration = 1;
+        public float queenBeeAmplitude = 1;
+        public float chargerBugMove = 1;
     }
 }

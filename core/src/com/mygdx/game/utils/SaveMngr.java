@@ -369,6 +369,16 @@ public class SaveMngr {
         public float queenBeeSpawnChance = 1;
         public float beeSpawnChance = 1;
 
+        public float simpleBugMoveDuration = 1;
+        public float simpleBugAmplitude = 1;
+        public float drunkBugMoveDuration = 1;
+        public float drunkBugAmplitude = 1;
+        public float beeMoveDuration = 1;
+        public float beeAmplitude = 1;
+        public float queenBeeMoveDuration = 1;
+        public float queenBeeAmplitude = 1;
+        public float chargerBugMove = 1;
+
         public LevelInfo() {}
     }
 

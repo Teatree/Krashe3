@@ -171,7 +171,7 @@ public class BugSystem extends IteratingSystem {
         // Idle
         if (bc.state.equals(IDLE)) {
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
-            bc.velocity = deltaTime * IDLE_MVMNT_SPEED;
+            bc.velocity = deltaTime * bc.IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
                 setAnimation(PREPARING_ANI, Animation.PlayMode.LOOP, sasc, sac);
@@ -181,12 +181,12 @@ public class BugSystem extends IteratingSystem {
         }
         // Preparing
         else if (bc.state.equals(PREPARING)) {
-            bc.velocity = deltaTime * PREPARING_MVMNT_SPEED;
+            bc.velocity = deltaTime * bc.PREPARING_MVMNT_SPEED;
             if (bc.counter == 0) {
                 bc.state = CHARGING;
                 canPlayAnimation = true;
                 setAnimation(CHARGING_ANI, Animation.PlayMode.LOOP, sasc, sac);
-                bc.velocity = deltaTime * CHARGING_MVMNT_SPEED;
+                bc.velocity = deltaTime * bc.CHARGING_MVMNT_SPEED;
             }
         }
         // Charging

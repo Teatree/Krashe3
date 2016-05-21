@@ -3,6 +3,8 @@ package com.mygdx.game.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.system.BugSpawnSystem;
 import com.mygdx.game.utils.GlobalConstants;
 
 import java.util.Random;
@@ -37,6 +39,10 @@ public class BugComponent implements Component {
     public Interpolation interpolation = Interpolation.exp5;
     public boolean reverse, began, complete;
 
+    public float IDLE_MVMNT_SPEED;
+    public float PREPARING_MVMNT_SPEED;
+    public float CHARGING_MVMNT_SPEED;
+
     public int points;
 
     public Rectangle boundsRect = new Rectangle();
@@ -51,54 +57,41 @@ public class BugComponent implements Component {
         state = IDLE;
     }
 
-    public BugComponent(String type) {
+    public BugComponent(String type, BugSpawnSystem.Multiplier m) {
         this.type = type;
         this.state = IDLE;
         switch (type) {
             case DRUNK: {
-                duration = 12;
-                amplitude = 50;
+                duration = 12 *m.drunkBugMoveDuration *GameStage.gameScript.fpc.level.drunkBugMoveDuration;
+                amplitude = 50 *m.drunkBugAmplitude *GameStage.gameScript.fpc.level.drunkBugAmplitude;
                 points = 10;
                 break;
             }
             case BEE: {
-                duration = 14;
-                amplitude = 0;
+                duration = 14 *m.beeMoveDuration *GameStage.gameScript.fpc.level.beeMoveDuration;
+                amplitude = 0 *m.beeAmplitude *GameStage.gameScript.fpc.level.beeAmplitude;
                 points = 15;
                 break;
             }
             case CHARGER: {
                 points = 25;
+                IDLE_MVMNT_SPEED = 115 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
+                PREPARING_MVMNT_SPEED = 40 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
+                CHARGING_MVMNT_SPEED = 505 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
                 break;
             }
             case QUEENBEE: {
-                duration = 12;
-                amplitude = 50;
+                duration = 12 *m.queenBeeMoveDuration *GameStage.gameScript.fpc.level.queenBeeMoveDuration;
+                amplitude = 50 *m.queenBeeAmplitude *GameStage.gameScript.fpc.level.queenBeeAmplitude;
                 points = 33;
                 break;
             }
             default: {
-                duration = 14;
-                amplitude = 0;
+                duration = 14 *m.simpleBugMoveDuration *GameStage.gameScript.fpc.level.simpleBugMoveDuration;
+                amplitude = 0 *m.simpleBugAmplitude *GameStage.gameScript.fpc.level.simpleBugAmplitude;
                 points = 10;
                 break;
             }
         }
     }
-//
-//    public enum State {
-//        IDLE,
-//        PREPARING,
-//        CHARGING,
-//        SCARED,
-//        DEAD
-//    }
-
-//    public enum BugType {
-//        SIMPLE,
-//        DRUNK,
-//        CHARGER,
-//        BEE,
-//        QUEENBEE
-//    }
 }

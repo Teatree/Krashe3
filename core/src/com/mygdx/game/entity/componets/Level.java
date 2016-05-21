@@ -27,6 +27,16 @@ public class Level {
     public float queenBeeSpawnChance = 1;
     public float beeSpawnChance = 1;
 
+    public float simpleBugMoveDuration = 1;
+    public float simpleBugAmplitude = 1;
+    public float drunkBugMoveDuration = 1;
+    public float drunkBugAmplitude = 1;
+    public float beeMoveDuration = 1;
+    public float beeAmplitude = 1;
+    public float queenBeeMoveDuration = 1;
+    public float queenBeeAmplitude = 1;
+    public float chargerBugMove = 1;
+
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;
         spawnInterval = levelsInfo.get(difficultyLevel).spawnInterval;
@@ -39,6 +49,16 @@ public class Level {
         chargerBugSpawnChance = levelsInfo.get(difficultyLevel).chargerBugSpawnChance;
         queenBeeSpawnChance = levelsInfo.get(difficultyLevel).queenBeeSpawnChance;
         beeSpawnChance = levelsInfo.get(difficultyLevel).beeSpawnChance;
+
+        simpleBugMoveDuration = levelsInfo.get(difficultyLevel).simpleBugMoveDuration;
+        simpleBugAmplitude = levelsInfo.get(difficultyLevel).simpleBugAmplitude;
+        drunkBugMoveDuration = levelsInfo.get(difficultyLevel).drunkBugMoveDuration;
+        drunkBugAmplitude = levelsInfo.get(difficultyLevel).drunkBugAmplitude;
+        beeMoveDuration = levelsInfo.get(difficultyLevel).beeMoveDuration;
+        beeAmplitude = levelsInfo.get(difficultyLevel).beeAmplitude;
+        queenBeeMoveDuration = levelsInfo.get(difficultyLevel).queenBeeMoveDuration;
+        queenBeeAmplitude = levelsInfo.get(difficultyLevel).queenBeeAmplitude;
+        chargerBugMove = levelsInfo.get(difficultyLevel).chargerBugMove;
     }
 
     public Goal getGoalByType(Goal.GoalType type) {
@@ -79,6 +99,16 @@ public class Level {
             chargerBugSpawnChance = info.chargerBugSpawnChance;
             queenBeeSpawnChance = info.queenBeeSpawnChance;
             beeSpawnChance = info.beeSpawnChance;
+
+            simpleBugMoveDuration = info.simpleBugMoveDuration;
+            simpleBugAmplitude = info.simpleBugAmplitude;
+            drunkBugMoveDuration = info.drunkBugMoveDuration;
+            drunkBugAmplitude = info.drunkBugAmplitude;
+            beeMoveDuration = info.beeMoveDuration;
+            beeAmplitude = info.beeAmplitude;
+            queenBeeMoveDuration = info.queenBeeMoveDuration;
+            queenBeeAmplitude = info.queenBeeAmplitude;
+            chargerBugMove = info.chargerBugMove;
         }
     }
 }

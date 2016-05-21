@@ -18,9 +18,6 @@ public abstract class GlobalConstants {
 
     public static final int MAX_IDLE_COUNT = 240;
     public static final int MIN_IDLE_COUNTER = 100;
-    public static final int IDLE_MVMNT_SPEED = 115;
-    public static final int PREPARING_MVMNT_SPEED = 40;
-    public static final int CHARGING_MVMNT_SPEED = 505;
     public static final int PREPARATION_TIME = 100;
 
     public static final int BEE_SPAWN_INTERVAL_ANGERED = 50;
