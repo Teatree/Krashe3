@@ -294,12 +294,5 @@ public class BugSystem extends IteratingSystem {
         if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS) != null && bc.type.equals(QUEENBEE)) {
             GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS).update();
         }
-
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_LOWER) != null && GameStage.gameScript.fpc.boundsRect.getY() < 400) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_LOWER).update();
-        }
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_UPPER) != null && GameStage.gameScript.fpc.boundsRect.getY() > 400) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUG_UPPER).update();
-        }
     }
 }

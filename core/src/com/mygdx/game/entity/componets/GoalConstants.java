@@ -1,6 +1,10 @@
 package com.mygdx.game.entity.componets;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class GoalConstants {
 
     public static final int EAT_N_BUGS_EASY_MIN = 20;
@@ -16,20 +20,6 @@ public class GoalConstants {
     public static final int EAT_N_BUGS_1LIFE_HARD_MIN = 20;
     public static final int EAT_N_BUGS_1LIFE_HARD_MAX = 25;
     public static final String PET_EAT_N_BUGS_DESC = "PET EAT # BUGS";
-
-    public static final int PET_CHARGE_N_TIMES_EASY_MIN = 10;
-    public static final int PET_CHARGE_N_TIMES_EASY_MAX = 15;
-    public static final int PET_CHARGE_N_TIMES_MED_MIN = 16;
-    public static final int PET_CHARGE_N_TIMES_MED_MAX = 25;
-    public static final int PET_CHARGE_N_TIMES_HARD_MIN =26;
-    public static final int PET_CHARGE_N_TIMES_HARD_MAX = 40;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_EASY_MIN = 3;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_EASY_MAX = 6;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_MED_MIN = 7;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_MED_MAX = 12;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MIN = 13;
-    public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MAX = 22;
-    public static final String PET_CHARGE_N_TIMES_DESC = "PET DASH # TIMES";
 
     public static final int DESTROY_N_COCOON_EASY_MIN = 2;
     public static final int DESTROY_N_COCOON_EASY_MAX = 4;
@@ -227,19 +217,19 @@ public class GoalConstants {
     public static final int PET_THE_PET_1LIFE_HARD_MAX = 30;
     public static final String PET_THE_PET_DESC = "PET THE PET # TIMES";
 
-    public static final int PET_DASH_EASY_MIN = 7;
-    public static final int PET_DASH_EASY_MAX = 10;
-    public static final int PET_DASH_MED_MIN = 11;
-    public static final int PET_DASH_MED_MAX = 16;
-    public static final int PET_DASH_HARD_MIN = 17;
-    public static final int PET_DASH_HARD_MAX = 25;
-    public static final int PET_DASH_1LIFE_EASY_MIN = 1;
-    public static final int PET_DASH_1LIFE_EASY_MAX = 2;
-    public static final int PET_DASH_1LIFE_MED_MIN = 3;
-    public static final int PET_DASH_1LIFE_MED_MAX = 4;
-    public static final int PET_DASH_1LIFE_HARD_MIN = 5;
-    public static final int PET_DASH_1LIFE_HARD_MAX = 6;
-    public static final String PET_DASH_DESC = "PET DASH # TIMES";
+    public static final int PET_CHARGE_N_TIMES_EASY_MIN = 7;
+    public static final int PET_CHARGE_N_TIMES_EASY_MAX = 10;
+    public static final int PET_CHARGE_N_TIMES_MED_MIN = 11;
+    public static final int PET_CHARGE_N_TIMES_MED_MAX = 16;
+    public static final int PET_CHARGE_N_TIMES_HARD_MIN = 17;
+    public static final int PET_CHARGE_N_TIMES_HARD_MAX = 25;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_EASY_MIN = 1;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_EASY_MAX = 2;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_MED_MIN = 3;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_MED_MAX = 4;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MIN = 5;
+    public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MAX = 6;
+    public static final String PET_CHARGE_N_TIMES_DESC = "PET DASH # TIMES";
 
     public static final int TAP_EASY_MIN = 100;
     public static final int TAP_EASY_MAX = 200;
@@ -254,4 +244,267 @@ public class GoalConstants {
     public static final int TAP_1LIFE_HARD_MIN = 81;
     public static final int TAP_1LIFE_HARD_MAX = 120;
     public static final String TAP_DESC = "TAP # TIMES";
+
+    public static HashMap<Goal.GoalType, List<Integer>> bParameters;
+
+    public static HashMap<Goal.GoalType, List<Integer>> getbParameters(){
+        if (bParameters == null){
+            bParameters = new HashMap<>();
+            List<Integer> eat_n_bug_goals = new ArrayList();
+            eat_n_bug_goals.add(EAT_N_BUGS_EASY_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_EASY_MAX);
+            eat_n_bug_goals.add(EAT_N_BUGS_MED_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_MED_MAX);
+            eat_n_bug_goals.add(EAT_N_BUGS_HARD_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_HARD_MAX);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_EASY_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_EASY_MAX);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_MED_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_MED_MAX);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_HARD_MIN);
+            eat_n_bug_goals.add(EAT_N_BUGS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_BUGS, eat_n_bug_goals);
+
+            List<Integer> pet_charge_n_times_goals = new ArrayList();
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_EASY_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_EASY_MAX);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_MED_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_MED_MAX);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_HARD_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_HARD_MAX);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_EASY_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_EASY_MAX);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_MED_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_MED_MAX);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_HARD_MIN);
+            pet_charge_n_times_goals.add(PET_CHARGE_N_TIMES_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.PET_DASH_N_TIMES, pet_charge_n_times_goals);
+
+            List<Integer> destroy_n_cocoon_goals = new ArrayList();
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_EASY_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_EASY_MAX);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_MED_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_MED_MAX);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_HARD_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_HARD_MAX);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_EASY_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_EASY_MAX);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_MED_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_MED_MAX);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_HARD_MIN);
+            destroy_n_cocoon_goals.add(DESTROY_N_COCOON_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.DESTROY_N_COCOON, destroy_n_cocoon_goals);
+
+            List<Integer> eat_n_butterflies_goals = new ArrayList();
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_EASY_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_EASY_MAX);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_MED_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_MED_MAX);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_HARD_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_HARD_MAX);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_EASY_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_EASY_MAX);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_MED_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_MED_MAX);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_HARD_MIN);
+            eat_n_butterflies_goals.add(EAT_N_BUTTERFLIES_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_BUTTERFLIES, eat_n_butterflies_goals);
+
+            List<Integer> get_n_points_goals = new ArrayList();
+            get_n_points_goals.add(GET_N_POINTS_EASY_MIN);
+            get_n_points_goals.add(GET_N_POINTS_EASY_MAX);
+            get_n_points_goals.add(GET_N_POINTS_MED_MIN);
+            get_n_points_goals.add(GET_N_POINTS_MED_MAX);
+            get_n_points_goals.add(GET_N_POINTS_HARD_MIN);
+            get_n_points_goals.add(GET_N_POINTS_HARD_MAX);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_EASY_MIN);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_EASY_MAX);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_MED_MIN);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_MED_MAX);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_HARD_MIN);
+            get_n_points_goals.add(GET_N_POINTS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.GET_N_POINTS, get_n_points_goals);
+
+            List<Integer> spend_moneyz_goals = new ArrayList();
+            spend_moneyz_goals.add(SPEND_MONEYZ_EASY_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_EASY_MAX);
+            spend_moneyz_goals.add(SPEND_MONEYZ_MED_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_MED_MAX);
+            spend_moneyz_goals.add(SPEND_MONEYZ_HARD_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_HARD_MAX);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_EASY_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_EASY_MAX);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_MED_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_MED_MAX);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_HARD_MIN);
+            spend_moneyz_goals.add(SPEND_MONEYZ_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.SPEND_MONEYZ, spend_moneyz_goals);
+
+            List<Integer> eat_n_umbrella_goals = new ArrayList();
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_EASY_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_EASY_MAX);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_MED_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_MED_MAX);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_HARD_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_HARD_MAX);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_EASY_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_EASY_MAX);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_MED_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_MED_MAX);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_HARD_MIN);
+            eat_n_umbrella_goals.add(EAT_N_UMBRELLA_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_UMBRELLA, eat_n_umbrella_goals);
+
+            List<Integer> bounce_umbrella_goals = new ArrayList();
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_EASY_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_EASY_MAX);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_MED_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_MED_MAX);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_HARD_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_N_TIMES_HARD_MAX);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_EASY_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_EASY_MAX);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_MED_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_MED_MAX);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_HARD_MIN);
+            bounce_umbrella_goals.add(BOUNCE_UMBRELLA_1LIFE_N_TIMES_HARD_MAX);
+            bParameters.put(Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES, bounce_umbrella_goals);
+
+            List<Integer> eat_n_queens_goals = new ArrayList();
+            eat_n_queens_goals.add(EAT_N_QUEENS_EASY_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_EASY_MAX);
+            eat_n_queens_goals.add(EAT_N_QUEENS_MED_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_MED_MAX);
+            eat_n_queens_goals.add(EAT_N_QUEENS_HARD_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_HARD_MAX);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_EASY_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_EASY_MAX);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_MED_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_MED_MAX);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_HARD_MIN);
+            eat_n_queens_goals.add(EAT_N_QUEENS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_QUEENS, eat_n_queens_goals);
+
+            List<Integer> survive_n_angered_goals = new ArrayList();
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_EASY_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_EASY_MAX);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_MED_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_MED_MAX);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_HARD_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_HARD_MAX);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_EASY_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_EASY_MAX);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_MED_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_MED_MAX);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MIN);
+            survive_n_angered_goals.add(SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.SURVIVE_N_ANGERED_MODES, survive_n_angered_goals);
+
+            List<Integer> eat_n_bees_goals = new ArrayList();
+            eat_n_bees_goals.add(EAT_N_BEES_EASY_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_EASY_MAX);
+            eat_n_bees_goals.add(EAT_N_BEES_MED_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_MED_MAX);
+            eat_n_bees_goals.add(EAT_N_BEES_HARD_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_HARD_MAX);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_EASY_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_EASY_MAX);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_MED_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_MED_MAX);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_HARD_MIN);
+            eat_n_bees_goals.add(EAT_N_BEES_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_BEES, eat_n_bees_goals);
+
+            List<Integer> eat_n_chargers_goals = new ArrayList();
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_EASY_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_EASY_MAX);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_MED_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_MED_MAX);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_HARD_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_HARD_MAX);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_EASY_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_EASY_MAX);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_MED_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_MED_MAX);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_HARD_MIN);
+            eat_n_chargers_goals.add(EAT_N_CHARGERS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_CHARGERS, eat_n_chargers_goals);
+
+            List<Integer> eat_n_drunks_goals = new ArrayList();
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_EASY_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_EASY_MAX);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_MED_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_MED_MAX);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_HARD_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_HARD_MAX);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_EASY_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_EASY_MAX);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_MED_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_MED_MAX);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_HARD_MIN);
+            eat_n_drunks_goals.add(EAT_N_DRUNKS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_DRUNKS, eat_n_drunks_goals);
+
+            List<Integer> eat_n_simple_goals = new ArrayList();
+            eat_n_simple_goals.add(EAT_N_SIMPLE_EASY_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_EASY_MAX);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_MED_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_MED_MAX);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_HARD_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_HARD_MAX);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_EASY_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_EASY_MAX);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_MED_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_MED_MAX);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_HARD_MIN);
+            eat_n_simple_goals.add(EAT_N_SIMPLE_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.EAT_N_SIMPLE, eat_n_simple_goals);
+
+            List<Integer> pet_eat_n_bugs_goals = new ArrayList();
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_EASY_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_EASY_MAX);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_MED_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_MED_MAX);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_HARD_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_HARD_MAX);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_EASY_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_EASY_MAX);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_MED_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_MED_MAX);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_HARD_MIN);
+            pet_eat_n_bugs_goals.add(PET_EAT_N_BUGS_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.PET_EAT_N_BUGS, pet_eat_n_bugs_goals);
+
+            List<Integer> pet_the_pet_goals = new ArrayList();
+            pet_the_pet_goals.add(PET_THE_PET_EASY_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_EASY_MAX);
+            pet_the_pet_goals.add(PET_THE_PET_MED_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_MED_MAX);
+            pet_the_pet_goals.add(PET_THE_PET_HARD_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_HARD_MAX);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_EASY_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_EASY_MAX);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_MED_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_MED_MAX);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_HARD_MIN);
+            pet_the_pet_goals.add(PET_THE_PET_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.PET_THE_PET, pet_the_pet_goals);
+
+            List<Integer> tap_goals = new ArrayList();
+            tap_goals.add(TAP_EASY_MIN);
+            tap_goals.add(TAP_EASY_MAX);
+            tap_goals.add(TAP_MED_MIN);
+            tap_goals.add(TAP_MED_MAX);
+            tap_goals.add(TAP_HARD_MIN);
+            tap_goals.add(TAP_HARD_MAX);
+            tap_goals.add(TAP_1LIFE_EASY_MIN);
+            tap_goals.add(TAP_1LIFE_EASY_MAX);
+            tap_goals.add(TAP_1LIFE_MED_MIN);
+            tap_goals.add(TAP_1LIFE_MED_MAX);
+            tap_goals.add(TAP_1LIFE_HARD_MIN);
+            tap_goals.add(TAP_1LIFE_HARD_MAX);
+            bParameters.put(Goal.GoalType.TAP, tap_goals);
+        }
+        return bParameters;
+    }
 }
