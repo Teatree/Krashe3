@@ -39,6 +39,7 @@ public class Goal {
     public static HashMap<Integer, PeriodType> periodTypeMap;
     public static HashMap<Integer, PetComponent> petType;
     public static HashMap<Integer, Float> levelMultipliers;
+
     public int counter;
     public boolean achieved;
     public boolean justAchieved;
@@ -65,7 +66,6 @@ public class Goal {
         periodTypeMap = new HashMap<>();
         periodTypeMap.put(0, PeriodType.IN_ONE_LIFE);
         periodTypeMap.put(1, PeriodType.TOTAL);
-        periodTypeMap.put(2, PeriodType.IN_A_ROW);
 
         levelMultipliers = new HashMap<>();
         levelMultipliers.put(0, 1.03f);
@@ -98,23 +98,6 @@ public class Goal {
         }
     }
 
-    public void updateInARowGoals(BugComponent bc) {
-        if (periodType.equals(PeriodType.IN_A_ROW)) {
-            if (type.equals(GoalType.EAT_N_DRUNKS) && !bc.type.equals(DRUNK)) {
-                counter = 0;
-            }
-            if (type.equals(GoalType.EAT_N_BEES) && !bc.type.equals(BEE)) {
-                counter = 0;
-            }
-            if (type.equals(GoalType.EAT_N_CHARGERS) && !bc.type.equals(CHARGER)) {
-                counter = 0;
-            }
-            if (type.equals(GoalType.EAT_N_SIMPLE) && !bc.type.equals(SIMPLE)) {
-                counter = 0;
-            }
-        }
-    }
-
     public int changeByLevel(int level, int n) {
         return Math.round(n * levelMultipliers.get(level));
     }
@@ -124,7 +107,6 @@ public class Goal {
     }
 
     public enum PeriodType {
-        IN_A_ROW(10),
         IN_ONE_LIFE(5),
         TOTAL(1);
 
@@ -136,8 +118,9 @@ public class Goal {
     }
 
     public enum GoalType {
-        EAT_N_BUGS(EAT_N_BUGS_MIN, EAT_N_BUGS_MAX, EAT_N_BUGS_DESC, 3),
+        EAT_N_BUGS(EAT_N_BUGS_MIN, EAT_N_BUGS_MAX, EAT_N_BUGS_DESC, 2),
         GET_N_POINTS(GET_N_POINTS_MIN, GET_N_POINTS_MAX, GET_N_POINTS_DESC, 2),
+        SPEND_MONEYZ(SPEND_MONEYZ_MIN, SPEND_MONEYZ_MAX, SPEND_MONEYZ_DESC, 1),
         EAT_N_DRUNKS(EAT_N_DRUNKS_MIN, EAT_N_DRUNKS_MAX, EAT_N_DRUNKS_DESC, 2),
         EAT_N_CHARGERS(EAT_N_CHARGERS_MIN, EAT_N_CHARGERS_MAX, EAT_N_CHARGERS_DESC, 2),
         EAT_N_SIMPLE(EAT_N_SIMPLE_MIN, EAT_N_SIMPLE_MAX, EAT_N_SIMPLE_DESC, 2),
@@ -152,7 +135,7 @@ public class Goal {
         EAT_N_QUEENS(EAT_N_QUEENS_MIN, EAT_N_QUEENS_MAX, EAT_N_QUEENS_DESC, 2),
         SURVIVE_N_ANGERED_MODES(SURVIVE_N_ANGERED_MODES_MIN, SURVIVE_N_ANGERED_MODES_MAX, SURVIVE_N_ANGERED_MODES_DESC, 2),
         PET_THE_PET(PET_THE_PET_MIN, PET_THE_PET_MAX, PET_THE_PET_DESC, 2),
-        PET_EAT_N_BUGS(PET_EAT_N_BUGS_MIN, PET_EAT_N_BUGS_MAX, PET_EAT_N_BUGS_DESC, 3),
+        PET_EAT_N_BUGS(PET_EAT_N_BUGS_MIN, PET_EAT_N_BUGS_MAX, PET_EAT_N_BUGS_DESC, 2),
         PET_DASH_N_TIMES(PET_CHARGE_N_TIMES_MIN, PET_CHARGE_N_TIMES_MAX, PET_CHARGE_N_TIMES_DESC, 2);
 
         public int min;
@@ -171,6 +154,7 @@ public class Goal {
         public static List<GoalType> getEasyGoals() {
             List<GoalType> result = new ArrayList<>();
             result.add(EAT_N_BUGS);
+            result.add(SPEND_MONEYZ);
             result.add(GET_N_POINTS);
             result.add(EAT_N_DRUNKS);
             result.add(EAT_N_CHARGERS);
@@ -188,6 +172,7 @@ public class Goal {
         public static List<GoalType> getMediumGoals() {
             List<GoalType> result = new ArrayList<>();
             result.add(EAT_N_BUGS);
+            result.add(SPEND_MONEYZ);
             result.add(GET_N_POINTS);
             result.add(EAT_N_DRUNKS);
             result.add(EAT_N_CHARGERS);
@@ -209,6 +194,7 @@ public class Goal {
         public static List<GoalType> getHardGoals() {
             List<GoalType> result = new ArrayList<>();
             result.add(EAT_N_BUGS);
+            result.add(SPEND_MONEYZ);
             result.add(GET_N_POINTS);
             result.add(EAT_N_DRUNKS);
             result.add(EAT_N_CHARGERS);

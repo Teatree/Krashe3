@@ -53,10 +53,6 @@ public class BugComponent implements Component {
 
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
 
-    public BugComponent() {
-        state = IDLE;
-    }
-
     public BugComponent(String type, BugSpawnSystem.Multiplier m) {
         this.type = type;
         this.state = IDLE;

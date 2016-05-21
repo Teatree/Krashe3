@@ -280,10 +280,6 @@ public class BugSystem extends IteratingSystem {
 
     private void checkGoals(BugComponent bc) {
 
-        for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
-            g.updateInARowGoals(bc);
-        }
-
         updateBugGoals(bc);
 
         if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BEE)) {
