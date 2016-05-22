@@ -38,8 +38,6 @@ public class Goal {
 
     public static HashMap<Integer, PeriodType> periodTypeMap;
     public static HashMap<Integer, PetComponent> petType;
-//    public static HashMap<Integer, Float> levelMultipliers;
-//    public static HashMap<Integer, Float> levelMultipliers;
 
     public int counter;
     public boolean achieved;
