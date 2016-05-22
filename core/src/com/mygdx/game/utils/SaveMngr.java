@@ -379,6 +379,30 @@ public class SaveMngr {
         public float queenBeeAmplitude = 1;
         public float chargerBugMove = 1;
 
+        public int maxGoalsAmount = 3;
+        public int minGoalsAmount = 5;
+        public int easyGoalsAmount = 1;
+        public int mediumGoalsAmount = 1;
+        public int hardGoalsAmount = 1;
+
+        public float prob_eat_n_bugs;
+        public float prob_eat_n_drunks;
+        public float prob_eat_n_chargers;
+        public float prob_eat_n_simple ;
+        public float prob_eat_n_bees ;
+        public float prob_eat_n_queens;
+        public float prob_eat_n_umrellas;
+        public float prob_eat_n_butterflies;
+        public float prob_destroy_n_cocoon;
+        public float prob_bounce_umbrella_n_times;
+        public float prob_tap;
+        public float prob_survive_n_angered_modes;
+        public float prob_spend_n_moneyz;
+        public float prob_get_n_moneyz;
+        public float prob_pet_the_pet_n_times;
+        public float prob_pet_eat_n_bugs;
+        public float prob_pet_dash_n_times;
+                
         public LevelInfo() {}
     }
 

@@ -11,7 +11,6 @@ public class Level {
 
     public static List<SaveMngr.LevelInfo> levelsInfo;
     public int difficultyLevel;
-    public float difficultyMultiplier;
     public String name;
     public HashMap<Goal.GoalType, Goal> goals = new HashMap<>();
     public GoalGenerator goalGenerator = new GoalGenerator();
@@ -37,6 +36,31 @@ public class Level {
     public float queenBeeAmplitude = 1;
     public float chargerBugMove = 1;
 
+    public int maxGoalsAmount = 3;
+    public int minGoalsAmount = 5;
+    public int easyGoalsAmount = 1;
+    public int mediumGoalsAmount = 1;
+    public int hardGoalsAmount = 1;
+    public float goalMultiplier = 1.05f;
+
+    public float prob_eat_n_bugs;
+    public float prob_eat_n_drunks;
+    public float prob_eat_n_chargers;
+    public float prob_eat_n_simple;
+    public float prob_eat_n_bees;
+    public float prob_eat_n_queens;
+    public float prob_eat_n_umrellas;
+    public float prob_eat_n_butterflies;
+    public float prob_destroy_n_cocoon;
+    public float prob_bounce_umbrella_n_times;
+    public float prob_tap;
+    public float prob_survive_n_angered_modes;
+    public float prob_spend_n_moneyz;
+    public float prob_get_n_moneyz;
+    public float prob_pet_the_pet_n_times;
+    public float prob_pet_eat_n_bugs;
+    public float prob_pet_dash_n_times;
+
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;
         spawnInterval = levelsInfo.get(difficultyLevel).spawnInterval;
@@ -59,6 +83,31 @@ public class Level {
         queenBeeMoveDuration = levelsInfo.get(difficultyLevel).queenBeeMoveDuration;
         queenBeeAmplitude = levelsInfo.get(difficultyLevel).queenBeeAmplitude;
         chargerBugMove = levelsInfo.get(difficultyLevel).chargerBugMove;
+
+        maxGoalsAmount = levelsInfo.get(difficultyLevel).maxGoalsAmount;
+        minGoalsAmount = levelsInfo.get(difficultyLevel).minGoalsAmount;
+        easyGoalsAmount = levelsInfo.get(difficultyLevel).easyGoalsAmount;
+        mediumGoalsAmount = levelsInfo.get(difficultyLevel).mediumGoalsAmount;
+        hardGoalsAmount = levelsInfo.get(difficultyLevel).hardGoalsAmount;
+
+        prob_eat_n_bugs = levelsInfo.get(difficultyLevel).prob_eat_n_bugs;
+        prob_eat_n_drunks = levelsInfo.get(difficultyLevel).prob_eat_n_drunks;
+        prob_eat_n_chargers = levelsInfo.get(difficultyLevel).prob_eat_n_chargers;
+        prob_eat_n_simple = levelsInfo.get(difficultyLevel).prob_eat_n_simple;
+        prob_eat_n_bees = levelsInfo.get(difficultyLevel).prob_eat_n_bees;
+        prob_eat_n_queens = levelsInfo.get(difficultyLevel).prob_eat_n_queens;
+        prob_eat_n_umrellas = levelsInfo.get(difficultyLevel).prob_eat_n_umrellas;
+        prob_eat_n_butterflies = levelsInfo.get(difficultyLevel).prob_eat_n_butterflies;
+        prob_destroy_n_cocoon = levelsInfo.get(difficultyLevel).prob_destroy_n_cocoon;
+        prob_bounce_umbrella_n_times = levelsInfo.get(difficultyLevel).prob_bounce_umbrella_n_times;
+        prob_tap = levelsInfo.get(difficultyLevel).prob_tap;
+        prob_survive_n_angered_modes = levelsInfo.get(difficultyLevel).prob_survive_n_angered_modes;
+        prob_spend_n_moneyz = levelsInfo.get(difficultyLevel).prob_spend_n_moneyz;
+        prob_get_n_moneyz = levelsInfo.get(difficultyLevel).prob_get_n_moneyz;
+        prob_pet_the_pet_n_times = levelsInfo.get(difficultyLevel).prob_pet_the_pet_n_times;
+        prob_pet_eat_n_bugs = levelsInfo.get(difficultyLevel).prob_pet_eat_n_bugs;
+        prob_pet_dash_n_times = levelsInfo.get(difficultyLevel).prob_pet_dash_n_times;
+
     }
 
     public Goal getGoalByType(Goal.GoalType type) {
@@ -109,6 +158,12 @@ public class Level {
             queenBeeMoveDuration = info.queenBeeMoveDuration;
             queenBeeAmplitude = info.queenBeeAmplitude;
             chargerBugMove = info.chargerBugMove;
+
+            maxGoalsAmount = info.maxGoalsAmount;
+            minGoalsAmount = info.minGoalsAmount;
+            easyGoalsAmount = info.easyGoalsAmount;
+            mediumGoalsAmount = info.mediumGoalsAmount;
+            hardGoalsAmount = info.hardGoalsAmount;
         }
     }
 }

@@ -130,8 +130,6 @@ public class GameStage extends Stage {
     public void initShop() {
         sceneLoader.setScene(SHOP_SCENE);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        if (Gdx.input.isTouched()) {
-//        }
         if (shopScript == null) {
             shopScript = new ShopScreenScript(this);
             root.addScript(shopScript);

@@ -48,7 +48,6 @@ public class Goal {
     public GoalType type;
     public PeriodType periodType;
     public int n;
-//    public int diff;
     public PetComponent pet;
     private Random random = new Random();
 
@@ -57,8 +56,6 @@ public class Goal {
 
     public Goal(GoalType goalType, int difficulty) {
         this.type = goalType;
-//        diff = random.nextInt(3);
-//        n = random.nextInt(goalType.max - goalType.min) + goalType.min;
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
         if(periodType == periodType.TOTAL) {
@@ -66,28 +63,13 @@ public class Goal {
         }else{
             n = random.nextInt(getbParameters().get(goalType).get(difficulty*2 + 7) - getbParameters().get(goalType).get(difficulty*2+6)) + getbParameters().get(goalType).get(difficulty*2+6);
         }
-        n *= GameStage.gameScript.fpc.level.
-//        n /= periodType.adjustByTypeDivider;
-//        n = changeByLevel(GameStage.gameScript.fpc.level.difficultyLevel, n);
+        n *= GameStage.gameScript.fpc.level.goalMultiplier;
     }
 
     public static void init(FlowerPublicComponent fpc) {
         periodTypeMap = new HashMap<>();
         periodTypeMap.put(0, PeriodType.IN_ONE_LIFE);
         periodTypeMap.put(1, PeriodType.TOTAL);
-
-//        levelMultipliers = new HashMap<>();
-//        levelMultipliers.put(0, 1.03f);
-//        levelMultipliers.put(1, 1.26f);
-//        levelMultipliers.put(2, 1.8f);
-//        levelMultipliers.put(3, 2.6f);
-//        levelMultipliers.put(4, 3.4f);
-//        levelMultipliers.put(5, 4.2f);
-//        levelMultipliers.put(6, 5f);
-//        levelMultipliers.put(7, 5.8f);
-//        levelMultipliers.put(8, 6.6f);
-//        levelMultipliers.put(9, 7.4f);
-//        levelMultipliers.put(10, 8.2f);
 
         petType = new HashMap<>();
         int ba = 0;
@@ -106,10 +88,6 @@ public class Goal {
             }
         }
     }
-
-//    public int changeByLevel(int level, int n) {
-////        return Math.round(n * levelMultipliers.get(level));
-//    }
 
     public String getDescription() {
         return description.replace("#", " " + n + " ") + " " + periodType;

@@ -245,7 +245,7 @@ public class GoalConstants {
     public static final int TAP_1LIFE_HARD_MAX = 120;
     public static final String TAP_DESC = "TAP # TIMES";
 
-    public static HashMap<Goal.GoalType, List<Integer>> bParameters;
+    private static HashMap<Goal.GoalType, List<Integer>> bParameters;
 
     public static HashMap<Goal.GoalType, List<Integer>> getbParameters(){
         if (bParameters == null){

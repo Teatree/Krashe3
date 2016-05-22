@@ -28,14 +28,7 @@ public class FlowerPublicComponent implements Component {
 
 
     public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
-//        if (currentPet != null) {
-//            PetComponent.eatThatBug(currentPet, rectangle);
-//
-//            return boundsRect.overlaps(rectangle) ||
-//                    currentPet.boundsRect.overlaps(rectangle);
-//        } else {
         return boundsRect.overlaps(rectangle) || petCollisionCheck(rectangle);
-//        }
     }
 
     public boolean petCollisionCheck(Rectangle rectangle) {
