@@ -57,9 +57,17 @@ public class Goal {
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
         if(periodType == periodType.TOTAL) {
-            n = random.nextInt(getbParameters().get(goalType).get(difficulty*2 + 1) - getbParameters().get(goalType).get(difficulty*2)) + getbParameters().get(goalType).get(difficulty*2);
+            if (getbParameters().get(goalType).get(difficulty*2 + 1) != getbParameters().get(goalType).get(difficulty*2)) {
+                n = random.nextInt(getbParameters().get(goalType).get(difficulty * 2 + 1) - getbParameters().get(goalType).get(difficulty * 2)) + getbParameters().get(goalType).get(difficulty * 2);
+            }else{
+                n = getbParameters().get(goalType).get(difficulty*2);
+            }
         }else{
-            n = random.nextInt(getbParameters().get(goalType).get(difficulty*2 + 7) - getbParameters().get(goalType).get(difficulty*2+6)) + getbParameters().get(goalType).get(difficulty*2+6);
+            if (getbParameters().get(goalType).get(difficulty*2 + 7) != getbParameters().get(goalType).get(difficulty*2+6)) {
+                n = random.nextInt(getbParameters().get(goalType).get(difficulty * 2 + 7) - getbParameters().get(goalType).get(difficulty * 2 + 6)) + getbParameters().get(goalType).get(difficulty * 2 + 6);
+            }else{
+                n = getbParameters().get(goalType).get(difficulty * 2 + 6);
+            }
         }
         n *= GameStage.gameScript.fpc.level.goalMultiplier;
     }
