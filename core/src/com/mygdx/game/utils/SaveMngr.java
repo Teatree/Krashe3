@@ -1,5 +1,6 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
@@ -205,8 +206,12 @@ public class SaveMngr {
     }
 
     private static String readFile(String fileName) {
-//        FileHandle file = Gdx.files.local(fileName);
-        FileHandle file = Gdx.files.internal(fileName);
+        FileHandle file;
+        if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+            file = Gdx.files.internal(fileName);
+        } else {
+            file = Gdx.files.local(fileName);
+        }
         if (file != null && file.exists()) {
             String s = file.readString();
             if (!s.isEmpty()) {
@@ -341,7 +346,7 @@ public class SaveMngr {
 
     public static List<LevelInfo> initAllLevels() {
         String saved = readFile(LEVELS_JSON);
-        List<LevelInfo> levels = new Json().fromJson(List.class, saved);
+        List<LevelInfo> levels = new Json().fromJson(ArrayList.class, saved);
         Level.levelsInfo = levels;
         return levels;
     }
