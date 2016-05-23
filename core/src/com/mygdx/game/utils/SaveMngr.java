@@ -205,11 +205,11 @@ public class SaveMngr {
     }
 
     private static String readFile(String fileName) {
-        FileHandle file = Gdx.files.local(fileName);
+//        FileHandle file = Gdx.files.local(fileName);
+        FileHandle file = Gdx.files.internal(fileName);
         if (file != null && file.exists()) {
             String s = file.readString();
             if (!s.isEmpty()) {
-//                return com.badlogic.gdx.utils.Base64Coder.decodeString(s);
                 return s;
             }
         }
@@ -346,11 +346,10 @@ public class SaveMngr {
         return levels;
     }
 
-    public static List<BugSpawnSystem.Multiplier> initAllMultipliers() {
+    public static void initAllMultipliers() {
         String file = readFile(MULTIPLIERS_JSON);
         List<BugSpawnSystem.Multiplier> multipliers = new Json().fromJson(List.class, file);
         BugSpawnSystem.mulipliers = multipliers;
-        return multipliers;
     }
 
     public static class LevelInfo {
