@@ -66,106 +66,121 @@ public class GoalGenerator {
         Goal.GoalType goalType = null;
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom < probabilityValueCheck + gameScript.fpc.level.prob_eat_n_bugs) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_bugs) {
             goalType = EAT_N_BUGS;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_bugs;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_drunks) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_drunks) {
             goalType = EAT_N_DRUNKS;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_drunks;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_chargers) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_chargers) {
             goalType = EAT_N_CHARGERS;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_chargers;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_simple) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_simple) {
             goalType = EAT_N_SIMPLE;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_simple;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_bees) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_bees) {
             goalType = EAT_N_BEES;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_bees;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_queens) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_queens) {
             goalType = EAT_N_QUEENS;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_queens;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_umrellas) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_umrellas) {
             goalType = EAT_N_UMBRELLA;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_umrellas;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_eat_n_butterflies) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_butterflies) {
             goalType = EAT_N_BUTTERFLIES;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_eat_n_butterflies;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_destroy_n_cocoon) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_destroy_n_cocoon) {
             goalType = DESTROY_N_COCOON;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_destroy_n_cocoon;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_bounce_umbrella_n_times) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_bounce_umbrella_n_times) {
             goalType = BOUNCE_UMBRELLA_N_TIMES;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_bounce_umbrella_n_times;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_tap) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_tap) {
             goalType = TAP;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_tap;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_survive_n_angered_modes) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_survive_n_angered_modes) {
             goalType = SURVIVE_N_ANGERED_MODES;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_survive_n_angered_modes;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_pet_the_pet_n_times) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_pet_the_pet_n_times) {
             goalType = PET_THE_PET;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_pet_the_pet_n_times;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_pet_eat_n_bugs) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_pet_eat_n_bugs) {
             goalType = PET_EAT_N_BUGS;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_pet_eat_n_bugs;
         }
 
         if (probabilityValueRandom > probabilityValueCheck
-                && probabilityValueRandom <= gameScript.fpc.level.prob_pet_dash_n_times) {
+                && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_pet_dash_n_times) {
             goalType = PET_DASH_N_TIMES;
+            return new Goal(goalType, difficulty);
         } else {
             probabilityValueCheck += gameScript.fpc.level.prob_pet_dash_n_times;
         }
