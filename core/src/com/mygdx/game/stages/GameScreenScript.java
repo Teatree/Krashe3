@@ -55,8 +55,8 @@ public class GameScreenScript implements IScript {
     public Entity background;
     public GiftScreen giftScreen;
     public GoalFeedbackScreen goalFeedbackScreen;
-    public int dandelionSpawnCounter;
-    public int cocoonSpawnCounter;
+    public static float dandelionSpawnCounter;
+    public float cocoonSpawnCounter;
     public ItemWrapper gameItem;
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
@@ -116,8 +116,13 @@ public class GameScreenScript implements IScript {
 //                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
-        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-        cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+//        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
+
+        CocoonSystem.resetSpawnCoefficients();
+        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+
+        DandelionSystem.resetSpawnCoefficients();
+        dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
 
         Entity scoreLabel = gameItem.getChild(LBL_SCORE).getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
@@ -328,10 +333,10 @@ public class GameScreenScript implements IScript {
 
             if (!isPause && !isGameOver && isStarted) {
                 if (canDandelionSpawn()) {
-                    dandelionSpawnCounter--;
+                    dandelionSpawnCounter-=delta;
                 }
                 if (canCocoonSpawn()) {
-                    cocoonSpawnCounter--;
+                    cocoonSpawnCounter-=delta;
                 }
                 //Spawn dandelion
                 if (dandelionSpawnCounter <= 0) {
@@ -370,8 +375,8 @@ public class GameScreenScript implements IScript {
 
     private void spawnDandelion() {
         if (canDandelionSpawn()) {
-            dandelionSpawnCounter =
-                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
+//            dandelionSpawnCounter =
+//                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
@@ -391,7 +396,7 @@ public class GameScreenScript implements IScript {
 
     private void spawnCocoon() {
         if (canCocoonSpawn()) {
-            cocoonSpawnCounter = random.nextInt(COCOON_SPAWN_MAX - COCOON_SPAWN_MIN) + COCOON_SPAWN_MIN;
+            cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity cocoonEntity = root.getChild(COCCOON).getEntity();
@@ -419,7 +424,7 @@ public class GameScreenScript implements IScript {
                         sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x <= 0 ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).y <= 0;
+                                .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y;
     }
 
     private boolean canDandelionSpawn() {
@@ -430,14 +435,14 @@ public class GameScreenScript implements IScript {
                 sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
                         .get(0).getComponent(TransformComponent.class).x <= 0 ||
                 sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).y <= 0) &&
+                        .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y) &&
                 (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x <= 0 ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).y == 0
+                                .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
                 );
     }
 }

@@ -18,6 +18,8 @@ public class SaveMngr {
     public static final String UPGRADES_FILE = "upgrades.params";
     public static final String LEVELS_JSON = "levels.json";
     public static final String MULTIPLIERS_JSON = "multipliers.json";
+    public static final String COCOON_MULTIPLIERS_JSON = "cocoonMultipliers.json";
+    public static final String DANDELION_MULTIPLIERS_JSON = "dandelionMultipliers.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -75,6 +77,8 @@ public class SaveMngr {
     public static FlowerPublicComponent loadStats() {
         initAllLevels();
         initAllMultipliers();
+        initCocoonMultipliers();
+        initDandelionMultipliers();
         FlowerPublicComponent fc = new FlowerPublicComponent();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
@@ -524,5 +528,19 @@ public class SaveMngr {
             this.tryPeriodStart = petComponent.tryPeriodStart;
             this.transactionId = petComponent.transactionId;
         }
+    }
+
+    public static void initCocoonMultipliers(){
+        String file = readFile(COCOON_MULTIPLIERS_JSON);
+        List<CocoonComponent.CocoonMultiplier> multipliers = new Json().fromJson(List.class, file);
+        CocoonComponent.cocoonMultipliers = multipliers;
+        CocoonComponent.currentCocoonMultiplier = multipliers.get(0);
+    }
+
+    public static void initDandelionMultipliers(){
+        String file = readFile(DANDELION_MULTIPLIERS_JSON);
+        List<DandelionComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
+        DandelionComponent.dandelionMultipliers = multipliers;
+        DandelionComponent.currentDandelionMultiplier = multipliers.get(0);
     }
 }

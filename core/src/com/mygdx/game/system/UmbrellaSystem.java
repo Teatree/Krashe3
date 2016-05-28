@@ -114,6 +114,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void hide(Entity entity, TransformComponent tc) {
+        dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
+
         tc.x = FAR_FAR_AWAY_X;
         tc.y = FAR_FAR_AWAY_Y;
         entity.remove(UmbrellaComponent.class);

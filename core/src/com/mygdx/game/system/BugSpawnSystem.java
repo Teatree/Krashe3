@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.mygdx.game.entity.componets.BugComponent;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
-import com.mygdx.game.stages.GameScreenScript;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -13,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.BugComponent.*;
+import static com.mygdx.game.entity.componets.CocoonComponent.*;
+import static com.mygdx.game.entity.componets.DandelionComponent.*;
 import static com.mygdx.game.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.game.stages.GameScreenScript.*;
 
@@ -165,6 +166,15 @@ public class BugSpawnSystem extends EntitySystem {
                 if(bugsSpawned >= currentMultiplier.finishOn){
                     int index = mulipliers.indexOf(currentMultiplier);
                     currentMultiplier = mulipliers.get(index < mulipliers.size()-1 ? index+1 : index);
+
+                }
+                if(bugsSpawned >= currentCocoonMultiplier.finishOn){
+                    int indexC = cocoonMultipliers.indexOf(currentCocoonMultiplier);
+                    currentCocoonMultiplier = cocoonMultipliers.get(indexC < cocoonMultipliers.size()-1 ? indexC+1 : indexC);
+                }
+                if(bugsSpawned >= currentDandelionMultiplier.finishOn){
+                    int indexC = dandelionMultipliers.indexOf(currentDandelionMultiplier);
+                    currentDandelionMultiplier = dandelionMultipliers.get(indexC < dandelionMultipliers.size()-1 ? indexC+1 : indexC);
                 }
                 spawn(deltaTime);
                 updateAngeredBeesMode();
@@ -215,5 +225,6 @@ public class BugSpawnSystem extends EntitySystem {
         public float queenBeeMoveDuration = 1;
         public float queenBeeAmplitude = 1;
         public float chargerBugMove = 1;
+
     }
 }

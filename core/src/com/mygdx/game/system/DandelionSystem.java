@@ -17,9 +17,15 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponen
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.Random;
+
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
+import static com.mygdx.game.entity.componets.CocoonComponent.SPAWN_INTERVAL_BASE;
+import static com.mygdx.game.entity.componets.CocoonComponent.cocoonMultipliers;
+import static com.mygdx.game.entity.componets.CocoonComponent.currentCocoonMultiplier;
+import static com.mygdx.game.entity.componets.DandelionComponent.*;
 import static com.mygdx.game.entity.componets.DandelionComponent.State.*;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.*;
@@ -34,6 +40,7 @@ public class DandelionSystem extends IteratingSystem {
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
     private FlowerPublicComponent fcc;
 
+//    public float SPAWN_INTERVAL_BASE;
     private int idleCounter;
 
     //counts time from start of animation.
@@ -120,5 +127,16 @@ public class DandelionSystem extends IteratingSystem {
             sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
         }
+    }
+
+    public static float getNextSpawnInterval(){
+        Random r = new Random();
+        float randCoefficient = currentDandelionMultiplier.minSpawnCoefficient +
+                r.nextFloat()*(currentDandelionMultiplier.maxSpawnCoefficient-currentDandelionMultiplier.minSpawnCoefficient);
+        return SPAWN_INTERVAL_BASE*randCoefficient;
+    }
+
+    public static void resetSpawnCoefficients(){
+        currentDandelionMultiplier = dandelionMultipliers.get(0);
     }
 }

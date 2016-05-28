@@ -16,7 +16,10 @@ import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.Random;
+
 import static com.mygdx.game.entity.componets.CocoonComponent.State.*;
+import static com.mygdx.game.entity.componets.CocoonComponent.*;
 import static com.mygdx.game.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.mygdx.game.stages.GameScreenScript.*;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
@@ -78,7 +81,7 @@ public class CocoonSystem extends IteratingSystem {
 
             if (cc.state.equals(HIT)) {
                 if (isAnimationFinished()) {
-                    if (cc.hitCounter >= GlobalConstants.COCOON_HIT_AMOUNT) {
+                    if (cc.hitCounter >= CocoonComponent.COCOON_HIT_AMOUNT) {
                         cc.state = DEAD;
                         spawnButterfly();
                         checkCocoonGoal();
@@ -151,5 +154,16 @@ public class CocoonSystem extends IteratingSystem {
         if (GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
             GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON).update();
         }
+    }
+
+    public static float getNextSpawnInterval(){
+        Random r = new Random();
+        float randCoefficient = currentCocoonMultiplier.minSpawnCoefficient +
+                r.nextFloat()*(currentCocoonMultiplier.maxSpawnCoefficient-currentCocoonMultiplier.minSpawnCoefficient);
+        return SPAWN_INTERVAL_BASE*randCoefficient;
+    }
+
+    public static void resetSpawnCoefficients(){
+        currentCocoonMultiplier = cocoonMultipliers.get(0);
     }
 }
