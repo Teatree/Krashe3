@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Main;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.VanityComponent;
 import com.mygdx.game.stages.GameStage;
@@ -353,11 +352,27 @@ public class Preview {
             @Override
             public void clicked() {
                 if (animFinished()) {
-                    int previousIndex = allShopItems.indexOf(vc) - 1;
-                    if (previousIndex >= 0) {
-                        setShouldDeleteIconE();
-                        showPreview(allShopItems.get(previousIndex), false, false);
+                    if (vc.currencyType.equals(SOFT)){
+                        prevSoftItem();
+                    } else {
+                        prevHardItem();
                     }
+                }
+            }
+
+            private void prevSoftItem() {
+                int previousIndex = allShopItems.indexOf(vc) - 1;
+                if (previousIndex >= 0) {
+                    setShouldDeleteIconE();
+                    showPreview(allShopItems.get(previousIndex), false, false);
+                }
+            }
+
+            private void prevHardItem() {
+                int previousIndex = allHCItems.indexOf(vc) - 1;
+                if (previousIndex >= 0) {
+                    setShouldDeleteIconE();
+                    showPreview(allHCItems.get(previousIndex), false, false);
                 }
             }
         });
@@ -378,11 +393,27 @@ public class Preview {
             @Override
             public void clicked() {
                 if (animFinished()) {
-                    int nextIndex = allShopItems.indexOf(vc) + 1;
-                    if (nextIndex < allShopItems.size()) {
-                        setShouldDeleteIconE();
-                        showPreview(allShopItems.get(nextIndex), false, false);
+                    if (vc.currencyType.equals(SOFT)) {
+                        nextSoftItem();
+                    } else {
+                        nextHardItem();
                     }
+                }
+            }
+
+            private void nextSoftItem() {
+                int nextIndex = allShopItems.indexOf(vc) + 1;
+                if (nextIndex < allShopItems.size()) {
+                    setShouldDeleteIconE();
+                    showPreview(allShopItems.get(nextIndex), false, false);
+                }
+            }
+
+            private void nextHardItem() {
+                int nextIndex = allHCItems.indexOf(vc) + 1;
+                if (nextIndex < allHCItems.size()) {
+                    setShouldDeleteIconE();
+                    showPreview(allHCItems.get(nextIndex), false, false);
                 }
             }
         });
