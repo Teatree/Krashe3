@@ -130,8 +130,8 @@ public class Main extends Game {
     }
 
     public void async() {
-        SaveMngr.generateVanityJson();
-        SaveMngr.generatePetsJson();
+//        SaveMngr.generateVanityJson();
+//        SaveMngr.generatePetsJson();
 //        SaveMngr.generateLevelsJson();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);

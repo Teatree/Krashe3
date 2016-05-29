@@ -12,6 +12,8 @@ public class ButtonComponent implements Component {
     public boolean isTouched = false;
     public static boolean skipDefaultLayersChange;
 
+    public boolean enable;
+
     private Array<ButtonListener> listeners = new Array<ButtonListener>();
 
     public interface ButtonListener {

@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
@@ -14,6 +15,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -34,11 +36,16 @@ public class ShopScreenScript implements IScript {
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
     public static final String DOT_LIB = "dot_lib";
+    public static final String HC_SHOP_SEC = "HC_shop_sec";
+    public static final String TAB_BTN_SHOP = "tab_btn_shop";
+    public static final String TAB_BTN_UPG = "tab_btn_upg";
+    public static final int INIT_HC_ITEMS_X = 146;
 
     public static Entity scoreLbl;
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
     public static List<ShopItem> allShopItems = new ArrayList<>();
+    public static List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZone;
     public LabelComponent lc;
@@ -51,6 +58,9 @@ public class ShopScreenScript implements IScript {
     float stopVelocity;
     private GameStage stage;
     private ItemWrapper shopItem;
+    private Entity hcSectionE;
+    private Entity btnShop;
+    private Entity btnUpg;
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
@@ -78,14 +88,171 @@ public class ShopScreenScript implements IScript {
         touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         createIconsForAllShopItems();
+        createIconsForAllHCItems();
+        initTabBtns();
         bagPosId = 0;
         isPreviewOn = false;
     }
 
+    public void initTabBtns() {
+
+        btnShop = shopItem.getChild(TAB_BTN_SHOP).getEntity();
+        btnShop.getComponent(ButtonComponent.class).enable = false;
+        btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+
+            }
+
+            @Override
+            public void touchDown() {
+
+            }
+
+            @Override
+            public void clicked() {
+                if (btnShop.getComponent(ButtonComponent.class).enable) {
+
+                    btnUpg.getComponent(ButtonComponent.class).enable = true;
+                    LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
+                    lc.getLayer(BTN_NORMAL).isVisible = true;
+                    lc.getLayer(BTN_PRESSED).isVisible = false;
+//                    lc.getLayer(BTN_DEFAULT).isVisible = false;
+
+                    btnShop.getComponent(ButtonComponent.class).enable = false;
+                    LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
+                    lc1.getLayer(BTN_NORMAL).isVisible = false;
+                    lc1.getLayer(BTN_PRESSED).isVisible = true;
+//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
+
+                    ActionComponent ac = new ActionComponent();
+                    Actions.checkInit();
+
+                    ac.dataArray.add(
+                            Actions.moveTo(INIT_HC_ITEMS_X, hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+                    hcSectionE.add(ac);
+
+                    for (Entity bag : bags) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
+
+                        a.dataArray.add(
+                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227,
+                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+
+                        bag.add(a);
+                    }
+
+                    for (Entity icon : itemIcons.values()) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
+
+                        a.dataArray.add(
+                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + 1227,
+                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+
+                        icon.add(a);
+                    }
+
+                    ActionComponent acTouchZone = new ActionComponent();
+                    Actions.checkInit();
+
+                    acTouchZone.dataArray.add(
+                            Actions.moveTo(1300, touchZone.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+                    touchZone.add(acTouchZone);
+                } else {
+                    LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
+                    lc1.getLayer(BTN_NORMAL).isVisible = false;
+                    lc1.getLayer(BTN_PRESSED).isVisible = true;
+//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
+                }
+            }
+        });
+
+        btnUpg = shopItem.getChild(TAB_BTN_UPG).getEntity();
+        btnUpg.getComponent(ButtonComponent.class).enable = true;
+        btnUpg.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+
+            }
+
+            @Override
+            public void touchDown() {
+
+            }
+
+            @Override
+            public void clicked() {
+
+                if (btnUpg.getComponent(ButtonComponent.class).enable) {
+
+                    btnUpg.getComponent(ButtonComponent.class).enable = false;
+                    LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
+                    lc.getLayer(BTN_NORMAL).isVisible = false;
+                    lc.getLayer(BTN_PRESSED).isVisible = true;
+//                    lc.getLayer(BTN_DEFAULT).isVisible = false;
+
+                    btnShop.getComponent(ButtonComponent.class).enable = true;
+                    LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
+                    lc1.getLayer(BTN_NORMAL).isVisible = true;
+                    lc1.getLayer(BTN_PRESSED).isVisible = false;
+//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
+
+                    ActionComponent ac = new ActionComponent();
+                    Actions.checkInit();
+
+                    ac.dataArray.add(
+                            Actions.moveTo(-1300, hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+                    hcSectionE.add(ac);
+
+                    for (Entity bag : bags) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
+
+                        a.dataArray.add(
+                                Actions.moveTo(bag.getComponent(TransformComponent.class).x - 1227,
+                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+                        bag.add(a);
+                    }
+
+                    for (Entity icon : itemIcons.values()) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
+
+                        a.dataArray.add(
+                                Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
+                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+
+                        icon.add(a);
+                    }
+                    ActionComponent acTouchZone = new ActionComponent();
+                    Actions.checkInit();
+
+                    acTouchZone.dataArray.add(
+                            Actions.moveTo(0, touchZone.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+                    touchZone.add(acTouchZone);
+                } else {
+                    LayerMapComponent lc1 = btnUpg.getComponent(LayerMapComponent.class);
+                    lc1.getLayer(BTN_PRESSED).isVisible = true;
+                    lc1.getLayer(BTN_NORMAL).isVisible = false;
+//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
+                }
+            }
+        });
+    }
+
     private void getAllAllVanities() {
         if (allShopItems.isEmpty()) {
-            allShopItems.addAll(getAllUpgrades());
-            allShopItems.addAll(GameStage.gameScript.fpc.pets);
+//            allShopItems.addAll(getAllUpgrades());
+//            allShopItems.addAll(GameStage.gameScript.fpc.pets);
+
+            allHCItems.addAll(GameStage.gameScript.fpc.pets);
+            allHCItems.addAll(getAllUpgrades());
             allShopItems.addAll(GameStage.gameScript.fpc.vanities);
         }
 
@@ -110,6 +277,35 @@ public class ShopScreenScript implements IScript {
         Collections.reverse(allShopItems);
     }
 
+    private void createIconsForAllHCItems() {
+        hcSectionE = shopItem.getChild(HC_SHOP_SEC).getEntity();
+        NodeComponent nc = hcSectionE.getComponent(NodeComponent.class);
+
+        int i = 0;
+        for (Entity e : nc.children) {
+            final ShopItem hc = allHCItems.get(i);
+            e.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
+
+                }
+
+                @Override
+                public void touchDown() {
+
+                }
+
+                @Override
+                public void clicked() {
+                    if (!isPreviewOn && canOpenPreview) {
+                        preview.showPreview(hc, true, false);
+                    }
+                }
+            });
+            i += 1;
+        }
+    }
+
     private void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
@@ -119,20 +315,20 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon;
-            if (vc.currencyType.equals(SOFT)) {
-                itemIcon = initSoftCurrencyShopItem(vc);
-            } else {
-                itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
-            }
+//            if (vc.currencyType.equals(SOFT)) {
+            itemIcon = initSoftCurrencyShopItem(vc);
+//            } else {
+//                itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
+//            }
 
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(26);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
 
-            if (allShopItems.indexOf(vc) != allShopItems.size()-1) {
-                addDot(bagEntity);
-            }
+//            if (allShopItems.indexOf(vc) != allShopItems.size() - 1) {
+//                addDot(bagEntity);
+//            }
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
@@ -142,11 +338,11 @@ public class ShopScreenScript implements IScript {
             tcb.y = tc.y;
 
             bags.add(bagEntity);
-            if (vc.currencyType.equals(SOFT)) {
-                itemIcons.put(vc.shopIcon, itemIcon);
-            } else {
-                itemIcons.put(vc.name, itemIcon);
-            }
+//            if (vc.currencyType.equals(SOFT)) {
+            itemIcons.put(vc.shopIcon, itemIcon);
+//            } else {
+//                itemIcons.put(vc.name, itemIcon);
+//            }
 
             bagEntity.add(new ButtonComponent());
 
@@ -173,12 +369,12 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public List<Upgrade> getAllUpgrades(){
+    public List<Upgrade> getAllUpgrades() {
         List<Upgrade> upgrades = Upgrade.getAllUpgrades();
         if (!GameStage.gameScript.fpc.upgrades.isEmpty()) {
             for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
-                for(Upgrade u2: upgrades){
-                    if(u.upgradeType.equals(u2.upgradeType)){
+                for (Upgrade u2 : upgrades) {
+                    if (u.upgradeType.equals(u2.upgradeType)) {
                         u2.tryPeriod = u.tryPeriod;
                         u2.tryPeriodDuration = u.tryPeriodDuration;
                         u2.tryPeriodStart = u.tryPeriodStart;
@@ -259,7 +455,7 @@ public class ShopScreenScript implements IScript {
                 if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY)* delta * GlobalConstants.FPS;
+                        bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
@@ -272,18 +468,18 @@ public class ShopScreenScript implements IScript {
                 if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
                     int i = 0;
                     while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY)* delta * GlobalConstants.FPS;
+                        bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
-                    tempGdx.x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY)* delta * GlobalConstants.FPS;
+                    tempGdx.x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
                     ButtonComponent.skipDefaultLayersChange = true;
                 }
             } else {
                 isGdxWritten = false;
                 if (stopVelocity != 0 && (canMoveBagsLeft() && canMoveBagsRight())) {
-                        int i = 0;
+                    int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity * delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
@@ -299,7 +495,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public boolean canMoveBagsLeft() {
-        return bags.get(bags.size()-1).getComponent(TransformComponent.class).x >= 990;
+        return bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= 990;
     }
 
     public boolean canMoveBagsRight() {
@@ -348,8 +544,8 @@ public class ShopScreenScript implements IScript {
         int step = 20;
 
         if (previous == null) {
-            tc.x = 73;
-            tc.y = 359;
+            tc.x = 1300;
+            tc.y = 400;
             return tc;
         }
         switch (bagPosId) {
