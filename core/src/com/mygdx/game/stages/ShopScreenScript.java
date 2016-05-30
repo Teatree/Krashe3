@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.brashmonkey.spriter.Dimension;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.Upgrade;
@@ -98,6 +99,8 @@ public class ShopScreenScript implements IScript {
 
         btnShop = shopItem.getChild(TAB_BTN_SHOP).getEntity();
         btnShop.getComponent(ButtonComponent.class).enable = false;
+        btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
+        btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = false;
         btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
@@ -132,12 +135,13 @@ public class ShopScreenScript implements IScript {
                             Actions.moveTo(INIT_HC_ITEMS_X, hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
                     hcSectionE.add(ac);
 
+                    float bagsShift = 73 - bags.get(0).getComponent(TransformComponent.class).x;
                     for (Entity bag : bags) {
                         ActionComponent a = new ActionComponent();
                         Actions.checkInit();
 
                         a.dataArray.add(
-                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227,
+                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227 + bagsShift,
                                         bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                         );
 
@@ -149,7 +153,7 @@ public class ShopScreenScript implements IScript {
                         Actions.checkInit();
 
                         a.dataArray.add(
-                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + 1227,
+                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + 1227 + bagsShift,
                                         icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                         );
 
@@ -550,33 +554,34 @@ public class ShopScreenScript implements IScript {
         }
         switch (bagPosId) {
             case 0: {
-                tc.x = previous.x;
-                tc.y = previous.y - previousDc.height - step;
+                tc.x = previous.x + previousDc.width * 0.6f;
+                tc.y = previous.y - previousDc.height;
 
                 bagPosId++;
                 break;
             }
             case 1: {
-                tc.x = previous.x + previousDc.width + step;
-                tc.y = previous.y;
+                tc.x = previous.x + previousDc.width * 0.6f;
+                tc.y = previous.y + previousDc.height;
 
-                bagPosId++;
-                break;
-            }
-            case 2: {
-                tc.x = previous.x;
-                tc.y = previous.y + previousDc.height + step;
-
-                bagPosId++;
-                break;
-            }
-            case 3: {
-                tc.x = previous.x + previousDc.width + step;
-                tc.y = previous.y;
-
+//                bagPosId++;
                 bagPosId = 0;
                 break;
             }
+//            case 2: {
+//                tc.x = previous.x;
+//                tc.y = previous.y + previousDc.height + step;
+//
+//                bagPosId++;
+//                break;
+//            }
+//            case 3: {
+//                tc.x = previous.x + previousDc.width + step;
+//                tc.y = previous.y;
+//
+//                bagPosId = 0;
+//                break;
+//            }
         }
         return tc;
     }
