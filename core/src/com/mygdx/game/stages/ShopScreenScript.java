@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.brashmonkey.spriter.Dimension;
 import com.mygdx.game.entity.componets.FlowerPublicComponent;
 import com.mygdx.game.entity.componets.ShopItem;
 import com.mygdx.game.entity.componets.Upgrade;
@@ -23,8 +22,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.*;
 
 import static com.mygdx.game.entity.componets.ShopItem.HARD;
-import static com.mygdx.game.entity.componets.ShopItem.SOFT;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class ShopScreenScript implements IScript {
@@ -75,9 +72,6 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-//        System.err.print("init shop ");
-//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-//                Gdx.app.getNativeHeap());
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
@@ -120,13 +114,11 @@ public class ShopScreenScript implements IScript {
                     LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
                     lc.getLayer(BTN_NORMAL).isVisible = true;
                     lc.getLayer(BTN_PRESSED).isVisible = false;
-//                    lc.getLayer(BTN_DEFAULT).isVisible = false;
 
                     btnShop.getComponent(ButtonComponent.class).enable = false;
                     LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
                     lc1.getLayer(BTN_NORMAL).isVisible = false;
                     lc1.getLayer(BTN_PRESSED).isVisible = true;
-//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
 
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
@@ -170,7 +162,6 @@ public class ShopScreenScript implements IScript {
                     LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
                     lc1.getLayer(BTN_NORMAL).isVisible = false;
                     lc1.getLayer(BTN_PRESSED).isVisible = true;
-//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
                 }
             }
         });
@@ -197,13 +188,11 @@ public class ShopScreenScript implements IScript {
                     LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
                     lc.getLayer(BTN_NORMAL).isVisible = false;
                     lc.getLayer(BTN_PRESSED).isVisible = true;
-//                    lc.getLayer(BTN_DEFAULT).isVisible = false;
 
                     btnShop.getComponent(ButtonComponent.class).enable = true;
                     LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
                     lc1.getLayer(BTN_NORMAL).isVisible = true;
                     lc1.getLayer(BTN_PRESSED).isVisible = false;
-//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
 
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
@@ -244,7 +233,6 @@ public class ShopScreenScript implements IScript {
                     LayerMapComponent lc1 = btnUpg.getComponent(LayerMapComponent.class);
                     lc1.getLayer(BTN_PRESSED).isVisible = true;
                     lc1.getLayer(BTN_NORMAL).isVisible = false;
-//                    lc1.getLayer(BTN_DEFAULT).isVisible = false;
                 }
             }
         });
@@ -252,9 +240,6 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         if (allShopItems.isEmpty()) {
-//            allShopItems.addAll(getAllUpgrades());
-//            allShopItems.addAll(GameStage.gameScript.fpc.pets);
-
             allHCItems.addAll(GameStage.gameScript.fpc.pets);
             allHCItems.addAll(getAllUpgrades());
             allShopItems.addAll(GameStage.gameScript.fpc.vanities);
@@ -319,20 +304,13 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon;
-//            if (vc.currencyType.equals(SOFT)) {
             itemIcon = initSoftCurrencyShopItem(vc);
-//            } else {
-//                itemIcon = new ItemWrapper(sceneLoader.getRoot()).getChild(vc.name).getEntity();
-//            }
 
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(26);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
 
-//            if (allShopItems.indexOf(vc) != allShopItems.size() - 1) {
-//                addDot(bagEntity);
-//            }
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
@@ -342,11 +320,7 @@ public class ShopScreenScript implements IScript {
             tcb.y = tc.y;
 
             bags.add(bagEntity);
-//            if (vc.currencyType.equals(SOFT)) {
             itemIcons.put(vc.shopIcon, itemIcon);
-//            } else {
-//                itemIcons.put(vc.name, itemIcon);
-//            }
 
             bagEntity.add(new ButtonComponent());
 
@@ -506,43 +480,6 @@ public class ShopScreenScript implements IScript {
         return bags.get(0).getComponent(TransformComponent.class).x <= 10;
     }
 
-    private void addDot(Entity bag) {
-        DimensionsComponent bagDc = bag.getComponent(DimensionsComponent.class);
-        TransformComponent tc = new TransformComponent();
-        switch (bagPosId) {
-            case 0: {
-                tc.x = bagDc.width / 2;
-                tc.y = -5;
-                break;
-            }
-            case 1: {
-                tc.x = bagDc.width + 5;
-                tc.y = bagDc.height / 2;
-                break;
-            }
-            case 2: {
-                tc.x = bagDc.width / 2;
-                tc.y = bagDc.height + 5;
-                break;
-
-            }
-            case 3: {
-                tc.x = bagDc.width + 5;
-                tc.y = bagDc.height / 2;
-                break;
-            }
-        }
-        tc.scaleX = 0.2f;
-        tc.scaleY = 0.2f;
-
-        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(DOT_LIB).clone();
-        final Entity dotE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-        dotE.getComponent(ZIndexComponent.class).setZIndex(0);
-        dotE.add(tc);
-        bag.getComponent(NodeComponent.class).addChild(dotE);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotE, tempC.composite);
-    }
-
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
         TransformComponent tc = new TransformComponent();
         int step = 20;
@@ -564,24 +501,9 @@ public class ShopScreenScript implements IScript {
                 tc.x = previous.x + previousDc.width * 0.6f;
                 tc.y = previous.y + previousDc.height;
 
-//                bagPosId++;
                 bagPosId = 0;
                 break;
             }
-//            case 2: {
-//                tc.x = previous.x;
-//                tc.y = previous.y + previousDc.height + step;
-//
-//                bagPosId++;
-//                break;
-//            }
-//            case 3: {
-//                tc.x = previous.x + previousDc.width + step;
-//                tc.y = previous.y;
-//
-//                bagPosId = 0;
-//                break;
-//            }
         }
         return tc;
     }

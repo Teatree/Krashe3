@@ -294,7 +294,7 @@ public class GameScreenScript implements IScript {
     public void initPet() {
         if (fpc.currentPet != null) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
-            if ( fpc.currentPet.enabled) {
+            if (fpc.currentPet.enabled) {
                 TransformComponent tc = pet.getComponent(TransformComponent.class);
                 tc.x = PetComponent.X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
@@ -312,7 +312,6 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void dispose() {
-//        System.gc();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class ResultScreenScript implements IScript {
     LabelComponent earnedLabel;
 
     boolean showcasePopup;
-//    static long nextVanityCost;
+    //    static long nextVanityCost;
     long need;
     int i = 0;
     int j = 0;
@@ -89,6 +89,7 @@ public class ResultScreenScript implements IScript {
         initPlayBtn();
         initShopBtn();
     }
+
     public void initResultScreen() {
         show = false;
 
@@ -185,16 +186,11 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!show) {
-                    if (Main.adsController.isWifiConnected()) {
-                        ShowAdsWithChance();
-                    } else {
-                        backToGame();
-                    }
+                    backToGame();
                 }
             }
 
             private void ShowAdsWithChance() {
-                System.err.println("ADS ARE GREAT!!!");
                 if (new Random().nextInt(10) <= 3) {
 
                     Main.adsController.showInterstitialGeneralAd(new Runnable() {
@@ -265,7 +261,7 @@ public class ResultScreenScript implements IScript {
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
-            if (!show && showCaseVanity!= null && showCaseVanity.cost <= GameStage.gameScript.fpc.totalScore) {
+            if (!show && showCaseVanity != null && showCaseVanity.cost <= GameStage.gameScript.fpc.totalScore) {
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
 //                setProgressBar();
@@ -279,7 +275,7 @@ public class ResultScreenScript implements IScript {
 
         if (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score < 0) {
             dcProgressBar.width = 0;
-        } else if ((GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH) {
+        } else if ((GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
     }
@@ -292,7 +288,7 @@ public class ResultScreenScript implements IScript {
 
     private void setProgressBar() {
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        long scoreDiff = (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score)*MAX_PROGRESS_BAR_WIDTH/showCaseVanity.cost;
+        long scoreDiff = (GameStage.gameScript.fpc.totalScore - GameStage.gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
         if (scoreDiff < 0) {
             dcProgressBar.width = 0;
         } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
@@ -316,7 +312,7 @@ public class ResultScreenScript implements IScript {
         progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
         if (!show && GameStage.gameScript.fpc.score > 0) {
             showcase.initShowCase();
-            txtNeedE.getComponent(LabelComponent.class).text.replace(0,txtNeedE.getComponent(LabelComponent.class).text.length,"");
+            txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
         }
     }
 
