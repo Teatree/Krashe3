@@ -63,7 +63,7 @@ public class GoalGenerator {
     private Goal createGoal(int difficulty) {
         int probabilityValueRandom = random.nextInt(100)+1;
         int probabilityValueCheck = 0;
-        Goal.GoalType goalType = null;
+        Goal.GoalType goalType = EAT_N_BUGS;
 
         if (probabilityValueRandom > probabilityValueCheck
                 && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_eat_n_bugs) {
@@ -181,8 +181,6 @@ public class GoalGenerator {
                 && probabilityValueRandom <= probabilityValueCheck + gameScript.fpc.level.prob_pet_dash_n_times) {
             goalType = PET_DASH_N_TIMES;
             return new Goal(goalType, difficulty);
-        } else {
-            probabilityValueCheck += gameScript.fpc.level.prob_pet_dash_n_times;
         }
         
         return new Goal(goalType, difficulty);
