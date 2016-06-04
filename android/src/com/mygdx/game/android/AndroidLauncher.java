@@ -74,7 +74,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     }
 
     @Override
-    public void showInterstitialVideoAd(final Runnable then) {
+    public void showInterstitialReviveVideoAd(final Runnable then) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +95,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     }
 
     @Override
-    public void showInterstitialGeneralAd(final Runnable then) {
+    public void showLaunchAd(final Runnable then) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -113,5 +113,15 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
                 interstitialVideoAd.show();
             }
         });
+    }
+
+    @Override
+    public void showResultScreenAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showGeneralShopAd(Runnable then) {
+
     }
 }

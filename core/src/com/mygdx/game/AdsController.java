@@ -4,7 +4,9 @@ public interface AdsController {
 
     boolean isWifiConnected();
 
-    void showInterstitialVideoAd(Runnable then);
+    void showInterstitialReviveVideoAd(Runnable then);
 
-    void showInterstitialGeneralAd(Runnable then);
+    void showLaunchAd(Runnable then);
+    void showResultScreenAd(Runnable then);
+    void showGeneralShopAd(Runnable then);
 }

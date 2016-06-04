@@ -109,7 +109,7 @@ public class GameOverDialog {
 
     private void playVideoAd(final TransformComponent dialogTc) {
         if (Main.adsController.isWifiConnected()) {
-            Main.adsController.showInterstitialVideoAd(new Runnable() {
+            Main.adsController.showInterstitialReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
                     continueGame(dialogTc);

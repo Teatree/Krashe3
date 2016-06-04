@@ -9,12 +9,22 @@ public class DummyAdsController implements AdsController {
     }
 
     @Override
-    public void showInterstitialVideoAd(Runnable then) {
+    public void showInterstitialReviveVideoAd(Runnable then) {
 
     }
 
     @Override
-    public void showInterstitialGeneralAd(Runnable then) {
+    public void showLaunchAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showResultScreenAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showGeneralShopAd(Runnable then) {
 
     }
 }

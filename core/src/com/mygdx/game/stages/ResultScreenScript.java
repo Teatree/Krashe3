@@ -190,19 +190,19 @@ public class ResultScreenScript implements IScript {
                 }
             }
 
-            private void ShowAdsWithChance() {
-                if (new Random().nextInt(10) <= 3) {
-
-                    Main.adsController.showInterstitialGeneralAd(new Runnable() {
-                        @Override
-                        public void run() {
-                            backToGame();
-                        }
-                    });
-                } else {
-                    backToGame();
-                }
-            }
+//            private void ShowAdsWithChance() {
+//                if (new Random().nextInt(10) <= 3) {
+//
+//                    Main.adsController.showInterstitialGeneralAd(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            backToGame();
+//                        }
+//                    });
+//                } else {
+//                    backToGame();
+//                }
+//            }
 
             private void backToGame() {
                 stage.initGame();
@@ -342,7 +342,7 @@ public class ResultScreenScript implements IScript {
             public void clicked() {
                 if (!show) {
                     if (Main.adsController.isWifiConnected()) {
-                        Main.adsController.showInterstitialGeneralAd(new Runnable() {
+                        Main.adsController.showResultScreenAd(new Runnable() {
                             @Override
                             public void run() {
                                 //give that money!
