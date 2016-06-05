@@ -54,10 +54,6 @@ public class FlowerPublicComponent implements Component {
         return phoenix != null && phoenix.counter <= 0;
     }
 
-    public boolean havePhoenix() {
-        return upgrades.get(Upgrade.UpgradeType.PHOENIX) != null;
-    }
-
     public void resetPhoenix() {
         Upgrade phoenix = upgrades.get(Upgrade.UpgradeType.PHOENIX);
         if (phoenix != null) {

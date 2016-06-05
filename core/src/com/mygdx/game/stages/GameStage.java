@@ -3,6 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Main;
 import com.mygdx.game.utils.BugPool;
 import com.mygdx.game.utils.ETFSceneLoader;
 import com.mygdx.game.utils.GlobalConstants;
@@ -15,6 +16,7 @@ import static com.mygdx.game.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.mygdx.game.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.mygdx.game.utils.GlobalConstants.BUTTON_TAG;
 import static com.mygdx.game.utils.SoundMgr.getSoundMgr;
+import static com.mygdx.game.Main.*;
 
 public class GameStage extends Stage {
 
@@ -48,7 +50,18 @@ public class GameStage extends Stage {
         gameScript = new GameScreenScript(this);
         gameScript.fpc = SaveMngr.loadStats();
         justCreated = true;
-        initMenu();
+
+        if (gameScript.fpc.settings.shouldShowLaunchAd()) {
+            Main.adsController.showLaunchAd(new Runnable() {
+                @Override
+                public void run() {
+                    initMenu();
+                }
+            });
+        } else {
+            initMenu();
+        }
+
     }
 
     public static void updateFlowerAni() {
@@ -60,6 +73,7 @@ public class GameStage extends Stage {
     }
 
     public void initGame() {
+
         if (changedFlower || changedFlower2) {
             changedFlower = false;
             sceneLoader.loadScene(MAIN_SCENE, viewport);
@@ -136,6 +150,32 @@ public class GameStage extends Stage {
         }
         ShopScreenScript.isPreviewOn = false;
         GlobalConstants.CUR_SCREEN = SHOP;
+    }
+
+    public void initShopWithAds() {
+        if (gameScript.fpc.settings.shouldShowShopAd()){
+            adsController.showGeneralShopAd(new Runnable() {
+                @Override
+                public void run() {
+                    initShop();
+                }
+            });
+        } else {
+            initShop();
+        }
+    }
+
+    public void initResultWithAds() {
+        if (gameScript.fpc.settings.shouldShowResultAd()){
+            adsController.showResultScreenAd(new Runnable() {
+                @Override
+                public void run() {
+                    initResult();
+                }
+            });
+        } else {
+            initResult();
+        }
     }
 
     public void update() {

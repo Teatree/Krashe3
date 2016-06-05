@@ -3,6 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.AdsController;
 import com.mygdx.game.entity.componets.*;
 import com.mygdx.game.stages.ui.GameOverDialog;
 import com.mygdx.game.stages.ui.GiftScreen;
@@ -110,12 +111,13 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-//
+
 //        System.err.print("init game ");
 //        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
 //                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
+
 //        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
         CocoonSystem.resetSpawnCoefficients();
@@ -140,11 +142,10 @@ public class GameScreenScript implements IScript {
 
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
-
         pauseDialog = new PauseDialog(gameItem);
+        pauseDialog.init();
 
         gameScript.fpc.level.updateLevel();
-        pauseDialog.init();
 
         giftScreen = new GiftScreen(gameItem);
         giftScreen.init();
@@ -155,6 +156,10 @@ public class GameScreenScript implements IScript {
         goalFeedbackScreen.init(false);
 
         checkTryPeriod();
+
+        gameScript.fpc.settings.totalPlayedGames++;
+        gameScript.fpc.settings.playedGames++;
+        BugSpawnSystem.isAngeredBeesMode = false;
     }
 
     public void initButtons() {
@@ -374,9 +379,6 @@ public class GameScreenScript implements IScript {
 
     private void spawnDandelion() {
         if (canDandelionSpawn()) {
-//            dandelionSpawnCounter =
-//                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
 

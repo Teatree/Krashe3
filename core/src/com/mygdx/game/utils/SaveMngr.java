@@ -20,6 +20,7 @@ public class SaveMngr {
     public static final String MULTIPLIERS_JSON = "multipliers.json";
     public static final String COCOON_MULTIPLIERS_JSON = "cocoonMultipliers.json";
     public static final String DANDELION_MULTIPLIERS_JSON = "dandelionMultipliers.json";
+    public static final String SETTINGS_JSON = "settings.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -28,6 +29,26 @@ public class SaveMngr {
         gameStats.noAds = fc.settings.noAds;
         gameStats.noMusic = fc.settings.noMusic;
         gameStats.noSound = fc.settings.noSound;
+        gameStats.totalPlayedGames = fc.settings.totalPlayedGames;
+
+        gameStats.start_resultScreenAd = fc.settings.start_resultScreenAd;
+        gameStats.start_getMoneyAd = fc.settings.start_getMoneyAd;
+        gameStats.start_launchAd = fc.settings.start_launchAd;
+        gameStats.start_reviveAd = fc.settings.start_reviveAd;
+        gameStats.start_shopAd = fc.settings.start_shopAd;
+
+        gameStats.launchAd_max= fc.settings.launchAd_max;
+        gameStats.resultScreenAd_max= fc.settings.resultScreenAd_max;
+        gameStats.getMoneyAd_max= fc.settings.getMoneyAd_max;
+        gameStats.reviveAd_max= fc.settings.reviveAd_max;
+        gameStats.shopAd_max= fc.settings.shopAd_max;
+
+        gameStats.launchAd_min= fc.settings.launchAd_min;
+        gameStats.resultScreenAd_min= fc.settings.resultScreenAd_min;
+        gameStats.getMoneyAd_min= fc.settings.getMoneyAd_min;
+        gameStats.reviveAd_min= fc.settings.reviveAd_min;
+        gameStats.shopAd_min= fc.settings.shopAd_min;
+
         for (Upgrade u : fc.upgrades.values()) {
             gameStats.upgrades.put(u.upgradeType.toString(), new UpgradeStats(u));
         }
@@ -87,10 +108,31 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
+         
             fc.settings.noAds = gameStats.noAds;
             fc.settings.noMusic = gameStats.noMusic;
             fc.settings.noSound = gameStats.noSound;
+            fc.settings.totalPlayedGames = gameStats.totalPlayedGames;
+            fc.settings.playedGames = 0;
+            
+            fc.settings.start_resultScreenAd = gameStats.start_resultScreenAd;
+            fc.settings.start_getMoneyAd = gameStats.start_getMoneyAd;
+            fc.settings.start_launchAd = gameStats.start_launchAd;
+            fc.settings.start_reviveAd = gameStats.start_reviveAd;
+            fc.settings.start_shopAd = gameStats.start_shopAd;
 
+            fc.settings.launchAd_max= gameStats.launchAd_max;        
+            fc.settings.resultScreenAd_max= gameStats.resultScreenAd_max;        
+            fc.settings.getMoneyAd_max= gameStats.getMoneyAd_max;        
+            fc.settings.reviveAd_max= gameStats.reviveAd_max;        
+            fc.settings.shopAd_max= gameStats.shopAd_max;
+
+            fc.settings.launchAd_min= gameStats.launchAd_min;
+            fc.settings.resultScreenAd_min= gameStats.resultScreenAd_min;
+            fc.settings.getMoneyAd_min= gameStats.getMoneyAd_min;
+            fc.settings.reviveAd_min= gameStats.reviveAd_min;
+            fc.settings.shopAd_min= gameStats.shopAd_min;
+            
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
                 fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
             }
@@ -423,6 +465,25 @@ public class SaveMngr {
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
         public Map<String, UpgradeStats> upgrades = new HashMap<>();
+        public int totalPlayedGames;
+
+        public int shopAd_max = 4;
+        public int resultScreenAd_max = 4;
+        public int launchAd_max = 4;
+        public int getMoneyAd_max = 4;
+        public int reviveAd_max = 4;
+
+        public int shopAd_min = 2;
+        public int resultScreenAd_min = 2;
+        public int launchAd_min = 2;
+        public int getMoneyAd_min = 2;
+        public int reviveAd_min = 2;
+
+        public int start_resultScreenAd = 1;
+        public int start_shopAd = 1;
+        public int start_getMoneyAd = 1;
+        public int start_launchAd = 1;
+        public int start_reviveAd = 1;
     }
 
     private static class DailyGoalStats {

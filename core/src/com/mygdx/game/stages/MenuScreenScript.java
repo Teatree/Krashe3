@@ -80,7 +80,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                stage.initShop();
+                stage.initShopWithAds();
             }
 
             @Override

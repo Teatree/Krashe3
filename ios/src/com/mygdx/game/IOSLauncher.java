@@ -26,12 +26,52 @@ public class IOSLauncher extends IOSApplication.Delegate implements AdsControlle
     }
 
     @Override
-    public void showInterstitialReviveVideoAd(Runnable then) {
+    public void showReviveVideoAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showGetMoneyVideoAd(Runnable then) {
 
     }
 
     @Override
     public void showLaunchAd(Runnable then) {
 
+    }
+
+    @Override
+    public boolean shouldShowGetMoneyVideoBtnAd(long need) {
+        return false;
+    }
+
+    @Override
+    public void showResultScreenAd(Runnable then) {
+
+    }
+
+    @Override
+    public void showGeneralShopAd(Runnable then) {
+
+    }
+
+    @Override
+    public boolean shouldShowLaunchAd() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldShowShopAd() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldShowResultAd() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldShowReviveVideoBtnAd() {
+        return false;
     }
 }
