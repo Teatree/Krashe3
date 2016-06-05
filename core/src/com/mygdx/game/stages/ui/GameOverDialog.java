@@ -82,7 +82,7 @@ public class GameOverDialog {
         final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
         if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
             turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            reviveBtn.getComponent(TransformComponent.class).x = 140;
+            reviveBtn.getComponent(TransformComponent.class).x = 210;
             reviveBtn.getComponent(TransformComponent.class).y = 80;
             reviveBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override

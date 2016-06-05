@@ -20,7 +20,7 @@ public class SaveMngr {
     public static final String MULTIPLIERS_JSON = "multipliers.json";
     public static final String COCOON_MULTIPLIERS_JSON = "cocoonMultipliers.json";
     public static final String DANDELION_MULTIPLIERS_JSON = "dandelionMultipliers.json";
-    public static final String SETTINGS_JSON = "settings.json";
+    public static final String ADS_SETTINGS_JSON = "adssettings.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -49,6 +49,7 @@ public class SaveMngr {
         gameStats.reviveAd_min= fc.settings.reviveAd_min;
         gameStats.shopAd_min= fc.settings.shopAd_min;
 
+        writeFile(ADS_SETTINGS_JSON, new Json().toJson(gameStats));
         for (Upgrade u : fc.upgrades.values()) {
             gameStats.upgrades.put(u.upgradeType.toString(), new UpgradeStats(u));
         }
@@ -109,29 +110,30 @@ public class SaveMngr {
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
          
-            fc.settings.noAds = gameStats.noAds;
-            fc.settings.noMusic = gameStats.noMusic;
-            fc.settings.noSound = gameStats.noSound;
-            fc.settings.totalPlayedGames = gameStats.totalPlayedGames;
+            GameStats adsStats = json.fromJson(GameStats.class, saved);
+            fc.settings.noAds = adsStats.noAds;
+            fc.settings.noMusic = adsStats.noMusic;
+            fc.settings.noSound = adsStats.noSound;
+            fc.settings.totalPlayedGames = adsStats.totalPlayedGames;
             fc.settings.playedGames = 0;
             
-            fc.settings.start_resultScreenAd = gameStats.start_resultScreenAd;
-            fc.settings.start_getMoneyAd = gameStats.start_getMoneyAd;
-            fc.settings.start_launchAd = gameStats.start_launchAd;
-            fc.settings.start_reviveAd = gameStats.start_reviveAd;
-            fc.settings.start_shopAd = gameStats.start_shopAd;
+            fc.settings.start_resultScreenAd = adsStats.start_resultScreenAd;
+            fc.settings.start_getMoneyAd = adsStats.start_getMoneyAd;
+            fc.settings.start_launchAd = adsStats.start_launchAd;
+            fc.settings.start_reviveAd = adsStats.start_reviveAd;
+            fc.settings.start_shopAd = adsStats.start_shopAd;
 
-            fc.settings.launchAd_max= gameStats.launchAd_max;        
-            fc.settings.resultScreenAd_max= gameStats.resultScreenAd_max;        
-            fc.settings.getMoneyAd_max= gameStats.getMoneyAd_max;        
-            fc.settings.reviveAd_max= gameStats.reviveAd_max;        
-            fc.settings.shopAd_max= gameStats.shopAd_max;
+            fc.settings.launchAd_max= adsStats.launchAd_max;        
+            fc.settings.resultScreenAd_max= adsStats.resultScreenAd_max;        
+            fc.settings.getMoneyAd_max= adsStats.getMoneyAd_max;        
+            fc.settings.reviveAd_max= adsStats.reviveAd_max;        
+            fc.settings.shopAd_max= adsStats.shopAd_max;
 
-            fc.settings.launchAd_min= gameStats.launchAd_min;
-            fc.settings.resultScreenAd_min= gameStats.resultScreenAd_min;
-            fc.settings.getMoneyAd_min= gameStats.getMoneyAd_min;
-            fc.settings.reviveAd_min= gameStats.reviveAd_min;
-            fc.settings.shopAd_min= gameStats.shopAd_min;
+            fc.settings.launchAd_min= adsStats.launchAd_min;
+            fc.settings.resultScreenAd_min= adsStats.resultScreenAd_min;
+            fc.settings.getMoneyAd_min= adsStats.getMoneyAd_min;
+            fc.settings.reviveAd_min= adsStats.reviveAd_min;
+            fc.settings.shopAd_min= adsStats.shopAd_min;
             
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
                 fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
