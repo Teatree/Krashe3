@@ -76,7 +76,6 @@ public class GameSettings {
     }
 
     public boolean shouldShowShopAd() {
-
         if (!noAds && Main.adsController.isWifiConnected() &&
                 totalPlayedGames >= start_shopAd &&
                 playedGames % fatigue_shopAd == 0) {
