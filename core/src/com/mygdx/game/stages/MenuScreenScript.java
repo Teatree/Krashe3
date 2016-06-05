@@ -55,7 +55,8 @@ public class MenuScreenScript implements IScript {
             @Override
             public void clicked() {
                 Main.getPlatformResolver().requestPurchase(Main.no_ads_trans_ID);
-//                GameStage.gameScript.fpc.settings.noAds = true;
+                //temp
+                GameStage.gameScript.fpc.settings.noAds = true;
             }
         });
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -80,7 +81,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                stage.initShop();
+                stage.initShopWithAds();
             }
 
             @Override

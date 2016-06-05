@@ -15,7 +15,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.mygdx.game.AdsController;
 import com.mygdx.game.Main;
+import com.mygdx.game.entity.componets.GameSettings;
 import com.mygdx.game.stages.GameStage;
+
+import static com.mygdx.game.stages.GameStage.*;
+import static com.mygdx.game.stages.ResultScreenScript.*;
+import static com.mygdx.game.utils.GlobalConstants.*;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController {
 
@@ -43,11 +48,9 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         setContentView(layout);
 
         //===== detect operating system and Configure platform dependent code ==========================
-        if(game.getAppStore() == Main.APPSTORE_GOOGLE) {
+        if (game.getAppStore() == Main.APPSTORE_GOOGLE) {
             Main.setPlatformResolver(new GooglePlayResolver(game));
         }
-
-//        game.getPlatformResolver().installIAP();
     }
 
     public void setupAds() {
@@ -74,7 +77,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     }
 
     @Override
-    public void showInterstitialVideoAd(final Runnable then) {
+        public void showReviveVideoAd(final Runnable then) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,11 +98,74 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     }
 
     @Override
-    public void showInterstitialGeneralAd(final Runnable then) {
+    public void showGetMoneyVideoAd(final Runnable then) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null && !GameStage.gameScript.fpc.settings.noAds) {
+                if (then != null) {
+                    interstitialVideoAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            Gdx.app.postRunnable(then);
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            AdRequest ad = builder.build();
+                            interstitialVideoAd.loadAd(ad);
+                        }
+                    });
+                }
+                interstitialVideoAd.show();
+            }
+        });
+    }
+
+    @Override
+    public void showLaunchAd(final Runnable then) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                interstitialVideoAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        Gdx.app.postRunnable(then);
+                        AdRequest.Builder builder = new AdRequest.Builder();
+                        AdRequest ad = builder.build();
+                        interstitialVideoAd.loadAd(ad);
+                    }
+                });
+
+                interstitialVideoAd.show();
+            }
+        });
+    }
+
+    @Override
+    public void showResultScreenAd(final Runnable then) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (then != null && !gameScript.fpc.settings.noAds) {
+                    interstitialVideoAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            Gdx.app.postRunnable(then);
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            AdRequest ad = builder.build();
+                            interstitialVideoAd.loadAd(ad);
+                        }
+                    });
+                }
+                interstitialVideoAd.show();
+            }
+        });
+    }
+
+    @Override
+    public void showGeneralShopAd(final Runnable then) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (then != null && !gameScript.fpc.settings.noAds) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {

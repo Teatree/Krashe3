@@ -6,141 +6,141 @@ filter: Nearest,Nearest
 repeat: none
 drunkBugAni01
   rotate: false
-  xy: 2, 743
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 797
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni02
   rotate: false
-  xy: 2, 529
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 638
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni03
   rotate: false
-  xy: 193, 743
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 797
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni04
   rotate: false
-  xy: 2, 315
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 479
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni05
   rotate: false
-  xy: 193, 529
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 638
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni06
   rotate: false
-  xy: 384, 743
-  size: 189, 212
-  orig: 189, 212
+  xy: 428, 797
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni07
   rotate: false
-  xy: 2, 101
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 320
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni08
   rotate: false
-  xy: 193, 315
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 479
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni09
   rotate: false
-  xy: 384, 529
-  size: 189, 212
-  orig: 189, 212
+  xy: 428, 638
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni10
   rotate: false
-  xy: 575, 743
-  size: 189, 212
-  orig: 189, 212
+  xy: 641, 797
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni11
   rotate: false
-  xy: 193, 101
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 161
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni12
   rotate: false
-  xy: 384, 315
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 320
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni13
   rotate: false
-  xy: 575, 529
-  size: 189, 212
-  orig: 189, 212
+  xy: 428, 479
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni14
   rotate: false
-  xy: 766, 743
-  size: 189, 212
-  orig: 189, 212
+  xy: 641, 638
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni15
   rotate: false
-  xy: 384, 101
-  size: 189, 212
-  orig: 189, 212
+  xy: 2, 2
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni16
   rotate: false
-  xy: 575, 315
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 161
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni17
   rotate: false
-  xy: 766, 529
-  size: 189, 212
-  orig: 189, 212
+  xy: 428, 320
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni18
   rotate: false
-  xy: 575, 101
-  size: 189, 212
-  orig: 189, 212
+  xy: 641, 479
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni19
   rotate: false
-  xy: 766, 315
-  size: 189, 212
-  orig: 189, 212
+  xy: 215, 2
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1
 drunkBugAni20
   rotate: false
-  xy: 766, 101
-  size: 189, 212
-  orig: 189, 212
+  xy: 428, 161
+  size: 211, 157
+  orig: 211, 157
   offset: 0, 0
   index: -1

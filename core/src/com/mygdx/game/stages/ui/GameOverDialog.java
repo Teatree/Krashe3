@@ -22,6 +22,7 @@ import static com.mygdx.game.stages.GameStage.gameScript;
 import static com.mygdx.game.utils.EffectUtils.fade;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.game.utils.GlobalConstants.FAR_FAR_AWAY_Y;
+import static com.mygdx.game.Main.*;
 
 public class GameOverDialog {
 
@@ -73,30 +74,40 @@ public class GameOverDialog {
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
 
-        final Entity watchAdBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
+        initReviveBtn(dialogTc);
+    }
+
+    private void initReviveBtn(final TransformComponent dialogTc) {
+        final Entity reviveBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
         final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
-        turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-
-        watchAdBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                if (Main.adsController.isWifiConnected()) {
-                    playVideoAd(dialogTc);
-                } else {
-                    turnOnWifi.getComponent(TransformComponent.class).x = 127;
-                    turnOnWifi.getComponent(TransformComponent.class).y = 45;
-                    continueGame(dialogTc);
+        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
+            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            reviveBtn.getComponent(TransformComponent.class).x = 240;
+            reviveBtn.getComponent(TransformComponent.class).y = 80;
+            reviveBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                @Override
+                public void touchUp() {
                 }
-            }
-        });
+
+                @Override
+                public void touchDown() {
+                }
+
+                @Override
+                public void clicked() {
+                    if (Main.adsController.isWifiConnected()) {
+                        playVideoAd(dialogTc);
+                    } else {
+                        turnOnWifi.getComponent(TransformComponent.class).x = 127;
+                        turnOnWifi.getComponent(TransformComponent.class).y = 45;
+                        continueGame(dialogTc);
+                    }
+                }
+            });
+        } else {
+            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            reviveBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        }
     }
 
     public void continueGame(TransformComponent dialogTc) {
@@ -109,7 +120,7 @@ public class GameOverDialog {
 
     private void playVideoAd(final TransformComponent dialogTc) {
         if (Main.adsController.isWifiConnected()) {
-            Main.adsController.showInterstitialVideoAd(new Runnable() {
+            Main.adsController.showReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
                     continueGame(dialogTc);
@@ -158,7 +169,7 @@ public class GameOverDialog {
                 } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen && !gameScript.giftScreen.isGiftScreenOpen) {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
-                    gameScript.stage.initResult();
+                    gameScript.stage.initResultWithAds();
                 }
             }
         }

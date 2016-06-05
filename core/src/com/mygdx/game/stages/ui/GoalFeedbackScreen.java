@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.game.entity.componets.Goal;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.utils.EffectUtils;
 import com.mygdx.game.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
@@ -106,12 +105,12 @@ public class GoalFeedbackScreen {
 
         final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + GameStage.gameScript.fpc.level.name + " \n ");
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
 
         if (tiles == null || tiles.isEmpty() || !isPause) {
             int y = GOAL_INIT_POS_Y;
             tilesScs = new ArrayList<>();
-            for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
+            for (Goal g : gameScript.fpc.level.getGoals()) {
                 tiles.add(createGoalTile(g, y));
                 y -= GOAL_STEP_Y;
             }
@@ -127,7 +126,7 @@ public class GoalFeedbackScreen {
 
 //        final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
 //        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-//        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + GameStage.gameScript.fpc.level.name + " \n ");
+//        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
 
         if (prevLvlTiles != null || !prevLvlTiles.isEmpty() || !isPause) {
             for (SpriterComponent s : tilesScs) {
@@ -182,7 +181,7 @@ public class GoalFeedbackScreen {
 
             int i = 1;
             float delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
-            for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
+            for (Goal g : gameScript.fpc.level.getGoals()) {
                 Entity newTile = createGoalTile(g, y);
 
                 ActionComponent ac = new ActionComponent();
@@ -262,11 +261,11 @@ public class GoalFeedbackScreen {
         int i = 0;
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
-            if (GameStage.gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
+            if (gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
                 tilesScs.get(i).player.speed = 4;
                 isAniPlaying = true;
                 aniPlayingIndex = i;
-                GameStage.gameScript.fpc.level.getGoals().get(i).justAchieved = false;
+                gameScript.fpc.level.getGoals().get(i).justAchieved = false;
             } else if (tilesScs.get(i).player.getTime() >=
                     tilesScs.get(i).player.getAnimation().length - 20) {
                 tilesScs.get(i).player.speed = 0;
@@ -285,22 +284,22 @@ public class GoalFeedbackScreen {
             final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-            if(!goalsLabelComp.text.toString().equals(GameStage.gameScript.fpc.level.name)) {
+            if(!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
                 EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
                         goalLabel.getComponent(TransformComponent.class).y);
-                goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), GameStage.gameScript.fpc.level.name);
+                goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
             }
         }
 
         if (Gdx.input.justTouched() && isGoalFeedbackOpen) {
-            if (GameStage.gameScript.fpc.level.checkAllGoals()) {
+            if (gameScript.fpc.level.checkAllGoals()) {
                 gameScript.giftScreen.show();
 
                 isGoalFeedbackOpen = false;
             } else {
-                if (GameStage.gameScript.giftScreen.isGiftScreenOpen) {
-                    GameStage.gameScript.giftScreen.isGiftScreenOpen = false;
-                    GameStage.gameScript.giftScreen.hide();
+                if (gameScript.giftScreen.isGiftScreenOpen) {
+                    gameScript.giftScreen.isGiftScreenOpen = false;
+                    gameScript.giftScreen.hide();
 
                 } else if (tiles.get(tiles.size()-1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X+20){
                     isGoalFeedbackOpen = false;
@@ -308,7 +307,7 @@ public class GoalFeedbackScreen {
                     feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
                     sceneLoader.getEngine().removeEntity(feedbackEntity);
                     prevLvlTiles = null;
-                    GameStage.gameScript.stage.initResult();
+                    gameScript.stage.initResultWithAds();
                 }
             }
         }

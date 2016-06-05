@@ -24,8 +24,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.game.entity.componets.FlowerComponent.*;
-import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.GameStage.gameScript;
+import static com.mygdx.game.stages.GameStage.sceneLoader;
 import static com.mygdx.game.stages.ShopScreenScript.allShopItems;
 import static com.mygdx.game.utils.GlobalConstants.*;
 
@@ -110,12 +110,13 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-//
+
 //        System.err.print("init game ");
 //        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
 //                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
+
 //        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
         CocoonSystem.resetSpawnCoefficients();
@@ -140,11 +141,10 @@ public class GameScreenScript implements IScript {
 
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
-
         pauseDialog = new PauseDialog(gameItem);
+        pauseDialog.init();
 
         gameScript.fpc.level.updateLevel();
-        pauseDialog.init();
 
         giftScreen = new GiftScreen(gameItem);
         giftScreen.init();
@@ -155,6 +155,10 @@ public class GameScreenScript implements IScript {
         goalFeedbackScreen.init(false);
 
         checkTryPeriod();
+
+        gameScript.fpc.settings.totalPlayedGames++;
+        gameScript.fpc.settings.playedGames++;
+        BugSpawnSystem.isAngeredBeesMode = false;
     }
 
     public void initButtons() {
@@ -265,7 +269,7 @@ public class GameScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!isGameOver) {
+                if (!isGameOver) {
                     pauseDialog.show();
                 }
             }
@@ -304,7 +308,7 @@ public class GameScreenScript implements IScript {
                 fpc.currentPet.init();
 
                 pet.add(fpc.currentPet);
-            }else{
+            } else {
                 sceneLoader.getEngine().removeEntity(pet);
             }
         }
@@ -332,10 +336,10 @@ public class GameScreenScript implements IScript {
 
             if (!isPause && !isGameOver && isStarted) {
                 if (canDandelionSpawn()) {
-                    dandelionSpawnCounter-=delta;
+                    dandelionSpawnCounter -= delta;
                 }
                 if (canCocoonSpawn()) {
-                    cocoonSpawnCounter-=delta;
+                    cocoonSpawnCounter -= delta;
                 }
                 //Spawn dandelion
                 if (dandelionSpawnCounter <= 0) {
@@ -374,9 +378,6 @@ public class GameScreenScript implements IScript {
 
     private void spawnDandelion() {
         if (canDandelionSpawn()) {
-//            dandelionSpawnCounter =
-//                    random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
-
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
 
