@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -15,6 +16,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.mygdx.game.AdsController;
 import com.mygdx.game.Main;
+import com.mygdx.game.android.util.IabHelper;
+import com.mygdx.game.android.util.IabResult;
 import com.mygdx.game.entity.componets.GameSettings;
 import com.mygdx.game.stages.GameStage;
 
@@ -31,6 +34,8 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     InterstitialAd interstitialGeneralAd;
 
     private Main game;
+
+    IabHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,26 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         if (game.getAppStore() == Main.APPSTORE_GOOGLE) {
             Main.setPlatformResolver(new GooglePlayResolver(game));
         }
+
+        setupIAP();
+    }
+
+    private void setupIAP() {
+        // ...
+        String base64EncodedPublicKey = "";
+
+        // compute your public key and store it in base64EncodedPublicKey
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+//                    Log.d(TAyG, "Problem setting up In-app Billing: " + result);
+                }
+                // Hooray, IAB is fully set up!
+            }
+        });
     }
 
     public void setupAds() {
@@ -179,5 +204,16 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
                 interstitialVideoAd.show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHelper != null) try {
+            mHelper.dispose();
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
+        mHelper = null;
     }
 }

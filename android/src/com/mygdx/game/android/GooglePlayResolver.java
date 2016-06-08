@@ -3,6 +3,7 @@ package com.mygdx.game.android;
 import com.badlogic.gdx.pay.PurchaseManagerConfig;
 import com.mygdx.game.Main;
 import com.mygdx.game.PlatformResolver;
+import com.mygdx.game.android.util.IabHelper;
 
 public class GooglePlayResolver extends PlatformResolver {
 
