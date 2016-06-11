@@ -36,7 +36,7 @@ backgroundforeground
   index: -1
 backnooff
   rotate: false
-  xy: 1864, 540
+  xy: 1861, 1926
   size: 121, 120
   split: 26, 24, 24, 30
   orig: 121, 120
@@ -67,7 +67,7 @@ bugjuicebubble
   index: -1
 buttonback
   rotate: false
-  xy: 1864, 418
+  xy: 1864, 540
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -75,7 +75,7 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1878, 192
+  xy: 1864, 418
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
@@ -83,9 +83,18 @@ buttonbackoff
   index: -1
 buttonbackoff1
   rotate: false
-  xy: 1878, 70
+  xy: 1878, 192
   size: 121, 120
   split: 14, 16, 13, 15
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonbackon1
+  rotate: false
+  xy: 1878, 70
+  size: 121, 120
+  split: 16, 17, 15, 17
+  pad: 16, 16, 15, 17
   orig: 121, 120
   offset: 0, 0
   index: -1
@@ -94,13 +103,6 @@ emptyStar
   xy: 1775, 662
   size: 256, 256
   orig: 256, 256
-  offset: 0, 0
-  index: -1
-flowerhead
-  rotate: false
-  xy: 1861, 1896
-  size: 143, 150
-  orig: 143, 150
   offset: 0, 0
   index: -1
 flowerpeducle
@@ -176,7 +178,7 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 1861, 1874
+  xy: 1861, 1904
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
@@ -237,18 +239,9 @@ backshadow1
   orig: 220, 220
   offset: 0, 0
   index: -1
-buttonbackon1
-  rotate: false
-  xy: 502, 522
-  size: 121, 120
-  split: 16, 17, 15, 17
-  pad: 16, 16, 15, 17
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
 buttoncameraoff
   rotate: false
-  xy: 1812, 1852
+  xy: 502, 522
   size: 121, 120
   split: 23, 18, 17, 29
   orig: 121, 120
@@ -256,7 +249,7 @@ buttoncameraoff
   index: -1
 buttoncameraon
   rotate: false
-  xy: 1026, 1256
+  xy: 1812, 1852
   size: 121, 120
   split: 23, 17, 17, 29
   orig: 121, 120
@@ -264,7 +257,7 @@ buttoncameraon
   index: -1
 buttonnoAdsoff
   rotate: false
-  xy: 1149, 1256
+  xy: 1812, 1730
   size: 120, 120
   split: 14, 18, 11, 13
   pad: 11, 13, 16, 14
@@ -273,7 +266,7 @@ buttonnoAdsoff
   index: -1
 buttonnoAdson
   rotate: false
-  xy: 625, 400
+  xy: 1149, 1256
   size: 120, 120
   split: 12, 15, 11, 14
   orig: 120, 120
@@ -281,7 +274,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 502, 400
+  xy: 1026, 1256
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -289,7 +282,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 625, 522
+  xy: 502, 400
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -298,7 +291,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 1812, 1730
+  xy: 625, 522
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -307,7 +300,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 1304, 1332
+  xy: 625, 400
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -315,7 +308,7 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 1426, 1332
+  xy: 1304, 1332
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
@@ -323,7 +316,7 @@ buttonsettingson
   index: -1
 buttonshopoff
   rotate: false
-  xy: 252, 2
+  xy: 1426, 1332
   size: 120, 120
   split: 14, 16, 17, 17
   orig: 120, 120
@@ -331,7 +324,7 @@ buttonshopoff
   index: -1
 buttonshopon
   rotate: false
-  xy: 374, 2
+  xy: 252, 2
   size: 120, 120
   split: 14, 15, 16, 19
   orig: 120, 120
@@ -346,14 +339,14 @@ dnaamountbackground
   index: -1
 item_button_off
   rotate: false
-  xy: 502, 278
+  xy: 374, 2
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
   index: -1
 item_button_on
   rotate: false
-  xy: 624, 278
+  xy: 502, 278
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
