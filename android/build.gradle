@@ -1,4 +1,15 @@
 android {
+
+    signingConfigs {
+        /* TODO(developer): Configure to sign app with a release key for testing.*/
+        release {
+            storeFile file('android/keystore.jks')
+            keyAlias 'release_key_alias'
+            keyPassword "66236zair!"
+            storePassword "66236zair!"
+        }
+    }
+
     buildToolsVersion '19.1.0'
     compileSdkVersion 19
     sourceSets {
@@ -25,6 +36,7 @@ android {
 // use minifyEnabled instead of runProguard if your gradle plugin version is 0.14+
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-project.txt'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -77,7 +89,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game.android/com.mygdx.game.android.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.etf.android/com.mygdx.etf.android.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {

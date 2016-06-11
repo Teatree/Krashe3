@@ -1,12 +1,12 @@
 [{
-class: com.mygdx.game.entity.componets.CocoonComponent$CocoonMultiplier,
+class: com.mygdx.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 0,
 finishOn: 15,
 minSpawnCoefficient: 1.5, 
 maxSpawnCoefficient: 3
 },
 {
-class: com.mygdx.game.entity.componets.CocoonComponent$CocoonMultiplier,
+class: com.mygdx.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 16,
 finishOn:25,
 minSpawnCoefficient: 0.2, 
