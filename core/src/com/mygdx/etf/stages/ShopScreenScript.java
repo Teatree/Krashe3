@@ -37,7 +37,14 @@ public class ShopScreenScript implements IScript {
     public static final String HC_SHOP_SEC = "HC_shop_sec";
     public static final String TAB_BTN_SHOP = "tab_btn_shop";
     public static final String TAB_BTN_UPG = "tab_btn_upg";
+    public static final String CURTAIN_SHOP = "curtain_shop";
     public static final int INIT_HC_ITEMS_X = 146;
+
+    // Dima's fun house
+    Entity curtain_shop;
+    int fadeCounter = 0;
+    boolean startTransitionIn;
+    boolean startTransitionOut;
 
     public static Entity scoreLbl;
     public static boolean isPreviewOn;
@@ -76,6 +83,12 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
         preview = new Preview(shopItem);
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+
+        // Dima's fun house
+        curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();
+        curtain_shop.getComponent(TintComponent.class).color.a = 1f;
+        startTransitionIn = true;
+        startTransitionOut = false;
 
         addBackButtonPlease();
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
@@ -411,7 +424,8 @@ public class ShopScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!isPreviewOn) {
-                    stage.initMenu();
+                    startTransitionOut = true;
+
                 }
             }
         });
@@ -420,6 +434,22 @@ public class ShopScreenScript implements IScript {
     @Override
     public void act(float delta) {
         if (!isPreviewOn) {
+            if(startTransitionIn){
+                curtain_shop.getComponent(TintComponent.class).color.a -= 0.05f;
+                if(curtain_shop.getComponent(TintComponent.class).color.a<=0){
+                    startTransitionIn = false;
+                }
+            }
+
+            if(startTransitionOut){
+                curtain_shop.getComponent(TintComponent.class).color.a += 0.05f;
+                if(curtain_shop.getComponent(TintComponent.class).color.a>=1){
+                    startTransitionOut = false;
+                    startTransitionIn = true;
+                    stage.initMenu();
+                }
+            }
+
             List<Entity> itemIcons2 = new ArrayList<>(itemIcons.values());
             if (touchZoneBtn.isTouched) {
                 if (!isGdxWritten) {
