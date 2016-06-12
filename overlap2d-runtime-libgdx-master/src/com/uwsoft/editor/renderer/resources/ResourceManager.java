@@ -1,8 +1,5 @@
 package com.uwsoft.editor.renderer.resources;
 
-import java.io.File;
-import java.util.*;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,6 +12,9 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Json;
 import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.utils.MySkin;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * Default ResourceManager that you can reuse or extend

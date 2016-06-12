@@ -17,13 +17,12 @@ public abstract class ShopItem {
     //true when is applied now
     public boolean enabled ;
 
-    public abstract void apply (FlowerPublicComponent fpc);
+    public abstract void apply ();
 
-    public abstract void disable(FlowerPublicComponent fpc);
+    public abstract void disable();
 
-    public abstract void buyAndUse(FlowerPublicComponent fpc);
+    public abstract void buyAndUse();
 
-//    public enum CurrencyType {
-//        SOFT, HARD
-//    }
+    public abstract void buyHard();
+
 }

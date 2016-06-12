@@ -1,6 +1,6 @@
 package com.brashmonkey.spriter;
 
-import static  com.brashmonkey.spriter.Calculator.*;
+import static com.brashmonkey.spriter.Calculator.solveCubic;
 import static com.brashmonkey.spriter.Interpolator.*;
 
 /**

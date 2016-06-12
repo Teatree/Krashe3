@@ -13,10 +13,6 @@ public class DesktopLauncher {
 		config.width = 1200;
 		config.height = 800;
 
-		// Configure platform dependent code
-		DesktopResolver res = new DesktopResolver(game);
-		Main.setPlatformResolver(res);
-
 		new LwjglApplication(game, config);
 	}
 }

@@ -1,10 +1,8 @@
 package com.uwsoft.editor.renderer.components.light;
 
 import box2dLight.Light;
-
 import com.badlogic.ashley.core.Component;
 import com.uwsoft.editor.renderer.data.LightVO.LightType;
-import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 
 public class LightObjectComponent implements Component {
 	private LightType type;

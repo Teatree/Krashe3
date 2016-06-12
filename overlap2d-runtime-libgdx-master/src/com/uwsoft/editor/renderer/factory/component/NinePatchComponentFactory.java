@@ -1,7 +1,6 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import box2dLight.RayHandler;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

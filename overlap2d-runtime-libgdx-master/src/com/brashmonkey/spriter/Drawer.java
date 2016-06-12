@@ -1,12 +1,12 @@
 package com.brashmonkey.spriter;
 
-import java.util.Iterator;
-
 import com.brashmonkey.spriter.Entity.CharacterMap;
 import com.brashmonkey.spriter.Entity.ObjectInfo;
 import com.brashmonkey.spriter.Entity.ObjectType;
 import com.brashmonkey.spriter.Timeline.Key.Bone;
 import com.brashmonkey.spriter.Timeline.Key.Object;
+
+import java.util.Iterator;
 
 /**
  * A Drawer is responsible for drawing a {@link Player}.

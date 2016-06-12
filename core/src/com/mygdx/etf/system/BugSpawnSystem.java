@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.BugComponent.*;
-import static com.mygdx.etf.entity.componets.CocoonComponent.*;
-import static com.mygdx.etf.entity.componets.DandelionComponent.*;
+import static com.mygdx.etf.entity.componets.CocoonComponent.cocoonMultipliers;
+import static com.mygdx.etf.entity.componets.CocoonComponent.currentCocoonMultiplier;
+import static com.mygdx.etf.entity.componets.DandelionComponent.currentDandelionMultiplier;
+import static com.mygdx.etf.entity.componets.DandelionComponent.dandelionMultipliers;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 

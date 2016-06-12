@@ -94,7 +94,7 @@ public class GameOverDialog {
 
                 @Override
                 public void clicked() {
-                    if (Main.adsController.isWifiConnected()) {
+                    if (Main.mainController.isWifiConnected()) {
                         playVideoAd(dialogTc);
                     } else {
                         turnOnWifi.getComponent(TransformComponent.class).x = 127;
@@ -118,8 +118,8 @@ public class GameOverDialog {
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {
-        if (Main.adsController.isWifiConnected()) {
-            Main.adsController.showReviveVideoAd(new Runnable() {
+        if (Main.mainController.isWifiConnected()) {
+            Main.mainController.showReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
                     continueGame(dialogTc);

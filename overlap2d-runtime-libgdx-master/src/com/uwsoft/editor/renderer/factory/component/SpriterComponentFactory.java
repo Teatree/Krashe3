@@ -19,7 +19,6 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import box2dLight.RayHandler;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.physics.box2d.World;

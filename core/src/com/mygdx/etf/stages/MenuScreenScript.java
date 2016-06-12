@@ -10,6 +10,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 
 public class MenuScreenScript implements IScript {
@@ -64,11 +65,11 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                Main.getPlatformResolver().requestPurchase(Main.no_ads_trans_ID);
-                //temp
-                GameStage.gameScript.fpc.settings.noAds = true;
+                Main.mainController.removeAds();
             }
         });
+
+
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
 
             @Override

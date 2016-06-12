@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.stages.GameStage;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.NodeComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -17,7 +19,8 @@ import java.util.Map;
 import static com.mygdx.etf.stages.GameScreenScript.isPause;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.EffectUtils.fade;
-import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class PauseDialog {
 

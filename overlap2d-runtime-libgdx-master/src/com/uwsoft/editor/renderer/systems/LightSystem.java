@@ -2,8 +2,6 @@ package com.uwsoft.editor.renderer.systems;
 
 import box2dLight.ConeLight;
 import box2dLight.Light;
-import box2dLight.PointLight;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;

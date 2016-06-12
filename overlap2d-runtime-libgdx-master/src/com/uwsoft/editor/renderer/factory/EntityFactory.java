@@ -1,8 +1,6 @@
 package com.uwsoft.editor.renderer.factory;
 
 import box2dLight.RayHandler;
-
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -18,7 +16,9 @@ import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.factory.component.*;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class EntityFactory {
 	

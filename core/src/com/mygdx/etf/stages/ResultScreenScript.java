@@ -14,9 +14,9 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.*;
-import static com.mygdx.etf.stages.GameStage.*;
 
 public class ResultScreenScript implements IScript {
 
@@ -311,8 +311,8 @@ public class ResultScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!show) {
-                    if (Main.adsController.isWifiConnected()) {
-                        Main.adsController.showGetMoneyVideoAd(new Runnable() {
+                    if (Main.mainController.isWifiConnected()) {
+                        Main.mainController.showGetMoneyVideoAd(new Runnable() {
                             @Override
                             public void run() {
                                 //give that money!

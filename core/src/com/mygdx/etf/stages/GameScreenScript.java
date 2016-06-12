@@ -79,7 +79,7 @@ public class GameScreenScript implements IScript {
                 gameScript.fpc.currentPet.enabled = false;
                 gameScript.fpc.currentPet.bought = false;
                 gameScript.fpc.currentPet.tryPeriod = false;
-                gameScript.fpc.currentPet.disable(gameScript.fpc);
+                gameScript.fpc.currentPet.disable();
 
                 if (allShopItems.indexOf(gameScript.fpc.currentPet) >= 0) {
                     allShopItems.get(allShopItems.indexOf(gameScript.fpc.currentPet)).bought = false;
@@ -93,7 +93,7 @@ public class GameScreenScript implements IScript {
                     u.enabled = false;
                     u.bought = false;
                     u.tryPeriod = false;
-                    u.disable(gameScript.fpc);
+                    u.disable();
 
                     if (allShopItems.indexOf(u) >= 0) {
                         allShopItems.get(allShopItems.indexOf(u)).bought = false;
@@ -105,7 +105,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
-        gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix(gameScript.fpc);
+        gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
     }
 
     @Override
@@ -116,8 +116,6 @@ public class GameScreenScript implements IScript {
 //                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
-
-//        dandelionSpawnCounter = random.nextInt(DANDELION_SPAWN_CHANCE_MAX - DANDELION_SPAWN_CHANCE_MIN) + DANDELION_SPAWN_CHANCE_MIN;
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();

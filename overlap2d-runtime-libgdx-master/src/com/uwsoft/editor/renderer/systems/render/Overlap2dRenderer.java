@@ -19,9 +19,7 @@ import com.uwsoft.editor.renderer.systems.render.logic.DrawableLogicMapper;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class Overlap2dRenderer extends IteratingSystem {

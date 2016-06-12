@@ -1,10 +1,10 @@
 package com.uwsoft.editor.renderer.systems.render.logic;
 
-import java.util.HashMap;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
+
+import java.util.HashMap;
 
 public class DrawableLogicMapper {
 

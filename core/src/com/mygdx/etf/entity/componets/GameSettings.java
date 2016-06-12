@@ -65,7 +65,7 @@ public class GameSettings {
     }
 
     public boolean shouldShowLaunchAd() {
-        if (!noAds && Main.adsController.isWifiConnected() &&
+        if (!noAds && Main.mainController.isWifiConnected() &&
                 totalPlayedGames >= start_launchAd &&
                 playedGames % fatigue_launchAd == 0) {
             resetFatigueLaunchAd();
@@ -76,7 +76,7 @@ public class GameSettings {
     }
 
     public boolean shouldShowShopAd() {
-        if (!noAds && Main.adsController.isWifiConnected() &&
+        if (!noAds && Main.mainController.isWifiConnected() &&
                 totalPlayedGames >= start_shopAd &&
                 playedGames % fatigue_shopAd == 0) {
             resetFatigueShopAd();
@@ -87,7 +87,7 @@ public class GameSettings {
     }
 
     public boolean shouldShowResultAd() {
-        if (!noAds && Main.adsController.isWifiConnected() &&
+        if (!noAds && Main.mainController.isWifiConnected() &&
                 totalPlayedGames >= start_resultScreenAd &&
                 playedGames % fatigue_resultScreenAd == 0) {
             resetFatigueResultScreenAd();

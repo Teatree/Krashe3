@@ -2,6 +2,7 @@ package com.mygdx.etf.entity.componets;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class Upgrade extends ShopItem{
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
-        phoenix.transactionId = Main.phoenix_trans_ID;
+//        phoenix.transactionId = Main.phoenix_trans_ID;
         return phoenix;
     }
 
@@ -58,28 +59,39 @@ public class Upgrade extends ShopItem{
         bjd.description = "more juice \\0/";
         bjd.enabled = false;
         bjd.currencyType = HARD;
-        bjd.transactionId = Main.bj_double_trans_ID;
+//        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }
 
     @Override
-    public void apply(FlowerPublicComponent fpc) {
+    public void apply() {
         this.enabled = true;
-        fpc.upgrades.put(this.upgradeType, this);
+        GameStage.gameScript.fpc.upgrades.put(this.upgradeType, this);
     }
 
     @Override
-    public void disable(FlowerPublicComponent fpc) {
+    public void disable() {
         this.enabled = false;
     }
 
     @Override
-    public void buyAndUse(FlowerPublicComponent fpc) {
+    public void buyAndUse() {
         this.bought = true;
-        apply(fpc);
+        apply();
     }
 
-    public void usePhoenix(FlowerPublicComponent fpc) {
+    @Override
+    public void buyHard() {
+        if (upgradeType.equals(UpgradeType.PHOENIX)){
+            Main.mainController.getPhoenix(this);
+        }
+
+        if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
+            Main.mainController.getBJDouble(this);
+        }
+    }
+
+    public void usePhoenix() {
         blowUpAllBugs = true;
         FlowerComponent.state = FlowerComponent.State.PHOENIX;
         counter++;
