@@ -79,7 +79,7 @@ public class GameOverDialog {
     private void initReviveBtn(final TransformComponent dialogTc) {
         final Entity reviveBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
         final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
-        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
+//        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
             turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             reviveBtn.getComponent(TransformComponent.class).x = 240;
             reviveBtn.getComponent(TransformComponent.class).y = 80;
@@ -103,10 +103,10 @@ public class GameOverDialog {
                     }
                 }
             });
-        } else {
-            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            reviveBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        }
+//        } else {
+//            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            reviveBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        }
     }
 
     public void continueGame(TransformComponent dialogTc) {
