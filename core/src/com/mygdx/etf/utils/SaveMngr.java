@@ -104,6 +104,7 @@ public class SaveMngr {
         FlowerPublicComponent fc = new FlowerPublicComponent();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
+//        saved = "";
         if (!"".equals(saved)) {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
@@ -466,7 +467,7 @@ public class SaveMngr {
         public long totalScore;
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
-        public Map<String, UpgradeStats> upgrades = new HashMap<>();
+        public Map<String, UpgradeStats> upgrades = new HashMap<String, UpgradeStats>();
         public int totalPlayedGames;
 
         public int shopAd_max = 4;

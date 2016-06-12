@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Align;
 
 public class BugJuiceBubbleComponent implements Component {
     public float startX, startY;
-    public float endX = 1080;
+    public float endX = 601;
     public float endY = 680;
     public float duration = 1;
     public float time;
