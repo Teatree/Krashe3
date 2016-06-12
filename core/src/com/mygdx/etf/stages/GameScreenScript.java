@@ -61,6 +61,7 @@ public class GameScreenScript implements IScript {
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
+    public static Entity beesModeAni;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -70,6 +71,7 @@ public class GameScreenScript implements IScript {
         BugSpawnSystem.isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
+        beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
     }
 
     public static void checkTryPeriod() {
@@ -116,6 +118,10 @@ public class GameScreenScript implements IScript {
 //                Gdx.app.getNativeHeap());
 
         gameItem = new ItemWrapper(item);
+
+        beesModeAni = gameItem.getChild("bees_mode_ani").getEntity();
+        beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
+        beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
@@ -353,6 +359,7 @@ public class GameScreenScript implements IScript {
             pauseDialog.update(delta);
             giftScreen.update();
             goalFeedbackScreen.update();
+
         }
     }
 
