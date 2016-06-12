@@ -69,7 +69,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.pet = vc.pet != null ? new PetComponent(vc.pet) : pet;
     }
 
-    public void apply(FlowerPublicComponent fc) {
+    public void apply() {
 //        moveToLocal();
 
         if (bought) {
@@ -83,28 +83,33 @@ public class VanityComponent extends ShopItem implements Component {
             }
 
             if (this.pet != null) {
-                fc.currentPet = this.pet;
+                GameStage.gameScript.fpc.currentPet = this.pet;
             }
             GameStage.updateFlowerAni();
             GameStage.changedFlower = true;
         }
     }
 
-    public void buy(FlowerPublicComponent fc) {
-        fc.totalScore -= this.cost;
+    public void buy() {
+        GameStage.gameScript.fpc.totalScore -= this.cost;
         this.bought = true;
     }
 
-    public void buyAndUse(FlowerPublicComponent fc) {
-        buy(fc);
-        apply(fc);
+    public void buyAndUse() {
+        buy();
+        apply();
+    }
+
+    @Override
+    public void buyHard() {
+        //nothing I'm soft
     }
 
     public boolean canBuy() {
         return GameStage.gameScript.fpc.totalScore >= this.cost;
     }
 
-    public void disable(FlowerPublicComponent fc) {
+    public void disable() {
         this.enabled = false;
 
         for (Map.Entry entry : assetsToChange.entrySet()) {

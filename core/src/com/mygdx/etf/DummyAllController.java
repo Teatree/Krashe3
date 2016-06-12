@@ -1,6 +1,9 @@
 package com.mygdx.etf;
 
-public class DummyAdsController implements AdsController {
+import com.mygdx.etf.entity.componets.PetComponent;
+import com.mygdx.etf.entity.componets.Upgrade;
+
+public class DummyAllController implements AllController {
 
     @Override
     public boolean isWifiConnected() {
@@ -30,5 +33,25 @@ public class DummyAdsController implements AdsController {
     @Override
     public void showGeneralShopAd(Runnable then) {
         System.out.println("showGeneralShopAd");
+    }
+
+    @Override
+    public void removeAds() {
+        System.out.println("pay to remove ads");
+    }
+
+    @Override
+    public void getPhoenix(Upgrade phoenix) {
+        System.out.println("pay to get phoenix");
+    }
+
+    @Override
+    public void getBJDouble(Upgrade bj) {
+        System.out.println("pay to get bj");
+    }
+
+    @Override
+    public void getBirdPet(PetComponent pet) {
+        System.out.println("pay to get pet");
     }
 }

@@ -2,8 +2,6 @@ package com.uwsoft.editor.renderer.data;
 
 import com.uwsoft.editor.renderer.utils.CustomVariables;
 
-import java.util.Map;
-
 /**
  * Created by Osman on 20.08.2015.
  *

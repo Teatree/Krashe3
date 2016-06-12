@@ -1,7 +1,6 @@
 package com.uwsoft.editor.renderer.components.additional;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 /**

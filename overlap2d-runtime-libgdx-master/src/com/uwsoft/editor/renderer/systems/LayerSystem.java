@@ -1,16 +1,14 @@
 package com.uwsoft.editor.renderer.systems;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.uwsoft.editor.renderer.components.*;
-import com.uwsoft.editor.renderer.data.LayerItemVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+
+import java.util.Comparator;
 
 public class LayerSystem extends IteratingSystem {
 

@@ -2,7 +2,6 @@ package com.uwsoft.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
-import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 
 public class LightVO extends MainItemVO{
 	//public int itemId = -1;

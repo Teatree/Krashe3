@@ -1,11 +1,11 @@
 package com.uwsoft.editor.renderer.components;
 
+import com.badlogic.ashley.core.Component;
+import com.uwsoft.editor.renderer.data.LayerItemVO;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-
-import com.badlogic.ashley.core.Component;
-import com.uwsoft.editor.renderer.data.LayerItemVO;
 
 public class LayerMapComponent implements Component {
 	public boolean autoIndexing = true;

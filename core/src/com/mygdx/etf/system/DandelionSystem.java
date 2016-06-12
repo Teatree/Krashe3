@@ -23,8 +23,9 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.mygdx.etf.entity.componets.CocoonComponent.SPAWN_INTERVAL_BASE;
-import static com.mygdx.etf.entity.componets.DandelionComponent.*;
 import static com.mygdx.etf.entity.componets.DandelionComponent.State.*;
+import static com.mygdx.etf.entity.componets.DandelionComponent.currentDandelionMultiplier;
+import static com.mygdx.etf.entity.componets.DandelionComponent.dandelionMultipliers;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.utils.GlobalConstants.*;
 

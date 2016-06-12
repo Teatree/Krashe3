@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.uwsoft.editor.renderer.data.ProjectInfoVO;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;

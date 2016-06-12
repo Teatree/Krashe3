@@ -1,7 +1,6 @@
 package com.uwsoft.editor.renderer.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.HashSet;
 import java.util.Set;

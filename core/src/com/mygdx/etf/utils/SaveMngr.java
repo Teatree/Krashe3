@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.system.BugSpawnSystem;
 
@@ -357,7 +356,7 @@ public class SaveMngr {
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
-        dummyPet.transactionId = Main.pet_bird_trans_ID;
+//        dummyPet.transactionId = Main.pet_bird_trans_ID;
 
         ArrayList<PetJson> allPets = new ArrayList<PetJson>();
         allPets.add(dummyPet);

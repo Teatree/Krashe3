@@ -12,11 +12,11 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.Main.mainController;
 import static com.mygdx.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.mygdx.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 import static com.mygdx.etf.utils.SoundMgr.getSoundMgr;
-import static com.mygdx.etf.Main.*;
 
 public class GameStage extends Stage {
 
@@ -52,7 +52,7 @@ public class GameStage extends Stage {
         justCreated = true;
 
         if (gameScript.fpc.settings.shouldShowLaunchAd()) {
-            Main.adsController.showLaunchAd(new Runnable() {
+            Main.mainController.showLaunchAd(new Runnable() {
                 @Override
                 public void run() {
                     initMenu();
@@ -154,7 +154,7 @@ public class GameStage extends Stage {
 
     public void initShopWithAds() {
         if (gameScript.fpc.settings.shouldShowShopAd()){
-            adsController.showGeneralShopAd(new Runnable() {
+            mainController.showGeneralShopAd(new Runnable() {
                 @Override
                 public void run() {
                     initShop();
@@ -167,7 +167,7 @@ public class GameStage extends Stage {
 
     public void initResultWithAds() {
         if (gameScript.fpc.settings.shouldShowResultAd()){
-            adsController.showResultScreenAd(new Runnable() {
+            mainController.showResultScreenAd(new Runnable() {
                 @Override
                 public void run() {
                     initResult();

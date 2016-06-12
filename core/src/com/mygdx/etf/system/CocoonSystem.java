@@ -18,8 +18,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
-import static com.mygdx.etf.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.etf.entity.componets.CocoonComponent.*;
+import static com.mygdx.etf.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;

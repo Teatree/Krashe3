@@ -1,10 +1,10 @@
 package com.uwsoft.editor.renderer.components.spriter;
 
-import java.util.ArrayList;
-
 import com.badlogic.ashley.core.Component;
 import com.brashmonkey.spriter.Data;
 import com.brashmonkey.spriter.Player;
+
+import java.util.ArrayList;
 
 public class SpriterComponent implements Component {
 	public Player player;

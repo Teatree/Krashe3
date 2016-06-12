@@ -178,7 +178,7 @@ public class Showcase {
 
             @Override
             public void clicked() {
-                showCaseVanity.buyAndUse(GameStage.gameScript.fpc);
+                showCaseVanity.buyAndUse();
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();

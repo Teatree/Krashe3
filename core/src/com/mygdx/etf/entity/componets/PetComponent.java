@@ -3,6 +3,7 @@ package com.mygdx.etf.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
 
@@ -81,24 +82,29 @@ public class PetComponent extends ShopItem implements Component {
     }
 
     @Override
-    public void apply(FlowerPublicComponent fpc) {
+    public void apply() {
         this.enabled = true;
-        fpc.currentPet = this;
+        GameStage.gameScript.fpc.currentPet = this;
     }
 
     @Override
-    public void disable(FlowerPublicComponent fpc) {
+    public void disable() {
         this.enabled = false;
 //        fpc.currentPet = null;
     }
 
     @Override
-    public void buyAndUse(FlowerPublicComponent fpc) {
+    public void buyAndUse() {
         this.bought = true;
         if (GameStage.gameScript.fpc.currentPet != null) {
             GameStage.gameScript.fpc.currentPet.tryPeriod = false;
         }
-        apply(fpc);
+        apply();
+    }
+
+    @Override
+    public void buyHard() {
+        Main.mainController.getBirdPet(this);
     }
 
     public void setOutsideStateDuration() {

@@ -1,7 +1,9 @@
 package com.mygdx.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.Bezier;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Teatree on 10/6/2015.

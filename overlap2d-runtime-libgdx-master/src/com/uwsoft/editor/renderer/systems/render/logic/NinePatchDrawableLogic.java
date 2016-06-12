@@ -3,8 +3,10 @@ package com.uwsoft.editor.renderer.systems.render.logic;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Matrix4;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.NinePatchComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 
 public class NinePatchDrawableLogic implements Drawable {
 

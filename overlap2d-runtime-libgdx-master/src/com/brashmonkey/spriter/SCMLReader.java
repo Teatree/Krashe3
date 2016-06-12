@@ -1,13 +1,15 @@
 package com.brashmonkey.spriter;
 
+import com.brashmonkey.spriter.Entity.ObjectInfo;
+import com.brashmonkey.spriter.Entity.ObjectType;
+import com.brashmonkey.spriter.Mainline.Key.BoneRef;
+import com.brashmonkey.spriter.Mainline.Key.ObjectRef;
+import com.brashmonkey.spriter.XmlReader.Element;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.brashmonkey.spriter.Entity.*;
-import com.brashmonkey.spriter.Mainline.Key.*;
-import com.brashmonkey.spriter.XmlReader.*;
 
 /**
  * This class parses a SCML file and creates a {@link Data} instance.

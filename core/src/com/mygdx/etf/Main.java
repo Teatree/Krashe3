@@ -6,12 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.pay.PurchaseManagerConfig;
-import com.badlogic.gdx.pay.PurchaseObserver;
-import com.badlogic.gdx.pay.Transaction;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.SaveMngr;
@@ -29,93 +26,13 @@ public class Main extends Game {
     Sprite tex;
     Viewport oneViewport;
 
-    public static AdsController adsController;
+    public static AllController mainController;
 
-    //iap
-    public static final int APPSTORE_UNDEFINED = 0;
-    public static final int APPSTORE_GOOGLE = 1;
-    private int isAppStore = APPSTORE_UNDEFINED;
-
-    public final static String phoenix_trans_ID = "phoenix";
-    public final static String bj_double_trans_ID = "bj_double";
-    public final static String no_ads_trans_ID = "no_ads";
-    public final static String pet_bird_trans_ID = "pet_bird";
-
-    static PlatformResolver m_platformResolver;
-    public PurchaseManagerConfig purchaseManagerConfig;
-
-    public PurchaseObserver purchaseObserver = new PurchaseObserver() {
-        @Override
-        public void handleRestore(Transaction[] transactions) {
-            for (Transaction transaction : transactions) {
-                if (checkTransaction(transaction.getIdentifier(), true)) break;
-            }
-        }
-
-        @Override
-        public void handleRestoreError(Throwable e) {
-            throw new GdxRuntimeException(e);
-        }
-
-        @Override
-        public void handleInstall() {
-        }
-
-        @Override
-        public void handleInstallError(Throwable e) {
-            Gdx.app.log("ERROR", "PurchaseObserver: handleInstallError!: " + e.getMessage());
-            throw new GdxRuntimeException(e);
-        }
-
-        @Override
-        public void handlePurchase(Transaction transaction) {
-            checkTransaction(transaction.getIdentifier(), false);
-        }
-
-        @Override
-        public void handlePurchaseError(Throwable e) {    //--- Amazon IAP: this will be called for cancelled
-            throw new GdxRuntimeException(e);
-        }
-
-        @Override
-        public void handlePurchaseCanceled() {    //--- will not be called by amazonIAP
-        }
-    };
-
-    protected boolean checkTransaction(String id, boolean isRestore) {
-        boolean returnbool = false;
-
-        switch (id) {
-            case (phoenix_trans_ID): {
-                Gdx.app.log("checkTransaction", "phoenix!");
-                returnbool = true;
-                break;
-            }
-            case (bj_double_trans_ID): {
-                Gdx.app.log("checkTransaction", "bj_double!");
-                returnbool = true;
-                break;
-            }
-            case (no_ads_trans_ID): {
-                Gdx.app.log("checkTransaction", "no_ads!");
-                GameStage.gameScript.fpc.settings.noAds = true;
-                returnbool = true;
-                break;
-            }
-            case (pet_bird_trans_ID): {
-                Gdx.app.log("checkTransaction", "get pet bird!");
-                returnbool = true;
-                break;
-            }
-        }
-        return returnbool;
-    }
-
-    public Main(AdsController adsController) {
-        if (adsController != null) {
-            Main.adsController = adsController;
+    public Main(AllController controller) {
+        if (controller != null) {
+            Main.mainController = controller;
         } else {
-            Main.adsController = new DummyAdsController();
+            Main.mainController = new DummyAllController();
         }
     }
 
@@ -193,21 +110,5 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         SaveMngr.saveStats(GameStage.gameScript.fpc);
-    }
-
-    public static PlatformResolver getPlatformResolver() {
-        return m_platformResolver;
-    }
-
-    public static void setPlatformResolver(PlatformResolver platformResolver) {
-        m_platformResolver = platformResolver;
-    }
-
-    public int getAppStore() {
-        return isAppStore;
-    }
-
-    public void setAppStore(int isAppStore) {
-        this.isAppStore = isAppStore;
     }
 }

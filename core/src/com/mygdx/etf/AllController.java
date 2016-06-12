@@ -1,6 +1,9 @@
 package com.mygdx.etf;
 
-public interface AdsController {
+import com.mygdx.etf.entity.componets.PetComponent;
+import com.mygdx.etf.entity.componets.Upgrade;
+
+public interface AllController {
 
     boolean isWifiConnected();
 
@@ -14,14 +17,11 @@ public interface AdsController {
 
     void showGeneralShopAd(Runnable then);
 
-//    boolean shouldShowGetMoneyVideoBtnAd(long need);
+    void removeAds();
 
-//    boolean shouldShowLaunchAd();
-//
-//    boolean shouldShowShopAd();
-//
-//    boolean shouldShowResultAd();
-//
-//    boolean shouldShowReviveVideoBtnAd();
+    void getPhoenix(Upgrade phoenix);
 
+    void getBJDouble(Upgrade bj);
+
+    void getBirdPet(PetComponent pet);
 }

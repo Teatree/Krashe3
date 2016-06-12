@@ -1,10 +1,5 @@
 package com.uwsoft.editor.renderer.utils;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Map.Entry;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -19,6 +14,11 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.brashmonkey.spriter.Data;
 import com.brashmonkey.spriter.FileReference;
 import com.brashmonkey.spriter.Loader;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class LibGdxLoader extends Loader<Sprite> implements Disposable {
 

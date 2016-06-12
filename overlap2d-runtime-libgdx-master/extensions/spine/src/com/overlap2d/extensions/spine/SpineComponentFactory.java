@@ -19,7 +19,6 @@
 package com.overlap2d.extensions.spine;
 
 import box2dLight.RayHandler;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.spine.*;

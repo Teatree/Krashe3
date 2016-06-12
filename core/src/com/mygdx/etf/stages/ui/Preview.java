@@ -253,15 +253,24 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
-                        vc.buyAndUse(GameStage.gameScript.fpc);
-                        showPreview(vc, false, true);
-                        if (vc.currencyType.equals(SOFT)) {
+                        if (vc.currencyType.equals(HARD)) {
+                            vc.buyHard();
+                        } else {
+                            vc.buyAndUse();
                             changeBagIcon(vc);
                             sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
                             itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
                             itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
                             itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
                         }
+                        showPreview(vc, false, true);
+//                        if (vc.currencyType.equals(SOFT)) {
+//                            changeBagIcon(vc);
+//                            sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+//                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
+//                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
+//                            itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
+//                        }
                         ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
                 }
@@ -293,11 +302,7 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-//                        if (vc.currencyType != HARD) {
-                            vc.apply(GameStage.gameScript.fpc);
-//                        } else {
-//                            Main.getPlatformResolver().requestPurchase(vc.transactionId);
-//                        }
+                        vc.apply();
                         showPreview(vc, false, false);
                     }
                 }
@@ -330,7 +335,7 @@ public class Preview {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.disable(GameStage.gameScript.fpc);
+                        vc.disable();
                         showPreview(vc, false, false);
                     }
                 }
@@ -352,7 +357,7 @@ public class Preview {
             @Override
             public void clicked() {
                 if (animFinished()) {
-                    if (vc.currencyType.equals(SOFT)){
+                    if (vc.currencyType.equals(SOFT)) {
                         prevSoftItem();
                     } else {
                         prevHardItem();
