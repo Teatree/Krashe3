@@ -103,7 +103,6 @@ public class SaveMngr {
         FlowerPublicComponent fc = new FlowerPublicComponent();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
-//        saved = "";
         if (!"".equals(saved)) {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
