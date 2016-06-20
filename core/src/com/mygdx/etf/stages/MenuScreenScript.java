@@ -12,6 +12,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
+import static com.mygdx.etf.stages.GameStage.*;
 
 public class MenuScreenScript implements IScript {
 
@@ -105,11 +106,11 @@ public class MenuScreenScript implements IScript {
         final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
         LabelComponent lc = timerE.getComponent(LabelComponent.class);
         boolean showTimer = false;
-        if (GameStage.gameScript.fpc.currentPet != null && GameStage.gameScript.fpc.currentPet.tryPeriod) {
-            lc.text.replace(0, lc.text.length, GameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
+        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
+            lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
             showTimer = true;
         } else {
-            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
+            for (Upgrade u : gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {
                     lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
                     showTimer = true;
