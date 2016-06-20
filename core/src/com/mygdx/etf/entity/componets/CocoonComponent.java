@@ -20,7 +20,6 @@ public class CocoonComponent implements Component {
 
     public CocoonComponent() {
         this.boundsRect = new Rectangle();
-        state = State.SPAWNING;
     }
 
     public enum State {

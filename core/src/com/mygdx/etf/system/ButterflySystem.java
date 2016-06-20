@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.ButterflyComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -19,11 +18,12 @@ import static com.mygdx.etf.entity.componets.ButterflyComponent.State.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.stages.GameStage.*;
+
 
 public class ButterflySystem extends IteratingSystem {
 
     private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
-    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public ButterflySystem() {
         super(Family.all(ButterflyComponent.class).get());
@@ -40,7 +40,8 @@ public class ButterflySystem extends IteratingSystem {
             entity.getComponent(ButterflyComponent.class).state = DEAD;
         }
 
-        if (!isPause && !isGameOver && isStarted) {
+        if (!isPause && !isGameOver && isStarted &&
+                entity.getComponent(ButterflyComponent.class).state != DEAD) {
             sasc.player.speed = FPS;
 
             ButterflyComponent bc = mapper.get(entity);
@@ -49,7 +50,6 @@ public class ButterflySystem extends IteratingSystem {
             sasc.scale = 0.3f;
             dc.height = 147;
             dc.width = 138;
-            FlowerPublicComponent fcc = collisionMapper.get(entity);
 
             if (bc.state.equals(SPAWN)) {
                 bc.dataSet = new Vector2[3];
@@ -81,15 +81,15 @@ public class ButterflySystem extends IteratingSystem {
             }
 
             updateRectangle(bc, tc, dc);
-            if (checkCollision(bc, fcc)) {
-                fcc.isCollision = true;
+            if (checkCollision(bc)) {
+                gameScript.fpc.isCollision = true;
                 tc.x = FAR_FAR_AWAY_X;
                 tc.y = FAR_FAR_AWAY_Y;
                 entity.getComponent(ButterflyComponent.class).state = DEAD;
 //                entity.remove(ButterflyComponent.class);
 
-                fcc.addScore(bc.points);
-                GameStage.gameScript.reloadScoreLabel(fcc);
+                gameScript.fpc.addScore(bc.points);
+                GameStage.gameScript.reloadScoreLabel(GameStage.gameScript.fpc);
             }
 
             if (entity.getComponent(ButterflyComponent.class).state == DEAD){
@@ -119,15 +119,15 @@ public class ButterflySystem extends IteratingSystem {
         return bc.boundsRect.getX() >= 1200;
     }
 
-    private boolean checkCollision(ButterflyComponent bc, FlowerPublicComponent fcc) {
-        checkGoal(bc, fcc);
-        return fcc.petAndFlowerCollisionCheck(bc.boundsRect);
+    private boolean checkCollision(ButterflyComponent bc) {
+        checkGoal(bc);
+        return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 
-    private void checkGoal(ButterflyComponent bc, FlowerPublicComponent fcc) {
-        if (fcc.flowerCollisionCheck(bc.boundsRect)) {
-            if (fcc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
-                fcc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
+    private void checkGoal(ButterflyComponent bc) {
+        if (gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
+            if (gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
+                gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
             }
         }
     }
