@@ -343,8 +343,9 @@ public class GameScreenScript implements IScript {
 
                 pet.add(fpc.currentPet);
             } else {
-                //TODO: NPE when pet timer is 0 and then start game
-//                sceneLoader.getEngine().removeEntity(pet);
+                if (pet != null) {
+                    sceneLoader.getEngine().removeEntity(pet);
+                }
             }
         }
     }
