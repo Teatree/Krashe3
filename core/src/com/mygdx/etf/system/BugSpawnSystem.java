@@ -3,7 +3,6 @@ package com.mygdx.etf.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.mygdx.etf.entity.componets.BugComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -37,7 +36,6 @@ public class BugSpawnSystem extends EntitySystem {
 
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean queenBeeOnStage = false;
-    public FlowerPublicComponent fcc;
 
     private int SPAWN_MAX_X = -400;
     private int SPAWN_MIN_X = 300;
@@ -64,9 +62,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     private Random rand = new Random();
 
-    public BugSpawnSystem(FlowerPublicComponent fcc) {
-        this.fcc = fcc;
-        this.fcc = fcc;
+    public BugSpawnSystem() {
         init();
     }
 
@@ -138,7 +134,6 @@ public class BugSpawnSystem extends EntitySystem {
         Entity bugEntity = BugPool.getInstance().get(tempType);
         BugComponent bc = new BugComponent(tempType, currentMultiplier);
         bugEntity.add(bc);
-        bugEntity.add(fcc);
 
         TransformComponent tc = getPos(bc);
         bc.startYPosition = tc.y;

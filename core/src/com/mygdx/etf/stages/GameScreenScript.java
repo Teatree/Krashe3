@@ -76,15 +76,20 @@ public class GameScreenScript implements IScript {
         isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
+
+        beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
+        beesModeAni.getComponent(SpriterComponent.class).player.setTime(0);
+
     }
 
     private void updateAngeredBeesMode() {
         if (isAngeredBeesMode) {
             angeredBeesModeTimer--;
             //stop ani when it's finished
-            if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() >=
-                    beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length - 1 ){
+            if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
+                    beesModeAni.getComponent(SpriterComponent.class).player.getTime()%
+                            beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
                 beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
             }
             if (angeredBeesModeTimer <= 0) {
@@ -173,6 +178,7 @@ public class GameScreenScript implements IScript {
         initPet();
         initDoubleBJIcon();
         initDandelion();
+        initCocoon();
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
         pauseDialog = new PauseDialog(gameItem);
@@ -243,7 +249,7 @@ public class GameScreenScript implements IScript {
         sceneLoader.getEngine().addSystem(new PetSystem());
         sceneLoader.getEngine().addSystem(new DandelionSystem(this));
         sceneLoader.getEngine().addSystem(new CocoonSystem(this));
-        sceneLoader.getEngine().addSystem(new BugSpawnSystem(fpc));
+        sceneLoader.getEngine().addSystem(new BugSpawnSystem());
     }
 
     private void initBackButton() {
@@ -413,7 +419,25 @@ public class GameScreenScript implements IScript {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
-    private void initDandelion(){
+    private void initCocoon() {
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity cocoonEntity = root.getChild(COCCOON).getEntity();
+        if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
+            CocoonComponent dc = new CocoonComponent();
+            cocoonEntity.add(dc);
+        }
+        cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.DEAD;
+        cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
+
+        Entity butEntity = root.getChild(CocoonSystem.BUTTERFLY_ANI).getEntity();
+        if (butEntity.getComponent(ButterflyComponent.class) == null) {
+            ButterflyComponent dc = new ButterflyComponent();
+            butEntity.add(dc);
+        }
+        butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
+    }
+
+    private void initDandelion() {
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
         if (dandelionEntity.getComponent(DandelionComponent.class) == null) {
@@ -428,7 +452,6 @@ public class GameScreenScript implements IScript {
             umbrellaEntity.add(dc);
         }
         umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
-
     }
 
     private void spawnDandelion() {
@@ -463,9 +486,8 @@ public class GameScreenScript implements IScript {
             tc.y = 800;
             cocoonEntity.add(tc);
 
-            cocoonEntity.add(fpc);
-            CocoonComponent cc = new CocoonComponent();
-            cocoonEntity.add(cc);
+            cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.SPAWNING;
+            cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
         }
     }
 
@@ -493,7 +515,7 @@ public class GameScreenScript implements IScript {
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x <= FAR_FAR_AWAY_X ||
+                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
                 );

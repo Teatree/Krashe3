@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.entity.componets.CocoonComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -22,17 +21,16 @@ import static com.mygdx.etf.entity.componets.CocoonComponent.*;
 import static com.mygdx.etf.entity.componets.CocoonComponent.State.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.mygdx.etf.stages.GameScreenScript.*;
+import static com.mygdx.etf.stages.GameStage.*;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
 
     public static final String BUTTERFLY_ANI = "butterfly";
 
-    FlowerPublicComponent fcc;
     ItemWrapper gameItem;
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
-    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
     private SpriterComponent sc = new SpriterComponent();
 
     public CocoonSystem(GameScreenScript gameScript) {
@@ -51,16 +49,15 @@ public class CocoonSystem extends IteratingSystem {
             CocoonComponent cc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-            fcc = collisionMapper.get(entity);
 
             updateRect(cc, tc, dc);
             act(cc, entity, deltaTime);
 
-            if (checkCollision(cc, fcc) && !cc.canHit) {
+            if (checkCollision(cc) && !cc.canHit) {
                 hit(cc);
             }
 
-        }else{
+        } else {
             sc.player.speed = 0;
         }
     }
@@ -86,7 +83,7 @@ public class CocoonSystem extends IteratingSystem {
                         checkCocoonGoal();
                     } else {
                         cc.state = IDLE;
-                        if(cc.hitCounter+1<4) {
+                        if (cc.hitCounter + 1 < 4) {
                             sc.player.setAnimation(cc.hitCounter + 1);
                         }
                         sc.player.speed = 0;
@@ -114,10 +111,10 @@ public class CocoonSystem extends IteratingSystem {
             cc.state = HIT;
 //            cc.hitCounter+=1;
             cc.canHit = true;
-            if(!isPause && !isGameOver) {
+            if (!isPause && !isGameOver) {
                 sc.player.speed = 24;
             }
-            if(cc.hitCounter<=3) {
+            if (cc.hitCounter <= 3) {
                 sc.player.setAnimation(cc.hitCounter++);
             }
         }
@@ -131,11 +128,11 @@ public class CocoonSystem extends IteratingSystem {
 //        sceneLoader.renderer.drawDebug(cc.boundsRect.x,cc.boundsRect.y,cc.boundsRect.width,cc.boundsRect.height);
     }
 
-    private boolean checkCollision(CocoonComponent cc, FlowerPublicComponent fcc) {
-        if (!cc.boundsRect.overlaps(fcc.boundsRect)){
+    private boolean checkCollision(CocoonComponent cc) {
+        if (!cc.boundsRect.overlaps(gameScript.fpc.boundsRect)) {
             cc.canHit = false;
         }
-        return cc.boundsRect.overlaps(fcc.boundsRect);
+        return cc.boundsRect.overlaps(gameScript.fpc.boundsRect);
     }
 
     private void spawnButterfly() {
@@ -145,7 +142,6 @@ public class CocoonSystem extends IteratingSystem {
         tc.y = 750;
 
         ButterflyComponent bc = new ButterflyComponent();
-        butterflyEntity.add(fcc);
         butterflyEntity.add(bc);
     }
 
@@ -155,14 +151,14 @@ public class CocoonSystem extends IteratingSystem {
         }
     }
 
-    public static float getNextSpawnInterval(){
+    public static float getNextSpawnInterval() {
         Random r = new Random();
         float randCoefficient = currentCocoonMultiplier.minSpawnCoefficient +
-                r.nextFloat()*(currentCocoonMultiplier.maxSpawnCoefficient-currentCocoonMultiplier.minSpawnCoefficient);
-        return SPAWN_INTERVAL_BASE*randCoefficient;
+                r.nextFloat() * (currentCocoonMultiplier.maxSpawnCoefficient - currentCocoonMultiplier.minSpawnCoefficient);
+        return SPAWN_INTERVAL_BASE * randCoefficient;
     }
 
-    public static void resetSpawnCoefficients(){
+    public static void resetSpawnCoefficients() {
         currentCocoonMultiplier = cocoonMultipliers.get(0);
     }
 }

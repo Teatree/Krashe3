@@ -55,7 +55,6 @@ public class UmbrellaSystem extends IteratingSystem {
         if (!isPause && !isGameOver && isStarted &&
                 entity.getComponent(UmbrellaComponent.class).state != UmbrellaComponent.State.DEAD) {
 
-            System.out.println(entity.getComponent(UmbrellaComponent.class).state);
             UmbrellaComponent uc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -106,7 +105,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 hide(entity, tc);
 
                 gameScript.fpc.umbrellaMult(uc.pointsMult);
-                GameStage.gameScript.reloadScoreLabel(gameScript.fpc);
+                gameScript.reloadScoreLabel(gameScript.fpc);
 
                 playParticleEffectFor();
 
@@ -124,7 +123,7 @@ public class UmbrellaSystem extends IteratingSystem {
     private void hide(Entity entity, TransformComponent tc) {
         dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
         entity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
-        tc.x = FAR_FAR_AWAY_X;
+        tc.x = -500;
         tc.y = FAR_FAR_AWAY_Y;
     }
 
