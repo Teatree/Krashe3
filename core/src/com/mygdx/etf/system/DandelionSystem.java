@@ -58,14 +58,19 @@ public class DandelionSystem extends IteratingSystem {
     private void spawnUmbrella(float x, float y){
 
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
+
         TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = x;
         transformComponent.y = y;
         umbrellaEntity.add(transformComponent);
 
-        UmbrellaComponent umbrellaComponent  = new UmbrellaComponent();
-        umbrellaEntity.add(umbrellaComponent);
-
+        if (umbrellaEntity.getComponent(UmbrellaComponent.class)==null) {
+            UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
+            umbrellaComponent.state = UmbrellaComponent.State.PUSH;
+            umbrellaEntity.add(umbrellaComponent);
+        } else {
+            umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.PUSH;
+        }
         umbrellaEntity.add(GameStage.gameScript.fpc);
     }
 
@@ -103,16 +108,22 @@ public class DandelionSystem extends IteratingSystem {
                         idleCounter = 0;
                     }
                 }
+                TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
                 if (dc.state == DYING) {
+
                     setAnimation(DIE_ANI_NAME, NORMAL, animStateComp, saComponent);
                     if (animStateComp.get().isAnimationFinished(stateTime)) {
-                        TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
                         spawnUmbrella(tc.x, tc.y);
                         dc.state = DEAD;
                         canPlayAnimation = true;
                         tc.x = FAR_FAR_AWAY_X;
                         tc.y = FAR_FAR_AWAY_Y;
                     }
+                }
+
+                if (dc.state == DEAD){
+                    tc.x = FAR_FAR_AWAY_X;
+                    tc.y = FAR_FAR_AWAY_Y;
                 }
             }
         } else {

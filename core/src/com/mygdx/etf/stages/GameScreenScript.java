@@ -24,6 +24,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;
+import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ShopScreenScript.allShopItems;
@@ -61,17 +62,45 @@ public class GameScreenScript implements IScript {
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
+
+    //bee mode
     public static Entity beesModeAni;
+    public static boolean isAngeredBeesMode = false;
+    public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
     }
 
     public static void angerBees() {
-        BugSpawnSystem.isAngeredBeesMode = true;
+        isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
+    }
+
+    private void updateAngeredBeesMode() {
+        if (isAngeredBeesMode) {
+            angeredBeesModeTimer--;
+            //stop ani when it's finished
+            if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() >=
+                    beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length - 1 ){
+                beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
+            }
+            if (angeredBeesModeTimer <= 0) {
+                isAngeredBeesMode = false;
+                cameraShaker.initBlinking(40, 3);
+                angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+
+                checkAngeredBeesGoal();
+            }
+        }
+    }
+
+    private void checkAngeredBeesGoal() {
+        if (fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES) != null) {
+            fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES).update();
+        }
     }
 
     public static void checkTryPeriod() {
@@ -127,7 +156,8 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
         DandelionSystem.resetSpawnCoefficients();
-        dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
+//        dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
+        dandelionSpawnCounter = 12;
 
         Entity scoreLabel = gameItem.getChild(LBL_SCORE).getEntity();
         scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
@@ -142,7 +172,7 @@ public class GameScreenScript implements IScript {
         initBackground();
         initPet();
         initDoubleBJIcon();
-
+        initDandelion();
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
         pauseDialog = new PauseDialog(gameItem);
@@ -162,7 +192,7 @@ public class GameScreenScript implements IScript {
 
         gameScript.fpc.settings.totalPlayedGames++;
         gameScript.fpc.settings.playedGames++;
-        BugSpawnSystem.isAngeredBeesMode = false;
+        isAngeredBeesMode = false;
     }
 
     public void initButtons() {
@@ -313,6 +343,7 @@ public class GameScreenScript implements IScript {
 
                 pet.add(fpc.currentPet);
             } else {
+                //TODO: NPE when pet timer is 0 and then start game
                 sceneLoader.getEngine().removeEntity(pet);
             }
         }
@@ -359,7 +390,7 @@ public class GameScreenScript implements IScript {
             pauseDialog.update(delta);
             giftScreen.update();
             goalFeedbackScreen.update();
-
+            updateAngeredBeesMode();
         }
     }
 
@@ -381,6 +412,24 @@ public class GameScreenScript implements IScript {
         scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
     }
 
+    private void initDandelion(){
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
+        if (dandelionEntity.getComponent(DandelionComponent.class) == null) {
+            DandelionComponent dc = new DandelionComponent();
+            dandelionEntity.add(dc);
+        }
+        dandelionEntity.getComponent(DandelionComponent.class).state = DandelionComponent.State.DEAD;
+
+        Entity umbrellaEntity = root.getChild(DandelionSystem.UMBRELLA_ANI).getEntity();
+        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
+            UmbrellaComponent dc = new UmbrellaComponent();
+            umbrellaEntity.add(dc);
+        }
+        umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
+
+    }
+
     private void spawnDandelion() {
         if (canDandelionSpawn()) {
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -393,9 +442,7 @@ public class GameScreenScript implements IScript {
             tc.scaleY = 0.7f;
 
             dandelionEntity.add(tc);
-            DandelionComponent dc = new DandelionComponent();
-            dc.state = DandelionComponent.State.GROWING;
-            dandelionEntity.add(dc);
+            dandelionEntity.getComponent(DandelionComponent.class).state = DandelionComponent.State.GROWING;
         }
     }
 
@@ -445,7 +492,7 @@ public class GameScreenScript implements IScript {
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
+                                .get(0).getComponent(TransformComponent.class).x <= FAR_FAR_AWAY_X ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
                 );

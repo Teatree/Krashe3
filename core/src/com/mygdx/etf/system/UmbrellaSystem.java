@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.UmbrellaComponent;
 import com.mygdx.etf.stages.GameStage;
@@ -21,6 +22,7 @@ import java.util.Random;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.EAT_N_UMBRELLA;
 import static com.mygdx.etf.stages.GameScreenScript.*;
+import static com.mygdx.etf.stages.GameStage.*;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -30,7 +32,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
-    private ComponentMapper<FlowerPublicComponent> fccMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public UmbrellaSystem() {
         super(Family.all(UmbrellaComponent.class).get());
@@ -39,15 +40,22 @@ public class UmbrellaSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
-        FlowerPublicComponent fcc = fccMapper.get(entity);
 
-        if (!isStarted) {
+        if (!isStarted || isGameOver) {
             entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            entity.remove(UmbrellaComponent.class);
+            entity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
 //            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
-        if (!isPause && !isGameOver && isStarted) {
 
+        if (entity.getComponent(UmbrellaComponent.class).state == UmbrellaComponent.State.DEAD){
+            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+        }
+
+        if (!isPause && !isGameOver && isStarted &&
+                entity.getComponent(UmbrellaComponent.class).state != UmbrellaComponent.State.DEAD) {
+
+            System.out.println(entity.getComponent(UmbrellaComponent.class).state);
             UmbrellaComponent uc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -81,7 +89,7 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.myCatmull.derivativeAt(uc.out, 5);
 
                 uc.current -= 1;
-                checkBounceGoal(fcc);
+                checkBounceGoal();
             }
 
             uc.myCatmull.valueAt(uc.out, uc.current);
@@ -93,16 +101,16 @@ public class UmbrellaSystem extends IteratingSystem {
 //
             updateRect(uc, tc, dc);
 
-            if (checkCollision(uc, fcc)) {
-                fcc.isCollision = true;
+            if (checkCollision(uc)) {
+                gameScript.fpc.isCollision = true;
                 hide(entity, tc);
 
-                fcc.umbrellaMult(uc.pointsMult);
-                GameStage.gameScript.reloadScoreLabel(fcc);
+                gameScript.fpc.umbrellaMult(uc.pointsMult);
+                GameStage.gameScript.reloadScoreLabel(gameScript.fpc);
 
                 playParticleEffectFor();
 
-                checkEatGoal(uc, fcc);
+                checkEatGoal(uc);
             }
         } else {
             sasc.paused = true;
@@ -115,10 +123,9 @@ public class UmbrellaSystem extends IteratingSystem {
 
     private void hide(Entity entity, TransformComponent tc) {
         dandelionSpawnCounter = DandelionSystem.getNextSpawnInterval();
-
+        entity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
         tc.x = FAR_FAR_AWAY_X;
         tc.y = FAR_FAR_AWAY_Y;
-        entity.remove(UmbrellaComponent.class);
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
@@ -128,21 +135,21 @@ public class UmbrellaSystem extends IteratingSystem {
         uc.boundsRect.height = (int) dc.height * tc.scaleY;
     }
 
-    private boolean checkCollision(UmbrellaComponent bc, FlowerPublicComponent fcc) {
-        return fcc.flowerCollisionCheck(bc.boundsRect);
+    private boolean checkCollision(UmbrellaComponent bc) {
+        return gameScript.fpc.flowerCollisionCheck(bc.boundsRect);
     }
 
-    private void checkEatGoal(UmbrellaComponent uc, FlowerPublicComponent fcc) {
-        if (fcc.flowerCollisionCheck(uc.boundsRect)) {
-            if (fcc.level.getGoalByType(EAT_N_UMBRELLA) != null) {
-                fcc.level.getGoalByType(EAT_N_UMBRELLA).update();
+    private void checkEatGoal(UmbrellaComponent uc) {
+        if (gameScript.fpc.flowerCollisionCheck(uc.boundsRect)) {
+            if (gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA) != null) {
+                gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA).update();
             }
         }
     }
 
-    private void checkBounceGoal(FlowerPublicComponent fpc) {
-        if (fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
-            fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
+    private void checkBounceGoal() {
+        if (gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
+            gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
         }
     }
 }

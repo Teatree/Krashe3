@@ -114,7 +114,7 @@ public class GameOverDialog {
         dialogTc.x = -1000;
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
-        BugSpawnSystem.isAngeredBeesMode = false;
+        isAngeredBeesMode = false;
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {
@@ -179,7 +179,7 @@ public class GameOverDialog {
         gameOverCounter = GAME_OVER_COUNT;
         isStarted = false;
         isPause = false;
-        BugSpawnSystem.isAngeredBeesMode = false;
+        isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;
         if (GameStage.gameScript.fpc.bestScore < GameStage.gameScript.fpc.score) {
             GameStage.gameScript.fpc.bestScore = GameStage.gameScript.fpc.score;

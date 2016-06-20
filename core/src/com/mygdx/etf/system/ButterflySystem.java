@@ -33,9 +33,11 @@ public class ButterflySystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
 
-        if (!isStarted) {
+        if (!isStarted || isGameOver) {
             entity.getComponent(TransformComponent.class).x = -900;
             entity.getComponent(TransformComponent.class).y = -900;
+            sasc.player.speed = 0;
+            entity.getComponent(ButterflyComponent.class).state = DEAD;
         }
 
         if (!isPause && !isGameOver && isStarted) {
@@ -81,16 +83,23 @@ public class ButterflySystem extends IteratingSystem {
             updateRectangle(bc, tc, dc);
             if (checkCollision(bc, fcc)) {
                 fcc.isCollision = true;
-                tc.x = -300;
-                tc.y = -300;
-                entity.remove(ButterflyComponent.class);
+                tc.x = FAR_FAR_AWAY_X;
+                tc.y = FAR_FAR_AWAY_Y;
+                entity.getComponent(ButterflyComponent.class).state = DEAD;
+//                entity.remove(ButterflyComponent.class);
 
                 fcc.addScore(bc.points);
                 GameStage.gameScript.reloadScoreLabel(fcc);
             }
+
+            if (entity.getComponent(ButterflyComponent.class).state == DEAD){
+                entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            }
         } else {
             sasc.player.speed = 0;
         }
+
     }
 
     private void die(ButterflyComponent bc, TransformComponent tc) {

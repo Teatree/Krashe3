@@ -80,6 +80,7 @@ public class BugSystem extends IteratingSystem {
                     if (bc.type.equals(QUEENBEE)) {
                         angerBees();
                     }
+
                     BugPool.getInstance().release(entity);
 
                     if (fcc.flowerCollisionCheck(bc.boundsRect)) {

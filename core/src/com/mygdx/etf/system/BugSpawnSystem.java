@@ -36,9 +36,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static int curBeeProb = BEE_SPAWN_PROB;
 
     public static int ANGERED_BEES_MODE_DURATION = 800;
-    public static boolean isAngeredBeesMode = false;
     public static boolean queenBeeOnStage = false;
-    public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     public FlowerPublicComponent fcc;
 
     private int SPAWN_MAX_X = -400;
@@ -179,27 +177,8 @@ public class BugSpawnSystem extends EntitySystem {
                     currentDandelionMultiplier = dandelionMultipliers.get(indexC < dandelionMultipliers.size()-1 ? indexC+1 : indexC);
                 }
                 spawn(deltaTime);
-                updateAngeredBeesMode();
+//                updateAngeredBeesMode();
             }
-        }
-    }
-
-    private void updateAngeredBeesMode() {
-        if (isAngeredBeesMode) {
-            angeredBeesModeTimer--;
-            if (angeredBeesModeTimer <= 0) {
-                isAngeredBeesMode = false;
-                cameraShaker.initBlinking(40, 3);
-                angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
-
-                checkAngeredBeesGoal();
-            }
-        }
-    }
-
-    private void checkAngeredBeesGoal() {
-        if (GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES) != null) {
-            GameStage.gameScript.fpc.level.getGoalByType(SURVIVE_N_ANGERED_MODES).update();
         }
     }
 
