@@ -6,141 +6,141 @@ filter: Nearest,Nearest
 repeat: none
 queenBeeAni01
   rotate: false
-  xy: 2, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 2, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni02
   rotate: false
-  xy: 2, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 2, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni20
   rotate: false
-  xy: 2, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 2, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni03
   rotate: false
-  xy: 235, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni19
   rotate: false
-  xy: 235, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni04
   rotate: false
-  xy: 2, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 2, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni18
   rotate: false
-  xy: 2, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 2, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni05
   rotate: false
-  xy: 235, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni17
   rotate: false
-  xy: 235, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni06
   rotate: false
-  xy: 468, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni16
   rotate: false
-  xy: 468, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni07
   rotate: false
-  xy: 235, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni15
   rotate: false
-  xy: 235, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 225, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni08
   rotate: false
-  xy: 468, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni14
   rotate: false
-  xy: 468, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni09
   rotate: false
-  xy: 701, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 671, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni13
   rotate: false
-  xy: 701, 643
-  size: 231, 289
-  orig: 231, 289
+  xy: 671, 627
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni10
   rotate: false
-  xy: 468, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni12
   rotate: false
-  xy: 468, 61
-  size: 231, 289
-  orig: 231, 289
+  xy: 448, 93
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
 queenBeeAni11
   rotate: false
-  xy: 701, 352
-  size: 231, 289
-  orig: 231, 289
+  xy: 671, 360
+  size: 221, 265
+  orig: 221, 265
   offset: 0, 0
   index: -1
