@@ -37,7 +37,6 @@ public class DandelionSystem extends IteratingSystem {
     public static final String UMBRELLA_ANI = "umbrellaAni";
 
     private ComponentMapper<DandelionComponent> mapper = ComponentMapper.getFor(DandelionComponent.class);
-    private FlowerPublicComponent fcc;
 
 //    public float SPAWN_INTERVAL_BASE;
     private int idleCounter;

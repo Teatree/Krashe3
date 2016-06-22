@@ -24,11 +24,9 @@ import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FPS;
 import static com.mygdx.etf.utils.SoundMgr.soundMgr;
+import static com.mygdx.etf.stages.GameStage.*;
 
 public class FlowerSystem extends IteratingSystem {
-
-    private ComponentMapper<FlowerComponent> mapper = ComponentMapper.getFor(FlowerComponent.class);
-    private ComponentMapper<FlowerPublicComponent> collisionMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -39,25 +37,24 @@ public class FlowerSystem extends IteratingSystem {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
         SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
         spriterComponent.scale = 0.6f;
-        FlowerPublicComponent fcc = collisionMapper.get(entity);
-        updateRect(fcc, transformComponent);
-        act(fcc, transformComponent, spriterComponent, deltaTime);
-        sceneLoader.renderer.drawDebugRect(fcc.boundsRect.x, fcc.boundsRect.y, fcc.boundsRect.width, fcc.boundsRect.height, entity.toString());
+        updateRect(transformComponent);
+        act(transformComponent, spriterComponent, deltaTime);
+        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
     }
 
-    public void updateRect(FlowerPublicComponent fcc, TransformComponent tc) {
-        fcc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
-        fcc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
-        fcc.boundsRect.width = 200 * tc.scaleX;
-        fcc.boundsRect.height = 200 * tc.scaleY;
+    public void updateRect( TransformComponent tc) {
+        gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
+        gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
+        gameScript.fpc.boundsRect.width = 200 * tc.scaleX;
+        gameScript.fpc.boundsRect.height = 200 * tc.scaleY;
         if (state.equals(IDLE) || state.equals(IDLE_BITE)) {
-            fcc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
-            fcc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
+            gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
+            gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
         }
-//        GameStage.sceneLoader.drawDebugRect(fcc.boundsRect.x,fcc.boundsRect.y,fcc.boundsRect.width,fcc.boundsRect.height);
+//        GameStage.sceneLoader.drawDebugRect(gameScript.fpc.boundsRect.x,gameScript.fpc.boundsRect.y,gameScript.fpc.boundsRect.width,gameScript.fpc.boundsRect.height);
     }
 
-    public void act(FlowerPublicComponent fcc, TransformComponent tc, SpriterComponent sc, float delta) {
+    public void act(TransformComponent tc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             sc.player.speed = FPS;
 
@@ -66,22 +63,22 @@ public class FlowerSystem extends IteratingSystem {
             }
 
             if (state.equals(IDLE)) {
-                if (fcc.isCollision) {
+                if (gameScript.fpc.isCollision) {
                     state = IDLE_BITE;
-                    fcc.isCollision = false;
+                    gameScript.fpc.isCollision = false;
 
                     soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     setIdleAnimation(sc);
                 }
             }
-            if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord(fcc)) {
+            if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord()) {
                 state = TRANSITION;
             }
 
             if (Gdx.input.isTouched()
                     && !state.equals(TRANSITION)
-                    && !state.equals(ATTACK) && canAttackCoord(fcc)) {
+                    && !state.equals(ATTACK) && canAttackCoord()) {
                 state = ATTACK;
 
                 setAttackAnimation(sc);
@@ -98,7 +95,7 @@ public class FlowerSystem extends IteratingSystem {
             if (state.equals(TRANSITION_BACK)) {
                 setTransitionBackAnimation(sc);
 
-                if (Gdx.input.justTouched() && canAttackCoord(fcc)) {  // This is added for quick breaking of an animation
+                if (Gdx.input.justTouched() && canAttackCoord()) {  // This is added for quick breaking of an animation
                     setAttackAnimation(sc);
                     state = ATTACK;
                 }
@@ -111,10 +108,10 @@ public class FlowerSystem extends IteratingSystem {
 
             if (state.equals(ATTACK) || state.equals(RETREAT)) {
 
-                if (fcc.isCollision) {
+                if (gameScript.fpc.isCollision) {
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
-                    fcc.isCollision = false;
+                    gameScript.fpc.isCollision = false;
 
                     soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
@@ -139,7 +136,7 @@ public class FlowerSystem extends IteratingSystem {
                         setAttackAnimation(sc);
                     }
 
-                    if (fcc.isCollision && canInterruptAttackBite(sc)) {
+                    if (gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
                         state = ATTACK_BITE;
                         setBiteAttackAnimation(sc);
                     }
@@ -166,8 +163,8 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
-    private boolean canAttackCoord(FlowerPublicComponent fcc) {
-        return (fcc.currentPet == null || !fcc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+    private boolean canAttackCoord() {
+        return (gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
                 && !GameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates());
     }
 

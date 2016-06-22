@@ -5,14 +5,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.etf.entity.componets.BugJuiceBubbleComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
+import static com.mygdx.etf.stages.GameStage.*;
+
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
-    private ComponentMapper<FlowerPublicComponent> flowerMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public BugJuiceBubbleSystem() {
         super(Family.all(BugJuiceBubbleComponent.class).get());
@@ -21,7 +21,6 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TintComponent tic = entity.getComponent(TintComponent.class);
         TransformComponent tc = entity.getComponent(TransformComponent.class);
-        FlowerPublicComponent fcc = flowerMapper.get(entity);
         BugJuiceBubbleComponent bjc = mapper.get(entity);
 
         if (!bjc.began) {
@@ -38,7 +37,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
             if (bjc.interpolation != null) percent = bjc.interpolation.apply(percent);
         }
         update(bjc, tc, bjc.reverse ? 1 - percent : percent);
-        if (bjc.complete) end(fcc, entity);
+        if (bjc.complete) end(entity);
 
 //        tic.color.a = bjc.alpha;
         if (bjc.time <= (bjc.duration/5)){
@@ -60,8 +59,9 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         bjc.startY = tc.y;
     }
 
-    protected void end(FlowerPublicComponent fcc, Entity entity) {
-        GameStage.gameScript.scoreLabelComponent.text.replace(0, GameStage.gameScript.scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+    protected void end(Entity entity) {
+        GameStage.gameScript.scoreLabelComponent.text.replace(0, GameStage.gameScript.scoreLabelComponent.text.capacity(), "" +
+                gameScript.fpc.score + "/" + gameScript.fpc.totalScore);
         GameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
