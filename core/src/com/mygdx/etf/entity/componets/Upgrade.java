@@ -3,6 +3,7 @@ package com.mygdx.etf.entity.componets;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
+import com.mygdx.etf.system.BugSystem;
 import com.mygdx.etf.utils.SaveMngr;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 
 public class Upgrade extends ShopItem{
 
-    public static boolean blowUpAllBugs;
     public UpgradeType upgradeType;
     public int counter;
 
@@ -92,7 +92,7 @@ public class Upgrade extends ShopItem{
     }
 
     public void usePhoenix() {
-        blowUpAllBugs = true;
+        BugSystem.blowUpAllBugs = true;
         FlowerComponent.state = FlowerComponent.State.PHOENIX;
         counter++;
     }

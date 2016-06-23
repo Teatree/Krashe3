@@ -14,6 +14,8 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import javax.swing.plaf.basic.BasicSliderUI;
+
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ResultScreenScript.show;
 import static com.mygdx.etf.stages.ResultScreenScript.showCaseVanity;
@@ -56,30 +58,51 @@ public class Showcase {
 
         NodeComponent nc = showcaseE.getComponent(NodeComponent.class);
         TintComponent tcp = showcaseE.getComponent(TintComponent.class);
-
+        showcaseE.getComponent(TransformComponent.class).scaleX = 0.8f;
+        showcaseE.getComponent(TransformComponent.class).scaleY = 0.8f;
         boolean appear = (tcp.color.a < 1 && show) || (tcp.color.a > 0 && !show);
 
         int fadeCoefficient = show ? 1 : -1;
 
         if (appear) {
-            tcp.color.a += fadeCoefficient * 0.1f;
-            fadeChildren(nc, fadeCoefficient);
-            if (itemIcon != null && fadeCoefficient <0 )
-            fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+//            if (fadeCoefficient > 0) {
+                ac.dataArray.add(Actions.moveTo(150, 100, 1f, Interpolation.exp10));
+//            } else {
+//                ac.dataArray.add(Actions.moveTo(150, 1300, 1f, Interpolation.exp10));
+//            }
+            showcaseE.add(ac);
+//            tcp.color.a += fadeCoefficient * 0.1f;
+//            fadeChildren(nc, fadeCoefficient);
+//            if (itemIcon != null && fadeCoefficient <0 )
+//            fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
         }
-        hideWindow(tcp);
+//        hideWindow(tcp);
+//        hideWindow();
 
     }
 
-    private void hideWindow(TintComponent ticParent) {
-        if (!show && ticParent.color.a <= 0 && showcaseE != null) {
+    private void hideWindow(/*TintComponent ticParent*/) {
+        if (/*!show && ticParent.color.a <= 0 && */showcaseE != null) {
             if (itemIcon != null) {
-                tcItem.x = FAR_FAR_AWAY_X;
+//                tcItem.x = FAR_FAR_AWAY_X;
                 sceneLoader.getEngine().removeEntity(itemIcon);
                 itemIcon = null;
-                tcItem = null;
+//                tcItem = null;
             }
-            tcShowCase.x = FAR_FAR_AWAY_X;
+//            tcShowCase.x = FAR_FAR_AWAY_X;
+            showcaseE.remove(ActionComponent.class);
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.sequence(Actions.moveTo(150, 1300, 1f, Interpolation.exp10),
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultScreen.initResultScreen();
+                        }
+                    })));
+            showcaseE.add(ac);
         }
     }
 
@@ -105,12 +128,12 @@ public class Showcase {
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
-        sc.player.speed = GlobalConstants.FPS/4;
+        sc.player.speed = GlobalConstants.FPS / 4;
 
         initShowCaseItem();
 
-        tcShowCase.x = -25;
-        tcShowCase.y = -35;
+//        tcShowCase.x = -25;
+//        tcShowCase.y = -35;
     }
 
     private void initShowCaseItem() {
@@ -118,21 +141,23 @@ public class Showcase {
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
+        showcaseE.getComponent(NodeComponent.class).addChild(itemIcon);
+
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(100);
-
-        tcItem = itemIcon.getComponent(TransformComponent.class);
-        tcItem.x = 445;
-        tcItem.y = 350;
-        tcItem.scaleX = 0.05f;
-        tcItem.scaleY = 0.05f;
-        itemIcon.getComponent(TintComponent.class).color.a = 0.0f;
-
-        ActionComponent ac = new ActionComponent();
-        Actions.checkInit();
-        ac.dataArray.add(Actions.parallel(
-                Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
-                Actions.fadeIn(5, Interpolation.exp10Out)));
-        itemIcon.add(ac);
+//
+//        tcItem = itemIcon.getComponent(TransformComponent.class);
+//        tcItem.x = 145;
+//        tcItem.y = 150;
+//        tcItem.scaleX = 0.05f;
+//        tcItem.scaleY = 0.05f;
+//        itemIcon.getComponent(TintComponent.class).color.a = 0.0f;
+//
+//        ActionComponent ac = new ActionComponent();
+//        Actions.checkInit();
+//        ac.dataArray.add(Actions.parallel(
+//                Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
+//                Actions.fadeIn(5, Interpolation.exp10Out)));
+//        itemIcon.add(ac);
     }
 
     private void initShowCaseBackButton() {
@@ -154,7 +179,8 @@ public class Showcase {
             @Override
             public void clicked() {
                 ResultScreenScript.isWasShowcase = true;
-                resultScreen.initResultScreen();
+
+                hideWindow();
                 showCaseVanity = null;
             }
         });
@@ -181,7 +207,8 @@ public class Showcase {
                 showCaseVanity.buyAndUse();
                 GameStage.changedFlower2 = true;
                 ResultScreenScript.isWasShowcase = true;
-                resultScreen.initResultScreen();
+//                resultScreen.initResultScreen();
+                hideWindow();
                 if (GameStage.shopScript != null) {
                     GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
                 }

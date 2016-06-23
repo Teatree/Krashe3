@@ -9,6 +9,7 @@ import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
+import com.mygdx.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -45,7 +46,7 @@ public class GameOverDialog {
     }
 
     public static boolean releaseAllBugs() {
-        return isGameOver && gameOverCounter <= 0 && !Upgrade.blowUpAllBugs;
+        return isGameOver && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs;
     }
 
     public void show() {

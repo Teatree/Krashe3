@@ -1,13 +1,10 @@
 package com.mygdx.etf.system;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.FlowerComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
-import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
@@ -155,7 +152,7 @@ public class FlowerSystem extends IteratingSystem {
                 if (isAnimationFinished(sc)) {
                     state = IDLE;
                     setIdleAnimation(sc);
-                    Upgrade.blowUpAllBugs = false;
+                    BugSystem.blowUpAllBugs = false;
                 }
             }
         } else {

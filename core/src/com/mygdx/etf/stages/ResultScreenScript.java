@@ -98,18 +98,24 @@ public class ResultScreenScript implements IScript {
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(gameScript.fpc.bestScore));
 
-        if (showCaseVanity == null && !isWasShowcase) {
-            getNeedForNextItem();
-            isWasShowcase = false;
-        }
-        need = showCaseVanity.cost - gameScript.fpc.totalScore;
-        setProgressBar();
+        if (!isWasShowcase) {
+            if (showCaseVanity == null && !isWasShowcase) {
+                getNeedForNextItem();
+                isWasShowcase = false;
+            }
+            need = showCaseVanity.cost - gameScript.fpc.totalScore;
 
-        LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
-        if (need > 0) {
-            needLabel.text.replace(0, needLabel.text.capacity(), YOU_NEED + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
+
+            setProgressBar();
+
+            LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
+            if (need > 0) {
+                needLabel.text.replace(0, needLabel.text.capacity(), YOU_NEED + String.valueOf(need) + " TO UNLOCK NEXT ITEM");
+            } else {
+                needLabel.text.replace(0, needLabel.text.capacity(), YOU_UNLOCKED_NEXT_ITEM);
+            }
         } else {
-            needLabel.text.replace(0, needLabel.text.capacity(), YOU_UNLOCKED_NEXT_ITEM);
+            txtNeedE.getComponent(LabelComponent.class).text.replace(0,txtNeedE.getComponent(LabelComponent.class).text.capacity(),"" );
         }
     }
 
@@ -223,6 +229,7 @@ public class ResultScreenScript implements IScript {
             progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
             txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
         }
+
         showcase.showFading();
     }
 

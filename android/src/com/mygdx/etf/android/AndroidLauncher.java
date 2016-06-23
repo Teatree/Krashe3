@@ -166,7 +166,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null && !gameScript.fpc.settings.noAds) {
+                if (then != null) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {
@@ -187,7 +187,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (then != null && !gameScript.fpc.settings.noAds) {
+                if (then != null) {
                     interstitialVideoAd.setAdListener(new AdListener() {
                         @Override
                         public void onAdClosed() {

@@ -77,6 +77,7 @@ public class GameScreenScript implements IScript {
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
 
+        BugSystem.blowUpAllBugs = true;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
         beesModeAni.getComponent(SpriterComponent.class).player.setTime(0);
@@ -91,6 +92,7 @@ public class GameScreenScript implements IScript {
                     beesModeAni.getComponent(SpriterComponent.class).player.getTime()%
                             beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
                 beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
+                BugSystem.blowUpAllBugs = false;
             }
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;

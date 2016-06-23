@@ -6,8 +6,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.etf.entity.componets.BugComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
-import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ui.GameOverDialog;
 import com.mygdx.etf.utils.BugPool;
@@ -30,6 +28,8 @@ public class BugSystem extends IteratingSystem {
     public static final String CHARGING_ANI = "CHARGING";
     public static final String IDLE_ANI = "IDLE";
     public static final String PREPARING_ANI = "PREPARING";
+
+    public static boolean blowUpAllBugs;
 
     boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
@@ -57,7 +57,7 @@ public class BugSystem extends IteratingSystem {
             transformComponent.scaleY = BUG_SCALE;
             BugComponent bc = mapper.get(entity);
 
-            if (BugSpawnSystem.isBlewUp() || Upgrade.blowUpAllBugs) {
+            if (BugSpawnSystem.isBlewUp() || blowUpAllBugs) {
                 destroyBug(entity, transformComponent);
 
             } else if (bc.state != DEAD) {
