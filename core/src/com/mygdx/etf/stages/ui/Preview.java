@@ -257,11 +257,8 @@ public class Preview {
                             vc.buyHard();
                         } else {
                             vc.buyAndUse();
-                            changeBagIcon(vc);
-                            sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
-                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
-                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
-                            itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
+
+                            putInPlaceNewIconPosition();
                         }
                         showPreview(vc, false, true);
 //                        if (vc.currencyType.equals(SOFT)) {
@@ -273,6 +270,13 @@ public class Preview {
 //                        }
                         ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
+                }
+
+                private void putInPlaceNewIconPosition() {
+                    TransformComponent tc = changeBagIcon(vc);
+                    itemIcons.get(vc.shopIcon).add(tc);
+                    sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+//                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
                 }
             });
         }
@@ -473,14 +477,17 @@ public class Preview {
         }
     }
 
-    public void changeBagIcon(ShopItem vc) {
+    public TransformComponent changeBagIcon(ShopItem vc) {
         if (vc.currencyType.equals(SOFT)) {
             CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
             Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
             sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
             itemIcons.put(vc.shopIcon, iconBagClone);
+            return oldTc;
         }
+        return null;
     }
 
     private boolean animFinished() {

@@ -60,7 +60,7 @@ public class BugSystem extends IteratingSystem {
             if (BugSpawnSystem.isBlewUp() || blowUpAllBugs) {
                 destroyBug(entity, transformComponent);
 
-            } else if (bc.state != DEAD) {
+            } else if (!DEAD.equals(bc.state)) {
                 updateRect(bc, transformComponent, dimensionsComponent);
                 updateRectScary(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
