@@ -255,6 +255,11 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         Gdx.net.openURI(ANDROID_APP_LINK);
     }
 
+    @Override
+    public void restorePurchases() {
+
+    }
+
     public void iapRemoveAds() throws IabHelper.IabAsyncInProgressException {
         // Callback for when a purchase is finished
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {

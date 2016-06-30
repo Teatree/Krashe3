@@ -60,4 +60,9 @@ public class DummyAllController implements AllController {
     public void rateMyApp() {
         Gdx.net.openURI(ANDROID_APP_LINK);
     }
+
+    @Override
+    public void restorePurchases() {
+
+    }
 }

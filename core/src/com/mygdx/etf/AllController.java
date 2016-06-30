@@ -5,7 +5,7 @@ import com.mygdx.etf.entity.componets.Upgrade;
 
 public interface AllController {
 
-    public static final String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
+    String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
 
     boolean isWifiConnected();
 
@@ -28,4 +28,6 @@ public interface AllController {
     void getBirdPet(PetComponent pet);
 
     void rateMyApp();
+
+    void restorePurchases();
 }

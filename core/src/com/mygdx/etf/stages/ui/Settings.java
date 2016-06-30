@@ -3,6 +3,7 @@ package com.mygdx.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.MenuScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -223,4 +224,43 @@ public class Settings {
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, 2, Interpolation.exp10Out));
         settingsE.add(ac);
     }
+
+
+    public void musicOn(){
+        GameStage.gameScript.fpc.settings.noMusic = false;
+    }
+
+    public void musicOff(){
+        GameStage.gameScript.fpc.settings.noMusic = true;
+    }
+
+    public void soundOn(){
+        GameStage.gameScript.fpc.settings.noSound = false;
+    }
+
+    public void soundOff(){
+        GameStage.gameScript.fpc.settings.noSound = true;
+    }
+
+    public void resetAllProgress(){
+        for (VanityComponent vc : GameStage.gameScript.fpc.vanities){
+            if (vc.enabled){
+                vc.disable();
+            }
+            vc.bought = false;
+            vc.enabled = false;
+            vc.advertised = false;
+
+            GameStage.gameScript.fpc.score = 0;
+            GameStage.gameScript.fpc.bestScore = 0;
+            GameStage.gameScript.fpc.totalScore = 0;
+            GameStage.gameScript.fpc.level.difficultyLevel = 0;
+            GameStage.gameScript.fpc.level.resetNewInfo();
+
+            GameStage.gameScript.fpc.currentPet = null;
+            GameStage.gameScript.fpc.upgrades = null;
+
+        }
+    }
+
 }
