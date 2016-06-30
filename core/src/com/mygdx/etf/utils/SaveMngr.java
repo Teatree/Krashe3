@@ -602,8 +602,8 @@ public class SaveMngr {
 
     public static void initDandelionMultipliers(){
         String file = readFile(DANDELION_MULTIPLIERS_JSON);
-        List<DandelionComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
-        DandelionComponent.dandelionMultipliers = multipliers;
-        DandelionComponent.currentDandelionMultiplier = multipliers.get(0);
+        List<UmbrellaComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
+        UmbrellaComponent.multipliers = multipliers;
+        UmbrellaComponent.currentMultiplier = multipliers.get(0);
     }
 }

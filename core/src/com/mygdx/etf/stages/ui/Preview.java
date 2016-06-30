@@ -195,6 +195,7 @@ public class Preview {
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
+            addShadow();
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = 460;
 
@@ -202,7 +203,6 @@ public class Preview {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(PREVIEW_X, PREVIEW_Y, 2, Interpolation.exp10Out));
             previewE.add(ac);
-            addShadow();
         } else {
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
