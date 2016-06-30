@@ -30,7 +30,6 @@ public class VanityComponent extends ShopItem implements Component {
     public static final String flower_idle = "flower_idle.scml";
     public static final String CLASS = "class";
 
-
     //true when was presented in showcase
     public boolean advertised;
 
