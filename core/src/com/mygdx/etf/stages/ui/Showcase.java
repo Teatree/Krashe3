@@ -130,8 +130,8 @@ public class Showcase {
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(
-                Actions.scaleTo(1.5f, 1.5f, 5, Interpolation.exp5Out),
-                Actions.fadeIn(5, Interpolation.exp10Out)));
+                Actions.scaleTo(1.5f, 1.5f, 0.7f, Interpolation.exp5Out),
+                Actions.fadeIn(0.8f, Interpolation.exp10Out)));
         itemIcon.add(ac);
     }
 

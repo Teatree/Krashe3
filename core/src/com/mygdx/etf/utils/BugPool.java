@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.BugComponent;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
+import com.mygdx.etf.system.BugSpawnSystem;
+import com.mygdx.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -144,6 +146,7 @@ public class BugPool {
 
     public void release(Entity bug) {
         BugComponent bc = mapper.get(bug);
+        bc.state = BugComponent.IDLE;
         bc.velocity = 0;
 
         TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
