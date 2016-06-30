@@ -1,6 +1,8 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -21,6 +23,9 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_NO_ADS = "btn_noAds";
     public static final String TRIAL_TIMER = "trial_timer";
     public static final String CURTAIN = "curtain_mm";
+    public static final String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
+    public static final String BTN_RATE_APP = "btn_rate_app";
+
     ItemWrapper menuItem;
     private GameStage stage;
 
@@ -54,6 +59,7 @@ public class MenuScreenScript implements IScript {
         Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
         Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
+//        Entity btnRateApp = menuItem.getChild(BTN_RATE_APP).getEntity();
 
         btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -101,7 +107,30 @@ public class MenuScreenScript implements IScript {
                 startShopTransition = true;
             }
         });
+//        btnRateApp.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//            @Override
+//            public void touchUp() {
+//            }
+//
+//            @Override
+//            public void touchDown() {
+//            }
+//
+//            @Override
+//            public void clicked() {
+//                rateMyApp();
+//            }
+//        });
     }
+
+    private void rateMyApp() {
+        if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+            Gdx.net.openURI(ANDROID_APP_LINK);
+        } else if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
+            Gdx.net.openURI(ANDROID_APP_LINK);
+        }
+    }
+
     private void timer(ItemWrapper menuItem) {
         final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
         LabelComponent lc = timerE.getComponent(LabelComponent.class);
