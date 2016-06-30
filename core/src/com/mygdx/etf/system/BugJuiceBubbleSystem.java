@@ -8,6 +8,7 @@ import com.mygdx.etf.entity.componets.BugJuiceBubbleComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.label.LabelComponent;
 
 import static com.mygdx.etf.stages.GameStage.*;
 
@@ -60,7 +61,8 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     protected void end(Entity entity) {
-        GameStage.gameScript.scoreLabelComponent.text.replace(0, GameStage.gameScript.scoreLabelComponent.text.capacity(), "" +
+        gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
                 gameScript.fpc.score + "/" + gameScript.fpc.totalScore);
         GameStage.sceneLoader.getEngine().removeEntity(entity);
     }

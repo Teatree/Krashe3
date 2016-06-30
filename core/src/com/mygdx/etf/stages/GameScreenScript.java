@@ -56,7 +56,7 @@ public class GameScreenScript implements IScript {
     public GameStage stage;
     public Random random = new Random();
     public FlowerPublicComponent fpc;
-    public LabelComponent scoreLabelComponent;
+    public Entity scoreLabelE;
     public LabelComponent startLabelComponent;
     public Entity background;
     public GiftScreen giftScreen;
@@ -176,9 +176,9 @@ public class GameScreenScript implements IScript {
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = 5;
 
-        Entity scoreLabel = gameItem.getChild(LBL_SCORE).getEntity();
-        scoreLabelComponent = scoreLabel.getComponent(LabelComponent.class);
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "0");
+        scoreLabelE = gameItem.getChild(LBL_SCORE).getEntity();
+        LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
+        scoreLabel.text.replace(0, scoreLabel.text.capacity(), "0");
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
@@ -432,7 +432,9 @@ public class GameScreenScript implements IScript {
     }
 
     public void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelComponent.text.replace(0, scoreLabelComponent.text.capacity(), "" + fcc.score + "/" + fcc.totalScore);
+        scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                scoreLabelE.getComponent(LabelComponent.class).text.capacity(),
+                "" + fcc.score + "/" + fcc.totalScore);
     }
 
     private void initCocoon() {

@@ -13,10 +13,10 @@ import java.util.List;
 public class UmbrellaComponent implements Component {
 
     public static float SPAWN_INTERVAL_BASE = 10;
-    public static float SPAWNING_TIME = 15;
+    public static float SPAWNING_TIME = 3;
 
-    public static float INIT_SPAWN_X = 550;
-    public static float INIT_SPAWN_Y = 400;
+    public static float INIT_SPAWN_X = 1150;
+    public static float INIT_SPAWN_Y = 600;
 
     public Rectangle boundsRect = new Rectangle();
 
@@ -36,7 +36,7 @@ public class UmbrellaComponent implements Component {
     public static DandelionMultiplier currentMultiplier;
 
     public UmbrellaComponent() {
-        this.state = UmbrellaComponent.State.PUSH;
+        this.state = State.PUSH;
         getSpawningTimeCounter = 0;
         pointsMult = 2;
         blinkCounter = 9;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.UmbrellaComponent;
+import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -32,9 +33,7 @@ import static com.mygdx.etf.entity.componets.UmbrellaComponent.*;
 
 public class UmbrellaSystem extends IteratingSystem {
 
-    public static final float UMBRELLA_SCALE = 0.6f;
-    public static final int PARTICLES_ON_SCORE_X = 1088;
-    public static final int PARTICLES_ON_SCORE_Y = 674;
+    public static final float UMBRELLA_SCALE = 0.4f;
 
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
@@ -53,7 +52,7 @@ public class UmbrellaSystem extends IteratingSystem {
 //            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
 
-        if (entity.getComponent(UmbrellaComponent.class).state == DEAD) {
+        if (entity.getComponent(UmbrellaComponent.class).state.equals(DEAD)) {
             entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
@@ -76,12 +75,10 @@ public class UmbrellaSystem extends IteratingSystem {
                 if (uc.blinkCounter == 0){
                     if (entity.getComponent(TintComponent.class).color.a > 0.95f) {
                         entity.getComponent(TintComponent.class).color.a -= 0.3f;
-
                     } else {
                         entity.getComponent(TintComponent.class).color.a += 0.4f;
-                        entity.getComponent(TintComponent.class).color.r = 1;
                     }
-                    uc.blinkCounter = 20;
+                    uc.blinkCounter = 10;
                 }
 
                 umbrellaSpawnCounter += deltaTime;
@@ -98,10 +95,10 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.dataSet[2] = new Vector2(1170, 400);
 
                 uc.myCatmull = new Bezier<>(uc.dataSet);
+//                uc.out = new Vector2(340, 200);
                 uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 uc.myCatmull.valueAt(uc.out, 5);
                 uc.myCatmull.derivativeAt(uc.out, 5);
-
                 uc.state = FLY;
             }
 
@@ -112,6 +109,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
                 uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
                 uc.out = new Vector2(340, 200);
+                uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 uc.myCatmull.valueAt(uc.out, 5);
                 uc.myCatmull.derivativeAt(uc.out, 5);
 
@@ -125,8 +123,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
             }
             sasc.paused = false;
-//
-//
             updateRect(uc, tc, dc);
 
             if (checkCollision(uc)) {
@@ -146,7 +142,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-        EffectUtils.playYellowStarsParticleEffect(PARTICLES_ON_SCORE_X, PARTICLES_ON_SCORE_Y);
+        EffectUtils.playYellowStarsParticleEffect(gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
+                gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
     }
 
     private void hide(Entity entity, TransformComponent tc) {
@@ -162,7 +159,7 @@ public class UmbrellaSystem extends IteratingSystem {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
 //        return SPAWN_INTERVAL_BASE*randCoefficient;
-        return SPAWN_INTERVAL_BASE;
+        return 3;
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
