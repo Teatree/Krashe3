@@ -5,6 +5,8 @@ import com.mygdx.etf.entity.componets.Upgrade;
 
 public interface AllController {
 
+    public static final String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
+
     boolean isWifiConnected();
 
     void showReviveVideoAd(Runnable then);
@@ -24,4 +26,6 @@ public interface AllController {
     void getBJDouble(Upgrade bj);
 
     void getBirdPet(PetComponent pet);
+
+    void rateMyApp();
 }

@@ -34,7 +34,7 @@ public class PauseDialog {
 
     public static final int PAUSE_Y = 30;
     public static final int PAUSE_X = 300;
-    public static final int GOAL_TILE_START_Y = 510;
+    public static final int GOAL_TILE_START_Y = 460;
     public static final int GOAL_TILE_SPACE_X = 100;
     public static final float GOAL_TILE_SCALE = 0.7f;
     public static final int GOAL_TILE_STEP_Y = 110;

@@ -214,10 +214,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         mHelper = null;
     }
 
-    public void removeAds(){
-        try{
+    public void removeAds() {
+        try {
             iapRemoveAds();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -250,11 +250,16 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         }
     }
 
+    @Override
+    public void rateMyApp() {
+        Gdx.net.openURI(ANDROID_APP_LINK);
+    }
+
     public void iapRemoveAds() throws IabHelper.IabAsyncInProgressException {
         // Callback for when a purchase is finished
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if ( purchase == null) return;
+                if (purchase == null) return;
                 Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
                 // if we were disposed of in the meantime, quit.
@@ -285,7 +290,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public void iapGetBirdPet(final PetComponent petComponent) throws IabHelper.IabAsyncInProgressException {
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if ( purchase == null) return;
+                if (purchase == null) return;
                 Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
                 if (mHelper == null) return;
@@ -306,7 +311,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public void iapGetBj(final Upgrade bj) throws IabHelper.IabAsyncInProgressException {
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if ( purchase == null) return;
+                if (purchase == null) return;
                 Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
                 if (mHelper == null) return;
@@ -327,7 +332,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public void iapGetPhoenix(final Upgrade phoenix) throws IabHelper.IabAsyncInProgressException {
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if ( purchase == null) return;
+                if (purchase == null) return;
                 Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
                 if (mHelper == null) return;

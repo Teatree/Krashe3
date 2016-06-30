@@ -1,5 +1,6 @@
 package com.mygdx.etf;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.Upgrade;
 
@@ -53,5 +54,10 @@ public class DummyAllController implements AllController {
     @Override
     public void getBirdPet(PetComponent pet) {
         System.out.println("pay to get pet");
+    }
+
+    @Override
+    public void rateMyApp() {
+        Gdx.net.openURI(ANDROID_APP_LINK);
     }
 }

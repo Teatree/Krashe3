@@ -26,9 +26,6 @@ public class MenuScreenScript implements IScript {
     public static final String TRIAL_TIMER = "trial_timer";
     public static final String CURTAIN = "curtain_mm";
 
-    public static final String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
-    public static final String BTN_RATE_APP = "btn_rate_app";
-
     ItemWrapper menuItem;
     private GameStage stage;
 
@@ -39,6 +36,7 @@ public class MenuScreenScript implements IScript {
     boolean startGameTransition;
     boolean startShopTransition;
     boolean startTransitionIn;
+    public static boolean isSettingsOpen;
 
     public MenuScreenScript(GameStage stage) {
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -61,13 +59,13 @@ public class MenuScreenScript implements IScript {
 
         settings = new Settings(menuItem);
         settings.init();
+        isSettingsOpen = false;
     }
 
     public void initButtons() {
         Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
         Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
-//        Entity btnRateApp = menuItem.getChild(BTN_RATE_APP).getEntity();
         Entity btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
 
         btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -81,7 +79,9 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                Main.mainController.removeAds();
+                if(!isSettingsOpen) {
+                    Main.mainController.removeAds();
+                }
             }
         });
 
@@ -98,7 +98,9 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                startGameTransition = true;
+                if (!isSettingsOpen) {
+                    startGameTransition = true;
+                }
             }
         });
         btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -108,29 +110,18 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                startShopTransition = true;
+                if(!isSettingsOpen) {
+                    startShopTransition = true;
+                }
             }
 
             @Override
             public void clicked() {
-                startShopTransition = true;
+                if(!isSettingsOpen) {
+                    startShopTransition = true;
+                }
             }
         });
-
-//        btnRateApp.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//            @Override
-//            public void touchUp() {
-//            }
-//
-//            @Override
-//            public void touchDown() {
-//            }
-//
-//            @Override
-//            public void clicked() {
-//                rateMyApp();
-//            }
-//        });
 
         btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -145,17 +136,12 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                settings.show();
+                if(!isSettingsOpen) {
+                    isSettingsOpen = true;
+                    settings.show();
+                }
             }
         });
-    }
-
-    private void rateMyApp() {
-        if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-            Gdx.net.openURI(ANDROID_APP_LINK);
-        } else if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
-            Gdx.net.openURI(ANDROID_APP_LINK);
-        }
     }
 
     private void timer(ItemWrapper menuItem) {
