@@ -85,7 +85,7 @@ public class VanityComponent extends ShopItem implements Component {
             if (this.pet != null) {
                 GameStage.gameScript.fpc.currentPet = this.pet;
             }
-            GameStage.updateFlowerAni();
+//            GameStage.updateFlowerAni();
             GameStage.changedFlower = true;
         }
     }
@@ -120,7 +120,7 @@ public class VanityComponent extends ShopItem implements Component {
             }
 
         }
-        GameStage.updateFlowerAni();
+//        GameStage.updateFlowerAni();
         GameStage.changedFlower = true;
     }
 }
