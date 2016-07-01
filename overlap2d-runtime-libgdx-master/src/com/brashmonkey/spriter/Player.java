@@ -141,7 +141,7 @@ public class Player {
 	 * @return the object with the given index.
 	 */
 	public Object getObject(int index){
-		return (Object) this.unmappedTweenedKeys[getCurrentKey().getObjectRef(index).timeline].object();
+		return this.unmappedTweenedKeys[getCurrentKey().getObjectRef(index).timeline].object();
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class Player {
 	 * @throws NullPointerException if no object exists with the given name
 	 */
 	public Object getObject(String name){
-		return (Object)this.unmappedTweenedKeys[animation.getTimeline(name).id].object();
+		return this.unmappedTweenedKeys[animation.getTimeline(name).id].object();
 	}
 	
 	/**
@@ -1017,13 +1017,13 @@ public class Player {
 	 * @author Trixt0r
 	 *
 	 */
-	public static interface PlayerListener{
+	public interface PlayerListener{
 		
 		/**
 		 * Gets called if the current animation has reached it's end or it's beginning (depends on the current set {@link Player#speed}).
 		 * @param animation the animation which finished.
 		 */
-		public void animationFinished(Animation animation);
+		void animationFinished(Animation animation);
 		
 		/**
 		 * Gets called if the animation of the player gets changed.
@@ -1031,19 +1031,19 @@ public class Player {
 		 * @param oldAnim the old animation
 		 * @param newAnim the new animation
 		 */
-		public void animationChanged(Animation oldAnim, Animation newAnim);
+		void animationChanged(Animation oldAnim, Animation newAnim);
 		
 		/**
 		 * Gets called before a player updates the current animation.
 		 * @param player the player which is calling this method.
 		 */
-		public void preProcess(Player player);
+		void preProcess(Player player);
 		
 		/**
 		 * Gets called after a player updated the current animation.
 		 * @param player the player which is calling this method.
 		 */
-		public void postProcess(Player player);
+		void postProcess(Player player);
 		
 		/**
 		 * Gets called if the mainline key gets changed.
@@ -1051,7 +1051,7 @@ public class Player {
 		 * @param prevKey the previous mainline key
 		 * @param newKey the new mainline key
 		 */
-		public void mainlineKeyChanged(Mainline.Key prevKey, Mainline.Key newKey);
+		void mainlineKeyChanged(Mainline.Key prevKey, Mainline.Key newKey);
 	}
 	
 	/**

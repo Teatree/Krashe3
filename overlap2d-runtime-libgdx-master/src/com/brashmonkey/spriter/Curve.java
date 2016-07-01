@@ -18,8 +18,8 @@ public class Curve {
 	 * @author Trixt0r
 	 *
 	 */
-	public static enum Type {
-		Instant, Linear, Quadratic, Cubic, Quartic, Quintic, Bezier;
+	public enum Type {
+		Instant, Linear, Quadratic, Cubic, Quartic, Quintic, Bezier
 	}
 	
 	/**

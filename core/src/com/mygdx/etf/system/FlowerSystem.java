@@ -17,11 +17,11 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;
 import static com.mygdx.etf.entity.componets.FlowerComponent.State.*;
+import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FPS;
 import static com.mygdx.etf.utils.SoundMgr.soundMgr;
-import static com.mygdx.etf.stages.GameStage.*;
 
 public class FlowerSystem extends IteratingSystem {
 

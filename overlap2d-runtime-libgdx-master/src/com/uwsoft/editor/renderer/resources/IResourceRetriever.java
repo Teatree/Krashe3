@@ -16,18 +16,18 @@ import com.uwsoft.editor.renderer.utils.MySkin;
  */
 public interface IResourceRetriever {
 
-    public TextureRegion getTextureRegion(String name);
-    public ParticleEffect getParticleEffect(String name);
-    public TextureAtlas getSkeletonAtlas(String name);
-    public FileHandle getSkeletonJSON(String name);
-    public FileHandle getSCMLFile(String name);
-    public TextureAtlas getSpriteAnimation(String name);
-    public BitmapFont getBitmapFont(String name, int size);
-    public MySkin getSkin();
+    TextureRegion getTextureRegion(String name);
+    ParticleEffect getParticleEffect(String name);
+    TextureAtlas getSkeletonAtlas(String name);
+    FileHandle getSkeletonJSON(String name);
+    FileHandle getSCMLFile(String name);
+    TextureAtlas getSpriteAnimation(String name);
+    BitmapFont getBitmapFont(String name, int size);
+    MySkin getSkin();
 
-    public SceneVO getSceneVO(String sceneName);
-    public ProjectInfoVO getProjectVO();
+    SceneVO getSceneVO(String sceneName);
+    ProjectInfoVO getProjectVO();
 
-    public ResolutionEntryVO getLoadedResolution();
-    public ShaderProgram getShaderProgram(String shaderName);
+    ResolutionEntryVO getLoadedResolution();
+    ShaderProgram getShaderProgram(String shaderName);
 }

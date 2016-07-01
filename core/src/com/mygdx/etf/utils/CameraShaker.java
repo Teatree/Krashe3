@@ -2,7 +2,6 @@ package com.mygdx.etf.utils;
 
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
-import com.mygdx.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 

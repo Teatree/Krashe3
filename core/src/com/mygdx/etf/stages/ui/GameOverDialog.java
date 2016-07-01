@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Goal;
-import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
 import com.mygdx.etf.system.BugSystem;

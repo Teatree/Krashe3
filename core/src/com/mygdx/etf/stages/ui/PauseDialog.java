@@ -8,7 +8,6 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -18,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.mygdx.etf.stages.GameScreenScript.isPause;
-import static com.mygdx.etf.stages.GameStage.*;
+import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 

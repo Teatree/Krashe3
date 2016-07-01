@@ -26,7 +26,7 @@ public class CocoonComponent implements Component {
         IDLE,
         SPAWNING,
         HIT,
-        DEAD;
+        DEAD
     }
 
     public static class CocoonMultiplier {

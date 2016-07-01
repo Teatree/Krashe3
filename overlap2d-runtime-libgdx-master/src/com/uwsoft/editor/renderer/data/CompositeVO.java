@@ -136,40 +136,40 @@ public class CompositeVO {
     public void removeItem(MainItemVO vo) {
         String className = vo.getClass().getSimpleName();
         if (className.equals("SimpleImageVO")) {
-            sImages.remove((SimpleImageVO) vo);
+            sImages.remove(vo);
         }
         if (className.equals("Image9patchVO")) {
-            sImage9patchs.remove((Image9patchVO) vo);
+            sImage9patchs.remove(vo);
         }
         if (className.equals("TextBoxVO")) {
-            sTextBox.remove((TextBoxVO) vo);
+            sTextBox.remove(vo);
         }
         if (className.equals("LabelVO")) {
-            sLabels.remove((LabelVO) vo);
+            sLabels.remove(vo);
         }
         if (className.equals("CompositeItemVO")) {
-            sComposites.remove((CompositeItemVO) vo);
+            sComposites.remove(vo);
         }
         if (className.equals("SelectBoxVO")) {
-            sSelectBoxes.remove((SelectBoxVO) vo);
+            sSelectBoxes.remove(vo);
         }
         if (className.equals("ParticleEffectVO")) {
-            sParticleEffects.remove((ParticleEffectVO) vo);
+            sParticleEffects.remove(vo);
         }
         if (className.equals("LightVO")) {
-            sLights.remove((LightVO) vo);
+            sLights.remove(vo);
         }
         if (className.equals("SpineVO")) {
-            sSpineAnimations.remove((SpineVO) vo);
+            sSpineAnimations.remove(vo);
         }
         if (className.equals("SpriteAnimationVO")) {
-            sSpriteAnimations.remove((SpriteAnimationVO) vo);
+            sSpriteAnimations.remove(vo);
         }
         if (className.equals("SpriterVO")) {
-        	sSpriterAnimations.remove((SpriterVO) vo);
+        	sSpriterAnimations.remove(vo);
         }
         if(className.equals("ColorPrimitiveVO")) {
-            sColorPrimitives.remove((ColorPrimitiveVO) vo);
+            sColorPrimitives.remove(vo);
         }
     }
 

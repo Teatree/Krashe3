@@ -44,7 +44,6 @@ public class GameScreenScript implements IScript {
     public final String LBL_TAP_2_START = "lbl_tap2start";
     public final String BTN_PAUSE = "btn_pause";
     public final String MEGA_FLOWER = "mega_flower";
-//    public final String DANDELION_ANI = "dandelionAni";
     public final String COCCOON = "coccoon";
     public final String BACKGROUND_LIB = "backgroundLib";
     public final String BTN_BACK = "btn_back";
@@ -62,7 +61,6 @@ public class GameScreenScript implements IScript {
     public GiftScreen giftScreen;
     public GoalFeedbackScreen goalFeedbackScreen;
 
-//    public static float dandelionSpawnCounter;
     public static float umbrellaSpawnCounter;
     public float cocoonSpawnCounter;
     public ItemWrapper gameItem;
@@ -169,10 +167,6 @@ public class GameScreenScript implements IScript {
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
-//        DandelionSystem.resetSpawnCoefficients();
-//        dandelionSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-//        dandelionSpawnCounter = 5;
-
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = 5;
 
@@ -189,7 +183,6 @@ public class GameScreenScript implements IScript {
         initBackground();
         initPet();
         initDoubleBJIcon();
-//        initDandelion();
         initUmbrella();
         initCocoon();
         gameOverDialog = new GameOverDialog(gameItem);
@@ -260,7 +253,6 @@ public class GameScreenScript implements IScript {
         sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
         sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
         sceneLoader.getEngine().addSystem(new PetSystem());
-//        sceneLoader.getEngine().addSystem(new DandelionSystem(this));
         sceneLoader.getEngine().addSystem(new CocoonSystem(this));
         sceneLoader.getEngine().addSystem(new BugSpawnSystem());
     }
@@ -390,16 +382,12 @@ public class GameScreenScript implements IScript {
             }
 
             if (!isPause && !isGameOver && isStarted) {
-//                if (canDandelionSpawn()) {
                 if (canUmbrellaSpawn()) {
                     umbrellaSpawnCounter -= delta;
-//                    dandelionSpawnCounter -= delta;
                 }
                 if (canCocoonSpawn()) {
                     cocoonSpawnCounter -= delta;
                 }
-                //Spawn dandelion
-//                if (dandelionSpawnCounter <= 0) {
                 if (umbrellaSpawnCounter <= 0) {
                     spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 }
@@ -455,16 +443,8 @@ public class GameScreenScript implements IScript {
         butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
     }
 
-//    private void initDandelion() {
     private void initUmbrella() {
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
-//        if (dandelionEntity.getComponent(DandelionComponent.class) == null) {
-//            DandelionComponent dc = new DandelionComponent();
-//            dandelionEntity.add(dc);
-//        }
-//        dandelionEntity.getComponent(DandelionComponent.class).state = DandelionComponent.State.DEAD;
-//
         Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
             UmbrellaComponent dc = new UmbrellaComponent();
@@ -490,24 +470,8 @@ public class GameScreenScript implements IScript {
         } else {
             umbrellaEntity.getComponent(UmbrellaComponent.class).setToSpawningState();
         }
-//        dandelionSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
     }
-//    private void spawnDandelion() {
-//        if (canDandelionSpawn()) {
-//            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//            Entity dandelionEntity = root.getChild(DANDELION_ANI).getEntity();
-//
-//            TransformComponent tc = dandelionEntity.getComponent(TransformComponent.class);
-//            tc.x = 300;
-//            tc.y = 40;
-//            tc.scaleX = 0.7f;
-//            tc.scaleY = 0.7f;
-//
-//            dandelionEntity.add(tc);
-//            dandelionEntity.getComponent(DandelionComponent.class).state = DandelionComponent.State.GROWING;
-//        }
-//    }
 
     private void spawnCocoon() {
         if (canCocoonSpawn()) {
@@ -541,17 +505,9 @@ public class GameScreenScript implements IScript {
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y;
     }
 
-//    private boolean canDandelionSpawn() {
     private boolean canUmbrellaSpawn() {
 
-        return (/*sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get()).size() == 0 ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(DandelionComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y) &&
-                (*/sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
+        return (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
                         sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())

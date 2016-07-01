@@ -109,13 +109,9 @@ public class GameSettings {
     }
 
     public boolean shouldShowGetMoneyVideoBtnAd(long need) {
-        if (gameScript.fpc.settings.totalPlayedGames >= start_getMoneyAd &&
+        return gameScript.fpc.settings.totalPlayedGames >= start_getMoneyAd &&
                 gameScript.fpc.totalScore < PERCENTS_TO_OFFER_AD &&
-                gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need) {
-            return true;
-        } else {
-            return false;
-        }
+                gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need;
     }
 
 }

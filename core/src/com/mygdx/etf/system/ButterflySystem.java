@@ -17,8 +17,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.mygdx.etf.entity.componets.ButterflyComponent.State.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
 import static com.mygdx.etf.stages.GameScreenScript.*;
+import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.utils.GlobalConstants.*;
-import static com.mygdx.etf.stages.GameStage.*;
 
 
 public class ButterflySystem extends IteratingSystem {

@@ -144,7 +144,7 @@ public class Entity {
      * @author Trixt0r
      *
      */
-    public static enum ObjectType{
+    public enum ObjectType{
     	Sprite, Bone, Box, Point, Skin;
     	
     	/**

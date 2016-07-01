@@ -55,7 +55,7 @@ public class Goal {
         this.type = goalType;
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
-        if(periodType == periodType.TOTAL) {
+        if(periodType == PeriodType.TOTAL) {
             if (getbParameters().get(goalType).get(difficulty*2 + 1) != getbParameters().get(goalType).get(difficulty*2)) {
                 n = random.nextInt(getbParameters().get(goalType).get(difficulty * 2 + 1) - getbParameters().get(goalType).get(difficulty * 2)) + getbParameters().get(goalType).get(difficulty * 2);
             }else{

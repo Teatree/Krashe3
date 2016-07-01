@@ -13,7 +13,6 @@ import java.util.Random;
 import static com.mygdx.etf.entity.componets.BugComponent.*;
 import static com.mygdx.etf.entity.componets.CocoonComponent.cocoonMultipliers;
 import static com.mygdx.etf.entity.componets.CocoonComponent.currentCocoonMultiplier;
-import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 
 public class BugSpawnSystem extends EntitySystem {
@@ -118,8 +117,8 @@ public class BugSpawnSystem extends EntitySystem {
                 if(break_counter > 0) {
                     spawner = curSpawnInterval;
                 }else{
-                    spawner = rand.nextInt((int)curBreakLengthMax-(int)curBreakLengthMin)+curBreakLengthMin;;
-                    break_counter = rand.nextInt((int)curBreakFreqMax - (int)curBreakFreqMin)+ curBreakFreqMin;;
+                    spawner = rand.nextInt((int)curBreakLengthMax-(int)curBreakLengthMin)+curBreakLengthMin;
+                    break_counter = rand.nextInt((int)curBreakFreqMax - (int)curBreakFreqMin)+ curBreakFreqMin;
                 }
             } else {
                 spawner -= delta;

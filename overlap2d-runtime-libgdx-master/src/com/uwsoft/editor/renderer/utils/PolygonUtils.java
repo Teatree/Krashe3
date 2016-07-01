@@ -182,13 +182,11 @@ public class PolygonUtils {
         }
 
         public boolean linkedTo(Vector2 point) {
-            if(start.equals(point) || end.equals(point)) return true;
-            return false;
+            return start.equals(point) || end.equals(point);
         }
 
         public boolean linkedTo(Edge edge) {
-            if(!this.equals(edge) && (start.equals(edge.end) || end.equals(edge.start) || end.equals(edge.end) || start.equals(edge.start))) return true;
-            return false;
+            return !this.equals(edge) && (start.equals(edge.end) || end.equals(edge.start) || end.equals(edge.end) || start.equals(edge.start));
         }
 
         public void reverse() {
@@ -203,8 +201,7 @@ public class PolygonUtils {
             if (obj == null) return false;
             if (getClass() != obj.getClass()) return false;
             Edge other = (Edge)obj;
-            if(hashCode() == other.hashCode()) return true;
-            return false;
+            return hashCode() == other.hashCode();
         }
 
         @Override

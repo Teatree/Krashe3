@@ -4,9 +4,9 @@ import com.uwsoft.editor.renderer.scene2d.CompositeActor;
 
 
 public interface IActorScript {
-    public void init(CompositeActor entity);
+    void init(CompositeActor entity);
 
-    public void act(float delta);
+    void act(float delta);
 
-    public void dispose();
+    void dispose();
 }

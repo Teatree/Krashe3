@@ -12,9 +12,9 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
-import static com.mygdx.etf.stages.GameStage.*;
-import static com.mygdx.etf.stages.ui.AbstractDialog.*;
 
 public class MenuScreenScript implements IScript {
 

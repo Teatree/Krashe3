@@ -7,11 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.etf.entity.componets.ButterflyComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.UmbrellaComponent;
-import com.mygdx.etf.stages.GameScreenScript;
-import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -23,13 +19,13 @@ import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.Goal.GoalType.BOUNCE_UMBRELLA_N_TIMES;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.EAT_N_UMBRELLA;
+import static com.mygdx.etf.entity.componets.UmbrellaComponent.SPAWNING_TIME;
+import static com.mygdx.etf.entity.componets.UmbrellaComponent.State.*;
+import static com.mygdx.etf.entity.componets.UmbrellaComponent.currentMultiplier;
 import static com.mygdx.etf.stages.GameScreenScript.*;
-import static com.mygdx.etf.stages.GameStage.*;
+import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
-
-import static com.mygdx.etf.entity.componets.UmbrellaComponent.State.*;
-import static com.mygdx.etf.entity.componets.UmbrellaComponent.*;
 
 public class UmbrellaSystem extends IteratingSystem {
 

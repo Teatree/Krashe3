@@ -46,7 +46,7 @@ public class Calculator {
 	public static float distanceBetween(float x1, float y1, float x2, float y2){
 		float xDiff = x2-x1;
 		float yDiff = y2-y1;
-	    return (float)sqrt(xDiff*xDiff+yDiff*yDiff);
+	    return sqrt(xDiff*xDiff+yDiff*yDiff);
 	}
 	
 	/**
