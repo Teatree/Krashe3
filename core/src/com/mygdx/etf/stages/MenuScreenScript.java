@@ -23,6 +23,7 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
     public static final String TRIAL_TIMER = "trial_timer";
+    public static final String BTN_RATE = "btn_restore";
     public static final String CURTAIN = "curtain_mm";
 
     ItemWrapper menuItem;
@@ -35,7 +36,6 @@ public class MenuScreenScript implements IScript {
     boolean startGameTransition;
     boolean startShopTransition;
     boolean startTransitionIn;
-//    public static boolean isDialogOpen;
 
     public MenuScreenScript(GameStage stage) {
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -66,15 +66,26 @@ public class MenuScreenScript implements IScript {
         Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
         Entity btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
+        final Entity rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
 
+        rateAppBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {}
+
+            @Override
+            public void touchDown() {}
+
+            @Override
+            public void clicked() {
+                rateMyApp();
+            }
+        });
         btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -86,14 +97,11 @@ public class MenuScreenScript implements IScript {
 
 
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {}
 
             @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -124,14 +132,10 @@ public class MenuScreenScript implements IScript {
 
         btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -198,5 +202,7 @@ public class MenuScreenScript implements IScript {
         }
     }
 
-
+    private void rateMyApp() {
+        Main.mainController.rateMyApp();
+    }
 }

@@ -23,7 +23,6 @@ public class Settings extends AbstractDialog {
     public static final String INFO = "info";
 
 //    public static final String LIB_SHADOW = "lib_shadow";
-    public static final String BTN_RATE = "btn_restore";
     public static final String BTN_RESET = "btn_reset";
     public static final String BTN_RESTORE = "btn_restore";
     public static final String BTN_CLOSE_SETTINGS = "btn_close_settings";
@@ -58,7 +57,6 @@ public class Settings extends AbstractDialog {
 
         Entity closeInfoBtn = gameItem.getChild(INFO).getChild(BTN_CLOSE_INFO).getEntity();
         Entity backBtn = gameItem.getChild(INFO).getChild(BTN_BACK_SETTINGS).getEntity();
-        final Entity rateAppBtn = gameItem.getChild(INFO).getChild(BTN_RATE).getEntity();
 
         final BasicDialog dialog = new BasicDialog(gameItem);
         dialog.init();
@@ -89,19 +87,6 @@ public class Settings extends AbstractDialog {
             @Override
             public void clicked() {
                 close(infoE);
-            }
-        });
-
-        rateAppBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                rateMyApp();
             }
         });
 
@@ -183,11 +168,6 @@ public class Settings extends AbstractDialog {
         final TransformComponent settingsTc = settingsE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
         settingsTc.y = FAR_FAR_AWAY_Y;
-    }
-
-
-    private void rateMyApp() {
-        Main.mainController.rateMyApp();
     }
 
     public void show(){
