@@ -10,6 +10,7 @@ public class ButtonComponent implements Component {
 
     public boolean isTouched = false;
     public static boolean skipDefaultLayersChange;
+    public boolean isDefaultLayersChange=true;
 
     public boolean enable;
 

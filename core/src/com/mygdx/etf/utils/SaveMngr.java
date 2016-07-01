@@ -110,30 +110,30 @@ public class SaveMngr {
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
          
-            GameStats adsStats = json.fromJson(GameStats.class, saved);
-            fc.settings.noAds = adsStats.noAds;
-            fc.settings.noMusic = adsStats.noMusic;
-            fc.settings.noSound = adsStats.noSound;
-            fc.settings.totalPlayedGames = adsStats.totalPlayedGames;
+            GameStats stats = json.fromJson(GameStats.class, saved);
+            fc.settings.noAds = stats.noAds;
+            fc.settings.noMusic = stats.noMusic;
+            fc.settings.noSound = stats.noSound;
+            fc.settings.totalPlayedGames = stats.totalPlayedGames;
             fc.settings.playedGames = 0;
             
-            fc.settings.start_resultScreenAd = adsStats.start_resultScreenAd;
-            fc.settings.start_getMoneyAd = adsStats.start_getMoneyAd;
-            fc.settings.start_launchAd = adsStats.start_launchAd;
-            fc.settings.start_reviveAd = adsStats.start_reviveAd;
-            fc.settings.start_shopAd = adsStats.start_shopAd;
+            fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
+            fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
+            fc.settings.start_launchAd = stats.start_launchAd;
+            fc.settings.start_reviveAd = stats.start_reviveAd;
+            fc.settings.start_shopAd = stats.start_shopAd;
 
-            fc.settings.launchAd_max= adsStats.launchAd_max;        
-            fc.settings.resultScreenAd_max= adsStats.resultScreenAd_max;        
-            fc.settings.getMoneyAd_max= adsStats.getMoneyAd_max;        
-            fc.settings.reviveAd_max= adsStats.reviveAd_max;        
-            fc.settings.shopAd_max= adsStats.shopAd_max;
+            fc.settings.launchAd_max= stats.launchAd_max;
+            fc.settings.resultScreenAd_max= stats.resultScreenAd_max;
+            fc.settings.getMoneyAd_max= stats.getMoneyAd_max;
+            fc.settings.reviveAd_max= stats.reviveAd_max;
+            fc.settings.shopAd_max= stats.shopAd_max;
 
-            fc.settings.launchAd_min= adsStats.launchAd_min;
-            fc.settings.resultScreenAd_min= adsStats.resultScreenAd_min;
-            fc.settings.getMoneyAd_min= adsStats.getMoneyAd_min;
-            fc.settings.reviveAd_min= adsStats.reviveAd_min;
-            fc.settings.shopAd_min= adsStats.shopAd_min;
+            fc.settings.launchAd_min= stats.launchAd_min;
+            fc.settings.resultScreenAd_min= stats.resultScreenAd_min;
+            fc.settings.getMoneyAd_min= stats.getMoneyAd_min;
+            fc.settings.reviveAd_min= stats.reviveAd_min;
+            fc.settings.shopAd_min= stats.shopAd_min;
             
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
                 fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
