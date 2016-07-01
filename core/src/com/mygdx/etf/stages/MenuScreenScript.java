@@ -1,12 +1,8 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
-import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.Upgrade;
-import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -18,6 +14,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 import static com.mygdx.etf.stages.GameStage.*;
+import static com.mygdx.etf.stages.ui.AbstractDialog.*;
 
 public class MenuScreenScript implements IScript {
 
@@ -38,7 +35,7 @@ public class MenuScreenScript implements IScript {
     boolean startGameTransition;
     boolean startShopTransition;
     boolean startTransitionIn;
-    public static boolean isSettingsOpen;
+//    public static boolean isDialogOpen;
 
     public MenuScreenScript(GameStage stage) {
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -61,7 +58,7 @@ public class MenuScreenScript implements IScript {
 
         settings = new Settings(menuItem);
         settings.init();
-        isSettingsOpen = false;
+        isDialogOpen = false;
     }
 
     public void initButtons() {
@@ -81,7 +78,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!isSettingsOpen) {
+                if(!isDialogOpen) {
                     Main.mainController.removeAds();
                 }
             }
@@ -100,7 +97,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if (!isSettingsOpen) {
+                if (!isDialogOpen) {
                     startGameTransition = true;
                 }
             }
@@ -112,14 +109,14 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                if(!isSettingsOpen) {
+                if(!isDialogOpen) {
                     startShopTransition = true;
                 }
             }
 
             @Override
             public void clicked() {
-                if(!isSettingsOpen) {
+                if(!isDialogOpen) {
                     startShopTransition = true;
                 }
             }
@@ -138,8 +135,8 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!isSettingsOpen) {
-                    isSettingsOpen = true;
+                if(!isDialogOpen) {
+                    isDialogOpen = true;
                     settings.show();
                 }
             }

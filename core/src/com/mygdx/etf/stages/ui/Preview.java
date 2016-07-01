@@ -212,6 +212,7 @@ public class Preview {
                 30,
                 648,
                 previewE.getComponent(DimensionsComponent.class).height);
+        previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+10);
     }
 
     private void addShadow() {
