@@ -13,6 +13,7 @@ import com.mygdx.etf.utils.CameraShaker;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -79,6 +80,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void angerBees() {
+        System.out.println("anger bees ");
         isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
@@ -149,6 +151,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
+        System.out.println("it is phoenix!");
         gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
     }
 
@@ -345,13 +348,17 @@ public class GameScreenScript implements IScript {
         if (fpc.currentPet != null) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             if (fpc.currentPet.enabled) {
+                fpc.currentPet.init();
+
                 TransformComponent tc = pet.getComponent(TransformComponent.class);
                 tc.x = PetComponent.X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
                 tc.scaleX = 1.3f;
                 tc.scaleY = 1.3f;
 
-                fpc.currentPet.init();
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y;
+                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
                 pet.add(fpc.currentPet);
             } else {

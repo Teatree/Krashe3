@@ -147,7 +147,6 @@ public class SaveMngr {
                 }
             }
             fc.currentPet = petComponent;
-//            dummyUpgrade(fc);
             dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
@@ -353,6 +352,7 @@ public class SaveMngr {
         PetJson dummyPet = new PetJson();
 
         dummyPet.name = "pet";
+        dummyPet.petCannonName = "pet_cannon";
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
@@ -572,6 +572,7 @@ public class SaveMngr {
         public long tryPeriodTimer;
         public long tryPeriodStart;
         public String transactionId;
+        public String petCannonName;
 
         public PetJson() {
         }
@@ -590,6 +591,8 @@ public class SaveMngr {
             this.tryPeriodTimer = petComponent.tryPeriodTimer;
             this.tryPeriodStart = petComponent.tryPeriodStart;
             this.transactionId = petComponent.transactionId;
+
+            this.petCannonName = petComponent.petCannonName;
         }
     }
 

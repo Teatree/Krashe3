@@ -47,36 +47,48 @@ public class PetSystem extends IteratingSystem {
         TransformComponent tc = entity.getComponent(TransformComponent.class);
         SpriterComponent sc = entity.getComponent(SpriterComponent.class);
         DimensionsComponent dc = entity.getComponent(DimensionsComponent.class);
+
+        DimensionsComponent cannondc = entity.getComponent(DimensionsComponent.class);
+        TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
+        SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
+
         dc.width = 56;
         dc.height = 100;
-        updateRect(pc, tc, dc);
+        updateRect(pc, tc, dc, cannontc, cannondc);
         if (!isPause && !isGameOver) {
             sc.player.speed = FPS;
+            cannonsc.player.speed = FPS;
 //            pc.animationCounter--;
 
-            if (pc.state.equals(TAPPED) ) {
+            if (pc.state.equals(TAPPED)) {
                 if (tc.x >= 1300) {
                     entity.remove(ActionComponent.class);
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     tc.y = PetComponent.getNewPositionY();
-                    ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y,0.7f));
+                    cannontc.y = tc.y;
+                    ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, 0.7f));
                     entity.add(ac);
+                    pc.petCannon.add(ac);
                     setIdleAnimation(sc);
+                    setIdleAnimation(cannonsc);
                 }
 
-                if (tc.x == X_SPAWN_POSITION){
+                if (tc.x == X_SPAWN_POSITION) {
                     pc.state = IDLE;
                 }
             }
-            if (pc.state.equals(BITE)){
+            if (pc.state.equals(BITE)) {
                 setBiteAnimation(sc);
+                setBiteAnimation(cannonsc);
                 if (isAnimationFinished(sc)) {
                     if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
                         pc.state = IDLE;
                         setIdleAnimation(sc);
+                        setIdleAnimation(cannonsc);
                     } else {
                         canPlayAnimation = true;
+                        setDashAnimation(cannonsc);
                         setDashAnimation(sc);
                         pc.state = DASH;
                         checkPetDashGoal();
@@ -85,20 +97,27 @@ public class PetSystem extends IteratingSystem {
             }
 
             if (pc.state.equals(SPAWNING)) {
-                tc.x = 1200;
+                tc.x = PetComponent.X_SPAWN_POSITION;
+                cannontc.x = PetComponent.X_SPAWN_POSITION;
                 setSpawnAnimation(sc);
+                setSpawnAnimation(cannonsc);
                 pc.velocity = 0;
                 if (isAnimationFinished(sc)) {
                     pc.state = IDLE;
                     canPlayAnimation = true;
                     pc.setOutsideStateDuration();
                     setIdleAnimation(sc);
+                    setIdleAnimation(cannonsc);
                 }
             }
 
             if (pc.state.equals(DASH)) {
                 pc.velocity += deltaTime * 3.4;
                 tc.x -= pc.velocity;
+                if (isAnimationFinished(cannonsc)) {
+                    cannonsc.player.speed = 0;
+                    cannontc.x = FAR_FAR_AWAY_X;
+                }
             }
 
             if (tc.x < -100) {
@@ -108,49 +127,56 @@ public class PetSystem extends IteratingSystem {
                 pc.setOutsideStateDuration();
             }
 
-            if (pc.state.equals(OUTSIDE) && isAnimationFinished(sc)) {
+            if (pc.state.equals(OUTSIDE)) {
                 pc.state = SPAWNING;
                 pc.eatenBugsCounter = 0;
 //                pc.animationCounter = PetComponent.SPAWN_DURATION;
                 tc.x = X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
+
+                cannontc.x = tc.x;
+                cannontc.y = tc.y;
                 setSpawnAnimation(sc);
+                setSpawnAnimation(cannonsc);
             }
 
             Vector2 v = getTouchCoordinates();
             if (Gdx.input.justTouched() &&
                     pc.boundsRect.contains(v.x, v.y)
-                    && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)){
+                    && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
                 pc.state = TAPPED;
                 setTappedAnimation(sc);
+                setTappedAnimation(cannonsc);
 
                 EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
-                tc.x ++;
+                tc.x++;
                 ActionComponent ac = new ActionComponent();
                 Actions.checkInit();
-                ac.dataArray.add(Actions.moveTo(1300, tc.y,0.7f));
+                ac.dataArray.add(Actions.moveTo(1300, tc.y, 0.7f));
                 entity.add(ac);
-
+                pc.petCannon.add(ac);
                 checkPetThePetGoal();
             }
         } else {
             sc.player.speed = 0;
+            cannonsc.player.speed = 0;
         }
-        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
+//        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
     }
 
     private boolean isAnimationFinished(SpriterComponent sc) {
         return sc.player.getTime() >= sc.player.getAnimation().length - 20;
     }
 
-    public void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc) {
-        pc.boundsRect.width = (int) dc.width * tc.scaleX;
-        pc.boundsRect.height = (int) dc.height * tc.scaleY;
+    public void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc,
+                           TransformComponent cannontc, DimensionsComponent cannondc) {
+        pc.boundsRect.width = (int) dc.width * tc.scaleX + cannondc.width * cannontc.scaleX;
+        pc.boundsRect.height = (int) cannondc.height * cannontc.scaleY;
 
-        pc.boundsRect.x = (int) tc.x-dc.width;
-        pc.boundsRect.y = (int) tc.y-dc.height/2;
-}
+        pc.boundsRect.x = (int) tc.x - dc.width;
+        pc.boundsRect.y = (int) cannontc.y - cannondc.height / 2;
+    }
 
     private void setSpawnAnimation(SpriterComponent sc) {
         sc.player.setAnimation(4);

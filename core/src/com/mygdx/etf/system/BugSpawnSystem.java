@@ -64,6 +64,8 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     public static boolean isBlewUp() {
+        if (isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION - 10)
+        System.out.println("is blew up");
         return isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION - 10;
     }
 

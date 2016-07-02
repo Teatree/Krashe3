@@ -147,6 +147,7 @@ public class PauseDialog extends AbstractDialog {
 //    }
 
     public void show(){
+        isActive = true;
         addShadow();
 
         lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
