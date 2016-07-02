@@ -27,6 +27,7 @@ public class AbstractDialog {
     protected Entity shadowE;
     public static boolean isDialogOpen;
     public static boolean isSecondDialogOpen;
+    public boolean isActive;
 
     protected void initShadow() {
         CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
@@ -55,18 +56,21 @@ public class AbstractDialog {
     }
 
     public void close (Entity e){
-        ActionComponent ac = new ActionComponent();
-        Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
-        e.add(ac);
+        if (isActive) {
+            isActive = false;
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
+            e.add(ac);
 
-        ActionComponent ac2 = new ActionComponent();
-        ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
-        shadowE.add(ac2);
-        if (isSecondDialogOpen){
-            isSecondDialogOpen = false;
-        } else {
-            isDialogOpen = false;
+            ActionComponent ac2 = new ActionComponent();
+            ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
+            shadowE.add(ac2);
+            if (isSecondDialogOpen) {
+                isSecondDialogOpen = false;
+            } else {
+                isDialogOpen = false;
+            }
         }
     }
 

@@ -21,6 +21,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;

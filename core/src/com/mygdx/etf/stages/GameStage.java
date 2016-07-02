@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -11,6 +12,8 @@ import com.mygdx.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import java.util.HashMap;
 
 import static com.mygdx.etf.Main.mainController;
 import static com.mygdx.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
@@ -180,5 +183,26 @@ public class GameStage extends Stage {
 
     public void update() {
         sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
+    }
+
+
+    public static void resetAllProgress(){
+        for (VanityComponent vc : gameScript.fpc.vanities){
+            if (vc.enabled){
+                vc.disable();
+            }
+            vc.bought = false;
+            vc.enabled = false;
+            vc.advertised = false;
+
+            gameScript.fpc.score = 0;
+            gameScript.fpc.bestScore = 0;
+            gameScript.fpc.totalScore = 0;
+            gameScript.fpc.level.difficultyLevel = 0;
+            gameScript.fpc.level.resetNewInfo();
+
+            gameScript.fpc.currentPet = null;
+            gameScript.fpc.upgrades = new HashMap<>();
+        }
     }
 }
