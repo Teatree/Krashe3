@@ -15,7 +15,7 @@ public class PetComponent extends ShopItem implements Component {
     public static final int OUTSIDE_DURATION_MAX = 1000;
     public static final int OUTSIDE_DURATION_MIN = 500;
 
-    public static final float X_SPAWN_POSITION = 1200;
+    public static final float X_SPAWN_POSITION = 1150;
     public static final int Y_SPAWN_POSITION_MAX = 568;
     public static final int Y_SPAWN_POSITION_MIN = 370;
 

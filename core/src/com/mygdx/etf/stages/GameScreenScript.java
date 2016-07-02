@@ -13,6 +13,7 @@ import com.mygdx.etf.utils.CameraShaker;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -353,13 +354,9 @@ public class GameScreenScript implements IScript {
                 tc.scaleX = 1.3f;
                 tc.scaleY = 1.3f;
 
-
-                TransformComponent cannontc =  fpc.currentPet.petCannon.getComponent(TransformComponent.class);
-                cannontc.x = tc.x+40;
-                cannontc.y = tc.y;
-                cannontc.scaleX = 0.3f;
-                cannontc.scaleY = .3f;
-
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y;
+                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
                 pet.add(fpc.currentPet);
             } else {
