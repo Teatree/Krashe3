@@ -80,6 +80,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void angerBees() {
+        System.out.println("anger bees ");
         isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
@@ -150,6 +151,7 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
+        System.out.println("it is phoenix!");
         gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
     }
 

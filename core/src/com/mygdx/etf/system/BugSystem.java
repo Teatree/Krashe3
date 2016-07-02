@@ -57,7 +57,7 @@ public class BugSystem extends IteratingSystem {
             transformComponent.scaleY = BUG_SCALE;
             BugComponent bc = mapper.get(entity);
 
-            if (BugSpawnSystem.isBlewUp() || blowUpAllBugs) {
+            if (/*BugSpawnSystem.isBlewUp() ||*/ blowUpAllBugs) {
                 destroyBug(entity, transformComponent);
 
             } else if (!DEAD.equals(bc.state)) {
@@ -65,7 +65,7 @@ public class BugSystem extends IteratingSystem {
                 updateRectScary(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
                 if (gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
-                    transformComponent.scaleX+= 0.5f;
+                    transformComponent.scaleX += 0.5f;
 //                    gameScript.fpc.state = ATTACK_BITE;
                     gameScript.fpc.isScary = true;
                 }
@@ -241,9 +241,9 @@ public class BugSystem extends IteratingSystem {
 
     public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
         bc.boundsRectScary.x = (int) tc.x;
-        bc.boundsRectScary.y = (int) tc.y-dc.height;
+        bc.boundsRectScary.y = (int) tc.y - dc.height;
         bc.boundsRectScary.width = (int) dc.width;
-        bc.boundsRectScary.height = (int) dc.height*2;
+        bc.boundsRectScary.height = (int) dc.height * 2;
     }
 
 

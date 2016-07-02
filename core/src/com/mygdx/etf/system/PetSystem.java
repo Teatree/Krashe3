@@ -127,7 +127,7 @@ public class PetSystem extends IteratingSystem {
                 pc.setOutsideStateDuration();
             }
 
-            if (pc.state.equals(OUTSIDE) && isAnimationFinished(sc)) {
+            if (pc.state.equals(OUTSIDE)) {
                 pc.state = SPAWNING;
                 pc.eatenBugsCounter = 0;
 //                pc.animationCounter = PetComponent.SPAWN_DURATION;
