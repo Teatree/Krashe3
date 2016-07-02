@@ -436,6 +436,7 @@ public class SaveMngr {
         public int easyGoalsAmount = 1;
         public int mediumGoalsAmount = 1;
         public int hardGoalsAmount = 1;
+        public float goalMultiplier = 1.05f;
 
         public float prob_eat_n_bugs;
         public float prob_eat_n_drunks;
