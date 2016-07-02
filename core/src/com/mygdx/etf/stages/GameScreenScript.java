@@ -345,13 +345,21 @@ public class GameScreenScript implements IScript {
         if (fpc.currentPet != null) {
             Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
             if (fpc.currentPet.enabled) {
+                fpc.currentPet.init();
+
                 TransformComponent tc = pet.getComponent(TransformComponent.class);
                 tc.x = PetComponent.X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
                 tc.scaleX = 1.3f;
                 tc.scaleY = 1.3f;
 
-                fpc.currentPet.init();
+
+                TransformComponent cannontc =  fpc.currentPet.petCannon.getComponent(TransformComponent.class);
+                cannontc.x = tc.x;
+                cannontc.y = tc.y;
+                cannontc.scaleX = 0.3f;
+                cannontc.scaleY = .3f;
+
 
                 pet.add(fpc.currentPet);
             } else {

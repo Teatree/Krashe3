@@ -3,6 +3,7 @@ package com.mygdx.etf.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.brashmonkey.spriter.Entity;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
@@ -35,8 +36,11 @@ public class PetComponent extends ShopItem implements Component {
 
     public boolean isCollision;
 
+    public String petCannonName;
+    public com.badlogic.ashley.core.Entity petCannon;
+
     public PetComponent() {
-        init();
+//        init();
         currencyType = HARD;
     }
 
@@ -54,7 +58,8 @@ public class PetComponent extends ShopItem implements Component {
         this.tryPeriodTimer = pet.tryPeriodTimer;
         this.tryPeriodStart = pet.tryPeriodStart;
         this.transactionId = pet.transactionId;
-        init();
+        this.petCannonName = pet.petCannonName;
+//        init();
     }
 
     public static int getNewPositionY() {
@@ -79,6 +84,7 @@ public class PetComponent extends ShopItem implements Component {
         this.boundsRect = new Rectangle();
         eatenBugsCounter = 0;
 
+        petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
     }
 
     @Override
