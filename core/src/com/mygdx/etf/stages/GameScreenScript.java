@@ -355,7 +355,7 @@ public class GameScreenScript implements IScript {
 
 
                 TransformComponent cannontc =  fpc.currentPet.petCannon.getComponent(TransformComponent.class);
-                cannontc.x = tc.x;
+                cannontc.x = tc.x+40;
                 cannontc.y = tc.y;
                 cannontc.scaleX = 0.3f;
                 cannontc.scaleY = .3f;
