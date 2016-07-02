@@ -59,17 +59,17 @@ public class BugComponent implements Component {
             case DRUNK: {
                 duration = 12 *m.drunkBugMoveDuration *GameStage.gameScript.fpc.level.drunkBugMoveDuration;
                 amplitude = 50 *m.drunkBugAmplitude *GameStage.gameScript.fpc.level.drunkBugAmplitude;
-                points = 10;
+                points = 4;
                 break;
             }
             case BEE: {
                 duration = 14 *m.beeMoveDuration *GameStage.gameScript.fpc.level.beeMoveDuration;
                 amplitude = 0 *m.beeAmplitude *GameStage.gameScript.fpc.level.beeAmplitude;
-                points = 15;
+                points = 6;
                 break;
             }
             case CHARGER: {
-                points = 25;
+                points = 10;
                 IDLE_MVMNT_SPEED = 115 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
                 PREPARING_MVMNT_SPEED = 40 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
                 CHARGING_MVMNT_SPEED = 505 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
@@ -78,13 +78,13 @@ public class BugComponent implements Component {
             case QUEENBEE: {
                 duration = 12 *m.queenBeeMoveDuration *GameStage.gameScript.fpc.level.queenBeeMoveDuration;
                 amplitude = 50 *m.queenBeeAmplitude *GameStage.gameScript.fpc.level.queenBeeAmplitude;
-                points = 33;
+                points = 12;
                 break;
             }
             default: {
                 duration = 14 *m.simpleBugMoveDuration *GameStage.gameScript.fpc.level.simpleBugMoveDuration;
                 amplitude = 0 *m.simpleBugAmplitude *GameStage.gameScript.fpc.level.simpleBugAmplitude;
-                points = 10;
+                points = 3;
                 break;
             }
         }
