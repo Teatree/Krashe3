@@ -46,6 +46,8 @@ public class BasicDialog extends AbstractDialog{
     private Entity okBtn;
     private Entity cancelBtn;
 
+    public AbstractDialog parent;
+
     public BasicDialog(ItemWrapper gameItem){
         this.gameItem = gameItem;
     }
@@ -87,6 +89,8 @@ public class BasicDialog extends AbstractDialog{
     }
 
     public void show(String type){
+        parent.isActive = false;
+        this.isActive = true;
         addShadow();
         AbstractDialog.isSecondDialogOpen = true;
 
@@ -199,7 +203,9 @@ public class BasicDialog extends AbstractDialog{
 
             @Override
             public void clicked() {
-                resetAllProgress();
+                GameStage.resetAllProgress();
+                close(dialogE);
+                show(TYPE_RESET_RESULT);
             }
         });
 
@@ -210,26 +216,9 @@ public class BasicDialog extends AbstractDialog{
         cancelBtn.getComponent(TransformComponent.class).y = 60;
     }
 
-
-    public void resetAllProgress(){
-        for (VanityComponent vc : GameStage.gameScript.fpc.vanities){
-            if (vc.enabled){
-                vc.disable();
-            }
-            vc.bought = false;
-            vc.enabled = false;
-            vc.advertised = false;
-
-            GameStage.gameScript.fpc.score = 0;
-            GameStage.gameScript.fpc.bestScore = 0;
-            GameStage.gameScript.fpc.totalScore = 0;
-            GameStage.gameScript.fpc.level.difficultyLevel = 0;
-            GameStage.gameScript.fpc.level.resetNewInfo();
-
-            GameStage.gameScript.fpc.currentPet = null;
-            GameStage.gameScript.fpc.upgrades = new HashMap<>();
-        }
-        close(dialogE);
-        show(TYPE_RESET_RESULT);
+    @Override
+    public void close (Entity e){
+        parent.isActive = true;
+        super.close(e);
     }
 }
