@@ -3,12 +3,15 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.stages.ui.Showcase;
+import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -37,6 +40,7 @@ public class ResultScreenScript implements IScript {
     public static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
     public static final String LBL_BET_SCORE = "lbl_BET_SCORE";
     public static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
+    private static final String TRIAL_TIMER = "timer_lbl";
 
     public static VanityComponent showCaseVanity;
     public static boolean show;
@@ -58,6 +62,7 @@ public class ResultScreenScript implements IScript {
     private ItemWrapper resultScreenItem;
     private Entity adsBtn;
     private Showcase showcase;
+    private TrialTimer timer;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -79,6 +84,9 @@ public class ResultScreenScript implements IScript {
 
         initResultScreen();
         showcase = new Showcase(resultScreenItem, this);
+        if (timer == null) {
+            timer = new TrialTimer(resultScreenItem, 120, 650);
+        }
     }
 
     public void initButtons() {
@@ -211,6 +219,7 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+        timer.timer();
         if (!isWasShowcase) {
             if (i <= gameScript.fpc.score) {
                 updateScore();
@@ -351,4 +360,51 @@ public class ResultScreenScript implements IScript {
     public void reset() {
         init(resultScreenItem.getEntity());
     }
+//
+//
+//    private void timer(ItemWrapper gameItem) {
+//        final Entity timerE = gameItem.getChild(TRIAL_TIMER).getEntity();
+//        boolean showTimer = false;
+//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
+//            showTimer = showTimer(timerE, fpc.currentPet.logoName);
+//        } else {
+//            for (Upgrade u : fpc.upgrades.values()) {
+//                if (u.tryPeriod) {
+//                    showTimer(timerE, u.logoName);
+//                }
+//            }
+//        }
+//        if (!showTimer) {
+//            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
+//            timerLogo = null;
+//        }
+//    }
+//
+//    private boolean showTimer(Entity timerE, String logoname) {
+//        LabelComponent lc = timerE.getComponent(LabelComponent.class);
+//        boolean showTimer;
+//        lc.text.replace(0, lc.text.length, fpc.currentPet.updateTryPeriodTimer());
+//        showTimer = true;
+//        addTimerLogo(logoname);
+//        timerE.getComponent(TransformComponent.class).x = 160;
+//        timerE.getComponent(TransformComponent.class).y = 660;
+//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
+//        return showTimer;
+//    }
+//
+//    private void addTimerLogo(String logoLibName) {
+//        if (timerLogo == null){
+//            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
+//            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
+//            sceneLoader.getEngine().addEntity(timerLogo);
+//        }
+//        timerLogo.getComponent(TransformComponent.class).x = 120;
+//        timerLogo.getComponent(TransformComponent.class).y = 650;
+//        timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
+//        timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
+//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
+//    }
 }

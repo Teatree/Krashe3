@@ -4,12 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.*;
-import com.mygdx.etf.stages.ui.GameOverDialog;
-import com.mygdx.etf.stages.ui.GiftScreen;
-import com.mygdx.etf.stages.ui.GoalFeedbackScreen;
-import com.mygdx.etf.stages.ui.PauseDialog;
+import com.mygdx.etf.stages.ui.*;
 import com.mygdx.etf.system.*;
 import com.mygdx.etf.utils.CameraShaker;
+import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -74,13 +72,13 @@ public class GameScreenScript implements IScript {
     public static Entity beesModeAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+    private TrialTimer timer;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
     }
 
     public static void angerBees() {
-        System.out.println("anger bees ");
         isAngeredBeesMode = true;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
@@ -151,7 +149,6 @@ public class GameScreenScript implements IScript {
     }
 
     public static void usePhoenix() {
-        System.out.println("it is phoenix!");
         gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
     }
 
@@ -204,6 +201,9 @@ public class GameScreenScript implements IScript {
         }
         goalFeedbackScreen.init(false);
 
+        if (timer == null) {
+            timer = new TrialTimer(gameItem, 120, 650);
+        }
         checkTryPeriod();
 
         gameScript.fpc.settings.totalPlayedGames++;
@@ -267,8 +267,8 @@ public class GameScreenScript implements IScript {
         final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
         backBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
-        backBtn.getComponent(TransformComponent.class).x = 90;
-        backBtn.getComponent(TransformComponent.class).y = 680;
+        backBtn.getComponent(TransformComponent.class).x = 10;
+        backBtn.getComponent(TransformComponent.class).y = 640;
 
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -364,6 +364,8 @@ public class GameScreenScript implements IScript {
             } else {
                 if (pet != null) {
                     sceneLoader.getEngine().removeEntity(pet);
+                    fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                    sceneLoader.getEngine().removeEntity( fpc.currentPet.petCannon);
                 }
             }
         }
@@ -410,6 +412,7 @@ public class GameScreenScript implements IScript {
             giftScreen.update();
             goalFeedbackScreen.update();
             updateAngeredBeesMode();
+            timer.timer();
         }
     }
 
@@ -524,4 +527,50 @@ public class GameScreenScript implements IScript {
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
                 );
     }
+//
+//    private void timer(ItemWrapper gameItem) {
+//        final Entity timerE = gameItem.getChild(TRIAL_TIMER).getEntity();
+//        boolean showTimer = false;
+//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
+//            showTimer = showTimer(timerE, fpc.currentPet.logoName);
+//        } else {
+//            for (Upgrade u : fpc.upgrades.values()) {
+//                if (u.tryPeriod) {
+//                   showTimer(timerE, u.logoName);
+//                }
+//            }
+//        }
+//        if (!showTimer) {
+//            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
+//            timerLogo = null;
+//        }
+//    }
+//
+//    private boolean showTimer(Entity timerE, String logoname) {
+//        LabelComponent lc = timerE.getComponent(LabelComponent.class);
+//        boolean showTimer;
+//        lc.text.replace(0, lc.text.length, fpc.currentPet.updateTryPeriodTimer());
+//        showTimer = true;
+//        addTimerLogo(logoname);
+//        timerE.getComponent(TransformComponent.class).x = 160;
+//        timerE.getComponent(TransformComponent.class).y = 660;
+//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
+//        return showTimer;
+//    }
+//
+//    private void addTimerLogo(String logoLibName) {
+//        if (timerLogo == null){
+//            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
+//            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
+//            sceneLoader.getEngine().addEntity(timerLogo);
+//        }
+//        timerLogo.getComponent(TransformComponent.class).x = 120;
+//        timerLogo.getComponent(TransformComponent.class).y = 650;
+//        timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
+//        timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
+//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
+//    }
 }

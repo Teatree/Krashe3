@@ -4,15 +4,18 @@ import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.ui.Settings;
+import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 
@@ -22,13 +25,11 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_SHOP = "btn_shop";
     public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
-    public static final String TRIAL_TIMER = "trial_timer";
     public static final String BTN_RATE = "btn_restore";
     public static final String CURTAIN = "curtain_mm";
 
     ItemWrapper menuItem;
     private GameStage stage;
-
     private Settings settings;
 
     //Dima's party time
@@ -36,6 +37,8 @@ public class MenuScreenScript implements IScript {
     boolean startGameTransition;
     boolean startShopTransition;
     boolean startTransitionIn;
+
+    private TrialTimer timer;
 
     public MenuScreenScript(GameStage stage) {
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -59,6 +62,9 @@ public class MenuScreenScript implements IScript {
         settings = new Settings(menuItem);
         settings.init();
         isDialogOpen = false;
+        if (timer == null) {
+            timer = new TrialTimer(menuItem, 680, 500);
+        }
     }
 
     public void initButtons() {
@@ -147,26 +153,44 @@ public class MenuScreenScript implements IScript {
         });
     }
 
-    private void timer(ItemWrapper menuItem) {
-        final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
-        LabelComponent lc = timerE.getComponent(LabelComponent.class);
-        boolean showTimer = false;
-        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
-            lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
-            showTimer = true;
-        } else {
-            for (Upgrade u : gameScript.fpc.upgrades.values()) {
-                if (u.tryPeriod) {
-                    lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
-                    showTimer = true;
-                }
-            }
-        }
-        if (!showTimer) {
-            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-        }
-
-    }
+//    private void timer(ItemWrapper menuItem) {
+//        final Entity timerE = menuItem.getChild(TRIAL_TIMER).getEntity();
+//        LabelComponent lc = timerE.getComponent(LabelComponent.class);
+//        boolean showTimer = false;
+//        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
+//            lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
+//            showTimer = true;
+//            addTimerLogo(gameScript.fpc.currentPet.logoName);
+//        } else {
+//            for (Upgrade u : gameScript.fpc.upgrades.values()) {
+//                if (u.tryPeriod) {
+//                    lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
+//                    showTimer = true;
+//                    addTimerLogo(u.logoName);
+//                }
+//            }
+//        }
+//        if (!showTimer) {
+//            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            sceneLoader.getEngine().removeEntity(timerLogo);
+//            timerLogo = null;
+//        }
+//    }
+//
+//    private void addTimerLogo(String logoLibName) {
+//        if (timerLogo == null){
+//            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
+//            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
+//            sceneLoader.getEngine().addEntity(timerLogo);
+//
+//            timerLogo.getComponent(TransformComponent.class).x = 680;
+//            timerLogo.getComponent(TransformComponent.class).y = 500;
+//            timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
+//            timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
+//        }
+//    }
 
     @Override
     public void dispose() {
@@ -176,7 +200,7 @@ public class MenuScreenScript implements IScript {
     @Override
     public void act(float delta) {
         GameScreenScript.checkTryPeriod();
-        timer(menuItem);
+        timer.timer();
 
         if(startGameTransition){
             curtain_mm.getComponent(TintComponent.class).color.a+=0.05f;

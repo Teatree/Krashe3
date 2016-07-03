@@ -25,6 +25,8 @@ import static com.mygdx.etf.utils.SoundMgr.soundMgr;
 
 public class FlowerSystem extends IteratingSystem {
 
+    public static final String TUTORIAL_LINE = "tutorial_line";
+
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
     }
@@ -39,7 +41,7 @@ public class FlowerSystem extends IteratingSystem {
         sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
     }
 
-    public void updateRect( TransformComponent tc) {
+    public void updateRect(TransformComponent tc) {
         gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
         gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
         gameScript.fpc.boundsRect.width = 200 * tc.scaleX;
@@ -69,7 +71,8 @@ public class FlowerSystem extends IteratingSystem {
                     setIdleAnimation(sc);
                 }
             }
-            if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord()) {
+            if (Gdx.input.isTouched() && state.equals(IDLE) &&
+                    canAttackCoord()) {
                 state = TRANSITION;
             }
 
@@ -160,16 +163,18 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
+    //:TODO NPE
     private boolean canAttackCoord() {
-        return (gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
-                && !GameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates());
+        return (gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.enabled ||
+                !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                && !gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates());
     }
 
     private void hideTutorialLine() {
-        if(GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a > 0.3f){
-            GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a -= 0.3f;
-        }else{
-            GameStage.gameScript.gameItem.getChild("tutorial_line").getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        if (gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.3f) {
+            gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.3f;
+        } else {
+            gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 

@@ -87,7 +87,7 @@ public class PauseDialog extends AbstractDialog {
         lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                 lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
 
-        createGoalTiles();
+//        createGoalTiles();
     }
 
     private void closePauseDialog() {

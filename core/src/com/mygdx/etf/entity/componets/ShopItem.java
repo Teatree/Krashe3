@@ -4,6 +4,7 @@ public abstract class ShopItem {
 
     public static String SOFT = "SOFT";
     public static String HARD = "HARD";
+
     public String shopIcon;
     public String name;
     public long cost;
@@ -11,6 +12,7 @@ public abstract class ShopItem {
     public String currencyType;
 
     public String transactionId;
+    public String logoName;
 
     //true when was bought (could be not applied)
     public boolean bought;

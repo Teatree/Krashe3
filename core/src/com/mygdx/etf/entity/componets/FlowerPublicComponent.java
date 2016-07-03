@@ -32,7 +32,7 @@ public class FlowerPublicComponent implements Component {
     }
 
     public boolean petCollisionCheck(Rectangle rectangle) {
-        if (currentPet != null) {
+        if (currentPet != null && currentPet.enabled) {
             PetComponent.eatThatBug(currentPet, rectangle);
 
             return boundsRect.overlaps(rectangle) ||

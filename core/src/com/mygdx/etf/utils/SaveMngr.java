@@ -159,7 +159,7 @@ public class SaveMngr {
         fc.currentPet = fc.pets.get(0);
         fc.currentPet.tryPeriod = true;
         fc.currentPet.enabled = true;
-        fc.currentPet.tryPeriodDuration = 2 * 60;
+        fc.currentPet.tryPeriodDuration = 30;
         fc.currentPet.tryPeriodStart = System.currentTimeMillis();
     }
 
@@ -353,6 +353,7 @@ public class SaveMngr {
 
         dummyPet.name = "pet";
         dummyPet.petCannonName = "pet_cannon";
+        dummyPet.logoName = "star_lib";
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
@@ -574,6 +575,7 @@ public class SaveMngr {
         public long tryPeriodStart;
         public String transactionId;
         public String petCannonName;
+        public String logoName;
 
         public PetJson() {
         }
@@ -588,6 +590,8 @@ public class SaveMngr {
             this.shopIcon = petComponent.shopIcon;
 
             this.tryPeriod = petComponent.tryPeriod;
+            this.logoName = petComponent.logoName;
+
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.tryPeriodTimer = petComponent.tryPeriodTimer;
             this.tryPeriodStart = petComponent.tryPeriodStart;

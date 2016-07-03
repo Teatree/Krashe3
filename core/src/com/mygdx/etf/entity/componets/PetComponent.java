@@ -1,9 +1,9 @@
 package com.mygdx.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.brashmonkey.spriter.Entity;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
@@ -37,28 +37,29 @@ public class PetComponent extends ShopItem implements Component {
     public boolean isCollision;
 
     public String petCannonName;
-    public com.badlogic.ashley.core.Entity petCannon;
+    public Entity petCannon;
 
     public PetComponent() {
 //        init();
         currencyType = HARD;
     }
 
-    public PetComponent(SaveMngr.PetJson pet) {
+    public PetComponent(SaveMngr.PetJson petJson) {
         currencyType = HARD;
-        this.name = pet.name;
-        this.enabled = pet.activated;
-        this.bought = pet.bought;
-        this.cost = pet.cost;
-        this.tryPeriod = pet.tryPeriod;
-        this.tryPeriodDuration = pet.tryPeriodDuration - (System.currentTimeMillis() - pet.tryPeriodStart) / 1000;
-        this.amountBugsBeforeCharging = pet.amountBugsBeforeCharging;
-        this.totalEatenBugs = pet.totalEatenBugs;
-        this.shopIcon = pet.shopIcon;
-        this.tryPeriodTimer = pet.tryPeriodTimer;
-        this.tryPeriodStart = pet.tryPeriodStart;
-        this.transactionId = pet.transactionId;
-        this.petCannonName = pet.petCannonName;
+        this.name = petJson.name;
+        this.enabled = petJson.activated;
+        this.bought = petJson.bought;
+        this.cost = petJson.cost;
+        this.tryPeriod = petJson.tryPeriod;
+        this.tryPeriodDuration = petJson.tryPeriodDuration - (System.currentTimeMillis() - petJson.tryPeriodStart) / 1000;
+        this.amountBugsBeforeCharging = petJson.amountBugsBeforeCharging;
+        this.totalEatenBugs = petJson.totalEatenBugs;
+        this.shopIcon = petJson.shopIcon;
+        this.tryPeriodTimer = petJson.tryPeriodTimer;
+        this.tryPeriodStart = petJson.tryPeriodStart;
+        this.transactionId = petJson.transactionId;
+        this.petCannonName = petJson.petCannonName;
+        this.logoName = petJson.logoName;
 //        init();
     }
 
