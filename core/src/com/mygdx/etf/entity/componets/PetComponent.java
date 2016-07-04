@@ -60,6 +60,7 @@ public class PetComponent extends ShopItem implements Component {
         this.transactionId = petJson.transactionId;
         this.petCannonName = petJson.petCannonName;
         this.logoName = petJson.logoName;
+        this.discountTransactionId = petJson.discountTransactionId;
 //        init();
     }
 
@@ -112,6 +113,11 @@ public class PetComponent extends ShopItem implements Component {
     @Override
     public void buyHard() {
         Main.mainController.getBirdPet(this);
+    }
+
+    @Override
+    public void buyHardDiscount() {
+        Main.mainController.getBirdPetDiscount(this);
     }
 
     public void setOutsideStateDuration() {

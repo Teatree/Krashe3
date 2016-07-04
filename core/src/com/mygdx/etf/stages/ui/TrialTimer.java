@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
-import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -14,6 +13,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.*;
+import static com.mygdx.etf.utils.GlobalConstants.*;
 
 /**
  * Created by ARudyk on 7/3/2016.
@@ -21,6 +21,7 @@ import static com.mygdx.etf.stages.GameStage.*;
 public class TrialTimer {
 
     private static final String TRIAL_TIMER = "timer_lbl";
+
     private Entity timerLogo;
     private ItemWrapper mainItem;
 
@@ -36,25 +37,32 @@ public class TrialTimer {
     public void timer() {
         GameScreenScript.checkTryPeriod();
         final Entity timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
+        if (!ifShouldShowTimer(timerE) && timerE.getComponent(TransformComponent.class).x !=FAR_FAR_AWAY_X) {
+            DiscountWindow.offerDiscount = true;
+            timerE.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
+            if (timerLogo != null) {
+                timerLogo.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
+                GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
+            }
+        }
+    }
+
+    private boolean ifShouldShowTimer(Entity timerE) {
         boolean showTimer = false;
         if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
             showTimer(timerE, gameScript.fpc.currentPet.logoName);
+            DiscountWindow.offer = gameScript.fpc.currentPet;
         } else {
             for (Upgrade u : gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {
                     showTimer = true;
+                    DiscountWindow.offer = u;
                     showTimer(timerE, u.logoName);
                 }
             }
         }
-        if (!showTimer) {
-            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-            if (timerLogo != null) {
-                timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-                GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
-            }
-        }
+        return showTimer;
     }
 
     private void showTimer(Entity timerE, String logoname) {

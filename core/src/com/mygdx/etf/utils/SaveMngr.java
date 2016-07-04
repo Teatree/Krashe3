@@ -588,6 +588,7 @@ public class SaveMngr {
         public long tryPeriodTimer;
         public long tryPeriodStart;
         public String transactionId;
+        public String discountTransactionId;
         public String petCannonName;
         public String logoName;
 
@@ -610,6 +611,7 @@ public class SaveMngr {
             this.tryPeriodTimer = petComponent.tryPeriodTimer;
             this.tryPeriodStart = petComponent.tryPeriodStart;
             this.transactionId = petComponent.transactionId;
+            this.discountTransactionId = petComponent.discountTransactionId;
 
             this.petCannonName = petComponent.petCannonName;
         }

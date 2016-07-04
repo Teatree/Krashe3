@@ -251,6 +251,34 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
+    public void getPhoenixDiscount(Upgrade phoenix) {
+        try {
+            iapGetPhoenixDiscount(phoenix);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getBJDoubleDiscount(Upgrade bj) {
+        try {
+            iapGetBjDiscount(bj);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void getBirdPetDiscount(PetComponent petComponent) {
+        try {
+            iapGetBirdPetDiscount(petComponent);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void rateMyApp() {
         Gdx.net.openURI(ANDROID_APP_LINK);
     }
@@ -335,6 +363,69 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     public void iapGetPhoenix(final Upgrade phoenix) throws IabHelper.IabAsyncInProgressException {
+        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                if (purchase == null) return;
+                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+
+                if (mHelper == null) return;
+                if (result.isFailure()) {
+                    return;
+                }
+
+                Log.d("IAB", "Purchase successful.");
+                if (purchase.getSku().equals(SKU_PHOENIX)) {
+                    phoenix.buyAndUse();
+                }
+            }
+        };
+        mHelper.launchPurchaseFlow(this, SKU_PHOENIX, RC_REQUEST,
+                mPurchaseFinishedListener);
+    }
+
+    public void iapGetBirdPetDiscount(final PetComponent petComponent) throws IabHelper.IabAsyncInProgressException {
+        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                if (purchase == null) return;
+                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+
+                if (mHelper == null) return;
+
+                if (result.isFailure()) {
+                    return;
+                }
+
+                if (purchase.getSku().equals(SKU_PET)) {
+                    petComponent.buyAndUse();
+                }
+            }
+        };
+        mHelper.launchPurchaseFlow(this, SKU_NO_ADS, RC_REQUEST,
+                mPurchaseFinishedListener);
+    }
+
+    public void iapGetBjDiscount(final Upgrade bj) throws IabHelper.IabAsyncInProgressException {
+        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                if (purchase == null) return;
+                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+
+                if (mHelper == null) return;
+                if (result.isFailure()) {
+                    return;
+                }
+
+                Log.d("IAB", "Purchase successful.");
+                if (purchase.getSku().equals(SKU_BJ)) {
+                    bj.buyAndUse();
+                }
+            }
+        };
+        mHelper.launchPurchaseFlow(this, SKU_NO_ADS, RC_REQUEST,
+                mPurchaseFinishedListener);
+    }
+
+    public void iapGetPhoenixDiscount(final Upgrade phoenix) throws IabHelper.IabAsyncInProgressException {
         IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
                 if (purchase == null) return;

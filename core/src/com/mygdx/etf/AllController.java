@@ -27,6 +27,12 @@ public interface AllController {
 
     void getBirdPet(PetComponent pet);
 
+    void getPhoenixDiscount(Upgrade phoenix);
+
+    void getBJDoubleDiscount(Upgrade bj);
+
+    void getBirdPetDiscount(PetComponent pet);
+
     void rateMyApp();
 
     void restorePurchases();

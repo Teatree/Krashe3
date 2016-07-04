@@ -5,13 +5,14 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.VanityComponent;
+import com.mygdx.etf.stages.ui.DiscountWindow;
+import com.mygdx.etf.stages.ui.GiftScreen;
 import com.mygdx.etf.stages.ui.Showcase;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -20,6 +21,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.stages.ui.DiscountWindow.*;
 
 public class ResultScreenScript implements IScript {
 
@@ -44,16 +46,17 @@ public class ResultScreenScript implements IScript {
 
     public static VanityComponent showCaseVanity;
     public static boolean show;
+    boolean showcasePopup;
     public static boolean isWasShowcase;
+    public static boolean active = true;
 
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
     public Entity progressBarE;
     Entity txtEarnedE;
-    LabelComponent earnedLabel;
 
-    boolean showcasePopup;
+    LabelComponent earnedLabel;
     long need;
     int i = 0;
     int j = 0;
@@ -63,6 +66,7 @@ public class ResultScreenScript implements IScript {
     private Entity adsBtn;
     private Showcase showcase;
     private TrialTimer timer;
+    private DiscountWindow discountWindow;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -87,6 +91,11 @@ public class ResultScreenScript implements IScript {
         if (timer == null) {
             timer = new TrialTimer(resultScreenItem, 120, 650);
         }
+
+        if (discountWindow == null) {
+            discountWindow = new DiscountWindow(resultScreenItem);
+        }
+        discountWindow.init();
     }
 
     public void initButtons() {
@@ -179,8 +188,10 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if (!show) {
-                    backToGame();
+                if (active) {
+                    if (!show) {
+                        backToGame();
+                    }
                 }
             }
 
@@ -209,6 +220,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                if (active)
                 if (!show) {
                     stage.initShopWithAds();
                     isWasShowcase = false;
@@ -220,19 +232,28 @@ public class ResultScreenScript implements IScript {
     @Override
     public void act(float delta) {
         timer.timer();
-        if (!isWasShowcase) {
-            if (i <= gameScript.fpc.score) {
-                updateScore();
+        if (offerDiscount && active) {
+            discountWindow.show();
+            offerDiscount = false;
+            active = false;
+        }
+
+        if (active) {
+            if (!isWasShowcase) {
+                if (i <= gameScript.fpc.score) {
+                    updateScore();
+                } else {
+                    earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
+                    updateProgressBar(delta);
+                }
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
-                updateProgressBar(delta);
+                progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
+                txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
-        } else {
-            earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
-            progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
-            txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
+            showcase.showFading();
         }
-        showcase.showFading();
+
     }
 
     private void updateProgressBar(float deltaTime) {
@@ -319,6 +340,7 @@ public class ResultScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                if (active)
                 if (!show) {
                     if (Main.mainController.isWifiConnected()) {
                         Main.mainController.showGetMoneyVideoAd(new Runnable() {
@@ -360,51 +382,5 @@ public class ResultScreenScript implements IScript {
     public void reset() {
         init(resultScreenItem.getEntity());
     }
-//
-//
-//    private void timer(ItemWrapper gameItem) {
-//        final Entity timerE = gameItem.getChild(TRIAL_TIMER).getEntity();
-//        boolean showTimer = false;
-//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-//            showTimer = showTimer(timerE, fpc.currentPet.logoName);
-//        } else {
-//            for (Upgrade u : fpc.upgrades.values()) {
-//                if (u.tryPeriod) {
-//                    showTimer(timerE, u.logoName);
-//                }
-//            }
-//        }
-//        if (!showTimer) {
-//            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//            timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//            GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
-//            timerLogo = null;
-//        }
-//    }
-//
-//    private boolean showTimer(Entity timerE, String logoname) {
-//        LabelComponent lc = timerE.getComponent(LabelComponent.class);
-//        boolean showTimer;
-//        lc.text.replace(0, lc.text.length, fpc.currentPet.updateTryPeriodTimer());
-//        showTimer = true;
-//        addTimerLogo(logoname);
-//        timerE.getComponent(TransformComponent.class).x = 160;
-//        timerE.getComponent(TransformComponent.class).y = 660;
-//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
-//        return showTimer;
-//    }
-//
-//    private void addTimerLogo(String logoLibName) {
-//        if (timerLogo == null){
-//            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
-//            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
-//            sceneLoader.getEngine().addEntity(timerLogo);
-//        }
-//        timerLogo.getComponent(TransformComponent.class).x = 120;
-//        timerLogo.getComponent(TransformComponent.class).y = 650;
-//        timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
-//        timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
-//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
-//    }
+
 }

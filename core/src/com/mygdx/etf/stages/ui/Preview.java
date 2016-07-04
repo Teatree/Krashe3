@@ -255,7 +255,7 @@ public class Preview {
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
                         if (vc.currencyType.equals(HARD)) {
-                            vc.buyHard();
+                            vc.buyHard(); // TODO: http://cdn.collider.com/wp-content/uploads/die-hard-with-a-vengeance-bruce-willis.jpg
                         } else {
                             vc.buyAndUse();
 

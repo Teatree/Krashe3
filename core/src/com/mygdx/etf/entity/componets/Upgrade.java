@@ -91,6 +91,17 @@ public class Upgrade extends ShopItem{
         }
     }
 
+    @Override
+    public void buyHardDiscount() {
+        if (upgradeType.equals(UpgradeType.PHOENIX)){
+            Main.mainController.getPhoenixDiscount(this);
+        }
+
+        if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
+            Main.mainController.getBJDoubleDiscount(this);
+        }
+    }
+
     public void usePhoenix() {
         BugSystem.blowUpAllBugs = true;
         FlowerComponent.state = FlowerComponent.State.PHOENIX;

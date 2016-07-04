@@ -15,6 +15,9 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.security.UnresolvedPermission;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.etf.stages.GameScreenScript.isGameOver;
@@ -38,14 +41,22 @@ public class GiftScreen {
     public final int HIT_COUNTER_MIN = 5;
     public boolean isGiftScreenOpen = false;
 
-    private ItemWrapper gameItem;
     private Entity giftScreen;
     private Entity pinataBtn;
     private int pinataHitCounter;
     private Gift gift;
 
+    static List<Integer> moneySums;
+
     public GiftScreen(ItemWrapper gameItem) {
-        this.gameItem = gameItem;
+        /*this.gameItem = gameItem;*/
+        moneySums = new ArrayList<>();
+        moneySums.add(50);
+        moneySums.add(100);
+        moneySums.add(150);
+        moneySums.add(200);
+        moneySums.add(250);
+        moneySums.add(300);
     }
 
     public void init() {
@@ -111,10 +122,11 @@ public class GiftScreen {
         isGiftScreenOpen = true;
     }
 
-    public void hide (){
+    public void hide() {
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }
+
     public void update() {
         if (pinataHitCounter <= 0) {
             pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -144,7 +156,7 @@ public class GiftScreen {
 
         public static final int ONE_HOUR = 3600000;
 
-//        public static HashMap<String, Integer> rewardChanceGroups;
+        //        public static HashMap<String, Integer> rewardChanceGroups;
         private static Random random = new Random();
 
 //        static {
@@ -162,54 +174,72 @@ public class GiftScreen {
 
         public static Gift getRandomGift() {
             Gift gift = new Gift();
-                int i = random.nextInt(100);
-                if (i > 0 && i <= gameScript.fpc.level.rewardChanceGroups.get(PET)) {
-                    gift = getPetGift();
-                } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET) && i <= gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
-                    gift = getPhoenixGift();
-                } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) && i <= gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE)) {
-                    gift = getDoubleJuiceGift();
-                } else if (i > gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) && i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY)) {
-                    gift = getRandomMoneyGift();
-                }
+            int i = random.nextInt(100);
+            if (i > 0 && i <= gameScript.fpc.level.rewardChanceGroups.get(PET)) {
+                gift = getPetGift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
+                gift = getPhoenixGift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE)) {
+                gift = getDoubleJuiceGift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY)) {
+                gift = getRandomMoneyGift();
+            }
             return gift;
         }
 
         public static Gift getRandomMoneyGift() {
             Gift gift = new Gift();
-            gift.money = random.nextInt(50) + 100;
+            int moneyIndex = random.nextInt(5);
+            gift.money = moneySums.get(moneyIndex);
             gift.type = MONEY;
             return gift;
         }
 
         public static Gift getPetGift() {
             Gift gift = new Gift();
-            gift.pet = GameStage.gameScript.fpc.pets.get(0);
-            gift.pet.tryPeriod = true;
-            gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = PET;
-            return gift;
+            PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+            if (!pet.enabled && !pet.bought) {
+                gift.pet = pet;
+                gift.pet.tryPeriod = true;
+                gift.pet.tryPeriodDuration = ONE_HOUR;
+                gift.type = PET;
+                return gift;
+            } else {
+                return getRandomMoneyGift();
+            }
         }
 
         public static Gift getPhoenixGift() {
-            Gift gift = new Gift();
-            gift.upgrade = Upgrade.getPhoenix();
-            gift.upgrade.tryPeriod = true;
-            gift.upgrade.tryPeriodDuration = ONE_HOUR;
-            gift.type = PHOENIX;
-            return gift;
+            if (!Upgrade.getPhoenix().enabled && !Upgrade.getPhoenix().bought) {
+                Gift gift = new Gift();
+                gift.upgrade = Upgrade.getPhoenix();
+                gift.upgrade.tryPeriod = true;
+                gift.upgrade.tryPeriodDuration = ONE_HOUR;
+                gift.type = PHOENIX;
+                return gift;
+            } else {
+                return getRandomMoneyGift();
+            }
         }
 
         public static Gift getDoubleJuiceGift() {
-            Gift gift = new Gift();
-            gift.upgrade = Upgrade.getBJDouble();
-            gift.upgrade.tryPeriod = true;
-            gift.upgrade.tryPeriodDuration = ONE_HOUR;
-            gift.type = BJ_DOUBLE;
-            return gift;
+            if (!Upgrade.getBJDouble().enabled && !Upgrade.getBJDouble().bought) {
+                Gift gift = new Gift();
+                gift.upgrade = Upgrade.getBJDouble();
+                gift.upgrade.tryPeriod = true;
+                gift.upgrade.tryPeriodDuration = ONE_HOUR;
+                gift.type = BJ_DOUBLE;
+                return gift;
+            } else {
+                return getRandomMoneyGift();
+            }
         }
 
         public void takeGift(FlowerPublicComponent fpc) {
+            DiscountWindow.offerDiscount = false;
             switch (type) {
                 case (MONEY): {
                     fpc.totalScore += money;

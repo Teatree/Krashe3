@@ -57,6 +57,21 @@ public class DummyAllController implements AllController {
     }
 
     @Override
+    public void getPhoenixDiscount(Upgrade phoenix) {
+        System.out.println("pay to get phoenix cheaper");
+    }
+
+    @Override
+    public void getBJDoubleDiscount(Upgrade bj) {
+        System.out.println("pay to get bj cheaper");
+    }
+
+    @Override
+    public void getBirdPetDiscount(PetComponent pet) {
+        System.out.println("pay to get pet cheaper");
+    }
+
+    @Override
     public void rateMyApp() {
         Gdx.net.openURI(ANDROID_APP_LINK);
     }

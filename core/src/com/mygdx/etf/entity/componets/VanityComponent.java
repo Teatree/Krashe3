@@ -104,6 +104,11 @@ public class VanityComponent extends ShopItem implements Component {
         //nothing I'm soft
     }
 
+    @Override
+    public void buyHardDiscount() {
+        //nothing I'm soft
+    }
+
     public boolean canBuy() {
         return GameStage.gameScript.fpc.totalScore >= this.cost;
     }

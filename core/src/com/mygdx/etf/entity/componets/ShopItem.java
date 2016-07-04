@@ -12,6 +12,7 @@ public abstract class ShopItem {
     public String currencyType;
 
     public String transactionId;
+    public String discountTransactionId;
     public String logoName;
 
     //true when was bought (could be not applied)
@@ -27,4 +28,5 @@ public abstract class ShopItem {
 
     public abstract void buyHard();
 
+    public abstract void buyHardDiscount();
 }
