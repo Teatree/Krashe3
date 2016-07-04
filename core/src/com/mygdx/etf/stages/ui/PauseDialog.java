@@ -87,19 +87,10 @@ public class PauseDialog extends AbstractDialog {
         lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                 lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
 
-//        createGoalTiles();
+        createGoalTiles();
     }
 
     private void closePauseDialog() {
-//        ActionComponent ac = new ActionComponent();
-//        Actions.checkInit();
-//        ac.dataArray.add(Actions.moveTo(PAUSE_X, 900, 1, Interpolation.exp10));
-//        pauseDialogE.add(ac);
-//
-//        ActionComponent ac2 = new ActionComponent();
-//        ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
-//        shadowE.add(ac2);
-
         close(pauseDialogE);
         pauseTimer = 0;
         pauseCounter = PAUSE_COUNT - 1;
@@ -107,44 +98,6 @@ public class PauseDialog extends AbstractDialog {
                 lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                 String.valueOf(PAUSE_COUNT));
     }
-
-//    private void initShadow(CompositeItemVO tempC) {
-//        if (shadowE == null) {
-//            shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempC.composite);
-//            sceneLoader.getEngine().addEntity(shadowE);
-//        }
-//        shadowE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        shadowE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-//    }
-
-//    public void show() {
-//
-//        pauseCounter = 10;
-//
-//        final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
-//        dialogTc.x = PAUSE_X;
-//        dialogTc.y = PAUSE_Y;
-//
-//        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
-//                lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
-//
-//        shadowE.getComponent(TransformComponent.class).x = 0;
-//        shadowE.getComponent(TransformComponent.class).y = 0;
-//        shadowE.getComponent(ZIndexComponent.class).setZIndex(49);
-//
-//        final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
-//        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-//        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
-//
-//        int y = GOAL_TILE_START_Y;
-//        for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
-//            showGoalTile(y, pair.getValue(), pair.getKey());
-//            y -= GOAL_TILE_STEP_Y;
-//        }
-//
-//        isPause = true;
-//    }
 
     public void show(){
         isActive = true;
@@ -174,21 +127,6 @@ public class PauseDialog extends AbstractDialog {
         ac.dataArray.add(Actions.moveTo(PAUSE_X, PAUSE_Y, 2, Interpolation.exp10Out));
         pauseDialogE.add(ac);
     }
-
-//    private void addShadow() {
-//        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
-//        shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
-//        shadowE.getComponent(TransformComponent.class).x = 0;
-//        shadowE.getComponent(TransformComponent.class).y = 0;
-//        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
-//        sceneLoader.getEngine().addEntity(shadowE);
-//        shadowE.getComponent(TintComponent.class).color.a = 0;
-//        Actions.checkInit();
-//        ActionComponent ac = new ActionComponent();
-//        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
-//        shadowE.add(ac);
-//    }
 
     private List<Entity> getTileEntities (Entity pauseDialogE){
         List<Entity> tiles = new ArrayList<>();
