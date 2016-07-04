@@ -6,6 +6,7 @@ import com.mygdx.etf.utils.SaveMngr;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Level {
 
@@ -61,6 +62,8 @@ public class Level {
     public float prob_pet_eat_n_bugs;
     public float prob_pet_dash_n_times;
 
+    public Map<String, Integer> rewardChanceGroups;
+
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;
         spawnInterval = levelsInfo.get(difficultyLevel).spawnInterval;
@@ -107,7 +110,7 @@ public class Level {
         prob_pet_the_pet_n_times = levelsInfo.get(difficultyLevel).prob_pet_the_pet_n_times;
         prob_pet_eat_n_bugs = levelsInfo.get(difficultyLevel).prob_pet_eat_n_bugs;
         prob_pet_dash_n_times = levelsInfo.get(difficultyLevel).prob_pet_dash_n_times;
-
+        rewardChanceGroups = levelsInfo.get(difficultyLevel).rewardChanceGroups;
     }
 
     public Goal getGoalByType(Goal.GoalType type) {
@@ -164,6 +167,7 @@ public class Level {
             easyGoalsAmount = info.easyGoalsAmount;
             mediumGoalsAmount = info.mediumGoalsAmount;
             hardGoalsAmount = info.hardGoalsAmount;
+            rewardChanceGroups = info.rewardChanceGroups;
         }
     }
 }

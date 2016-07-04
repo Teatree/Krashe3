@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.etf.entity.componets.*;
+import com.mygdx.etf.stages.ui.GiftScreen;
 import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
@@ -36,17 +37,17 @@ public class SaveMngr {
         gameStats.start_reviveAd = fc.settings.start_reviveAd;
         gameStats.start_shopAd = fc.settings.start_shopAd;
 
-        gameStats.launchAd_max= fc.settings.launchAd_max;
-        gameStats.resultScreenAd_max= fc.settings.resultScreenAd_max;
-        gameStats.getMoneyAd_max= fc.settings.getMoneyAd_max;
-        gameStats.reviveAd_max= fc.settings.reviveAd_max;
-        gameStats.shopAd_max= fc.settings.shopAd_max;
+        gameStats.launchAd_max = fc.settings.launchAd_max;
+        gameStats.resultScreenAd_max = fc.settings.resultScreenAd_max;
+        gameStats.getMoneyAd_max = fc.settings.getMoneyAd_max;
+        gameStats.reviveAd_max = fc.settings.reviveAd_max;
+        gameStats.shopAd_max = fc.settings.shopAd_max;
 
-        gameStats.launchAd_min= fc.settings.launchAd_min;
-        gameStats.resultScreenAd_min= fc.settings.resultScreenAd_min;
-        gameStats.getMoneyAd_min= fc.settings.getMoneyAd_min;
-        gameStats.reviveAd_min= fc.settings.reviveAd_min;
-        gameStats.shopAd_min= fc.settings.shopAd_min;
+        gameStats.launchAd_min = fc.settings.launchAd_min;
+        gameStats.resultScreenAd_min = fc.settings.resultScreenAd_min;
+        gameStats.getMoneyAd_min = fc.settings.getMoneyAd_min;
+        gameStats.reviveAd_min = fc.settings.reviveAd_min;
+        gameStats.shopAd_min = fc.settings.shopAd_min;
 
         writeFile(ADS_SETTINGS_JSON, new Json().toJson(gameStats));
         for (Upgrade u : fc.upgrades.values()) {
@@ -109,32 +110,32 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
-         
+
             GameStats stats = json.fromJson(GameStats.class, saved);
             fc.settings.noAds = stats.noAds;
             fc.settings.noMusic = stats.noMusic;
             fc.settings.noSound = stats.noSound;
             fc.settings.totalPlayedGames = stats.totalPlayedGames;
             fc.settings.playedGames = 0;
-            
+
             fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
             fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
             fc.settings.start_launchAd = stats.start_launchAd;
             fc.settings.start_reviveAd = stats.start_reviveAd;
             fc.settings.start_shopAd = stats.start_shopAd;
 
-            fc.settings.launchAd_max= stats.launchAd_max;
-            fc.settings.resultScreenAd_max= stats.resultScreenAd_max;
-            fc.settings.getMoneyAd_max= stats.getMoneyAd_max;
-            fc.settings.reviveAd_max= stats.reviveAd_max;
-            fc.settings.shopAd_max= stats.shopAd_max;
+            fc.settings.launchAd_max = stats.launchAd_max;
+            fc.settings.resultScreenAd_max = stats.resultScreenAd_max;
+            fc.settings.getMoneyAd_max = stats.getMoneyAd_max;
+            fc.settings.reviveAd_max = stats.reviveAd_max;
+            fc.settings.shopAd_max = stats.shopAd_max;
 
-            fc.settings.launchAd_min= stats.launchAd_min;
-            fc.settings.resultScreenAd_min= stats.resultScreenAd_min;
-            fc.settings.getMoneyAd_min= stats.getMoneyAd_min;
-            fc.settings.reviveAd_min= stats.reviveAd_min;
-            fc.settings.shopAd_min= stats.shopAd_min;
-            
+            fc.settings.launchAd_min = stats.launchAd_min;
+            fc.settings.resultScreenAd_min = stats.resultScreenAd_min;
+            fc.settings.getMoneyAd_min = stats.getMoneyAd_min;
+            fc.settings.reviveAd_min = stats.reviveAd_min;
+            fc.settings.shopAd_min = stats.shopAd_min;
+
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
                 fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
             }
@@ -170,7 +171,7 @@ public class SaveMngr {
         u.tryPeriodStart = System.currentTimeMillis();
         u.bought = true;
         u.enabled = true;
-        fc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE,u);
+        fc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE, u);
     }
 
     private static void addGoals(FlowerPublicComponent fc, GameStats gameStats) {
@@ -184,8 +185,8 @@ public class SaveMngr {
             goal.n = dg.n;
             goal.description = dg.description;
             fc.level.goals.put(goal.type, goal);
-            fc.level.difficultyLevel = dg.difficultyLevel-1;
-            fc.level.name = Level.levelsInfo.get(dg.difficultyLevel-1).name;
+            fc.level.difficultyLevel = dg.difficultyLevel - 1;
+            fc.level.name = Level.levelsInfo.get(dg.difficultyLevel - 1).name;
             fc.level.resetNewInfo();
         }
 //        Goal goal = new Goal();
@@ -368,22 +369,33 @@ public class SaveMngr {
     }
 
     public static void generateLevelsJson() {
+
+        Map<String, Integer> rewardChanceGroups = new HashMap<>();
+        rewardChanceGroups.put(GiftScreen.Gift.PET, 0);
+        rewardChanceGroups.put(GiftScreen.Gift.PHOENIX, 15);
+        rewardChanceGroups.put(GiftScreen.Gift.BJ_DOUBLE, 30);
+        rewardChanceGroups.put(GiftScreen.Gift.MONEY, 100);
+
         List<LevelInfo> levels = new ArrayList<>();
         LevelInfo l = new LevelInfo();
         l.difficultyLevel = 1;
         l.name = "Novice";
+        l.rewardChanceGroups = rewardChanceGroups;
 
         LevelInfo l1 = new LevelInfo();
         l1.difficultyLevel = 2;
         l1.name = "Pro";
+        l1.rewardChanceGroups = rewardChanceGroups;
 
         LevelInfo l2 = new LevelInfo();
         l2.difficultyLevel = 3;
         l2.name = "Prorer Pro";
+        l2.rewardChanceGroups = rewardChanceGroups;
 
         LevelInfo l3 = new LevelInfo();
         l3.difficultyLevel = 4;
         l3.name = "Prorest Pro";
+        l3.rewardChanceGroups = rewardChanceGroups;
 
         levels.add(l);
         levels.add(l1);
@@ -442,8 +454,8 @@ public class SaveMngr {
         public float prob_eat_n_bugs;
         public float prob_eat_n_drunks;
         public float prob_eat_n_chargers;
-        public float prob_eat_n_simple ;
-        public float prob_eat_n_bees ;
+        public float prob_eat_n_simple;
+        public float prob_eat_n_bees;
         public float prob_eat_n_queens;
         public float prob_eat_n_umrellas;
         public float prob_eat_n_butterflies;
@@ -456,8 +468,10 @@ public class SaveMngr {
         public float prob_pet_the_pet_n_times;
         public float prob_pet_eat_n_bugs;
         public float prob_pet_dash_n_times;
+        public Map<String, Integer> rewardChanceGroups = new HashMap<>();
 
-        public LevelInfo() {}
+        public LevelInfo() {
+        }
     }
 
     private static class GameStats {
@@ -601,14 +615,14 @@ public class SaveMngr {
         }
     }
 
-    public static void initCocoonMultipliers(){
+    public static void initCocoonMultipliers() {
         String file = readFile(COCOON_MULTIPLIERS_JSON);
         List<CocoonComponent.CocoonMultiplier> multipliers = new Json().fromJson(List.class, file);
         CocoonComponent.cocoonMultipliers = multipliers;
         CocoonComponent.currentCocoonMultiplier = multipliers.get(0);
     }
 
-    public static void initDandelionMultipliers(){
+    public static void initDandelionMultipliers() {
         String file = readFile(DANDELION_MULTIPLIERS_JSON);
         List<UmbrellaComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
         UmbrellaComponent.multipliers = multipliers;
