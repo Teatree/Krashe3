@@ -38,7 +38,7 @@ public class TrialTimer {
         GameScreenScript.checkTryPeriod();
         final Entity timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
         if (!ifShouldShowTimer(timerE) && timerE.getComponent(TransformComponent.class).x !=FAR_FAR_AWAY_X) {
-            DiscountWindow.offerDiscount = true;
+            PromoWindow.offerPromo = true;
             timerE.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
             if (timerLogo != null) {
                 timerLogo.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
@@ -52,12 +52,12 @@ public class TrialTimer {
         if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
             showTimer(timerE, gameScript.fpc.currentPet.logoName);
-            DiscountWindow.offer = gameScript.fpc.currentPet;
+            PromoWindow.offer = gameScript.fpc.currentPet;
         } else {
             for (Upgrade u : gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {
                     showTimer = true;
-                    DiscountWindow.offer = u;
+                    PromoWindow.offer = u;
                     showTimer(timerE, u.logoName);
                 }
             }
