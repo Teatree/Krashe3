@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.mygdx.etf.android.util.IabResult;
 import com.mygdx.etf.android.util.Purchase;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.Upgrade;
+import com.mygdx.etf.stages.GameStage;
+
+import java.util.List;
 
 import static com.mygdx.etf.stages.GameStage.gameScript;
 
@@ -38,6 +42,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     static final String SKU_BJ = "bj";
     static final String SKU_PHOENIX = "phoenix";
     static final String SKU_PET = "Revive";
+
+    static final String SKU_PROMO_BJ = "bj_promo";
+    static final String SKU_PROMO_PHOENIX = "phoenix_promo";
+    static final String SKU_PROMO_PET = "Revive_promo";
 
     private Main game;
 
@@ -284,8 +292,23 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
-    public void restorePurchases() {
+    public void restorePurchases() throws Exception{
+        List <String> skus = mHelper.getPurchases();
+        if (skus.isEmpty()) {
+            for (String sku : skus){
+                if (sku.equals(SKU_BJ) || sku.equals(SKU_PROMO_BJ)){
+                    Upgrade.getBJDouble().buyAndUse();
+                }
 
+                if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_PROMO_PHOENIX)){
+                    Upgrade.getPhoenix().buyAndUse();
+                }
+
+                if (sku.equals(SKU_PET) || sku.equals(SKU_PROMO_PET)){
+                    GameStage.gameScript.fpc.pets.get(0).buyAndUse();
+                }
+            }
+        }
     }
 
     public void iapRemoveAds() throws IabHelper.IabAsyncInProgressException {

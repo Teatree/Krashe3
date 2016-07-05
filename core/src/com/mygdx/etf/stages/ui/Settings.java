@@ -3,6 +3,7 @@ package com.mygdx.etf.stages.ui;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -154,7 +155,6 @@ public class Settings extends AbstractDialog {
             @Override
             public void clicked() {
                 if (!AbstractDialog.isSecondDialogOpen && isActive) {
-
                     dialog.show(BasicDialog.TYPE_RESET);
                 }
             }
@@ -170,7 +170,13 @@ public class Settings extends AbstractDialog {
             @Override
             public void clicked() {
                 if (!AbstractDialog.isSecondDialogOpen) {
-//                    dialog.show(BasicDialog.TYPE_RESTORE_PURCH);
+                    try{
+                        Main.mainController.restorePurchases();
+                        dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
+                    } catch (Exception e){
+                        System.out.println("error during restoring purchases");
+                        dialog.show(BasicDialog.ERROR);
+                    }
                 }
             }
         });
