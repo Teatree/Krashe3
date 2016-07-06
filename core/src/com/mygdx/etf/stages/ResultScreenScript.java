@@ -3,10 +3,8 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
-import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.VanityComponent;
-import com.mygdx.etf.stages.ui.DiscountWindow;
-import com.mygdx.etf.stages.ui.GiftScreen;
+import com.mygdx.etf.stages.ui.PromoWindow;
 import com.mygdx.etf.stages.ui.Showcase;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -21,7 +19,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.*;
-import static com.mygdx.etf.stages.ui.DiscountWindow.*;
+import static com.mygdx.etf.stages.ui.PromoWindow.*;
 
 public class ResultScreenScript implements IScript {
 
@@ -66,7 +64,7 @@ public class ResultScreenScript implements IScript {
     private Entity adsBtn;
     private Showcase showcase;
     private TrialTimer timer;
-    private DiscountWindow discountWindow;
+    private PromoWindow promoWindow;
 
     public ResultScreenScript(GameStage stage) {
         this.stage = stage;
@@ -92,10 +90,10 @@ public class ResultScreenScript implements IScript {
             timer = new TrialTimer(resultScreenItem, 120, 650);
         }
 
-        if (discountWindow == null) {
-            discountWindow = new DiscountWindow(resultScreenItem);
+        if (promoWindow == null) {
+            promoWindow = new PromoWindow(resultScreenItem);
         }
-        discountWindow.init();
+        promoWindow.init();
     }
 
     public void initButtons() {
@@ -232,9 +230,9 @@ public class ResultScreenScript implements IScript {
     @Override
     public void act(float delta) {
         timer.timer();
-        if (offerDiscount && active) {
-            discountWindow.show();
-            offerDiscount = false;
+        if (offerPromo && active) {
+            promoWindow.show();
+            offerPromo = false;
             active = false;
         }
 

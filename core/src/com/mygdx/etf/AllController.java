@@ -3,6 +3,8 @@ package com.mygdx.etf;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.Upgrade;
 
+import java.rmi.RemoteException;
+
 public interface AllController {
 
     String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
@@ -35,5 +37,5 @@ public interface AllController {
 
     void rateMyApp();
 
-    void restorePurchases();
+    void restorePurchases() throws  Exception;
 }

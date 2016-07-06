@@ -70,6 +70,7 @@ import java.util.List;
  *
  */
 public class IabHelper {
+    public static final String PACKAGE_NAME = "etf";
     // Is debug logging enabled?
     boolean mDebugLog = false;
     String mDebugTag = "IabHelper";
@@ -151,7 +152,6 @@ public class IabHelper {
     public static final String RESPONSE_INAPP_PURCHASE_DATA_LIST = "INAPP_PURCHASE_DATA_LIST";
     public static final String RESPONSE_INAPP_SIGNATURE_LIST = "INAPP_DATA_SIGNATURE_LIST";
     public static final String INAPP_CONTINUATION_TOKEN = "INAPP_CONTINUATION_TOKEN";
-
     // Item types
     public static final String ITEM_TYPE_INAPP = "inapp";
     public static final String ITEM_TYPE_SUBS = "subs";
@@ -929,6 +929,31 @@ public class IabHelper {
         public IabAsyncInProgressException(String message) {
             super(message);
         }
+    }
+
+    public List<String> getPurchases () throws RemoteException {
+        List<String> skus = new ArrayList<>();
+        Bundle ownedItems = mService.getPurchases(3, mContext.getPackageName(), ITEM_TYPE_INAPP, null);
+        int response = ownedItems.getInt("RESPONSE_CODE");
+        if (response == 0) {
+            ArrayList<String> ownedSkus =
+                    ownedItems.getStringArrayList("INAPP_PURCHASE_ITEM_LIST");
+            ArrayList<String>  purchaseDataList =
+                    ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
+            ArrayList<String>  signatureList =
+                    ownedItems.getStringArrayList("INAPP_DATA_SIGNATURE_LIST");
+            String continuationToken =
+                    ownedItems.getString("INAPP_CONTINUATION_TOKEN");
+
+            for (int i = 0; i < purchaseDataList.size(); ++i) {
+                String purchaseData = purchaseDataList.get(i);
+                String signature = signatureList.get(i);
+                String sku = ownedSkus.get(i);
+                skus.add(sku);
+            }
+
+        }
+        return skus;
     }
 
     int queryPurchases(Inventory inv, String itemType) throws JSONException, RemoteException {

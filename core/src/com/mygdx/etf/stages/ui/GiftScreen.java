@@ -15,7 +15,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.security.UnresolvedPermission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -239,7 +238,7 @@ public class GiftScreen {
         }
 
         public void takeGift(FlowerPublicComponent fpc) {
-            DiscountWindow.offerDiscount = false;
+            PromoWindow.offerPromo = false;
             switch (type) {
                 case (MONEY): {
                     fpc.totalScore += money;
