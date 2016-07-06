@@ -21,7 +21,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
  */
 public class PromoWindow extends AbstractDialog {
     
-    public static final String PROMO_WINDOW = "discount_window";
+    public static final String PROMO_WINDOW = "promo_window";
     public static final String BUY_DISC_BTN = "buy_disc_btn";
     public static final String DISC_TEXT_LBL = "disc_text_lbl";
     public static final String CLOSE_DISC_BTN = "close_disc_btn";

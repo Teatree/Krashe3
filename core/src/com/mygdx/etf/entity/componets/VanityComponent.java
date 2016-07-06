@@ -17,14 +17,14 @@ public class VanityComponent extends ShopItem implements Component {
 
     public static final String HEAD_TOP = "head_top";
     public static final String HEAD_BOTTOM = "head_bottom";
-    public static final String HEAD_MID = "head_mid";
-    public static final String leaf_left = "leaf_left";
-    public static final String leaf_right = "leaf_right";
+//    public static final String HEAD_MID = "head_mid";
+//    public static final String leaf_left = "leaf_left";
+//    public static final String leaf_right = "leaf_right";
     public static final String peduncle_bottom = "peducle_bottom";
     public static final String peducle_middle = "peducle_middle";
-    public static final String peducle_middle_aboveLeaf = "peducle_middle_aboveLeaf";
+//    public static final String peducle_middle_aboveLeaf = "peducle_middle_aboveLeaf";
     public static final String peducle_top = "peducle_top";
-    public static final String peducle_top_under = "peducle_top_under";
+//    public static final String peducle_top_under = "peducle_top_under";
     public static final String item_back_shine = "item_back_shine";
     public static final String flower_peducle = "flower_peducle";
     public static final String flower_idle = "flower_idle.scml";
