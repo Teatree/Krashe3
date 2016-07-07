@@ -3,6 +3,7 @@ package com.mygdx.etf;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.Upgrade;
+import com.mygdx.etf.stages.GameStage;
 
 public class DummyAllController implements AllController {
 
@@ -53,6 +54,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public void getBirdPet(PetComponent pet) {
+        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
         System.out.println("pay to get pet");
     }
 
@@ -68,6 +70,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public void getBirdPetDiscount(PetComponent pet) {
+        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
         System.out.println("pay to get pet cheaper");
     }
 

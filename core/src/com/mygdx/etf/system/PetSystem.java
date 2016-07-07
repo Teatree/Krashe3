@@ -30,6 +30,8 @@ import static com.mygdx.etf.utils.GlobalConstants.FPS;
 
 public class PetSystem extends IteratingSystem {
 
+    public static final int TAPPED_X = 1300;
+    public static final float DURATION_TAP = 1.7f;
     public Random random = new Random();
     boolean canPlayAnimation = true;
 
@@ -55,19 +57,21 @@ public class PetSystem extends IteratingSystem {
         dc.width = 56;
         dc.height = 100;
         updateRect(pc, tc, dc, cannontc, cannondc);
+
+
         if (!isPause && !isGameOver) {
             sc.player.speed = FPS;
             cannonsc.player.speed = FPS;
 //            pc.animationCounter--;
 
             if (pc.state.equals(TAPPED)) {
-                if (tc.x >= 1300) {
+                if (tc.x >= TAPPED_X) {
                     entity.remove(ActionComponent.class);
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     tc.y = PetComponent.getNewPositionY();
                     cannontc.y = tc.y;
-                    ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, 0.7f));
+                    ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, DURATION_TAP));
                     entity.add(ac);
                     pc.petCannon.add(ac);
                     setIdleAnimation(sc);
@@ -153,7 +157,7 @@ public class PetSystem extends IteratingSystem {
                 tc.x++;
                 ActionComponent ac = new ActionComponent();
                 Actions.checkInit();
-                ac.dataArray.add(Actions.moveTo(1300, tc.y, 0.7f));
+                ac.dataArray.add(Actions.moveTo(TAPPED_X, tc.y, DURATION_TAP));
                 entity.add(ac);
                 pc.petCannon.add(ac);
                 checkPetThePetGoal();
@@ -161,6 +165,12 @@ public class PetSystem extends IteratingSystem {
         } else {
             sc.player.speed = 0;
             cannonsc.player.speed = 0;
+            if (!pc.state.equals(DASH)) {
+                pc.state = IDLE;
+                setIdleAnimation(sc);
+                pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION;
+                tc.x = X_SPAWN_POSITION;
+            }
         }
 //        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
     }

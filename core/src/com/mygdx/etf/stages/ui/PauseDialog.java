@@ -142,7 +142,7 @@ public class PauseDialog extends AbstractDialog {
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
         for (Goal goal : gameScript.fpc.level.getGoals()) {
-         Entity tile = tileEntities.get(i++);
+         Entity tile = tileEntities.get(i++); //TODO: out of bound exception
 //            CompositeItemVO tempC;
 //            tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
 //

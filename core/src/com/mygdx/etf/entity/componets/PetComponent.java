@@ -74,7 +74,7 @@ public class PetComponent extends ShopItem implements Component {
             pet.totalEatenBugs++;
             pet.duringGameEatenBugs++;
 
-            if (!pet.state.equals(State.DASH)) {
+            if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;
                 pet.isCollision = true;
             }
