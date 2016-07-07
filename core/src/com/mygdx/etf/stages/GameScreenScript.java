@@ -44,6 +44,7 @@ public class GameScreenScript implements IScript {
     public final String LBL_TAP_2_START = "lbl_tap2start";
     public final String BTN_PAUSE = "btn_pause";
     public final String MEGA_FLOWER = "mega_flower";
+    public final String MEGA_LEAFS = "mega_leafs";
     public final String COCCOON = "coccoon";
     public final String BACKGROUND_LIB = "backgroundLib";
     public final String BTN_BACK = "btn_back";
@@ -328,12 +329,21 @@ public class GameScreenScript implements IScript {
     private void initFlower() {
         gameScript.fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
+        Entity leafsEntity = gameItem.getChild(MEGA_LEAFS).getEntity();
+
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
         tc.y = FLOWER_Y_POS;
         tc.scaleX = FLOWER_SCALE;
         tc.scaleY = FLOWER_SCALE;
         flowerEntity.add(tc);
+
+        TransformComponent tcL = leafsEntity.getComponent(TransformComponent.class);
+        tcL.x = FLOWER_X_POS;
+        tcL.y = FLOWER_Y_POS;
+        tcL.scaleX = FLOWER_SCALE;
+        tcL.scaleY = FLOWER_SCALE;
+        flowerEntity.add(tcL);
 
         FlowerComponent fc = new FlowerComponent();
 

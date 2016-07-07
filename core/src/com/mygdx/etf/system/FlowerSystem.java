@@ -34,10 +34,14 @@ public class FlowerSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
-        spriterComponent.scale = 0.6f;
+
+        SpriterComponent spriterComponentFlower = ComponentRetriever.get(entity, SpriterComponent.class);
+        spriterComponentFlower.scale = FLOWER_SCALE;
+        SpriterComponent spriterComponentLeafs = ComponentRetriever.get(entity, SpriterComponent.class);
+        spriterComponentLeafs.scale = LEAFS_SCALE;
+
         updateRect(transformComponent);
-        act(transformComponent, spriterComponent, deltaTime);
+        act(transformComponent, spriterComponentFlower, spriterComponentLeafs, deltaTime);
         sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
     }
 
@@ -53,12 +57,14 @@ public class FlowerSystem extends IteratingSystem {
 //        GameStage.sceneLoader.drawDebugRect(gameScript.fpc.boundsRect.x,gameScript.fpc.boundsRect.y,gameScript.fpc.boundsRect.width,gameScript.fpc.boundsRect.height);
     }
 
-    public void act(TransformComponent tc, SpriterComponent sc, float delta) {
+    public void act(TransformComponent tc, SpriterComponent sc, SpriterComponent scL, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             sc.player.speed = FPS;
+            scL.player.speed = FPS;
 
             if (state.equals(IDLE_BITE)) {
                 setBiteIdleAnimation(sc);
+                setBiteIdleAnimation(scL);
             }
 
             if (state.equals(IDLE)) {
@@ -69,6 +75,7 @@ public class FlowerSystem extends IteratingSystem {
                     soundMgr.play(SoundMgr.EAT_SOUND);
                 } else {
                     setIdleAnimation(sc);
+                    setIdleAnimation(scL);
                 }
             }
             if (Gdx.input.isTouched() && state.equals(IDLE) &&
@@ -82,12 +89,14 @@ public class FlowerSystem extends IteratingSystem {
                 state = ATTACK;
 
                 setAttackAnimation(sc);
+                setAttackAnimation(scL);
             }
 
             if (state.equals(TRANSITION)) {
                 setTransitionAnimation(sc);
                 if (isAnimationFinished(sc)) {
                     setAttackAnimation(sc);
+                    setAttackAnimation(scL);
                     state = ATTACK;
                 }
             }
@@ -97,11 +106,13 @@ public class FlowerSystem extends IteratingSystem {
 
                 if (Gdx.input.justTouched() && canAttackCoord()) {  // This is added for quick breaking of an animation
                     setAttackAnimation(sc);
+                    setAttackAnimation(scL);
                     state = ATTACK;
                 }
 
                 if (sc.player.getTime() > 20 && sc.player.getTime() < 62) {
                     setIdleAnimation(sc);
+                    setIdleAnimation(scL);
                     state = IDLE;
                 }
             }
@@ -111,6 +122,7 @@ public class FlowerSystem extends IteratingSystem {
                 if (gameScript.fpc.isCollision) {
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
+                    setBiteAttackAnimation(scL);
                     gameScript.fpc.isCollision = false;
 
                     soundMgr.play(SoundMgr.EAT_SOUND);
@@ -123,6 +135,7 @@ public class FlowerSystem extends IteratingSystem {
                     if (tc.y <= FLOWER_Y_POS + FLOWER_MOVE_SPEED * delta * FPS && state.equals(RETREAT)) {
                         tc.y = FLOWER_Y_POS;
                         sc.player.setTime(sc.player.getAnimation().length);
+                        scL.player.setTime(scL.player.getAnimation().length);
                         state = TRANSITION_BACK;
                     }
                 }
@@ -134,17 +147,20 @@ public class FlowerSystem extends IteratingSystem {
                     if (isAnimationFinished(sc)) {
                         state = RETREAT;
                         setAttackAnimation(sc);
+                        setAttackAnimation(scL);
                     }
 
                     if (gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
                         state = ATTACK_BITE;
                         setBiteAttackAnimation(sc);
+                        setBiteAttackAnimation(scL);
                     }
                 }
 
                 if (state.equals(IDLE_BITE) && isAnimationFinished(sc)) {
                     state = IDLE;
                     setIdleAnimation(sc);
+                    setIdleAnimation(scL);
                 }
             }
 
@@ -152,9 +168,11 @@ public class FlowerSystem extends IteratingSystem {
                 tc.x = FLOWER_X_POS;
                 tc.y = FLOWER_Y_POS;
                 setBiteIdleAnimation(sc);
+                setBiteIdleAnimation(scL);
                 if (isAnimationFinished(sc)) {
                     state = IDLE;
                     setIdleAnimation(sc);
+                    setIdleAnimation(scL);
                     BugSystem.blowUpAllBugs = false;
                 }
             }
