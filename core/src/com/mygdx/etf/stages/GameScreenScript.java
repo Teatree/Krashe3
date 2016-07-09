@@ -7,7 +7,6 @@ import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.stages.ui.*;
 import com.mygdx.etf.system.*;
 import com.mygdx.etf.utils.CameraShaker;
-import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -20,10 +19,10 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;
+import static com.mygdx.etf.entity.componets.LeafsComponent.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
@@ -182,6 +181,7 @@ public class GameScreenScript implements IScript {
 
         addSystems();
         initFlower();
+        initLeafs();
         initBackground();
         initPet();
         initDoubleBJIcon();
@@ -252,8 +252,9 @@ public class GameScreenScript implements IScript {
 
     private void addSystems() {
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
-        sceneLoader.getEngine().addSystem(new FlowerSystem());
+        sceneLoader.getEngine().addSystem(new LeafsSystem());
         sceneLoader.getEngine().addSystem(new ButterflySystem());
+        sceneLoader.getEngine().addSystem(new FlowerSystem());
         sceneLoader.getEngine().addSystem(new BugSystem());
         sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
         sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
@@ -326,10 +327,24 @@ public class GameScreenScript implements IScript {
         });
     }
 
+    private void initLeafs() {
+        Entity leafsEntity = gameItem.getChild(MEGA_LEAFS).getEntity();
+
+        TransformComponent tcL = leafsEntity.getComponent(TransformComponent.class);
+        tcL.x = LEAFS_X_POS;
+        tcL.y = LEAFS_Y_POS;
+        tcL.scaleX = LEAFS_SCALE;
+        tcL.scaleY = LEAFS_SCALE;
+        leafsEntity.add(tcL);
+
+        LeafsComponent lc = new LeafsComponent();
+
+        leafsEntity.add(lc);
+    }
+
     private void initFlower() {
         gameScript.fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
-        Entity leafsEntity = gameItem.getChild(MEGA_LEAFS).getEntity();
 
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
@@ -337,13 +352,6 @@ public class GameScreenScript implements IScript {
         tc.scaleX = FLOWER_SCALE;
         tc.scaleY = FLOWER_SCALE;
         flowerEntity.add(tc);
-
-        TransformComponent tcL = leafsEntity.getComponent(TransformComponent.class);
-        tcL.x = FLOWER_X_POS;
-        tcL.y = FLOWER_Y_POS;
-        tcL.scaleX = FLOWER_SCALE;
-        tcL.scaleY = FLOWER_SCALE;
-        flowerEntity.add(tcL);
 
         FlowerComponent fc = new FlowerComponent();
 
