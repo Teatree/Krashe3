@@ -1,5 +1,8 @@
 package com.mygdx.etf.entity.componets;
 
+import com.badlogic.gdx.Gdx;
+import com.mygdx.etf.stages.ui.TrialTimer;
+
 public abstract class ShopItem {
 
     public static String SOFT = "SOFT";
@@ -15,6 +18,11 @@ public abstract class ShopItem {
     public String discountTransactionId;
     public String logoName;
 
+    public boolean tryPeriod;
+    public long tryPeriodDuration;
+    public long tryPeriodStart;
+    public long tryPeriodTimer;
+
     //true when was bought (could be not applied)
     public boolean bought;
     //true when is applied now
@@ -29,4 +37,19 @@ public abstract class ShopItem {
     public abstract void buyHard();
 
     public abstract void buyHardDiscount();
+
+
+    public String updateTryPeriodTimer() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+
+        int minutes = ((int) tryPeriodTimer) / 60;
+        int seconds = ((int) tryPeriodTimer) % 60;
+        String result =  "" + minutes + " : " + seconds;
+        if (tryPeriodTimer < 0 ){
+            result = TrialTimer.TIMER_LBL_TIME_UP;
+        }
+        return result;
+    }
 }

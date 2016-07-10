@@ -37,6 +37,8 @@ public class GameScreenScript implements IScript {
     public static final int COCOON_X = 980;
     public static final int COCOON_Y = 800;
     public static final String BEES_MODE_ANI = "bees_mode_ani";
+    public static final int TRIAL_TIMER_X = 120;
+    public static final int TRIAL_TIMER_Y = 650;
     public final String START_MESSAGE = "TAP TO START";
     public final String DOUBLE_BJ_ICON = "double_bj_badge";
     public final String LBL_SCORE = "lbl_score";
@@ -95,7 +97,7 @@ public class GameScreenScript implements IScript {
             angeredBeesModeTimer--;
             //stop ani when it's finished
             if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
-                    beesModeAni.getComponent(SpriterComponent.class).player.getTime()%
+                    beesModeAni.getComponent(SpriterComponent.class).player.getTime() %
                             beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
                 beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
                 BugSystem.blowUpAllBugs = false;
@@ -185,7 +187,7 @@ public class GameScreenScript implements IScript {
         initBackground();
         initPet();
         initDoubleBJIcon();
-        initUmbrella();
+//        initUmbrella();
         initCocoon();
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
@@ -203,9 +205,12 @@ public class GameScreenScript implements IScript {
         goalFeedbackScreen.init(false);
 
         if (timer == null) {
-            timer = new TrialTimer(gameItem, 120, 650);
+            timer = new TrialTimer(gameItem, TRIAL_TIMER_X, TRIAL_TIMER_Y);
         }
         checkTryPeriod();
+//        if (!timer.ifShouldShowTimer()) {
+//            timer.timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        }
 
         gameScript.fpc.settings.totalPlayedGames++;
         gameScript.fpc.settings.playedGames++;
@@ -474,33 +479,37 @@ public class GameScreenScript implements IScript {
         butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
     }
 
-    private void initUmbrella() {
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
-        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
-            UmbrellaComponent dc = new UmbrellaComponent();
-            umbrellaEntity.add(dc);
-        }
-        umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
-    }
+//    private void initUmbrella() {
+//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+//        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
+//        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
+//            UmbrellaComponent dc = new UmbrellaComponent();
+//            umbrellaEntity.add(dc);
+//        }
+//        umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
+//    }
 
-    private void spawnUmbrella(float x, float y){
+    private void spawnUmbrella(float x, float y) {
 
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
 
-        TransformComponent transformComponent = new TransformComponent();
-        transformComponent.x = x;
-        transformComponent.y = y;
-        umbrellaEntity.add(transformComponent);
+//        TransformComponent transformComponent = new TransformComponent();
+//        transformComponent.x = x;
+//        transformComponent.y = y;
+//        umbrellaEntity.add(transformComponent);
 
-        if (umbrellaEntity.getComponent(UmbrellaComponent.class)==null) {
+        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
             UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
             umbrellaComponent.setToSpawningState();
             umbrellaEntity.add(umbrellaComponent);
-            umbrellaEntity.add(GameStage.gameScript.fpc);
+//            umbrellaEntity.add(GameStage.gameScript.fpc);
         } else {
             umbrellaEntity.getComponent(UmbrellaComponent.class).setToSpawningState();
         }
+
+        umbrellaEntity.getComponent(TransformComponent.class).x = x;
+        umbrellaEntity.getComponent(TransformComponent.class).y = y;
+
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
     }
 
@@ -539,58 +548,12 @@ public class GameScreenScript implements IScript {
     private boolean canUmbrellaSpawn() {
 
         return (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
-                );
+                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).x <= 0 ||
+                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                        .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
+        );
     }
-//
-//    private void timer(ItemWrapper gameItem) {
-//        final Entity timerE = gameItem.getChild(TRIAL_TIMER).getEntity();
-//        boolean showTimer = false;
-//        if (fpc.currentPet != null && fpc.currentPet.tryPeriod) {
-//            showTimer = showTimer(timerE, fpc.currentPet.logoName);
-//        } else {
-//            for (Upgrade u : fpc.upgrades.values()) {
-//                if (u.tryPeriod) {
-//                   showTimer(timerE, u.logoName);
-//                }
-//            }
-//        }
-//        if (!showTimer) {
-//            timerE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//            timerLogo.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//            GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
-//            timerLogo = null;
-//        }
-//    }
-//
-//    private boolean showTimer(Entity timerE, String logoname) {
-//        LabelComponent lc = timerE.getComponent(LabelComponent.class);
-//        boolean showTimer;
-//        lc.text.replace(0, lc.text.length, fpc.currentPet.updateTryPeriodTimer());
-//        showTimer = true;
-//        addTimerLogo(logoname);
-//        timerE.getComponent(TransformComponent.class).x = 160;
-//        timerE.getComponent(TransformComponent.class).y = 660;
-//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
-//        return showTimer;
-//    }
-//
-//    private void addTimerLogo(String logoLibName) {
-//        if (timerLogo == null){
-//            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
-//            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
-//            sceneLoader.getEngine().addEntity(timerLogo);
-//        }
-//        timerLogo.getComponent(TransformComponent.class).x = 120;
-//        timerLogo.getComponent(TransformComponent.class).y = 650;
-//        timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
-//        timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
-//        timerLogo.getComponent(ZIndexComponent.class).setZIndex(background.getComponent(ZIndexComponent.class).getZIndex()+5);
-//    }
 }
