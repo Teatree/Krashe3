@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
+import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -21,8 +22,10 @@ import static com.mygdx.etf.utils.GlobalConstants.*;
 public class TrialTimer {
 
     private static final String TRIAL_TIMER = "timer_lbl";
+    public static final String TIMER_LBL_TIME_UP = "TIME'S UP";
 
     private Entity timerLogo;
+    public Entity timerE;
     private ItemWrapper mainItem;
 
     public int x;
@@ -35,19 +38,31 @@ public class TrialTimer {
     }
 
     public void timer() {
-        GameScreenScript.checkTryPeriod();
-        final Entity timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
-        if (!ifShouldShowTimer(timerE) && timerE.getComponent(TransformComponent.class).x !=FAR_FAR_AWAY_X) {
+        if (!CUR_SCREEN.equals(GAME)) {
+            GameScreenScript.checkTryPeriod();
+        }
+        timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
+        if (!ifShouldShowTimer() && timerE.getComponent(TransformComponent.class).x != FAR_FAR_AWAY_X) {
             PromoWindow.offerPromo = true;
-            timerE.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
-            if (timerLogo != null) {
-                timerLogo.getComponent(TransformComponent.class).x =FAR_FAR_AWAY_X;
-                GameStage.sceneLoader.getEngine().removeEntity(timerLogo);
-            }
+//            if (GlobalConstants.CUR_SCREEN.equals(GAME)) {
+                timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                if (timerLogo != null) {
+                    timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                    sceneLoader.getEngine().removeEntity(timerLogo);
+                }
+//            } else {
+//                timerE.getComponent(LabelComponent.class).text.replace(0, timerE.getComponent(LabelComponent.class).text.length,
+//                        TIMER_LBL_TIME_UP);
+//
+//            }
+        }
+        if (ifShouldShowTimer()) {
+            timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
+            timerE.getComponent(TransformComponent.class).y = y + 15;
         }
     }
 
-    private boolean ifShouldShowTimer(Entity timerE) {
+    public boolean ifShouldShowTimer() {
         boolean showTimer = false;
         if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;

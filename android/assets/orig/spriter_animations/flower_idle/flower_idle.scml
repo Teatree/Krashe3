@@ -20,6 +20,7 @@
         <obj_info name="bone_head" type="bone" w="82.201" h="10"/>
         <obj_info name="bone_head_bottom" type="bone" w="145.031" h="10"/>
         <obj_info name="bone_head_top" type="bone" w="140.246" h="10"/>
+        <obj_info name="bone_leafs_back" type="bone" w="28.6531" h="10"/>
         <obj_info name="bone_leafs_back_000" type="bone" w="28.6531" h="10"/>
         <animation id="0" name="idle" length="3000" interval="100">
             <mainline>
