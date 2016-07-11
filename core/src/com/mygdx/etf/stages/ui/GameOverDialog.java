@@ -23,7 +23,7 @@ import static com.mygdx.etf.utils.EffectUtils.fade;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
-public class GameOverDialog {
+public class GameOverDialog extends AbstractDialog {
 
     public static final int TAP_COOL = 30;
     public final String GAME_OVER_DIALOG = "game_over_dialog";
@@ -49,6 +49,8 @@ public class GameOverDialog {
     }
 
     public void show() {
+        addShadow();
+        isActive = true;
         isGameOver = true;
         System.gc();
         final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
@@ -73,6 +75,7 @@ public class GameOverDialog {
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
 
+        initShadow();
         initReviveBtn(dialogTc);
     }
 
@@ -101,6 +104,7 @@ public class GameOverDialog {
                         turnOnWifi.getComponent(TransformComponent.class).y = 45;
                         continueGame(dialogTc);
                     }
+                    close(gameOverDialog);
                 }
             });
 //        } else {
@@ -169,6 +173,7 @@ public class GameOverDialog {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
                     gameScript.stage.initResultWithAds();
+                    close(gameOverDialog);
                 }
             }
         }

@@ -143,25 +143,7 @@ public class PetSystem extends IteratingSystem {
                 setSpawnAnimation(sc);
                 setSpawnAnimation(cannonsc);
             }
-
-            Vector2 v = getTouchCoordinates();
-            if (Gdx.input.justTouched() &&
-                    pc.boundsRect.contains(v.x, v.y)
-                    && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
-                pc.state = TAPPED;
-                setTappedAnimation(sc);
-                setTappedAnimation(cannonsc);
-
-                EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
-
-                tc.x++;
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-                ac.dataArray.add(Actions.moveTo(TAPPED_X, tc.y, DURATION_TAP));
-                entity.add(ac);
-                pc.petCannon.add(ac);
-                checkPetThePetGoal();
-            }
+            tap(entity, cannonsc);
         } else {
             sc.player.speed = 0;
             cannonsc.player.speed = 0;
@@ -173,6 +155,28 @@ public class PetSystem extends IteratingSystem {
             }
         }
 //        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
+    }
+
+    private void tap(Entity entity, SpriterComponent cannonsc) {
+        PetComponent pc = entity.getComponent(PetComponent.class);
+        Vector2 v = getTouchCoordinates();
+        if (Gdx.input.justTouched() &&
+                pc.boundsRect.contains(v.x, v.y)
+                && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
+            pc.state = TAPPED;
+            setTappedAnimation(entity.getComponent(SpriterComponent.class));
+            setTappedAnimation(cannonsc);
+
+            EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
+
+            entity.getComponent(TransformComponent.class).x++;
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
+            entity.add(ac);
+            pc.petCannon.add(ac);
+            checkPetThePetGoal();
+        }
     }
 
     private boolean isAnimationFinished(SpriterComponent sc) {

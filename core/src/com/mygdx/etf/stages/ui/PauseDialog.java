@@ -100,6 +100,7 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void show(){
+        isPause = true;
         isActive = true;
         addShadow();
 
@@ -115,8 +116,6 @@ public class PauseDialog extends AbstractDialog {
             showGoalTile(y, pair.getValue(), pair.getKey());
             y -= GOAL_TILE_STEP_Y;
         }
-
-        isPause = true;
 
         pauseDialogE.getComponent(TransformComponent.class).x = PAUSE_X;
         pauseDialogE.getComponent(TransformComponent.class).y = 460;

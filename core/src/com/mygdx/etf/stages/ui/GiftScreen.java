@@ -13,6 +13,8 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.action.data.AlphaData;
+import com.uwsoft.editor.renderer.systems.action.data.DelegateData;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class GiftScreen {
 
     private Entity giftScreen;
     private Entity pinataBtn;
-    private int pinataHitCounter;
+    private int pinataHitCounter = -1;
     private Gift gift;
 
     static List<Integer> moneySums;
@@ -98,12 +100,11 @@ public class GiftScreen {
 
             @Override
             public void clicked() {
-                pinataHitCounter--;
-                playYellowStarsParticleEffect(Gdx.input.getX(), Gdx.input.getY());
+                pinataHitCounter = 300;
             }
         });
 
-        pinataHitCounter = new Random().nextInt(HIT_COUNTER_MAX) + HIT_COUNTER_MIN;
+        pinataHitCounter = -1;
     }
 
     public void show() {
@@ -127,23 +128,30 @@ public class GiftScreen {
     }
 
     public void update() {
-        if (pinataHitCounter <= 0) {
-            pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
 
-//            lbl.add(new LabelComponent("YOU GOT " + gift.money + " " + gift.type + " !!!", LabelComponentFactory.defaultLabelStyle));
-            lbl.getComponent(LabelComponent.class).text.replace(0,
-                    lbl.getComponent(LabelComponent.class).text.capacity(),
-                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
-            if (Gdx.input.justTouched() && isGameOver) {
-                gift.takeGift(GameStage.gameScript.fpc);
-                giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                GameStage.gameScript.goalFeedbackScreen.init(true);
-                pinataHitCounter = 1;
-                GameStage.gameScript.goalFeedbackScreen.showNewLevel();
-            }
+        if (pinataHitCounter == 0) {
+            getPresent();
+        } else {
+            pinataHitCounter--;
         }
         fade(giftScreen, true);
+    }
+
+    private void getPresent() {
+        pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        Entity lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
+
+//            lbl.add(new LabelComponent("YOU GOT " + gift.money + " " + gift.type + " !!!", LabelComponentFactory.defaultLabelStyle));
+        lbl.getComponent(LabelComponent.class).text.replace(0,
+                lbl.getComponent(LabelComponent.class).text.capacity(),
+                "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        if (Gdx.input.justTouched() && isGameOver) {
+            gift.takeGift(GameStage.gameScript.fpc);
+            giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            GameStage.gameScript.goalFeedbackScreen.init(true);
+            pinataHitCounter = 1;
+            GameStage.gameScript.goalFeedbackScreen.showNewLevel();
+        }
     }
 
     public static class Gift {
