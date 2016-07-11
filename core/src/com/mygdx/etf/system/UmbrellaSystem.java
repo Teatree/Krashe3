@@ -65,6 +65,7 @@ public class UmbrellaSystem extends IteratingSystem {
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
 
             if (uc.state.equals(SPAWNING)) {
+                System.out.println("spawn");
 //                dandelionSpawnCounter+=deltaTime;
 //                if (dandelionSpawnCounter >= SPAWNING_TIME){
                 uc.blinkCounter--;
@@ -85,6 +86,7 @@ public class UmbrellaSystem extends IteratingSystem {
             }
 
             if (uc.state.equals(PUSH)) {
+                System.out.println("push");
                 uc.dataSet = new Vector2[3];
                 uc.dataSet[0] = new Vector2(tc.x, tc.y);
                 uc.dataSet[1] = new Vector2(-500, 400);
@@ -123,7 +125,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (checkCollision(uc)) {
                 gameScript.fpc.isCollision = true;
-                hide(entity, tc);
+                hide(entity);
 
                 gameScript.fpc.umbrellaMult(uc.pointsMult);
                 gameScript.reloadScoreLabel(gameScript.fpc);
@@ -142,12 +144,13 @@ public class UmbrellaSystem extends IteratingSystem {
                 gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
     }
 
-    private void hide(Entity entity, TransformComponent tc) {
+    private void hide(Entity entity) {
+        System.out.println("hide");
         umbrellaSpawnCounter = getNextSpawnInterval();
 //        dandelionSpawnCounter = getNextSpawnInterval();
         entity.getComponent(UmbrellaComponent.class).state = DEAD;
-        tc.x = -500;
-        tc.y = FAR_FAR_AWAY_Y;
+        entity.getComponent(TransformComponent.class).x = -500;
+        entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }
 
     public static float getNextSpawnInterval() {
@@ -182,4 +185,5 @@ public class UmbrellaSystem extends IteratingSystem {
             gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
         }
     }
+
 }

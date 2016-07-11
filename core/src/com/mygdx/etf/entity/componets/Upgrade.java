@@ -14,10 +14,10 @@ public class Upgrade extends ShopItem{
     public UpgradeType upgradeType;
     public int counter;
 
-    public boolean tryPeriod;
-    public long tryPeriodDuration;
-    public long tryPeriodStart;
-    public long tryPeriodTimer;
+//    public boolean tryPeriod;
+//    public long tryPeriodDuration;
+//    public long tryPeriodStart;
+//    public long tryPeriodTimer;
 
     public Upgrade() {
     }
@@ -107,16 +107,16 @@ public class Upgrade extends ShopItem{
         FlowerComponent.state = FlowerComponent.State.PHOENIX;
         counter++;
     }
-
-    public String updateTryPeriodTimer() {
-        float deltaTime = Gdx.graphics.getDeltaTime();
-
-        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
-
-        int minutes = ((int) tryPeriodTimer) / 60;
-        int seconds = ((int) tryPeriodTimer) % 60;
-        return "" + minutes + " : " + seconds;
-    }
+//
+//    public String updateTryPeriodTimer() {
+//        float deltaTime = Gdx.graphics.getDeltaTime();
+//
+//        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+//
+//        int minutes = ((int) tryPeriodTimer) / 60;
+//        int seconds = ((int) tryPeriodTimer) % 60;
+//        return "" + minutes + " : " + seconds;
+//    }
 
     public enum UpgradeType {
         PHOENIX, BJ_DOUBLE

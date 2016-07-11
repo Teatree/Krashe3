@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
+import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.SaveMngr;
 
 import java.util.Random;
@@ -28,11 +29,6 @@ public class PetComponent extends ShopItem implements Component {
     public int totalEatenBugs;
     public int duringGameEatenBugs;
     public int eatenBugsCounter;
-
-    public boolean tryPeriod;
-    public long tryPeriodDuration;
-    public long tryPeriodStart;
-    public long tryPeriodTimer;
 
     public boolean isCollision;
 
@@ -123,16 +119,20 @@ public class PetComponent extends ShopItem implements Component {
     public void setOutsideStateDuration() {
         this.outsideCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
     }
-
-    public String updateTryPeriodTimer() {
-        float deltaTime = Gdx.graphics.getDeltaTime();
-
-        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
-
-        int minutes = ((int) tryPeriodTimer) / 60;
-        int seconds = ((int) tryPeriodTimer) % 60;
-        return "" + minutes + " : " + seconds;
-    }
+//
+//    public String updateTryPeriodTimer() {
+//        float deltaTime = Gdx.graphics.getDeltaTime();
+//
+//        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
+//
+//        int minutes = ((int) tryPeriodTimer) / 60;
+//        int seconds = ((int) tryPeriodTimer) % 60;
+//        String result =  "" + minutes + " : " + seconds;
+//        if (tryPeriodTimer < 0 ){
+//            result = TrialTimer.TIMER_LBL_TIME_UP;
+//        }
+//        return result;
+//    }
 
     public enum State {
         SPAWNING,

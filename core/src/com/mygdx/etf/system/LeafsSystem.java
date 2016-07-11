@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.FlowerComponent;
+import com.mygdx.etf.entity.componets.LeafsComponent;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.SoundMgr;
@@ -25,7 +26,7 @@ import static com.mygdx.etf.utils.SoundMgr.soundMgr;
 public class LeafsSystem extends IteratingSystem {
 
     public LeafsSystem() {
-        super(Family.all(FlowerComponent.class).get());
+        super(Family.all(LeafsComponent.class).get());
     }
 
     @Override
@@ -37,7 +38,7 @@ public class LeafsSystem extends IteratingSystem {
 
         updateRect(transformComponent);
         act(transformComponent, spriterComponentLeafs, deltaTime);
-        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
+//        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
     }
 
     public void updateRect(TransformComponent tc) {
