@@ -12,6 +12,7 @@ import com.mygdx.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -37,7 +38,7 @@ public class GameOverDialog extends AbstractDialog {
     private int tapCoolDown = TAP_COOL;
 
     private static ItemWrapper gameItem;
-    public static Entity gameOverDialog;
+    public static Entity gameOverDialogE;
 
 
     public GameOverDialog(ItemWrapper gameItem) {
@@ -53,9 +54,10 @@ public class GameOverDialog extends AbstractDialog {
         isActive = true;
         isGameOver = true;
         System.gc();
-        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
+        final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
+        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+1);
 
         tapCoolDown = TAP_COOL;
         gameOverTimer = 0;
@@ -70,12 +72,12 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void initGameOverDialog() {
-        gameOverDialog = gameItem.getChild(GAME_OVER_DIALOG).getEntity();
-        final TransformComponent dialogTc = gameOverDialog.getComponent(TransformComponent.class);
+        initShadow();
+        gameOverDialogE = gameItem.getChild(GAME_OVER_DIALOG).getEntity();
+        final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
-
-        initShadow();
+        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+1);
         initReviveBtn(dialogTc);
     }
 
@@ -104,7 +106,7 @@ public class GameOverDialog extends AbstractDialog {
                         turnOnWifi.getComponent(TransformComponent.class).y = 45;
                         continueGame(dialogTc);
                     }
-                    close(gameOverDialog);
+                    close(gameOverDialogE);
                 }
             });
 //        } else {
@@ -136,7 +138,7 @@ public class GameOverDialog extends AbstractDialog {
 
     public void update(float deltaTime) {
 
-        fade(gameOverDialog, isGameOver);
+        fade(gameOverDialogE, isGameOver);
         if (isGameOver) {
             final Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
@@ -173,7 +175,7 @@ public class GameOverDialog extends AbstractDialog {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
                     gameScript.stage.initResultWithAds();
-                    close(gameOverDialog);
+                    close(gameOverDialogE);
                 }
             }
         }

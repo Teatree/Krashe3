@@ -150,7 +150,7 @@ public class PauseDialog extends AbstractDialog {
 //            tile.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //            pauseDialogE.getComponent(NodeComponent.class).addChild(tile);
 //            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
-
+ 
             NodeComponent nc = tile.getComponent(NodeComponent.class);
             for (Entity e : nc.children) {
                 if (e.getComponent(LabelComponent.class) != null) {
