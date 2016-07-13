@@ -28,7 +28,6 @@ public class PauseDialog extends AbstractDialog {
     public static final String LBL_DIALOG = "lbl_dialog";
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
-//    public static final String LIB_SHADOW = "lib_shadow";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
 
     public static final int PAUSE_Y = 30;
@@ -44,7 +43,6 @@ public class PauseDialog extends AbstractDialog {
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
     private Entity pauseDialogE;
-//    private Entity shadowE;
 
     private Entity lblPauseTimer;
     public float pauseTimer = 0;
@@ -59,10 +57,6 @@ public class PauseDialog extends AbstractDialog {
     public void init() {
         pauseDialogE = gameItem.getChild(PAUSE_DIALOG).getEntity();
         Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
-
-//        CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
-
-//        initShadow(tempC);
 
         closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -82,6 +76,7 @@ public class PauseDialog extends AbstractDialog {
         final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
+        initShadow();
 
         lblPauseTimer = gameItem.getChild(LBL_PAUSE_TIMER).getEntity();
         lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
@@ -102,6 +97,7 @@ public class PauseDialog extends AbstractDialog {
     public void show(){
         isPause = true;
         isActive = true;
+        pauseCounter = 10;
         addShadow();
 
         lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
