@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
@@ -36,7 +35,6 @@ public class PetSystem extends IteratingSystem {
     boolean canPlayAnimation = true;
 
     private ComponentMapper<PetComponent> mapper = ComponentMapper.getFor(PetComponent.class);
-    private ComponentMapper<FlowerPublicComponent> fccMapper = ComponentMapper.getFor(FlowerPublicComponent.class);
 
     public PetSystem() {
         super(Family.all(PetComponent.class).get());
@@ -62,99 +60,125 @@ public class PetSystem extends IteratingSystem {
         if (!isPause && !isGameOver) {
             sc.player.speed = FPS;
             cannonsc.player.speed = FPS;
-//            pc.animationCounter--;
-
-            if (pc.state.equals(TAPPED)) {
-                if (tc.x >= TAPPED_X) {
-                    entity.remove(ActionComponent.class);
-                    ActionComponent ac = new ActionComponent();
-                    Actions.checkInit();
-                    tc.y = PetComponent.getNewPositionY();
-                    cannontc.y = tc.y;
-                    ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, DURATION_TAP));
-                    entity.add(ac);
-                    pc.petCannon.add(ac);
-                    setIdleAnimation(sc);
-                    setIdleAnimation(cannonsc);
-                }
-
-                if (tc.x == X_SPAWN_POSITION) {
-                    pc.state = IDLE;
-                }
-            }
-            if (pc.state.equals(BITE)) {
-                setBiteAnimation(sc);
-                setBiteAnimation(cannonsc);
-                if (isAnimationFinished(sc)) {
-                    if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
-                        pc.state = IDLE;
-                        setIdleAnimation(sc);
-                        setIdleAnimation(cannonsc);
-                    } else {
-                        canPlayAnimation = true;
-                        setDashAnimation(cannonsc);
-                        setDashAnimation(sc);
-                        pc.state = DASH;
-                        checkPetDashGoal();
-                    }
-                }
-            }
-
-            if (pc.state.equals(SPAWNING)) {
-                tc.x = PetComponent.X_SPAWN_POSITION;
-                cannontc.x = PetComponent.X_SPAWN_POSITION;
-                setSpawnAnimation(sc);
-                setSpawnAnimation(cannonsc);
-                pc.velocity = 0;
-                if (isAnimationFinished(sc)) {
-                    pc.state = IDLE;
-                    canPlayAnimation = true;
-                    pc.setOutsideStateDuration();
-                    setIdleAnimation(sc);
-                    setIdleAnimation(cannonsc);
-                }
-            }
-
-            if (pc.state.equals(DASH)) {
-                pc.velocity += deltaTime * 3.4;
-                tc.x -= pc.velocity;
-                if (isAnimationFinished(cannonsc)) {
-                    cannonsc.player.speed = 0;
-                    cannontc.x = FAR_FAR_AWAY_X;
-                }
-            }
-
-            if (tc.x < -100) {
-                pc.state = OUTSIDE;
-                pc.velocity = 0;
-                tc.x = FAR_FAR_AWAY_X;
-                pc.setOutsideStateDuration();
-            }
-
-            if (pc.state.equals(OUTSIDE)) {
-                pc.state = SPAWNING;
-                pc.eatenBugsCounter = 0;
-//                pc.animationCounter = PetComponent.SPAWN_DURATION;
-                tc.x = X_SPAWN_POSITION;
-                tc.y = PetComponent.getNewPositionY();
-
-                cannontc.x = tc.x;
-                cannontc.y = tc.y;
-                setSpawnAnimation(sc);
-                setSpawnAnimation(cannonsc);
-            }
+            tapped(entity, pc, tc, sc, cannontc, cannonsc);
+            bite(pc, sc, cannonsc);
+            spawn(pc, tc, sc, cannontc, cannonsc);
+            dash(deltaTime, pc, tc, cannontc, cannonsc);
+            outside(pc, tc, sc, cannontc, cannonsc);
             tap(entity, cannonsc);
         } else {
-            sc.player.speed = 0;
-            cannonsc.player.speed = 0;
-            if (!pc.state.equals(DASH)) {
-                pc.state = IDLE;
-                setIdleAnimation(sc);
-                pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION;
-                tc.x = X_SPAWN_POSITION;
-            }
+            pausedState(pc, tc, sc, cannonsc);
         }
 //        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
+    }
+
+    private void tapped(Entity entity, PetComponent pc, TransformComponent tc,
+                        SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
+        if (pc.state.equals(TAPPED)) {
+            if (tc.x >= TAPPED_X-10) {
+
+                entity.remove(ActionComponent.class);
+                pc.petCannon.remove(ActionComponent.class);
+
+                ActionComponent ac = new ActionComponent();
+                Actions.checkInit();
+                tc.y = PetComponent.getNewPositionY();
+                cannontc.y = tc.y;
+                ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, DURATION_TAP));
+
+                entity.add(ac);
+                pc.petCannon.add(ac);
+
+                setIdleAnimation(sc);
+                setIdleAnimation(cannonsc);
+            }
+
+            if (tc.x <= X_SPAWN_POSITION) {
+                pc.state = IDLE;
+            }
+        }
+    }
+
+    private void bite(PetComponent pc, SpriterComponent sc, SpriterComponent cannonsc) {
+        if (pc.state.equals(BITE)) {
+            setBiteAnimation(sc);
+            setBiteAnimation(cannonsc);
+            if (isAnimationFinished(sc)) {
+                if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+                    pc.state = IDLE;
+                    setIdleAnimation(sc);
+                    setIdleAnimation(cannonsc);
+                } else {
+                    canPlayAnimation = true;
+                    setDashAnimation(cannonsc);
+                    setDashAnimation(sc);
+                    pc.state = DASH;
+                    checkPetDashGoal();
+                }
+            }
+        }
+    }
+
+    private void spawn(PetComponent pc, TransformComponent tc, SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
+        if (pc.state.equals(SPAWNING)) {
+            tc.x = PetComponent.X_SPAWN_POSITION;
+            cannontc.x = PetComponent.X_SPAWN_POSITION;
+            setSpawnAnimation(sc);
+            setSpawnAnimation(cannonsc);
+            pc.velocity = 0;
+            if (isAnimationFinished(sc)) {
+                pc.state = IDLE;
+                canPlayAnimation = true;
+                pc.setOutsideStateDuration();
+                setIdleAnimation(sc);
+                setIdleAnimation(cannonsc);
+            }
+        }
+    }
+
+    private void pausedState(PetComponent pc, TransformComponent tc, SpriterComponent sc, SpriterComponent cannonsc) {
+        if (!pc.state.equals(DASH)) {
+            pc.state = IDLE;
+            setIdleAnimation(sc);
+            setIdleAnimation(cannonsc);
+            pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION;
+            tc.x = X_SPAWN_POSITION;
+        }
+        sc.player.speed = 0;
+        cannonsc.player.speed = 0;
+    }
+
+    private void outside(PetComponent pc, TransformComponent tc, SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
+        if (tc.x < -100) {
+            pc.state = OUTSIDE;
+            pc.velocity = 0;
+            tc.x = FAR_FAR_AWAY_X;
+            pc.setOutsideStateDuration();
+        }
+
+        if (pc.state.equals(OUTSIDE)) {
+            pc.state = SPAWNING;
+            pc.eatenBugsCounter = 0;
+//                pc.animationCounter = PetComponent.SPAWN_DURATION;
+            tc.x = X_SPAWN_POSITION;
+            tc.y = PetComponent.getNewPositionY();
+
+            cannontc.x = tc.x;
+            cannontc.y = tc.y;
+            setSpawnAnimation(sc);
+            setSpawnAnimation(cannonsc);
+        }
+    }
+
+    private void dash(float deltaTime, PetComponent pc, TransformComponent tc, TransformComponent cannontc, SpriterComponent cannonsc) {
+        if (pc.state.equals(DASH)) {
+            pc.velocity += deltaTime * 3.4;
+            tc.x -= pc.velocity;
+            if (isAnimationFinished(cannonsc)) {
+                cannonsc.player.speed = 0;
+                cannontc.x = FAR_FAR_AWAY_X;
+            }
+        }
     }
 
     private void tap(Entity entity, SpriterComponent cannonsc) {
@@ -169,12 +193,16 @@ public class PetSystem extends IteratingSystem {
 
             EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
-            entity.getComponent(TransformComponent.class).x++;
+//            entity.getComponent(TransformComponent.class).x++;
+            entity.remove(ActionComponent.class);
+            pc.petCannon.remove(ActionComponent.class);
+
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
             entity.add(ac);
             pc.petCannon.add(ac);
+
             checkPetThePetGoal();
         }
     }

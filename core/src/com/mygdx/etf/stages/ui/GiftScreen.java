@@ -100,7 +100,7 @@ public class GiftScreen {
 
             @Override
             public void clicked() {
-                pinataHitCounter = 300;
+                pinataHitCounter = 30;
             }
         });
 

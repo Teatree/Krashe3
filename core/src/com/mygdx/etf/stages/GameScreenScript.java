@@ -370,11 +370,11 @@ public class GameScreenScript implements IScript {
 
     public void initPet() {
         if (fpc.currentPet != null) {
-            Entity pet = gameItem.getChild(fpc.currentPet.name).getEntity();
+            Entity petE = gameItem.getChild(fpc.currentPet.name).getEntity();
             if (fpc.currentPet.enabled) {
                 fpc.currentPet.init();
 
-                TransformComponent tc = pet.getComponent(TransformComponent.class);
+                TransformComponent tc = petE.getComponent(TransformComponent.class); //TODO: NPE
                 tc.x = PetComponent.X_SPAWN_POSITION;
                 tc.y = PetComponent.getNewPositionY();
                 tc.scaleX = 1.3f;
@@ -384,14 +384,14 @@ public class GameScreenScript implements IScript {
                 fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y;
                 fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
-                pet.add(fpc.currentPet);
+                petE.add(fpc.currentPet);
             } else {
-                if (pet != null && !fpc.currentPet.enabled) {
+                if (petE != null && !fpc.currentPet.enabled) {
                     if (fpc.currentPet.petCannon != null) {
                         fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                         sceneLoader.getEngine().removeEntity(fpc.currentPet.petCannon);
                     }
-                    sceneLoader.getEngine().removeEntity(pet);
+                    sceneLoader.getEngine().removeEntity(petE);
                 }
             }
         }
