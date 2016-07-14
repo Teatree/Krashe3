@@ -248,26 +248,26 @@ public class Settings extends AbstractDialog {
 
             @Override
             public void touchDown() {
-                final ToggleButtonComponent tbc = mapper.get(musicBtn);
-                if (tbc.isOn()) {
-                    lc.getLayer(BTN_NORMAL).isVisible = false;
-                    lc.getLayer(BTN_PRESSED).isVisible = true;
-                } else {
-                    lc.getLayer(BTN_NORMAL).isVisible = true;
-                    lc.getLayer(BTN_PRESSED).isVisible = false;
-                }
+//                final ToggleButtonComponent tbc = mapper.get(musicBtn);
+//                if (tbc.isOn()) {
+//                    lc.getLayer(BTN_NORMAL).isVisible = false;
+//                    lc.getLayer(BTN_PRESSED).isVisible = true;
+//                } else {
+//                    lc.getLayer(BTN_NORMAL).isVisible = true;
+//                    lc.getLayer(BTN_PRESSED).isVisible = false;
+//                }
             }
 
             @Override
             public void touchUp() {
-                final ToggleButtonComponent tbc = mapper.get(musicBtn);
-                if (tbc.isOn()) {
-                    lc.getLayer(BTN_NORMAL).isVisible = false;
-                    lc.getLayer(BTN_PRESSED).isVisible = true;
-                } else {
-                    lc.getLayer(BTN_NORMAL).isVisible = true;
-                    lc.getLayer(BTN_PRESSED).isVisible = false;
-                }
+//                final ToggleButtonComponent tbc = mapper.get(musicBtn);
+//                if (tbc.isOn()) {
+//                    lc.getLayer(BTN_NORMAL).isVisible = false;
+//                    lc.getLayer(BTN_PRESSED).isVisible = true;
+//                } else {
+//                    lc.getLayer(BTN_NORMAL).isVisible = true;
+//                    lc.getLayer(BTN_PRESSED).isVisible = false;
+//                }
             }
 
             @Override
@@ -311,26 +311,26 @@ public class Settings extends AbstractDialog {
             @Override
             public void touchDown() {
 
-                final ToggleButtonComponent tbc = mapper.get(soundBtn);
-                if (tbc.isOn()) {
-                    lc.getLayer(BTN_NORMAL).isVisible = false;
-                    lc.getLayer(BTN_PRESSED).isVisible = true;
-                } else {
-                    lc.getLayer(BTN_NORMAL).isVisible = true;
-                    lc.getLayer(BTN_PRESSED).isVisible = false;
-                }
+//                final ToggleButtonComponent tbc = mapper.get(soundBtn);
+//                if (tbc.isOn()) {
+//                    lc.getLayer(BTN_NORMAL).isVisible = false;
+//                    lc.getLayer(BTN_PRESSED).isVisible = true;
+//                } else {
+//                    lc.getLayer(BTN_NORMAL).isVisible = true;
+//                    lc.getLayer(BTN_PRESSED).isVisible = false;
+//                }
             }
 
             @Override
             public void touchUp() {
-                final ToggleButtonComponent tbc = mapper.get(soundBtn);
-                if (tbc.isOn()) {
-                    lc.getLayer(BTN_NORMAL).isVisible = false;
-                    lc.getLayer(BTN_PRESSED).isVisible = true;
-                } else {
-                    lc.getLayer(BTN_NORMAL).isVisible = true;
-                    lc.getLayer(BTN_PRESSED).isVisible = false;
-                }
+//                final ToggleButtonComponent tbc = mapper.get(soundBtn);
+//                if (tbc.isOn()) {
+//                    lc.getLayer(BTN_NORMAL).isVisible = false;
+//                    lc.getLayer(BTN_PRESSED).isVisible = true;
+//                } else {
+//                    lc.getLayer(BTN_NORMAL).isVisible = true;
+//                    lc.getLayer(BTN_PRESSED).isVisible = false;
+//                }
             }
 
             @Override
