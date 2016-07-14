@@ -389,9 +389,9 @@ public class GameScreenScript implements IScript {
                 if (petE != null && !fpc.currentPet.enabled) {
                     if (fpc.currentPet.petCannon != null) {
                         fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                        sceneLoader.getEngine().removeEntity(fpc.currentPet.petCannon);
+//                        sceneLoader.getEngine().removeEntity(fpc.currentPet.petCannon);
                     }
-                    sceneLoader.getEngine().removeEntity(petE);
+//                    sceneLoader.getEngine().removeEntity(petE);
                 }
             }
         }

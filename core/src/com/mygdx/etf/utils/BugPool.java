@@ -3,7 +3,6 @@ package com.mygdx.etf.utils;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.BugComponent;
-import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -61,7 +60,6 @@ public class BugPool {
     private Stack<Entity> drunkBugs = new Stack<>();
     private Stack<Entity> chargerBugs = new Stack<>();
     private Entity queenBee;
-
 
     private BugPool() {
         final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -173,6 +171,6 @@ public class BugPool {
             }
         }
         bug.remove(BugComponent.class);
-        bug.remove(FlowerPublicComponent.class);
+//        bug.remove(FlowerPublicComponent.class);
     }
 }
