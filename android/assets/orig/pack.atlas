@@ -18,15 +18,6 @@ background
   orig: 1200, 786
   offset: 0, 0
   index: -1
-backgroundDescription
-  rotate: false
-  xy: 2, 116
-  size: 697, 354
-  split: 28, 204, 0, 354
-  pad: 30, 209, 143, 210
-  orig: 697, 354
-  offset: 0, 0
-  index: -1
 backgroundforeground
   rotate: false
   xy: 1371, 1348
@@ -42,23 +33,16 @@ backnooff
   orig: 121, 120
   offset: 0, 0
   index: -1
-bjDouble
-  rotate: false
-  xy: 1804, 14
-  size: 200, 244
-  orig: 200, 244
-  offset: 0, 0
-  index: -1
 bugjuicebubble
   rotate: false
-  xy: 2006, 225
+  xy: 1994, 2013
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
   index: -1
 buttonback
   rotate: false
-  xy: 1871, 1804
+  xy: 1847, 436
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -66,7 +50,7 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1871, 1682
+  xy: 569, 52
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
@@ -74,7 +58,7 @@ buttonbackoff
   index: -1
 buttonbackoff1
   rotate: false
-  xy: 1871, 1560
+  xy: 1871, 1804
   size: 121, 120
   split: 14, 16, 13, 15
   orig: 121, 120
@@ -82,7 +66,7 @@ buttonbackoff1
   index: -1
 buttonbackon1
   rotate: false
-  xy: 1268, 52
+  xy: 1847, 314
   size: 121, 120
   split: 16, 17, 15, 17
   pad: 16, 16, 15, 17
@@ -91,15 +75,98 @@ buttonbackon1
   index: -1
 buttoncameraoff
   rotate: false
-  xy: 1391, 72
+  xy: 692, 52
   size: 121, 120
   split: 23, 18, 17, 29
   orig: 121, 120
   offset: 0, 0
   index: -1
+buttoncameraon
+  rotate: false
+  xy: 1871, 1682
+  size: 121, 120
+  split: 23, 17, 17, 29
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonnoAdsoff
+  rotate: false
+  xy: 1061, 52
+  size: 120, 120
+  split: 14, 18, 11, 13
+  pad: 11, 13, 16, 14
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonnoAdson
+  rotate: false
+  xy: 1183, 52
+  size: 120, 120
+  split: 12, 15, 11, 14
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonnoon
+  rotate: false
+  xy: 815, 52
+  size: 121, 120
+  split: 28, 23, 23, 28
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonpauseoff
+  rotate: false
+  xy: 1871, 1560
+  size: 121, 120
+  split: 14, 16, 16, 18
+  pad: 15, 16, 16, 18
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonpauseon
+  rotate: false
+  xy: 938, 52
+  size: 121, 120
+  split: 14, 17, 14, 16
+  pad: 14, 17, 13, 16
+  orig: 121, 120
+  offset: 0, 0
+  index: -1
+buttonsettingsoff
+  rotate: false
+  xy: 1855, 192
+  size: 120, 120
+  split: 18, 14, 15, 16
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonsettingson
+  rotate: false
+  xy: 1855, 70
+  size: 120, 120
+  split: 18, 14, 15, 17
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonshopoff
+  rotate: false
+  xy: 1305, 52
+  size: 120, 120
+  split: 14, 16, 17, 17
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+buttonshopon
+  rotate: false
+  xy: 1427, 72
+  size: 120, 120
+  split: 14, 15, 16, 19
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
 dnaamountbackground
   rotate: false
-  xy: 1046, 52
+  xy: 347, 52
   size: 220, 120
   orig: 220, 120
   offset: 0, 0
@@ -134,119 +201,119 @@ itembikerhelmoff
   index: -1
 itembikerhelmon
   rotate: false
-  xy: 1371, 1452
+  xy: 347, 174
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemdeerhorns
   rotate: false
-  xy: 1621, 1750
+  xy: 1371, 1452
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemdeerhornson
   rotate: false
-  xy: 1621, 1452
+  xy: 1621, 1750
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itempilotscarfoff
   rotate: false
-  xy: 1046, 174
+  xy: 597, 174
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itempilotscarfon
   rotate: false
-  xy: 1269, 1048
+  xy: 1621, 1452
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsantabeard
   rotate: false
-  xy: 1269, 750
+  xy: 847, 174
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsantabeardoff
   rotate: false
-  xy: 1296, 194
+  xy: 1097, 174
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsantahatoff
   rotate: false
-  xy: 1519, 1154
+  xy: 1269, 1048
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsantahaton
   rotate: false
-  xy: 1519, 856
+  xy: 1269, 750
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsunglassesoff
   rotate: false
-  xy: 1527, 558
+  xy: 1347, 194
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemsunglasseson
   rotate: false
-  xy: 1546, 260
+  xy: 1519, 1154
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemteacupoff
   rotate: false
-  xy: 1769, 1154
+  xy: 1519, 856
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemteacupon
   rotate: false
-  xy: 1769, 856
+  xy: 1527, 558
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemunknown
   rotate: false
-  xy: 1777, 558
+  xy: 1597, 260
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 itemunknownoff
   rotate: false
-  xy: 1796, 260
+  xy: 1769, 1154
   size: 248, 296
   orig: 248, 296
   offset: 0, 0
   index: -1
 pinata
   rotate: false
-  xy: 701, 120
+  xy: 2, 120
   size: 343, 350
   orig: 343, 350
   offset: 0, 0
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1527, 544
+  xy: 1871, 1546
   size: 12, 12
   split: 5, 5, 5, 5
   orig: 12, 12
@@ -254,29 +321,43 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 1871, 1538
+  xy: 1527, 492
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
   offset: 0, 0
   index: -1
+shopitem1
+  rotate: false
+  xy: 1769, 856
+  size: 248, 296
+  orig: 248, 296
+  offset: 0, 0
+  index: -1
+shopitem1off
+  rotate: false
+  xy: 1777, 558
+  size: 248, 296
+  orig: 248, 296
+  offset: 0, 0
+  index: -1
 sludge
   rotate: false
-  xy: 1994, 2004
+  xy: 1527, 514
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 1546, 2
+  xy: 1597, 2
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 starY
   rotate: false
-  xy: 2, 49
+  xy: 2, 53
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
@@ -303,7 +384,7 @@ filter: Linear,Linear
 repeat: none
 backshadow
   rotate: false
-  xy: 1054, 447
+  xy: 1078, 704
   size: 220, 220
   split: 89, 105, 80, 104
   pad: 88, 106, 79, 105
@@ -312,111 +393,35 @@ backshadow
   index: -1
 backshadow1
   rotate: false
-  xy: 1328, 704
+  xy: 1300, 704
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
-buttoncameraon
+bjDouble
   rotate: false
-  xy: 2, 2
-  size: 121, 120
-  split: 23, 17, 17, 29
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttonnoAdsoff
-  rotate: false
-  xy: 927, 208
-  size: 120, 120
-  split: 14, 18, 11, 13
-  pad: 11, 13, 16, 14
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonnoAdson
-  rotate: false
-  xy: 1895, 804
-  size: 120, 120
-  split: 12, 15, 11, 14
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonnoon
-  rotate: false
-  xy: 804, 208
-  size: 121, 120
-  split: 28, 23, 23, 28
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttonpauseoff
-  rotate: false
-  xy: 1772, 804
-  size: 121, 120
-  split: 14, 16, 16, 18
-  pad: 15, 16, 16, 18
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttonpauseon
-  rotate: false
-  xy: 125, 2
-  size: 121, 120
-  split: 14, 17, 14, 16
-  pad: 14, 17, 13, 16
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttonsettingsoff
-  rotate: false
-  xy: 248, 2
-  size: 120, 120
-  split: 18, 14, 15, 16
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonsettingson
-  rotate: false
-  xy: 370, 2
-  size: 120, 120
-  split: 18, 14, 15, 17
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonshopoff
-  rotate: false
-  xy: 492, 2
-  size: 120, 120
-  split: 14, 16, 17, 17
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonshopon
-  rotate: false
-  xy: 614, 2
-  size: 120, 120
-  split: 14, 15, 16, 19
-  orig: 120, 120
+  xy: 804, 423
+  size: 200, 244
+  orig: 200, 244
   offset: 0, 0
   index: -1
 item_button_off
   rotate: false
-  xy: 1054, 325
+  xy: 2, 2
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
   index: -1
 item_button_on
   rotate: false
-  xy: 1049, 203
+  xy: 804, 301
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
   index: -1
 pop-upback
   rotate: false
-  xy: 1550, 704
+  xy: 1522, 704
   size: 220, 220
   split: 89, 103, 111, 101
   pad: 89, 103, 111, 102
@@ -425,14 +430,14 @@ pop-upback
   index: -1
 pop-up_back
   rotate: false
-  xy: 1550, 704
+  xy: 1522, 704
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 pot
   rotate: false
-  xy: 1054, 669
+  xy: 804, 669
   size: 272, 255
   orig: 272, 255
   offset: 0, 0
@@ -444,19 +449,5 @@ previewTagBg.9
   split: 287, 461, 0, 0
   pad: -1, -1, 159, 640
   orig: 800, 800
-  offset: 0, 0
-  index: -1
-shopitem1
-  rotate: false
-  xy: 804, 628
-  size: 248, 296
-  orig: 248, 296
-  offset: 0, 0
-  index: -1
-shopitem1off
-  rotate: false
-  xy: 804, 330
-  size: 248, 296
-  orig: 248, 296
   offset: 0, 0
   index: -1
