@@ -13,8 +13,6 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.systems.action.data.AlphaData;
-import com.uwsoft.editor.renderer.systems.action.data.DelegateData;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
@@ -25,7 +23,6 @@ import static com.mygdx.etf.stages.GameScreenScript.isGameOver;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.utils.EffectUtils.fade;
-import static com.mygdx.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -44,8 +41,10 @@ public class GiftScreen {
 
     private Entity giftScreen;
     private Entity pinataBtn;
-    private int pinataHitCounter = -1;
     private Gift gift;
+
+    private int openGiftCooldown = 30;
+    private boolean openedGift;
 
     static List<Integer> moneySums;
 
@@ -62,6 +61,7 @@ public class GiftScreen {
 
     public void init() {
 //        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
+        openedGift = false;
 
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
         giftScreen = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -100,15 +100,13 @@ public class GiftScreen {
 
             @Override
             public void clicked() {
-                pinataHitCounter = 30;
+                openedGift = true;
+                openGiftCooldown = 30;
             }
         });
-
-        pinataHitCounter = -1;
     }
 
     public void show() {
-
         gift = Gift.getRandomGift();
 
         final TransformComponent screenTc = giftScreen.getComponent(TransformComponent.class);
@@ -120,6 +118,7 @@ public class GiftScreen {
         pinataTc.y = PINATA_Y;
 
         isGiftScreenOpen = true;
+        openedGift = false;
     }
 
     public void hide() {
@@ -129,10 +128,11 @@ public class GiftScreen {
 
     public void update() {
 
-        if (pinataHitCounter == 0) {
+        if (openedGift && openGiftCooldown == 0) {
             getPresent();
+            openedGift = false;
         } else {
-            pinataHitCounter--;
+            openGiftCooldown--;
         }
         fade(giftScreen, true);
     }
@@ -149,7 +149,6 @@ public class GiftScreen {
             gift.takeGift(GameStage.gameScript.fpc);
             giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             GameStage.gameScript.goalFeedbackScreen.init(true);
-            pinataHitCounter = 1;
             GameStage.gameScript.goalFeedbackScreen.showNewLevel();
         }
     }

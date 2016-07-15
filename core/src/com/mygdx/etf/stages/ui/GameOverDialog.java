@@ -54,6 +54,7 @@ public class GameOverDialog extends AbstractDialog {
         isActive = true;
         isGameOver = true;
         System.gc();
+
         final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
@@ -166,7 +167,7 @@ public class GameOverDialog extends AbstractDialog {
 
     private void finishGame() {
         if (gameOverCounter <= 0) {
-            if (!GameStage.gameScript.fpc.canUsePhoenix()) {
+            if (!gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     gameScript.goalFeedbackScreen.show();
@@ -188,13 +189,13 @@ public class GameOverDialog extends AbstractDialog {
         isPause = false;
         isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;
-        if (GameStage.gameScript.fpc.bestScore < GameStage.gameScript.fpc.score) {
-            GameStage.gameScript.fpc.bestScore = GameStage.gameScript.fpc.score;
+        if (gameScript.fpc.bestScore < gameScript.fpc.score) {
+            gameScript.fpc.bestScore = gameScript.fpc.score;
         }
-        GameStage.gameScript.fpc.resetPhoenix();
+        gameScript.fpc.resetPhoenix();
 
         //reset goals with type "In one life"
-        for (Goal g : GameStage.gameScript.fpc.level.getGoals()) {
+        for (Goal g : gameScript.fpc.level.getGoals()) {
             if (!g.periodType.equals(Goal.PeriodType.TOTAL) && !g.achieved) {
                 g.counter = 0;
             }
