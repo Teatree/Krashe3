@@ -66,7 +66,6 @@ public class UmbrellaSystem extends IteratingSystem {
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
 
             if (uc.state.equals(SPAWNING)) {
-                System.out.println("spawn");
 //                dandelionSpawnCounter+=deltaTime;
 //                if (dandelionSpawnCounter >= SPAWNING_TIME){
                 uc.blinkCounter--;
@@ -87,7 +86,6 @@ public class UmbrellaSystem extends IteratingSystem {
             }
 
             if (uc.state.equals(PUSH)) {
-                System.out.println("push");
                 uc.dataSet = new Vector2[3];
                 uc.dataSet[0] = new Vector2(tc.x, tc.y);
                 uc.dataSet[1] = new Vector2(-500, 400);
@@ -145,7 +143,6 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     public static void hide(Entity entity) {
-        System.out.println("hide");
         umbrellaSpawnCounter = getNextSpawnInterval();
 //        dandelionSpawnCounter = getNextSpawnInterval();
         UmbrellaComponent uc = new UmbrellaComponent();
