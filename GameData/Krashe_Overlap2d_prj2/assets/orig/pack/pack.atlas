@@ -362,6 +362,13 @@ starY
   orig: 65, 65
   offset: 0, 0
   index: -1
+tempcurtain
+  rotate: false
+  xy: 1485, 1418
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 tutorialline
   rotate: false
   xy: 1269, 1346
