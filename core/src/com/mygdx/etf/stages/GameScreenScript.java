@@ -187,7 +187,7 @@ public class GameScreenScript implements IScript {
         initBackground();
         initPet();
         initDoubleBJIcon();
-//        initUmbrella();
+        initUmbrella();
         initCocoon();
         gameOverDialog = new GameOverDialog(gameItem);
         gameOverDialog.initGameOverDialog();
@@ -480,15 +480,16 @@ public class GameScreenScript implements IScript {
         butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
     }
 
-//    private void initUmbrella() {
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
-//        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
-//            UmbrellaComponent dc = new UmbrellaComponent();
-//            umbrellaEntity.add(dc);
-//        }
+    private void initUmbrella() {
+        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
+        if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
+           umbrellaEntity.remove(UmbrellaComponent.class);
+        }
+        UmbrellaSystem.hide(umbrellaEntity);
+//        umbrellaEntity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //        umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
-//    }
+    }
 
     private void spawnUmbrella(float x, float y) {
 

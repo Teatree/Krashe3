@@ -43,15 +43,16 @@ public class UmbrellaSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
         if (!isStarted || isGameOver) {
-            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            entity.getComponent(UmbrellaComponent.class).state = DEAD;
-//            GameStage.sceneLoader.getEngine().removeEntity(entity);
+            hide(entity);
+//            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            entity.getComponent(UmbrellaComponent.class).state = DEAD;
+////            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
 
-        if (entity.getComponent(UmbrellaComponent.class).state.equals(DEAD)) {
-            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        }
+//        if (entity.getComponent(UmbrellaComponent.class).state.equals(DEAD)) {
+//            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+//        }
 
         if (!isPause && !isGameOver && isStarted &&
                 entity.getComponent(UmbrellaComponent.class).state != DEAD) {
@@ -118,7 +119,6 @@ public class UmbrellaSystem extends IteratingSystem {
                 uc.myCatmull.valueAt(uc.out, uc.current);
                 tc.x = uc.out.x;
                 tc.y = uc.out.y;
-
             }
             sasc.paused = false;
             updateRect(uc, tc, dc);
@@ -144,10 +144,12 @@ public class UmbrellaSystem extends IteratingSystem {
                 gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
     }
 
-    private void hide(Entity entity) {
+    public static void hide(Entity entity) {
         System.out.println("hide");
         umbrellaSpawnCounter = getNextSpawnInterval();
 //        dandelionSpawnCounter = getNextSpawnInterval();
+        UmbrellaComponent uc = new UmbrellaComponent();
+        entity.add(uc);
         entity.getComponent(UmbrellaComponent.class).state = DEAD;
         entity.getComponent(TransformComponent.class).x = -500;
         entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;

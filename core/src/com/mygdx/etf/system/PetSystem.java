@@ -69,6 +69,10 @@ public class PetSystem extends IteratingSystem {
         } else {
             pausedState(pc, tc, sc, cannonsc);
         }
+        if (!pc.enabled){
+            tc.x = FAR_FAR_AWAY_X;
+            pc.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        }
 //        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
     }
 
