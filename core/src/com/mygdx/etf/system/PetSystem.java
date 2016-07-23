@@ -69,7 +69,7 @@ public class PetSystem extends IteratingSystem {
         } else {
             pausedState(pc, tc, sc, cannonsc);
         }
-        if (!pc.enabled){
+        if (!pc.enabled) {
             tc.x = FAR_FAR_AWAY_X;
             pc.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
@@ -78,8 +78,13 @@ public class PetSystem extends IteratingSystem {
 
     private void tapped(Entity entity, PetComponent pc, TransformComponent tc,
                         SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
+
+        if (tc.x <= X_SPAWN_POSITION+2 && pc.tappedback) {
+            pc.state = IDLE;
+            pc.tappedback = false;
+        }
         if (pc.state.equals(TAPPED)) {
-            if (tc.x >= TAPPED_X-10) {
+            if (tc.x >= TAPPED_X) {
 
                 entity.remove(ActionComponent.class);
                 pc.petCannon.remove(ActionComponent.class);
@@ -95,10 +100,7 @@ public class PetSystem extends IteratingSystem {
 
                 setIdleAnimation(sc);
                 setIdleAnimation(cannonsc);
-            }
-
-            if (tc.x <= X_SPAWN_POSITION) {
-                pc.state = IDLE;
+                pc.tappedback = true;
             }
         }
     }
@@ -194,6 +196,7 @@ public class PetSystem extends IteratingSystem {
             pc.state = TAPPED;
             setTappedAnimation(entity.getComponent(SpriterComponent.class));
             setTappedAnimation(cannonsc);
+            pc.tappedback = false;
 
             EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 

@@ -23,17 +23,19 @@ public class PetComponent extends ShopItem implements Component {
     public State state;
     public Rectangle boundsRect;
     public float velocity;
-    public int outsideCounter;
+    public boolean isCollision;
+    public boolean tappedback;
 
+    public int outsideCounter;
     public int amountBugsBeforeCharging;
     public int totalEatenBugs;
     public int duringGameEatenBugs;
-    public int eatenBugsCounter;
 
-    public boolean isCollision;
+    public int eatenBugsCounter;
 
     public String petCannonName;
     public Entity petCannon;
+
 
     public PetComponent() {
 //        init();

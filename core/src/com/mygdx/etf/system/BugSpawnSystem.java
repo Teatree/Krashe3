@@ -170,7 +170,7 @@ public class BugSpawnSystem extends EntitySystem {
 //                    int indexC = dandelionMultipliers.indexOf(currentDandelionMultiplier);
 //                    currentDandelionMultiplier = dandelionMultipliers.get(indexC < dandelionMultipliers.size()-1 ? indexC+1 : indexC);
 //                }
-                spawn(deltaTime);
+//                spawn(deltaTime);
 //                updateAngeredBeesMode();
             }
         }
