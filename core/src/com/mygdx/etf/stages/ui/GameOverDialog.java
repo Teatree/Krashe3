@@ -171,6 +171,7 @@ public class GameOverDialog extends AbstractDialog {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
                     gameScript.goalFeedbackScreen.show();
+                    close(gameOverDialogE);
                     isGameOver = true;
                 } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen && !gameScript.giftScreen.isGiftScreenOpen) {
                     isGameOver = false;
