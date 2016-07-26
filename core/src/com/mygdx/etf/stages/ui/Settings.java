@@ -197,6 +197,9 @@ public class Settings extends AbstractDialog {
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, 2, Interpolation.exp10Out));
         settingsE.add(ac);
+
+//        setMusicButnState(gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity());
+//        setSoundButtonState(gameItem.getChild(SETTINGS).getChild(BTN_SOUND).getEntity());
     }
 
 
@@ -227,18 +230,9 @@ public class Settings extends AbstractDialog {
     private void  initMusicBtn(){
         final Entity musicBtn = gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity();
         ToggleButtonComponent musictbc = new ToggleButtonComponent();
-        final LayerMapComponent lc = ComponentRetriever.get(musicBtn, LayerMapComponent.class);
-        if (GameStage.gameScript.fpc.settings.noMusic) {
-            lc.getLayer(BTN_NORMAL).isVisible = false;
-            lc.getLayer(BTN_DEFAULT).isVisible = false;
-            lc.getLayer(BTN_PRESSED).isVisible = true;
-            musictbc.setOff();
-        } else {
-            musictbc.setOn();
-            lc.getLayer(BTN_NORMAL).isVisible = true;
-            lc.getLayer(BTN_PRESSED).isVisible = false;
-        }
+//        final LayerMapComponent lc = ComponentRetriever.get(musicBtn, LayerMapComponent.class);
         musicBtn.add(musictbc);
+        setMusicButnState(musicBtn);
 
         musicBtn.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
         musicBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -289,20 +283,27 @@ public class Settings extends AbstractDialog {
         });
     }
 
+    private void setMusicButnState(Entity e) {
+        ToggleButtonComponent musictbc = e.getComponent(ToggleButtonComponent.class);
+        LayerMapComponent lc = e.getComponent(LayerMapComponent.class);
+        if (GameStage.gameScript.fpc.settings.noMusic) {
+            lc.getLayer(BTN_NORMAL).isVisible = false;
+            lc.getLayer(BTN_DEFAULT).isVisible = false;
+            lc.getLayer(BTN_PRESSED).isVisible = true;
+            musictbc.setOff();
+        } else {
+            musictbc.setOn();
+            lc.getLayer(BTN_NORMAL).isVisible = true;
+            lc.getLayer(BTN_PRESSED).isVisible = false;
+        }
+    }
+
     private void initSoundBtn() {
         final Entity soundBtn = gameItem.getChild(SETTINGS).getChild(BTN_SOUND).getEntity();
         ToggleButtonComponent soundtbc = new ToggleButtonComponent();
-        final LayerMapComponent lc8 = ComponentRetriever.get(soundBtn, LayerMapComponent.class);
-        if (GameStage.gameScript.fpc.settings.noSound) {
-            soundtbc.setOff();
-            lc8.getLayer(BTN_NORMAL).isVisible = false;
-            lc8.getLayer(BTN_PRESSED).isVisible = true;
-        } else {
-            soundtbc.setOn();
-            lc8.getLayer(BTN_NORMAL).isVisible = true;
-            lc8.getLayer(BTN_PRESSED).isVisible = false;
-        }
+//        final LayerMapComponent lc8 = ComponentRetriever.get(soundBtn, LayerMapComponent.class);
         soundBtn.add(soundtbc);
+        setSoundButtonState(soundBtn);
         soundBtn.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
         soundBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             final LayerMapComponent lc = ComponentRetriever.get(soundBtn, LayerMapComponent.class);
@@ -349,5 +350,19 @@ public class Settings extends AbstractDialog {
                 }
             }
         });
+    }
+
+    private void setSoundButtonState(Entity e) {
+        ToggleButtonComponent soundtbc = e.getComponent(ToggleButtonComponent.class);
+        LayerMapComponent lc8 = e.getComponent(LayerMapComponent.class);
+        if (GameStage.gameScript.fpc.settings.noSound) {
+            soundtbc.setOff();
+            lc8.getLayer(BTN_NORMAL).isVisible = false;
+            lc8.getLayer(BTN_PRESSED).isVisible = true;
+        } else {
+            soundtbc.setOn();
+            lc8.getLayer(BTN_NORMAL).isVisible = true;
+            lc8.getLayer(BTN_PRESSED).isVisible = false;
+        }
     }
 }

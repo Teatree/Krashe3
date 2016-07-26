@@ -200,7 +200,7 @@ public class GameScreenScript implements IScript {
         giftScreen.init();
 
         if (goalFeedbackScreen == null) {
-            goalFeedbackScreen = new GoalFeedbackScreen(gameItem);
+            goalFeedbackScreen = new GoalFeedbackScreen();
         }
         goalFeedbackScreen.init(false);
 

@@ -48,7 +48,7 @@ public class GoalFeedbackScreen {
     private Entity feedbackEntity;
 
 
-    public GoalFeedbackScreen(ItemWrapper gameItem) {
+    public GoalFeedbackScreen() {
 //        if (tiles != null) {
 //            for (Entity tile : tiles) {
 //                tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
@@ -76,18 +76,10 @@ public class GoalFeedbackScreen {
             for (Entity tile : tiles) {
                 prevLvlTiles.add(tile);
             }
-
-//            if (tiles != null) {
-//                for (Entity tile : tiles) {
-//                    tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//                    sceneLoader.getEngine().removeEntity(tile);
-//                }
-//            }
         }
 
         tiles = new ArrayList<>();
 
-//        feedbackEntity = gameItem.getChild(GOALFEEDBACK).getEntity();
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GOALFEEDBACK);
         feedbackEntity = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), feedbackEntity, tempC.composite);
@@ -124,87 +116,86 @@ public class GoalFeedbackScreen {
         feedbackEntity.getComponent(TransformComponent.class).y = POS_Y;
         feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
 
-//        final Entity goalLabel = gameItem.getChild(GOALFEEDBACK).getChild(LBL_DIALOG).getEntity();
-//        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-//        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
-
         if (prevLvlTiles != null || !prevLvlTiles.isEmpty() || !isPause) {
-            for (SpriterComponent s : tilesScs) {
-                tilesScs2.add(s);
-
-//                s.player.speed = 25;
-//                s.player.setAnimation(0);
-            }
-//            tilesScs = new ArrayList<>();
-            int y = GOAL_INIT_POS_Y;
-            int i = 1;
-
-            float delay = 0;
-            for (Entity e : prevLvlTiles) {
-                e.getComponent(TransformComponent.class).x = GOAL_INIT_POS_X;
-                e.getComponent(TransformComponent.class).y = y;
-                e.getComponent(TintComponent.class).color.a = 1;
-
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-
-                if (i == 1) {
-                    delay = INITIAL_DELAY;
-                } else {
-                    delay += MOVE_TILES_DELAY;
-                }
-                i++;
-
-                ac.dataArray.add(Actions.sequence(Actions.delay(delay),
-                        Actions.moveTo(-e.getComponent(DimensionsComponent.class).width,
-                                e.getComponent(TransformComponent.class).y, 1.5f, Interpolation.exp10In)));
-                e.add(ac);
-
-                if (e.getComponent(NodeComponent.class) != null && e.getComponent(NodeComponent.class).children != null
-                        && e.getComponent(NodeComponent.class).children.size != 0) {
-                    for (Entity e2 : e.getComponent(NodeComponent.class).children) {
-                        TintComponent tc = e2.getComponent(TintComponent.class);
-                        tc.color.a = 1;
-
-                        e2.getComponent(TintComponent.class).color.a = 1;
-//                        e2.getComponent(ZIndexComponent.class).setZIndex(2000);
-                    }
-                }
-                e.getComponent(TransformComponent.class).x = GOAL_INIT_POS_X;
-                e.getComponent(ZIndexComponent.class).setZIndex(2000);
-                y -= GOAL_STEP_Y;
-            }
+            addMoveInPrevTilesActions();
         }
         if (tiles == null || tiles.isEmpty() || !isPause) {
-            int y = GOAL_INIT_POS_Y;
-            tilesScs = new ArrayList<>();
-
-            int i = 1;
-            float delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
-            for (Goal g : gameScript.fpc.level.getGoals()) {
-                Entity newTile = createGoalTile(g, y);
-
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-
-                if (i == 1) {
-                    delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
-                } else {
-                    delay += 0.1f;
-                }
-                i++;
-
-                ac.dataArray.add(Actions.sequence(Actions.delay(delay),
-                        Actions.moveTo(GOAL_INIT_POS_X, newTile.getComponent(TransformComponent.class).y, 1.5f, Interpolation.exp10Out)));
-                newTile.add(ac);
-                tiles.add(newTile);
-                y -= GOAL_STEP_Y;
-            }
+            addMoveInTilesActions();
         }
-
 
         isGoalFeedbackOpen = true;
         isNewLevel = false;
+    }
+
+    private void addMoveInTilesActions() {
+        int y = GOAL_INIT_POS_Y;
+        tilesScs = new ArrayList<>();
+
+        int i = 1;
+        float delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
+        for (Goal g : gameScript.fpc.level.getGoals()) {
+            Entity newTile = createGoalTile(g, y);
+
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+
+            if (i == 1) {
+                delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
+            } else {
+                delay += 0.1f;
+            }
+            i++;
+
+            ac.dataArray.add(Actions.sequence(Actions.delay(delay),
+                    Actions.moveTo(GOAL_INIT_POS_X, newTile.getComponent(TransformComponent.class).y, 1.5f, Interpolation.exp10Out)));
+            newTile.add(ac);
+            tiles.add(newTile);
+            y -= GOAL_STEP_Y;
+        }
+    }
+
+    private void addMoveInPrevTilesActions() {
+        for (SpriterComponent s : tilesScs) {
+            tilesScs2.add(s);
+        }
+        int y = GOAL_INIT_POS_Y;
+        int i = 1;
+
+        float delay = 0;
+        for (Entity e : prevLvlTiles) {
+            e.getComponent(TransformComponent.class).x = GOAL_INIT_POS_X;
+            e.getComponent(TransformComponent.class).y = y;
+            e.getComponent(TintComponent.class).color.a = 1;
+
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+
+            if (i == 1) {
+                delay = INITIAL_DELAY;
+            } else {
+                delay += MOVE_TILES_DELAY;
+            }
+            i++;
+
+            ac.dataArray.add(Actions.sequence(Actions.delay(delay),
+                    Actions.moveTo(-e.getComponent(DimensionsComponent.class).width,
+                            e.getComponent(TransformComponent.class).y, 1.5f, Interpolation.exp10In)));
+            e.add(ac);
+
+            if (e.getComponent(NodeComponent.class) != null && e.getComponent(NodeComponent.class).children != null
+                    && e.getComponent(NodeComponent.class).children.size != 0) {
+                for (Entity e2 : e.getComponent(NodeComponent.class).children) {
+                    TintComponent tc = e2.getComponent(TintComponent.class);
+                    tc.color.a = 1;
+
+                    e2.getComponent(TintComponent.class).color.a = 1;
+//                        e2.getComponent(ZIndexComponent.class).setZIndex(2000);
+                }
+            }
+            e.getComponent(TransformComponent.class).x = GOAL_INIT_POS_X;
+            e.getComponent(ZIndexComponent.class).setZIndex(2000);
+            y -= GOAL_STEP_Y;
+        }
     }
 
     private Entity createGoalTile(Goal goal, int y) {

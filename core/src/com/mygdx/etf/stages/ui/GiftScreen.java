@@ -44,6 +44,7 @@ public class GiftScreen {
     private Gift gift;
 
     private int openGiftCooldown = 30;
+    private boolean showNewLevelAnim;
     private boolean openedGift;
 
     static List<Integer> moneySums;
@@ -62,6 +63,7 @@ public class GiftScreen {
     public void init() {
 //        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
         openedGift = false;
+        openGiftCooldown = 30;
 
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
         giftScreen = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -127,30 +129,35 @@ public class GiftScreen {
     }
 
     public void update() {
-
+        if (Gdx.input.justTouched() && isGameOver && showNewLevelAnim) {
+            showNewLevelScreen();
+            showNewLevelAnim = false;
+        }
         if (openedGift && openGiftCooldown == 0) {
-            getPresent();
+            showGift();
             openedGift = false;
-        } else {
+            showNewLevelAnim = true;
+        } else if (openGiftCooldown > 0) {
             openGiftCooldown--;
         }
+
         fade(giftScreen, true);
     }
 
-    private void getPresent() {
+    private void showNewLevelScreen() {
+        gift.takeGift(GameStage.gameScript.fpc);
+        giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        GameStage.gameScript.goalFeedbackScreen.init(true);
+        GameStage.gameScript.goalFeedbackScreen.showNewLevel();
+    }
+
+    private void showGift() {
         pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         Entity lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
 
-//            lbl.add(new LabelComponent("YOU GOT " + gift.money + " " + gift.type + " !!!", LabelComponentFactory.defaultLabelStyle));
         lbl.getComponent(LabelComponent.class).text.replace(0,
                 lbl.getComponent(LabelComponent.class).text.capacity(),
                 "YOU GOT " + gift.money + " " + gift.type + " !!!");
-        if (Gdx.input.justTouched() && isGameOver) {
-            gift.takeGift(GameStage.gameScript.fpc);
-            giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            GameStage.gameScript.goalFeedbackScreen.init(true);
-            GameStage.gameScript.goalFeedbackScreen.showNewLevel();
-        }
     }
 
     public static class Gift {
