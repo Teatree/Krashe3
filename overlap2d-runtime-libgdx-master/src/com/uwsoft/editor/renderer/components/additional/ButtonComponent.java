@@ -14,7 +14,7 @@ public class ButtonComponent implements Component {
 
     public boolean enable;
 
-    private Array<ButtonListener> listeners = new Array<ButtonListener>();
+    public Array<ButtonListener> listeners = new Array<ButtonListener>();
 
     public interface ButtonListener {
         void touchUp();
