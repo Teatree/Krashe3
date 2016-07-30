@@ -29,6 +29,7 @@ public class SaveMngr {
         gameStats.noAds = fc.settings.noAds;
         gameStats.noMusic = fc.settings.noMusic;
         gameStats.noSound = fc.settings.noSound;
+        gameStats.goalStatusChanged = Level.goalStatusChanged;
         gameStats.totalPlayedGames = fc.settings.totalPlayedGames;
 
         gameStats.start_resultScreenAd = fc.settings.start_resultScreenAd;
@@ -105,7 +106,9 @@ public class SaveMngr {
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
 //        saved = "";
+        Level.goalStatusChanged = true;
         if (!"".equals(saved)) {
+
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
@@ -117,6 +120,7 @@ public class SaveMngr {
             fc.settings.noSound = stats.noSound;
             fc.settings.totalPlayedGames = stats.totalPlayedGames;
             fc.settings.playedGames = 0;
+            Level.goalStatusChanged = stats.goalStatusChanged;
 
             fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
             fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
@@ -475,6 +479,7 @@ public class SaveMngr {
     }
 
     private static class GameStats {
+        public boolean goalStatusChanged;
         public boolean noAds;
         public boolean noSound;
         public boolean noMusic;

@@ -86,6 +86,7 @@ public class Goal {
     public void update() {
         counter++;
         if (counter >= n && !achieved) {
+            Level.goalStatusChanged = true;
             achieved = true;
             justAchieved = true;
             if (!GoalFeedbackScreen.shouldShow) {
