@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class Level {
 
+    public static  boolean goalStatusChanged;
+
     public static List<SaveMngr.LevelInfo> levelsInfo;
     public int difficultyLevel;
     public String name;
@@ -169,5 +171,15 @@ public class Level {
             hardGoalsAmount = info.hardGoalsAmount;
             rewardChanceGroups = info.rewardChanceGroups;
         }
+    }
+
+    public String getRemainingGoals() {
+        int remainingCounter = 0;
+        for (Goal g : goals.values()){
+            if (!g.achieved){
+                remainingCounter++;
+            }
+        }
+        return String.valueOf(remainingCounter);
     }
 }
