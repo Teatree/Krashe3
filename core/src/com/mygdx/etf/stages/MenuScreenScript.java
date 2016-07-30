@@ -12,6 +12,12 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_SCALE;
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_X_POS;
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_Y_POS;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
@@ -21,12 +27,13 @@ public class MenuScreenScript implements IScript {
 
     public static final String BTN_PLAY = "btn_play";
     public static final String BTN_SHOP = "btn_shop";
-    public static final String BTN_NO_ADS = "btn_noAds";
+//    public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
     public static final String BTN_RATE = "btn_restore";
     public static final String BTN_GOALS = "btn_goals";
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
+    public static final String MM_FLOWER = "MM_flower";
 
     ItemWrapper menuItem;
     private GameStage stage;
@@ -81,49 +88,61 @@ public class MenuScreenScript implements IScript {
     public void initButtons() {
         final Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
         final Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
-        final Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
         final Entity btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         final Entity rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
         final Entity btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
+        Entity mmFlowerEntity = menuItem.getChild(MM_FLOWER).getEntity();
+
+        TransformComponent tc = mmFlowerEntity.getComponent(TransformComponent.class);
+        tc.x = FLOWER_X_POS;
+        tc.y = FLOWER_Y_POS;
+        tc.scaleX = FLOWER_SCALE;
+        tc.scaleY = FLOWER_SCALE;
+
+        Entity mmLeafsEntity = menuItem.getChild("MM_leafs").getEntity();
+
+        TransformComponent tcL = mmLeafsEntity.getComponent(TransformComponent.class);
+        tcL.x = LEAFS_X_POS;
+        tcL.y = LEAFS_Y_POS;
+        tcL.scaleX = LEAFS_SCALE;
+        tcL.scaleY = LEAFS_SCALE;
+
+
 
         rateAppBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
                 rateMyApp();
             }
         });
-        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
+//        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//            @Override
+//            public void touchUp() {}
+//
+//            @Override
+//            public void touchDown() {}
+//
+//            @Override
+//            public void clicked() {
+//                if(!isDialogOpen) {
+//                    Main.mainController.removeAds();
+//                }
+//            }
+//        });
 
-            @Override
-            public void touchDown() {
-            }
 
-            @Override
-            public void clicked() {
-                if (!isDialogOpen) {
-                    Main.mainController.removeAds();
-                }
-            }
-        });
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
@@ -139,30 +158,29 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                if (!isDialogOpen) {
+                if(!isDialogOpen) {
                     startShopTransition = true;
                 }
             }
 
             @Override
             public void clicked() {
-                if (!isDialogOpen) {
+                if(!isDialogOpen) {
                     startShopTransition = true;
                 }
             }
         });
+
         btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {
-            }
+            public void touchUp() {}
 
             @Override
-            public void touchDown() {
-            }
+            public void touchDown() {}
 
             @Override
             public void clicked() {
-                if (!isDialogOpen) {
+                if(!isDialogOpen) {
                     isDialogOpen = true;
                     settings.show();
                 }
@@ -203,13 +221,13 @@ public class MenuScreenScript implements IScript {
         GameScreenScript.checkTryPeriod();
         timer.timer();
 
-        if (startGameTransition) {
-            curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
-            if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
+        if(startGameTransition){
+            curtain_mm.getComponent(TintComponent.class).color.a+=0.05f;
+            if (curtain_mm.getComponent(TintComponent.class).color.a>=1){
                 startGameTransition = false;
                 stage.initGame();
-            }
-        }
+    }
+}
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
