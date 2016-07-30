@@ -33,6 +33,7 @@ public class Settings extends AbstractDialog {
     public static final String BTN_BACK_SETTINGS = "btn_back_settings";
     public static final String BTN_MUSIC = "btn_music";
     public static final String BTN_SOUND = "btn_sound";
+    public static final String BTN_NO_ADS = "btn_noAds";
 
     public static final int SETTINGS_Y = 30;
     public static final int SETTINGS_X = 260;
@@ -51,6 +52,7 @@ public class Settings extends AbstractDialog {
     public void init() {
         settingsE = gameItem.getChild(SETTINGS).getEntity();
         Entity closeSettingsBtn = gameItem.getChild(SETTINGS).getChild(BTN_CLOSE_SETTINGS).getEntity();
+        Entity btnNoAds = gameItem.getChild(SETTINGS).getChild(BTN_NO_ADS).getEntity();
         Entity nextInfoBtn = gameItem.getChild(SETTINGS).getChild(BTN_NEXT_INFO).getEntity();
         Entity restorePurchasesBtn = gameItem.getChild(SETTINGS).getChild(BTN_RESTORE).getEntity();
         Entity resetProgressBtn = gameItem.getChild(SETTINGS).getChild(BTN_RESET).getEntity();
@@ -95,6 +97,21 @@ public class Settings extends AbstractDialog {
             @Override
             public void clicked() {
                 close(infoE);
+            }
+        });
+
+        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {}
+
+            @Override
+            public void touchDown() {}
+
+            @Override
+            public void clicked() {
+                if(!isDialogOpen) {
+                    Main.mainController.removeAds();
+                }
             }
         });
 

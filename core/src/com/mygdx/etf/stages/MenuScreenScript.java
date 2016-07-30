@@ -14,6 +14,12 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_SCALE;
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_X_POS;
+import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_Y_POS;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
@@ -23,7 +29,7 @@ public class MenuScreenScript implements IScript {
 
     public static final String BTN_PLAY = "btn_play";
     public static final String BTN_SHOP = "btn_shop";
-    public static final String BTN_NO_ADS = "btn_noAds";
+//    public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
     public static final String BTN_RATE = "btn_restore";
     public static final String CURTAIN = "curtain_mm";
@@ -65,12 +71,28 @@ public class MenuScreenScript implements IScript {
         if (timer == null) {
             timer = new TrialTimer(menuItem, 680, 500);
         }
+
+        Entity mmFlowerEntity = menuItem.getChild("MM_flower").getEntity();
+
+        TransformComponent tc = mmFlowerEntity.getComponent(TransformComponent.class);
+        tc.x = FLOWER_X_POS;
+        tc.y = FLOWER_Y_POS;
+        tc.scaleX = FLOWER_SCALE;
+        tc.scaleY = FLOWER_SCALE;
+
+        Entity mmLeafsEntity = menuItem.getChild("MM_leafs").getEntity();
+
+        TransformComponent tcL = mmLeafsEntity.getComponent(TransformComponent.class);
+        tcL.x = LEAFS_X_POS;
+        tcL.y = LEAFS_Y_POS;
+        tcL.scaleX = LEAFS_SCALE;
+        tcL.scaleY = LEAFS_SCALE;
     }
 
     public void initButtons() {
         Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
         Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
-        Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
+//        Entity btnNoAds = menuItem.getChild(BTN_NO_ADS).getEntity();
         Entity btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         final Entity rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
 
@@ -86,21 +108,6 @@ public class MenuScreenScript implements IScript {
                 rateMyApp();
             }
         });
-        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                if(!isDialogOpen) {
-                    Main.mainController.removeAds();
-                }
-            }
-        });
-
 
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
