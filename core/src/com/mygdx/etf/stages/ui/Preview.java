@@ -54,12 +54,13 @@ public class Preview {
     public Entity lbl_not_enough;
     public Entity bg;
     public Entity shadowE;
-    private ItemWrapper shopItem;
     private Entity iconE;
     private Entity btnLeft;
     private Entity btnNext;
-    private Rectangle tagBoundingBox;
+
+    private Rectangle previewBoundingBox;
     private ShopItem vc;
+    private ItemWrapper shopItem;
 
     public Preview(ItemWrapper shopItem) {
         this.shopItem = shopItem;
@@ -201,14 +202,14 @@ public class Preview {
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(PREVIEW_X, PREVIEW_Y, 2, Interpolation.exp10Out));
+            ac.dataArray.add(Actions.moveTo(PREVIEW_X, PREVIEW_Y, 1.5f, Interpolation.exp10Out));
             previewE.add(ac);
         } else {
             previewE.getComponent(TransformComponent.class).x = PREVIEW_X;
             previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
         }
 
-        tagBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
+        previewBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
                 30,
                 648,
                 previewE.getComponent(DimensionsComponent.class).height);
@@ -216,9 +217,11 @@ public class Preview {
     }
 
     private void addShadow() {
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
-        shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
+        if (shadowE == null) {
+            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
+            shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
+        }
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
         shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
@@ -433,8 +436,8 @@ public class Preview {
 
         updateTagIcon();
         Vector2 v = getTouchCoordinates();
-        boolean isOutside = tagBoundingBox == null ||
-                !tagBoundingBox.contains(v.x, v.y);
+        boolean isOutside = previewBoundingBox == null ||
+                !previewBoundingBox.contains(v.x, v.y);
         float currentYpos = previewE.getComponent(TransformComponent.class).y;
         if (Gdx.input.isTouched() && currentYpos <= 50 || currentYpos >= 800) {
             if (isPreviewOn && isOutside) {

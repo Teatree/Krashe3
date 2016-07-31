@@ -30,8 +30,8 @@ public class AbstractDialog {
     public boolean isActive;
 
     protected void initShadow() {
-        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
         if (shadowE == null) {
+            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
             shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(shadowE);
@@ -41,16 +41,14 @@ public class AbstractDialog {
     }
 
     protected void addShadow() {
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
-        shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
         shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
         sceneLoader.getEngine().addEntity(shadowE);
         shadowE.getComponent(TintComponent.class).color.a = 0;
-        Actions.checkInit();
+
         ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
         shadowE.add(ac);
     }
