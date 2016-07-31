@@ -47,13 +47,6 @@ betaptoplay
   orig: 334, 50
   offset: 0, 0
   index: -1
-be_tap_to_play
-  rotate: false
-  xy: 2, 68
-  size: 334, 50
-  orig: 334, 50
-  offset: 0, 0
-  index: -1
 bjDouble
   rotate: false
   xy: 1408, 429
@@ -61,60 +54,60 @@ bjDouble
   orig: 200, 244
   offset: 0, 0
   index: -1
-btnback
+btnads
   rotate: false
   xy: 1621, 1496
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_back
+btnadsoff
   rotate: false
-  xy: 1621, 1496
+  xy: 1269, 794
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnback
+  rotate: false
+  xy: 1313, 101
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnbackoff
   rotate: false
-  xy: 1269, 794
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_back_off
-  rotate: false
-  xy: 1269, 794
+  xy: 1269, 721
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoals
   rotate: false
-  xy: 1269, 721
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_goals
-  rotate: false
-  xy: 1269, 721
+  xy: 1269, 648
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoalsoff
   rotate: false
-  xy: 1269, 648
+  xy: 1313, 28
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_goals_off
+btntext
   rotate: false
-  xy: 1269, 648
-  size: 69, 71
-  orig: 69, 71
+  xy: 1101, 104
+  size: 210, 68
+  orig: 210, 68
+  offset: 0, 0
+  index: -1
+btntextoff
+  rotate: false
+  xy: 1101, 34
+  size: 210, 68
+  orig: 210, 68
   offset: 0, 0
   index: -1
 bugjuicebubble
@@ -126,7 +119,7 @@ bugjuicebubble
   index: -1
 buttonback
   rotate: false
-  xy: 1101, 52
+  xy: 1871, 1248
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -134,7 +127,7 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1871, 1248
+  xy: 1871, 1126
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
@@ -142,7 +135,7 @@ buttonbackoff
   index: -1
 buttonbackoff1
   rotate: false
-  xy: 1224, 52
+  xy: 1871, 1004
   size: 121, 120
   split: 14, 16, 13, 15
   orig: 121, 120
@@ -150,7 +143,7 @@ buttonbackoff1
   index: -1
 buttonbackon1
   rotate: false
-  xy: 1871, 1126
+  xy: 1871, 882
   size: 121, 120
   split: 16, 17, 15, 17
   pad: 16, 16, 15, 17
@@ -159,7 +152,7 @@ buttonbackon1
   index: -1
 buttoncameraoff
   rotate: false
-  xy: 1871, 1004
+  xy: 1871, 760
   size: 121, 120
   split: 23, 18, 17, 29
   orig: 121, 120
@@ -167,7 +160,7 @@ buttoncameraoff
   index: -1
 buttoncameraon
   rotate: false
-  xy: 1871, 882
+  xy: 1871, 638
   size: 121, 120
   split: 23, 17, 17, 29
   orig: 121, 120
@@ -192,7 +185,7 @@ buttonnoAdson
   index: -1
 buttonnoon
   rotate: false
-  xy: 1871, 760
+  xy: 1908, 272
   size: 121, 120
   split: 28, 23, 23, 28
   orig: 121, 120
@@ -200,7 +193,7 @@ buttonnoon
   index: -1
 buttonpauseoff
   rotate: false
-  xy: 1871, 638
+  xy: 1908, 150
   size: 121, 120
   split: 14, 16, 16, 18
   pad: 15, 16, 16, 18
@@ -209,7 +202,7 @@ buttonpauseoff
   index: -1
 buttonpauseon
   rotate: false
-  xy: 1908, 272
+  xy: 1908, 28
   size: 121, 120
   split: 14, 17, 14, 16
   pad: 14, 17, 13, 16
@@ -218,7 +211,7 @@ buttonpauseon
   index: -1
 buttonsettingsoff
   rotate: false
-  xy: 1908, 150
+  xy: 1269, 526
   size: 120, 120
   split: 18, 14, 15, 16
   orig: 120, 120
@@ -226,7 +219,7 @@ buttonsettingsoff
   index: -1
 buttonsettingson
   rotate: false
-  xy: 1908, 28
+  xy: 1384, 9
   size: 120, 120
   split: 18, 14, 15, 17
   orig: 120, 120
@@ -234,17 +227,9 @@ buttonsettingson
   index: -1
 buttonshopoff
   rotate: false
-  xy: 1269, 526
+  xy: 1506, 9
   size: 120, 120
   split: 14, 16, 17, 17
-  orig: 120, 120
-  offset: 0, 0
-  index: -1
-buttonshopon
-  rotate: false
-  xy: 1347, 9
-  size: 120, 120
-  split: 14, 15, 16, 19
   orig: 120, 120
   offset: 0, 0
   index: -1
@@ -281,13 +266,6 @@ img
   xy: 1204, 472
   size: 22, 22
   orig: 22, 22
-  offset: 0, 0
-  index: -1
-item_button_off
-  rotate: false
-  xy: 1469, 9
-  size: 120, 120
-  orig: 120, 120
   offset: 0, 0
   index: -1
 itembikerhelmoff
@@ -398,7 +376,7 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 1908, 6
+  xy: 1871, 616
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
@@ -425,16 +403,9 @@ star
   orig: 256, 256
   offset: 0, 0
   index: -1
-starY
-  rotate: false
-  xy: 1591, 64
-  size: 65, 65
-  orig: 65, 65
-  offset: 0, 0
-  index: -1
 tempcurtain
   rotate: false
-  xy: 1871, 604
+  xy: 879, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -468,142 +439,150 @@ backshadow1
   orig: 220, 220
   offset: 0, 0
   index: -1
-btn_pause
+btnmusic
   rotate: false
-  xy: 1554, 409
+  xy: 1776, 704
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_pause_off
+btnmusicno
   rotate: false
-  xy: 1625, 482
+  xy: 2, 2
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_play
+btnmusicoff
   rotate: false
-  xy: 1776, 631
+  xy: 124, 124
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_play_off
+btnmusicoffno
   rotate: false
-  xy: 1847, 704
+  xy: 804, 208
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_yes_off
+btnnext
   rotate: false
-  xy: 195, 124
+  xy: 926, 330
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnnextoff
+  rotate: false
+  xy: 1676, 482
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 804, 330
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_no
-  rotate: false
-  xy: 804, 330
+  xy: 1776, 631
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnnooff
   rotate: false
-  xy: 1554, 482
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_no_off
-  rotate: false
-  xy: 1554, 482
+  xy: 1847, 704
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettings
   rotate: false
-  xy: 1776, 704
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_settings
-  rotate: false
-  xy: 1776, 704
+  xy: 195, 124
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettingsoff
   rotate: false
-  xy: 2, 2
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_settings_off
-  rotate: false
-  xy: 2, 2
+  xy: 997, 330
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 124, 124
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btn_shop
-  rotate: false
-  xy: 124, 124
+  xy: 1776, 558
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshopoff
   rotate: false
-  xy: 804, 257
+  xy: 1847, 631
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_shop_off
+btnsound
   rotate: false
-  xy: 804, 257
+  xy: 1918, 704
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundno
+  rotate: false
+  xy: 266, 124
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundoff
+  rotate: false
+  xy: 1068, 330
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundoffno
+  rotate: false
+  xy: 1847, 558
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 875, 330
+  xy: 1918, 631
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btn_yes
+btnyesoff
   rotate: false
-  xy: 875, 330
+  xy: 337, 124
   size: 69, 71
   orig: 69, 71
+  offset: 0, 0
+  index: -1
+buttonshopon
+  rotate: false
+  xy: 2, 75
+  size: 120, 120
+  split: 14, 15, 16, 19
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+item_button_off
+  rotate: false
+  xy: 804, 281
+  size: 120, 120
+  orig: 120, 120
   offset: 0, 0
   index: -1
 item_button_on
   rotate: false
-  xy: 2, 75
+  xy: 1554, 433
   size: 120, 120
   orig: 120, 120
   offset: 0, 0
@@ -673,5 +652,12 @@ shopitem1off
   xy: 1304, 403
   size: 248, 296
   orig: 248, 296
+  offset: 0, 0
+  index: -1
+starY
+  rotate: false
+  xy: 1139, 336
+  size: 65, 65
+  orig: 65, 65
   offset: 0, 0
   index: -1

@@ -35,7 +35,7 @@ public class Settings extends AbstractDialog {
     public static final String BTN_SOUND = "btn_sound";
     public static final String BTN_NO_ADS = "btn_noAds";
 
-    public static final int SETTINGS_Y = 30;
+    public static final int SETTINGS_Y = 50;
     public static final int SETTINGS_X = 260;
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
@@ -207,7 +207,7 @@ public class Settings extends AbstractDialog {
         isActive = true;
         addShadow();
         settingsE.getComponent(TransformComponent.class).x = SETTINGS_X;
-        settingsE.getComponent(TransformComponent.class).y = 460;
+        settingsE.getComponent(TransformComponent.class).y = 450;
         settingsE.getComponent(ZIndexComponent.class).setZIndex(100);
 
         ActionComponent ac = new ActionComponent();
