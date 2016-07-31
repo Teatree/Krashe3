@@ -326,7 +326,7 @@ public class GameScreenScript implements IScript {
             @Override
             public void clicked() {
                 isPause = true;
-                if (!isGameOver) {
+                if (!isGameOver && isStarted) {
                     pauseDialog.show();
                 }
             }

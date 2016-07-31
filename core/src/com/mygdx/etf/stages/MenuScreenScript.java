@@ -3,6 +3,7 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
+import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -27,7 +28,7 @@ public class MenuScreenScript implements IScript {
 
     public static final String BTN_PLAY = "btn_play";
     public static final String BTN_SHOP = "btn_shop";
-//    public static final String BTN_NO_ADS = "btn_noAds";
+    //    public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
     public static final String BTN_RATE = "btn_restore";
     public static final String BTN_GOALS = "btn_goals";
@@ -47,6 +48,7 @@ public class MenuScreenScript implements IScript {
     public static boolean showGoalNotification;
 
     private TrialTimer timer;
+    private PauseDialog pauseDialog;
 
     public MenuScreenScript(GameStage stage) {
         showGoalNotification = Level.goalStatusChanged;
@@ -83,6 +85,8 @@ public class MenuScreenScript implements IScript {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
+        pauseDialog = new PauseDialog(menuItem);
+        pauseDialog.init();
     }
 
     public void initButtons() {
@@ -107,14 +111,14 @@ public class MenuScreenScript implements IScript {
         tcL.scaleX = LEAFS_SCALE;
         tcL.scaleY = LEAFS_SCALE;
 
-
-
         rateAppBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {}
+            public void touchUp() {
+            }
 
             @Override
-            public void touchDown() {}
+            public void touchDown() {
+            }
 
             @Override
             public void clicked() {
@@ -139,10 +143,12 @@ public class MenuScreenScript implements IScript {
 
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {}
+            public void touchUp() {
+            }
 
             @Override
-            public void touchDown() {}
+            public void touchDown() {
+            }
 
             @Override
             public void clicked() {
@@ -158,29 +164,32 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void touchDown() {
-                if(!isDialogOpen) {
+                if (!isDialogOpen) {
                     startShopTransition = true;
                 }
             }
 
             @Override
             public void clicked() {
-                if(!isDialogOpen) {
+                if (!isDialogOpen) {
                     startShopTransition = true;
+                    resetPauseDialog();
                 }
             }
         });
 
         btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {}
+            public void touchUp() {
+            }
 
             @Override
-            public void touchDown() {}
+            public void touchDown() {
+            }
 
             @Override
             public void clicked() {
-                if(!isDialogOpen) {
+                if (!isDialogOpen) {
                     isDialogOpen = true;
                     settings.show();
                 }
@@ -201,11 +210,13 @@ public class MenuScreenScript implements IScript {
             @Override
             public void clicked() {
                 if (!isDialogOpen) {
-//                    isDialogOpen = true;
+                    isDialogOpen = true;
                     showGoalNotification = false;
                     Level.goalStatusChanged = false;
                     Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
                     lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
+                    pauseDialog.show();
                 }
             }
         });
@@ -221,13 +232,14 @@ public class MenuScreenScript implements IScript {
         GameScreenScript.checkTryPeriod();
         timer.timer();
 
-        if(startGameTransition){
-            curtain_mm.getComponent(TintComponent.class).color.a+=0.05f;
-            if (curtain_mm.getComponent(TintComponent.class).color.a>=1){
+        pauseDialog.update(delta);
+        if (startGameTransition) {
+            curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
+            if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startGameTransition = false;
                 stage.initGame();
-    }
-}
+            }
+        }
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
@@ -247,5 +259,9 @@ public class MenuScreenScript implements IScript {
 
     private void rateMyApp() {
         Main.mainController.rateMyApp();
+    }
+
+    public void resetPauseDialog() {
+        pauseDialog.deleteTiles();
     }
 }

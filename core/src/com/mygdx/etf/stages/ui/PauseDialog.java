@@ -79,9 +79,10 @@ public class PauseDialog extends AbstractDialog {
         initShadow();
 
         lblPauseTimer = gameItem.getChild(LBL_PAUSE_TIMER).getEntity();
-        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
-                lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
-
+        if (lblPauseTimer != null) {
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+        }
         createGoalTiles();
     }
 
@@ -89,19 +90,23 @@ public class PauseDialog extends AbstractDialog {
         close(pauseDialogE);
         pauseTimer = 0;
         pauseCounter = PAUSE_COUNT - 1;
-        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
-                lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
-                String.valueOf(PAUSE_COUNT));
+        if (lblPauseTimer != null) {
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
+                    String.valueOf(PAUSE_COUNT));
+        }
     }
 
-    public void show(){
+    public void show() {
         isPause = true;
         isActive = true;
         pauseCounter = 10;
         addShadow();
 
-        lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
-                lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+        if (lblPauseTimer != null) {
+            lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
+                    lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+        }
 
         final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
@@ -123,21 +128,22 @@ public class PauseDialog extends AbstractDialog {
         pauseDialogE.add(ac);
     }
 
-    private List<Entity> getTileEntities (Entity pauseDialogE){
+    private List<Entity> getTileEntities(Entity pauseDialogE) {
         List<Entity> tiles = new ArrayList<>();
         NodeComponent nc = pauseDialogE.getComponent(NodeComponent.class);
-        for (Entity e : nc.children){
-            if (e.getComponent(MainItemComponent.class).tags.contains(TILE_TAG)){
+        for (Entity e : nc.children) {
+            if (e.getComponent(MainItemComponent.class).tags.contains(TILE_TAG)) {
                 tiles.add(e);
             }
         }
         return tiles;
     }
+
     private void createGoalTiles() {
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
         for (Goal goal : gameScript.fpc.level.getGoals()) {
-         Entity tile = tileEntities.get(i++); //TODO: out of bound exception
+            Entity tile = tileEntities.get(i++); //TODO: out of bound exception
 //            CompositeItemVO tempC;
 //            tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
 //
@@ -146,7 +152,7 @@ public class PauseDialog extends AbstractDialog {
 //            tile.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //            pauseDialogE.getComponent(NodeComponent.class).addChild(tile);
 //            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
- 
+
             NodeComponent nc = tile.getComponent(NodeComponent.class);
             for (Entity e : nc.children) {
                 if (e.getComponent(LabelComponent.class) != null) {
@@ -157,7 +163,7 @@ public class PauseDialog extends AbstractDialog {
             }
             tiles.put(goal, tile);
         }
-        while (i < tileEntities.size()){
+        while (i < tileEntities.size()) {
             tileEntities.get(i++).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
@@ -191,7 +197,7 @@ public class PauseDialog extends AbstractDialog {
 //            fade(tile, pauseCounter > PAUSE_COUNT);
 //        }
 
-        if (pauseCounter == 0 && isPause && pauseTimer >= 1) {
+        if (pauseCounter == 0 && isPause && pauseTimer >= 1 && lblPauseTimer != null) {
             isPause = false;
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
@@ -206,13 +212,13 @@ public class PauseDialog extends AbstractDialog {
             tapCoolDown--;
 
 
-            if (pauseTimer >= 1) {
+            if (pauseTimer >= 1 && lblPauseTimer != null) {
                 pauseTimer = 0;
                 lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                         lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                         String.valueOf(pauseCounter--));
             }
-        } else if (pauseTimer >= 1){
+        } else if (pauseTimer >= 1 && lblPauseTimer != null) {
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
