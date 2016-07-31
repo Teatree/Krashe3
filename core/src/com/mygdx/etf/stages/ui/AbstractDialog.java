@@ -44,7 +44,7 @@ public class AbstractDialog {
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
         shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
-        sceneLoader.getEngine().addEntity(shadowE);
+//        sceneLoader.getEngine().addEntity(shadowE);
         shadowE.getComponent(TintComponent.class).color.a = 0;
 
         ActionComponent ac = new ActionComponent();
