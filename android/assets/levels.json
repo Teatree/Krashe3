@@ -27,7 +27,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 30
 	}
@@ -61,7 +66,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 45
 	}
@@ -95,7 +105,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 45
 	}
@@ -129,7 +144,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 45
 	}
@@ -163,7 +183,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 45
 	}
@@ -197,7 +222,12 @@
 	rewardChanceGroups: {
 		class: java.util.HashMap,
 		PHOENIX: 15,
-		MONEY: 55,
+		MONEY_50: 55,
+		MONEY_100: 0,
+		MONEY_150: 0,
+		MONEY_200: 0,
+		MONEY_250: 0,
+		MONEY_300: 0,
 		PET: 0,
 		BJ_DOUBLE: 45
 	}

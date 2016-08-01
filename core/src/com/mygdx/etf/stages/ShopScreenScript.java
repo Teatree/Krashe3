@@ -2,12 +2,13 @@ package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.Upgrade;
+import com.mygdx.etf.stages.listeners.ShopTabListener;
 import com.mygdx.etf.stages.ui.Preview;
+import com.mygdx.etf.stages.listeners.ShopUpgrTabListener;
 import com.mygdx.etf.system.ParticleLifespanSystem;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
@@ -15,7 +16,6 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -63,10 +63,9 @@ public class ShopScreenScript implements IScript {
     float stopVelocity;
     private GameStage stage;
     private ItemWrapper shopItem;
-    private Entity hcSectionE;
-    private Entity btnShop;
-    private Entity btnUpg;
-    private static int initCounter;
+    public Entity hcSectionE;
+    public Entity btnShop;
+    public Entity btnUpg;
 
     public ShopScreenScript(GameStage stage) {
         this.stage = stage;
@@ -109,206 +108,11 @@ public class ShopScreenScript implements IScript {
         btnShop.getComponent(ButtonComponent.class).enable = false;
         btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
         btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = false;
-        btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                if (!isPreviewOn) {
-                    LayerMapComponent lc = btnShop.getComponent(LayerMapComponent.class);
-                    if (lc.getLayer(BTN_NORMAL).isVisible) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                    } else {
-                        lc.getLayer(BTN_NORMAL).isVisible = false;
-                        lc.getLayer(BTN_PRESSED).isVisible = true;
-                    }
-                }
-            }
-
-            @Override
-            public void touchDown() {
-                if (!isPreviewOn) {
-                    LayerMapComponent lc = btnShop.getComponent(LayerMapComponent.class);
-                    if (lc.getLayer(BTN_NORMAL).isVisible) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                    } else {
-                        lc.getLayer(BTN_NORMAL).isVisible = false;
-                        lc.getLayer(BTN_PRESSED).isVisible = true;
-                    }
-                }
-            }
-
-            @Override
-            public void clicked() {
-                if (!isPreviewOn) {
-                    if (btnShop.getComponent(ButtonComponent.class).enable) {
-                        changeTabBtnsLayers();
-                        shiftHCsections();
-                        shiftBags();
-                        shiftTouchZone();
-                    } else {
-                        LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
-                        lc1.getLayer(BTN_NORMAL).isVisible = false;
-                        lc1.getLayer(BTN_PRESSED).isVisible = true;
-                    }
-                }
-            }
-
-            private void shiftHCsections() {
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-                ac.dataArray.add(
-                        Actions.moveTo(INIT_HC_ITEMS_X, hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
-                hcSectionE.add(ac);
-            }
-
-            private void shiftTouchZone() {
-                ActionComponent acTouchZone = new ActionComponent();
-                Actions.checkInit();
-
-                acTouchZone.dataArray.add(
-                        Actions.moveTo(1300, touchZone.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
-                touchZone.add(acTouchZone);
-            }
-
-            private void shiftBags() {
-                float bagsShift = 73 - bags.get(0).getComponent(TransformComponent.class).x;
-                for (Entity bag : bags) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
-
-                    a.dataArray.add(
-                            Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227 + bagsShift,
-                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-                    bag.add(a);
-                }
-                shiftIcons(bagsShift);
-            }
-
-            private void shiftIcons(float bagsShift) {
-                for (Entity icon : itemIcons.values()) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
-
-                    a.dataArray.add(
-                            Actions.moveTo(icon.getComponent(TransformComponent.class).x + 1227 + bagsShift,
-                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-
-                    icon.add(a);
-                }
-            }
-
-            private void changeTabBtnsLayers() {
-                btnUpg.getComponent(ButtonComponent.class).enable = true;
-                LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-
-                btnShop.getComponent(ButtonComponent.class).enable = false;
-                LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
-                lc1.getLayer(BTN_NORMAL).isVisible = false;
-                lc1.getLayer(BTN_PRESSED).isVisible = true;
-            }
-        });
+        btnShop.getComponent(ButtonComponent.class).addListener(new ShopTabListener(this));
 
         btnUpg = shopItem.getChild(TAB_BTN_UPG).getEntity();
         btnUpg.getComponent(ButtonComponent.class).enable = true;
-        btnUpg.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                if (!isPreviewOn) {
-                    LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
-                    if (isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                    } else {
-                        lc.getLayer(BTN_NORMAL).isVisible = false;
-                        lc.getLayer(BTN_PRESSED).isVisible = true;
-                    }
-                }
-            }
-
-            @Override
-            public void touchDown() {
-                if (!isPreviewOn) {
-                    LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
-                    if (isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                    } else {
-                        lc.getLayer(BTN_NORMAL).isVisible = false;
-                        lc.getLayer(BTN_PRESSED).isVisible = true;
-                    }
-                }
-            }
-
-            @Override
-            public void clicked() {
-
-                if (!isPreviewOn) {
-                    if (btnUpg.getComponent(ButtonComponent.class).enable) {
-                        changeTabBtnsLayers();
-                        switchScreenToUpgrds();
-                    } else if (!isPreviewOn) {
-                        LayerMapComponent lc1 = btnUpg.getComponent(LayerMapComponent.class);
-                        lc1.getLayer(BTN_PRESSED).isVisible = true;
-                        lc1.getLayer(BTN_NORMAL).isVisible = false;
-                    }
-                }
-            }
-
-            private void changeTabBtnsLayers() {
-                btnUpg.getComponent(ButtonComponent.class).enable = false;
-                LayerMapComponent lc = btnUpg.getComponent(LayerMapComponent.class);
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-
-                btnShop.getComponent(ButtonComponent.class).enable = true;
-                LayerMapComponent lc1 = btnShop.getComponent(LayerMapComponent.class);
-                lc1.getLayer(BTN_NORMAL).isVisible = true;
-                lc1.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            private void switchScreenToUpgrds() {
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-
-                ac.dataArray.add(
-                        Actions.moveTo(-1300, hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
-                hcSectionE.add(ac);
-
-                for (Entity bag : bags) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
-
-                    a.dataArray.add(
-                            Actions.moveTo(bag.getComponent(TransformComponent.class).x - 1227,
-                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-                    bag.add(a);
-                }
-
-                for (Entity icon : itemIcons.values()) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
-
-                    a.dataArray.add(
-                            Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
-                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-
-                    icon.add(a);
-                }
-                ActionComponent acTouchZone = new ActionComponent();
-                Actions.checkInit();
-
-                acTouchZone.dataArray.add(
-                        Actions.moveTo(0, touchZone.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
-                touchZone.add(acTouchZone);
-            }
-        });
+        btnUpg.getComponent(ButtonComponent.class).addListener(new ShopUpgrTabListener(this));
     }
 
     private void getAllAllVanities() {

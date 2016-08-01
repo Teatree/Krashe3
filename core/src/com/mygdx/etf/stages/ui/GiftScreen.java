@@ -164,6 +164,13 @@ public class GiftScreen {
     public static class Gift {
 
         public static final String MONEY = "MONEY";
+        public static final String MONEY_50 = "MONEY_50";
+        public static final String MONEY_100 = "MONEY_100";
+        public static final String MONEY_150 = "MONEY_150";
+        public static final String MONEY_200 = "MONEY_200";
+        public static final String MONEY_250 = "MONEY_250";
+        public static final String MONEY_300 = "MONEY_300";
+
         public static final String PET = "PET";
         public static final String PET_2 = "PET2";
         public static final String PET_3 = "PET3";
@@ -187,18 +194,34 @@ public class GiftScreen {
                 gift = getPetGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(PET_2)) {
-                gift = getPet2Gift();;
-            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_2) &&
+                gift = getPet2Gift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_2) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(PET_3)) {
                 gift = getPet3Gift();
-            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_3) &&
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_3) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
                 gift = getPhoenixGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE)) {
                 gift = getDoubleJuiceGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) &&
-                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY)) {
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_50)) {
+                gift = getRandomMoneyGift();
+            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_50) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_100)) {
+                gift = getRandomMoneyGift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_100) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_150)) {
+                gift = getRandomMoneyGift();
+            }
+            else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_150) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_200)) {
+                gift = getRandomMoneyGift();
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_200) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
+                gift = getRandomMoneyGift();
+            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_300)) {
                 gift = getRandomMoneyGift();
             }
             return gift;
