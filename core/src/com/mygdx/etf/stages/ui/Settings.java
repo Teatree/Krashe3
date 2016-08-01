@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
 import com.mygdx.etf.stages.GameStage;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -35,7 +32,7 @@ public class Settings extends AbstractDialog {
     public static final String BTN_SOUND = "btn_sound";
     public static final String BTN_NO_ADS = "btn_noAds";
 
-    public static final int SETTINGS_Y = 50;
+    public static final int SETTINGS_Y = 30;
     public static final int SETTINGS_X = 260;
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
@@ -51,6 +48,8 @@ public class Settings extends AbstractDialog {
 
     public void init() {
         settingsE = gameItem.getChild(SETTINGS).getEntity();
+        settingsE.getComponent(TransformComponent.class).scaleX = 0.9f;
+        settingsE.getComponent(TransformComponent.class).scaleY = 0.9f;
         Entity closeSettingsBtn = gameItem.getChild(SETTINGS).getChild(BTN_CLOSE_SETTINGS).getEntity();
         Entity btnNoAds = gameItem.getChild(SETTINGS).getChild(BTN_NO_ADS).getEntity();
         Entity nextInfoBtn = gameItem.getChild(SETTINGS).getChild(BTN_NEXT_INFO).getEntity();
@@ -63,6 +62,8 @@ public class Settings extends AbstractDialog {
         infoE = gameItem.getChild(INFO).getEntity();
         infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
         infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
+        infoE.getComponent(TransformComponent.class).scaleX = 0.9f;
+        infoE.getComponent(TransformComponent.class).scaleY = 0.9f;
 
         Entity closeInfoBtn = gameItem.getChild(INFO).getChild(BTN_CLOSE_INFO).getEntity();
         Entity backBtn = gameItem.getChild(INFO).getChild(BTN_BACK_SETTINGS).getEntity();
@@ -129,12 +130,12 @@ public class Settings extends AbstractDialog {
                     infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
                     ActionComponent acSettings = new ActionComponent();
                     Actions.checkInit();
-                    acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, 1, Interpolation.exp10));
+                    acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                     settingsE.add(acSettings);
 
                     ActionComponent acInfo = new ActionComponent();
                     Actions.checkInit();
-                    acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, 1, Interpolation.exp10));
+                    acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                     infoE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
                     infoE.add(acInfo);
                 }
@@ -152,12 +153,12 @@ public class Settings extends AbstractDialog {
             public void clicked() {
                 ActionComponent acSettings = new ActionComponent();
                 Actions.checkInit();
-                acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, 1, Interpolation.exp10));
+                acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                 settingsE.add(acSettings);
 
                 ActionComponent acInfo = new ActionComponent();
                 Actions.checkInit();
-                acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, 1, Interpolation.exp10));
+                acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                 infoE.add(acInfo);
             }
         });
@@ -207,12 +208,12 @@ public class Settings extends AbstractDialog {
         isActive = true;
         addShadow();
         settingsE.getComponent(TransformComponent.class).x = SETTINGS_X;
-        settingsE.getComponent(TransformComponent.class).y = 450;
+        settingsE.getComponent(TransformComponent.class).y = 460;
         settingsE.getComponent(ZIndexComponent.class).setZIndex(100);
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);
 
 //        setMusicBtnState(gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity());

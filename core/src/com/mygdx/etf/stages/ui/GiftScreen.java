@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.etf.stages.GameScreenScript.isGameOver;
+import static com.mygdx.etf.stages.GameStage.GAME;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.utils.EffectUtils.fade;
@@ -164,21 +165,15 @@ public class GiftScreen {
 
         public static final String MONEY = "MONEY";
         public static final String PET = "PET";
+        public static final String PET_2 = "PET2";
+        public static final String PET_3 = "PET3";
+
         public static final String PHOENIX = "PHOENIX";
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
 
         public static final int ONE_HOUR = 3600000;
 
-        //        public static HashMap<String, Integer> rewardChanceGroups;
         private static Random random = new Random();
-
-//        static {
-//            rewardChanceGroups = new HashMap<>();
-//            rewardChanceGroups.put(Gift.PET, 0);
-//            rewardChanceGroups.put(Gift.PHOENIX, 15);
-//            rewardChanceGroups.put(Gift.BJ_DOUBLE, 30);
-//            rewardChanceGroups.put(Gift.MONEY, 100);
-//        }
 
         public PetComponent pet;
         public int money;
@@ -191,6 +186,12 @@ public class GiftScreen {
             if (i > 0 && i <= gameScript.fpc.level.rewardChanceGroups.get(PET)) {
                 gift = getPetGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(PET_2)) {
+                gift = getPet2Gift();;
+            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_2) &&
+                    i <= gameScript.fpc.level.rewardChanceGroups.get(PET_3)) {
+                gift = getPet3Gift();
+            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_3) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
                 gift = getPhoenixGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) &&
@@ -205,7 +206,7 @@ public class GiftScreen {
 
         public static Gift getRandomMoneyGift() {
             Gift gift = new Gift();
-            int moneyIndex = random.nextInt(5);
+            int moneyIndex = random.nextInt(moneySums.size());
             gift.money = moneySums.get(moneyIndex);
             gift.type = MONEY;
             return gift;
@@ -214,7 +215,35 @@ public class GiftScreen {
         public static Gift getPetGift() {
             Gift gift = new Gift();
             PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
-            if (!pet.enabled && !pet.bought) {
+            if (!pet.bought) {
+                gift.pet = pet;
+                gift.pet.tryPeriod = true;
+                gift.pet.tryPeriodDuration = ONE_HOUR;
+                gift.type = PET;
+                return gift;
+            } else {
+                return getRandomMoneyGift();
+            }
+        }
+
+        public static Gift getPet2Gift() {
+            Gift gift = new Gift();
+            PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+            if (!pet.bought) {
+                gift.pet = pet;
+                gift.pet.tryPeriod = true;
+                gift.pet.tryPeriodDuration = ONE_HOUR;
+                gift.type = PET;
+                return gift;
+            } else {
+                return getRandomMoneyGift();
+            }
+        }
+
+        public static Gift getPet3Gift() {
+            Gift gift = new Gift();
+            PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+            if (!pet.bought) {
                 gift.pet = pet;
                 gift.pet.tryPeriod = true;
                 gift.pet.tryPeriodDuration = ONE_HOUR;

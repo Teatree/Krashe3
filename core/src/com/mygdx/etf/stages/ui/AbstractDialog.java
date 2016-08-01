@@ -22,6 +22,7 @@ public class AbstractDialog {
 
     public static final String LIB_SHADOW = "lib_shadow";
     public static final int HIDE_Y = 900;
+    public static final float POPUP_MOVE_DURATION = 1.6f;
 
     protected ItemWrapper gameItem;
     protected Entity shadowE;

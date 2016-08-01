@@ -24,7 +24,7 @@ import static com.mygdx.etf.utils.EffectUtils.getTouchCoordinates;
 import static com.mygdx.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
-public class Preview {
+public class Preview extends AbstractDialog {
 
     public static final String PREVIEW = "previewTag";
     public static final String ITEM_UNKNOWN = "item_unknown_n";
@@ -39,13 +39,13 @@ public class Preview {
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
     public static final String TAG_NOT_NUFF = "tag_notNuff";
-    public static final String SHADOW_LIB = "shadow_lib";
 
     public static final int ICON_X = 465;
     public static final int ICON_X_RELATIVE = 220;
     public static final int ICON_Y_RELATIVE = 280;
     public static final int PREVIEW_X = 260;
     public static final int PREVIEW_Y = 30;
+    public static final float PREVIEW_SCALE = 0.9f;
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
@@ -53,7 +53,6 @@ public class Preview {
     public Entity lbl_price;
     public Entity lbl_not_enough;
     public Entity bg;
-    public Entity shadowE;
     private Entity iconE;
     private Entity btnLeft;
     private Entity btnNext;
@@ -78,6 +77,7 @@ public class Preview {
         btnNext.getComponent(TransformComponent.class).y += btnNext.getComponent(DimensionsComponent.class).height;
 
         previewE.getComponent(ZIndexComponent.class).setZIndex(51);
+        initShadow();
     }
 
     public void initBoughtPreviewIcon(boolean playAni) {
@@ -118,8 +118,8 @@ public class Preview {
         TransformComponent preview_tc = previewE.getComponent(TransformComponent.class);
         preview_tc.x = PREVIEW_X;
         preview_tc.y = PREVIEW_Y;
-        preview_tc.scaleX = 0.9f;
-        preview_tc.scaleY = 0.9f;
+        preview_tc.scaleX = PREVIEW_SCALE;
+        preview_tc.scaleY = PREVIEW_SCALE;
     }
 
     public void setLabelsValues() {
@@ -165,7 +165,6 @@ public class Preview {
 
     public void showPreview(ShopItem vc, boolean jump, boolean justBoughtAni) {
         this.vc = vc;
-
         isPreviewOn = true;
         setLabelsValues();
 
@@ -216,21 +215,21 @@ public class Preview {
         previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+10);
     }
 
-    private void addShadow() {
-        if (shadowE == null) {
-            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
-            shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
-        }
-        shadowE.getComponent(TransformComponent.class).x = 0;
-        shadowE.getComponent(TransformComponent.class).y = 0;
-        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
-        shadowE.getComponent(TintComponent.class).color.a = 0;
-        Actions.checkInit();
-        ActionComponent ac = new ActionComponent();
-        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
-        shadowE.add(ac);
-    }
+//    private void addShadow() {
+//        if (shadowE == null) {
+//            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
+//            shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
+//        }
+//        shadowE.getComponent(TransformComponent.class).x = 0;
+//        shadowE.getComponent(TransformComponent.class).y = 0;
+//        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
+//        shadowE.getComponent(TintComponent.class).color.a = 0;
+//        Actions.checkInit();
+//        ActionComponent ac = new ActionComponent();
+//        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
+//        shadowE.add(ac);
+//    }
 
     public void initBuyButton(final ShopItem vc) {
         final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();

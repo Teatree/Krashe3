@@ -1,6 +1,7 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.stages.ui.PauseDialog;
@@ -125,21 +126,6 @@ public class MenuScreenScript implements IScript {
                 rateMyApp();
             }
         });
-//        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//            @Override
-//            public void touchUp() {}
-//
-//            @Override
-//            public void touchDown() {}
-//
-//            @Override
-//            public void clicked() {
-//                if(!isDialogOpen) {
-//                    Main.mainController.removeAds();
-//                }
-//            }
-//        });
-
 
         playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -152,6 +138,7 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
+                System.out.println(Gdx.app.getJavaHeap()/1000000);
                 if (!isDialogOpen) {
                     startGameTransition = true;
                 }

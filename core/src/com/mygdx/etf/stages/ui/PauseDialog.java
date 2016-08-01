@@ -124,7 +124,7 @@ public class PauseDialog extends AbstractDialog {
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(PAUSE_X, PAUSE_Y, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveTo(PAUSE_X, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         pauseDialogE.add(ac);
     }
 
@@ -228,7 +228,7 @@ public class PauseDialog extends AbstractDialog {
     public void deleteTiles() {
         if (tiles != null && !tiles.isEmpty()) {
             for (Entity e : tiles.values()) {
-                sceneLoader.getEngine().removeEntity(e);
+                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
         }
     }

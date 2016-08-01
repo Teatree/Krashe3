@@ -118,7 +118,7 @@ public class BasicDialog extends AbstractDialog{
         }
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         dialogE.add(ac);
     }
 

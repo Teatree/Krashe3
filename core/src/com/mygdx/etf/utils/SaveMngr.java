@@ -88,13 +88,13 @@ public class SaveMngr {
     }
 
     private static void saveOtherPets(FlowerPublicComponent fc) {
-        List<PetJson> vanities = new ArrayList<PetJson>();
+        List<PetJson> pets = new ArrayList<PetJson>();
         for (PetComponent petComp : fc.pets) {
             PetJson pet = new PetJson(petComp);
-            vanities.add(pet);
+            pets.add(pet);
         }
         Json json2 = new Json();
-        writeFile(PETS_FILE, json2.toJson(vanities));
+        writeFile(PETS_FILE, json2.toJson(pets));
     }
 
     public static FlowerPublicComponent loadStats() {
