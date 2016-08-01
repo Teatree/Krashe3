@@ -1,6 +1,6 @@
 [{
 	class: com.mygdx.etf.utils.SaveMngr$LevelInfo,
-	name: Novice,
+	name: NOVICE,
 	difficultyLevel: 1,
 	maxGoalsAmount: 4,
 	minGoalsAmount: 3,
@@ -39,7 +39,7 @@
 },
 {
 	class: com.mygdx.etf.utils.SaveMngr$LevelInfo,
-	name: Beginner,
+	name: BEGINNER,
 	difficultyLevel: 2,
 	maxGoalsAmount: 4,
 	minGoalsAmount: 3,

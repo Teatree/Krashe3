@@ -26,15 +26,16 @@ public class PauseDialog extends AbstractDialog {
 
     public static final String PAUSE_DIALOG = "dialog";
     public static final String LBL_DIALOG = "lbl_dialog";
+    public static final String LBL_DIALOG_S = "lbl_dialog_2";
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
 
-    public static final int PAUSE_Y = 30;
-    public static final int PAUSE_X = 300;
-    public static final int GOAL_TILE_START_Y = 460;
-    public static final int GOAL_TILE_SPACE_X = 100;
-    public static final float GOAL_TILE_SCALE = 0.7f;
+    public static final int PAUSE_Y = 50;
+    public static final int PAUSE_X = 260;
+    public static final int GOAL_TILE_START_Y = 440;
+    public static final int GOAL_TILE_SPACE_X = 170;
+    public static final float GOAL_TILE_SCALE = 1f;
     public static final int GOAL_TILE_STEP_Y = 110;
     public static final int TAP_COOLDOWN = 30;
     public static final int PAUSE_COUNT = 3;
@@ -108,9 +109,13 @@ public class PauseDialog extends AbstractDialog {
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
         }
 
+        final Entity goalLabels = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG_S).getEntity();
+        LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
+        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
+
         final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
@@ -158,7 +163,7 @@ public class PauseDialog extends AbstractDialog {
                 if (e.getComponent(LabelComponent.class) != null) {
                     e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                             goal.getDescription());
-                    e.getComponent(ZIndexComponent.class).setZIndex(120);
+//                    e.getComponent(ZIndexComponent.class).setZIndex(120);
                 }
             }
             tiles.put(goal, tile);
@@ -171,13 +176,13 @@ public class PauseDialog extends AbstractDialog {
     private void showGoalTile(int y, Entity tile, Goal goal) {
         tile.getComponent(TransformComponent.class).x = GOAL_TILE_SPACE_X;
         tile.getComponent(TransformComponent.class).y = y;
-        tile.getComponent(TransformComponent.class).scaleY = GOAL_TILE_SCALE;
+//        tile.getComponent(TransformComponent.class).scaleY = GOAL_TILE_SCALE;
 
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         for (Entity e : nc.children) {
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
             if (sc != null) {
-                sc.scale = 0.8f;
+//                sc.scale = 0.8f;
                 if (goal.achieved) {
                     sc.player.setTime(sc.player.getAnimation().length - 2);
                     sc.player.speed = 0;

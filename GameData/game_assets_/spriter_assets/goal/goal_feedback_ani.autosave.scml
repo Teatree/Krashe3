@@ -48,58 +48,58 @@
             </mainline>
             <timeline id="0" name="button_back_off">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-298" y="90"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0"/>
                 </key>
                 <key id="1" time="40" spin="0">
-                    <object folder="0" file="0" x="-298" y="90"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0"/>
                 </key>
                 <key id="2" time="99" spin="0">
-                    <object folder="0" file="0" x="-298" y="90" a="0"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0" a="0"/>
                 </key>
                 <key id="3" time="160" spin="0">
-                    <object folder="0" file="0" x="-298" y="90"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0"/>
                 </key>
                 <key id="4" time="219" spin="0">
-                    <object folder="0" file="0" x="-298" y="90" a="0"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0" a="0"/>
                 </key>
                 <key id="5" time="400" spin="0">
-                    <object folder="0" file="0" x="-298" y="90" a="0"/>
+                    <object folder="0" file="0" x="-298" y="90" angle="0" a="0"/>
                 </key>
             </timeline>
             <timeline id="1" name="emptyStar">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4"/>
                 </key>
                 <key id="1" time="40" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4"/>
                 </key>
                 <key id="2" time="99" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4" a="0"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4" a="0"/>
                 </key>
                 <key id="3" time="160" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4"/>
                 </key>
                 <key id="4" time="219" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4" a="0"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4" a="0"/>
                 </key>
                 <key id="5" time="400" spin="0">
-                    <object folder="0" file="3" x="-269.345725" y="54.319703" scale_x="0.4" scale_y="0.4" a="0"/>
+                    <object folder="0" file="3" x="-269.345725" y="54.319703" angle="0" scale_x="0.4" scale_y="0.4" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="button_back_on_000">
                 <key id="0" spin="0">
-                    <object folder="0" file="1" x="-298" y="90"/>
+                    <object folder="0" file="1" x="-298" y="90" angle="0"/>
                 </key>
                 <key id="1" time="40" spin="0">
-                    <object folder="0" file="1" x="-298" y="90"/>
+                    <object folder="0" file="1" x="-298" y="90" angle="0"/>
                 </key>
             </timeline>
             <timeline id="3" name="star_000">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="-269.34572" y="54.3197" scale_x="0.4" scale_y="0.4"/>
+                    <object folder="0" file="2" x="-269.34572" y="54.3197" angle="0" scale_x="0.4" scale_y="0.4"/>
                 </key>
                 <key id="1" time="40" spin="0">
-                    <object folder="0" file="2" x="-269.34572" y="54.3197" scale_x="0.4" scale_y="0.4"/>
+                    <object folder="0" file="2" x="-269.34572" y="54.3197" angle="0" scale_x="0.4" scale_y="0.4"/>
                 </key>
             </timeline>
         </animation>

@@ -32,7 +32,7 @@ public class Settings extends AbstractDialog {
     public static final String BTN_SOUND = "btn_sound";
     public static final String BTN_NO_ADS = "btn_noAds";
 
-    public static final int SETTINGS_Y = 30;
+    public static final int SETTINGS_Y = 50;
     public static final int SETTINGS_X = 260;
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
@@ -48,8 +48,8 @@ public class Settings extends AbstractDialog {
 
     public void init() {
         settingsE = gameItem.getChild(SETTINGS).getEntity();
-        settingsE.getComponent(TransformComponent.class).scaleX = 0.9f;
-        settingsE.getComponent(TransformComponent.class).scaleY = 0.9f;
+//        settingsE.getComponent(TransformComponent.class).scaleX = 0.9f;
+//        settingsE.getComponent(TransformComponent.class).scaleY = 0.9f;
         Entity closeSettingsBtn = gameItem.getChild(SETTINGS).getChild(BTN_CLOSE_SETTINGS).getEntity();
         Entity btnNoAds = gameItem.getChild(SETTINGS).getChild(BTN_NO_ADS).getEntity();
         Entity nextInfoBtn = gameItem.getChild(SETTINGS).getChild(BTN_NEXT_INFO).getEntity();
@@ -62,8 +62,8 @@ public class Settings extends AbstractDialog {
         infoE = gameItem.getChild(INFO).getEntity();
         infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
         infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
-        infoE.getComponent(TransformComponent.class).scaleX = 0.9f;
-        infoE.getComponent(TransformComponent.class).scaleY = 0.9f;
+//        infoE.getComponent(TransformComponent.class).scaleX = 0.9f;
+//        infoE.getComponent(TransformComponent.class).scaleY = 0.9f;
 
         Entity closeInfoBtn = gameItem.getChild(INFO).getChild(BTN_CLOSE_INFO).getEntity();
         Entity backBtn = gameItem.getChild(INFO).getChild(BTN_BACK_SETTINGS).getEntity();
