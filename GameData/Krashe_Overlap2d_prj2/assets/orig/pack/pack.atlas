@@ -112,7 +112,7 @@ btntextoff
   index: -1
 bugjuicebubble
   rotate: false
-  xy: 2, 33
+  xy: 136, 33
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
@@ -380,6 +380,13 @@ progressbarframe
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
+  offset: 0, 0
+  index: -1
+rateus
+  rotate: false
+  xy: 2, 6
+  size: 132, 60
+  orig: 132, 60
   offset: 0, 0
   index: -1
 sludge
