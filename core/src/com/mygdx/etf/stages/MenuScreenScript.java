@@ -123,7 +123,9 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                rateMyApp();
+                if (!isDialogOpen) {
+                    rateMyApp();
+                }
             }
         });
 
