@@ -216,7 +216,7 @@ public class GoalFeedbackScreen {
 
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         for (Entity e : nc.children) {
-            if (e.getComponent(LabelComponent.class) != null) {
+            if (e.getComponent(LabelComponent.class) != null && e.getComponent(LabelComponent.class).textEquals("ERROR MESSAGES ARE SO COOL")) {
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
                 e.getComponent(ZIndexComponent.class).setZIndex(120);

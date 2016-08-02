@@ -99,6 +99,14 @@ public class Goal {
         return description.replace("#", " " + n + " ") + " " + periodType;
     }
 
+    public int getN() {
+        return n;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
     public enum PeriodType {
         IN_ONE_LIFE(5),
         TOTAL(1);

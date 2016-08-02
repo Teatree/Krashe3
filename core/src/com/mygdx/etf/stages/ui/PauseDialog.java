@@ -27,6 +27,7 @@ public class PauseDialog extends AbstractDialog {
     public static final String PAUSE_DIALOG = "dialog";
     public static final String LBL_DIALOG = "lbl_dialog";
     public static final String LBL_DIALOG_S = "lbl_dialog_2";
+    public static final String LBL_GOAL_PROGRESS = "goal_progress";
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
@@ -49,6 +50,8 @@ public class PauseDialog extends AbstractDialog {
     public float pauseTimer = 0;
     public int pauseCounter = 10;
     private int tapCoolDown = 30;
+
+    private String goalProgressValue;
 
     public PauseDialog(ItemWrapper gameItem) {
         tiles = new HashMap<>();
@@ -158,11 +161,24 @@ public class PauseDialog extends AbstractDialog {
 //            pauseDialogE.getComponent(NodeComponent.class).addChild(tile);
 //            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
 
+            goalProgressValue = String.valueOf(goal.getCounter());
             NodeComponent nc = tile.getComponent(NodeComponent.class);
             for (Entity e : nc.children) {
+
+                if (goal.getCounter() >= goal.getN()) {
+                    goalProgressValue = "Completed";
+                }else{
+                    goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+                }
+
                 if (e.getComponent(LabelComponent.class) != null) {
-                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                            goal.getDescription());
+                    if (e.getComponent(LabelComponent.class).textEquals("ERROR MESSAGES ARE SO COOL")) { //checks if the right label is being used
+                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                                goal.getDescription());
+                    }else{
+                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                                goalProgressValue);
+                    }
 //                    e.getComponent(ZIndexComponent.class).setZIndex(120);
                 }
             }
@@ -181,6 +197,20 @@ public class PauseDialog extends AbstractDialog {
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         for (Entity e : nc.children) {
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
+
+            if (goal.getCounter() >= goal.getN()) {
+                goalProgressValue = "Completed";
+            }else{
+                goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+            }
+
+            if (e.getComponent(LabelComponent.class) != null) {
+                if (e.getComponent(LabelComponent.class).getText().toString().contains("Progress")) { //checks if the right label is being used
+                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                            goalProgressValue);
+                }
+            }
+
             if (sc != null) {
 //                sc.scale = 0.8f;
                 if (goal.achieved) {
