@@ -63,7 +63,10 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     protected void end(Entity entity) {
         gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
-                gameScript.fpc.score + "/" + gameScript.fpc.totalScore);
+                        "" + gameScript.fpc.score);
+        gameScript.scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
+                gameScript.scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" +
+                        "" + gameScript.fpc.score);
         GameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 

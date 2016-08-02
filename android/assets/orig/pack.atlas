@@ -502,72 +502,100 @@ btnnooff
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettings
+btnpause
   rotate: false
   xy: 195, 124
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettingsoff
+btnpauseoff
   rotate: false
   xy: 997, 330
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshop
+btnsettings
   rotate: false
   xy: 1776, 558
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshopoff
+btnsettingsoff
   rotate: false
   xy: 1847, 631
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsound
+btnshop
   rotate: false
   xy: 1918, 704
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundno
+btnshopoff
   rotate: false
   xy: 266, 124
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundoff
+btnsound
   rotate: false
   xy: 1068, 330
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundoffno
+btnsoundno
   rotate: false
   xy: 1847, 558
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnyes
+btnsoundoff
   rotate: false
   xy: 1918, 631
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnyesoff
+btnsoundoffno
   rotate: false
   xy: 337, 124
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnup
+  rotate: false
+  xy: 1139, 330
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnupoff
+  rotate: false
+  xy: 1918, 558
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnyes
+  rotate: false
+  xy: 408, 124
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnyesoff
+  rotate: false
+  xy: 1210, 330
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -663,7 +691,7 @@ shopitem1off
   index: -1
 starY
   rotate: false
-  xy: 1139, 336
+  xy: 479, 130
   size: 65, 65
   orig: 65, 65
   offset: 0, 0
