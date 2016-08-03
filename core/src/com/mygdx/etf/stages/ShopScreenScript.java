@@ -31,6 +31,7 @@ public class ShopScreenScript implements IScript {
     public static final String SCORE_LBL = "score_lbl";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_SHOP_ICON_LIB = "btn_shop_icon_lib";
+    public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
     public static final String DOT_LIB = "dot_lib";
@@ -175,7 +176,7 @@ public class ShopScreenScript implements IScript {
     private void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
-            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_SHOP_ICON_LIB).clone();
+            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
@@ -191,7 +192,7 @@ public class ShopScreenScript implements IScript {
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
-            shopItem.getChild(BTN_SHOP_ICON_LIB).addChild(itemIcon);
+            shopItem.getChild(BTN_IMG_SHOP_ICON_LIB).addChild(itemIcon);
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x;
             tcb.y = tc.y;
