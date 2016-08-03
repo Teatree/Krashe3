@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.*;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.*;
 import com.mygdx.etf.system.*;
 import com.mygdx.etf.utils.CameraShaker;
@@ -284,7 +285,16 @@ public class GameScreenScript implements IScript {
         backBtn.getComponent(TransformComponent.class).x = 10;
         backBtn.getComponent(TransformComponent.class).y = 640;
 
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
+                                                                    @Override
+                                                                    public void clicked() {
+                                                                        resetPauseDialog();
+                                                                        stage.initMenu();
+                                                                    }
+                                                                }
+
+
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -302,7 +312,7 @@ public class GameScreenScript implements IScript {
                 resetPauseDialog();
                 stage.initMenu();
             }
-        });
+        }*/);
     }
 
     public void resetPauseDialog() {
@@ -317,7 +327,22 @@ public class GameScreenScript implements IScript {
 //        pauseBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
 //        pauseBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
 
-        pauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        pauseBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(pauseBtn) {
+                    @Override
+                    public void clicked() {
+                        isPause = true;
+                        if (!isGameOver && isStarted) {
+                            if (pauseDialog == null) {
+                                pauseDialog = new PauseDialog(gameItem);
+                                pauseDialog.init();
+                            }
+                            pauseDialog.show();
+                        }
+                    }
+                }
+
+                /*new ButtonComponent.ButtonListener() {
             LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
 
             @Override
@@ -343,7 +368,7 @@ public class GameScreenScript implements IScript {
                     pauseDialog.show();
                 }
             }
-        });
+        }*/);
     }
 
     private void initLeafs() {

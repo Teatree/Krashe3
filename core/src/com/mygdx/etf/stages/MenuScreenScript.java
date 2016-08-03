@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
@@ -35,7 +36,7 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_SHOP = "btn_shop";
     //    public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
-    public static final String BTN_RATE = "btn_restore";
+    public static final String BTN_RATE = "btn_rate";
     public static final String BTN_GOALS = "btn_goals";
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
@@ -116,7 +117,16 @@ public class MenuScreenScript implements IScript {
         tcL.scaleX = LEAFS_SCALE;
         tcL.scaleY = LEAFS_SCALE;
 
-        rateAppBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        rateAppBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(rateAppBtn) {
+                    @Override
+                    public void clicked() {
+                        if (!isDialogOpen) {
+                            rateMyApp();
+                        }
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -131,26 +141,37 @@ public class MenuScreenScript implements IScript {
                     rateMyApp();
                 }
             }
-        });
+        }*/);
 
-        playBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
+        playBtn.getComponent(ButtonComponent.class).addListener(
+                new ButtonComponent.ButtonListener() {
+                    @Override
+                    public void touchUp() {
+                    }
 
-            @Override
-            public void touchDown() {
-            }
+                    @Override
+                    public void touchDown() {
+                    }
 
-            @Override
-            public void clicked() {
-                System.out.println(Gdx.app.getJavaHeap() / 1000000);
-                if (!isDialogOpen) {
-                    startGameTransition = true;
+                    @Override
+                    public void clicked() {
+                        System.out.println(Gdx.app.getJavaHeap() / 1000000);
+                        if (!isDialogOpen) {
+                            startGameTransition = true;
+                        }
+                    }
+                });
+        btnShop.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnShop) {
+                    @Override
+                    public void clicked() {
+                        if (!isDialogOpen) {
+                            startShopTransition = true;
+                            resetPauseDialog();
+                        }
+                    }
                 }
-            }
-        });
-        btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+          /*      new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -169,9 +190,25 @@ public class MenuScreenScript implements IScript {
                     resetPauseDialog();
                 }
             }
-        });
+        }*/);
 
-        btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        btnSettings.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnSettings) {
+                    @Override
+                    public void clicked() {
+                        if (!isDialogOpen) {
+                            isDialogOpen = true;
+                            if (settings == null) {
+                                settings = new Settings(menuItem);
+                                settings.init();
+                            }
+                            settings.show();
+                        }
+                    }
+                }
+
+
+         /*       new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 btnSettings.getComponent(TintComponent.class).color.set(1, 1, 1, 1f);
@@ -193,9 +230,28 @@ public class MenuScreenScript implements IScript {
                     settings.show();
                 }
             }
-        });
+        }*/);
 
-        btnGoals.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        btnGoals.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnGoals) {
+                    @Override
+                    public void clicked() {
+                        if (!isDialogOpen) {
+                            isDialogOpen = true;
+                            showGoalNotification = false;
+                            Level.goalStatusChanged = false;
+                            Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
+                            lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
+                            if (pauseDialog == null) {
+                                pauseDialog = new PauseDialog(menuItem);
+                                pauseDialog.init();
+                            }
+                            pauseDialog.show();
+                        }
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -223,7 +279,7 @@ public class MenuScreenScript implements IScript {
                     pauseDialog.show();
                 }
             }
-        });
+        }*/);
     }
 
     @Override

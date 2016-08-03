@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.Goal;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -60,9 +61,16 @@ public class PauseDialog extends AbstractDialog {
 
     public void init() {
         pauseDialogE = gameItem.getChild(PAUSE_DIALOG).getEntity();
-        Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
+        final Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
 
-        closePauseBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        closePauseBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(closePauseBtn) {
+                    @Override
+                    public void clicked() {
+                        closePauseDialog();
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -75,7 +83,7 @@ public class PauseDialog extends AbstractDialog {
             public void clicked() {
                 closePauseDialog();
             }
-        });
+        }*/);
 
         final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;

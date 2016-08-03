@@ -3,6 +3,7 @@ package com.mygdx.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.ShopItem;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ResultScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -43,7 +44,15 @@ public class PromoWindow extends AbstractDialog {
         promoWindowE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
 
         final Entity closeBtn = gameItem.getChild(PROMO_WINDOW).getChild(CLOSE_DISC_BTN).getEntity();
-        closeBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        closeBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(closeBtn) {
+                    @Override
+                    public void clicked() {
+                        close(promoWindowE);
+                        ResultScreenScript.active = true;
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
             }
@@ -57,7 +66,7 @@ public class PromoWindow extends AbstractDialog {
                 close(promoWindowE);
                 ResultScreenScript.active = true;
             }
-        });
+        }*/);
 
         final TransformComponent settingsTc = promoWindowE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
@@ -81,7 +90,16 @@ public class PromoWindow extends AbstractDialog {
         promoWindowE.add(ac);
 
         Entity buyBtn = gameItem.getChild(PROMO_WINDOW).getChild(BUY_DISC_BTN).getEntity();
-        buyBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        buyBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(buyBtn) {
+                    @Override
+                    public void clicked() {
+                        PromoWindow.offer.buyHard();
+                        close(promoWindowE);
+                        ResultScreenScript.active = true;
+                    }
+                }
+               /* new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -94,7 +112,7 @@ public class PromoWindow extends AbstractDialog {
                 close(promoWindowE);
                 ResultScreenScript.active = true;
             }
-        });
+        }*/);
 
         Entity lbl = gameItem.getChild(PROMO_WINDOW).getChild(DISC_TEXT_LBL).getEntity();
         LabelComponent lc = lbl.getComponent(LabelComponent.class);

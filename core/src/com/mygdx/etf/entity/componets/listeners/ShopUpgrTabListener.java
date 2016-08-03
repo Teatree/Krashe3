@@ -1,4 +1,4 @@
-package com.mygdx.etf.stages.listeners;
+package com.mygdx.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;

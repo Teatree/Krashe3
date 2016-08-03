@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -75,7 +76,14 @@ public class Settings extends AbstractDialog {
 
         initShadow();
 
-        closeSettingsBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        closeSettingsBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(closeSettingsBtn) {
+                    @Override
+                    public void clicked() {
+                        close(settingsE);
+                    }
+                }
+              /*  new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -86,9 +94,16 @@ public class Settings extends AbstractDialog {
             public void clicked() {
                 close(settingsE);
             }
-        });
+        }*/);
 
-        closeInfoBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        closeInfoBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(closeInfoBtn) {
+                    @Override
+                    public void clicked() {
+                        close(infoE);
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -99,9 +114,18 @@ public class Settings extends AbstractDialog {
             public void clicked() {
                 close(infoE);
             }
-        });
+        }*/);
 
-        btnNoAds.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        btnNoAds.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnNoAds) {
+                    @Override
+                    public void clicked() {
+                        if(!isDialogOpen) {
+                            Main.mainController.removeAds();
+                        }
+                    }
+                }
+        /*        new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -114,9 +138,30 @@ public class Settings extends AbstractDialog {
                     Main.mainController.removeAds();
                 }
             }
-        });
+        }*/);
 
-        nextInfoBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        nextInfoBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(nextInfoBtn) {
+                    @Override
+                    public void clicked() {
+                        if (isActive) {
+                            infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
+                            infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
+                            ActionComponent acSettings = new ActionComponent();
+                            Actions.checkInit();
+                            acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                            settingsE.add(acSettings);
+
+                            ActionComponent acInfo = new ActionComponent();
+                            Actions.checkInit();
+                            acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                            infoE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+                            infoE.add(acInfo);
+                        }
+
+                    }
+                }
+               /* new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -140,9 +185,24 @@ public class Settings extends AbstractDialog {
                     infoE.add(acInfo);
                 }
             }
-        });
+        }*/);
 
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        backBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(backBtn) {
+                    @Override
+                    public void clicked() {
+                        ActionComponent acSettings = new ActionComponent();
+                        Actions.checkInit();
+                        acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                        settingsE.add(acSettings);
+
+                        ActionComponent acInfo = new ActionComponent();
+                        Actions.checkInit();
+                        acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                        infoE.add(acInfo);
+                    }
+                }
+               /* new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {}
 
@@ -161,7 +221,7 @@ public class Settings extends AbstractDialog {
                 acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                 infoE.add(acInfo);
             }
-        });
+        }*/);
 
         resetProgressBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override

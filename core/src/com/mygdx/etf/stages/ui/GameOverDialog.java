@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Goal;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
 import com.mygdx.etf.system.BugSystem;
@@ -89,7 +90,21 @@ public class GameOverDialog extends AbstractDialog {
             turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             reviveBtn.getComponent(TransformComponent.class).x = 240;
             reviveBtn.getComponent(TransformComponent.class).y = 80;
-            reviveBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            reviveBtn.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(reviveBtn) {
+                        @Override
+                        public void clicked() {
+                            if (Main.mainController.isWifiConnected()) {
+                                playVideoAd(dialogTc);
+                            } else {
+                                turnOnWifi.getComponent(TransformComponent.class).x = 127;
+                                turnOnWifi.getComponent(TransformComponent.class).y = 45;
+                                continueGame(dialogTc);
+                            }
+                            close(gameOverDialogE);
+                        }
+                    }
+                    /*new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
                 }
@@ -109,7 +124,7 @@ public class GameOverDialog extends AbstractDialog {
                     }
                     close(gameOverDialogE);
                 }
-            });
+            }*/);
 //        } else {
 //            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //            reviveBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.VanityComponent;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PromoWindow;
 import com.mygdx.etf.stages.ui.Showcase;
 import com.mygdx.etf.stages.ui.TrialTimer;
@@ -97,7 +98,7 @@ public class ResultScreenScript implements IScript {
     }
 
     public void initButtons() {
-        initBackButton();
+//        initBackButton();
         initPlayBtn();
         initShopBtn();
     }
@@ -144,8 +145,18 @@ public class ResultScreenScript implements IScript {
 
     private void initBackButton() {
         Entity backBtn = resultScreenItem.getChild(BTN_BACK).getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
+        backBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(backBtn) {
+                    @Override
+                    public void clicked() {
+                        if (!showcasePopup && !show) {
+                            stage.initMenu();
+                        }
+                        isWasShowcase = false;
+                    }
+                }
+           /*     new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -165,13 +176,29 @@ public class ResultScreenScript implements IScript {
                 }
                 isWasShowcase = false;
             }
-        });
+        }*/);
     }
 
     private void initPlayBtn() {
         backPlay = resultScreenItem.getChild(BTN_PLAY).getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
-        backPlay.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//        final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
+        backPlay.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(backPlay) {
+                    @Override
+                    public void clicked() {
+                        if (active) {
+                            if (!show) {
+                                backToGame();
+                            }
+                        }
+                    }
+
+                    private void backToGame() {
+                        stage.initGame();
+                        isWasShowcase = false;
+                    }
+                }
+               /* new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -197,13 +224,23 @@ public class ResultScreenScript implements IScript {
                 stage.initGame();
                 isWasShowcase = false;
             }
-        });
+        }*/);
     }
 
     private void initShopBtn() {
         Entity shopBtn = resultScreenItem.getChild(BTN_SHOP).getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(shopBtn, LayerMapComponent.class);
-        shopBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        shopBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(shopBtn) {
+                    @Override
+                    public void clicked() {
+                        if (active)
+                            if (!show) {
+                                stage.initShopWithAds();
+                                isWasShowcase = false;
+                            }
+                    }
+                }
+         /*       new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -224,7 +261,7 @@ public class ResultScreenScript implements IScript {
                     isWasShowcase = false;
                 }
             }
-        });
+        }*/);
     }
 
     @Override
@@ -322,8 +359,34 @@ public class ResultScreenScript implements IScript {
         tc.x = 978;
         tc.y = 250;
 
-        final LayerMapComponent lc = ComponentRetriever.get(adsBtn, LayerMapComponent.class);
-        adsBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//        final LayerMapComponent lc = ComponentRetriever.get(adsBtn, LayerMapComponent.class);
+        adsBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(adsBtn) {
+                    @Override
+                    public void clicked() {
+                        if (active)
+                            if (!show) {
+                                if (Main.mainController.isWifiConnected()) {
+                                    Main.mainController.showGetMoneyVideoAd(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //give that money!
+                                            gameScript.fpc.totalScore = showCaseVanity.cost;
+                                            adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                                            init(resultScreenItem.getEntity());
+                                        }
+                                    });
+                                } else {
+                                    gameScript.fpc.score = showCaseVanity.cost - gameScript.fpc.totalScore;
+                                    gameScript.fpc.totalScore = showCaseVanity.cost;
+
+                                    adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                                    init(resultScreenItem.getEntity());
+                                }
+                            }
+                    }
+                }
+              /*  new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -359,7 +422,7 @@ public class ResultScreenScript implements IScript {
                     }
                 }
             }
-        });
+        }*/);
 
         tc.scaleY = 0.1f;
         tc.scaleX = 0.1f;
