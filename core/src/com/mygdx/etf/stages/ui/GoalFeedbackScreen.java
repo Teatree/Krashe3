@@ -63,14 +63,12 @@ public class GoalFeedbackScreen {
         aniPlayingIndex = -1;
         this.isNewLevel = isNewLevel;
         if (!isNewLevel) {
-
             if (tiles != null) {
                 for (Entity tile : tiles) {
                     tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
                     sceneLoader.getEngine().removeEntity(tile);
                 }
             }
-
         } else {
             prevLvlTiles = new ArrayList<>();
             for (Entity tile : tiles) {

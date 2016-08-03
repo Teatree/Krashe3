@@ -177,11 +177,11 @@ public class GameScreenScript implements IScript {
 
         scoreLabelE = gameItem.getChild(LBL_SCORE).getEntity();
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
-        scoreLabel.text.replace(0, scoreLabel.text.capacity(), ""+ GameStage.gameScript.fpc.score );
+        scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + GameStage.gameScript.fpc.score);
 
         scoreLabelES = gameItem.getChild(LBL_SCORE_S).getEntity();
         LabelComponent scoreLabelS = scoreLabelES.getComponent(LabelComponent.class);
-        scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), ""+ GameStage.gameScript.fpc.score);
+        scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), "" + GameStage.gameScript.fpc.score);
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
@@ -195,10 +195,11 @@ public class GameScreenScript implements IScript {
         initDoubleBJIcon();
         initUmbrella();
         initCocoon();
-        gameOverDialog = new GameOverDialog(gameItem);
-        gameOverDialog.initGameOverDialog();
-        pauseDialog = new PauseDialog(gameItem);
-        pauseDialog.init();
+//        gameOverDialog = new GameOverDialog(gameItem);
+//        gameOverDialog.initGameOverDialog();
+
+//        pauseDialog = new PauseDialog(gameItem);
+//        pauseDialog.init();
 
         gameScript.fpc.level.updateLevel();
 
@@ -333,6 +334,10 @@ public class GameScreenScript implements IScript {
             public void clicked() {
                 isPause = true;
                 if (!isGameOver && isStarted) {
+                    if (pauseDialog == null){
+                        pauseDialog = new PauseDialog(gameItem);
+                        pauseDialog.init();
+                    }
                     pauseDialog.show();
                 }
             }
@@ -439,8 +444,13 @@ public class GameScreenScript implements IScript {
                 }
             }
 
-            gameOverDialog.update(delta);
-            pauseDialog.update(delta);
+            if (gameOverDialog != null) {
+                gameOverDialog.update(delta);
+            }
+
+            if (pauseDialog != null) {
+                pauseDialog.update(delta);
+            }
             giftScreen.update();
             goalFeedbackScreen.update();
             updateAngeredBeesMode();
@@ -458,6 +468,10 @@ public class GameScreenScript implements IScript {
         if (fpc.canUsePhoenix()) {
             usePhoenix();
         } else {
+            if (gameOverDialog == null) {
+                gameOverDialog = new GameOverDialog(gameItem);
+                gameOverDialog.initGameOverDialog();
+            }
             gameOverDialog.show();
         }
     }
@@ -474,7 +488,7 @@ public class GameScreenScript implements IScript {
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                 "" + fcc.score);
         scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
-                scoreLabelES.getComponent(LabelComponent.class).text.capacity(), ""+ fcc.score);
+                scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" + fcc.score);
     }
 
     private void initCocoon() {
@@ -499,7 +513,7 @@ public class GameScreenScript implements IScript {
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
-           umbrellaEntity.remove(UmbrellaComponent.class);
+            umbrellaEntity.remove(UmbrellaComponent.class);
         }
         UmbrellaSystem.hide(umbrellaEntity);
 //        umbrellaEntity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

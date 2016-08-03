@@ -71,8 +71,8 @@ public class MenuScreenScript implements IScript {
         startShopTransition = false;
         startTransitionIn = true;
 
-        settings = new Settings(menuItem);
-        settings.init();
+//        settings = new Settings(menuItem);
+//        settings.init();
         isDialogOpen = false;
         if (timer == null) {
             timer = new TrialTimer(menuItem, 680, 500);
@@ -140,10 +140,10 @@ public class MenuScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                System.out.println(Gdx.app.getJavaHeap()/1000000);
+                System.out.println(Gdx.app.getJavaHeap() / 1000000);
                 if (!isDialogOpen) {
                     startGameTransition = true;
-                }
+            }
             }
         });
         btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -180,6 +180,10 @@ public class MenuScreenScript implements IScript {
             public void clicked() {
                 if (!isDialogOpen) {
                     isDialogOpen = true;
+                    if (settings == null) {
+                        settings = new Settings(menuItem);
+                        settings.init();
+                    }
                     settings.show();
                 }
             }
@@ -204,6 +208,11 @@ public class MenuScreenScript implements IScript {
                     Level.goalStatusChanged = false;
                     Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
                     lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
+                    if (pauseDialog == null) {
+                        pauseDialog = new PauseDialog(menuItem);
+                        pauseDialog.init();
+                    }
 
                     pauseDialog.show();
                 }
