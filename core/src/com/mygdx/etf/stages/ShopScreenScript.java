@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.Upgrade;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.entity.componets.listeners.ShopTabListener;
 import com.mygdx.etf.stages.ui.Preview;
 import com.mygdx.etf.entity.componets.listeners.ShopUpgrTabListener;
@@ -202,8 +203,16 @@ public class ShopScreenScript implements IScript {
 
             bagEntity.add(new ButtonComponent());
 
-            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
-            bagEntity.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
+            bagEntity.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(bagEntity) {
+                        @Override
+                        public void clicked() {
+                            if (!isPreviewOn && canOpenPreview) {
+                                preview.showPreview(vc, true, false);
+                            }
+                        }
+                    }/*new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
                     skipLayersOverride(lc);
@@ -221,7 +230,7 @@ public class ShopScreenScript implements IScript {
                     }
                     skipLayersOverride(lc);
                 }
-            });
+            }*/);
         }
     }
 
