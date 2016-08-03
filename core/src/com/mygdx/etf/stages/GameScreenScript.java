@@ -306,7 +306,9 @@ public class GameScreenScript implements IScript {
     }
 
     public void resetPauseDialog() {
-        pauseDialog.deleteTiles();
+        if (pauseDialog != null) {
+            pauseDialog.deleteTiles();
+        }
     }
 
     private void initPauseBtn() {
@@ -334,7 +336,7 @@ public class GameScreenScript implements IScript {
             public void clicked() {
                 isPause = true;
                 if (!isGameOver && isStarted) {
-                    if (pauseDialog == null){
+                    if (pauseDialog == null) {
                         pauseDialog = new PauseDialog(gameItem);
                         pauseDialog.init();
                     }

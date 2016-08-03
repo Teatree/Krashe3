@@ -2,15 +2,18 @@ package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -22,6 +25,7 @@ import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
 import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
+import static com.mygdx.etf.utils.GlobalConstants.BTN_DEFAULT;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
@@ -143,7 +147,7 @@ public class MenuScreenScript implements IScript {
                 System.out.println(Gdx.app.getJavaHeap() / 1000000);
                 if (!isDialogOpen) {
                     startGameTransition = true;
-            }
+                }
             }
         });
         btnShop.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
@@ -170,10 +174,12 @@ public class MenuScreenScript implements IScript {
         btnSettings.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
+                btnSettings.getComponent(TintComponent.class).color.set(1, 1, 1, 1f);
             }
 
             @Override
             public void touchDown() {
+                btnSettings.getComponent(TintComponent.class).color.set(0, 0, 0, 0.5f);
             }
 
             @Override
