@@ -182,8 +182,7 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
-            Entity itemIcon;
-            itemIcon = initSoftCurrencyShopItem(vc);
+            Entity itemIcon = initSoftCurrencyShopItem(vc);
 
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(26);
 
@@ -193,6 +192,20 @@ public class ShopScreenScript implements IScript {
             previousTc = tc;
 
             itemIcon.add(new ButtonComponent());
+            itemIcon.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(itemIcon) {
+                @Override
+                public void touchUp() {
+                }
+
+                @Override
+                public void touchDown(){
+                }
+
+                @Override
+                public void clicked() {
+                }
+            });
+
             shopItem.getChild(BTN_IMG_SHOP_ICON_LIB).addChild(itemIcon);
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x;
@@ -206,6 +219,14 @@ public class ShopScreenScript implements IScript {
 //            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
             bagEntity.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(bagEntity) {
+                        @Override
+                        public void touchUp() {
+                        }
+
+                        @Override
+                        public void touchDown(){
+                        }
+
                         @Override
                         public void clicked() {
                             if (!isPreviewOn && canOpenPreview) {
@@ -299,7 +320,6 @@ public class ShopScreenScript implements IScript {
             public void clicked() {
                 if (!isPreviewOn) {
                     startTransitionOut = true;
-
                 }
             }
         });

@@ -62,7 +62,6 @@ public class MenuScreenScript implements IScript {
         this.stage = stage;
     }
 
-
     @Override
     public void init(Entity item) {
 //        System.err.print("init menu ");

@@ -2,6 +2,7 @@ package com.mygdx.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.TintComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 
 /**
@@ -16,11 +17,13 @@ public abstract class ImageButtonListener implements ButtonComponent.ButtonListe
 
     @Override
     public void touchUp() {
-        btn.getComponent(TintComponent.class).color.set(1, 1, 1, 1f);
+        btn.getComponent(TransformComponent.class).scaleX +=0.1f;
+        btn.getComponent(TransformComponent.class).scaleY +=0.1f;
     }
 
     @Override
     public void touchDown() {
-        btn.getComponent(TintComponent.class).color.set(0, 0, 0, 0.5f);
+        btn.getComponent(TransformComponent.class).scaleX -=0.1f;
+        btn.getComponent(TransformComponent.class).scaleY -=0.1f;
     }
 }

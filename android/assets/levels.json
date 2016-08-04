@@ -33,7 +33,7 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
 		BJ_DOUBLE: 30
 	}
 },
@@ -72,7 +72,7 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
 		BJ_DOUBLE: 45
 	}
 },
@@ -111,7 +111,7 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
 		BJ_DOUBLE: 45
 	}
 },
@@ -150,7 +150,7 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
 		BJ_DOUBLE: 45
 	}
 },
@@ -189,7 +189,7 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
 		BJ_DOUBLE: 45
 	}
 },
@@ -228,7 +228,9 @@
 		MONEY_200: 0,
 		MONEY_250: 0,
 		MONEY_300: 0,
-		PET: 0,
+		PET: 0,PET2: 0,PET3: 0,
+		PET2: 0,
+		PET3: 0,
 		BJ_DOUBLE: 45
 	}
 }]
