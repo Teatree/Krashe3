@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.VanityComponent;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.*;
@@ -355,14 +356,7 @@ public class Preview extends AbstractDialog {
 
     private void initPrevButton(final ShopItem vc) {
         btnLeft.getComponent(ButtonComponent.class).clearListeners();
-        btnLeft.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
+        btnLeft.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnLeft) {
 
             @Override
             public void clicked() {
@@ -396,15 +390,7 @@ public class Preview extends AbstractDialog {
     private void initNextButton(final ShopItem vc) {
         btnNext.getComponent(ButtonComponent.class).clearListeners();
 
-        btnNext.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
+        btnNext.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnNext) {
             @Override
             public void clicked() {
                 if (animFinished()) {

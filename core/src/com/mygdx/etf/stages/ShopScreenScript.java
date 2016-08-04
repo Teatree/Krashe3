@@ -304,8 +304,16 @@ public class ShopScreenScript implements IScript {
 
     private void addBackButtonPlease() {
         Entity btnBack = shopItem.getChild(BTN_BACK).getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(btnBack, LayerMapComponent.class);
-        btnBack.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+        btnBack.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnBack) {
+                    @Override
+                    public void clicked() {
+                        if (!isPreviewOn) {
+                            startTransitionOut = true;
+                        }
+                    }
+                }
+                /*new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -326,7 +334,7 @@ public class ShopScreenScript implements IScript {
                     startTransitionOut = true;
                 }
             }
-        });
+        }*/);
     }
 
     @Override
