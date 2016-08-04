@@ -543,18 +543,11 @@ public class GameScreenScript implements IScript {
             umbrellaEntity.remove(UmbrellaComponent.class);
         }
         UmbrellaSystem.hide(umbrellaEntity);
-//        umbrellaEntity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        umbrellaEntity.getComponent(UmbrellaComponent.class).state = UmbrellaComponent.State.DEAD;
     }
 
     private void spawnUmbrella(float x, float y) {
 
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
-
-//        TransformComponent transformComponent = new TransformComponent();
-//        transformComponent.x = x;
-//        transformComponent.y = y;
-//        umbrellaEntity.add(transformComponent);
 
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
             UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
