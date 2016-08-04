@@ -51,6 +51,8 @@ public class ShopScreenScript implements IScript {
     public static Entity scoreLbl;
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
+    public static int bagsZindex;
+
     public static List<ShopItem> allShopItems = new ArrayList<>();
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
@@ -188,6 +190,8 @@ public class ShopScreenScript implements IScript {
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
+
+            bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex();
 
             previousTc = tc;
 

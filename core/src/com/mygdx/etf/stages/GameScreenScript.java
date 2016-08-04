@@ -77,7 +77,7 @@ public class GameScreenScript implements IScript {
     public static Entity beesModeAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
-    private TrialTimer timer;
+//    private TrialTimer timer;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -212,9 +212,9 @@ public class GameScreenScript implements IScript {
         }
         goalFeedbackScreen.init(false);
 
-        if (timer == null) {
-            timer = new TrialTimer(gameItem, TRIAL_TIMER_X, TRIAL_TIMER_Y);
-        }
+//        if (timer == null) {
+//            timer = new TrialTimer(gameItem, TRIAL_TIMER_X, TRIAL_TIMER_Y);
+//        }
         checkTryPeriod();
 //        if (!timer.ifShouldShowTimer()) {
 //            timer.timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -481,7 +481,7 @@ public class GameScreenScript implements IScript {
             giftScreen.update();
             goalFeedbackScreen.update();
             updateAngeredBeesMode();
-            timer.timer();
+//            timer.timer();
         }
     }
 

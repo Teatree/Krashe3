@@ -46,6 +46,7 @@ public class Preview extends AbstractDialog {
     public static final int PREVIEW_X = 260;
     public static final int PREVIEW_Y = 30;
     public static final float PREVIEW_SCALE = 0.9f;
+
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
     public Entity lbl_desc;
@@ -277,6 +278,9 @@ public class Preview extends AbstractDialog {
                 private void putInPlaceNewIconPosition() {
                     TransformComponent tc = changeBagIcon(vc);
                     itemIcons.get(vc.shopIcon).add(tc);
+                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                            ShopScreenScript.bagsZindex +1
+                    );
                     sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
 //                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
                 }
