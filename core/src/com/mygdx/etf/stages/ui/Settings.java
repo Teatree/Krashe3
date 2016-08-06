@@ -223,41 +223,31 @@ public class Settings extends AbstractDialog {
             }
         }*/);
 
-        resetProgressBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                if (!AbstractDialog.isSecondDialogOpen && isActive) {
-                    dialog.show(BasicDialog.TYPE_RESET);
-                }
-            }
-        });
-
-        restorePurchasesBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                if (!AbstractDialog.isSecondDialogOpen) {
-                    try{
-                        Main.mainController.restorePurchases();
-                        dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
-                    } catch (Exception e){
-                        System.out.println("error during restoring purchases");
-                        dialog.show(BasicDialog.ERROR);
+        resetProgressBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(resetProgressBtn) {
+                    @Override
+                    public void clicked() {
+                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
+                            dialog.show(BasicDialog.TYPE_RESET);
+                        }
                     }
-                }
-            }
-        });
+                });
+
+        restorePurchasesBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(restorePurchasesBtn) {
+                    @Override
+                    public void clicked() {
+                        if (!AbstractDialog.isSecondDialogOpen) {
+                            try {
+                                Main.mainController.restorePurchases();
+                                dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
+                            } catch (Exception e) {
+                                System.out.println("error during restoring purchases");
+                                dialog.show(BasicDialog.ERROR);
+                            }
+                        }
+                    }
+                });
 
         final TransformComponent settingsTc = settingsE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
@@ -322,10 +312,18 @@ public class Settings extends AbstractDialog {
 
                 @Override
                 public void touchDown() {
+                    musicBtn.getComponent(TransformComponent.class).scaleX -=0.1f;
+                    musicBtn.getComponent(TransformComponent.class).scaleY -=0.1f;
+                    musicBtn.getComponent(TransformComponent.class).x += musicBtn.getComponent(DimensionsComponent.class).width/20;
+                    musicBtn.getComponent(TransformComponent.class).y += musicBtn.getComponent(DimensionsComponent.class).height/20;
                 }
 
                 @Override
                 public void touchUp() {
+                    musicBtn.getComponent(TransformComponent.class).scaleX +=0.1f;
+                    musicBtn.getComponent(TransformComponent.class).scaleY +=0.1f;
+                    musicBtn.getComponent(TransformComponent.class).x -= musicBtn.getComponent(DimensionsComponent.class).width/20;
+                    musicBtn.getComponent(TransformComponent.class).y -= musicBtn.getComponent(DimensionsComponent.class).height/20;
                 }
 
                 @Override
@@ -379,6 +377,10 @@ public class Settings extends AbstractDialog {
                 @Override
                 public void touchDown() {
 
+                    soundBtn.getComponent(TransformComponent.class).scaleX -=0.1f;
+                    soundBtn.getComponent(TransformComponent.class).scaleY -=0.1f;
+                    soundBtn.getComponent(TransformComponent.class).x += soundBtn.getComponent(DimensionsComponent.class).width/20;
+                    soundBtn.getComponent(TransformComponent.class).y += soundBtn.getComponent(DimensionsComponent.class).height/20;
 //                final ToggleButtonComponent tbc = mapper.get(soundBtn);
 //                if (tbc.isOn()) {
 //                    lc.getLayer(BTN_NORMAL).isVisible = false;
@@ -391,6 +393,10 @@ public class Settings extends AbstractDialog {
 
                 @Override
                 public void touchUp() {
+                    soundBtn.getComponent(TransformComponent.class).scaleX +=0.1f;
+                    soundBtn.getComponent(TransformComponent.class).scaleY +=0.1f;
+                    soundBtn.getComponent(TransformComponent.class).x -= soundBtn.getComponent(DimensionsComponent.class).width/20;
+                    soundBtn.getComponent(TransformComponent.class).y -= soundBtn.getComponent(DimensionsComponent.class).height/20;
 //                final ToggleButtonComponent tbc = mapper.get(soundBtn);
 //                if (tbc.isOn()) {
 //                    lc.getLayer(BTN_NORMAL).isVisible = false;

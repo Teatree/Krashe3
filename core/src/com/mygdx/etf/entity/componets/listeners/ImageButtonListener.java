@@ -1,6 +1,7 @@
 package com.mygdx.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -19,11 +20,15 @@ public abstract class ImageButtonListener implements ButtonComponent.ButtonListe
     public void touchUp() {
         btn.getComponent(TransformComponent.class).scaleX +=0.1f;
         btn.getComponent(TransformComponent.class).scaleY +=0.1f;
+        btn.getComponent(TransformComponent.class).x -= btn.getComponent(DimensionsComponent.class).width/20;
+        btn.getComponent(TransformComponent.class).y -= btn.getComponent(DimensionsComponent.class).height/20;
     }
 
     @Override
     public void touchDown() {
         btn.getComponent(TransformComponent.class).scaleX -=0.1f;
         btn.getComponent(TransformComponent.class).scaleY -=0.1f;
+        btn.getComponent(TransformComponent.class).x += btn.getComponent(DimensionsComponent.class).width/20;
+        btn.getComponent(TransformComponent.class).y += btn.getComponent(DimensionsComponent.class).height/20;
     }
 }
