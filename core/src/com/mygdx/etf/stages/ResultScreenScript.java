@@ -244,12 +244,17 @@ public class ResultScreenScript implements IScript {
 
         if (gameScript.fpc.totalScore - gameScript.fpc.score < 0) {
             dcProgressBar.width = 0;
-        } else if ((gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH) {
+        } else if (showCaseVanity == null ||
+                (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH
+                ) {
             dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
     }
 
     private float getProgressBarActualLength() {
+        if (showCaseVanity == null) {
+            return MAX_PROGRESS_BAR_WIDTH;
+        }
         return gameScript.fpc.totalScore < showCaseVanity.cost ?
                 ((float) gameScript.fpc.totalScore / (float) showCaseVanity.cost) * 100 * 6.9f :
                 MAX_PROGRESS_BAR_WIDTH;
