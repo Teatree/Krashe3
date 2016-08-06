@@ -118,7 +118,10 @@ public class ResultScreenScript implements IScript {
             getNeedForNextItem();
             isWasShowcase = false;
         }
-        need = showCaseVanity.cost - gameScript.fpc.totalScore;
+        need = 0;
+        if (showCaseVanity != null) {
+            need = showCaseVanity.cost - gameScript.fpc.totalScore;
+        }
         setProgressBar();
 
         LabelComponent needLabel = txtNeedE.getComponent(LabelComponent.class);
@@ -140,12 +143,15 @@ public class ResultScreenScript implements IScript {
                 }
             }
         }
-        return showCaseVanity.cost - gameScript.fpc.totalScore;
+        if (showCaseVanity != null) {
+            return showCaseVanity.cost - gameScript.fpc.totalScore;
+        } else {
+            return 0;
+        }
     }
 
     private void initBackButton() {
         Entity backBtn = resultScreenItem.getChild(BTN_BACK).getEntity();
-//        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
         backBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(backBtn) {
                     @Override
@@ -155,33 +161,11 @@ public class ResultScreenScript implements IScript {
                         }
                         isWasShowcase = false;
                     }
-                }
-           /*     new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                if (!showcasePopup && !show) {
-                    stage.initMenu();
-                }
-                isWasShowcase = false;
-            }
-        }*/);
+                });
     }
 
     private void initPlayBtn() {
         backPlay = resultScreenItem.getChild(BTN_PLAY).getEntity();
-//        final LayerMapComponent lc = ComponentRetriever.get(backPlay, LayerMapComponent.class);
         backPlay.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(backPlay) {
                     @Override
@@ -197,34 +181,7 @@ public class ResultScreenScript implements IScript {
                         stage.initGame();
                         isWasShowcase = false;
                     }
-                }
-               /* new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                if (active) {
-                    if (!show) {
-                        backToGame();
-                    }
-                }
-            }
-
-            private void backToGame() {
-                stage.initGame();
-                isWasShowcase = false;
-            }
-        }*/);
+                });
     }
 
     private void initShopBtn() {
@@ -239,29 +196,7 @@ public class ResultScreenScript implements IScript {
                                 isWasShowcase = false;
                             }
                     }
-                }
-         /*       new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                if (active)
-                if (!show) {
-                    stage.initShopWithAds();
-                    isWasShowcase = false;
-                }
-            }
-        }*/);
+                });
     }
 
     @Override
@@ -301,7 +236,6 @@ public class ResultScreenScript implements IScript {
             if (!show && showCaseVanity != null && showCaseVanity.cost <= gameScript.fpc.totalScore) {
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
-//                setProgressBar();
             }
             if (!show && gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(need) && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
@@ -322,14 +256,16 @@ public class ResultScreenScript implements IScript {
     }
 
     private void setProgressBar() {
-        DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-        long scoreDiff = (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
-        if (scoreDiff < 0) {
-            dcProgressBar.width = 0;
-        } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
-            dcProgressBar.width = scoreDiff;
-        } else {
-            dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
+        if (showCaseVanity != null) {
+            DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
+            long scoreDiff = (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
+            if (scoreDiff < 0) {
+                dcProgressBar.width = 0;
+            } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
+                dcProgressBar.width = scoreDiff;
+            } else {
+                dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
+            }
         }
     }
 
@@ -359,7 +295,6 @@ public class ResultScreenScript implements IScript {
         tc.x = 978;
         tc.y = 250;
 
-//        final LayerMapComponent lc = ComponentRetriever.get(adsBtn, LayerMapComponent.class);
         adsBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(adsBtn) {
                     @Override
@@ -385,44 +320,7 @@ public class ResultScreenScript implements IScript {
                                 }
                             }
                     }
-                }
-              /*  new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                if (active)
-                if (!show) {
-                    if (Main.mainController.isWifiConnected()) {
-                        Main.mainController.showGetMoneyVideoAd(new Runnable() {
-                            @Override
-                            public void run() {
-                                //give that money!
-                                gameScript.fpc.totalScore = showCaseVanity.cost;
-                                adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                                init(resultScreenItem.getEntity());
-                            }
-                        });
-                    } else {
-                        gameScript.fpc.score = showCaseVanity.cost - gameScript.fpc.totalScore;
-                        gameScript.fpc.totalScore = showCaseVanity.cost;
-
-                        adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                        init(resultScreenItem.getEntity());
-                    }
-                }
-            }
-        }*/);
+                });
 
         tc.scaleY = 0.1f;
         tc.scaleX = 0.1f;
