@@ -7,6 +7,7 @@ import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
+import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -120,7 +121,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(btnNoAds) {
                     @Override
                     public void clicked() {
-                        if(!isDialogOpen) {
+                        if (!isDialogOpen) {
                             Main.mainController.removeAds();
                         }
                     }
@@ -295,7 +296,7 @@ public class Settings extends AbstractDialog {
         }
     }
 
-    private void  initMusicBtn(){
+    private void initMusicBtn() {
         final Entity musicBtn = gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity();
         ToggleButtonComponent musictbc = new ToggleButtonComponent();
 //        final LayerMapComponent lc = ComponentRetriever.get(musicBtn, LayerMapComponent.class);
@@ -312,18 +313,18 @@ public class Settings extends AbstractDialog {
 
                 @Override
                 public void touchDown() {
-                    musicBtn.getComponent(TransformComponent.class).scaleX -=0.1f;
-                    musicBtn.getComponent(TransformComponent.class).scaleY -=0.1f;
-                    musicBtn.getComponent(TransformComponent.class).x += musicBtn.getComponent(DimensionsComponent.class).width/20;
-                    musicBtn.getComponent(TransformComponent.class).y += musicBtn.getComponent(DimensionsComponent.class).height/20;
+                    musicBtn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+                    musicBtn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+                    musicBtn.getComponent(TransformComponent.class).x += musicBtn.getComponent(DimensionsComponent.class).width / 20;
+                    musicBtn.getComponent(TransformComponent.class).y += musicBtn.getComponent(DimensionsComponent.class).height / 20;
                 }
 
                 @Override
                 public void touchUp() {
-                    musicBtn.getComponent(TransformComponent.class).scaleX +=0.1f;
-                    musicBtn.getComponent(TransformComponent.class).scaleY +=0.1f;
-                    musicBtn.getComponent(TransformComponent.class).x -= musicBtn.getComponent(DimensionsComponent.class).width/20;
-                    musicBtn.getComponent(TransformComponent.class).y -= musicBtn.getComponent(DimensionsComponent.class).height/20;
+                    musicBtn.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+                    musicBtn.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+                    musicBtn.getComponent(TransformComponent.class).x -= musicBtn.getComponent(DimensionsComponent.class).width / 20;
+                    musicBtn.getComponent(TransformComponent.class).y -= musicBtn.getComponent(DimensionsComponent.class).height / 20;
                 }
 
                 @Override
@@ -377,10 +378,10 @@ public class Settings extends AbstractDialog {
                 @Override
                 public void touchDown() {
 
-                    soundBtn.getComponent(TransformComponent.class).scaleX -=0.1f;
-                    soundBtn.getComponent(TransformComponent.class).scaleY -=0.1f;
-                    soundBtn.getComponent(TransformComponent.class).x += soundBtn.getComponent(DimensionsComponent.class).width/20;
-                    soundBtn.getComponent(TransformComponent.class).y += soundBtn.getComponent(DimensionsComponent.class).height/20;
+                    soundBtn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+                    soundBtn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+                    soundBtn.getComponent(TransformComponent.class).x += soundBtn.getComponent(DimensionsComponent.class).width / 20;
+                    soundBtn.getComponent(TransformComponent.class).y += soundBtn.getComponent(DimensionsComponent.class).height / 20;
 //                final ToggleButtonComponent tbc = mapper.get(soundBtn);
 //                if (tbc.isOn()) {
 //                    lc.getLayer(BTN_NORMAL).isVisible = false;
@@ -393,18 +394,10 @@ public class Settings extends AbstractDialog {
 
                 @Override
                 public void touchUp() {
-                    soundBtn.getComponent(TransformComponent.class).scaleX +=0.1f;
-                    soundBtn.getComponent(TransformComponent.class).scaleY +=0.1f;
-                    soundBtn.getComponent(TransformComponent.class).x -= soundBtn.getComponent(DimensionsComponent.class).width/20;
-                    soundBtn.getComponent(TransformComponent.class).y -= soundBtn.getComponent(DimensionsComponent.class).height/20;
-//                final ToggleButtonComponent tbc = mapper.get(soundBtn);
-//                if (tbc.isOn()) {
-//                    lc.getLayer(BTN_NORMAL).isVisible = false;
-//                    lc.getLayer(BTN_PRESSED).isVisible = true;
-//                } else {
-//                    lc.getLayer(BTN_NORMAL).isVisible = true;
-//                    lc.getLayer(BTN_PRESSED).isVisible = false;
-//                }
+                    soundBtn.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+                    soundBtn.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+                    soundBtn.getComponent(TransformComponent.class).x -= soundBtn.getComponent(DimensionsComponent.class).width / 20;
+                    soundBtn.getComponent(TransformComponent.class).y -= soundBtn.getComponent(DimensionsComponent.class).height / 20;
                 }
 
                 @Override

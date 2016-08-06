@@ -25,7 +25,7 @@ public class EffectUtils {
         if (nc != null && nc.children != null && nc.children.size != 0) {
             for (Entity e : nc.children) {
                 TintComponent tc = e.getComponent(TintComponent.class);
-                tc.color.a += fadeCoefficient * 0.1f;
+                tc.color.a += fadeCoefficient * GlobalConstants.TENTH;
                 fadeChildren(e.getComponent(NodeComponent.class), fadeCoefficient);
             }
         }
@@ -41,7 +41,7 @@ public class EffectUtils {
         int fadeCoefficient = isPause ? 1 : -1;
 
         if (appear) {
-            tcp.color.a += fadeCoefficient * 0.1f;
+            tcp.color.a += fadeCoefficient * GlobalConstants.TENTH;
             fadeChildren(nc, fadeCoefficient);
         }
 

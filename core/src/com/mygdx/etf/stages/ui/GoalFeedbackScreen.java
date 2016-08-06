@@ -140,7 +140,7 @@ public class GoalFeedbackScreen {
             if (i == 1) {
                 delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
             } else {
-                delay += 0.1f;
+                delay += GlobalConstants.TENTH;
             }
             i++;
 

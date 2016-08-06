@@ -194,7 +194,7 @@ public class GameScreenScript implements IScript {
         initLeafs();
 //        initBackground();
         initPet();
-        initDoubleBJIcon();
+//        initDoubleBJIcon();
         initUmbrella();
         initCocoon();
         gameScript.fpc.level.updateLevel();

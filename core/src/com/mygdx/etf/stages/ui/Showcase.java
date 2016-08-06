@@ -20,7 +20,6 @@ import static com.mygdx.etf.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.etf.utils.EffectUtils.fadeChildren;
 import static com.mygdx.etf.utils.GlobalConstants.*;
 
-
 public class Showcase {
 
     public static final String PATH_PREFIX = "orig\\spriter_animations\\showcase_present_ani\\";
@@ -62,10 +61,10 @@ public class Showcase {
         int fadeCoefficient = show ? 1 : -1;
 
         if (appear) {
-            tcp.color.a += fadeCoefficient * 0.1f;
+            tcp.color.a += fadeCoefficient * GlobalConstants.TENTH;
             fadeChildren(nc, fadeCoefficient);
-            if (itemIcon != null && fadeCoefficient <0 )
-            fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
+            if (itemIcon != null && fadeCoefficient < 0)
+                fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
         }
         hideWindow(tcp);
 
@@ -105,7 +104,7 @@ public class Showcase {
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
-        sc.player.speed = GlobalConstants.FPS/4;
+        sc.player.speed = GlobalConstants.FPS / 4;
 
         initShowCaseItem();
 
@@ -125,7 +124,7 @@ public class Showcase {
         tcItem.y = 350;
         tcItem.scaleX = 0.05f;
         tcItem.scaleY = 0.05f;
-        itemIcon.getComponent(TintComponent.class).color.a = 0.0f;
+        itemIcon.getComponent(TintComponent.class).color.a = 0;
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();

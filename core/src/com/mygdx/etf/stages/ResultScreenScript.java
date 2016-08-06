@@ -327,9 +327,9 @@ public class ResultScreenScript implements IScript {
                     }
                 });
 
-        tc.scaleY = 0.1f;
-        tc.scaleX = 0.1f;
-        adsBtn.getComponent(TintComponent.class).color.a = 0.1f;
+        tc.scaleY = TENTH;
+        tc.scaleX = TENTH;
+        adsBtn.getComponent(TintComponent.class).color.a = TENTH;
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(

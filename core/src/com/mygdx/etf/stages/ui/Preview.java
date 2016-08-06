@@ -10,6 +10,7 @@ import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ShopScreenScript;
+import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -92,8 +93,8 @@ public class Preview extends AbstractDialog {
 
         if (playAni) {
             if (vc.currencyType.equals(SOFT)) {
-                iconE.getComponent(TransformComponent.class).scaleX = 0.1f;
-                iconE.getComponent(TransformComponent.class).scaleY = 0.1f;
+                iconE.getComponent(TransformComponent.class).scaleX = GlobalConstants.TENTH;
+                iconE.getComponent(TransformComponent.class).scaleY = GlobalConstants.TENTH;
                 iconE.getComponent(TransformComponent.class).x = 575;
                 iconE.getComponent(TransformComponent.class).y = 409;
 

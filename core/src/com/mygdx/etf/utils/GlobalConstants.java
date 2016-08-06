@@ -29,6 +29,7 @@ public abstract class GlobalConstants {
     public static final String BTN_PRESSED = "pressed";
     public static final String BTN_DEFAULT = "Default";
     public static final String BUTTON_TAG = "button";
+    public static final float TENTH = GlobalConstants.TENTH;
 
     public static String CUR_SCREEN = "MENU";
     public static final float ALPHA_TRANSITION_STEP = 0.05f;
