@@ -98,7 +98,7 @@ public class ResultScreenScript implements IScript {
     }
 
     public void initButtons() {
-//        initBackButton();
+        initBackButton();
         initPlayBtn();
         initShopBtn();
     }
