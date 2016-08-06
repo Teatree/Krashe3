@@ -41,10 +41,11 @@ public class ShopScreenScript implements IScript {
     public static final String TAB_BTN_UPG = "tab_btn_upg";
     public static final String CURTAIN_SHOP = "curtain_shop";
     public static final int INIT_HC_ITEMS_X = 146;
+    public static final int X_ICON_ON_BAG = 70;
+    public static final int Y_ICON_ON_BAG = 100;
 
     // Dima's fun house
     Entity curtain_shop;
-    int fadeCounter = 0;
     boolean startTransitionIn;
     boolean startTransitionOut;
 
@@ -157,12 +158,10 @@ public class ShopScreenScript implements IScript {
             e.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
-
                 }
 
                 @Override
                 public void touchDown() {
-
                 }
 
                 @Override
@@ -190,37 +189,35 @@ public class ShopScreenScript implements IScript {
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
-
             bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex();
 
             previousTc = tc;
 
-            itemIcon.add(new ButtonComponent());
-            itemIcon.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(itemIcon) {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown(){
-                }
-
-                @Override
-                public void clicked() {
-                }
-            });
+//            itemIcon.add(new ButtonComponent());
+//            itemIcon.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(itemIcon) {
+//                @Override
+//                public void touchUp() {
+//                }
+//
+//                @Override
+//                public void touchDown() {
+//                }
+//
+//                @Override
+//                public void clicked() {
+//                }
+//            });
 
             shopItem.getChild(BTN_IMG_SHOP_ICON_LIB).addChild(itemIcon);
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
-            tcb.x = tc.x;
-            tcb.y = tc.y;
+            tcb.x = tc.x + X_ICON_ON_BAG;
+            tcb.y = tc.y + Y_ICON_ON_BAG;
 
             bags.add(bagEntity);
             itemIcons.put(vc.shopIcon, itemIcon);
 
             bagEntity.add(new ButtonComponent());
 
-//            final LayerMapComponent lc = ComponentRetriever.get(bagEntity, LayerMapComponent.class);
             bagEntity.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(bagEntity) {
                         @Override
@@ -228,7 +225,7 @@ public class ShopScreenScript implements IScript {
                         }
 
                         @Override
-                        public void touchDown(){
+                        public void touchDown() {
                         }
 
                         @Override
@@ -237,25 +234,7 @@ public class ShopScreenScript implements IScript {
                                 preview.showPreview(vc, true, false);
                             }
                         }
-                    }/*new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                    skipLayersOverride(lc);
-                }
-
-                @Override
-                public void touchDown() {
-                    skipLayersOverride(lc);
-                }
-
-                @Override
-                public void clicked() {
-                    if (!isPreviewOn && canOpenPreview) {
-                        preview.showPreview(vc, true, false);
-                    }
-                    skipLayersOverride(lc);
-                }
-            }*/);
+                    });
         }
     }
 
@@ -296,7 +275,6 @@ public class ShopScreenScript implements IScript {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
             itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(120);
             GameStage.sceneLoader.getEngine().addEntity(itemIcon);
         }
         return itemIcon;
@@ -312,29 +290,7 @@ public class ShopScreenScript implements IScript {
                             startTransitionOut = true;
                         }
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_DEFAULT).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_DEFAULT).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                if (!isPreviewOn) {
-                    startTransitionOut = true;
-                }
-            }
-        }*/);
+                });
     }
 
     @Override
@@ -370,7 +326,7 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
@@ -383,7 +339,7 @@ public class ShopScreenScript implements IScript {
                     int i = 0;
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x;
+                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
                         i++;
                     }
                     stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
@@ -397,7 +353,7 @@ public class ShopScreenScript implements IScript {
                     while (i < bags.size()) {
                         bags.get(i).getComponent(TransformComponent.class).x += stopVelocity * delta * GlobalConstants.FPS;
                         itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
-                                .getComponent(TransformComponent.class).x;
+                                .getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
                         i++;
                     }
                     stopVelocity -= stopVelocity / 20;
@@ -418,8 +374,6 @@ public class ShopScreenScript implements IScript {
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
         TransformComponent tc = new TransformComponent();
-        int step = 20;
-
         if (previous == null) {
             tc.x = 1300;
             tc.y = 400;

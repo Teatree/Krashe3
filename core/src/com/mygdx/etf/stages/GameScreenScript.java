@@ -77,6 +77,7 @@ public class GameScreenScript implements IScript {
     public static Entity beesModeAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+    public static boolean shouldShowGameOverDialog;
 //    private TrialTimer timer;
 
     public GameScreenScript(GameStage gamestage) {
@@ -196,12 +197,6 @@ public class GameScreenScript implements IScript {
         initDoubleBJIcon();
         initUmbrella();
         initCocoon();
-//        gameOverDialog = new GameOverDialog(gameItem);
-//        gameOverDialog.initGameOverDialog();
-
-//        pauseDialog = new PauseDialog(gameItem);
-//        pauseDialog.init();
-
         gameScript.fpc.level.updateLevel();
 
         giftScreen = new GiftScreen(gameItem);
@@ -212,13 +207,7 @@ public class GameScreenScript implements IScript {
         }
         goalFeedbackScreen.init(false);
 
-//        if (timer == null) {
-//            timer = new TrialTimer(gameItem, TRIAL_TIMER_X, TRIAL_TIMER_Y);
-//        }
         checkTryPeriod();
-//        if (!timer.ifShouldShowTimer()) {
-//            timer.timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        }
 
         gameScript.fpc.settings.totalPlayedGames++;
         gameScript.fpc.settings.playedGames++;
@@ -286,33 +275,12 @@ public class GameScreenScript implements IScript {
         backBtn.getComponent(TransformComponent.class).y = 640;
 
         backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
-                                                                    @Override
-                                                                    public void clicked() {
-                                                                        resetPauseDialog();
-                                                                        stage.initMenu();
-                                                                    }
-                                                                }
-
-
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
             @Override
             public void clicked() {
                 resetPauseDialog();
                 stage.initMenu();
             }
-        }*/);
+        });
     }
 
     public void resetPauseDialog() {
@@ -323,9 +291,6 @@ public class GameScreenScript implements IScript {
 
     private void initPauseBtn() {
         pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
-
-//        pauseBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
-//        pauseBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
 
         pauseBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(pauseBtn) {
@@ -340,35 +305,7 @@ public class GameScreenScript implements IScript {
                             pauseDialog.show();
                         }
                     }
-                }
-
-                /*new ButtonComponent.ButtonListener() {
-            LayerMapComponent lc = ComponentRetriever.get(pauseBtn, LayerMapComponent.class);
-
-            @Override
-            public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
-            public void clicked() {
-                isPause = true;
-                if (!isGameOver && isStarted) {
-                    if (pauseDialog == null) {
-                        pauseDialog = new PauseDialog(gameItem);
-                        pauseDialog.init();
-                    }
-                    pauseDialog.show();
-                }
-            }
-        }*/);
+                });
     }
 
     private void initLeafs() {
@@ -427,9 +364,7 @@ public class GameScreenScript implements IScript {
                 if (petE != null && !fpc.currentPet.enabled) {
                     if (fpc.currentPet.petCannon != null) {
                         fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//                        sceneLoader.getEngine().removeEntity(fpc.currentPet.petCannon);
                     }
-//                    sceneLoader.getEngine().removeEntity(petE);
                 }
             }
         }
@@ -481,7 +416,6 @@ public class GameScreenScript implements IScript {
             giftScreen.update();
             goalFeedbackScreen.update();
             updateAngeredBeesMode();
-//            timer.timer();
         }
     }
 
@@ -495,22 +429,28 @@ public class GameScreenScript implements IScript {
         if (fpc.canUsePhoenix()) {
             usePhoenix();
         } else {
-            if (gameOverDialog == null) {
-                gameOverDialog = new GameOverDialog(gameItem);
-                gameOverDialog.initGameOverDialog();
-            }
-            gameOverDialog.show();
+            endGame();
         }
     }
 
-    public void reloadScoreLabel(FlowerPublicComponent fcc) {
-//        scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
-//                scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     debug score indicator
-//                "" + fcc.score + "/" + fcc.totalScore);
-//        scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
-//                scoreLabelES.getComponent(LabelComponent.class).text.capacity(),
-//                "" + fcc.score + "/" + fcc.totalScore);
+    private void endGame() {
+        if (shouldShowGameOverDialog) {
+            showGameOverDialog();
+        } else {
+            isGameOver = false;
+            gameScript.stage.initResultWithAds();
+        }
+    }
 
+    private void showGameOverDialog() {
+        if (gameOverDialog == null) {
+            gameOverDialog = new GameOverDialog(gameItem);
+            gameOverDialog.initGameOverDialog();
+        }
+        gameOverDialog.show();
+    }
+
+    public void reloadScoreLabel(FlowerPublicComponent fcc) {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                 "" + fcc.score);
@@ -553,7 +493,6 @@ public class GameScreenScript implements IScript {
             UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
             umbrellaComponent.setToSpawningState();
             umbrellaEntity.add(umbrellaComponent);
-//            umbrellaEntity.add(GameStage.gameScript.fpc);
         } else {
             umbrellaEntity.getComponent(UmbrellaComponent.class).setToSpawningState();
         }
