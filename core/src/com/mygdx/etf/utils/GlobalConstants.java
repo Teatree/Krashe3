@@ -31,4 +31,5 @@ public abstract class GlobalConstants {
     public static final String BUTTON_TAG = "button";
 
     public static String CUR_SCREEN = "MENU";
+    public static final float ALPHA_TRANSITION_STEP = 0.05f;
 }

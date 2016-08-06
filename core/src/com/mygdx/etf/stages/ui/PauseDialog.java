@@ -32,6 +32,12 @@ public class PauseDialog extends AbstractDialog {
     public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
+    public static final String TILE_TAG = "tile";
+    public static final String COMPLETED = "Completed";
+    public static final String PROGRESS = "Progress: ";
+    public static final String SLASH = "/";
+    public static final String GOAL_PROGRESS_LBL = "goal_progress_lbl";
+    public static final String GOAL_LBL = "goal_lbl";
 
     public static final int PAUSE_Y = 50;
     public static final int PAUSE_X = 260;
@@ -41,7 +47,6 @@ public class PauseDialog extends AbstractDialog {
     public static final int GOAL_TILE_STEP_Y = 110;
     public static final int TAP_COOLDOWN = 30;
     public static final int PAUSE_COUNT = 3;
-    public static final String TILE_TAG = "tile";
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
@@ -69,21 +74,7 @@ public class PauseDialog extends AbstractDialog {
                     public void clicked() {
                         closePauseDialog();
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                closePauseDialog();
-            }
-        }*/);
+                });
 
         final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
@@ -159,33 +150,24 @@ public class PauseDialog extends AbstractDialog {
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
         for (Goal goal : gameScript.fpc.level.getGoals()) {
-            Entity tile = tileEntities.get(i++); //TODO: out of bound exception
-//            CompositeItemVO tempC;
-//            tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
-//
-//            final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-////            sceneLoader.getEngine().addEntity(tile);
-//            tile.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            pauseDialogE.getComponent(NodeComponent.class).addChild(tile);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
+            Entity tile = tileEntities.get(i++);
 
             goalProgressValue = String.valueOf(goal.getCounter());
             NodeComponent nc = tile.getComponent(NodeComponent.class);
             for (Entity e : nc.children) {
 
                 if (goal.getCounter() >= goal.getN()) {
-                    goalProgressValue = "Completed";
-                }else{
-                    goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+                    goalProgressValue = COMPLETED;
+                } else {
+                    goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
                 }
-                    if (e.getComponent(MainItemComponent.class).tags.contains("goal_progress_lbl")) {
-                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                                goalProgressValue);
-//                    e.getComponent(ZIndexComponent.class).setZIndex(120);
-                    } else if (e.getComponent(MainItemComponent.class).tags.contains("goal_lbl")){
-                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                                goal.getDescription());
-                    }
+                if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_PROGRESS_LBL)) {
+                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                            goalProgressValue);
+                } else if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_LBL)) {
+                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                            goal.getDescription());
+                }
             }
             tiles.put(goal, tile);
         }
@@ -204,15 +186,15 @@ public class PauseDialog extends AbstractDialog {
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
 
             if (goal.getCounter() >= goal.getN()) {
-                goalProgressValue = "Completed";
-            }else{
-                goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+                goalProgressValue = COMPLETED;
+            } else {
+                goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
             }
 
-            if (e.getComponent(MainItemComponent.class).tags.contains("goal_progress_lbl")) { //checks if the right label is being used
+            if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_PROGRESS_LBL)) { //checks if the right label is being used
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goalProgressValue);
-            }else if (e.getComponent(MainItemComponent.class).tags.contains("goal_lbl")){
+            } else if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_LBL)) {
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
             }

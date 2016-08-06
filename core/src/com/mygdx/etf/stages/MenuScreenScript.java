@@ -1,20 +1,16 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.scene2d.ButtonClickListener;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -26,9 +22,9 @@ import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
 import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
-import static com.mygdx.etf.utils.GlobalConstants.BTN_DEFAULT;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.mygdx.etf.utils.GlobalConstants.ALPHA_TRANSITION_STEP;
 
 public class MenuScreenScript implements IScript {
 
@@ -41,6 +37,9 @@ public class MenuScreenScript implements IScript {
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
     public static final String MM_FLOWER = "MM_flower";
+
+    public static final int TIMER_X = 680;
+    public static final int TIMER_Y = 500;
 
     ItemWrapper menuItem;
     private GameStage stage;
@@ -79,7 +78,7 @@ public class MenuScreenScript implements IScript {
 //        settings.init();
         isDialogOpen = false;
         if (timer == null) {
-            timer = new TrialTimer(menuItem, 680, 500);
+            timer = new TrialTimer(menuItem, TIMER_X, TIMER_Y);
         }
 
         if (showGoalNotification) {
@@ -124,23 +123,7 @@ public class MenuScreenScript implements IScript {
                             rateMyApp();
                         }
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                if (!isDialogOpen) {
-                    rateMyApp();
-                }
-            }
-        }*/);
+                });
 
         playBtn.getComponent(ButtonComponent.class).addListener(
                 new ButtonComponent.ButtonListener() {
@@ -154,7 +137,6 @@ public class MenuScreenScript implements IScript {
 
                     @Override
                     public void clicked() {
-                        System.out.println(Gdx.app.getJavaHeap() / 1000000);
                         if (!isDialogOpen) {
                             startGameTransition = true;
                         }
@@ -169,27 +151,7 @@ public class MenuScreenScript implements IScript {
                             resetPauseDialog();
                         }
                     }
-                }
-          /*      new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-                if (!isDialogOpen) {
-                    startShopTransition = true;
-                }
-            }
-
-            @Override
-            public void clicked() {
-                if (!isDialogOpen) {
-                    startShopTransition = true;
-                    resetPauseDialog();
-                }
-            }
-        }*/);
+                });
 
         btnSettings.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnSettings) {
@@ -204,32 +166,7 @@ public class MenuScreenScript implements IScript {
                             settings.show();
                         }
                     }
-                }
-
-
-         /*       new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-                btnSettings.getComponent(TintComponent.class).color.set(1, 1, 1, 1f);
-            }
-
-            @Override
-            public void touchDown() {
-                btnSettings.getComponent(TintComponent.class).color.set(0, 0, 0, 0.5f);
-            }
-
-            @Override
-            public void clicked() {
-                if (!isDialogOpen) {
-                    isDialogOpen = true;
-                    if (settings == null) {
-                        settings = new Settings(menuItem);
-                        settings.init();
-                    }
-                    settings.show();
-                }
-            }
-        }*/);
+                });
 
         btnGoals.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnGoals) {
@@ -249,36 +186,7 @@ public class MenuScreenScript implements IScript {
                             pauseDialog.show();
                         }
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-                if (!isDialogOpen) {
-                }
-            }
-
-            @Override
-            public void clicked() {
-                if (!isDialogOpen) {
-                    isDialogOpen = true;
-                    showGoalNotification = false;
-                    Level.goalStatusChanged = false;
-                    Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
-                    lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-
-                    if (pauseDialog == null) {
-                        pauseDialog = new PauseDialog(menuItem);
-                        pauseDialog.init();
-                    }
-
-                    pauseDialog.show();
-                }
-            }
-        }*/);
+                });
     }
 
     @Override
@@ -293,7 +201,7 @@ public class MenuScreenScript implements IScript {
 
         pauseDialog.update(delta);
         if (startGameTransition) {
-            curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
+            curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startGameTransition = false;
                 stage.initGame();
@@ -301,7 +209,7 @@ public class MenuScreenScript implements IScript {
         }
 
         if (startShopTransition) {
-            curtain_mm.getComponent(TintComponent.class).color.a += 0.05f;
+            curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
                 stage.initShopWithAds();
@@ -309,7 +217,7 @@ public class MenuScreenScript implements IScript {
         }
 
         if (startTransitionIn) {
-            curtain_mm.getComponent(TintComponent.class).color.a -= 0.05f;
+            curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
                 startTransitionIn = false;
             }

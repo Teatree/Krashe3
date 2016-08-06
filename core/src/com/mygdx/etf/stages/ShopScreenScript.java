@@ -17,13 +17,14 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.*;
 
 import static com.mygdx.etf.entity.componets.ShopItem.HARD;
 import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.utils.GlobalConstants.ALPHA_TRANSITION_STEP;
+
 
 public class ShopScreenScript implements IScript {
 
@@ -43,6 +44,12 @@ public class ShopScreenScript implements IScript {
     public static final int INIT_HC_ITEMS_X = 146;
     public static final int X_ICON_ON_BAG = 70;
     public static final int Y_ICON_ON_BAG = 100;
+    public static final int STOP_VELOCITY_DIV = 20;
+    public static final int FIRST_BAG_X = 1300;
+    public static final int FIRST_BAG_Y = 400;
+    public static final float BAG_POS_COEFFICIENT = 0.6f;
+    public static final int CAN_MOVE_LEFT_BAG_X = 990;
+    public static final int CAN_MOVE_RIGHT_BAG_X = 10;
 
     // Dima's fun house
     Entity curtain_shop;
@@ -171,7 +178,7 @@ public class ShopScreenScript implements IScript {
                     }
                 }
             });
-            i += 1;
+            i++;
         }
     }
 
@@ -184,29 +191,12 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon = initSoftCurrencyShopItem(vc);
-
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(26);
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(bagsZindex+1);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
             bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex();
-
             previousTc = tc;
-
-//            itemIcon.add(new ButtonComponent());
-//            itemIcon.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(itemIcon) {
-//                @Override
-//                public void touchUp() {
-//                }
-//
-//                @Override
-//                public void touchDown() {
-//                }
-//
-//                @Override
-//                public void clicked() {
-//                }
-//            });
 
             shopItem.getChild(BTN_IMG_SHOP_ICON_LIB).addChild(itemIcon);
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
@@ -257,13 +247,6 @@ public class ShopScreenScript implements IScript {
         return upgrades;
     }
 
-    public void skipLayersOverride(LayerMapComponent lc) {
-        if (isPreviewOn || !canOpenPreview) {
-            lc.getLayer(BTN_NORMAL).isVisible = true;
-            lc.getLayer(BTN_PRESSED).isVisible = false;
-        }
-    }
-
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
         Entity itemIcon;
         if (!vc.bought) {
@@ -297,14 +280,14 @@ public class ShopScreenScript implements IScript {
     public void act(float delta) {
         if (!isPreviewOn) {
             if (startTransitionIn) {
-                curtain_shop.getComponent(TintComponent.class).color.a -= 0.05f;
+                curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
                 if (curtain_shop.getComponent(TintComponent.class).color.a <= 0) {
                     startTransitionIn = false;
                 }
             }
 
             if (startTransitionOut) {
-                curtain_shop.getComponent(TintComponent.class).color.a += 0.05f;
+                curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
                 if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                     startTransitionOut = false;
                     startTransitionIn = true;
@@ -356,7 +339,7 @@ public class ShopScreenScript implements IScript {
                                 .getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
                         i++;
                     }
-                    stopVelocity -= stopVelocity / 20;
+                    stopVelocity -= stopVelocity / STOP_VELOCITY_DIV;
                 }
             }
         }
@@ -365,30 +348,30 @@ public class ShopScreenScript implements IScript {
     }
 
     public boolean canMoveBagsLeft() {
-        return bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= 990;
+        return bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= CAN_MOVE_LEFT_BAG_X;
     }
 
     public boolean canMoveBagsRight() {
-        return bags.get(0).getComponent(TransformComponent.class).x <= 10;
+        return bags.get(0).getComponent(TransformComponent.class).x <= CAN_MOVE_RIGHT_BAG_X;
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
         TransformComponent tc = new TransformComponent();
         if (previous == null) {
-            tc.x = 1300;
-            tc.y = 400;
+            tc.x = FIRST_BAG_X;
+            tc.y = FIRST_BAG_Y;
             return tc;
         }
         switch (bagPosId) {
             case 0: {
-                tc.x = previous.x + previousDc.width * 0.6f;
+                tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
                 tc.y = previous.y - previousDc.height;
 
                 bagPosId++;
                 break;
             }
             case 1: {
-                tc.x = previous.x + previousDc.width * 0.6f;
+                tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
                 tc.y = previous.y + previousDc.height;
 
                 bagPosId = 0;
