@@ -178,17 +178,14 @@ public class PauseDialog extends AbstractDialog {
                 }else{
                     goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
                 }
-
-                if (e.getComponent(LabelComponent.class) != null) {
-                    if (e.getComponent(LabelComponent.class).textEquals("ERROR MESSAGES ARE SO COOL")) { //checks if the right label is being used
-                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                                goal.getDescription());
-                    }else{
+                    if (e.getComponent(MainItemComponent.class).tags.contains("goal_progress_lbl")) {
                         e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                                 goalProgressValue);
-                    }
 //                    e.getComponent(ZIndexComponent.class).setZIndex(120);
-                }
+                    } else if (e.getComponent(MainItemComponent.class).tags.contains("goal_lbl")){
+                        e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                                goal.getDescription());
+                    }
             }
             tiles.put(goal, tile);
         }
@@ -212,11 +209,12 @@ public class PauseDialog extends AbstractDialog {
                 goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
             }
 
-            if (e.getComponent(LabelComponent.class) != null) {
-                if (e.getComponent(LabelComponent.class).getText().toString().contains("Progress")) { //checks if the right label is being used
-                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                            goalProgressValue);
-                }
+            if (e.getComponent(MainItemComponent.class).tags.contains("goal_progress_lbl")) { //checks if the right label is being used
+                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                        goalProgressValue);
+            }else if (e.getComponent(MainItemComponent.class).tags.contains("goal_lbl")){
+                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                        goal.getDescription());
             }
 
             if (sc != null) {

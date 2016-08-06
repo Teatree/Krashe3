@@ -438,7 +438,19 @@ public class GameScreenScript implements IScript {
             showGameOverDialog();
         } else {
             isGameOver = false;
-            gameScript.stage.initResultWithAds();
+//            resetGameData();
+
+            if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
+                gameScript.goalFeedbackScreen.show();
+//                close(gameOverDialogE);
+                isGameOver = true;
+            } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen && !gameScript.giftScreen.isGiftScreenOpen) {
+                isGameOver = false;
+                gameScript.resetPauseDialog();
+                gameScript.stage.initResultWithAds();
+//                close(gameOverDialogE);
+            }
+//            gameScript.stage.initResultWithAds();
         }
     }
 

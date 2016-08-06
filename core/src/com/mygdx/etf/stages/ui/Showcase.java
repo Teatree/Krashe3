@@ -141,14 +141,14 @@ public class Showcase {
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
+//                lc.getLayer(BTN_NORMAL).isVisible = true;
+//                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
+//                lc.getLayer(BTN_NORMAL).isVisible = false;
+//                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
@@ -166,14 +166,14 @@ public class Showcase {
         backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
             public void touchUp() {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
+//                lc.getLayer(BTN_NORMAL).isVisible = true;
+//                lc.getLayer(BTN_PRESSED).isVisible = false;
             }
 
             @Override
             public void touchDown() {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
+//                lc.getLayer(BTN_NORMAL).isVisible = false;
+//                lc.getLayer(BTN_PRESSED).isVisible = true;
             }
 
             @Override
