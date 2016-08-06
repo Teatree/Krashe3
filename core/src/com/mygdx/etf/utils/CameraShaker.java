@@ -12,7 +12,7 @@ import static com.mygdx.etf.stages.GameStage.gameScript;
 
 public class CameraShaker {
 
-    public static final String BLINK = "blink";
+//    public static final String BLINK = "blink";
 
     public float time;
     Random random = new Random();
@@ -28,8 +28,7 @@ public class CameraShaker {
         this.power = power;
         this.time = time;
         this.current_time = 0;
-
-        initBlinking(7, 10);
+//        initBlinking(7, 10);
     }
 
     public void shake(float delta) {
@@ -43,32 +42,32 @@ public class CameraShaker {
             GameStage.viewport.getCamera().translate(signX * x, y, 0);
             current_time += delta;
         } else {
-            GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
-            ComponentRetriever.get(gameScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
-            Main.gameStage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
+//            GameStage.viewport.update(Main.viewportWidth, Main.viewportHeight, true);
+//            ComponentRetriever.get(gameScript.background, LayerMapComponent.class).getLayer(BLINK).isVisible = false;
+//            Main.gameStage.getViewport().update(Main.viewportWidth, Main.viewportHeight, true);
         }
 
     }
 
-    public void blink() {
-        this.blinkIntervalCounter--;
-        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
-        if (this.blinkIntervalCounter == 0 && blinkCounter != 0) {
-            lc.getLayer(BLINK).isVisible = !lc.getLayer(BLINK).isVisible;
-            this.blinkIntervalCounter = blinkInterval;
-            blinkCounter--;
-        }
-        if (blinkCounter == 0) {
-            lc.getLayer(BLINK).isVisible = false;
-        }
-    }
+//    public void blink() {
+//        this.blinkIntervalCounter--;
+//        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
+//        if (this.blinkIntervalCounter == 0 && blinkCounter != 0) {
+//            lc.getLayer(BLINK).isVisible = !lc.getLayer(BLINK).isVisible;
+//            this.blinkIntervalCounter = blinkInterval;
+//            blinkCounter--;
+//        }
+//        if (blinkCounter == 0) {
+//            lc.getLayer(BLINK).isVisible = false;
+//        }
+//    }
 
-    public void initBlinking(int blinkInterval, int amount) {
-        this.blinkIntervalCounter = blinkInterval;
-        this.blinkInterval = blinkInterval;
-        this.blinkCounter = amount;
-
-        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
-        lc.getLayer(BLINK).isVisible = true;
-    }
+//    public void initBlinking(int blinkInterval, int amount) {
+//        this.blinkIntervalCounter = blinkInterval;
+//        this.blinkInterval = blinkInterval;
+//        this.blinkCounter = amount;
+//
+//        LayerMapComponent lc = ComponentRetriever.get(gameScript.background, LayerMapComponent.class);
+//        lc.getLayer(BLINK).isVisible = true;
+//    }
 }

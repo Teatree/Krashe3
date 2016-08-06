@@ -49,7 +49,7 @@ public class GameScreenScript implements IScript {
     public final String MEGA_FLOWER = "mega_flower";
     public final String MEGA_LEAFS = "mega_leafs";
     public final String COCCOON = "coccoon";
-    public final String BACKGROUND_LIB = "backgroundLib";
+//    public final String BACKGROUND_LIB = "backgroundLib";
     public final String BTN_BACK = "btn_back";
 
     public static boolean isPause;
@@ -108,7 +108,7 @@ public class GameScreenScript implements IScript {
             }
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
-                cameraShaker.initBlinking(40, 3);
+//                cameraShaker.initBlinking(40, 3);
                 angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
 
                 checkAngeredBeesGoal();
@@ -192,7 +192,7 @@ public class GameScreenScript implements IScript {
         addSystems();
         initFlower();
         initLeafs();
-        initBackground();
+//        initBackground();
         initPet();
         initDoubleBJIcon();
         initUmbrella();
@@ -236,21 +236,21 @@ public class GameScreenScript implements IScript {
         }
     }
 
-    private void initBackground() {
-        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(BACKGROUND_LIB);
-        background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), background, tempC.composite);
-        sceneLoader.getEngine().addEntity(background);
-
-        LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
-        lc.setLayers(tempC.composite.layers);
-        background.add(lc);
-        lc.getLayer(CameraShaker.BLINK).isVisible = false;
-        TransformComponent tc = new TransformComponent();
-        tc.x = 0;
-        tc.y = 0;
-        background.add(tc);
-    }
+//    private void initBackground() {
+//        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(BACKGROUND_LIB);
+//        background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), background, tempC.composite);
+//        sceneLoader.getEngine().addEntity(background);
+//
+//        LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
+//        lc.setLayers(tempC.composite.layers);
+//        background.add(lc);
+////        lc.getLayer(CameraShaker.BLINK).isVisible = false;
+//        TransformComponent tc = new TransformComponent();
+//        tc.x = 0;
+//        tc.y = 0;
+//        background.add(tc);
+//    }
 
     private void addSystems() {
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
@@ -380,7 +380,7 @@ public class GameScreenScript implements IScript {
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
-                cameraShaker.blink();
+//                cameraShaker.blink();
             }
 
             if (!isStarted && Gdx.input.justTouched()) {
