@@ -10,12 +10,10 @@ import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
 import com.mygdx.etf.system.BugSystem;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -59,13 +57,13 @@ public class GameOverDialog extends AbstractDialog {
         final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
         dialogTc.x = 300;
         dialogTc.y = 100;
-        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+1);
+        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
 
         tapCoolDown = TAP_COOL;
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
 
-        Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
+        Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
         gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), Integer.toString(GAME_OVER_COUNT));
 
@@ -75,60 +73,41 @@ public class GameOverDialog extends AbstractDialog {
 
     public void initGameOverDialog() {
         initShadow();
-        gameOverDialogE = gameItem.getChild(GAME_OVER_DIALOG).getEntity();
+
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(GAME_OVER_DIALOG).clone();
+        gameOverDialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), gameOverDialogE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
+
         final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
-        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+1);
+        gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
         initReviveBtn(dialogTc);
     }
 
     private void initReviveBtn(final TransformComponent dialogTc) {
-        final Entity reviveBtn = gameItem.getChild(GAME_OVER_DIALOG).getChild(BTN_WATCH_VIDEO).getEntity();
-        final Entity turnOnWifi = gameItem.getChild(GAME_OVER_DIALOG).getChild(LBL_TURN_ON_WIFI).getEntity();
+        final Entity reviveBtn = gameOverDialogE.getComponent(NodeComponent.class).getChild(BTN_WATCH_VIDEO);
+        final Entity turnOnWifi = gameOverDialogE.getComponent(NodeComponent.class).getChild(LBL_TURN_ON_WIFI);
 //        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
-            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            reviveBtn.getComponent(TransformComponent.class).x = 240;
-            reviveBtn.getComponent(TransformComponent.class).y = 80;
-            reviveBtn.getComponent(ButtonComponent.class).addListener(
-                    new ImageButtonListener(reviveBtn) {
-                        @Override
-                        public void clicked() {
-                            if (Main.mainController.isWifiConnected()) {
-                                playVideoAd(dialogTc);
-                            } else {
-                                turnOnWifi.getComponent(TransformComponent.class).x = 127;
-                                turnOnWifi.getComponent(TransformComponent.class).y = 45;
-                                continueGame(dialogTc);
-                            }
-                            close(gameOverDialogE);
+        turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        reviveBtn.getComponent(TransformComponent.class).x = 240;
+        reviveBtn.getComponent(TransformComponent.class).y = 80;
+        reviveBtn.add(new ButtonComponent());
+        reviveBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(reviveBtn) {
+                    @Override
+                    public void clicked() {
+                        if (Main.mainController.isWifiConnected()) {
+                            playVideoAd(dialogTc);
+                        } else {
+                            turnOnWifi.getComponent(TransformComponent.class).x = 127;
+                            turnOnWifi.getComponent(TransformComponent.class).y = 45;
+                            continueGame(dialogTc);
                         }
+                        close(gameOverDialogE);
                     }
-                    /*new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown() {
-                }
-
-                @Override
-                public void clicked() {
-                    if (Main.mainController.isWifiConnected()) {
-                        playVideoAd(dialogTc);
-                    } else {
-                        turnOnWifi.getComponent(TransformComponent.class).x = 127;
-                        turnOnWifi.getComponent(TransformComponent.class).y = 45;
-                        continueGame(dialogTc);
-                    }
-                    close(gameOverDialogE);
-                }
-            }*/);
-//        } else {
-//            turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            reviveBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//        }
+                });
     }
 
     public void continueGame(TransformComponent dialogTc) {
@@ -156,7 +135,7 @@ public class GameOverDialog extends AbstractDialog {
 
         fade(gameOverDialogE, isGameOver);
         if (isGameOver) {
-            final Entity gameOverTimerLbl = gameItem.getChild(GAME_OVER_DIALOG).getChild(LABEL_TIMER_GAMEOVER).getEntity();
+            final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
             final ActionComponent ac = new ActionComponent();
@@ -165,15 +144,15 @@ public class GameOverDialog extends AbstractDialog {
             gameOverTimerLbl.add(ac);
 
 
-            if(Gdx.input.justTouched() && tapCoolDown <= 0){
+            if (Gdx.input.justTouched() && tapCoolDown <= 0) {
                 gameOverTimer = 1;
                 tapCoolDown = TAP_COOL;
             }
             tapCoolDown--;
 
-            gameOverTimer += deltaTime ;
-            if (gameOverTimer >= 1){
-                gameOverTimer =0;
+            gameOverTimer += deltaTime;
+            if (gameOverTimer >= 1) {
+                gameOverTimer = 0;
                 gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter--));
             }
             finishGame();
