@@ -51,6 +51,7 @@ public class PauseDialog extends AbstractDialog {
     public static final String GOALS_POPUP = "goal_popup_lib";
     public static final String ACHIEVED = "achieved";
     public static final String NOTACHIEVED = "notachieved";
+    public static final String ENTER = " \n ";
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
@@ -122,11 +123,11 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
         LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
-        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
+        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), ENTER + gameScript.fpc.level.name + ENTER);
 
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), ENTER + gameScript.fpc.level.name + ENTER);
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
