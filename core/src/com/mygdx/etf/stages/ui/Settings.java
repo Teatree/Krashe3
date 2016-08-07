@@ -10,6 +10,7 @@ import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -21,8 +22,8 @@ import static com.mygdx.etf.utils.GlobalConstants.*;
  */
 public class Settings extends AbstractDialog {
 
-    public static final String SETTINGS = "settings";
-    public static final String INFO = "info";
+    public static final String SETTINGS = "settings_lib";
+    public static final String INFO = "info_lib";
 
     public static final String BTN_RESET = "btn_reset";
     public static final String BTN_RESTORE = "btn_restore";
@@ -39,84 +40,58 @@ public class Settings extends AbstractDialog {
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
 
-    //    private ItemWrapper gameItem;
     private Entity settingsE;
     private Entity infoE;
-//    private Entity shadowE;
 
     public Settings(ItemWrapper gameItem) {
         this.gameItem = gameItem;
     }
 
     public void init() {
-        settingsE = gameItem.getChild(SETTINGS).getEntity();
-//        settingsE.getComponent(TransformComponent.class).scaleX = 0.9f;
-//        settingsE.getComponent(TransformComponent.class).scaleY = 0.9f;
-        Entity closeSettingsBtn = gameItem.getChild(SETTINGS).getChild(BTN_CLOSE_SETTINGS).getEntity();
-        Entity btnNoAds = gameItem.getChild(SETTINGS).getChild(BTN_NO_ADS).getEntity();
-        Entity nextInfoBtn = gameItem.getChild(SETTINGS).getChild(BTN_NEXT_INFO).getEntity();
-        Entity restorePurchasesBtn = gameItem.getChild(SETTINGS).getChild(BTN_RESTORE).getEntity();
-        Entity resetProgressBtn = gameItem.getChild(SETTINGS).getChild(BTN_RESET).getEntity();
+        loadSettingsFromLib();
+        loadInfoFromLib();
+
+        Entity closeSettingsBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_CLOSE_SETTINGS);
+        Entity btnNoAds = settingsE.getComponent(NodeComponent.class).getChild(BTN_NO_ADS);
+        Entity nextInfoBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_NEXT_INFO);
+        Entity restorePurchasesBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESTORE);
+        Entity resetProgressBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESET);
 
         initSoundBtn();
         initMusicBtn();
 
-        infoE = gameItem.getChild(INFO).getEntity();
+
         infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
         infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
-//        infoE.getComponent(TransformComponent.class).scaleX = 0.9f;
-//        infoE.getComponent(TransformComponent.class).scaleY = 0.9f;
 
-        Entity closeInfoBtn = gameItem.getChild(INFO).getChild(BTN_CLOSE_INFO).getEntity();
-        Entity backBtn = gameItem.getChild(INFO).getChild(BTN_BACK_SETTINGS).getEntity();
+        Entity closeInfoBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_CLOSE_INFO);
+        Entity backBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_BACK_SETTINGS);
 
         final BasicDialog dialog = new BasicDialog(gameItem);
         dialog.init();
         dialog.parent = this;
-//        dialogRestore.init(BasicDialog.TYPE_RESTORE_PURCH);
 
         initShadow();
 
+        closeSettingsBtn.add(new ButtonComponent());
         closeSettingsBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(closeSettingsBtn) {
                     @Override
                     public void clicked() {
                         close(settingsE);
                     }
-                }
-              /*  new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                close(settingsE);
-            }
-        }*/);
-
+        closeInfoBtn.add(new ButtonComponent());
         closeInfoBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(closeInfoBtn) {
                     @Override
                     public void clicked() {
                         close(infoE);
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                close(infoE);
-            }
-        }*/);
-
+        btnNoAds.add(new ButtonComponent());
         btnNoAds.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnNoAds) {
                     @Override
@@ -125,22 +100,9 @@ public class Settings extends AbstractDialog {
                             Main.mainController.removeAds();
                         }
                     }
-                }
-        /*        new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                if(!isDialogOpen) {
-                    Main.mainController.removeAds();
-                }
-            }
-        }*/);
-
+        nextInfoBtn.add(new ButtonComponent());
         nextInfoBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(nextInfoBtn) {
                     @Override
@@ -161,33 +123,9 @@ public class Settings extends AbstractDialog {
                         }
 
                     }
-                }
-               /* new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                if (isActive) {
-                    infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
-                    infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
-                    ActionComponent acSettings = new ActionComponent();
-                    Actions.checkInit();
-                    acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                    settingsE.add(acSettings);
-
-                    ActionComponent acInfo = new ActionComponent();
-                    Actions.checkInit();
-                    acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                    infoE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
-                    infoE.add(acInfo);
-                }
-            }
-        }*/);
-
+        backBtn.add(new ButtonComponent());
         backBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(backBtn) {
                     @Override
@@ -202,28 +140,9 @@ public class Settings extends AbstractDialog {
                         acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                         infoE.add(acInfo);
                     }
-                }
-               /* new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                ActionComponent acSettings = new ActionComponent();
-                Actions.checkInit();
-                acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                settingsE.add(acSettings);
-
-                ActionComponent acInfo = new ActionComponent();
-                Actions.checkInit();
-                acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                infoE.add(acInfo);
-            }
-        }*/);
-
+        resetProgressBtn.add(new ButtonComponent());
         resetProgressBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(resetProgressBtn) {
                     @Override
@@ -234,6 +153,7 @@ public class Settings extends AbstractDialog {
                     }
                 });
 
+        restorePurchasesBtn.add(new ButtonComponent());
         restorePurchasesBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(restorePurchasesBtn) {
                     @Override
@@ -255,6 +175,20 @@ public class Settings extends AbstractDialog {
         settingsTc.y = FAR_FAR_AWAY_Y;
     }
 
+    private void loadSettingsFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(SETTINGS).clone();
+        settingsE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), settingsE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(settingsE);
+    }
+
+    private void loadInfoFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(INFO).clone();
+        infoE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), infoE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(infoE);
+    }
+
     public void show() {
         isActive = true;
         addShadow();
@@ -266,9 +200,6 @@ public class Settings extends AbstractDialog {
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);
-
-//        setMusicBtnState(gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity());
-//        setSoundBtnState(gameItem.getChild(SETTINGS).getChild(BTN_SOUND).getEntity());
     }
 
 
@@ -297,12 +228,12 @@ public class Settings extends AbstractDialog {
     }
 
     private void initMusicBtn() {
-        final Entity musicBtn = gameItem.getChild(SETTINGS).getChild(BTN_MUSIC).getEntity();
+        final Entity musicBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_MUSIC);
         ToggleButtonComponent musictbc = new ToggleButtonComponent();
-//        final LayerMapComponent lc = ComponentRetriever.get(musicBtn, LayerMapComponent.class);
         musicBtn.add(musictbc);
         setMusicBtnState(musicBtn);
 
+        musicBtn.add(new ButtonComponent());
         musicBtn.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
 
         if (0 == musicBtn.getComponent(ButtonComponent.class).listeners.size) {
@@ -364,11 +295,12 @@ public class Settings extends AbstractDialog {
     }
 
     private void initSoundBtn() {
-        final Entity soundBtn = gameItem.getChild(SETTINGS).getChild(BTN_SOUND).getEntity();
+        final Entity soundBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_SOUND);
         ToggleButtonComponent soundtbc = new ToggleButtonComponent();
 //        final LayerMapComponent lc8 = ComponentRetriever.get(soundBtn, LayerMapComponent.class);
         soundBtn.add(soundtbc);
         setSoundBtnState(soundBtn);
+        soundBtn.add(new ButtonComponent());
         soundBtn.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
         if (0 == soundBtn.getComponent(ButtonComponent.class).listeners.size) {
             soundBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {

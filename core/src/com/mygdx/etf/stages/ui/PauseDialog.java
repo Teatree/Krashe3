@@ -48,7 +48,7 @@ public class PauseDialog extends AbstractDialog {
     public static final int GOAL_TILE_STEP_Y = 110;
     public static final int TAP_COOLDOWN = 30;
     public static final int PAUSE_COUNT = 3;
-    public static final String GOALS_POPUP = "goals_popup_lib";
+    public static final String GOALS_POPUP = "goal_popup_lib";
     public static final String ACHIEVED = "achieved";
     public static final String NOTACHIEVED = "notachieved";
 
