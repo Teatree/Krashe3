@@ -163,7 +163,8 @@ public abstract class ComponentFactory {
 
     protected void createNodeComponent(Entity root, Entity entity) {
         NodeComponent component = nodeComponentMapper.get(root);
-        component.children.add(entity);
+//        component.children.add(entity);
+        component.addChild(entity);
     }
 
     protected void createPhysicsComponents(Entity entity, MainItemVO vo) {

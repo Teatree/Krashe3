@@ -89,8 +89,8 @@ public class MenuScreenScript implements IScript {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
-        pauseDialog = new PauseDialog(menuItem);
-        pauseDialog.init();
+//        pauseDialog = new PauseDialog(menuItem);
+//        pauseDialog.init();
     }
 
     public void initButtons() {
@@ -199,6 +199,7 @@ public class MenuScreenScript implements IScript {
         GameScreenScript.checkTryPeriod();
         timer.timer();
 
+        if (pauseDialog != null)
         pauseDialog.update(delta);
         if (startGameTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
@@ -229,6 +230,7 @@ public class MenuScreenScript implements IScript {
     }
 
     public void resetPauseDialog() {
+        if (pauseDialog != null)
         pauseDialog.deleteTiles();
     }
 }

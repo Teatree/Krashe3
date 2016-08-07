@@ -5,10 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
+import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -29,7 +31,6 @@ public class PauseDialog extends AbstractDialog {
     public static final String LBL_DIALOG = "lbl_dialog";
     public static final String LBL_DIALOG_S = "lbl_dialog_2";
     public static final String LBL_GOAL_PROGRESS = "goal_progress";
-    public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
     public static final String TILE_TAG = "tile";
@@ -47,6 +48,9 @@ public class PauseDialog extends AbstractDialog {
     public static final int GOAL_TILE_STEP_Y = 110;
     public static final int TAP_COOLDOWN = 30;
     public static final int PAUSE_COUNT = 3;
+    public static final String GOALS_POPUP = "goals_popup_lib";
+    public static final String ACHIEVED = "achieved";
+    public static final String NOTACHIEVED = "notachieved";
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
@@ -65,9 +69,14 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void init() {
-        pauseDialogE = gameItem.getChild(PAUSE_DIALOG).getEntity();
-        final Entity closePauseBtn = gameItem.getChild(PAUSE_DIALOG).getChild(BTN_CLOSE).getEntity();
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(GOALS_POPUP).clone();
+        pauseDialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), pauseDialogE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(pauseDialogE);
 
+        final Entity closePauseBtn = pauseDialogE.getComponent(NodeComponent.class).getChild(BTN_CLOSE);
+
+        closePauseBtn.add(new ButtonComponent());
         closePauseBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(closePauseBtn) {
                     @Override
@@ -111,11 +120,11 @@ public class PauseDialog extends AbstractDialog {
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
         }
 
-        final Entity goalLabels = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG_S).getEntity();
+        final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
         LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
         goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
 
-        final Entity goalLabel = gameItem.getChild(PAUSE_DIALOG).getChild(LBL_DIALOG).getEntity();
+        final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "\n" + gameScript.fpc.level.name + " \n ");
 
@@ -179,47 +188,18 @@ public class PauseDialog extends AbstractDialog {
     private void showGoalTile(int y, Entity tile, Goal goal) {
         tile.getComponent(TransformComponent.class).x = GOAL_TILE_SPACE_X;
         tile.getComponent(TransformComponent.class).y = y;
-//        tile.getComponent(TransformComponent.class).scaleY = GOAL_TILE_SCALE;
 
-        NodeComponent nc = tile.getComponent(NodeComponent.class);
-        for (Entity e : nc.children) {
-            SpriterComponent sc = e.getComponent(SpriterComponent.class);
-
-            if (goal.getCounter() >= goal.getN()) {
-                goalProgressValue = COMPLETED;
-            } else {
-                goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
-            }
-
-            if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_PROGRESS_LBL)) { //checks if the right label is being used
-                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                        goalProgressValue);
-            } else if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_LBL)) {
-                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                        goal.getDescription());
-            }
-
-            if (sc != null) {
-//                sc.scale = 0.8f;
-                if (goal.achieved) {
-                    sc.player.setTime(sc.player.getAnimation().length - 2);
-                    sc.player.speed = 0;
-                } else {
-                    sc.player.setTime(0);
-                    sc.player.speed = 0;
-                }
-            }
+        if (goal.achieved){
+            tile.getComponent(LayerMapComponent.class).getLayer(ACHIEVED).isVisible = true;
+            tile.getComponent(LayerMapComponent.class).getLayer(NOTACHIEVED).isVisible = false;
+        } else {
+            tile.getComponent(LayerMapComponent.class).getLayer(ACHIEVED).isVisible = false;
+            tile.getComponent(LayerMapComponent.class).getLayer(NOTACHIEVED).isVisible = true;
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
     }
 
     public void update(float delta) {
-//        fade(pauseDialogE, pauseCounter > PAUSE_COUNT);
-//        fade(shadowE, pauseCounter > PAUSE_COUNT);
-//        for (Entity tile : tiles.values()) {
-//            fade(tile, pauseCounter > PAUSE_COUNT);
-//        }
-
         if (pauseCounter == 0 && isPause && pauseTimer >= 1 && lblPauseTimer != null) {
             isPause = false;
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
