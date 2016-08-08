@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r7">
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r4.1">
     <folder id="0">
-        <file id="0" name="body.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="1" name="eyelid_full.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="2" name="eyelid_half.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="3" name="head.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="4" name="mouth_lower.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="5" name="mouth_upper.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="6" name="wing_low.png" width="97" height="31" pivot_x="0" pivot_y="1"/>
-        <file id="7" name="wing_mid.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="8" name="wing_top.png" width="220" height="150" pivot_x="0" pivot_y="1"/>
-        <file id="9" name="cannon.png" width="86" height="77" pivot_x="0" pivot_y="1"/>
-        <file id="10" name="expl_1.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="11" name="expl_2.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="12" name="pet_3.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="13" name="pet_4.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="14" name="pet_5.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="15" name="pet_6.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="16" name="pet_7.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="17" name="pet_8.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="18" name="pet_9.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="19" name="pet_10.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="20" name="pet_11.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="21" name="pet_12.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="22" name="pet_13.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="23" name="pet_14.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="24" name="pet_15.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="25" name="pet_16.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="26" name="pet_17.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
-        <file id="27" name="pet_18.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="0" name="body.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="head.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="mouth_lower.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="mouth_upper.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="wing_low.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="wing_mid.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="6" name="wing_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="7" name="cannon.png" width="86" height="77" pivot_x="0" pivot_y="1"/>
+        <file id="8" name="expl_1.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="9" name="expl_2.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="10" name="pet_3.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="11" name="pet_4.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="12" name="pet_5.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="13" name="pet_6.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="14" name="pet_7.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="15" name="pet_8.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="16" name="pet_9.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="17" name="pet_10.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="18" name="pet_11.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="19" name="pet_12.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="20" name="pet_13.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="21" name="pet_14.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="22" name="pet_15.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="23" name="pet_16.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="24" name="pet_17.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
+        <file id="25" name="pet_18.png" width="50" height="128" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <animation id="0" name="idle" length="1000" interval="100">
             <mainline>
                 <key id="0">
-                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
                 </key>
             </mainline>
-            <timeline id="0" name="wing_top">
+            <timeline id="0" name="cannon">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="140.141361" y="-90.232161" angle="181.9368" a="0"/>
-                </key>
-            </timeline>
-            <timeline id="1" name="cannon">
-                <key id="0" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
             </timeline>
         </animation>
@@ -914,373 +907,373 @@
             </mainline>
             <timeline id="0" name="cannon">
                 <key id="0" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="1" time="92" spin="0">
-                    <object folder="0" file="9" x="-49.548851" y="111.320513" scale_x="2.902299" scale_y="3.358974"/>
+                    <object folder="0" file="7" x="-49.548851" y="111.320513" angle="0" scale_x="2.902299" scale_y="3.358974"/>
                 </key>
                 <key id="2" time="402" spin="0">
-                    <object folder="0" file="9" x="54.554598" y="91.583333" scale_x="3.109195" scale_y="2.833333"/>
+                    <object folder="0" file="7" x="54.554598" y="91.583333" angle="0" scale_x="3.109195" scale_y="2.833333"/>
                 </key>
             </timeline>
             <timeline id="1" name="expl_1">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="170" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="172" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="182" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="184" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="8" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="expl_2">
                 <key id="0" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="182" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="2" time="184" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="194" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="196" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="9" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="3" name="pet_3">
                 <key id="0" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="194" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="196" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="206" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="208" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="10" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" name="pet_4">
                 <key id="0" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="206" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="208" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="218" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="220" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="11" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="5" name="pet_5">
                 <key id="0" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="218" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="220" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="230" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="232" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="12" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="6" name="pet_6">
                 <key id="0" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="230" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="232" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="242" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="244" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="13" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="7" name="pet_7">
                 <key id="0" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="242" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="244" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="254" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="256" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="14" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="8" name="pet_8">
                 <key id="0" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="254" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="256" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="266" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="268" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="15" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="9" name="pet_9">
                 <key id="0" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="266" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="268" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="278" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="280" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="16" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="10" name="pet_10">
                 <key id="0" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="278" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="280" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="290" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="292" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="17" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="11" name="pet_11">
                 <key id="0" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="290" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="292" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="302" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="304" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="18" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="12" name="pet_12">
                 <key id="0" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="302" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="304" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="314" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="316" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="19" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
             </timeline>
             <timeline id="13" name="pet_13">
                 <key id="0" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="314" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="316" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="326" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="328" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="20" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="14" name="pet_14">
                 <key id="0" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="326" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="328" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="338" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="1"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="340" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="21" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="15" name="pet_15">
                 <key id="0" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="338" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="340" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="350" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="352" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="22" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="16" name="pet_16">
                 <key id="0" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="350" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="352" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="362" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="364" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="23" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="17" name="pet_17">
                 <key id="0" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="362" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="364" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="374" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="376" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="26" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="24" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
             <timeline id="18" name="pet_18">
                 <key id="0" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="1" time="374" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0.01"/>
                 </key>
                 <key id="2" time="376" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="386" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="388" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
                 <key id="5" time="402" spin="0">
-                    <object folder="0" file="27" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
+                    <object folder="0" file="25" x="-285" y="-90" angle="90" scale_x="3" scale_y="3" a="0"/>
                 </key>
             </timeline>
         </animation>
@@ -1307,22 +1300,22 @@
             </mainline>
             <timeline id="0" name="cannon">
                 <key id="0" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="1" time="100" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="2" time="135" spin="0">
-                    <object folder="0" file="9" x="-58" y="100" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="100" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="170" spin="0">
-                    <object folder="0" file="9" x="-58" y="90.380368" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="90.380368" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="4" time="200" spin="0">
-                    <object folder="0" file="9" x="-58" y="97.446437" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="97.446437" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="5" time="226" spin="0">
-                    <object folder="0" file="9" x="-58" y="93.810363" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="93.810363" angle="0" scale_x="3" scale_y="3"/>
                 </key>
             </timeline>
         </animation>
@@ -1343,16 +1336,16 @@
             </mainline>
             <timeline id="0" name="cannon">
                 <key id="0" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="1" time="109" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="2" time="216" spin="0">
-                    <object folder="0" file="9" x="-63" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-63" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="3" time="288" spin="0">
-                    <object folder="0" file="9" x="-70.461538" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-70.461538" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
             </timeline>
         </animation>
@@ -1367,10 +1360,10 @@
             </mainline>
             <timeline id="0" name="cannon">
                 <key id="0" spin="0">
-                    <object folder="0" file="9" x="150" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="150" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
                 <key id="1" time="600" spin="0">
-                    <object folder="0" file="9" x="-58" y="95" scale_x="3" scale_y="3"/>
+                    <object folder="0" file="7" x="-58" y="95" angle="0" scale_x="3" scale_y="3"/>
                 </key>
             </timeline>
         </animation>
