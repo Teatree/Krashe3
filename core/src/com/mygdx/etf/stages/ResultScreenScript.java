@@ -90,11 +90,6 @@ public class ResultScreenScript implements IScript {
         if (timer == null) {
             timer = new TrialTimer(resultScreenItem, 120, 650);
         }
-
-        if (promoWindow == null) {
-            promoWindow = new PromoWindow(resultScreenItem);
-        }
-        promoWindow.init();
     }
 
     public void initButtons() {
@@ -203,6 +198,10 @@ public class ResultScreenScript implements IScript {
     public void act(float delta) {
         timer.timer();
         if (offerPromo && active) {
+            if (promoWindow == null) {
+                promoWindow = new PromoWindow(resultScreenItem);
+            }
+            promoWindow.init();
             promoWindow.show();
             offerPromo = false;
             active = false;
