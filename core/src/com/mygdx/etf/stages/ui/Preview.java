@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.etf.entity.componets.BugComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -28,7 +29,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class Preview extends AbstractDialog {
 
-    public static final String PREVIEW = "previewTag";
+    public static final String PREVIEW = "tag_lib";
     public static final String ITEM_UNKNOWN = "item_unknown_n";
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
@@ -62,19 +63,24 @@ public class Preview extends AbstractDialog {
 
     private Rectangle previewBoundingBox;
     private ShopItem vc;
-    private ItemWrapper shopItem;
 
-    public Preview(ItemWrapper shopItem) {
-        this.shopItem = shopItem;
-        previewE = shopItem.getChild(PREVIEW).getEntity();
-        lbl_desc = shopItem.getChild(PREVIEW).getChild(LBL_DESC).getEntity();
-        lbl_title = shopItem.getChild(PREVIEW).getChild(LBL_ITEM_NAME).getEntity();
-        lbl_price = shopItem.getChild(PREVIEW).getChild(LBL_PRICE).getEntity();
-        bg = shopItem.getChild(PREVIEW).getChild(IMG_BG_SHOW_CASE).getEntity();
-        lbl_not_enough = shopItem.getChild(PREVIEW).getChild(LBL_NOT_ENOUGH).getEntity();
-        btnLeft = shopItem.getChild(PREVIEW).getChild(BTN_LEFT).getEntity();
+    private void loadPreviewFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(PREVIEW).clone();
+        previewE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), previewE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(previewE);
+    }
+    
+    public Preview() {
+        loadPreviewFromLib();
+        lbl_desc =previewE.getComponent(NodeComponent.class).getChild(LBL_DESC);
+        lbl_title =previewE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
+        lbl_price =previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE);
+        bg =previewE.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
+        lbl_not_enough =previewE.getComponent(NodeComponent.class).getChild(LBL_NOT_ENOUGH);
+        btnLeft =previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
 
-        btnNext = shopItem.getChild(PREVIEW).getChild(BTN_RIGHT).getEntity();
+        btnNext =previewE.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
         btnNext.getComponent(TransformComponent.class).rotation = -180;
         btnNext.getComponent(TransformComponent.class).x += btnNext.getComponent(DimensionsComponent.class).width;
         btnNext.getComponent(TransformComponent.class).y += btnNext.getComponent(DimensionsComponent.class).height;
@@ -182,18 +188,15 @@ public class Preview extends AbstractDialog {
         initPreviewWindow();
 
         if (vc.currencyType.equals(SOFT)) {
-            if (vc.bought) {
-                initBoughtPreviewIcon(justBoughtAni);
-            } else {
-                initUnknownPreviewIcon(jump);
-            }
+            initSoftIcon(vc, jump, justBoughtAni);
         } else {
+            initUnknownPreviewIcon(jump);
             if (iconE != null) {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
-            iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PREVIEW).getChild(vc.name).getEntity();
-            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
-            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE;
+//            iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PREVIEW).getChild(vc.name);
+//            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
+//            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE;
         }
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -218,43 +221,30 @@ public class Preview extends AbstractDialog {
         previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+10);
     }
 
-//    private void addShadow() {
-//        if (shadowE == null) {
-//            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(SHADOW_LIB).clone();
-//            shadowE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-//            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), shadowE, tempItemC.composite);
-//        }
-//        shadowE.getComponent(TransformComponent.class).x = 0;
-//        shadowE.getComponent(TransformComponent.class).y = 0;
-//        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
-//        shadowE.getComponent(TintComponent.class).color.a = 0;
-//        Actions.checkInit();
-//        ActionComponent ac = new ActionComponent();
-//        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
-//        shadowE.add(ac);
-//    }
+    private void initSoftIcon(ShopItem vc, boolean jump, boolean justBoughtAni) {
+        if (vc.bought) {
+            initBoughtPreviewIcon(justBoughtAni);
+        } else {
+            initUnknownPreviewIcon(jump);
+        }
+    }
 
     public void initBuyButton(final ShopItem vc) {
-        final Entity btnBuy = shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity();
-        shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        final Entity btnBuy = previewE.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
             btnBuy.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             btnBuy.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            if (btnBuy.getComponent(ButtonComponent.class) == null) {
+                btnBuy.add(new ButtonComponent());
+            }
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
-            btnBuy.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown() {
-                }
-
+            btnBuy.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnBuy) {
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
@@ -292,25 +282,20 @@ public class Preview extends AbstractDialog {
 
     public void initEnableButton(final ShopItem vc) {
         if (vc.bought && !vc.enabled) {
-            shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity enableBtn = shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity();
+            previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity enableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             enableBtn.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             enableBtn.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
 
+            if (enableBtn.getComponent(ButtonComponent.class) == null) {
+                enableBtn.add(new ButtonComponent());
+            }
             enableBtn.getComponent(ButtonComponent.class).clearListeners();
-            enableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown() {
-                }
-
+            enableBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(enableBtn) {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
@@ -324,27 +309,21 @@ public class Preview extends AbstractDialog {
 
     public void initDisableButton(final ShopItem vc) {
         if (vc.bought && vc.enabled) {
-            shopItem.getChild(PREVIEW).getChild(BTN_ENABLE).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            shopItem.getChild(PREVIEW).getChild(BTN_BUY).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity disableBtn = shopItem.getChild(PREVIEW).getChild(BTN_DISABLE).getEntity();
+            previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity disableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             disableBtn.getComponent(TransformComponent.class).x =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
             disableBtn.getComponent(TransformComponent.class).y =
-                    shopItem.getChild(PREVIEW).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
 
-
-            disableBtn.getComponent(ButtonComponent.class).clearListeners();
-            disableBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown() {
-                }
-
-                @Override
+            disableBtn.add(new ButtonComponent());
+            if (disableBtn.getComponent(ButtonComponent.class) == null) {
+                disableBtn.getComponent(ButtonComponent.class).clearListeners();
+            }
+            disableBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(disableBtn) {
+            @Override
                 public void clicked() {
                     if (animFinished()) {
                         vc.disable();
@@ -356,6 +335,9 @@ public class Preview extends AbstractDialog {
     }
 
     private void initPrevButton(final ShopItem vc) {
+        if (btnLeft.getComponent(ButtonComponent.class) == null){
+            btnLeft.add(new ButtonComponent());
+        }
         btnLeft.getComponent(ButtonComponent.class).clearListeners();
         btnLeft.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnLeft) {
 
@@ -389,8 +371,10 @@ public class Preview extends AbstractDialog {
     }
 
     private void initNextButton(final ShopItem vc) {
+        if (btnNext.getComponent(ButtonComponent.class) == null){
+            btnNext.add(new ButtonComponent());
+        }
         btnNext.getComponent(ButtonComponent.class).clearListeners();
-
         btnNext.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnNext) {
             @Override
             public void clicked() {

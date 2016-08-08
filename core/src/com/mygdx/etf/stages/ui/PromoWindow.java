@@ -4,14 +4,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
+import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ResultScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+import com.uwsoft.editor.renderer.components.NodeComponent;
 
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
@@ -22,7 +25,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
  */
 public class PromoWindow extends AbstractDialog {
     
-    public static final String PROMO_WINDOW = "promo_window";
+    public static final String PROMO_WINDOW = "promo_lib";
     public static final String BUY_DISC_BTN = "buy_disc_btn";
     public static final String DISC_TEXT_LBL = "disc_text_lbl";
     public static final String CLOSE_DISC_BTN = "close_disc_btn";
@@ -37,36 +40,31 @@ public class PromoWindow extends AbstractDialog {
     public PromoWindow(ItemWrapper gameItem) {
         this.gameItem = gameItem;
     }
-    
+
+    private void loadPromoFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(PROMO_WINDOW).clone();
+        promoWindowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), promoWindowE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(promoWindowE);
+    }
+
     public void init(){
         initShadow();
-        promoWindowE = gameItem.getChild(PROMO_WINDOW).getEntity();
+        loadPromoFromLib();
         promoWindowE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
 
-        final Entity closeBtn = gameItem.getChild(PROMO_WINDOW).getChild(CLOSE_DISC_BTN).getEntity();
+        final Entity closeBtn = promoWindowE.getComponent(NodeComponent.class).getChild(CLOSE_DISC_BTN);
+        if (closeBtn.getComponent(ButtonComponent.class) == null){
+            closeBtn.add(new ButtonComponent());
+        }
+        closeBtn.getComponent(ButtonComponent.class).clearListeners();
         closeBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(closeBtn) {
                     @Override
                     public void clicked() {
                         close(promoWindowE);
                         ResultScreenScript.active = true;
-                    }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-            }
-
-            @Override
-            public void touchDown() {
-            }
-
-            @Override
-            public void clicked() {
-                close(promoWindowE);
-                ResultScreenScript.active = true;
-            }
-        }*/);
+                    }});
 
         final TransformComponent settingsTc = promoWindowE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
@@ -80,16 +78,20 @@ public class PromoWindow extends AbstractDialog {
         promoWindowE.getComponent(TransformComponent.class).y = 460;
         promoWindowE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        Entity iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PROMO_WINDOW).getChild(offer.name).getEntity();
-        iconE.getComponent(TransformComponent.class).x = 320;
-        iconE.getComponent(TransformComponent.class).y = 420;
+//        Entity iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PROMO_WINDOW).getChild(offer.name);
+//        iconE.getComponent(TransformComponent.class).x = 320;
+//        iconE.getComponent(TransformComponent.class).y = 420;
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DISCOUNT_X, DISCOUNT_Y, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);
 
-        Entity buyBtn = gameItem.getChild(PROMO_WINDOW).getChild(BUY_DISC_BTN).getEntity();
+        Entity buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);
+        if (buyBtn.getComponent(ButtonComponent.class) == null){
+            buyBtn.add(new ButtonComponent());
+        }
+        buyBtn.getComponent(ButtonComponent.class).clearListeners();
         buyBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(buyBtn) {
                     @Override
@@ -98,23 +100,9 @@ public class PromoWindow extends AbstractDialog {
                         close(promoWindowE);
                         ResultScreenScript.active = true;
                     }
-                }
-               /* new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                PromoWindow.offer.buyHard();
-                close(promoWindowE);
-                ResultScreenScript.active = true;
-            }
-        }*/);
-
-        Entity lbl = gameItem.getChild(PROMO_WINDOW).getChild(DISC_TEXT_LBL).getEntity();
+        Entity lbl = promoWindowE.getComponent(NodeComponent.class).getChild(DISC_TEXT_LBL);
         LabelComponent lc = lbl.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), "Buy " + offer.name + " with discount!!! ");
     }

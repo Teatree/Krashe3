@@ -2,6 +2,7 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ResultScreenScript;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -26,12 +27,13 @@ public class Showcase {
     public static final String TYPE_SUFFIX = ".png";
     public static final String ITEM_UNKNOWN_DEFAULT = "item_unknown";
     public static final String INTRO = "intro";
-    public static final String SHOWCASE = "showcase";
+    public static final String SHOWCASE = "showcase_lib";
     public static final String LBL_ITEM_NAME = "lbl_item_name";
     public static final String LBL_ITEM_DESC = "lbl_item_desc";
     public static final String LBL_ITEM_PRICE = "lbl_item_price";
     public static final String SHOWCASE_ANI = "showcase_ani";
     public static final String BTN_NO = "btn_no";
+    public static final String BTN_BUY = "btn_buy";
     public TransformComponent tcShowCase;
     private ItemWrapper screenItem;
     private ResultScreenScript resultScreen;
@@ -43,7 +45,7 @@ public class Showcase {
         this.screenItem = resultScreenItem;
         this.resultScreen = resultScreen;
 
-        showcaseE = screenItem.getChild(SHOWCASE).getEntity();
+       loadShowcaseFromLib();
 
         initShowCaseBackButton();
         initShowCaseBuyButton();
@@ -51,8 +53,14 @@ public class Showcase {
         tcShowCase = showcaseE.getComponent(TransformComponent.class);
     }
 
+    private void loadShowcaseFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(SHOWCASE).clone();
+        showcaseE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), showcaseE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(showcaseE);
+    }
+    
     public void showFading() {
-
         NodeComponent nc = showcaseE.getComponent(NodeComponent.class);
         TintComponent tcp = showcaseE.getComponent(TintComponent.class);
 
@@ -84,11 +92,11 @@ public class Showcase {
 
     public void initShowCase() {
         show = true;
-        Entity lbl_nameE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_NAME).getEntity();
+        Entity lbl_nameE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
 
-        Entity lbl_descE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_DESC).getEntity();
+        Entity lbl_descE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_DESC);
         LabelComponent lc2 = lbl_descE.getComponent(LabelComponent.class);
         if (showCaseVanity.description != null) {
             lc2.text.replace(0, lc2.text.capacity(), showCaseVanity.description);
@@ -96,11 +104,11 @@ public class Showcase {
             lc2.text.replace(0, lc2.text.capacity(), "");
         }
 
-        Entity lbl_priceE = screenItem.getChild(SHOWCASE).getChild(LBL_ITEM_PRICE).getEntity();
+        Entity lbl_priceE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE);
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
 
-        Entity aniE = screenItem.getChild(SHOWCASE).getChild(SHOWCASE_ANI).getEntity();
+        Entity aniE = showcaseE.getComponent(NodeComponent.class).getChild(SHOWCASE_ANI);
 
         SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
         sc.animationName = INTRO;
@@ -135,22 +143,13 @@ public class Showcase {
     }
 
     private void initShowCaseBackButton() {
-        Entity backBtn = screenItem.getChild(SHOWCASE).getChild(BTN_NO).getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-//                lc.getLayer(BTN_NORMAL).isVisible = true;
-//                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-//                lc.getLayer(BTN_NORMAL).isVisible = false;
-//                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
+        Entity backBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_NO);
+        if (backBtn.getComponent(ButtonComponent.class) == null){
+            backBtn.add(new ButtonComponent());
+        };
+        backBtn.getComponent(ButtonComponent.class).clearListeners();
+        backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
+        @Override
             public void clicked() {
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
@@ -160,22 +159,13 @@ public class Showcase {
     }
 
     private void initShowCaseBuyButton() {
-        Entity backBtn = screenItem.getChild(SHOWCASE).getChild("btn_buy").getEntity();
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {
-//                lc.getLayer(BTN_NORMAL).isVisible = true;
-//                lc.getLayer(BTN_PRESSED).isVisible = false;
-            }
-
-            @Override
-            public void touchDown() {
-//                lc.getLayer(BTN_NORMAL).isVisible = false;
-//                lc.getLayer(BTN_PRESSED).isVisible = true;
-            }
-
-            @Override
+        Entity buyBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        if (buyBtn.getComponent(ButtonComponent.class) == null){
+            buyBtn.add(new ButtonComponent());
+        };
+        buyBtn.getComponent(ButtonComponent.class).clearListeners();
+        buyBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(buyBtn) {
+        @Override
             public void clicked() {
                 showCaseVanity.buyAndUse();
                 GameStage.changedFlower2 = true;

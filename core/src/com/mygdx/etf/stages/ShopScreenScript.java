@@ -93,7 +93,7 @@ public class ShopScreenScript implements IScript {
     public void init(Entity item) {
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
-        preview = new Preview(shopItem);
+        preview = new Preview();
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         // Dima's fun house
