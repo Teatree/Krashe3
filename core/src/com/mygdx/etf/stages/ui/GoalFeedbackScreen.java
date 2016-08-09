@@ -2,16 +2,24 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Interpolation;
+import com.brashmonkey.spriter.Player;
+import com.brashmonkey.spriter.SCMLReader;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
+import com.uwsoft.editor.renderer.data.SpriterVO;
+import com.uwsoft.editor.renderer.factory.component.SpriterComponentFactory;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+import com.uwsoft.editor.renderer.utils.LibGdxDrawer;
+import com.uwsoft.editor.renderer.utils.LibGdxLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,6 +205,7 @@ public class GoalFeedbackScreen {
     }
 
     private Entity createGoalTile(Goal goal, int y) {
+        System.out.println("create goal tile");
         CompositeItemVO tempC;
         tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
 
@@ -220,27 +229,46 @@ public class GoalFeedbackScreen {
                 e.getComponent(ZIndexComponent.class).setZIndex(120);
             }
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
-            if (sc != null) {
-                sc.scale = GOAL_SCALE;
-                if (goal.achieved) {
-                    if (goal.justAchieved) {
-                        ActionComponent ac = new ActionComponent();
-                        Actions.checkInit();
-                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
-                        tile.add(ac);
+            if (sc == null) {
+                SpriterVO vo = new SpriterVO();
+                vo.loadFromEntity(e);
+                sc = new SpriterComponent();
+                sc. entity = vo.entity;
+                sc.animation = vo.animation;
+                sc. animationName = vo.animationName;
+                sc.scale = vo.scale;
 
-                        sc.player.speed = 0;
-                    } else {
-                        sc.player.speed = 0;
-                        sc.player.setTime(sc.player.getAnimation().length - 2);
-                    }
-                } else {
-                    sc.player.setTime(0);
-                    sc.player.speed = 0;
-                }
-                tilesScs.add(sc);
+                sc.currentAnimationIndex	=	vo.animation;
+                sc.currentEntityIndex		=	vo.entity;
+
+                sc.player = new Player(sc.data.getEntity(sc.currentEntityIndex));
+
+                sc.player.setAnimation(sc.currentAnimationIndex);
+                sc.player.setScale(sc.scale);
+
+                e.add(sc);
             }
+//            if (sc != null) {
+            sc.scale = GOAL_SCALE;
+            if (goal.achieved) {
+                if (goal.justAchieved) {
+                    ActionComponent ac = new ActionComponent();
+                    Actions.checkInit();
+                    ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
+                    tile.add(ac);
+
+                    sc.player.speed = 0;
+                } else {
+                    sc.player.speed = 0;
+                    sc.player.setTime(sc.player.getAnimation().length - 2);
+                }
+            } else {
+                sc.player.setTime(0);
+                sc.player.speed = 0;
+            }
+            tilesScs.add(sc);
         }
+//        }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
     }
@@ -268,12 +296,12 @@ public class GoalFeedbackScreen {
             isAniPlaying = false;
         }
 
-        if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size()-1).getComponent(TransformComponent.class).x <=
-                -prevLvlTiles.get(prevLvlTiles.size()-1).getComponent(DimensionsComponent.class).width ){
+        if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
+                -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
             final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-            if(!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
+            if (!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
                 EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
                         goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
@@ -290,7 +318,7 @@ public class GoalFeedbackScreen {
                     gameScript.giftScreen.isGiftScreenOpen = false;
                     gameScript.giftScreen.hide();
 
-                } else if (tiles.get(tiles.size()-1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X+20){
+                } else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 20) {
                     isGoalFeedbackOpen = false;
                     feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
                     feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;

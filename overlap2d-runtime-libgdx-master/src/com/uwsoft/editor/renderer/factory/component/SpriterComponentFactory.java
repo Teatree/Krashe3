@@ -67,7 +67,7 @@ public class SpriterComponentFactory extends ComponentFactory {
         return component;
     }
 
-    protected SpriterComponent createSpriterDataComponent(Entity entity, SpriterVO vo) {
+    public SpriterComponent createSpriterDataComponent(Entity entity, SpriterVO vo) {
         SpriterComponent component = new SpriterComponent();
         component. entity = vo.entity;
         component.animation = vo.animation;
