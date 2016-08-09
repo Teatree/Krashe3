@@ -52,7 +52,7 @@ public class ShopScreenScript implements IScript {
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
 
     // Dima's fun house
-    Entity curtain_shop;
+    private static Entity curtain_shop;
     boolean startTransitionIn;
     boolean startTransitionOut;
 
@@ -73,14 +73,14 @@ public class ShopScreenScript implements IScript {
     public int bagPosId;
     public Preview preview;
     float stopVelocity;
-    private GameStage stage;
+//    private GameStage stage;
     private ItemWrapper shopItem;
     public Entity hcSectionE;
     public Entity btnShop;
     public Entity btnUpg;
 
-    public ShopScreenScript(GameStage stage) {
-        this.stage = stage;
+    public ShopScreenScript() {
+//        this.stage = stage;
         getAllAllVanities();
     }
 
@@ -213,11 +213,9 @@ public class ShopScreenScript implements IScript {
                         @Override
                         public void touchUp() {
                         }
-
                         @Override
                         public void touchDown() {
                         }
-
                         @Override
                         public void clicked() {
                             if (!isPreviewOn && canOpenPreview) {
@@ -291,7 +289,7 @@ public class ShopScreenScript implements IScript {
                 if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                     startTransitionOut = false;
                     startTransitionIn = true;
-                    stage.initMenu();
+                    GameStage.initMenu();
                 }
             }
 
@@ -390,7 +388,6 @@ public class ShopScreenScript implements IScript {
         bags = null;
         touchZoneBtn = null;
         preview = null;
-        stage = null;
         shopItem = null;
         System.gc();
     }

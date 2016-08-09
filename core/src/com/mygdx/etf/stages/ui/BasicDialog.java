@@ -7,10 +7,12 @@ import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -27,7 +29,7 @@ public class BasicDialog extends AbstractDialog{
     public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS ERASED";
     public static final String ERROR = "WE HAD ERROR :(";
 
-    public static String BASIC_DIALOG = "dialog_basic";
+    public static final String BASIC_DIALOG = "popup_basic_lib";
     public static final String DIALOG_TEXT = "dialog_text";
     public static final String BTN_OK = "btn_ok";
     public static final String BTN_CANCEL = "btn_cancel";
@@ -41,6 +43,9 @@ public class BasicDialog extends AbstractDialog{
 
     public static final int DIALOG_Y = 130;
     public static final int DIALOG_X = 260;
+    public static final int OK_BTN_X = 110;
+    public static final int BTN_Y = 60;
+    public static final int CANCEL_BTN_X = 465;
 
     private Entity dialogE;
     private Entity text;
@@ -53,42 +58,43 @@ public class BasicDialog extends AbstractDialog{
         this.gameItem = gameItem;
     }
 
+    private void loadFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(BASIC_DIALOG).clone();
+        dialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dialogE, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(dialogE);
+    }
+
     public void init (){
         initShadow();
-
-        dialogE = gameItem.getChild(BASIC_DIALOG).getEntity();
+        loadFromLib();
         dialogE.getComponent(TransformComponent.class).x = DIALOG_X;
         dialogE.getComponent(TransformComponent.class).y = HIDE_Y;
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex());
 
-        text = gameItem.getChild(BASIC_DIALOG).getChild(DIALOG_TEXT).getEntity();
-        okBtn = gameItem.getChild(BASIC_DIALOG).getChild(BTN_OK).getEntity();
-        cancelBtn = gameItem.getChild(BASIC_DIALOG).getChild(BTN_CANCEL).getEntity();
+        text = dialogE.getComponent(NodeComponent.class).getChild(DIALOG_TEXT);
+        okBtn = dialogE.getComponent(NodeComponent.class).getChild(BTN_OK);
+        if (okBtn.getComponent(ButtonComponent.class) == null) {
+            okBtn.add(new ButtonComponent());
+        }
 
+        cancelBtn = dialogE.getComponent(NodeComponent.class).getChild(BTN_CANCEL);
+        if (cancelBtn.getComponent(ButtonComponent.class) == null){
+            cancelBtn.add(new ButtonComponent());
+        }
         cancelBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(cancelBtn) {
                     @Override
                     public void clicked() {
                         close(dialogE);
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
+                });
 
-            @Override
-            public void touchDown() {}
+        okBtn.getComponent(TransformComponent.class).x = OK_BTN_X;
+        okBtn.getComponent(TransformComponent.class).y = BTN_Y;
 
-            @Override
-            public void clicked() {
-                close(dialogE);
-            }
-        }*/);
-        okBtn.getComponent(TransformComponent.class).x = 110;
-        okBtn.getComponent(TransformComponent.class).y = 60;
-
-        cancelBtn.getComponent(TransformComponent.class).x = 465;
-        cancelBtn.getComponent(TransformComponent.class).y = 60;
+        cancelBtn.getComponent(TransformComponent.class).x = CANCEL_BTN_X;
+        cancelBtn.getComponent(TransformComponent.class).y = BTN_Y;
     }
 
     private void restoreAllPurchases() {
@@ -147,11 +153,11 @@ public class BasicDialog extends AbstractDialog{
             }
         });
 
-        okBtn.getComponent(TransformComponent.class).x = 110;
-        okBtn.getComponent(TransformComponent.class).y = 60;
+        okBtn.getComponent(TransformComponent.class).x = OK_BTN_X;
+        okBtn.getComponent(TransformComponent.class).y = BTN_Y;
 
-        cancelBtn.getComponent(TransformComponent.class).x = 465;
-        cancelBtn.getComponent(TransformComponent.class).y = 60;
+        cancelBtn.getComponent(TransformComponent.class).x = CANCEL_BTN_X;
+        cancelBtn.getComponent(TransformComponent.class).y = BTN_Y;
     }
 
     private void showResetProgressResult() {
@@ -168,19 +174,7 @@ public class BasicDialog extends AbstractDialog{
                     public void clicked() {
                         close(dialogE);
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                close(dialogE);
-            }
-        }*/);
+                });
     }
 
     private void showRestorePurchResult() {
@@ -193,19 +187,7 @@ public class BasicDialog extends AbstractDialog{
                     public void clicked() {
                         close(dialogE);
                     }
-                }
-                /*new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                close(dialogE);
-            }
-        }*/);
+                });
 
         okBtn.getComponent(TransformComponent.class).x +=50;
 
@@ -224,27 +206,13 @@ public class BasicDialog extends AbstractDialog{
                         close(dialogE);
                         show(TYPE_RESET_RESULT);
                     }
-                }
-             /*   new ButtonComponent.ButtonListener() {
-            @Override
-            public void touchUp() {}
-
-            @Override
-            public void touchDown() {}
-
-            @Override
-            public void clicked() {
-                GameStage.resetAllProgress();
-                close(dialogE);
-                show(TYPE_RESET_RESULT);
-            }
-        }*/);
+                });
 
         okBtn.getComponent(TransformComponent.class).x = 110;
-        okBtn.getComponent(TransformComponent.class).y = 60;
+        okBtn.getComponent(TransformComponent.class).y = BTN_Y;
 
         cancelBtn.getComponent(TransformComponent.class).x = 465;
-        cancelBtn.getComponent(TransformComponent.class).y = 60;
+        cancelBtn.getComponent(TransformComponent.class).y = BTN_Y;
     }
 
     @Override

@@ -163,7 +163,6 @@ public class Settings extends AbstractDialog {
                                 Main.mainController.restorePurchases();
                                 dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
                             } catch (Exception e) {
-                                System.out.println("error during restoring purchases");
                                 dialog.show(BasicDialog.ERROR);
                             }
                         }
@@ -314,14 +313,6 @@ public class Settings extends AbstractDialog {
                     soundBtn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
                     soundBtn.getComponent(TransformComponent.class).x += soundBtn.getComponent(DimensionsComponent.class).width / 20;
                     soundBtn.getComponent(TransformComponent.class).y += soundBtn.getComponent(DimensionsComponent.class).height / 20;
-//                final ToggleButtonComponent tbc = mapper.get(soundBtn);
-//                if (tbc.isOn()) {
-//                    lc.getLayer(BTN_NORMAL).isVisible = false;
-//                    lc.getLayer(BTN_PRESSED).isVisible = true;
-//                } else {
-//                    lc.getLayer(BTN_NORMAL).isVisible = true;
-//                    lc.getLayer(BTN_PRESSED).isVisible = false;
-//                }
                 }
 
                 @Override

@@ -40,25 +40,32 @@ public class MenuScreenScript implements IScript {
 
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
+    public static final String MM_LEAFS = "MM_leafs";
 
     ItemWrapper menuItem;
-    private GameStage stage;
+//    private GameStage stage;
     private Settings settings;
 
     //Dima's party time
-    Entity curtain_mm;
+    static Entity curtain_mm;
     boolean startGameTransition;
     boolean startShopTransition;
     boolean startTransitionIn;
     public static boolean showGoalNotification;
 
-    private TrialTimer timer;
-    private PauseDialog pauseDialog;
+    private static TrialTimer timer;
+    private static PauseDialog pauseDialog;
+    private static Entity lblGoalNotification;
+    private static Entity playBtn;
+    private static Entity btnShop;
+    private static Entity btnSettings;
+    private static Entity rateAppBtn;
+    private static Entity btnGoals;
 
-    public MenuScreenScript(GameStage stage) {
+    public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-        this.stage = stage;
+//        this.stage = stage;
     }
 
     @Override
@@ -82,7 +89,7 @@ public class MenuScreenScript implements IScript {
         }
 
         if (showGoalNotification) {
-            Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
+            lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             LabelComponent lc = lblGoalNotification.getComponent(LabelComponent.class);
             lc.text.replace(0, lc.text.length, gameScript.fpc.level.getRemainingGoals());
         } else {
@@ -94,26 +101,28 @@ public class MenuScreenScript implements IScript {
     }
 
     public void initButtons() {
-        final Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
-        final Entity btnShop = menuItem.getChild(BTN_SHOP).getEntity();
-        final Entity btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
-        final Entity rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
-        final Entity btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
-        Entity mmFlowerEntity = menuItem.getChild(MM_FLOWER).getEntity();
+        playBtn = menuItem.getChild(BTN_PLAY).getEntity();
+        btnShop = menuItem.getChild(BTN_SHOP).getEntity();
+        btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
+        rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
+        btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
 
-        TransformComponent tc = mmFlowerEntity.getComponent(TransformComponent.class);
-        tc.x = FLOWER_X_POS;
-        tc.y = FLOWER_Y_POS;
-        tc.scaleX = FLOWER_SCALE;
-        tc.scaleY = FLOWER_SCALE;
+        // WE DO NOT NEED FLOWER
 
-        Entity mmLeafsEntity = menuItem.getChild("MM_leafs").getEntity();
-
-        TransformComponent tcL = mmLeafsEntity.getComponent(TransformComponent.class);
-        tcL.x = LEAFS_X_POS;
-        tcL.y = LEAFS_Y_POS;
-        tcL.scaleX = LEAFS_SCALE;
-        tcL.scaleY = LEAFS_SCALE;
+//        Entity mmFlowerEntity = menuItem.getChild(MM_FLOWER).getEntity();
+//        TransformComponent tc = mmFlowerEntity.getComponent(TransformComponent.class);
+//        tc.x = FLOWER_X_POS;
+//        tc.y = FLOWER_Y_POS;
+//        tc.scaleX = FLOWER_SCALE;
+//        tc.scaleY = FLOWER_SCALE;
+//
+//        Entity mmLeafsEntity = menuItem.getChild(MM_LEAFS).getEntity();
+//
+//        TransformComponent tcL = mmLeafsEntity.getComponent(TransformComponent.class);
+//        tcL.x = LEAFS_X_POS;
+//        tcL.y = LEAFS_Y_POS;
+//        tcL.scaleX = LEAFS_SCALE;
+//        tcL.scaleY = LEAFS_SCALE;
 
         rateAppBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(rateAppBtn) {
@@ -126,15 +135,7 @@ public class MenuScreenScript implements IScript {
                 });
 
         playBtn.getComponent(ButtonComponent.class).addListener(
-                new ButtonComponent.ButtonListener() {
-                    @Override
-                    public void touchUp() {
-                    }
-
-                    @Override
-                    public void touchDown() {
-                    }
-
+                new ImageButtonListener(playBtn) {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
@@ -142,6 +143,7 @@ public class MenuScreenScript implements IScript {
                         }
                     }
                 });
+
         btnShop.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnShop) {
                     @Override
@@ -200,20 +202,20 @@ public class MenuScreenScript implements IScript {
         timer.timer();
 
         if (pauseDialog != null)
-        pauseDialog.update(delta);
+            pauseDialog.update(delta);
         if (startGameTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startGameTransition = false;
-                stage.initGame();
+                GameStage.initGame();
             }
-        }
+    }
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
-                stage.initShopWithAds();
+                GameStage.initShopWithAds();
             }
         }
 
@@ -231,6 +233,6 @@ public class MenuScreenScript implements IScript {
 
     public void resetPauseDialog() {
         if (pauseDialog != null)
-        pauseDialog.deleteTiles();
+            pauseDialog.deleteTiles();
     }
 }

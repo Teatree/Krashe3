@@ -9,19 +9,30 @@ import java.util.Map;
 
 public class NodeComponent implements Component {
 	public SnapshotArray<Entity> children = new SnapshotArray<Entity>(true, 1, Entity.class);
-	public Map<String, Entity> childrenWithNames = new HashMap<String, Entity>();
+
+	//in case to save some space
+//	public Map<String, Entity> childrenWithNames = new HashMap<String, Entity>();
 
 	public void removeChild(Entity entity) {
 		children.removeValue(entity, false);
-		childrenWithNames.remove(entity);
+//		childrenWithNames.remove(entity);
 	}
 
 	public void addChild(Entity entity) {
 		children.add(entity);
-		childrenWithNames.put(entity.getComponent(MainItemComponent.class).itemIdentifier, entity);
+//		childrenWithNames.put(entity.getComponent(MainItemComponent.class).itemIdentifier, entity);
 	}
 
+//	public Entity getChild(String name){
+//		return childrenWithNames.get(name);
+//	}
+
 	public Entity getChild(String name){
-		return childrenWithNames.get(name);
+		for (Entity e : children){
+			if (name.equals(e.getComponent(MainItemComponent.class).itemIdentifier)){
+				return e;
+			}
+		}
+		return null;
 	}
 }

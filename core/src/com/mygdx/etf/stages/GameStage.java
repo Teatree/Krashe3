@@ -44,7 +44,7 @@ public class GameStage extends Stage {
 
     private ResultScreenScript resultScript;
     public static ShopScreenScript shopScript;
-    private MenuScreenScript menuScript;
+    private static MenuScreenScript menuScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
         GameStage.sceneLoader = sceneLoader;
@@ -75,12 +75,12 @@ public class GameStage extends Stage {
         }
     }
 
-    public void initGame() {
-
+    public static void initGame() {
+//        Main.printMemoryInfo();
         if (changedFlower || changedFlower2) {
             changedFlower = false;
-            sceneLoader.loadScene(MAIN_SCENE, viewport);
-            sceneLoader.setScene(MAIN_SCENE);
+//            sceneLoader.loadScene(MAIN_SCENE, viewport);
+            sceneLoader.setScene(MAIN_SCENE, viewport);
 
             BugPool.resetBugPool();
 
@@ -92,7 +92,7 @@ public class GameStage extends Stage {
             gameScript.reset();
 
         } else {
-            sceneLoader.setScene(MAIN_SCENE);
+            sceneLoader.setScene(MAIN_SCENE, viewport);
             if (justCreated) {
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -113,16 +113,17 @@ public class GameStage extends Stage {
         BugPool.getInstance();
     }
 
-    public void initMenu() {
+    public static void initMenu() {
+        Main.printMemoryInfo();
         if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
             menuScript = null;
         }
-        sceneLoader.setScene(MENU_SCENE);
+        sceneLoader.setScene(MENU_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (menuScript == null) {
-            menuScript = new MenuScreenScript(this);
+            menuScript = new MenuScreenScript();
             root.addScript(menuScript);
             menuScript.initButtons();
         } else {
@@ -132,7 +133,8 @@ public class GameStage extends Stage {
     }
 
     public void initResult() {
-        sceneLoader.setScene(RESULT_SCENE);
+        Main.printMemoryInfo();
+        sceneLoader.setScene(RESULT_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
             resultScript = new ResultScreenScript(this);
@@ -144,18 +146,20 @@ public class GameStage extends Stage {
         GlobalConstants.CUR_SCREEN = RESULT;
     }
 
-    public void initShop() {
-        sceneLoader.setScene(SHOP_SCENE);
+    public static void initShop() {
+        Main.printMemoryInfo();
+        sceneLoader.setScene(SHOP_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (shopScript == null) {
-            shopScript = new ShopScreenScript(this);
+            shopScript = new ShopScreenScript();
             root.addScript(shopScript);
         }
         ShopScreenScript.isPreviewOn = false;
         GlobalConstants.CUR_SCREEN = SHOP;
     }
 
-    public void initShopWithAds() {
+    public static void initShopWithAds() {
+        Main.printMemoryInfo();
         if (gameScript.fpc.settings.shouldShowShopAd()){
             mainController.showGeneralShopAd(new Runnable() {
                 @Override
@@ -169,6 +173,7 @@ public class GameStage extends Stage {
     }
 
     public void initResultWithAds() {
+        Main.printMemoryInfo();
         if (gameScript.fpc.settings.shouldShowResultAd()){
             mainController.showResultScreenAd(new Runnable() {
                 @Override

@@ -9,10 +9,8 @@ import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
@@ -45,8 +43,7 @@ public class Showcase {
         this.screenItem = resultScreenItem;
         this.resultScreen = resultScreen;
 
-       loadShowcaseFromLib();
-
+        loadShowcaseFromLib();
         initShowCaseBackButton();
         initShowCaseBuyButton();
 
@@ -59,7 +56,7 @@ public class Showcase {
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), showcaseE, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(showcaseE);
     }
-    
+
     public void showFading() {
         NodeComponent nc = showcaseE.getComponent(NodeComponent.class);
         TintComponent tcp = showcaseE.getComponent(TintComponent.class);
@@ -108,11 +105,10 @@ public class Showcase {
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
 
-        Entity aniE = showcaseE.getComponent(NodeComponent.class).getChild(SHOWCASE_ANI);
-
-        SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
-        sc.animationName = INTRO;
-        sc.player.speed = GlobalConstants.FPS / 4;
+//        Entity aniE = showcaseE.getComponent(NodeComponent.class).getChild(SHOWCASE_ANI);
+//        SpriterComponent sc = ComponentRetriever.get(aniE, SpriterComponent.class);
+//        sc.animationName = INTRO;
+//        sc.player.speed = GlobalConstants.FPS / 4;
 
         initShowCaseItem();
 
@@ -144,12 +140,13 @@ public class Showcase {
 
     private void initShowCaseBackButton() {
         Entity backBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_NO);
-        if (backBtn.getComponent(ButtonComponent.class) == null){
+        if (backBtn.getComponent(ButtonComponent.class) == null) {
             backBtn.add(new ButtonComponent());
-        };
+        }
+        ;
         backBtn.getComponent(ButtonComponent.class).clearListeners();
         backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
-        @Override
+            @Override
             public void clicked() {
                 ResultScreenScript.isWasShowcase = true;
                 resultScreen.initResultScreen();
@@ -160,12 +157,12 @@ public class Showcase {
 
     private void initShowCaseBuyButton() {
         Entity buyBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY);
-        if (buyBtn.getComponent(ButtonComponent.class) == null){
+        if (buyBtn.getComponent(ButtonComponent.class) == null) {
             buyBtn.add(new ButtonComponent());
-        };
+        }
         buyBtn.getComponent(ButtonComponent.class).clearListeners();
         buyBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(buyBtn) {
-        @Override
+            @Override
             public void clicked() {
                 showCaseVanity.buyAndUse();
                 GameStage.changedFlower2 = true;

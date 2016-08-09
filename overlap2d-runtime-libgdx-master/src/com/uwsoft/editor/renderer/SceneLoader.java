@@ -165,9 +165,9 @@ public class SceneLoader {
 
 		engine.addSystem(animationSystem);
 		engine.addSystem(particleSystem);
-		engine.addSystem(lightSystem);
+//		engine.addSystem(lightSystem);
 		engine.addSystem(layerSystem);
-		engine.addSystem(physicsSystem);
+//		engine.addSystem(physicsSystem);
 		engine.addSystem(compositeSystem);
 		engine.addSystem(labelSystem);
         engine.addSystem(scriptSystem);

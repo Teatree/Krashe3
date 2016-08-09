@@ -9,7 +9,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,10 +26,7 @@ import com.uwsoft.editor.renderer.components.ParentNodeComponent;
 import com.uwsoft.editor.renderer.components.ScriptComponent;
 import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.CompositeVO;
-import com.uwsoft.editor.renderer.data.ProjectInfoVO;
-import com.uwsoft.editor.renderer.data.SceneVO;
+import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
@@ -44,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ETFSceneLoader extends SceneLoader {
+//    private static Instrumentation instrumentation;
 
     public Entity rootEntity;
     public SceneVO sceneVO;
@@ -66,21 +64,24 @@ public class ETFSceneLoader extends SceneLoader {
         this.rm = rm;
         this.engine = new Engine();
         initSceneLoader();
-        for (String sceneName : rm.loadedSceneVOs.keySet()){
+        for (String sceneName : rm.loadedSceneVOs.keySet()) {
             loadScene(sceneName);
         }
-
     }
+
     public ETFSceneLoader(Viewport viewport) {
         ResourceManager rm = new ResourceManager();
         rm.initAllResources();
         this.rm = rm;
         this.engine = new Engine();
         initSceneLoader();
-        for (String sceneName : rm.loadedSceneVOs.keySet()){
-            loadScene(sceneName, viewport);
+        for (String sceneName : rm.loadedSceneVOs.keySet()) {
+            if (!(sceneName.equals("ResultScene") || sceneName.equals("ShopScene"))) {
+                loadScene(sceneName, viewport);
+                System.err.println(sceneName + " - " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1000000);
+            }
         }
-
+        Runtime.getRuntime().gc();
     }
 
     public ETFSceneLoader(ResourceManager rm) {
@@ -188,6 +189,7 @@ public class ETFSceneLoader extends SceneLoader {
 
         rootEntityByScene.put(sceneName, rootEntity);
         engineByScene.put(sceneName, engine);
+        System.out.println();
 
         setAmbienceInfo(sceneVO);
         rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
@@ -195,11 +197,17 @@ public class ETFSceneLoader extends SceneLoader {
         return sceneVO;
     }
 
-    public void setScene(String sceneName){
-        this.rootEntity = rootEntityByScene.get(sceneName);
-        this.engine = engineByScene.get(sceneName);
-    }
+    public void setScene(String sceneName, Viewport viewport) {
 
+        if (rootEntityByScene.get(sceneName) == null) {
+            loadScene(sceneName, viewport);
+            this.rootEntity = rootEntityByScene.get(sceneName);
+            this.engine = engineByScene.get(sceneName);
+        } else {
+            this.rootEntity = rootEntityByScene.get(sceneName);
+            this.engine = engineByScene.get(sceneName);
+        }
+    }
 
     public SceneVO loadScene(String sceneName) {
         ProjectInfoVO projectVO = rm.getProjectVO();
@@ -228,7 +236,8 @@ public class ETFSceneLoader extends SceneLoader {
         LabelSystem labelSystem = new LabelSystem();
         ScriptSystem scriptSystem = new ScriptSystem();
         ActionSystem actionSystem = new ActionSystem();
-        renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
+//        renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
+        renderer = new Overlap2dRenderer(new SpriteBatch());
         renderer.setRayHandler(rayHandler);
         renderer.setBox2dWorld(world);
 
@@ -257,7 +266,7 @@ public class ETFSceneLoader extends SceneLoader {
 
                 // mae sure we assign correct z-index here
                 /*
-				ZindexComponent zindexComponent = ComponentRetriever.get(entity, ZindexComponent.class);
+                ZindexComponent zindexComponent = ComponentRetriever.get(entity, ZindexComponent.class);
 				ParentNodeComponent parentNodeComponent = ComponentRetriever.get(entity, ParentNodeComponent.class);
 				if (parentNodeComponent != null) {
 					NodeComponent nodeComponent = parentNodeComponent.parentEntity.getComponent(NodeComponent.class);

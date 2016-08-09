@@ -13,7 +13,11 @@ import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.SaveMngr;
 
+import java.lang.instrument.Instrumentation;
+
 public class Main extends Game {
+
+    public static Instrumentation inst;
 
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 786;
@@ -52,6 +56,7 @@ public class Main extends Game {
 //        SaveMngr.generateLevelsJson();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
+//        SceneLoader sceneLoader = new SceneLoader();
         gameStage = new GameStage(sceneLoader);
         gameStage.setViewport(oneViewport);
         GameStage.viewport = oneViewport;
@@ -110,5 +115,11 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         SaveMngr.saveStats(GameStage.gameScript.fpc);
+    }
+
+    public static void printMemoryInfo(){
+//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.engineByScene));
+//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.rootEntityByScene));
+//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.engine));
     }
 }
