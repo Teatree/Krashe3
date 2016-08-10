@@ -19,7 +19,6 @@ public class BugPool {
     public static final String BEE = "BEE";
     public static final String QUEENBEE = "QUEENBEE";
 
-
     public static final String SIMPLE_BUG_ANI_1 = "simpleBugAni1";
     public static final String BEE_ANI_1 = "beeAni1";
     public static final String DRUNK_BUG_ANI_1 = "drunkBugAni1";
@@ -145,9 +144,9 @@ public class BugPool {
         bc.state = BugComponent.IDLE;
         bc.velocity = 0;
 
-        TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
-        tc.x = GlobalConstants.FAR_FAR_AWAY_X;
-        tc.y = GlobalConstants.FAR_FAR_AWAY_Y;
+//        TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
+        bug.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        bug.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
 
         switch (bc.type) {
             case SIMPLE: {
