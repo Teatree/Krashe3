@@ -9,7 +9,6 @@ import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -21,7 +20,6 @@ import java.util.Map;
 
 import static com.mygdx.etf.stages.GameScreenScript.isPause;
 import static com.mygdx.etf.stages.GameStage.gameScript;
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -44,7 +42,7 @@ public class PauseDialog extends AbstractDialog {
     public static final int PAUSE_X = 260;
     public static final int GOAL_TILE_START_Y = 440;
     public static final int GOAL_TILE_SPACE_X = 170;
-    public static final float GOAL_TILE_SCALE = 1f;
+    public static final float GOAL_TILE_SCALE = 2f;
     public static final int GOAL_TILE_STEP_Y = 110;
     public static final int TAP_COOLDOWN = 30;
     public static final int PAUSE_COUNT = 3;
@@ -52,6 +50,7 @@ public class PauseDialog extends AbstractDialog {
     public static final String ACHIEVED = "achieved";
     public static final String NOTACHIEVED = "notachieved";
     public static final String ENTER = " \n ";
+    public static final int PAUSE_Y_UP = 460;
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
@@ -136,7 +135,7 @@ public class PauseDialog extends AbstractDialog {
         }
 
         pauseDialogE.getComponent(TransformComponent.class).x = PAUSE_X;
-        pauseDialogE.getComponent(TransformComponent.class).y = 460;
+        pauseDialogE.getComponent(TransformComponent.class).y = PAUSE_Y_UP;
         pauseDialogE.getComponent(ZIndexComponent.class).setZIndex(100);
 
         ActionComponent ac = new ActionComponent();

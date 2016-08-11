@@ -29,7 +29,7 @@ import static com.mygdx.etf.utils.GlobalConstants.ALPHA_TRANSITION_STEP;
 public class ShopScreenScript implements IScript {
 
     public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
-    public static final int SENSITIVITY = 13;
+    public static final int SENSITIVITY = 7;
     public static final String SCORE_LBL = "score_lbl";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_SHOP_ICON_LIB = "btn_shop_icon_lib";
@@ -207,7 +207,6 @@ public class ShopScreenScript implements IScript {
             itemIcons.put(vc.shopIcon, itemIcon);
 
             bagEntity.add(new ButtonComponent());
-
             bagEntity.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(bagEntity) {
                         @Override
@@ -277,72 +276,93 @@ public class ShopScreenScript implements IScript {
     @Override
     public void act(float delta) {
         if (!isPreviewOn) {
-            if (startTransitionIn) {
-                curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
-                if (curtain_shop.getComponent(TintComponent.class).color.a <= 0) {
-                    startTransitionIn = false;
-                }
-            }
-
-            if (startTransitionOut) {
-                curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
-                if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
-                    startTransitionOut = false;
-                    startTransitionIn = true;
-                    GameStage.initMenu();
-                }
-            }
+            transitionIn();
+            transitionOut();
 
             List<Entity> itemIcons2 = new ArrayList<>(itemIcons.values());
             if (touchZoneBtn.isTouched) {
-                if (!isGdxWritten) {
-                    tempGdx.x = Gdx.input.getX();
-                    isGdxWritten = true;
-
-                    ButtonComponent.skipDefaultLayersChange = false;
-                }
+                startScrolling();
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
-
-                if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
-                    int i = 0;
-                    while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
-                        i++;
-                    }
-                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
-                    tempGdx.x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
-
-                    ButtonComponent.skipDefaultLayersChange = true;
-                }
-
-                if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
-                    int i = 0;
-                    while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
-                        i++;
-                    }
-                    stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
-                    tempGdx.x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
-                    ButtonComponent.skipDefaultLayersChange = true;
-                }
+                scrollLeft(delta, itemIcons2);
+                scrollRight(delta, itemIcons2);
             } else {
-                isGdxWritten = false;
-                if (stopVelocity != 0 && (canMoveBagsLeft() && canMoveBagsRight())) {
-                    int i = 0;
-                    while (i < bags.size()) {
-                        bags.get(i).getComponent(TransformComponent.class).x += stopVelocity * delta * GlobalConstants.FPS;
-                        itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
-                                .getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
-                        i++;
-                    }
-                    stopVelocity -= stopVelocity / STOP_VELOCITY_DIV;
-                }
+                stopScrolling(delta, itemIcons2);
             }
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
+    }
+
+    private void transitionOut() {
+        if (startTransitionOut) {
+            curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+            if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
+                startTransitionOut = false;
+                startTransitionIn = true;
+                GameStage.initMenu();
+            }
+        }
+    }
+
+    private void transitionIn() {
+        if (startTransitionIn) {
+            curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
+            if (curtain_shop.getComponent(TintComponent.class).color.a <= 0) {
+                startTransitionIn = false;
+            }
+        }
+    }
+
+    private void stopScrolling(float delta, List<Entity> itemIcons2) {
+        isGdxWritten = false;
+        if (stopVelocity != 0 && (canMoveBagsLeft() && canMoveBagsRight())) {
+            int i = 0;
+            while (i < bags.size()) {
+                bags.get(i).getComponent(TransformComponent.class).x += stopVelocity * delta * GlobalConstants.FPS;
+                itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i)
+                        .getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
+                i++;
+            }
+            stopVelocity -= stopVelocity / STOP_VELOCITY_DIV;
+        }
+    }
+
+    private void scrollRight(float delta, List<Entity> itemIcons2) {
+        if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
+            int i = 0;
+            while (i < bags.size()) {
+                bags.get(i).getComponent(TransformComponent.class).x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
+                itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
+                i++;
+            }
+            stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+            tempGdx.x += ((Gdx.input.getX() - tempGdx.x) / SENSITIVITY) * delta * GlobalConstants.FPS;
+            ButtonComponent.skipDefaultLayersChange = true;
+        }
+    }
+
+    private void scrollLeft(float delta, List<Entity> itemIcons2) {
+        if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
+            int i = 0;
+            while (i < bags.size()) {
+                bags.get(i).getComponent(TransformComponent.class).x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
+                itemIcons2.get(i).getComponent(TransformComponent.class).x = bags.get(i).getComponent(TransformComponent.class).x + X_ICON_ON_BAG;
+                i++;
+            }
+            stopVelocity = (Gdx.input.getX() - tempGdx.x) / SENSITIVITY;
+            tempGdx.x -= ((tempGdx.x - Gdx.input.getX()) / SENSITIVITY) * delta * GlobalConstants.FPS;
+
+            ButtonComponent.skipDefaultLayersChange = true;
+        }
+    }
+
+    private void startScrolling() {
+        if (!isGdxWritten) {
+            tempGdx.x = Gdx.input.getX();
+            isGdxWritten = true;
+
+            ButtonComponent.skipDefaultLayersChange = false;
+        }
     }
 
     public boolean canMoveBagsLeft() {
