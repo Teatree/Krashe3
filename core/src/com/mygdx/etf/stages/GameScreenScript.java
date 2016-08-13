@@ -206,6 +206,7 @@ public class GameScreenScript implements IScript {
             goalFeedbackScreen = new GoalFeedbackScreen();
         }
         goalFeedbackScreen.init(false);
+        goalFeedbackScreen.show();
 
         checkTryPeriod();
 

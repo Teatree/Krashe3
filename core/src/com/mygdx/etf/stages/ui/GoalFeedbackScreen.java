@@ -35,7 +35,7 @@ public class GoalFeedbackScreen {
     public static final String LBL_DIALOG = "lbl_level";
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
-    public static final String ACHIEVED_GOAL_LIB = "achieved_goal_lib";
+    public static final String GOAL_LIB = "goal_lib";
     public static final int GOAL_STEP_Y = 110;
     public static final int GOAL_INIT_POS_X = 381;
     public static final float GOAL_SCALE = 1f;
@@ -205,13 +205,12 @@ public class GoalFeedbackScreen {
     }
 
     private Entity createGoalTile(Goal goal, int y) {
-        System.out.println("create goal tile");
-        CompositeItemVO tempC;
-        tempC = sceneLoader.loadVoFromLibrary(ACHIEVED_GOAL_LIB).clone();
+        CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GOAL_LIB).clone();
 
-        final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
-        sceneLoader.getEngine().addEntity(tile);
+        final Entity tile = sceneLoader.loadFromLibrary(GOAL_LIB);
+//        final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
+//        sceneLoader.getEngine().addEntity(tile);
 
         if (isNewLevel) {
             tile.getComponent(TransformComponent.class).x = Gdx.graphics.getWidth();
@@ -229,25 +228,6 @@ public class GoalFeedbackScreen {
                 e.getComponent(ZIndexComponent.class).setZIndex(120);
             }
             SpriterComponent sc = e.getComponent(SpriterComponent.class);
-            if (sc == null) {
-                SpriterVO vo = new SpriterVO();
-                vo.loadFromEntity(e);
-                sc = new SpriterComponent();
-                sc. entity = vo.entity;
-                sc.animation = vo.animation;
-                sc. animationName = vo.animationName;
-                sc.scale = vo.scale;
-
-                sc.currentAnimationIndex	=	vo.animation;
-                sc.currentEntityIndex		=	vo.entity;
-
-                sc.player = new Player(sc.data.getEntity(sc.currentEntityIndex));
-
-                sc.player.setAnimation(sc.currentAnimationIndex);
-                sc.player.setScale(sc.scale);
-
-                e.add(sc);
-            }
 //            if (sc != null) {
             sc.scale = GOAL_SCALE;
             if (goal.achieved) {

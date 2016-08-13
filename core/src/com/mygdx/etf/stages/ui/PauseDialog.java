@@ -200,13 +200,13 @@ public class PauseDialog extends AbstractDialog {
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         for (Entity e : nc.children) {
             if (goal.getCounter() >= goal.getN()) {
-                goalProgressValue = "Completed";
+                goalProgressValue = COMPLETED;
             }else{
-                goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+                goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
             }
 
             if (e.getComponent(LabelComponent.class) != null) {
-                if (e.getComponent(LabelComponent.class).getText().toString().contains("Progress")) { //checks if the right label is being used
+                if (e.getComponent(LabelComponent.class).getText().toString().contains(PROGRESS)) { //checks if the right label is being used
                     e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                             goalProgressValue);
                 }
