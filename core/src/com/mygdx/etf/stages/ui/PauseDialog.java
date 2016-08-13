@@ -196,6 +196,22 @@ public class PauseDialog extends AbstractDialog {
             tile.getComponent(LayerMapComponent.class).getLayer(ACHIEVED).isVisible = false;
             tile.getComponent(LayerMapComponent.class).getLayer(NOTACHIEVED).isVisible = true;
         }
+
+        NodeComponent nc = tile.getComponent(NodeComponent.class);
+        for (Entity e : nc.children) {
+            if (goal.getCounter() >= goal.getN()) {
+                goalProgressValue = "Completed";
+            }else{
+                goalProgressValue = "Progress: " + String.valueOf(goal.getCounter() + "/" + goal.getN());
+            }
+
+            if (e.getComponent(LabelComponent.class) != null) {
+                if (e.getComponent(LabelComponent.class).getText().toString().contains("Progress")) { //checks if the right label is being used
+                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                            goalProgressValue);
+                }
+            }
+        }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
     }
 
