@@ -83,9 +83,4 @@ public class DummyAllController implements AllController {
     public void restorePurchases() {
 
     }
-
-    @Override
-    public long getObjectSize(Object o) {
-        return Main.inst.getObjectSize(o);
-    }
 }

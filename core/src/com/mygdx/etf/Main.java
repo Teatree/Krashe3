@@ -13,12 +13,7 @@ import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.SaveMngr;
 
-import java.lang.instrument.Instrumentation;
-
 public class Main extends Game {
-
-    public static Instrumentation inst;
-
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 786;
     public static int viewportWidth = 1200;

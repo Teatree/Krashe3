@@ -51,7 +51,7 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(GoalType goalType, int difficulty) {
+    public Goal(GoalType goalType, int difficulty, float goalMultiplier) {
         this.type = goalType;
         description = goalType.desc;
         periodType = periodTypeMap.get(random.nextInt(goalType.periodTypeMax));
@@ -68,7 +68,7 @@ public class Goal {
                 n = getbParameters().get(goalType).get(difficulty * 2 + 6);
             }
         }
-        n *= GameStage.gameScript.fpc.level.goalMultiplier;
+        n *= goalMultiplier;
     }
 
     public static void init(FlowerPublicComponent fpc) {

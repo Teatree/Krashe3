@@ -2,10 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'org.robovm:robovm-gradle-plugin:1.2.0'
+        classpath 'com.badlogicgames.ashley:ashley:1.7.0'
     }
 }
 
@@ -101,6 +104,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+        compile "com.badlogicgames.ashley:ashley:1.7.0"
 
 //        compile "commons-collections:commons-collections:3.2.2"
 

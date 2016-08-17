@@ -468,9 +468,4 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         mHelper.launchPurchaseFlow(this, SKU_PHOENIX, RC_REQUEST,
                 mPurchaseFinishedListener);
     }
-
-    @Override
-    public long getObjectSize(Object o){
-        return 0;
-    }
 }

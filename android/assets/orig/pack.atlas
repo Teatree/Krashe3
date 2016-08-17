@@ -84,33 +84,26 @@ btnmusic
   index: -1
 btnmusicno
   rotate: false
-  xy: 1880, 981
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-btnnext
-  rotate: false
   xy: 1882, 1412
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnno
+btnnext
   rotate: false
   xy: 1610, 1410
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnpause
+btnno
   rotate: false
   xy: 1601, 1337
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnplay
+btnpause
   rotate: false
   xy: 356, 110
   size: 69, 71
@@ -388,7 +381,7 @@ star
   index: -1
 starY
   rotate: false
-  xy: 1880, 915
+  xy: 1880, 981
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

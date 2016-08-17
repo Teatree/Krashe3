@@ -36,6 +36,4 @@ public interface AllController {
     void rateMyApp();
 
     void restorePurchases() throws  Exception;
-
-    long getObjectSize(Object o);
 }

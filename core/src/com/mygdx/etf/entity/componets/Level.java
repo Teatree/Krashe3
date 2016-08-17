@@ -1,5 +1,6 @@
 package com.mygdx.etf.entity.componets;
 
+import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GoalGenerator;
 import com.mygdx.etf.utils.SaveMngr;
 
@@ -131,10 +132,10 @@ public class Level {
         return new ArrayList<>(goals.values());
     }
 
-    public void updateLevel() {
+    public void updateLevel(FlowerPublicComponent fpc) {
         if (checkAllGoals()) {
             resetNewInfo();
-            goals = goalGenerator.getGoals();
+            goals = goalGenerator.getGoals(fpc);
         }
     }
 

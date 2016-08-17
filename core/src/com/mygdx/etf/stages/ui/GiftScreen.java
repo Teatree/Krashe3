@@ -50,7 +50,7 @@ public class GiftScreen {
 
     static List<Integer> moneySums;
 
-    public GiftScreen(ItemWrapper gameItem) {
+    public GiftScreen() {
         /*this.gameItem = gameItem;*/
         moneySums = new ArrayList<>();
         moneySums.add(50);
@@ -338,7 +338,7 @@ public class GiftScreen {
                     break;
                 }
             }
-            fpc.level.updateLevel();
+            fpc.level.updateLevel(GameStage.gameScript.fpc);
         }
     }
 }

@@ -197,16 +197,6 @@ public class GameScreenScript implements IScript {
 //        initDoubleBJIcon();
         initUmbrella();
         initCocoon();
-        gameScript.fpc.level.updateLevel();
-
-        giftScreen = new GiftScreen(gameItem);
-        giftScreen.init();
-
-        if (goalFeedbackScreen == null) {
-            goalFeedbackScreen = new GoalFeedbackScreen();
-        }
-        goalFeedbackScreen.init(false);
-        goalFeedbackScreen.show();
 
         checkTryPeriod();
 
@@ -414,8 +404,12 @@ public class GameScreenScript implements IScript {
             if (pauseDialog != null) {
                 pauseDialog.update(delta);
             }
-            giftScreen.update();
-            goalFeedbackScreen.update();
+            if (giftScreen != null) {
+                giftScreen.update();
+            }
+            if (goalFeedbackScreen != null) {
+                goalFeedbackScreen.update();
+            }
             updateAngeredBeesMode();
         }
     }
@@ -441,11 +435,13 @@ public class GameScreenScript implements IScript {
             isGameOver = false;
 //            resetGameData();
 
-            if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
-                gameScript.goalFeedbackScreen.show();
+            if (GoalFeedbackScreen.shouldShow &&
+                    (gameScript.giftScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
+                showGoalFeedback();
 //                close(gameOverDialogE);
                 isGameOver = true;
-            } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen && !gameScript.giftScreen.isGiftScreenOpen) {
+            } else if ((gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
+                    (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                 isGameOver = false;
                 gameScript.resetPauseDialog();
                 gameScript.stage.initResultWithAds();
@@ -453,6 +449,14 @@ public class GameScreenScript implements IScript {
             }
 //            gameScript.stage.initResultWithAds();
         }
+    }
+
+    private void showGoalFeedback() {
+        if (goalFeedbackScreen == null) {
+            goalFeedbackScreen = new GoalFeedbackScreen();
+        }
+        goalFeedbackScreen.init(false);
+        gameScript.goalFeedbackScreen.show();
     }
 
     private void showGameOverDialog() {

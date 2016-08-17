@@ -10,6 +10,8 @@ import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
+import static com.mygdx.etf.stages.GameStage.gameScript;
+
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
@@ -192,6 +194,8 @@ public class SaveMngr {
             fc.level.difficultyLevel = dg.difficultyLevel - 1;
             fc.level.name = Level.levelsInfo.get(dg.difficultyLevel - 1).name;
             fc.level.resetNewInfo();
+
+            fc.level.updateLevel(fc);
         }
 //        Goal goal = new Goal();
 //        goal.achieved = false;

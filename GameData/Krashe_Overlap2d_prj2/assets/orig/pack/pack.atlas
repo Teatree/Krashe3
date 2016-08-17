@@ -84,56 +84,56 @@ btnmusic
   index: -1
 btnmusicno
   rotate: false
-  xy: 1880, 1054
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-btnnext
-  rotate: false
   xy: 1882, 1412
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnno
+btnnext
   rotate: false
   xy: 1610, 1410
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnpause
+btnno
   rotate: false
   xy: 1601, 1337
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettings
+btnpause
   rotate: false
   xy: 356, 110
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshop
+btnsettings
   rotate: false
   xy: 347, 37
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsound
+btnshop
   rotate: false
   xy: 1882, 1339
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundno
+btnsound
   rotate: false
   xy: 1880, 1266
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundno
+  rotate: false
+  xy: 1880, 1193
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -147,14 +147,14 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 1880, 1193
+  xy: 1880, 1120
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1880, 1120
+  xy: 1880, 1047
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -381,7 +381,7 @@ star
   index: -1
 starY
   rotate: false
-  xy: 1880, 988
+  xy: 1880, 981
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
