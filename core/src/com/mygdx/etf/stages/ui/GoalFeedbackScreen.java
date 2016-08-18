@@ -3,6 +3,7 @@ package com.mygdx.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.brashmonkey.spriter.File;
 import com.brashmonkey.spriter.Player;
@@ -40,16 +41,22 @@ public class GoalFeedbackScreen {
 
     public static final String GOALFEEDBACK = "lib_gift_feedbacker";
     public static final String LBL_DIALOG = "lbl_level";
+    public static final String GOAL_LIB = "goal_ani_lib";
+    public static final String GOAL_PROGRESS = "goal_progress";
+    public static final String GOAL_LBL = "goal_lbl";
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
-    public static final String GOAL_LIB = "goal_ani_lib";
+
     public static final int GOAL_STEP_Y = 110;
-    public static final int GOAL_INIT_POS_X = 381;
-    public static final float GOAL_SCALE = 1f;
-    public static final int DELAY_ON_ANIMATION = 5000;
+
+    public static final int GOAL_INIT_POS_X = 591;
     public static final int GOAL_INIT_POS_Y = 500;
+    public static final float GOAL_SCALE = 0.8f;
+
+    public static final int DELAY_ON_ANIMATION = 5000;
     public static final float INITIAL_DELAY = 1.2f;
     public static final float MOVE_TILES_DELAY = 0.3f;
+    public static final String DEFAULT = "Default";
     public static boolean shouldShow;
 
     private List<Entity> tiles;
@@ -220,7 +227,7 @@ public class GoalFeedbackScreen {
         sceneLoader.getEngine().addEntity(tile);
 
         if (isNewLevel) {
-            tile.getComponent(TransformComponent.class).x = Gdx.graphics.getWidth();
+            tile.getComponent(TransformComponent.class).x = Gdx.graphics.getWidth() + 1000;
         } else {
             tile.getComponent(TransformComponent.class).x = POS_X + GOAL_INIT_POS_X;
         }
@@ -232,7 +239,7 @@ public class GoalFeedbackScreen {
         for (Entity e : nc.children) {
 
             //set progress label
-            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals("goal_progress")) {
+            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(GOAL_PROGRESS)) {
                 if (goal.getCounter() >= goal.getN()) {
                     goalProgressValue = PauseDialog.COMPLETED;
                 } else {
@@ -243,12 +250,13 @@ public class GoalFeedbackScreen {
             }
 
             //set goal desc label
-            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals("goal_lbl")) {
+            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(GOAL_LBL)) {
                 e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
             }
 
             SpriteAnimationStateComponent sc = e.getComponent(SpriteAnimationStateComponent.class);
+            SpriteAnimationComponent s = e.getComponent(SpriteAnimationComponent.class);
             if (sc != null){
                 if (goal.achieved) {
                     if (goal.justAchieved) {
@@ -258,11 +266,12 @@ public class GoalFeedbackScreen {
                         tile.add(ac);
                         sc.paused = true;
                     } else {
+                        sc.set(s.frameRangeMap.get(DEFAULT), 0, Animation.PlayMode.REVERSED);
                         sc.paused = true;
-                        sc.player.setTime(sc.player.getAnimation().length - 2);
+//                        sc.player.setTime(sc.player.getAnimation().length - 2);
                     }
                 } else {
-                    sc.player.setTime(0);
+//                    sc.player.setTime(0);
                     sc.paused = true;
                 }
                 tilesScs.add(sc);
@@ -300,22 +309,24 @@ public class GoalFeedbackScreen {
             fade(tiles.get(i), isGoalFeedbackOpen);
             if (gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
                 tilesScs.get(i).paused = false;
+                tilesScs.get(i).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
 //                tilesScs.get(i).player.speed = 4;
                 isAniPlaying = true;
                 aniPlayingIndex = i;
                 gameScript.fpc.level.getGoals().get(i).justAchieved = false;
-            } else if (tilesScs.get(i).player.getTime() >=
-                    tilesScs.get(i).player.getAnimation().length - 20) {
-                tilesScs.get(i).paused = false;
-                tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length - 20);
             }
+//            else if (tilesScs.get(i).player.getTime() >=
+//                    tilesScs.get(i).player.getAnimation().length - 20) {
+//                tilesScs.get(i).paused = false;
+//                tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length - 20);
+//            }
             i++;
         }
 
-        if (!tilesScs.isEmpty() && aniPlayingIndex >= 0 && tilesScs.get(aniPlayingIndex).player.getTime() >=
-                tilesScs.get(aniPlayingIndex).player.getAnimation().length - 20) {
-            isAniPlaying = false;
-        }
+//        if (!tilesScs.isEmpty() && aniPlayingIndex >= 0 && tilesScs.get(aniPlayingIndex).player.getTime() >=
+//                tilesScs.get(aniPlayingIndex).player.getAnimation().length - 20) {
+//            isAniPlaying = false;
+//        }
 
         if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
                 -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
