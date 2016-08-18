@@ -49,13 +49,14 @@ public class GoalFeedbackScreen {
 
     public static final int GOAL_STEP_Y = 110;
 
-    public static final int GOAL_INIT_POS_X = 581;
+    public static final int GOAL_INIT_POS_X = 591;
     public static final int GOAL_INIT_POS_Y = 500;
     public static final float GOAL_SCALE = 0.8f;
 
     public static final int DELAY_ON_ANIMATION = 5000;
     public static final float INITIAL_DELAY = 1.2f;
     public static final float MOVE_TILES_DELAY = 0.3f;
+    public static final String DEFAULT = "Default";
     public static boolean shouldShow;
 
     private List<Entity> tiles;
@@ -265,7 +266,7 @@ public class GoalFeedbackScreen {
                         tile.add(ac);
                         sc.paused = true;
                     } else {
-                        sc.set(s.frameRangeMap.get("Default"), 24, Animation.PlayMode.NORMAL);
+                        sc.set(s.frameRangeMap.get(DEFAULT), 0, Animation.PlayMode.REVERSED);
                         sc.paused = true;
 //                        sc.player.setTime(sc.player.getAnimation().length - 2);
                     }
