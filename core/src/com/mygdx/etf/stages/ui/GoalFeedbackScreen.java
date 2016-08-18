@@ -12,6 +12,8 @@ import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -56,8 +58,8 @@ public class GoalFeedbackScreen {
     public boolean isNewLevel;
     public int aniPlayingIndex;
     public boolean isGoalFeedbackOpen;
-    public List<SpriterComponent> tilesScs = new ArrayList<>();
-    public List<SpriterComponent> tilesScs2 = new ArrayList<>();
+    public List<SpriteAnimationStateComponent> tilesScs = new ArrayList<>();
+    public List<SpriteAnimationStateComponent> tilesScs2 = new ArrayList<>();
     private Entity feedbackEntity;
 
 
@@ -166,7 +168,7 @@ public class GoalFeedbackScreen {
     }
 
     private void addMoveInPrevTilesActions() {
-        for (SpriterComponent s : tilesScs) {
+        for (SpriteAnimationStateComponent s : tilesScs) {
             tilesScs2.add(s);
         }
         int y = GOAL_INIT_POS_Y;
@@ -246,27 +248,46 @@ public class GoalFeedbackScreen {
                         goal.getDescription());
             }
 
-            SpriterComponent sc = e.getComponent(SpriterComponent.class);
-            if (sc != null) {
-                sc.scale = GOAL_SCALE;
+            SpriteAnimationStateComponent sc = e.getComponent(SpriteAnimationStateComponent.class);
+            if (sc != null){
                 if (goal.achieved) {
                     if (goal.justAchieved) {
                         ActionComponent ac = new ActionComponent();
                         Actions.checkInit();
                         ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
                         tile.add(ac);
-
-                        sc.player.speed = 0;
+                        sc.paused = true;
                     } else {
-                        sc.player.speed = 0;
+                        sc.paused = true;
                         sc.player.setTime(sc.player.getAnimation().length - 2);
                     }
                 } else {
                     sc.player.setTime(0);
-                    sc.player.speed = 0;
+                    sc.paused = true;
                 }
                 tilesScs.add(sc);
             }
+//            SpriterComponent sc = e.getComponent(SpriterComponent.class);
+//            if (sc != null) {
+//                sc.scale = GOAL_SCALE;
+//                if (goal.achieved) {
+//                    if (goal.justAchieved) {
+//                        ActionComponent ac = new ActionComponent();
+//                        Actions.checkInit();
+//                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
+//                        tile.add(ac);
+//
+//                        sc.player.speed = 0;
+//                    } else {
+//                        sc.player.speed = 0;
+//                        sc.player.setTime(sc.player.getAnimation().length - 2);
+//                    }
+//                } else {
+//                    sc.player.setTime(0);
+//                    sc.player.speed = 0;
+//                }
+//                tilesScs.add(sc);
+//            }
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
@@ -278,13 +299,14 @@ public class GoalFeedbackScreen {
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
             if (gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
-                tilesScs.get(i).player.speed = 4;
+                tilesScs.get(i).paused = false;
+//                tilesScs.get(i).player.speed = 4;
                 isAniPlaying = true;
                 aniPlayingIndex = i;
                 gameScript.fpc.level.getGoals().get(i).justAchieved = false;
             } else if (tilesScs.get(i).player.getTime() >=
                     tilesScs.get(i).player.getAnimation().length - 20) {
-                tilesScs.get(i).player.speed = 0;
+                tilesScs.get(i).paused = false;
                 tilesScs.get(i).player.setTime(tilesScs.get(i).player.getAnimation().length - 20);
             }
             i++;

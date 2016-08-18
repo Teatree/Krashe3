@@ -214,7 +214,6 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void moveSimple(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent) {
-
         if (!bugComponent.began) {
             begin(bugComponent, transformComponent);
             bugComponent.began = true;
