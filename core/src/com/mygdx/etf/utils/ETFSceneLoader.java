@@ -78,7 +78,6 @@ public class ETFSceneLoader extends SceneLoader {
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
             if (!(sceneName.equals("ResultScene") || sceneName.equals("ShopScene"))) {
                 loadScene(sceneName, viewport);
-                System.err.println(sceneName + " - " + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1000000);
             }
         }
         Runtime.getRuntime().gc();

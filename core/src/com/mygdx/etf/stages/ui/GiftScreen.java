@@ -213,15 +213,13 @@ public class GiftScreen {
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_100) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_150)) {
                 gift = getRandomMoneyGift();
-            }
-            else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_150) &&
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_150) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_200)) {
                 gift = getRandomMoneyGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_200) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
                 gift = getRandomMoneyGift();
-            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250) &&
-                    i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_300)) {
+            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
                 gift = getRandomMoneyGift();
             }
             return gift;
