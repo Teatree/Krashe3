@@ -3,6 +3,7 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.*;
@@ -49,7 +50,6 @@ public class GameScreenScript implements IScript {
     public final String MEGA_FLOWER = "mega_flower";
     public final String MEGA_LEAFS = "mega_leafs";
     public final String COCCOON = "coccoon";
-//    public final String BACKGROUND_LIB = "backgroundLib";
     public final String BTN_BACK = "btn_back";
 
     public static boolean isPause;
@@ -78,7 +78,6 @@ public class GameScreenScript implements IScript {
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     public static boolean shouldShowGameOverDialog;
-//    private TrialTimer timer;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -226,22 +225,6 @@ public class GameScreenScript implements IScript {
             bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
-
-//    private void initBackground() {
-//        final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(BACKGROUND_LIB);
-//        background = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-//        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), background, tempC.composite);
-//        sceneLoader.getEngine().addEntity(background);
-//
-//        LayerMapComponent lc = ComponentRetriever.get(background, LayerMapComponent.class);
-//        lc.setLayers(tempC.composite.layers);
-//        background.add(lc);
-////        lc.getLayer(CameraShaker.BLINK).isVisible = false;
-//        TransformComponent tc = new TransformComponent();
-//        tc.x = 0;
-//        tc.y = 0;
-//        background.add(tc);
-//    }
 
     private void addSystems() {
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
@@ -429,6 +412,11 @@ public class GameScreenScript implements IScript {
     }
 
     private void endGame() {
+        if (new Random().nextInt(100) >= 70){
+            shouldShowGameOverDialog = true;
+        } else {
+            shouldShowGameOverDialog = false;
+        }
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {

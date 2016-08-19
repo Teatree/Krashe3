@@ -26,7 +26,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 public class GameOverDialog extends AbstractDialog {
 
     public static final int TAP_COOL = 30;
-    public final String GAME_OVER_DIALOG = "game_over_dialog";
+    public final String GAME_OVER_DIALOG = "game_over_lib";
     public final String BTN_WATCH_VIDEO = "btn_watch_video";
     public final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
     public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
