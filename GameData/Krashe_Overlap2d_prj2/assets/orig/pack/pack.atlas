@@ -56,84 +56,84 @@ betaptoplay
   index: -1
 btnads
   rotate: false
-  xy: 1951, 1271
+  xy: 1959, 1028
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnback
   rotate: false
-  xy: 1959, 1028
+  xy: 1959, 955
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoals
   rotate: false
-  xy: 1959, 955
+  xy: 1959, 882
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusic
   rotate: false
-  xy: 1959, 882
+  xy: 1566, 370
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusicno
   rotate: false
-  xy: 1566, 370
+  xy: 1467, 248
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnnext
   rotate: false
-  xy: 1467, 248
+  xy: 1538, 221
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1538, 221
+  xy: 1467, 175
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 1467, 175
+  xy: 1216, 126
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettings
   rotate: false
-  xy: 1216, 126
+  xy: 1287, 126
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1287, 126
+  xy: 1358, 126
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1358, 126
+  xy: 1609, 221
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1609, 221
+  xy: 1680, 187
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -147,7 +147,7 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 1680, 187
+  xy: 1538, 148
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -161,7 +161,7 @@ btnwatchads
   index: -1
 btnyes
   rotate: false
-  xy: 1538, 148
+  xy: 1429, 102
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -360,10 +360,11 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 159, 493
-  size: 20, 20
-  split: 4, 4, 4, 4
-  orig: 20, 20
+  xy: 1951, 1250
+  size: 90, 92
+  split: 40, 42, 42, 42
+  pad: 0, 0, 0, 0
+  orig: 90, 92
   offset: 0, 0
   index: -1
 shopitem1
