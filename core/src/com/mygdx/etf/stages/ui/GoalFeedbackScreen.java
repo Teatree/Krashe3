@@ -51,7 +51,7 @@ public class GoalFeedbackScreen {
 
     public static final int GOAL_INIT_POS_X = 591;
     public static final int GOAL_INIT_POS_Y = 500;
-    public static final float GOAL_SCALE = 0.8f;
+    public static final float GOAL_SCALE = 1.6f;
 
     public static final int DELAY_ON_ANIMATION = 5000;
     public static final float INITIAL_DELAY = 1.2f;
