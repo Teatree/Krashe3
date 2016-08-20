@@ -107,6 +107,7 @@ public class BasicDialog extends AbstractDialog{
         this.isActive = true;
         addShadow();
         AbstractDialog.isSecondDialogOpen = true;
+        System.out.println("set AbstractDialog.isSecondDialogOpen to true " + AbstractDialog.isSecondDialogOpen);
 
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+10);
 

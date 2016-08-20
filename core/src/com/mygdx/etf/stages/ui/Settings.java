@@ -107,7 +107,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(nextInfoBtn) {
                     @Override
                     public void clicked() {
-                        if (isActive) {
+                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
                             infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
                             infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
                             ActionComponent acSettings = new ActionComponent();
@@ -158,7 +158,9 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(restorePurchasesBtn) {
                     @Override
                     public void clicked() {
-                        if (!AbstractDialog.isSecondDialogOpen) {
+                        System.out.println(AbstractDialog.isSecondDialogOpen);
+                        System.out.println(isActive);
+                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
                             try {
                                 Main.mainController.restorePurchases();
                                 dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
