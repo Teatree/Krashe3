@@ -110,30 +110,37 @@ btnpause
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettings
+btnplay
   rotate: false
   xy: 1289, 126
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshop
+btnsettings
   rotate: false
   xy: 1360, 126
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsound
+btnshop
   rotate: false
   xy: 1611, 221
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundno
+btnsound
   rotate: false
   xy: 1682, 187
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundno
+  rotate: false
+  xy: 1540, 148
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -147,7 +154,7 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 1540, 148
+  xy: 1431, 102
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -161,7 +168,7 @@ btnwatchads
   index: -1
 btnyes
   rotate: false
-  xy: 1431, 102
+  xy: 1611, 148
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
