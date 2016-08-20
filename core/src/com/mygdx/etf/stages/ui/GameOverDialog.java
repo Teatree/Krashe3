@@ -163,11 +163,12 @@ public class GameOverDialog extends AbstractDialog {
         if (gameOverCounter <= 0) {
             if (!gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
-                if (GoalFeedbackScreen.shouldShow && !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) {
+                if (GoalFeedbackScreen.shouldShow &&
+                        (gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
                     gameScript.goalFeedbackScreen.show();
                     close(gameOverDialogE);
                     isGameOver = true;
-                } else if (!gameScript.goalFeedbackScreen.isGoalFeedbackOpen &&
+                } else if ((gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
                         (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
