@@ -6,9 +6,9 @@ filter: Linear,Linear
 repeat: none
 achievedgoal
   rotate: false
-  xy: 516, 388
-  size: 256, 55
-  orig: 256, 55
+  xy: 516, 378
+  size: 300, 65
+  orig: 300, 65
   offset: 0, 0
   index: -1
 background
@@ -49,7 +49,7 @@ bepopuptitle
   index: -1
 betaptoplay
   rotate: false
-  xy: 516, 348
+  xy: 516, 338
   size: 256, 38
   orig: 256, 38
   offset: 0, 0
@@ -70,14 +70,14 @@ btnback
   index: -1
 btngoals
   rotate: false
-  xy: 1610, 1483
+  xy: 356, 183
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusic
   rotate: false
-  xy: 356, 183
+  xy: 1610, 1483
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -91,26 +91,19 @@ btnmusicno
   index: -1
 btnnext
   rotate: false
-  xy: 1610, 1410
+  xy: 1506, 1229
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1601, 1337
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-btnpause
-  rotate: false
   xy: 356, 110
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnplay
+btnpause
   rotate: false
   xy: 347, 37
   size: 69, 71
@@ -119,28 +112,28 @@ btnplay
   index: -1
 btnsettings
   rotate: false
-  xy: 1882, 1339
+  xy: 1610, 1410
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1880, 1266
+  xy: 1601, 1337
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1880, 1193
+  xy: 1882, 1339
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1880, 1120
+  xy: 1880, 1266
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -154,14 +147,14 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 1880, 1047
+  xy: 1880, 1193
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1880, 974
+  xy: 1880, 1120
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -235,7 +228,7 @@ flowerpeducle
   index: -1
 img
   rotate: false
-  xy: 774, 421
+  xy: 1164, 1223
   size: 22, 22
   orig: 22, 22
   offset: 0, 0
@@ -256,21 +249,21 @@ itemdeerhornson
   index: -1
 itempilotscarfon
   rotate: false
-  xy: 1478, 1424
+  xy: 224, 124
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemsantabeard
   rotate: false
-  xy: 224, 124
+  xy: 906, 735
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemsantahaton
   rotate: false
-  xy: 906, 735
+  xy: 1478, 1424
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
@@ -298,9 +291,9 @@ itemunknown
   index: -1
 notachievedgoal
   rotate: false
-  xy: 1204, 1242
-  size: 256, 55
-  orig: 256, 55
+  xy: 1204, 1232
+  size: 300, 65
+  orig: 300, 65
   offset: 0, 0
   index: -1
 pinata
@@ -344,7 +337,7 @@ previewTagBg.9
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1462, 1285
+  xy: 2, 20
   size: 12, 12
   split: 5, 5, 5, 5
   orig: 12, 12
@@ -352,7 +345,7 @@ progressbarfiller
   index: -1
 progressbarframe
   rotate: false
-  xy: 1164, 1225
+  xy: 774, 356
   size: 20, 20
   split: 4, 4, 4, 4
   orig: 20, 20
@@ -388,7 +381,7 @@ star
   index: -1
 starY
   rotate: false
-  xy: 1880, 908
+  xy: 1880, 1054
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
