@@ -5,10 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -18,7 +15,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 /**
  * Created by ARudyk on 7/1/2016.
  */
-public class BasicDialog extends AbstractDialog{
+public class BasicDialog extends AbstractDialog {
 
     public static final String RESET_ALL_PROGRESS = "RESET ALL PROGRESS. ARE YOU SURE?";
     public static final String RESTORE_ALL_PURCHASES = "RESTORE ALL PURCHASES. ARE YOU SURE?";
@@ -43,6 +40,7 @@ public class BasicDialog extends AbstractDialog{
     public static final int OK_BTN_X = 110;
     public static final int BTN_Y = 60;
     public static final int CANCEL_BTN_X = 465;
+    public static final int OK_CENTER = 300;
 
     private Entity dialogE;
     private Entity text;
@@ -51,7 +49,7 @@ public class BasicDialog extends AbstractDialog{
 
     public AbstractDialog parent;
 
-    public BasicDialog(ItemWrapper gameItem){
+    public BasicDialog(ItemWrapper gameItem) {
         this.gameItem = gameItem;
     }
 
@@ -62,7 +60,7 @@ public class BasicDialog extends AbstractDialog{
         GameStage.sceneLoader.getEngine().addEntity(dialogE);
     }
 
-    public void init (){
+    public void init() {
         initShadow();
         loadFromLib();
         dialogE.getComponent(TransformComponent.class).x = DIALOG_X;
@@ -76,7 +74,7 @@ public class BasicDialog extends AbstractDialog{
         }
 
         cancelBtn = dialogE.getComponent(NodeComponent.class).getChild(BTN_CANCEL);
-        if (cancelBtn.getComponent(ButtonComponent.class) == null){
+        if (cancelBtn.getComponent(ButtonComponent.class) == null) {
             cancelBtn.add(new ButtonComponent());
         }
         cancelBtn.getComponent(ButtonComponent.class).addListener(
@@ -99,31 +97,29 @@ public class BasicDialog extends AbstractDialog{
         show(TYPE_RESTORE_PURCH_RESULT);
     }
 
-    public void show(String type){
+    public void show(String type) {
         parent.isActive = false;
         this.isActive = true;
         addShadow();
         AbstractDialog.isSecondDialogOpen = true;
-        System.out.println("set AbstractDialog.isSecondDialogOpen to true " + AbstractDialog.isSecondDialogOpen);
-
-        dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+10);
+        dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
 
         okBtn.remove(ButtonComponent.class);
         okBtn.add(new ButtonComponent());
-        switch (type){
-            case TYPE_RESET : {
-               showResetPrgress();
+        switch (type) {
+            case TYPE_RESET: {
+                showResetPrgress();
                 break;
-           }
-            case TYPE_RESTORE_PURCH : {
+            }
+            case TYPE_RESTORE_PURCH: {
                 showRestorePurchase();
                 break;
             }
-            case TYPE_RESET_RESULT : {
+            case TYPE_RESET_RESULT: {
                 showResetProgressResult();
                 break;
             }
-            case TYPE_RESTORE_PURCH_RESULT : {
+            case TYPE_RESTORE_PURCH_RESULT: {
                 showRestorePurchResult();
                 break;
             }
@@ -140,10 +136,12 @@ public class BasicDialog extends AbstractDialog{
 
         okBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
-            public void touchUp() {}
+            public void touchUp() {
+            }
 
             @Override
-            public void touchDown() {}
+            public void touchDown() {
+            }
 
             @Override
             public void clicked() {
@@ -161,7 +159,7 @@ public class BasicDialog extends AbstractDialog{
     private void showResetProgressResult() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESET_ALL_PROGRESS_RESULT);
-        okBtn.getComponent(TransformComponent.class).x +=50;
+        okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
 
         cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         cancelBtn.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
@@ -178,7 +176,7 @@ public class BasicDialog extends AbstractDialog{
     private void showRestorePurchResult() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESTORE_ALL_PURCHASES_RESULT);
-        okBtn.getComponent(TransformComponent.class).x +=50;
+        okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
         okBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(okBtn) {
                     @Override
@@ -186,8 +184,6 @@ public class BasicDialog extends AbstractDialog{
                         close(dialogE);
                     }
                 });
-
-        okBtn.getComponent(TransformComponent.class).x +=50;
 
         cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         cancelBtn.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
@@ -214,7 +210,7 @@ public class BasicDialog extends AbstractDialog{
     }
 
     @Override
-    public void close (Entity e){
+    public void close(Entity e) {
         parent.isActive = true;
         super.close(e);
     }

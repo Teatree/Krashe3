@@ -28,6 +28,7 @@ public class AbstractDialog {
     protected Entity shadowE;
     public static boolean isDialogOpen;
     public static boolean isSecondDialogOpen;
+    public static boolean isSecondDialogClosed;
     public boolean isActive;
 
     protected void initShadow() {
@@ -66,11 +67,17 @@ public class AbstractDialog {
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
             if (isSecondDialogOpen) {
-//                isSecondDialogOpen = false;
+                isSecondDialogClosed = true;
             } else {
                 isDialogOpen = false;
             }
         }
     }
 
+    public static void checkSecondaryDialog(){
+        if (isSecondDialogOpen && isSecondDialogClosed){
+            isSecondDialogOpen = false;
+            isSecondDialogClosed = false;
+        }
+    }
 }

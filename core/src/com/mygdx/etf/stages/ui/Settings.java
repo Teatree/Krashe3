@@ -107,7 +107,8 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(nextInfoBtn) {
                     @Override
                     public void clicked() {
-                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
+                        checkSecondaryDialog();
+                        if (!isSecondDialogOpen && isActive) {
                             infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
                             infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
                             ActionComponent acSettings = new ActionComponent();
@@ -147,7 +148,8 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(resetProgressBtn) {
                     @Override
                     public void clicked() {
-                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
+                        checkSecondaryDialog();
+                        if (!isSecondDialogOpen && isActive) {
                             dialog.show(BasicDialog.TYPE_RESET);
                         }
                     }
@@ -158,9 +160,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(restorePurchasesBtn) {
                     @Override
                     public void clicked() {
-                        System.out.println(AbstractDialog.isSecondDialogOpen);
-                        System.out.println(isActive);
-                        if (!AbstractDialog.isSecondDialogOpen && isActive) {
+                        if (!isSecondDialogOpen && isActive) {
                             try {
                                 Main.mainController.restorePurchases();
                                 dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
@@ -168,6 +168,7 @@ public class Settings extends AbstractDialog {
                                 dialog.show(BasicDialog.ERROR);
                             }
                         }
+                        checkSecondaryDialog();
                     }
                 });
 
