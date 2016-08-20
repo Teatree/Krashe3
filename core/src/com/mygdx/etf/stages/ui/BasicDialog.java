@@ -2,7 +2,6 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
-import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -15,8 +14,6 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-
-import java.util.HashMap;
 
 /**
  * Created by ARudyk on 7/1/2016.
@@ -119,7 +116,7 @@ public class BasicDialog extends AbstractDialog{
                 break;
            }
             case TYPE_RESTORE_PURCH : {
-                showRestorePurch();
+                showRestorePurchase();
                 break;
             }
             case TYPE_RESET_RESULT : {
@@ -137,7 +134,7 @@ public class BasicDialog extends AbstractDialog{
         dialogE.add(ac);
     }
 
-    private void showRestorePurch() {
+    private void showRestorePurchase() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESTORE_ALL_PURCHASES);
 
