@@ -29,16 +29,18 @@ public class ResultScreenScript implements IScript {
     public static final int PROGRESS_BAR_STEP = 12;
     public static final String IMG_PROGRESS_BAR = "img_progress_bar";
     public static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
-    public static final String YOU_EARNED = "YOU EARNED: ";
+    public static final String YOU_EARNED = "+";
     public static final String TOTAL = "TOTAL: ";
-    public static final String YOUR_BEST = "YOUR BEST: ";
+    public static final String YOUR_BEST = "BEST: ";
     public static final String YOU_NEED = "YOU NEED ";
     public static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
     public static final String BTN_BACK = "btn_back";
     public static final String BTN_PLAY = "btn_play";
     public static final String BTN_SHOP = "btn_shop";
     public static final String LBL_TOTAL = "lbl_TOTAL";
+    public static final String LBL_TOTAL_S = "lbl_TOTAL_s";
     public static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
+    public static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
     public static final String LBL_BET_SCORE = "lbl_BET_SCORE";
     public static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
     private static final String TRIAL_TIMER = "timer_lbl";
@@ -52,10 +54,13 @@ public class ResultScreenScript implements IScript {
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
+    public Entity txtTotalsE;
     public Entity progressBarE;
     Entity txtEarnedE;
+    Entity txtEarnedsE;
 
     LabelComponent earnedLabel;
+    LabelComponent earnedLabels;
     long need;
     int i = 0;
     int j = 0;
@@ -80,7 +85,9 @@ public class ResultScreenScript implements IScript {
         sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
 
         txtTotalE = resultScreenItem.getChild(LBL_TOTAL).getEntity();
+        txtTotalsE = resultScreenItem.getChild(LBL_TOTAL_S).getEntity();
         txtEarnedE = resultScreenItem.getChild(LBL_YOU_EARNED).getEntity();
+        txtEarnedsE = resultScreenItem.getChild(LBL_YOU_EARNED_S).getEntity();
         progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
         txtBestE = resultScreenItem.getChild(LBL_BET_SCORE).getEntity();
         txtNeedE = resultScreenItem.getChild(LBL_TO_UNLOCK).getEntity();
@@ -102,9 +109,12 @@ public class ResultScreenScript implements IScript {
         show = false;
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
+        LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), TOTAL + String.valueOf(gameScript.fpc.totalScore));
+        totalLabels.text.replace(0, totalLabels.text.capacity(), TOTAL + String.valueOf(gameScript.fpc.totalScore));
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
+        earnedLabels = txtEarnedsE.getComponent(LabelComponent.class);
 
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(gameScript.fpc.bestScore));
@@ -213,10 +223,12 @@ public class ResultScreenScript implements IScript {
                     updateScore();
                 } else {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
+                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
                     updateProgressBar(delta);
                 }
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
+                earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
@@ -278,6 +290,7 @@ public class ResultScreenScript implements IScript {
         long counterStep = gameScript.fpc.score / 48 > 1 ? gameScript.fpc.score / 48 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(i));
+            earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(i));
             i += counterStep;
             j = 0;
         }
