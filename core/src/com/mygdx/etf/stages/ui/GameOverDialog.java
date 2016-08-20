@@ -25,6 +25,8 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GameOverDialog extends AbstractDialog {
 
+    public static final int GAME_OVER_PROBABILITY = 0;
+
     public static final int TAP_COOL = 30;
     public final String GAME_OVER_DIALOG = "game_over_lib";
     public final String BTN_WATCH_VIDEO = "btn_watch_video";
@@ -36,13 +38,7 @@ public class GameOverDialog extends AbstractDialog {
     public static int gameOverCounter = GAME_OVER_COUNT;
     private int tapCoolDown = TAP_COOL;
 
-    private static ItemWrapper gameItem;
     public static Entity gameOverDialogE;
-
-
-    public GameOverDialog(ItemWrapper gameItem) {
-        GameOverDialog.gameItem = gameItem;
-    }
 
     public static boolean releaseAllBugs() {
         return isGameOver && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs;
@@ -66,9 +62,7 @@ public class GameOverDialog extends AbstractDialog {
         Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
         gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), Integer.toString(GAME_OVER_COUNT));
-
-        TintComponent tc = gameOverTimerLbl.getComponent(TintComponent.class);
-        tc.color.a = 0;
+        gameOverTimerLbl.getComponent(ZIndexComponent.class).setZIndex(gameOverDialogE.getComponent(ZIndexComponent.class).getZIndex() + 1);
     }
 
     public void initGameOverDialog() {
@@ -165,7 +159,7 @@ public class GameOverDialog extends AbstractDialog {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow &&
                         (gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
-                    gameScript.goalFeedbackScreen.show();
+                    gameScript.showGoalFeedback();
                     close(gameOverDialogE);
                     isGameOver = true;
                 } else if ((gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&

@@ -36,11 +36,6 @@ public class GameScreenScript implements IScript {
     public static final CameraShaker cameraShaker = new CameraShaker();
     public static final String TUTORIAL_LINE = "tutorial_line";
     public static final String UMBRELLA_ANI = "umbrellaAni";
-    public static final int COCOON_X = 980;
-    public static final int COCOON_Y = 800;
-    public static final String BEES_MODE_ANI = "bees_mode_ani";
-    public static final int TRIAL_TIMER_X = 120;
-    public static final int TRIAL_TIMER_Y = 650;
     public final String START_MESSAGE = "TAP TO START";
     public final String DOUBLE_BJ_ICON = "double_bj_badge";
     public final String LBL_SCORE = "lbl_score";
@@ -51,6 +46,12 @@ public class GameScreenScript implements IScript {
     public final String MEGA_LEAFS = "mega_leafs";
     public final String COCCOON = "coccoon";
     public final String BTN_BACK = "btn_back";
+    public static final String BEES_MODE_ANI = "bees_mode_ani";
+
+    public static final int COCOON_X = 980;
+    public static final int COCOON_Y = 800;
+    public static final int TRIAL_TIMER_X = 120;
+    public static final int TRIAL_TIMER_Y = 650;
 
     public static boolean isPause;
     public static boolean isGameOver;
@@ -89,6 +90,7 @@ public class GameScreenScript implements IScript {
         BugSpawnSystem.queenBeeOnStage = false;
 
         BugSystem.blowUpAllBugs = true;
+        beesModeAni.getComponent(TransformComponent.class).y = 394;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
         beesModeAni.getComponent(SpriterComponent.class).player.setTime(0);
@@ -169,6 +171,7 @@ public class GameScreenScript implements IScript {
         beesModeAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
         beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
+        beesModeAni.getComponent(TransformComponent.class).y = 1800;
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
@@ -176,13 +179,15 @@ public class GameScreenScript implements IScript {
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = 5;
 
+        fpc.score = 0;
+
         scoreLabelE = gameItem.getChild(LBL_SCORE).getEntity();
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
-        scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + GameStage.gameScript.fpc.score);
+        scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + fpc.score);
 
         scoreLabelES = gameItem.getChild(LBL_SCORE_S).getEntity();
         LabelComponent scoreLabelS = scoreLabelES.getComponent(LabelComponent.class);
-        scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), "" + GameStage.gameScript.fpc.score);
+        scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), "" + fpc.score);
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
@@ -412,11 +417,12 @@ public class GameScreenScript implements IScript {
     }
 
     private void endGame() {
-        if (new Random().nextInt(100) >= 70){
+        if (new Random().nextInt(100) >= GameOverDialog.GAME_OVER_PROBABILITY){
             shouldShowGameOverDialog = true;
         } else {
             shouldShowGameOverDialog = false;
         }
+
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
@@ -439,7 +445,7 @@ public class GameScreenScript implements IScript {
         }
     }
 
-    private void showGoalFeedback() {
+    public void showGoalFeedback() {
         if (goalFeedbackScreen == null) {
             goalFeedbackScreen = new GoalFeedbackScreen();
         }
@@ -449,7 +455,7 @@ public class GameScreenScript implements IScript {
 
     private void showGameOverDialog() {
         if (gameOverDialog == null) {
-            gameOverDialog = new GameOverDialog(gameItem);
+            gameOverDialog = new GameOverDialog();
             gameOverDialog.initGameOverDialog();
         }
         gameOverDialog.show();
