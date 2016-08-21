@@ -334,8 +334,8 @@ public class GameScreenScript implements IScript {
                 tc.scaleX = 1.3f;
                 tc.scaleY = 1.3f;
 
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x;
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x+64;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y-9;
                 fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
                 petE.add(fpc.currentPet);
