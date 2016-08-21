@@ -226,6 +226,13 @@ dnaamountbackground
   orig: 220, 120
   offset: 0, 0
   index: -1
+dnaamountbackground1
+  rotate: false
+  xy: 1962, 1526
+  size: 7, 38
+  orig: 7, 38
+  offset: 0, 0
+  index: -1
 eattheflylogo
   rotate: false
   xy: 2, 377
