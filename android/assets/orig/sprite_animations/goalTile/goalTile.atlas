@@ -1,0 +1,181 @@
+
+goalTile.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+goalTile01
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile02
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile03
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile04
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile05
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile06
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile09
+  rotate: false
+  xy: 2, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile07
+  rotate: false
+  xy: 2, 726
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile08
+  rotate: false
+  xy: 328, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile10
+  rotate: false
+  xy: 2, 599
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile11
+  rotate: false
+  xy: 328, 726
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile12
+  rotate: false
+  xy: 654, 853
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile13
+  rotate: false
+  xy: 2, 472
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile14
+  rotate: false
+  xy: 328, 599
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile15
+  rotate: false
+  xy: 654, 726
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile16
+  rotate: false
+  xy: 2, 345
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile17
+  rotate: false
+  xy: 328, 472
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile18
+  rotate: false
+  xy: 654, 599
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile19
+  rotate: false
+  xy: 2, 218
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile20
+  rotate: false
+  xy: 328, 345
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile21
+  rotate: false
+  xy: 654, 472
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile22
+  rotate: false
+  xy: 2, 91
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile23
+  rotate: false
+  xy: 328, 218
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile24
+  rotate: false
+  xy: 328, 218
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
+goalTile25
+  rotate: false
+  xy: 328, 218
+  size: 324, 125
+  orig: 324, 125
+  offset: 0, 0
+  index: -1
