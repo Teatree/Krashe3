@@ -128,7 +128,7 @@ public class PetSystem extends IteratingSystem {
     private void spawn(PetComponent pc, TransformComponent tc, SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
         if (pc.state.equals(SPAWNING)) {
             tc.x = PetComponent.X_SPAWN_POSITION;
-            cannontc.x = PetComponent.X_SPAWN_POSITION;
+            cannontc.x = PetComponent.X_SPAWN_POSITION+64;
             setSpawnAnimation(sc);
             setSpawnAnimation(cannonsc);
             pc.velocity = 0;
@@ -147,7 +147,7 @@ public class PetSystem extends IteratingSystem {
             pc.state = IDLE;
             setIdleAnimation(sc);
             setIdleAnimation(cannonsc);
-            pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION;
+            pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION+64;
             tc.x = X_SPAWN_POSITION;
         }
         sc.player.speed = 0;
