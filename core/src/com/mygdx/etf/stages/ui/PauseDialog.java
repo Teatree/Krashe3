@@ -159,7 +159,7 @@ public class PauseDialog extends AbstractDialog {
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
         for (Goal goal : gameScript.fpc.level.getGoals()) {
-            Entity tile = tileEntities.get(i++);
+            Entity tile = tileEntities.get(i);
 
             goalProgressValue = String.valueOf(goal.getCounter());
             NodeComponent nc = tile.getComponent(NodeComponent.class);
@@ -179,6 +179,7 @@ public class PauseDialog extends AbstractDialog {
                 }
             }
             tiles.put(goal, tile);
+            i++;
         }
         while (i < tileEntities.size()) {
             tileEntities.get(i++).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

@@ -73,7 +73,7 @@ public class BugSpawnSystem extends EntitySystem {
         SPAWN_MIN_X = -300;
         SPAWN_MIN_Y = 100;
         SPAWN_MAX_X = -200;
-        SPAWN_MAX_Y = 700;
+        SPAWN_MAX_Y = 650;
 
         break_counter = rand.nextInt((int)curBreakFreqMax- (int)curBreakFreqMin)+ curBreakFreqMin;
         currentMultiplier = mulipliers.get(0);

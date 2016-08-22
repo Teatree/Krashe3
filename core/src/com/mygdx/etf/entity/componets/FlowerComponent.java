@@ -7,7 +7,7 @@ public class FlowerComponent implements Component {
     public static final int FLOWER_Y_POS = 129;
     public static final int FLOWER_X_POS = 1023;
     public static final int FLOWER_MAX_Y_POS = 640;
-    public static final float FLOWER_SCALE = 0.6f;
+    public static final float FLOWER_SCALE = 0.7f;
 
     public static State state = State.IDLE;
 

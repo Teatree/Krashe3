@@ -20,7 +20,7 @@ public abstract class GlobalConstants {
 
     public static final int FPS = 24;
 
-    public static final float BUG_SCALE = 0.6f;
+    public static final float BUG_SCALE = 0.75f;
 
     public static final int FAR_FAR_AWAY_X = 1500;
     public static final int FAR_FAR_AWAY_Y = 1500;
