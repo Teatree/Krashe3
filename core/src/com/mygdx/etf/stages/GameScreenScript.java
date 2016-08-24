@@ -177,7 +177,7 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-        umbrellaSpawnCounter = 5;
+//        umbrellaSpawnCounter = 5;
 
         fpc.score = 0;
 

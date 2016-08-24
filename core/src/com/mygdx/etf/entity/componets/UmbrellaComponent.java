@@ -29,7 +29,7 @@ public class UmbrellaComponent implements Component {
     public State state;
     public int pointsMult;
 
-    public float getSpawningTimeCounter = 0;
+    public float getSpawningTimeCounter = 2;
     public int blinkCounter;
 
     public static List<DandelionMultiplier> multipliers;
@@ -48,7 +48,7 @@ public class UmbrellaComponent implements Component {
 
     public void setToSpawningState(){
         state = State.SPAWNING;
-        getSpawningTimeCounter = 0;
+        getSpawningTimeCounter = 2;
     }
 
     public static class DandelionMultiplier {

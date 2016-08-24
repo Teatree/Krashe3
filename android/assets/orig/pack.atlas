@@ -207,16 +207,16 @@ buttoncameraon
   index: -1
 coin
   rotate: false
-  xy: 906, 556
-  size: 58, 57
-  orig: 58, 57
+  xy: 1880, 866
+  size: 58, 59
+  orig: 58, 59
   offset: 0, 0
   index: -1
 coinap
   rotate: false
-  xy: 1880, 926
-  size: 62, 64
-  orig: 62, 64
+  xy: 1880, 927
+  size: 62, 63
+  orig: 62, 63
   offset: 0, 0
   index: -1
 dnaamountbackground
@@ -365,7 +365,7 @@ previewTagBg.9
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1880, 858
+  xy: 906, 547
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0

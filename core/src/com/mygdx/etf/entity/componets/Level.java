@@ -121,6 +121,9 @@ public class Level {
     }
 
     public boolean checkAllGoals() {
+        // Fucking weird ass method
+        // If you put the 1st goal to achieved: true
+        // AllAchieved will be true and new goals will be generated
         boolean allAchieved = true;
         for (Goal goal : goals.values()) {
             allAchieved = allAchieved && goal.achieved;

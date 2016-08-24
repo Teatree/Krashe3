@@ -156,8 +156,8 @@ public class UmbrellaSystem extends IteratingSystem {
         Random r = new Random();
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
-//        return SPAWN_INTERVAL_BASE*randCoefficient;
-        return 3;
+        return UmbrellaComponent.SPAWN_INTERVAL_BASE*randCoefficient;
+//        return 3;
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
