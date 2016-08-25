@@ -23,6 +23,9 @@ public class FlowerComponent implements Component {
         RETREAT,
         IDLE_BITE,
         ATTACK_BITE,
-        PHOENIX
+        PHOENIX,
+        DEATH,
+        REVIVE_ADS,
+        NO_REVIVE
     }
 }

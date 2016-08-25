@@ -98,6 +98,7 @@ public class GameOverDialog extends AbstractDialog {
                             turnOnWifi.getComponent(TransformComponent.class).x = 127;
                             turnOnWifi.getComponent(TransformComponent.class).y = 45;
                             continueGame(dialogTc);
+
                         }
                         close(gameOverDialogE);
                     }
@@ -110,6 +111,8 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isAngeredBeesMode = false;
+        BugSystem.blowUpAllBugs = true;
+        BugSystem.blowUpCounter = 10;
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {
@@ -117,6 +120,7 @@ public class GameOverDialog extends AbstractDialog {
             Main.mainController.showReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
+
                     continueGame(dialogTc);
                 }
             });

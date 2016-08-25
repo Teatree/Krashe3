@@ -68,6 +68,7 @@ public class GoalFeedbackScreen {
     public List<SpriteAnimationStateComponent> tilesScs = new ArrayList<>();
     public List<SpriteAnimationStateComponent> tilesScs2 = new ArrayList<>();
     private Entity feedbackEntity;
+    private float stateTime;
 
     public void init(boolean isNewLevel) {
         aniPlayingIndex = -1;
@@ -265,16 +266,22 @@ public class GoalFeedbackScreen {
     }
 
     public void update() {
+        stateTime += Gdx.graphics.getDeltaTime();
         fade(feedbackEntity, isGoalFeedbackOpen);
         int i = 0;
         while (i < tiles.size()) {
             fade(tiles.get(i), isGoalFeedbackOpen);
-            if (gameScript.fpc.level.getGoals().get(i).justAchieved && !isAniPlaying) {
-                tilesScs.get(i).paused = false;
-                tilesScs.get(i).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-                isAniPlaying = true;
-                aniPlayingIndex = i;
-                gameScript.fpc.level.getGoals().get(i).justAchieved = false;
+            if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
+                if (!isAniPlaying) {
+                    tilesScs.get(i).paused = false;
+                    tilesScs.get(i).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+                    isAniPlaying = true;
+                    aniPlayingIndex = i;
+                    gameScript.fpc.level.getGoals().get(i).justAchieved = false;
+
+                } else {
+                    isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
+                }
             }
             i++;
         }

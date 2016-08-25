@@ -30,6 +30,7 @@ import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ShopScreenScript.allShopItems;
 import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.system.BugSystem.*;
 
 public class GameScreenScript implements IScript {
 
@@ -73,6 +74,7 @@ public class GameScreenScript implements IScript {
     private GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
+    public int gameOverReviveTimesLimit;
 
     //bee mode
     public static Entity beesModeAni;
@@ -165,7 +167,7 @@ public class GameScreenScript implements IScript {
 //        System.err.print("init game ");
 //        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
 //                Gdx.app.getNativeHeap());
-
+        gameOverReviveTimesLimit = 2;
         gameItem = new ItemWrapper(item);
 
         beesModeAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
@@ -356,6 +358,10 @@ public class GameScreenScript implements IScript {
     @Override
     public void act(float delta) {
 
+        if (blowUpAllBugs) {
+            blowUpCounter--;
+        }
+
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
@@ -417,11 +423,19 @@ public class GameScreenScript implements IScript {
     }
 
     private void endGame() {
-        if (new Random().nextInt(100) >= GameOverDialog.GAME_OVER_PROBABILITY){
-            shouldShowGameOverDialog = true;
-        } else {
+        gameOverReviveTimesLimit--;
+        System.out.println("gameOverReviveTimesLimit" + gameOverReviveTimesLimit);
+        if (gameOverReviveTimesLimit <= 0) {
             shouldShowGameOverDialog = false;
+        }else{
+            shouldShowGameOverDialog = true;
         }
+
+//        if (new Random().nextInt(100) >= GameOverDialog.GAME_OVER_PROBABILITY){
+//            shouldShowGameOverDialog = true;
+//        } else {
+//            shouldShowGameOverDialog = false;
+//        }
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();

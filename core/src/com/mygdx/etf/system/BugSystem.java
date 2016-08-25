@@ -30,6 +30,7 @@ public class BugSystem extends IteratingSystem {
     public static final String PREPARING_ANI = "PREPARING";
 
     public static boolean blowUpAllBugs;
+    public static int blowUpCounter;
 
     boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
@@ -43,24 +44,25 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (!isStarted) {
-            BugPool.getInstance().release(entity);
+        DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
+        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        transformComponent.scaleX = BUG_SCALE;
+        transformComponent.scaleY = BUG_SCALE;
+
+         if (blowUpAllBugs) {
+            destroyBug(entity, transformComponent);
+            if(blowUpCounter<=0 && blowUpAllBugs){
+                blowUpAllBugs = false;
+            }
         }
 
-        if (!isPause && !isGameOver && isStarted) {
+        else if (!isPause && !isGameOver && isStarted) {
 
             sasc.paused = false;
 
-            DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-            TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-            transformComponent.scaleX = BUG_SCALE;
-            transformComponent.scaleY = BUG_SCALE;
             BugComponent bc = mapper.get(entity);
 
-            if (/*BugSpawnSystem.isBlewUp() ||*/ blowUpAllBugs) {
-                destroyBug(entity, transformComponent);
-
-            } else if (!DEAD.equals(bc.state)) {
+             if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
                 updateRect(bc, transformComponent, dimensionsComponent);
                 updateRectScary(bc, transformComponent, dimensionsComponent);
                 moveEntity(deltaTime, transformComponent, bc, sasc, sac);
@@ -95,9 +97,9 @@ public class BugSystem extends IteratingSystem {
                     gameScript.onBugOutOfBounds();
                 }
             }
-            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
-            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
-                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
+//            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
+//            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
+//                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         } else {
             sasc.paused = true;
             if (GameOverDialog.releaseAllBugs()) {
@@ -120,7 +122,7 @@ public class BugSystem extends IteratingSystem {
                 bc.boundsRect.y + bc.boundsRect.getHeight() / 2);
     }
 
-    private void destroyBug(Entity bugE, TransformComponent tc) {
+    public static void destroyBug(Entity bugE, TransformComponent tc) {
         EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         BugPool.getInstance().release(bugE);
     }

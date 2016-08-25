@@ -59,6 +59,7 @@ public class FlowerSystem extends IteratingSystem {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             sc.player.speed = FPS;
 
+
             if (state.equals(IDLE_BITE)) {
                 setBiteIdleAnimation(sc);
             }

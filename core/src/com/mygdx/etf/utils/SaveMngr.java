@@ -195,8 +195,9 @@ public class SaveMngr {
             fc.level.name = Level.levelsInfo.get(dg.difficultyLevel - 1).name;
             fc.level.resetNewInfo();
 
-            fc.level.updateLevel(fc);
         }
+        fc.level.updateLevel(fc);
+
 //        Goal goal = new Goal();
 //        goal.achieved = false;
 //        goal.justAchieved = false;
