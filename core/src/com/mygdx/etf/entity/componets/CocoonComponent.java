@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CocoonComponent implements Component {
 
-    public static float SPAWN_INTERVAL_BASE = 80;
+    public static float SPAWN_INTERVAL_BASE = 40;
     public static final int COCOON_HIT_AMOUNT = 3;
 
     public static List<CocoonMultiplier> cocoonMultipliers;
