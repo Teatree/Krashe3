@@ -24,7 +24,7 @@ import static com.mygdx.etf.stages.ui.PromoWindow.*;
 
 public class ResultScreenScript implements IScript {
 
-    public static final int MAX_PROGRESS_BAR_WIDTH = 690;
+    public static final int MAX_PROGRESS_BAR_WIDTH = 670;
     public static final double PERCENTS_TO_OFFER_AD = 0.99;
     public static final int PROGRESS_BAR_STEP = 12;
     public static final String IMG_PROGRESS_BAR = "img_progress_bar";
