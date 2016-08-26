@@ -47,7 +47,7 @@ public class ButterflySystem extends IteratingSystem {
             ButterflyComponent bc = mapper.get(entity);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
-            sasc.scale = 0.3f;
+            sasc.scale = 1f;
             dc.height = 147;
             dc.width = 138;
 
@@ -71,9 +71,9 @@ public class ButterflySystem extends IteratingSystem {
             tc.y = bc.out.y;
 
             if(bc.current>0.4f){
-                sasc.player.setAnimation(1);
-            }else{
                 sasc.player.setAnimation(0);
+            }else{
+                sasc.player.setAnimation(1);
             }
 
             if (bc.current >= 1 && bc.state.equals(FLY) || isOutOfBounds(bc)) {
