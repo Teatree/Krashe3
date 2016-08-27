@@ -2,11 +2,14 @@ package com.mygdx.etf.stages.ui;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.entity.componets.BugComponent;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
+import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
 import com.mygdx.etf.system.BugSystem;
@@ -41,7 +44,7 @@ public class GameOverDialog extends AbstractDialog {
     public static Entity gameOverDialogE;
 
     public static boolean releaseAllBugs() {
-        return isGameOver && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs;
+        return (isGameOver && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
     }
 
     public void show() {
@@ -157,16 +160,18 @@ public class GameOverDialog extends AbstractDialog {
         }
     }
 
-    private void finishGame() {
+    public void finishGame() {
         if (gameOverCounter <= 0) {
             if (!gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow &&
-                        (gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
+                        (gameScript.goalFeedbackScreen == null ||
+                                !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
                     gameScript.showGoalFeedback();
                     close(gameOverDialogE);
                     isGameOver = true;
-                } else if ((gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
+                } else if ((gameScript.goalFeedbackScreen == null ||
+                        !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
                         (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                     isGameOver = false;
                     gameScript.resetPauseDialog();
@@ -177,7 +182,7 @@ public class GameOverDialog extends AbstractDialog {
         }
     }
 
-    private void resetGameData() {
+    public static void resetGameData() {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isStarted = false;
