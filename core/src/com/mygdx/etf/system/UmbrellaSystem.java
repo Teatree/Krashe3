@@ -29,7 +29,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class UmbrellaSystem extends IteratingSystem {
 
-    public static final float UMBRELLA_SCALE = 0.4f;
+    public static final float UMBRELLA_SCALE = 2f;
 
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
