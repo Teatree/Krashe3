@@ -122,7 +122,7 @@ public class CocoonSystem extends IteratingSystem {
 
     public void updateRect(CocoonComponent cc, TransformComponent tc, DimensionsComponent dc) {
         cc.boundsRect.x = (int) tc.x;
-        cc.boundsRect.y = 793;
+        cc.boundsRect.y = 693;
         cc.boundsRect.width = (int) dc.width * tc.scaleX;
         cc.boundsRect.height = (int) dc.height * tc.scaleY;
 //        sceneLoader.renderer.drawDebug(cc.boundsRect.x,cc.boundsRect.y,cc.boundsRect.width,cc.boundsRect.height);
