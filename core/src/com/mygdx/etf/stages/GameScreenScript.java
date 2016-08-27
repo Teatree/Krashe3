@@ -94,6 +94,7 @@ public class GameScreenScript implements IScript {
         BugSpawnSystem.queenBeeOnStage = false;
 
         BugSystem.blowUpAllBugs = true;
+        BugSystem.blowUpCounter = 10;
         beesModeAni.getComponent(TransformComponent.class).y = 394;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
@@ -181,7 +182,6 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-//        umbrellaSpawnCounter = 5;
 
         fpc.score = 0;
 
@@ -200,7 +200,6 @@ public class GameScreenScript implements IScript {
         addSystems();
         initFlower();
         initLeafs();
-//        initBackground();
         initPet();
 //        initDoubleBJIcon();
         initUmbrella();

@@ -55,9 +55,7 @@ public class BugSystem extends IteratingSystem {
             if(blowUpCounter<=0 && blowUpAllBugs){
                 blowUpAllBugs = false;
             }
-        }
-
-        else if (!isPause && !isGameOver && isStarted ) {
+        } else if (!isPause && !isGameOver && isStarted ) {
 
             sasc.paused = false;
 
@@ -101,9 +99,10 @@ public class BugSystem extends IteratingSystem {
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
-        } else {
+        }
+        if(isGameOver || !isStarted){
             sasc.paused = true;
-            if (GameOverDialog.releaseAllBugs()) {
+            if (!blowUpAllBugs) {
                 BugPool.getInstance().release(entity);
             }
         }
