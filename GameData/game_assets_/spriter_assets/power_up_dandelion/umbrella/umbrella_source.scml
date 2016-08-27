@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r4.1">
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r7">
     <folder id="0">
         <file id="0" name="body.png" width="100" height="100" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="x2.png" width="49" height="47" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="bg_orange.png" width="76" height="76" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="bg_yellow.png" width="76" height="76" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="x2 for orange.png" width="49" height="47" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="x2 for yellow.png" width="49" height="47" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <animation id="0" name="NewAnimation" length="1000" interval="100">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="3" key="0" z_index="3"/>
+                    <object_ref id="4" timeline="4" key="0" z_index="4"/>
                 </key>
                 <key id="1" time="500">
                     <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="3" key="0" z_index="3"/>
+                    <object_ref id="4" timeline="4" key="1" z_index="4"/>
                 </key>
             </mainline>
-            <timeline id="0" name="body">
-                <key id="0">
-                    <object folder="0" file="0" x="-55.652174" y="51.304348"/>
+            <timeline id="0" name="bg_orange">
+                <key id="0" spin="0">
+                    <object folder="0" file="2" x="0.002498" y="-0.015864" pivot_x="0.497502" pivot_y="0.505864"/>
                 </key>
-                <key id="1" time="500" spin="-1">
-                    <object folder="0" file="0" x="-61.73913" y="45.217391" angle="7.450249" scale_x="1" scale_y="1"/>
+                <key id="1" time="500" spin="0">
+                    <object folder="0" file="2" x="0.002498" y="-0.015864" pivot_x="0.497502" pivot_y="0.505864" scale_x="1.3" scale_y="1.3"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="bg_yellow">
+                <key id="0" spin="0">
+                    <object folder="0" file="3" x="0.002498" y="-0.005994" pivot_x="0.497502" pivot_y="0.505994" a="0"/>
+                </key>
+                <key id="1" time="500" spin="0">
+                    <object folder="0" file="3" x="0.002498" y="-0.005994" pivot_x="0.497502" pivot_y="0.505994" scale_x="1.3" scale_y="1.3"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="x2">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="-24.139535" y="18.333333"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="x2 for orange">
+                <key id="0" spin="0">
+                    <object folder="0" file="4" x="-24.13953" y="18.33333"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="x2 for yellow">
+                <key id="0" spin="0">
+                    <object folder="0" file="5" x="-24.13953" y="18.33333" a="0"/>
+                </key>
+                <key id="1" time="500" spin="0">
+                    <object folder="0" file="5" x="-24.13953" y="18.33333"/>
                 </key>
             </timeline>
         </animation>
