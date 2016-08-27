@@ -3,11 +3,14 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
-import com.mygdx.etf.stages.ui.*;
+import com.mygdx.etf.stages.ui.GameOverDialog;
+import com.mygdx.etf.stages.ui.GiftScreen;
+import com.mygdx.etf.stages.ui.GoalFeedbackScreen;
+import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.system.*;
+import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.CameraShaker;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -16,21 +19,20 @@ import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;
-import static com.mygdx.etf.entity.componets.LeafsComponent.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
+import static com.mygdx.etf.entity.componets.LeafsComponent.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ShopScreenScript.allShopItems;
+import static com.mygdx.etf.system.BugSystem.blowUpAllBugs;
+import static com.mygdx.etf.system.BugSystem.blowUpCounter;
 import static com.mygdx.etf.utils.GlobalConstants.*;
-import static com.mygdx.etf.system.BugSystem.*;
 
 public class GameScreenScript implements IScript {
 
@@ -92,6 +94,7 @@ public class GameScreenScript implements IScript {
         BugSpawnSystem.queenBeeOnStage = false;
 
         BugSystem.blowUpAllBugs = true;
+        BugSystem.blowUpCounter = 10;
         beesModeAni.getComponent(TransformComponent.class).y = 394;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
@@ -179,7 +182,6 @@ public class GameScreenScript implements IScript {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-//        umbrellaSpawnCounter = 5;
 
         fpc.score = 0;
 
@@ -198,7 +200,6 @@ public class GameScreenScript implements IScript {
         addSystems();
         initFlower();
         initLeafs();
-//        initBackground();
         initPet();
 //        initDoubleBJIcon();
         initUmbrella();
@@ -249,9 +250,6 @@ public class GameScreenScript implements IScript {
     private void initBackButton() {
         Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
 
-        final LayerMapComponent lc = ComponentRetriever.get(backBtn, LayerMapComponent.class);
-        backBtn.getComponent(TransformComponent.class).scaleX = 0.7f;
-        backBtn.getComponent(TransformComponent.class).scaleY = 0.7f;
         backBtn.getComponent(TransformComponent.class).x = 10;
         backBtn.getComponent(TransformComponent.class).y = 640;
 
@@ -259,7 +257,7 @@ public class GameScreenScript implements IScript {
             @Override
             public void clicked() {
                 resetPauseDialog();
-                stage.initMenu();
+                GameStage.initMenu();
             }
         });
     }
@@ -431,31 +429,21 @@ public class GameScreenScript implements IScript {
             shouldShowGameOverDialog = true;
         }
 
-//        if (new Random().nextInt(100) >= GameOverDialog.GAME_OVER_PROBABILITY){
-//            shouldShowGameOverDialog = true;
-//        } else {
-//            shouldShowGameOverDialog = false;
-//        }
-
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
             isGameOver = false;
-//            resetGameData();
-
             if (GoalFeedbackScreen.shouldShow &&
                     (gameScript.giftScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
                 showGoalFeedback();
-//                close(gameOverDialogE);
                 isGameOver = true;
-            } else if ((gameScript.goalFeedbackScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
+            } else if ((gameScript.goalFeedbackScreen == null ||
+                    !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
                     (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                 isGameOver = false;
                 gameScript.resetPauseDialog();
                 gameScript.stage.initResultWithAds();
-//                close(gameOverDialogE);
             }
-//            gameScript.stage.initResultWithAds();
         }
     }
 

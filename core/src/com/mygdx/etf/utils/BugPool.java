@@ -55,11 +55,11 @@ public class BugPool {
 //    public static final String CHARGER_ANI_8 = "chargerAni8";
     private static BugPool instance;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
-    private Stack<Entity> simpleBugs = new Stack<>();
-    private Stack<Entity> bees = new Stack<>();
-    private Stack<Entity> drunkBugs = new Stack<>();
-    private Stack<Entity> chargerBugs = new Stack<>();
-    private Entity queenBee;
+    private static Stack<Entity> simpleBugs = new Stack<>();
+    private static Stack<Entity> bees = new Stack<>();
+    private static Stack<Entity> drunkBugs = new Stack<>();
+    private static Stack<Entity> chargerBugs = new Stack<>();
+    private static Entity queenBee;
 
     private BugPool() {
         final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -142,35 +142,63 @@ public class BugPool {
 
     public void release(Entity bug) {
         BugComponent bc = mapper.get(bug);
-        bc.state = BugComponent.IDLE;
-        bc.velocity = 0;
+        if (bc != null) {
+            bc.state = BugComponent.IDLE;
+            bc.velocity = 0;
 
-//        TransformComponent tc = ComponentRetriever.get(bug, TransformComponent.class);
-        bug.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-        bug.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+            bug.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+            bug.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
 
-        switch (bc.type) {
-            case SIMPLE: {
-                simpleBugs.add(bug);
-                break;
+            switch (bc.type) {
+                case SIMPLE: {
+                    simpleBugs.add(bug);
+                    break;
+                }
+                case DRUNK: {
+                    drunkBugs.add(bug);
+                    break;
+                }
+                case CHARGER: {
+                    chargerBugs.add(bug);
+                    break;
+                }
+                case BEE: {
+                    bees.add(bug);
+                    break;
+                }
+                case QUEENBEE: {
+                    break;
+                }
             }
-            case DRUNK: {
-                drunkBugs.add(bug);
-                break;
-            }
-            case CHARGER: {
-                chargerBugs.add(bug);
-                break;
-            }
-            case BEE: {
-                bees.add(bug);
-                break;
-            }
-            case QUEENBEE: {
-                break;
+            bug.remove(BugComponent.class);
+        }
+    }
+
+    public static void resetAllBugs(){
+        releaseAll(simpleBugs);
+        releaseAll(drunkBugs);
+        releaseAll(bees);
+        releaseAll(chargerBugs);
+        if (queenBee.getComponent(TransformComponent.class) != null){
+            queenBee.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+            queenBee.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+        }
+    }
+
+    public static void sendFarFarAway(Stack<Entity> bugs){
+        for (Entity e: bugs){
+            if (e.getComponent(TransformComponent.class) != null){
+                e.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+                e.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
             }
         }
-        bug.remove(BugComponent.class);
-//        bug.remove(FlowerPublicComponent.class);
+    }
+
+    public static void releaseAll(Stack<Entity> bugs){
+        for (Entity e: bugs){
+            if (e.getComponent(BugComponent.class) != null){
+                instance.release(e);
+            }
+        }
     }
 }

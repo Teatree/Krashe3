@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.etf.entity.componets.BugComponent;
+import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ui.GameOverDialog;
 import com.mygdx.etf.utils.BugPool;
@@ -54,9 +55,7 @@ public class BugSystem extends IteratingSystem {
             if(blowUpCounter<=0 && blowUpAllBugs){
                 blowUpAllBugs = false;
             }
-        }
-
-        else if (!isPause && !isGameOver && isStarted) {
+        } else if (!isPause && !isGameOver && isStarted ) {
 
             sasc.paused = false;
 
@@ -100,13 +99,13 @@ public class BugSystem extends IteratingSystem {
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
-        } else {
+        }
+        if(isGameOver || !isStarted){
             sasc.paused = true;
-            if (GameOverDialog.releaseAllBugs()) {
+            if (!blowUpAllBugs) {
                 BugPool.getInstance().release(entity);
             }
         }
-
     }
 
     private void checkPetEatBugGoal(BugComponent bc) {
