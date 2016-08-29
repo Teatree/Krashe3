@@ -30,6 +30,7 @@ import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 public class UmbrellaSystem extends IteratingSystem {
 
     public static final float UMBRELLA_SCALE = 2f;
+    public static float umbrellaSpawnStateCounter;
 
     public Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
@@ -65,61 +66,11 @@ public class UmbrellaSystem extends IteratingSystem {
 
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
 
-            if (uc.state.equals(SPAWNING)) {
-//                dandelionSpawnCounter+=deltaTime;
-//                if (dandelionSpawnCounter >= SPAWNING_TIME){
-                uc.blinkCounter--;
-                if (uc.blinkCounter == 0){
-                    if (entity.getComponent(TintComponent.class).color.a > 0.95f) {
-                        entity.getComponent(TintComponent.class).color.a -= 0.3f;
-                    } else {
-                        entity.getComponent(TintComponent.class).color.a += 0.4f;
-                    }
-                    uc.blinkCounter = 10;
-                }
+            spawn(entity, deltaTime, uc);
 
-                umbrellaSpawnCounter += deltaTime;
-                if (umbrellaSpawnCounter >= SPAWNING_TIME) {
-                    uc.state = PUSH;
-                    entity.getComponent(TintComponent.class).color.a = 1;
-                }
-            }
+            push(uc, tc);
 
-            if (uc.state.equals(PUSH)) {
-                uc.dataSet = new Vector2[3];
-                uc.dataSet[0] = new Vector2(tc.x, tc.y);
-                uc.dataSet[1] = new Vector2(-500, 400);
-                uc.dataSet[2] = new Vector2(1170, 400);
-
-                uc.myCatmull = new Bezier<>(uc.dataSet);
-//                uc.out = new Vector2(340, 200);
-                uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
-                uc.myCatmull.valueAt(uc.out, 5);
-                uc.myCatmull.derivativeAt(uc.out, 5);
-                uc.state = FLY;
-            }
-
-            if (uc.current >= 1 && uc.state.equals(FLY)) {
-                uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
-                uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
-                uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
-
-                uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
-                uc.out = new Vector2(340, 200);
-                uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
-                uc.myCatmull.valueAt(uc.out, 5);
-                uc.myCatmull.derivativeAt(uc.out, 5);
-
-                uc.current -= 1;
-                checkBounceGoal();
-            }
-            if (uc.myCatmull != null && !uc.state.equals(SPAWNING)) {
-                uc.myCatmull.valueAt(uc.out, uc.current);
-                tc.x = uc.out.x;
-                tc.y = uc.out.y;
-            }
-            sasc.paused = false;
-            updateRect(uc, tc, dc);
+            fly(sasc, uc, dc, tc);
 
             if (checkCollision(uc)) {
                 gameScript.fpc.isCollision = true;
@@ -134,6 +85,67 @@ public class UmbrellaSystem extends IteratingSystem {
             }
         } else {
             sasc.paused = true;
+        }
+    }
+
+    private void spawn(Entity entity, float deltaTime, UmbrellaComponent uc) {
+        if (uc.state.equals(SPAWNING)) {
+            uc.blinkCounter--;
+            if (uc.blinkCounter == 0){
+                if (entity.getComponent(TintComponent.class).color.a > 0.95f) {
+                    entity.getComponent(TintComponent.class).color.a -= 0.3f;
+                } else {
+                    entity.getComponent(TintComponent.class).color.a += 0.4f;
+                }
+                uc.blinkCounter = 10;
+            }
+
+            umbrellaSpawnStateCounter += deltaTime;
+            if (umbrellaSpawnStateCounter >= SPAWNING_TIME) {
+                uc.state = PUSH;
+                entity.getComponent(TintComponent.class).color.a = 1;
+                umbrellaSpawnStateCounter = 0;
+            }
+        }
+    }
+
+    private void fly(SpriteAnimationStateComponent sasc, UmbrellaComponent uc, DimensionsComponent dc, TransformComponent tc) {
+        if (uc.current >= 1 && uc.state.equals(FLY)) {
+            uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
+            uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
+            uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
+
+            uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
+            uc.out = new Vector2(340, 200);
+            uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
+            uc.myCatmull.valueAt(uc.out, 5);
+            uc.myCatmull.derivativeAt(uc.out, 5);
+
+            uc.current -= 1;
+            checkBounceGoal();
+        }
+        if (uc.myCatmull != null && !uc.state.equals(SPAWNING)) {
+            uc.myCatmull.valueAt(uc.out, uc.current);
+            tc.x = uc.out.x;
+            tc.y = uc.out.y;
+        }
+        sasc.paused = false;
+        updateRect(uc, tc, dc);
+    }
+
+    private void push(UmbrellaComponent uc, TransformComponent tc) {
+        if (uc.state.equals(PUSH)) {
+            uc.dataSet = new Vector2[3];
+            uc.dataSet[0] = new Vector2(tc.x, tc.y);
+            uc.dataSet[1] = new Vector2(-500, 400);
+            uc.dataSet[2] = new Vector2(1170, 400);
+
+            uc.myCatmull = new Bezier<>(uc.dataSet);
+//                uc.out = new Vector2(340, 200);
+            uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
+            uc.myCatmull.valueAt(uc.out, 5);
+            uc.myCatmull.derivativeAt(uc.out, 5);
+            uc.state = FLY;
         }
     }
 
@@ -157,7 +169,7 @@ public class UmbrellaSystem extends IteratingSystem {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
         return UmbrellaComponent.SPAWN_INTERVAL_BASE*randCoefficient;
-//        return 3;
+//        return 13;
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
