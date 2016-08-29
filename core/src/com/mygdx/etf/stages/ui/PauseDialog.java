@@ -28,6 +28,8 @@ public class PauseDialog extends AbstractDialog {
     public static final String PAUSE_DIALOG = "dialog";
     public static final String LBL_DIALOG = "lbl_dialog";
     public static final String LBL_DIALOG_S = "lbl_dialog_2";
+    public static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
+    public static final String LBL_LEVEL_INDICATOR_S = "lbl_level_indicator_s";
     public static final String LBL_GOAL_PROGRESS = "goal_progress";
     public static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
@@ -40,7 +42,7 @@ public class PauseDialog extends AbstractDialog {
 
     public static final int PAUSE_Y = 50;
     public static final int PAUSE_X = 260;
-    public static final int GOAL_TILE_START_Y = 440;
+    public static final int GOAL_TILE_START_Y = 400;
     public static final int GOAL_TILE_SPACE_X = 170;
     public static final float GOAL_TILE_SCALE = 2f;
     public static final int GOAL_TILE_STEP_Y = 110;
@@ -122,11 +124,19 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
         LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
-        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), ENTER + gameScript.fpc.level.name + ENTER);
+        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "Pause");
 
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), ENTER + gameScript.fpc.level.name + ENTER);
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "Pause");
+
+        final Entity levelLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR_S);
+        LabelComponent levelLabelComps = levelLabels.getComponent(LabelComponent.class);
+        levelLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
+
+        final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
+        LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
+        levelLabelsComp.text.replace(0, goalsLabelComp.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
