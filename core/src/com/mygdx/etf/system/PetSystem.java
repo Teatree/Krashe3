@@ -79,13 +79,13 @@ public class PetSystem extends IteratingSystem {
     private void tapped(Entity entity, PetComponent pc, TransformComponent tc,
                         SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
 
-        if (tc.x <= X_SPAWN_POSITION+2 && pc.tappedback) {
+        if (tc.x <= X_SPAWN_POSITION + 2 && pc.tappedback) {
             pc.state = IDLE;
             pc.tappedback = false;
         }
         if (pc.state.equals(TAPPED)) {
-            if (tc.x >= TAPPED_X) {
-
+            if (tc.x >= TAPPED_X - 1) {
+                pc.state = TAPPED_BACK;
                 entity.remove(ActionComponent.class);
                 pc.petCannon.remove(ActionComponent.class);
 
@@ -128,7 +128,7 @@ public class PetSystem extends IteratingSystem {
     private void spawn(PetComponent pc, TransformComponent tc, SpriterComponent sc, TransformComponent cannontc, SpriterComponent cannonsc) {
         if (pc.state.equals(SPAWNING)) {
             tc.x = PetComponent.X_SPAWN_POSITION;
-            cannontc.x = PetComponent.X_SPAWN_POSITION+64;
+            cannontc.x = PetComponent.X_SPAWN_POSITION + 64;
             setSpawnAnimation(sc);
             setSpawnAnimation(cannonsc);
             pc.velocity = 0;
@@ -147,7 +147,7 @@ public class PetSystem extends IteratingSystem {
             pc.state = IDLE;
             setIdleAnimation(sc);
             setIdleAnimation(cannonsc);
-            pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION+64;
+            pc.petCannon.getComponent(TransformComponent.class).x = X_SPAWN_POSITION + 64;
             tc.x = X_SPAWN_POSITION;
         }
         sc.player.speed = 0;

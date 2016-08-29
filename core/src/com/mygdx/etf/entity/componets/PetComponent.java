@@ -141,6 +141,7 @@ public class PetComponent extends ShopItem implements Component {
         IDLE,
         BITE,
         TAPPED,
+        TAPPED_BACK,
         DASH,
         OUTSIDE
     }
