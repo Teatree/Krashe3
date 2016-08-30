@@ -105,6 +105,7 @@ public class SaveMngr {
         initCocoonMultipliers();
         initDandelionMultipliers();
         FlowerPublicComponent fc = new FlowerPublicComponent();
+        fc.upgrades = new HashMap<>();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
 //        saved = "";

@@ -41,6 +41,7 @@ public class GameScreenScript implements IScript {
     public static final String UMBRELLA_ANI = "umbrellaAni";
     public final String START_MESSAGE = "TAP TO START";
     public final String DOUBLE_BJ_ICON = "double_bj_badge";
+    public final String PHOENIX_ICON = "extra_life_badge";
     public final String LBL_SCORE = "lbl_score";
     public final String LBL_SCORE_S = "lbl_score_s";
     public final String LBL_TAP_2_START = "lbl_tap2start";
@@ -201,7 +202,8 @@ public class GameScreenScript implements IScript {
         initFlower();
         initLeafs();
         initPet();
-//        initDoubleBJIcon();
+        initDoubleBJIcon();
+        initPhoenixIcon();
         initUmbrella();
         initCocoon();
 
@@ -225,10 +227,28 @@ public class GameScreenScript implements IScript {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
         if (gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-            tc.scaleX = 0.6f;
-            tc.scaleY = 0.6f;
-            tc.x = 953;
-            tc.y = 647;
+//            tc.scaleX = 1;
+//            tc.scaleY = 0.6f;
+            if(gameScript.fpc.havePhoenixDouble()) {
+                tc.x = 117;
+                tc.y = 675;
+            }else{
+                tc.x = 15;
+                tc.y = 675;
+            }
+        } else {
+            bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        }
+    }
+
+    private void initPhoenixIcon() {
+        Entity bjIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
+        if (gameScript.fpc.havePhoenixDouble()) {
+            TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
+//            tc.scaleX = 0.6f;
+//            tc.scaleY = 0.6f;
+            tc.x = -24;
+            tc.y = 637;
         } else {
             bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
@@ -250,8 +270,8 @@ public class GameScreenScript implements IScript {
     private void initBackButton() {
         Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
 
-        backBtn.getComponent(TransformComponent.class).x = 10;
-        backBtn.getComponent(TransformComponent.class).y = 640;
+//        backBtn.getComponent(TransformComponent.class).x = 10;
+//        backBtn.getComponent(TransformComponent.class).y = 640;
 
         backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
             @Override
