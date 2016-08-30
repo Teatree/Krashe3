@@ -100,7 +100,10 @@ public class BugSystem extends IteratingSystem {
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
-        if(isGameOver || !isStarted){
+        if (isPause){
+            sasc.paused = true;
+        }
+        if(isGameOver || !isStarted ){
             sasc.paused = true;
             if (!blowUpAllBugs) {
                 BugPool.getInstance().release(entity);
