@@ -382,7 +382,6 @@ public class GameScreenScript implements IScript {
                 }
                 if (umbrellaSpawnCounter <= 0) {
                     spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
-                    System.out.println(" SPAWNING UMBRELLA, ALSO KNOWN AS x2 ");
                 }
                 //spawn Cocoon
                 if (cocoonSpawnCounter <= 0) {

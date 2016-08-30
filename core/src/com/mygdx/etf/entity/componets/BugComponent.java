@@ -57,13 +57,13 @@ public class BugComponent implements Component {
         this.state = IDLE;
         switch (type) {
             case DRUNK: {
-                duration = 12 *m.drunkBugMoveDuration *GameStage.gameScript.fpc.level.drunkBugMoveDuration;
+                duration = 24 *m.drunkBugMoveDuration *GameStage.gameScript.fpc.level.drunkBugMoveDuration;
                 amplitude = 50 *m.drunkBugAmplitude *GameStage.gameScript.fpc.level.drunkBugAmplitude;
                 points = 4;
                 break;
             }
             case BEE: {
-                duration = 14 *m.beeMoveDuration *GameStage.gameScript.fpc.level.beeMoveDuration;
+                duration = 28 *m.beeMoveDuration *GameStage.gameScript.fpc.level.beeMoveDuration;
                 amplitude = 0 *m.beeAmplitude *GameStage.gameScript.fpc.level.beeAmplitude;
                 points = 6;
                 break;
@@ -76,13 +76,13 @@ public class BugComponent implements Component {
                 break;
             }
             case QUEENBEE: {
-                duration = 12 *m.queenBeeMoveDuration *GameStage.gameScript.fpc.level.queenBeeMoveDuration;
+                duration = 24 *m.queenBeeMoveDuration *GameStage.gameScript.fpc.level.queenBeeMoveDuration;
                 amplitude = 50 *m.queenBeeAmplitude *GameStage.gameScript.fpc.level.queenBeeAmplitude;
                 points = 12;
                 break;
             }
             default: {
-                duration = 14 *m.simpleBugMoveDuration *GameStage.gameScript.fpc.level.simpleBugMoveDuration;
+                duration = 24 *m.simpleBugMoveDuration *GameStage.gameScript.fpc.level.simpleBugMoveDuration;
                 amplitude = 0 *m.simpleBugAmplitude *GameStage.gameScript.fpc.level.simpleBugAmplitude;
                 points = 3;
                 break;

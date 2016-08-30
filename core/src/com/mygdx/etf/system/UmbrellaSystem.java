@@ -66,7 +66,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
 
-            spawn(entity, deltaTime, uc);
+            spawn(entity, deltaTime, uc, sasc, tc);
 
             push(uc, tc);
 
@@ -88,14 +88,17 @@ public class UmbrellaSystem extends IteratingSystem {
         }
     }
 
-    private void spawn(Entity entity, float deltaTime, UmbrellaComponent uc) {
+    private void spawn(Entity entity, float deltaTime, UmbrellaComponent uc, SpriteAnimationStateComponent sasc, TransformComponent tc) {
         if (uc.state.equals(SPAWNING)) {
+            sasc.paused = true;
+            tc.x = 1180;
+            tc.y = 400;
             uc.blinkCounter--;
             if (uc.blinkCounter == 0){
                 if (entity.getComponent(TintComponent.class).color.a > 0.95f) {
-                    entity.getComponent(TintComponent.class).color.a -= 0.3f;
+                    entity.getComponent(TintComponent.class).color.a -= 0.1f;
                 } else {
-                    entity.getComponent(TintComponent.class).color.a += 0.4f;
+                    entity.getComponent(TintComponent.class).color.a += 0.2f;
                 }
                 uc.blinkCounter = 10;
             }
@@ -123,13 +126,14 @@ public class UmbrellaSystem extends IteratingSystem {
 
             uc.current -= 1;
             checkBounceGoal();
+            sasc.paused = false;
         }
         if (uc.myCatmull != null && !uc.state.equals(SPAWNING)) {
             uc.myCatmull.valueAt(uc.out, uc.current);
             tc.x = uc.out.x;
             tc.y = uc.out.y;
+            sasc.paused = false;
         }
-        sasc.paused = false;
         updateRect(uc, tc, dc);
     }
 
@@ -138,7 +142,7 @@ public class UmbrellaSystem extends IteratingSystem {
             uc.dataSet = new Vector2[3];
             uc.dataSet[0] = new Vector2(tc.x, tc.y);
             uc.dataSet[1] = new Vector2(-500, 400);
-            uc.dataSet[2] = new Vector2(1170, 400);
+            uc.dataSet[2] = new Vector2(1470, 400);
 
             uc.myCatmull = new Bezier<>(uc.dataSet);
 //                uc.out = new Vector2(340, 200);
