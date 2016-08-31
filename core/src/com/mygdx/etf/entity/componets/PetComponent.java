@@ -36,6 +36,8 @@ public class PetComponent extends ShopItem implements Component {
     public String petCannonName;
     public Entity petCannon;
 
+    public int stageCounter;
+
 
     public PetComponent() {
 //        init();
@@ -68,9 +70,6 @@ public class PetComponent extends ShopItem implements Component {
 
     public static void eatThatBug(PetComponent pet, Rectangle bugRectangle) {
         if (pet.boundsRect.overlaps(bugRectangle)) {
-            pet.eatenBugsCounter++;
-            pet.totalEatenBugs++;
-            pet.duringGameEatenBugs++;
 
             if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;
@@ -85,6 +84,7 @@ public class PetComponent extends ShopItem implements Component {
         eatenBugsCounter = 0;
 
         petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
+        stageCounter = 0;
     }
 
     @Override
