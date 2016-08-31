@@ -10,9 +10,7 @@ import com.mygdx.etf.stages.ui.GiftScreen;
 import com.mygdx.etf.stages.ui.GoalFeedbackScreen;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.system.*;
-import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.CameraShaker;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -25,6 +23,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.FlowerComponent.*;
+import static com.mygdx.etf.entity.componets.CocoonComponent.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.entity.componets.LeafsComponent.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;
@@ -52,8 +51,6 @@ public class GameScreenScript implements IScript {
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
-    public static final int COCOON_X = 980;
-    public static final int COCOON_Y = 800;
     public static final int TRIAL_TIMER_X = 120;
     public static final int TRIAL_TIMER_Y = 650;
 
@@ -542,7 +539,7 @@ public class GameScreenScript implements IScript {
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity cocoonEntity = root.getChild(COCCOON).getEntity();
 
-            cocoonEntity.getComponent(SpriterComponent.class).scale = 0.3f;
+            cocoonEntity.getComponent(SpriterComponent.class).scale = COCOON_SCALE;
             cocoonEntity.getComponent(SpriterComponent.class).player.setAnimation(0);
 
             TransformComponent tc = cocoonEntity.getComponent(TransformComponent.class);

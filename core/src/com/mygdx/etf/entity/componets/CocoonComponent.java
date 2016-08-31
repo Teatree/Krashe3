@@ -7,6 +7,10 @@ import java.util.List;
 
 public class CocoonComponent implements Component {
 
+    public static final float COCOON_SCALE = 0.5f;
+    public static final int COCOON_X = 980;
+    public static final int COCOON_Y = 780;
+
     public static float SPAWN_INTERVAL_BASE = 10;
     public static final int COCOON_HIT_AMOUNT = 3;
 
