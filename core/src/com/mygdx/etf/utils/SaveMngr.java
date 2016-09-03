@@ -601,6 +601,7 @@ public class SaveMngr {
         public String transactionId;
         public String discountTransactionId;
         public String petCannonName;
+        public String petHeadName;
         public String logoName;
 
         public PetJson() {
@@ -625,6 +626,7 @@ public class SaveMngr {
             this.discountTransactionId = petComponent.discountTransactionId;
 
             this.petCannonName = petComponent.petCannonName;
+            this.petHeadName = petComponent.petHeadName;
         }
     }
 

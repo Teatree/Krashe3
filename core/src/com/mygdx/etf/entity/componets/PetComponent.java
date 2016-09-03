@@ -36,8 +36,10 @@ public class PetComponent extends ShopItem implements Component {
     public String petCannonName;
     public Entity petCannon;
 
-    public int stageCounter;
+    public String petHeadName;
+    public Entity petHead;
 
+    public int stageCounter;
 
     public PetComponent() {
 //        init();
@@ -59,6 +61,7 @@ public class PetComponent extends ShopItem implements Component {
         this.tryPeriodStart = petJson.tryPeriodStart;
         this.transactionId = petJson.transactionId;
         this.petCannonName = petJson.petCannonName;
+        this.petHeadName = petJson.petHeadName;
         this.logoName = petJson.logoName;
         this.discountTransactionId = petJson.discountTransactionId;
 //        init();
@@ -84,6 +87,7 @@ public class PetComponent extends ShopItem implements Component {
         eatenBugsCounter = 0;
 
         petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
+        petHead = GameStage.gameScript.gameItem.getChild("pet_head").getEntity();
         stageCounter = 0;
     }
 

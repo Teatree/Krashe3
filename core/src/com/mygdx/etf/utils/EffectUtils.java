@@ -18,7 +18,6 @@ public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
     public static final String GREEN_SPLATTER = "splatter.party";
-    public static final String TRAIL_GREEN = "trailgreen.party";
     public static final String DEFAULT_LAYER = "Default";
     public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
 
@@ -83,10 +82,6 @@ public class EffectUtils {
 
     public static void playSplatterParticleEffect(float x, float y){
         playParticleEffect(x, y, GREEN_SPLATTER, 0.5f);
-    }
-
-    public static void playTrailGreenParticleEffect(float x, float y){
-        playParticleEffect(x, y, TRAIL_GREEN, 0.5f);
     }
 
     public static void spawnBugJuiceBubble(float x, float y) {
