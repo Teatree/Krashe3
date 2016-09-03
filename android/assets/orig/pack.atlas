@@ -439,6 +439,13 @@ tempcurtain
   orig: 32, 32
   offset: 0, 0
   index: -1
+trailgreen
+  rotate: false
+  xy: 774, 346
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
 tutorialline
   rotate: false
   xy: 804, 557

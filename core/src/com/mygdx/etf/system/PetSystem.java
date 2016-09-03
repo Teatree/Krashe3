@@ -73,6 +73,9 @@ public class PetSystem extends IteratingSystem {
             tc.x = FAR_FAR_AWAY_X;
             pc.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
+
+        EffectUtils.playTrailGreenParticleEffect(tc.x, tc.y);
+
 //        GameStage.sceneLoader.renderer.drawDebugRect(pc.boundsRect.x,pc.boundsRect.y,pc.boundsRect.width,pc.boundsRect.height,entity.toString());
     }
 
