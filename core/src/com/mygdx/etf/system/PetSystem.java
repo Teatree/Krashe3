@@ -95,18 +95,18 @@ public class PetSystem extends IteratingSystem {
                 tc.y = PetComponent.getNewPositionY();
                 cannontc.y = tc.y;
                 ac.dataArray.add(Actions.moveTo(X_SPAWN_POSITION, tc.y, DURATION_TAP));
-                acc.dataArray.add(Actions.moveTo(X_SPAWN_POSITION+62, tc.y+11, DURATION_TAP));
+                acc.dataArray.add(Actions.moveTo(X_SPAWN_POSITION + 62, tc.y + 11, DURATION_TAP));
 
                 entity.add(ac);
                 pc.petCannon.add(acc);
 
                 setIdleAnimationStage1(sc);
 
-                if(pc.stageCounter == 0) {
+                if (pc.stageCounter == 0) {
                     setIdleAnimationStage1(cannonsc);
-                }else if(pc.stageCounter == 1) {
+                } else if (pc.stageCounter == 1) {
                     setIdleAnimationStage2(cannonsc);
-                }else if(pc.stageCounter == 2){
+                } else if (pc.stageCounter == 2) {
                     setIdleAnimationStage3(cannonsc);
                 }
                 pc.tappedback = true;
@@ -117,9 +117,9 @@ public class PetSystem extends IteratingSystem {
     private void bite(PetComponent pc, SpriterComponent sc, SpriterComponent cannonsc) {
         if (pc.state.equals(BITE)) {
             setBiteAnimationStage1(sc);
-            if(pc.stageCounter == 1) {
+            if (pc.stageCounter == 1) {
                 setBiteAnimationStage1(cannonsc);
-            }else{
+            } else {
                 setBiteAnimationStage2(cannonsc);
             }
 
@@ -128,25 +128,26 @@ public class PetSystem extends IteratingSystem {
                 pc.totalEatenBugs++;
                 pc.duringGameEatenBugs++;
                 pc.stageCounter++;
-                System.out.println("increasing stageCounter: " + pc.stageCounter);
 
-                if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
-                    pc.state = IDLE;
-                    setIdleAnimationStage1(sc);
-                    if(pc.stageCounter == 0) {
-                        setIdleAnimationStage1(cannonsc);
-                    }else if(pc.stageCounter == 1) {
-                        setIdleAnimationStage2(cannonsc);
-                    }else if(pc.stageCounter == 2){
-                        setIdleAnimationStage3(cannonsc);
-                    }
-                } else {
-                    canPlayAnimation = true;
-                    setDashAnimation(cannonsc);
-                    setDashAnimation(sc);
-                    pc.state = DASH;
-                    checkPetDashGoal();
+//                if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+                pc.state = IDLE;
+                setIdleAnimationStage1(sc);
+                if (pc.stageCounter == 0) {
+                    setIdleAnimationStage1(cannonsc);
+                } else if (pc.stageCounter == 1) {
+                    setIdleAnimationStage2(cannonsc);
+                } else if (pc.stageCounter == 2) {
+                    setIdleAnimationStage2(cannonsc);
+                } else if (pc.stageCounter == 3) {
+                    setIdleAnimationStage3(cannonsc);
                 }
+//                } else {
+//                    canPlayAnimation = true;
+//                    setDashAnimation(cannonsc);
+//                    setDashAnimation(sc);
+//                    pc.state = DASH;
+//                    checkPetDashGoal();
+//                }
             }
         }
     }
@@ -164,11 +165,11 @@ public class PetSystem extends IteratingSystem {
                 canPlayAnimation = true;
                 pc.setOutsideStateDuration();
                 setIdleAnimationStage1(sc);
-                if(pc.stageCounter == 0) {
+                if (pc.stageCounter == 0) {
                     setIdleAnimationStage1(cannonsc);
-                }else if(pc.stageCounter == 1) {
+                } else if (pc.stageCounter == 1) {
                     setIdleAnimationStage2(cannonsc);
-                }else if(pc.stageCounter == 2){
+                } else if (pc.stageCounter == 2) {
                     setIdleAnimationStage3(cannonsc);
                 }
             }
@@ -179,11 +180,11 @@ public class PetSystem extends IteratingSystem {
         if (!pc.state.equals(DASH)) {
             pc.state = IDLE;
             setIdleAnimationStage1(sc);
-            if(pc.stageCounter == 0) {
+            if (pc.stageCounter == 0) {
                 setIdleAnimationStage1(cannonsc);
-            }else if(pc.stageCounter == 1) {
+            } else if (pc.stageCounter == 1) {
                 setIdleAnimationStage2(cannonsc);
-            }else if(pc.stageCounter == 2){
+            } else if (pc.stageCounter == 2) {
                 setIdleAnimationStage3(cannonsc);
             }
             pc.petCannon.getComponent(TransformComponent.class).x = PetComponent.X_SPAWN_POSITION + 62;
@@ -205,7 +206,6 @@ public class PetSystem extends IteratingSystem {
         if (pc.state.equals(OUTSIDE)) {
             pc.state = SPAWNING;
             pc.eatenBugsCounter = 0;
-//                pc.animationCounter = PetComponent.SPAWN_DURATION;
             tc.x = X_SPAWN_POSITION;
             tc.y = PetComponent.getNewPositionY();
 
@@ -234,26 +234,35 @@ public class PetSystem extends IteratingSystem {
         if (Gdx.input.justTouched() &&
                 pc.boundsRect.contains(v.x, v.y)
                 && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
-            pc.state = TAPPED;
-            setTappedAnimation(entity.getComponent(SpriterComponent.class));
-            setTappedAnimation(cannonsc);
-            pc.tappedback = false;
+            if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+                pc.state = TAPPED;
+                setDashAnimation(entity.getComponent(SpriterComponent.class));
+                setTappedAnimation(entity.getComponent(SpriterComponent.class));
+                setTappedAnimation(cannonsc);
+                pc.tappedback = false;
 
-            EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
+                EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
 
 //            entity.getComponent(TransformComponent.class).x++;
-            entity.remove(ActionComponent.class);
-            pc.petCannon.remove(ActionComponent.class);
+                entity.remove(ActionComponent.class);
+                pc.petCannon.remove(ActionComponent.class);
 
-            ActionComponent ac = new ActionComponent();
-            ActionComponent acc = new ActionComponent();
-            Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
-            acc.dataArray.add(Actions.moveTo(TAPPED_X+62, entity.getComponent(TransformComponent.class).y+11, DURATION_TAP));
-            entity.add(ac);
-            pc.petCannon.add(acc);
+                ActionComponent ac = new ActionComponent();
+                ActionComponent acc = new ActionComponent();
+                Actions.checkInit();
+                ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
+                acc.dataArray.add(Actions.moveTo(TAPPED_X + 62, entity.getComponent(TransformComponent.class).y + 11, DURATION_TAP));
+                entity.add(ac);
+                pc.petCannon.add(acc);
 
-            checkPetThePetGoal();
+                checkPetThePetGoal();
+            } else {
+                canPlayAnimation = true;
+                setDashAnimation(cannonsc);
+                setDashAnimation(entity.getComponent(SpriterComponent.class));
+                pc.state = DASH;
+                checkPetDashGoal();
+            }
         }
     }
 
@@ -261,8 +270,8 @@ public class PetSystem extends IteratingSystem {
         return sc.player.getTime() >= sc.player.getAnimation().length - 20;
     }
 
-    public void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc,
-                           TransformComponent cannontc, DimensionsComponent cannondc) {
+    private void updateRect(PetComponent pc, TransformComponent tc, DimensionsComponent dc,
+                            TransformComponent cannontc, DimensionsComponent cannondc) {
         pc.boundsRect.width = (int) dc.width * tc.scaleX + cannondc.width * cannontc.scaleX;
         pc.boundsRect.height = (int) cannondc.height * cannontc.scaleY;
 
@@ -277,6 +286,7 @@ public class PetSystem extends IteratingSystem {
     private void setBiteAnimationStage1(SpriterComponent sc) {
         sc.player.setAnimation(3);
     }
+
     private void setBiteAnimationStage2(SpriterComponent sc) {
         sc.player.setAnimation(6);
     }
@@ -288,9 +298,11 @@ public class PetSystem extends IteratingSystem {
     private void setIdleAnimationStage1(SpriterComponent sc) {
         sc.player.setAnimation(0);
     }
+
     private void setIdleAnimationStage2(SpriterComponent sc) {
         sc.player.setAnimation(5);
     }
+
     private void setIdleAnimationStage3(SpriterComponent sc) {
         sc.player.setAnimation(7);
     }

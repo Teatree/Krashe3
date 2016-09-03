@@ -12,6 +12,7 @@ public class LibGdxDrawer extends Drawer<Sprite>{
 	
 	Batch batch;
 	ShapeRenderer renderer;
+	boolean doNotDraw;
 	
 	public LibGdxDrawer(Loader<Sprite> loader, ShapeRenderer renderer){
 		super(loader);
@@ -42,22 +43,33 @@ public class LibGdxDrawer extends Drawer<Sprite>{
 		this.batch	=	batch;
 		draw(player);
 	}
+
+	public void setAngleBeforeDraw(Player player, Batch batch, String bone, float angle) {
+//		this.batch	=	batch;
+		player.getBone(bone).angle = angle;
+		draw(player);
+		doNotDraw = true;
+	}
+
 	@Override
 	public void draw(Object object) {
-		Sprite sprite = loader.get(object.ref);
+		if (!doNotDraw) {
+			Sprite sprite = loader.get(object.ref);
+			float newPivotX = (sprite.getWidth() * object.pivot.x);
+			float newX = object.position.x - newPivotX;
+			float newPivotY = (sprite.getHeight() * object.pivot.y);
+			float newY = object.position.y - newPivotY;
 
-		float newPivotX = (sprite.getWidth() * object.pivot.x);
-		float newX = object.position.x - newPivotX;
-		float newPivotY = (sprite.getHeight() * object.pivot.y);
-		float newY = object.position.y - newPivotY;
-		
-		sprite.setX(newX);
-		sprite.setY(newY);
-        sprite.setOrigin(newPivotX, newPivotY);
-		sprite.setRotation(object.angle);
-		
-		sprite.setColor(1f, 1f, 1f, object.alpha);
-		sprite.setScale(object.scale.x, object.scale.y);
-		sprite.draw(batch);
+			sprite.setX(newX);
+			sprite.setY(newY);
+			sprite.setOrigin(newPivotX, newPivotY);
+			sprite.setRotation(object.angle);
+
+			sprite.setColor(1f, 1f, 1f, object.alpha);
+			sprite.setScale(object.scale.x, object.scale.y);
+			sprite.draw(batch);
+		} else {
+			doNotDraw = false;
+		}
 	}
 }
