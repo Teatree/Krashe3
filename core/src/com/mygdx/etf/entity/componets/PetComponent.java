@@ -8,6 +8,7 @@ import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 
 import java.util.Random;
 
@@ -76,6 +77,8 @@ public class PetComponent extends ShopItem implements Component {
 
             if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;
+                pet.isCollision = true;
+            }else if(!pet.state.equals(State.DASH)){
                 pet.isCollision = true;
             }
         }

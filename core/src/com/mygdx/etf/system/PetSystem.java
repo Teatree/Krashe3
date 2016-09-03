@@ -68,7 +68,7 @@ public class PetSystem extends IteratingSystem {
             tapped(entity, pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
             bite(pc, scPetBody, cannonsc, scPetHead);
             spawn(pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
-            dash(deltaTime, pc, tcPetBody, cannontc, cannonsc, tcPetHead);
+            dash(deltaTime, pc, tcPetBody, cannontc, cannonsc, tcPetHead, scPetHead);
             outside(pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
             tap(entity, cannonsc);
         } else {
@@ -239,12 +239,18 @@ public class PetSystem extends IteratingSystem {
         }
     }
 
-    private void dash(float deltaTime, PetComponent pc, TransformComponent tcPetBody, TransformComponent cannontc, SpriterComponent cannonsc, TransformComponent tcPetHead) {
+    private void dash(float deltaTime, PetComponent pc, TransformComponent tcPetBody, TransformComponent cannontc, SpriterComponent cannonsc, TransformComponent tcPetHead, SpriterComponent scPetHead) {
         if (pc.state.equals(DASH)) {
             pc.stageCounter = 0;
             pc.velocity += deltaTime * 3.4;
             tcPetBody.x -= pc.velocity;
             tcPetHead.x = tcPetBody.x;
+            if (pc.isCollision == true){
+                setDashBiteAnimation(scPetHead);
+                if (isAnimationFinished(scPetHead)) {
+                    setDashAnimation(scPetHead);
+                }
+            }
             if (isAnimationFinished(cannonsc)) {
                 cannonsc.player.speed = 0;
                 cannontc.x = FAR_FAR_AWAY_X;
@@ -262,6 +268,7 @@ public class PetSystem extends IteratingSystem {
                 pc.state = TAPPED;
                 setDashAnimation(entity.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
+                pc.isCollision = false;
                 setTappedAnimation(entity.getComponent(SpriterComponent.class));
                 setTappedAnimation(pc.petHead.getComponent(SpriterComponent.class));
                 setTappedAnimation(cannonsc);
@@ -337,6 +344,9 @@ public class PetSystem extends IteratingSystem {
 
     private void setTappedAnimation(SpriterComponent sc) {
         sc.player.setAnimation(2);
+    }
+    public void setDashBiteAnimation(SpriterComponent sc) {
+        sc.player.setAnimation(5);
     }
 
     private void checkPetThePetGoal() {
