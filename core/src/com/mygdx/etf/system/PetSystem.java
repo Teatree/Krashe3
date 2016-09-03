@@ -13,6 +13,7 @@ import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import java.util.Random;
@@ -234,26 +235,33 @@ public class PetSystem extends IteratingSystem {
         if (Gdx.input.justTouched() &&
                 pc.boundsRect.contains(v.x, v.y)
                 && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
-            pc.state = TAPPED;
-            setTappedAnimation(entity.getComponent(SpriterComponent.class));
-            setTappedAnimation(cannonsc);
-            pc.tappedback = false;
+//            pc.state = TAPPED;
+            pc.state = DASH;
+            setDashAnimation(entity.getComponent(SpriterComponent.class));
 
-            EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
+//            GameStage.sceneLoader.getBatch().begin();
+            entity.getComponent(SpriterDrawerComponent.class).drawer.setAngleBeforeDraw(entity.getComponent(SpriterComponent.class).player, GameStage.sceneLoader.getBatch(), "mouth_lower", 100);
+//            entity.getComponent(SpriterDrawerComponent.class).drawer.draw(entity.getComponent(SpriterComponent.class).player);
 
-//            entity.getComponent(TransformComponent.class).x++;
-            entity.remove(ActionComponent.class);
-            pc.petCannon.remove(ActionComponent.class);
-
-            ActionComponent ac = new ActionComponent();
-            ActionComponent acc = new ActionComponent();
-            Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
-            acc.dataArray.add(Actions.moveTo(TAPPED_X+62, entity.getComponent(TransformComponent.class).y+11, DURATION_TAP));
-            entity.add(ac);
-            pc.petCannon.add(acc);
-
-            checkPetThePetGoal();
+//            setTappedAnimation(entity.getComponent(SpriterComponent.class));
+//            setTappedAnimation(cannonsc);
+//            pc.tappedback = false;
+//
+//            EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
+//
+////            entity.getComponent(TransformComponent.class).x++;
+//            entity.remove(ActionComponent.class);
+//            pc.petCannon.remove(ActionComponent.class);
+//
+//            ActionComponent ac = new ActionComponent();
+//            ActionComponent acc = new ActionComponent();
+//            Actions.checkInit();
+//            ac.dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
+//            acc.dataArray.add(Actions.moveTo(TAPPED_X+62, entity.getComponent(TransformComponent.class).y+11, DURATION_TAP));
+//            entity.add(ac);
+//            pc.petCannon.add(acc);
+//
+//            checkPetThePetGoal();
         }
     }
 
@@ -283,6 +291,9 @@ public class PetSystem extends IteratingSystem {
 
     private void setDashAnimation(SpriterComponent sc) {
         sc.player.setAnimation(1);
+        sc.player.update();
+        sc.player.setBone("bone_003", 90);
+//        GameStage.sceneLoader.getEngine().
     }
 
     private void setIdleAnimationStage1(SpriterComponent sc) {
