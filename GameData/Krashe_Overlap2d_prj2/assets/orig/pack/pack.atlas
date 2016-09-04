@@ -112,35 +112,35 @@ btnpause
   index: -1
 btnplay
   rotate: false
-  xy: 818, 386
+  xy: 1506, 1244
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettings
   rotate: false
-  xy: 1506, 1244
+  xy: 356, 122
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 356, 122
+  xy: 352, 49
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 352, 49
+  xy: 906, 542
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 906, 542
+  xy: 903, 469
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -154,21 +154,21 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 903, 469
+  xy: 977, 542
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 977, 542
+  xy: 974, 469
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 bugjuicebubble
   rotate: false
-  xy: 1882, 1220
+  xy: 1880, 1159
   size: 53, 55
   orig: 53, 55
   offset: 0, 0
@@ -207,14 +207,14 @@ buttoncameraon
   index: -1
 coin
   rotate: false
-  xy: 1514, 1183
+  xy: 1882, 1216
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
   index: -1
 coinap
   rotate: false
-  xy: 1450, 1178
+  xy: 1516, 1179
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
@@ -259,6 +259,13 @@ flowerpeducle
   xy: 1685, 494
   size: 63, 1550
   orig: 63, 1550
+  offset: 0, 0
+  index: -1
+gifticonmaker
+  rotate: false
+  xy: 818, 387
+  size: 70, 70
+  orig: 70, 70
   offset: 0, 0
   index: -1
 img
@@ -427,7 +434,7 @@ star
   index: -1
 starY
   rotate: false
-  xy: 974, 476
+  xy: 1450, 1177
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
