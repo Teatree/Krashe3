@@ -245,10 +245,11 @@ public class PetSystem extends IteratingSystem {
             pc.velocity += deltaTime * 3.4;
             tcPetBody.x -= pc.velocity;
             tcPetHead.x = tcPetBody.x;
-            if (pc.isCollision == true){
+            if (pc.isBiteDash == true){
                 setDashBiteAnimation(scPetHead);
                 if (isAnimationFinished(scPetHead)) {
                     setDashAnimation(scPetHead);
+                    pc.isBiteDash = false;
                 }
             }
             if (isAnimationFinished(cannonsc)) {

@@ -25,6 +25,7 @@ public class PetComponent extends ShopItem implements Component {
     public Rectangle boundsRect;
     public float velocity;
     public boolean isCollision;
+    public boolean isBiteDash;
     public boolean tappedback;
 
     public int outsideCounter;
@@ -78,8 +79,8 @@ public class PetComponent extends ShopItem implements Component {
             if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;
                 pet.isCollision = true;
-            }else if(!pet.state.equals(State.DASH)){
-                pet.isCollision = true;
+            }else if(pet.state.equals(State.DASH)){
+                pet.isBiteDash = true;
             }
         }
     }
