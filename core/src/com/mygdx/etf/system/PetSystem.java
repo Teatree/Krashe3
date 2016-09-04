@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.stages.GameStage;
@@ -68,8 +69,8 @@ public class PetSystem extends IteratingSystem {
             tapped(entity, pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
             bite(pc, scPetBody, cannonsc, scPetHead);
             spawn(pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
-            dash(deltaTime, pc, tcPetBody, cannontc, cannonsc, tcPetHead, scPetHead);
-            outside(pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead);
+            dash(deltaTime, pc, tcPetBody, cannontc, cannonsc, tcPetHead, scPetHead, entity);
+            outside(pc, tcPetBody, scPetBody, cannontc, cannonsc, scPetHead, tcPetHead, entity);
             tap(entity, cannonsc);
         } else {
             pausedState(pc, tcPetBody, scPetBody, cannonsc, scPetHead, tcPetHead);
@@ -214,10 +215,11 @@ public class PetSystem extends IteratingSystem {
         cannonsc.player.speed = 0;
     }
 
-    private void outside(PetComponent pc, TransformComponent tcPetBody, SpriterComponent scPetBody, TransformComponent cannontc, SpriterComponent cannonsc, SpriterComponent scPetHead, TransformComponent tcPetHead) {
+    private void outside(PetComponent pc, TransformComponent tcPetBody, SpriterComponent scPetBody, TransformComponent cannontc, SpriterComponent cannonsc, SpriterComponent scPetHead, TransformComponent tcPetHead, Entity entity) {
         if (tcPetBody.x < -100) {
             pc.state = OUTSIDE;
-            pc.velocity = 0;
+            entity.remove(ActionComponent.class);
+            pc.petHead.remove(ActionComponent.class);
             tcPetBody.x = FAR_FAR_AWAY_X;
             tcPetHead.x = tcPetBody.x;
             pc.setOutsideStateDuration();
@@ -239,12 +241,47 @@ public class PetSystem extends IteratingSystem {
         }
     }
 
-    private void dash(float deltaTime, PetComponent pc, TransformComponent tcPetBody, TransformComponent cannontc, SpriterComponent cannonsc, TransformComponent tcPetHead, SpriterComponent scPetHead) {
+    private void dash(float deltaTime, PetComponent pc, TransformComponent tcPetBody, TransformComponent cannontc, SpriterComponent cannonsc, TransformComponent tcPetHead, SpriterComponent scPetHead, Entity entity) {
         if (pc.state.equals(DASH)) {
             pc.stageCounter = 0;
-            pc.velocity += deltaTime * 3.4;
-            tcPetBody.x -= pc.velocity;
-            tcPetHead.x = tcPetBody.x;
+
+            SpriterComponent sc = entity.getComponent(SpriterComponent.class);
+
+//            sc.scale -= 0.01f;
+//            tcPetBody.x -= 0.04f;
+//            scPetHead.scale -= 0.01f;
+//            tcPetHead.x -= 0.04f;
+
+            ActionComponent ac = new ActionComponent();
+            ActionComponent acc = new ActionComponent();
+
+            ActionComponent ac2 = new ActionComponent();
+            ActionComponent acc2 = new ActionComponent();
+
+//            pc.velocity += deltaTime * 3.4;
+            if (tcPetBody.x < 900 && cannonsc.player.getTime() >= cannonsc.player.getAnimation().length/2){
+                entity.remove(ac.getClass());
+                pc.petHead.remove(acc.getClass());
+                ac2 = new ActionComponent();
+                acc2 = new ActionComponent();
+                Actions.checkInit();
+                ac2.dataArray.add(Actions.moveTo(-320, tcPetBody.y, 1.6f, Interpolation.linear));
+                acc2.dataArray.add(Actions.moveTo(-320, tcPetBody.y, 1.6f, Interpolation.linear));
+                entity.add(ac2);
+                pc.petHead.add(acc2);
+                System.out.println("switching to linear");
+            }else if(cannonsc.player.getTime() >= cannonsc.player.getAnimation().length/2){
+                entity.remove(ActionComponent.class);
+                pc.petHead.remove(ActionComponent.class);
+                ac = new ActionComponent();
+                acc = new ActionComponent();
+                Actions.checkInit();
+                ac.dataArray.add(Actions.moveTo(220, tcPetBody.y, 3.2f, Interpolation.pow3Out));
+                acc.dataArray.add(Actions.moveTo(220, tcPetBody.y, 3.2f, Interpolation.pow3Out));
+                entity.add(ac);
+                pc.petHead.add(acc);
+            }
+
             if (pc.isBiteDash == true){
                 setDashBiteAnimation(scPetHead);
                 if (isAnimationFinished(scPetHead)) {
