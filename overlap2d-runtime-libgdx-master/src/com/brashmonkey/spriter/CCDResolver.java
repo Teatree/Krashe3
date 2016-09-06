@@ -6,8 +6,7 @@ import com.brashmonkey.spriter.Timeline.Key.Bone;
 /**
  * An inverse kinematics resolver implementation.
  * An instance of this class uses the CCD (Cyclic Coordinate Descent) algorithm to resolve the constraints.
- * @see <a href="https://sites.google.com/site/auraliusproject/ccd-algorithm">ccd-algorithm</a>
- * and <a href="http://www.ryanjuckett.com/programming/cyclic-coordinate-descent-in-2d/">cyclic-coordinate-descent-in-2d</a> .
+ * @see
  * @author Trixt0r
  *
  */

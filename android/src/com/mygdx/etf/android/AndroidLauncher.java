@@ -1,10 +1,13 @@
 package com.mygdx.etf.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +18,11 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.GameHelper;
 import com.mygdx.etf.AllController;
 import com.mygdx.etf.Main;
+import com.mygdx.etf.PlayServices;
 import com.mygdx.etf.android.util.IabHelper;
 import com.mygdx.etf.android.util.IabResult;
 import com.mygdx.etf.android.util.Purchase;
@@ -51,6 +57,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     IabHelper mHelper;
 
+    //game play service
+    private GameHelper gameHelper;
+    private final static int requestCode = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +72,29 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         View gameView = initializeForView(game, config);
         setupAds();
 
+        setupPlayServices();
+
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         setContentView(layout);
+    }
+
+    private void setupPlayServices() {
+        gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
+        gameHelper.enableDebugLog(false);
+
+        GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
+            @Override
+            public void onSignInFailed() {
+            }
+
+            @Override
+            public void onSignInSucceeded() {
+            }
+        };
+
+        gameHelper.setup(gameHelperListener);
     }
 
     private void setupIAP() {
@@ -82,6 +111,19 @@ public class AndroidLauncher extends AndroidApplication implements AllController
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        gameHelper.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        gameHelper.onStart(this);
+    }
+
 
     public void setupAds() {
 
@@ -104,6 +146,12 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         return (ni != null && ni.isConnected());
+    }
+
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
     }
 
     @Override
@@ -292,19 +340,19 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
-    public void restorePurchases() throws Exception{
-        List <String> skus = mHelper.getPurchases();
+    public void restorePurchases() throws Exception {
+        List<String> skus = mHelper.getPurchases();
         if (skus.isEmpty()) {
-            for (String sku : skus){
-                if (sku.equals(SKU_BJ) || sku.equals(SKU_PROMO_BJ)){
+            for (String sku : skus) {
+                if (sku.equals(SKU_BJ) || sku.equals(SKU_PROMO_BJ)) {
                     Upgrade.getBJDouble().buyAndUse();
                 }
 
-                if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_PROMO_PHOENIX)){
+                if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_PROMO_PHOENIX)) {
                     Upgrade.getPhoenix().buyAndUse();
                 }
 
-                if (sku.equals(SKU_PET) || sku.equals(SKU_PROMO_PET)){
+                if (sku.equals(SKU_PET) || sku.equals(SKU_PROMO_PET)) {
                     GameStage.gameScript.fpc.pets.get(0).buyAndUse();
                 }
             }
@@ -467,5 +515,71 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         };
         mHelper.launchPurchaseFlow(this, SKU_PHOENIX, RC_REQUEST,
                 mPurchaseFinishedListener);
+    }
+
+
+    //--------------------------PLAY SERVICES -----------------------------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        gameHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void signIn() {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameHelper.beginUserInitiatedSignIn();
+                }
+            });
+        } catch (Exception e) {
+            Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
+        }
+    }
+
+    @Override
+    public void signOut() {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameHelper.signOut();
+                }
+            });
+        } catch (Exception e) {
+            Gdx.app.log("MainActivity", "Log out failed: " + e.getMessage() + ".");
+        }
+    }
+
+    //TODO: RATE THE GAME!!!!!!
+    @Override
+    public void rateGame() {
+        String str = "Your PlayStore Link";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
+    }
+
+    @Override
+    public void submitScore(int highScore) {
+        if (isSignedIn() == true) {
+            Games.Leaderboards.submitScore(gameHelper.getApiClient(),
+                    getString(R.string.leaderboard_highest), highScore);
+        }
+    }
+
+    @Override
+    public void showScore() {
+        if (isSignedIn() == true) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
+                    getString(R.string.leaderboard_highest)), requestCode);
+        } else {
+            signIn();
+        }
+    }
+
+    @Override
+    public boolean isSignedIn() {
+        return gameHelper.isSignedIn();
     }
 }

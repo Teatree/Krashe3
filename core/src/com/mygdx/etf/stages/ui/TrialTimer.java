@@ -87,7 +87,7 @@ public class TrialTimer {
         timerE.getComponent(TransformComponent.class).x = x
                 + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
         timerE.getComponent(TransformComponent.class).y = y + 15;
-        timerE.getComponent(ZIndexComponent.class).setZIndex(105);
+        timerE.getComponent(ZIndexComponent.class).setZIndex(10);
     }
 
     private void addTimerLogo(String logoLibName) {
@@ -101,6 +101,6 @@ public class TrialTimer {
         timerLogo.getComponent(TransformComponent.class).y = this.y;
         timerLogo.getComponent(TransformComponent.class).scaleX = 0.4f;
         timerLogo.getComponent(TransformComponent.class).scaleY = 0.4f;
-        timerLogo.getComponent(ZIndexComponent.class).setZIndex(105);
+        timerLogo.getComponent(ZIndexComponent.class).setZIndex(10);
     }
 }

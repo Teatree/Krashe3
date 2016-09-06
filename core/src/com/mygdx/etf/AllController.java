@@ -3,7 +3,7 @@ package com.mygdx.etf;
 import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.Upgrade;
 
-public interface AllController {
+public interface AllController extends PlayServices {
 
     String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.mygdx.etf.android";
 

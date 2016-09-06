@@ -2,6 +2,7 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
@@ -29,6 +30,7 @@ public class Settings extends AbstractDialog {
     public static final String BTN_RESTORE = "btn_restore";
     public static final String BTN_CLOSE_SETTINGS = "btn_close_settings";
     public static final String BTN_CLOSE_INFO = "btn_close_info";
+    public static final String BTN_FB_INFO = "btn_fb_info";
     public static final String BTN_NEXT_INFO = "btn_next_info";
     public static final String BTN_BACK_SETTINGS = "btn_back_settings";
     public static final String BTN_MUSIC = "btn_music";
@@ -60,12 +62,7 @@ public class Settings extends AbstractDialog {
         initSoundBtn();
         initMusicBtn();
 
-
-        infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
-        infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
-
-        Entity closeInfoBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_CLOSE_INFO);
-        Entity backBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_BACK_SETTINGS);
+        initInfo();
 
         final BasicDialog dialog = new BasicDialog(gameItem);
         dialog.init();
@@ -79,15 +76,6 @@ public class Settings extends AbstractDialog {
                     @Override
                     public void clicked() {
                         close(settingsE);
-                    }
-                });
-
-        closeInfoBtn.add(new ButtonComponent());
-        closeInfoBtn.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(closeInfoBtn) {
-                    @Override
-                    public void clicked() {
-                        close(infoE);
                     }
                 });
 
@@ -126,23 +114,6 @@ public class Settings extends AbstractDialog {
                     }
                 });
 
-        backBtn.add(new ButtonComponent());
-        backBtn.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(backBtn) {
-                    @Override
-                    public void clicked() {
-                        ActionComponent acSettings = new ActionComponent();
-                        Actions.checkInit();
-                        acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                        settingsE.add(acSettings);
-
-                        ActionComponent acInfo = new ActionComponent();
-                        Actions.checkInit();
-                        acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                        infoE.add(acInfo);
-                    }
-                });
-
         resetProgressBtn.add(new ButtonComponent());
         resetProgressBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(resetProgressBtn) {
@@ -175,6 +146,53 @@ public class Settings extends AbstractDialog {
         final TransformComponent settingsTc = settingsE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
         settingsTc.y = FAR_FAR_AWAY_Y;
+    }
+
+    private void initInfo() {
+        infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
+        infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
+
+        Entity closeInfoBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_CLOSE_INFO);
+        closeInfoBtn.add(new ButtonComponent());
+        closeInfoBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(closeInfoBtn) {
+                    @Override
+                    public void clicked() {
+                        close(infoE);
+                    }
+                });
+
+        Entity backBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_BACK_SETTINGS);
+        backBtn.add(new ButtonComponent());
+        backBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(backBtn) {
+                    @Override
+                    public void clicked() {
+                        ActionComponent acSettings = new ActionComponent();
+                        Actions.checkInit();
+                        acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                        settingsE.add(acSettings);
+
+                        ActionComponent acInfo = new ActionComponent();
+                        Actions.checkInit();
+                        acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                        infoE.add(acInfo);
+                    }
+                });
+
+        Entity fbBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_FB_INFO);
+        if (fbBtn != null) {
+            fbBtn.add(new ButtonComponent());
+            fbBtn.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(fbBtn) {
+                        @Override
+                        public void clicked() {
+                            if (!Gdx.net.openURI("fb://page/Teatree1992")) { // opens app
+                                Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
+                            }
+                        }
+                    });
+        }
     }
 
     private void loadSettingsFromLib() {

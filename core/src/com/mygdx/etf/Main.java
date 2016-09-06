@@ -26,10 +26,12 @@ public class Main extends Game {
     Viewport oneViewport;
 
     public static AllController mainController;
+    public static PlayServices playServices;
 
     public Main(AllController controller) {
         if (controller != null) {
             Main.mainController = controller;
+            Main.playServices = controller;
         } else {
             Main.mainController = new DummyAllController();
         }
@@ -43,6 +45,7 @@ public class Main extends Game {
 
         batch = new SpriteBatch();
         tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
+        mainController.signIn();
     }
 
     public void async() {
@@ -110,6 +113,7 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         SaveMngr.saveStats(GameStage.gameScript.fpc);
+        mainController.signOut();
     }
 
     public static void printMemoryInfo(){

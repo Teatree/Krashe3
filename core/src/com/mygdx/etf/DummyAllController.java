@@ -85,6 +85,36 @@ public class DummyAllController implements AllController {
 
     @Override
     public void restorePurchases() {
+        System.out.println("restore purchases");
+    }
 
+    @Override
+    public void signIn() {
+        System.out.println("signIn");
+    }
+
+    @Override
+    public void signOut() {
+        System.out.println("signOut");
+    }
+
+    @Override
+    public void rateGame() {
+        System.out.println("rateGame");
+    }
+
+    @Override
+    public void submitScore(int highScore) {
+        System.out.println("submitScore");
+    }
+
+    @Override
+    public void showScore() {
+        System.out.println("showScore");
+    }
+
+    @Override
+    public boolean isSignedIn() {
+        return false;
     }
 }
