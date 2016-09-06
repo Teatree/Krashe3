@@ -180,19 +180,7 @@ public class Settings extends AbstractDialog {
                     }
                 });
 
-        Entity fbBtn = infoE.getComponent(NodeComponent.class).getChild(BTN_FB_INFO);
-        if (fbBtn != null) {
-            fbBtn.add(new ButtonComponent());
-            fbBtn.getComponent(ButtonComponent.class).addListener(
-                    new ImageButtonListener(fbBtn) {
-                        @Override
-                        public void clicked() {
-                            if (!Gdx.net.openURI("fb://page/Teatree1992")) { // opens app
-                                Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
-                            }
-                        }
-                    });
-        }
+
     }
 
     private void loadSettingsFromLib() {
