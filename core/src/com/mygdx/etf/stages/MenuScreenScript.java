@@ -1,12 +1,14 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
+import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -37,6 +39,7 @@ public class MenuScreenScript implements IScript {
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
     public static final String MM_FLOWER = "MM_flower";
+    public static final String BTN_FB_INFO = "btn_fb_info";
 
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
@@ -61,6 +64,7 @@ public class MenuScreenScript implements IScript {
     private static Entity btnSettings;
     private static Entity rateAppBtn;
     private static Entity btnGoals;
+    private static Entity btnFB;
 
     public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
@@ -105,6 +109,7 @@ public class MenuScreenScript implements IScript {
         btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
+        btnFB = menuItem.getChild(BTN_FB_INFO).getEntity();
         btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
 
         // WE DO NOT NEED FLOWER
@@ -123,6 +128,17 @@ public class MenuScreenScript implements IScript {
 //        tcL.y = LEAFS_Y_POS;
 //        tcL.scaleX = LEAFS_SCALE;
 //        tcL.scaleY = LEAFS_SCALE;
+
+        if (btnFB != null) {
+            btnFB.add(new ButtonComponent());
+            btnFB.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(btnFB) {
+                        @Override
+                        public void clicked() {
+                            Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
+                        }
+                    });
+        }
 
         rateAppBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(rateAppBtn) {
