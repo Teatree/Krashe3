@@ -562,7 +562,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void submitScore(int highScore) {
-        if (isSignedIn() == true) {
+        if (isSignedIn()) {
             Games.Leaderboards.submitScore(gameHelper.getApiClient(),
                     getString(R.string.leaderboard_highest), highScore);
         }

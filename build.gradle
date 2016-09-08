@@ -53,6 +53,11 @@ project(":android") {
     configurations { natives }
 
     dependencies {
+        compile "com.google.android.gms:play-services-games:9.4.0"
+        compile "com.google.android.gms:play-services-plus:9.4.0"
+        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
+        compile 'com.google.android.gms:play-services-ads:9.4.0'
+        compile project(":BaseGameUtils")
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"

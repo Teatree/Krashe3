@@ -36,8 +36,8 @@ android {
         ext.android_version = '24.0.1'
     }
 
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
 //    defaultConfig {
 //        multiDexEnabled  true

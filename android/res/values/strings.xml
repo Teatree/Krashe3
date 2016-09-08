@@ -3,6 +3,5 @@
 
     <string name="app_name">Eat the fly</string>
     <string name="leaderboard_highest">leaderboard_highest</string>
-    <string name="achievement_dum_dum">achievement_dum_dum</string>
     <!--<string name="app_id">EatTheFly</string>-->
 </resources>
