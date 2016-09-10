@@ -19,9 +19,9 @@ public class SaveMngr {
     public static final String PETS_FILE = "pets.params";
     public static final String UPGRADES_FILE = "upgrades.params";
     public static final String LEVELS_JSON = "levels.json";
-    public static final String MULTIPLIERS_JSON = "multipliers.json";
-    public static final String COCOON_MULTIPLIERS_JSON = "cocoonMultipliers.json";
-    public static final String DANDELION_MULTIPLIERS_JSON = "dandelionMultipliers.json";
+    public static final String MULTIPLIERS_JSON = "BugMultipliersByDuration.json";
+    public static final String COCOON_MULTIPLIERS_JSON = "CocoonSpawnMultipliersByDuration.json";
+    public static final String DANDELION_MULTIPLIERS_JSON = "DandelionSpawnMultipliersByDuration.json";
     public static final String ADS_SETTINGS_JSON = "adssettings.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
@@ -433,6 +433,7 @@ public class SaveMngr {
         public int difficultyLevel;
         public String type;
 
+        //WHY???
         public float spawnInterval = 1;
         public float breakFreqMin = 1;
         public float breakFreqMax = 1;
