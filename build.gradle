@@ -1,6 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+//        mavenLocal()
+//        jcenter()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -9,12 +14,17 @@ buildscript {
         classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'org.robovm:robovm-gradle-plugin:1.2.0'
         classpath 'com.badlogicgames.ashley:ashley:1.7.0'
+//        classpath "com.netflix.nebula:gradle-lint-plugin:5.1.0"
+//        classpath 'ca.cutterslade.gradle:gradle-dependency-analyze:1.1.0'
+//        classpath 'org.lund.gradle:DependencyAnalysisPlugin:1.0.3'
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+//    apply plugin: 'ca.cutterslade.analyze'
+//    apply plugin: 'dependencyAnalysis'
 
     version = '1.0'
     ext {
@@ -53,30 +63,25 @@ project(":android") {
     configurations { natives }
 
     dependencies {
+        compile project(":core")
         compile "com.google.android.gms:play-services-games:9.4.0"
         compile "com.google.android.gms:play-services-plus:9.4.0"
         compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
-        compile 'com.google.android.gms:play-services-ads:9.4.0'
-        compile project(":BaseGameUtils")
-        compile project(":core")
+        compile "com.google.android.gms:play-services-ads:9.4.0"
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+//        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+//        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+//        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
 
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
+//        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
+//        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
+//        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
 
-        compile "com.google.android.gms:play-services-games:9.4.0"
-        compile "com.google.android.gms:play-services-plus:9.4.0"
-        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
-        compile 'com.google.android.gms:play-services-ads:9.4.0'
         compile project(":BaseGameUtils")
     }
 }
@@ -109,14 +114,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-
         compile "com.badlogicgames.ashley:ashley:1.7.0"
-
-//        compile "commons-collections:commons-collections:3.2.2"
-
-//        compile "com.badlogicgames.gdxpay:gdx-pay-android:0.9.1"
-//        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
-        //compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.1-SNAPSHOT"
         compile project(":Overlap2dRuntime")
     }
 }

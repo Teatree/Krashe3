@@ -6,8 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,7 +148,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void attachBaseContext(Context base) {
-        MultiDex.install(base);
+//        MultiDex.install(base);
         super.attachBaseContext(base);
     }
 

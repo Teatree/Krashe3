@@ -21,9 +21,7 @@ import java.util.*;
  * Generally is good to load all the assets that are exported from editor
  * using default settings (The paths and file structure should be exact)
  * If changed by you manually, please override this class methods in order to keep it working.
- * <p/>
  * The main logic is to prepare list of resources that needs to be load for specified scenes, and then loaded.
- * <p/>
  * Created by azakhary on 9/9/2014.
  */
 public class ResourceManager implements IResourceLoader, IResourceRetriever {
