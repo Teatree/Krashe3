@@ -1,6 +1,5 @@
 package com.mygdx.etf.entity.componets;
 
-import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GoalGenerator;
 import com.mygdx.etf.utils.SaveMngr;
 

@@ -64,20 +64,21 @@ project(":android") {
 
     dependencies {
         compile project(":core")
-        compile "com.google.android.gms:play-services-games:9.4.0"
-        compile "com.google.android.gms:play-services-plus:9.4.0"
-        compile "com.badlogicgames.gdxpay:gdx-pay-client:0.9.1"
+//        compile "com.google.android.gms:play-services-games:9.4.0"
+//        compile "com.google.android.gms:play-services-plus:9.4.0"
         compile "com.google.android.gms:play-services-ads:9.4.0"
+
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+//        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
 
-        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+//        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
@@ -100,8 +101,6 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
 
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
-
-//        compile "com.badlogicgames.gdxpay:gdx-pay-iosrobovm-apple:0.9.1"
     }
 }
 
