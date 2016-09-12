@@ -131,6 +131,7 @@ public abstract class BaseGameActivity extends FragmentActivity implements
     }
 
     protected void beginUserInitiatedSignIn() {
+        System.out.println(">>>>> !!!!");
         mHelper.beginUserInitiatedSignIn();
     }
 

@@ -84,7 +84,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(btnNoAds) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isSecondDialogOpen) {
                             Main.mainController.removeAds();
                         }
                     }

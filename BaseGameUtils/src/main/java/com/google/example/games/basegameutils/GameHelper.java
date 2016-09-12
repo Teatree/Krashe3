@@ -16,6 +16,7 @@
 
 package com.google.example.games.basegameutils;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -296,6 +297,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
      *            The listener to be notified of sign-in events.
      */
     public void setup(GameHelperListener listener) {
+        logError("try to setup");
         if (mSetupDone) {
             String error = "GameHelper: you cannot call GameHelper.setup() more than once!";
             logError(error);
@@ -306,11 +308,12 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
 
         if (mGoogleApiClientBuilder == null) {
             // we don't have a builder yet, so create one
-            createApiClientBuilder();
         }
+            createApiClientBuilder();
 
         mGoogleApiClient = mGoogleApiClientBuilder.build();
         mGoogleApiClientBuilder = null;
+        logError(">>>> setup done!");
         mSetupDone = true;
     }
 

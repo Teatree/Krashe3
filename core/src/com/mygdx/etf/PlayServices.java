@@ -10,4 +10,6 @@ public interface PlayServices {
     public void submitScore(int highScore);
     public void showScore();
     public boolean isSignedIn();
+
+    void setupPlayServices();
 }

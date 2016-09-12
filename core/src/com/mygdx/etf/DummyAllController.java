@@ -117,4 +117,9 @@ public class DummyAllController implements AllController {
     public boolean isSignedIn() {
         return false;
     }
+
+    @Override
+    public void setupPlayServices() {
+        System.out.println("Set up services");
+    }
 }

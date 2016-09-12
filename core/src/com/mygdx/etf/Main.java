@@ -45,7 +45,8 @@ public class Main extends Game {
 
         batch = new SpriteBatch();
         tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
-        mainController.signIn();
+//        mainController.setupPlayServices();
+//        mainController.signIn();
     }
 
     public void async() {
