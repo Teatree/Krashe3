@@ -22,6 +22,7 @@ import com.mygdx.etf.entity.componets.Upgrade;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
+    public static final String LEADERBOARD_ID = "CgkI_OTOv6AOEAIQAQ";
     EtfIAPhelper iapHelper;
     EtfAdsHelper adsHelper;
 
@@ -40,7 +41,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(game, config);
         setupAds();
-//        setupPlayServices();
+        setupPlayServices();
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
@@ -77,8 +78,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
-        setupPlayServices();
-//        gameHelper.onStart(this);
+//        setupPlayServices();
+        gameHelper.onStart(this);
     }
 
 
@@ -240,7 +241,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public void rateGame() {
         String str = "Your PlayStore Link";
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ANDROID_APP_LINK)));
     }
 
     @Override
@@ -264,5 +265,31 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public boolean isSignedIn() {
         return gameHelper.isSignedIn();
+    }
+
+    @Override
+    public void unlockAchievement(String achievementId) {
+
+    }
+
+    @Override
+    public void revealAchievement(String achievementId) {
+
+    }
+
+    @Override
+    public void incrementAchievement(String achievementId, int steps) {
+
+    }
+
+    @Override
+    public void getLeaderboard() {
+        Games.Leaderboards.getLeaderboardIntent(gameHelper.mGoogleApiClient,
+                LEADERBOARD_ID);
+    }
+
+    @Override
+    public void getAchievements() {
+
     }
 }

@@ -329,7 +329,7 @@ public class ResultScreenScript implements IScript {
                                         }
                                     });
                                 } else {
-                                    gameScript.fpc.score = showCaseVanity.cost - gameScript.fpc.totalScore;
+                                    gameScript.fpc.score =(int)(showCaseVanity.cost - gameScript.fpc.totalScore);
                                     gameScript.fpc.totalScore = showCaseVanity.cost;
 
                                     adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

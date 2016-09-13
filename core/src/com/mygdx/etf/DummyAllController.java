@@ -122,4 +122,29 @@ public class DummyAllController implements AllController {
     public void setupPlayServices() {
         System.out.println("Set up services");
     }
+
+    @Override
+    public void unlockAchievement(String achievementId) {
+
+    }
+
+    @Override
+    public void revealAchievement(String achievementId) {
+
+    }
+
+    @Override
+    public void incrementAchievement(String achievementId, int steps) {
+
+    }
+
+    @Override
+    public void getLeaderboard() {
+
+    }
+
+    @Override
+    public void getAchievements() {
+
+    }
 }

@@ -135,7 +135,8 @@ public class MenuScreenScript implements IScript {
                     new ImageButtonListener(btnFB) {
                         @Override
                         public void clicked() {
-                            Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
+                            Main.mainController.showScore();
+//                            Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
                         }
                     });
         }
@@ -145,7 +146,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
-                            rateMyApp();
+                            Main.mainController.rateGame();
                         }
                     }
                 });
@@ -241,10 +242,6 @@ public class MenuScreenScript implements IScript {
                 startTransitionIn = false;
             }
         }
-    }
-
-    private void rateMyApp() {
-        Main.mainController.rateMyApp();
     }
 
     public void resetPauseDialog() {
