@@ -286,62 +286,46 @@ public class SaveMngr {
         VanityJson vanity4 = new VanityJson();
         VanityJson vanity5 = new VanityJson();
         VanityJson vanity6 = new VanityJson();
-        VanityJson vanity7 = new VanityJson();
-        VanityJson vanity8 = new VanityJson();
 
-        vanity3.cost = 90;
-        vanity3.name = "Christmas leaves";
-        vanity3.icon = "leaf_christmas";
-        vanity3.shopIcon = "bug_juice_bubble_lib";
-        vanity3.assetsToChange.put("leaf_left", "leaf_left_christmas");
-        vanity3.assetsToChange.put("leaf_right", "leaf_right_christmas");
-
-        vanity1.attackSpeed = 5;
-        vanity1.cost = 150;
-        vanity1.name = "majestic beard";
-        vanity1.icon = "santabeard";
-        vanity1.shopIcon = "item_white_beard_n";
-        vanity1.assetsToChange.put("head_top", "head_top_christmas");
-        vanity1.assetsToChange.put("head_mid", "head_mid_christmas");
-        vanity1.assetsToChange.put("head_bottom", "head_bottom_christmas");
+        vanity1.cost = 140;
+        vanity1.name = "Sacrecrow Hat";
+        vanity1.icon = "head_top_scarecrow";
+        vanity1.shopIcon = "bug_juice_bubble_lib";
+        vanity1.assetsToChange.put("head_top", "head_top_scarecrow");
 
         vanity2.cost = 250;
-        vanity2.name = "Deer horns";
+        vanity2.name = "Pot Lettuce";
         vanity2.icon = "deer";
         vanity2.shopIcon = "item_deer_horns_n";
-        vanity2.assetsToChange.put("head_top", "head_top_deer");
-        vanity2.assetsToChange.put("head_mid", "head_mid_default");
-        vanity2.assetsToChange.put("head_bottom", "head_bottom_default");
+        vanity2.assetsToChange.put("leaf_right", "leaf_right_lettuce");
+        vanity2.assetsToChange.put("leaf_left", "leaf_left_lettuce");
+        vanity2.assetsToChange.put("pot", "pot_lettuce");
 
-        vanity4.cost = 650;
-        vanity4.name = "Santa outfit";
-        vanity4.icon = "christmas";
-        vanity4.shopIcon = "item_santa_hat_n";
-        vanity4.assetsToChange.put("peducle_bottom", "peducle_bottom_christmas");
-        vanity4.assetsToChange.put("peducle_middle", "peducle_middle_christmas");
-        vanity4.assetsToChange.put("peducle_middle_aboveLeaf", "peducle_middle_aboveLeaf_chirstmas");
-        vanity4.assetsToChange.put("peducle_top", "peducle_top_christmas");
-        vanity4.assetsToChange.put("peducle_top_under", "peducle_top_under_christmas");
+        vanity3.cost = 450;
+        vanity3.name = "Baseball Cap";
+        vanity3.icon = "head_top_baseball_cap";
+        vanity3.shopIcon = "bug_juice_bubble_lib";
+        vanity3.assetsToChange.put("head_top", "head_top_baseball_cap");
 
-        vanity5.cost = 750;
-        vanity5.name = "Bike helmet";
-        vanity5.icon = "leaf_christmas";
-        vanity5.shopIcon = "item_biker_helm_n";
+        vanity4.cost = 720;
+        vanity4.name = "Sacrecrow Hat";
+        vanity4.icon = "head_top_scarecrow";
+        vanity4.shopIcon = "bug_juice_bubble_lib";
+        vanity4.assetsToChange.put("head_top", "head_top_scarecrow");
 
-        vanity6.cost = 900;
-        vanity6.name = "Cool Sun glasses";
-        vanity6.icon = "santabeard";
-        vanity6.shopIcon = "item_sun_glasses_n";
+        vanity5.cost = 1000;
+        vanity5.name = "Pot Lettuce";
+        vanity5.icon = "deer";
+        vanity5.shopIcon = "item_deer_horns_n";
+        vanity5.assetsToChange.put("leaf_right", "leaf_right_lettuce");
+        vanity5.assetsToChange.put("leaf_left", "leaf_left_lettuce");
+        vanity5.assetsToChange.put("pot", "pot_lettuce");
 
-        vanity7.cost = 1200;
-        vanity7.name = "Pilot's scarf";
-        vanity7.icon = "deer";
-        vanity7.shopIcon = "item_pilot_scarf_n";
-
-        vanity8.cost = 1550;
-        vanity8.name = "Tea cup";
-        vanity8.icon = "christmas";
-        vanity8.shopIcon = "item_tea_cup_n";
+        vanity6.cost = 1350;
+        vanity6.name = "Baseball Cap";
+        vanity6.icon = "head_top_baseball_cap";
+        vanity6.shopIcon = "bug_juice_bubble_lib";
+        vanity6.assetsToChange.put("head_top", "head_top_baseball_cap");
 
         List<VanityJson> vanityStatses = new ArrayList<VanityJson>();
 
@@ -351,8 +335,6 @@ public class SaveMngr {
         vanityStatses.add(vanity4);
         vanityStatses.add(vanity5);
         vanityStatses.add(vanity6);
-        vanityStatses.add(vanity7);
-        vanityStatses.add(vanity8);
 
         Json jsonVanityObj = new Json();
 
