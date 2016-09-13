@@ -18,7 +18,7 @@ public class FlowerPublicComponent implements Component {
 
     public long bestScore;
     public long totalScore;
-    public long score;
+    public int score;
 
     public List<VanityComponent> vanities = new ArrayList<>();
     public List<PetComponent> pets = new ArrayList<>();

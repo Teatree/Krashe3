@@ -116,7 +116,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     PlusOptions mPlusApiOptions = null;
 
     // Google API client object we manage.
-    GoogleApiClient mGoogleApiClient = null;
+    public GoogleApiClient mGoogleApiClient = null;
 
     // Client request flags
     public final static int CLIENT_NONE = 0x00;

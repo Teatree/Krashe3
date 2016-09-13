@@ -3,6 +3,7 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.GameOverDialog;
@@ -458,6 +459,7 @@ public class GameScreenScript implements IScript {
                     (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                 isGameOver = false;
                 gameScript.resetPauseDialog();
+                Main.mainController.submitScore(fpc.score);
                 gameScript.stage.initResultWithAds();
             }
         }
