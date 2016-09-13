@@ -40,7 +40,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(game, config);
         setupAds();
-//        setupPlayServices();
+        setupPlayServices();
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
@@ -77,8 +77,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
-        setupPlayServices();
-//        gameHelper.onStart(this);
+//        setupPlayServices();
+        gameHelper.onStart(this);
     }
 
 
