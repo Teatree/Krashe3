@@ -102,7 +102,7 @@ public class MenuScreenScript implements IScript {
                     new ImageButtonListener(btnFB) {
                         @Override
                         public void clicked() {
-                            Main.mainController.showScore();
+                            Main.mainController.getAchievements();
 //                            Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
                         }
                     });
@@ -113,7 +113,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
-                            Main.mainController.rateGame();
+                            Main.mainController.rateMyApp();
                         }
                     }
                 });

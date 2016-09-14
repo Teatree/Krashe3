@@ -8,8 +8,6 @@ public interface PlayServices {
 
     void signOut();
 
-    void rateGame();
-
     void submitScore(int highScore);
 
     void showScore();

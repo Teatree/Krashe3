@@ -22,7 +22,6 @@ import com.mygdx.etf.entity.componets.Upgrade;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
-    public static final String LEADERBOARD_ID = "CgkI_OTOv6AOEAIQAQ";
     EtfIAPhelper iapHelper;
     EtfAdsHelper adsHelper;
 
@@ -193,7 +192,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void rateMyApp() {
-        Gdx.net.openURI(ANDROID_APP_LINK);
+//        Gdx.net.openURI(ANDROID_APP_LINK);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ANDROID_APP_LINK)));
     }
 
     @Override
@@ -237,18 +237,11 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         }
     }
 
-    //TODO: RATE THE GAME!!!!!!
-    @Override
-    public void rateGame() {
-        String str = "Your PlayStore Link";
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ANDROID_APP_LINK)));
-    }
-
     @Override
     public void submitScore(int highScore) {
         if (isSignedIn()) {
             Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_highest), highScore);
+                    getString(R.string.leaderboard_stars), highScore);
         }
     }
 
@@ -256,7 +249,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public void showScore() {
         if (isSignedIn()) {
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_highest)), requestCode);
+                    getString(R.string.leaderboard_stars)), requestCode);
         } else {
             signIn();
         }
@@ -269,7 +262,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void unlockAchievement(String achievementId) {
-
+        Games.Achievements.unlock(gameHelper.getApiClient(),
+                getString(R.string.achievement_hunger_strike));
     }
 
     @Override
@@ -284,12 +278,20 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getLeaderboard() {
-        Games.Leaderboards.getLeaderboardIntent(gameHelper.mGoogleApiClient,
-                LEADERBOARD_ID);
+        if (isSignedIn()) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
+                    getString(R.string.leaderboard_stars)), requestCode);
+        } else {
+            signIn();
+        }
     }
 
     @Override
-    public void getAchievements() {
-
+    public void getAchievements(){
+        if (isSignedIn()) {
+            startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
+        } else {
+            signIn();
+        }
     }
 }

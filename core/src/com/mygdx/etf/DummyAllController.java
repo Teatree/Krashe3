@@ -99,11 +99,6 @@ public class DummyAllController implements AllController {
     }
 
     @Override
-    public void rateGame() {
-        System.out.println("rateGame");
-    }
-
-    @Override
     public void submitScore(int highScore) {
         System.out.println("submitScore");
     }
