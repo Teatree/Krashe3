@@ -296,6 +296,7 @@ public class SaveMngr {
         vanity2.cost = 250;
         vanity2.name = "Pot Lettuce";
         vanity2.icon = "deer";
+        vanity2.leaves = true;
         vanity2.shopIcon = "item_deer_horns_n";
         vanity2.assetsToChange.put("leaf_right", "leaf_right_lettuce");
         vanity2.assetsToChange.put("leaf_left", "leaf_left_lettuce");
@@ -320,6 +321,7 @@ public class SaveMngr {
         vanity5.assetsToChange.put("leaf_right", "leaf_right_lettuce");
         vanity5.assetsToChange.put("leaf_left", "leaf_left_lettuce");
         vanity5.assetsToChange.put("pot", "pot_lettuce");
+        vanity2.leaves = true;
 
         vanity6.cost = 1350;
         vanity6.name = "Baseball Cap";
@@ -546,6 +548,7 @@ public class SaveMngr {
         public int dandelionChance;
         public int angeredBeesDuration;
         public PetJson pet;
+        public boolean leaves;
 
         public VanityJson() {
         }
@@ -559,6 +562,7 @@ public class SaveMngr {
             this.bought = vc.bought;
             this.advertised = vc.advertised;
             this.enabled = vc.enabled;
+            this.leaves = vc.leaves;
             this.floatingText = vc.floatingText;
             this.bugsSpawnAmount = vc.bugsSpawnAmount;
             this.attackSpeed = vc.attackSpeed;

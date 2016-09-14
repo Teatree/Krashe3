@@ -170,7 +170,7 @@ public class BasicDialog extends AbstractDialog {
                     @Override
                     public void clicked() {
                         close(dialogE);
-                        VanityComponent.disableAllVanities();
+                        VanityComponent.disableAllVanitiesAssets();
                         GameStage.changedFlower = true;
                         GameStage.initMenu();
                     }

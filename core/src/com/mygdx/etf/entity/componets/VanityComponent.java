@@ -15,6 +15,7 @@ public class VanityComponent extends ShopItem implements Component {
     public static final String DEFAULT = "_default";
     public static final String PATH_PREFIX_VANITY = "vanity\\";
     public static final String PATH_PREFIX_LOCAL_ANI = "orig\\spriter_animations\\flower_idle\\";
+    public static final String PATH_PREFIX_LOCAL_LEAVES_ANI = "orig\\spriter_animations\\flower_leafs_idle\\";
     public static final String TYPE_SUFFIX = ".png";
 
     public static final String HEAD_TOP = "head_top";
@@ -34,6 +35,7 @@ public class VanityComponent extends ShopItem implements Component {
 
     //true when was presented in showcase
     public boolean advertised;
+    public boolean leaves; //if true - than change flower_leafs_idle
 
     public boolean floatingText;
     public int bugsSpawnAmount;
@@ -58,6 +60,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.description = vc.description;
         this.bought = vc.bought;
         this.advertised = vc.advertised;
+        this.leaves = vc.leaves;
 
         this.enabled = vc.enabled;
         this.floatingText = vc.floatingText;
@@ -79,7 +82,8 @@ public class VanityComponent extends ShopItem implements Component {
 //                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
 //                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
                 if (!entry.getKey().equals(CLASS)) {
-                    Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
+                    String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+                    Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
                 }
             }
 
@@ -120,7 +124,8 @@ public class VanityComponent extends ShopItem implements Component {
 
         for (Map.Entry entry : assetsToChange.entrySet()) {
             if (!entry.getKey().equals(CLASS)) {
-                Gdx.files.local(PATH_PREFIX_LOCAL_ANI + entry.getKey() + TYPE_SUFFIX)
+                String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+                Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX)
                         .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
                                 + DEFAULT + TYPE_SUFFIX).readBytes(), false);
             }
@@ -129,16 +134,26 @@ public class VanityComponent extends ShopItem implements Component {
         GameStage.changedFlower = true;
     }
 
-    public static void disableAllVanities (){
-        List<String> assetsToChange = new ArrayList<>();
-        assetsToChange.add("head_top");
-        assetsToChange.add("pot");
-        assetsToChange.add("leaf_left");
-        assetsToChange.add("leaf_right");
+    public static void disableAllVanitiesAssets(){
+        List<String> assetsToChangeFlower = new ArrayList<>();
+        assetsToChangeFlower.add("head_top");
 
-        for (String flowerPart : assetsToChange) {
+        List<String> assetsToChangeLeaves = new ArrayList<>();
+        assetsToChangeLeaves.add("pot");
+        assetsToChangeLeaves.add("leaf_left");
+        assetsToChangeLeaves.add("leaf_right");
+
+        for (String flowerPart : assetsToChangeFlower) {
             if (!flowerPart.equals(CLASS)) {
                 Gdx.files.local(PATH_PREFIX_LOCAL_ANI + flowerPart + TYPE_SUFFIX)
+                        .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + flowerPart
+                                + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            }
+        }
+
+        for (String flowerPart : assetsToChangeLeaves) {
+            if (!flowerPart.equals(CLASS)) {
+                Gdx.files.local(PATH_PREFIX_LOCAL_LEAVES_ANI + flowerPart + TYPE_SUFFIX)
                         .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + flowerPart
                                 + DEFAULT + TYPE_SUFFIX).readBytes(), false);
             }
