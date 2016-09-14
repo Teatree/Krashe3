@@ -1,8 +1,5 @@
 package com.mygdx.etf.android.util;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import com.badlogic.gdx.Gdx;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;

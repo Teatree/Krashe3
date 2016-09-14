@@ -3,9 +3,7 @@ package com.mygdx.etf.utils;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.BugComponent;
-import com.mygdx.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Stack;

@@ -8,8 +8,8 @@ import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.entity.componets.listeners.ShopTabListener;
-import com.mygdx.etf.stages.ui.Preview;
 import com.mygdx.etf.entity.componets.listeners.ShopUpgrTabListener;
+import com.mygdx.etf.stages.ui.Preview;
 import com.mygdx.etf.system.ParticleLifespanSystem;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
@@ -23,7 +23,6 @@ import java.util.*;
 
 import static com.mygdx.etf.entity.componets.ShopItem.HARD;
 import static com.mygdx.etf.utils.GlobalConstants.*;
-import static com.mygdx.etf.utils.GlobalConstants.ALPHA_TRANSITION_STEP;
 
 
 public class ShopScreenScript implements IScript {

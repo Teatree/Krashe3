@@ -2,12 +2,8 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
-import com.brashmonkey.spriter.File;
-import com.brashmonkey.spriter.Player;
-import com.brashmonkey.spriter.SCMLReader;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -15,24 +11,16 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterDrawerComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.data.SpriterVO;
-import com.uwsoft.editor.renderer.factory.component.SpriterComponentFactory;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-import com.uwsoft.editor.renderer.utils.LibGdxDrawer;
-import com.uwsoft.editor.renderer.utils.LibGdxLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mygdx.etf.stages.GameScreenScript.TRIAL_TIMER_X;
 import static com.mygdx.etf.stages.GameScreenScript.isPause;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
-import static com.mygdx.etf.stages.ui.PauseDialog.ENTER;
 import static com.mygdx.etf.stages.ui.PauseDialog.PROGRESS;
 import static com.mygdx.etf.stages.ui.PauseDialog.SLASH;
 import static com.mygdx.etf.utils.EffectUtils.fade;

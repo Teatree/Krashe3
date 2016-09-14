@@ -2,23 +2,22 @@ package com.mygdx.etf.stages.ui;
 
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
-import com.mygdx.etf.entity.componets.BugComponent;
 import com.mygdx.etf.entity.componets.Goal;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
-import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSpawnSystem;
 import com.mygdx.etf.system.BugSystem;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.NodeComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;

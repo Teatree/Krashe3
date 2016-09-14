@@ -6,7 +6,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.entity.componets.FlowerComponent;
 import com.mygdx.etf.stages.GameScreenScript;
-import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;

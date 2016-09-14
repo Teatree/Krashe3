@@ -1,7 +1,6 @@
 package com.mygdx.etf.entity.componets;
 
 
-import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ui.GoalFeedbackScreen;
 
 import java.util.ArrayList;

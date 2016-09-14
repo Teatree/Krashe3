@@ -24,7 +24,6 @@ import static com.mygdx.etf.entity.componets.UmbrellaComponent.State.*;
 import static com.mygdx.etf.entity.componets.UmbrellaComponent.currentMultiplier;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;
-import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class UmbrellaSystem extends IteratingSystem {

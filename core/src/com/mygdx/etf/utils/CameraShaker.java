@@ -1,13 +1,8 @@
 package com.mygdx.etf.utils;
 
-import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
-
-import static com.mygdx.etf.stages.GameStage.gameScript;
 
 
 public class CameraShaker {

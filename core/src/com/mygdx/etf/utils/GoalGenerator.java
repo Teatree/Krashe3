@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.Goal.GoalType.*;
-import static com.mygdx.etf.stages.GameStage.gameScript;
 
 public class GoalGenerator {
 

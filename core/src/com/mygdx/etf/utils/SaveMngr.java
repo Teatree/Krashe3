@@ -10,8 +10,6 @@ import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
-import static com.mygdx.etf.stages.GameStage.gameScript;
-
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";

@@ -3,25 +3,20 @@ package com.mygdx.etf.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
-import com.mygdx.etf.entity.componets.FlowerComponent;
 import com.mygdx.etf.entity.componets.LeafsComponent;
 import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.utils.EffectUtils;
-import com.mygdx.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.mygdx.etf.entity.componets.LeafsComponent.*;
-import static com.mygdx.etf.entity.componets.LeafsComponent.State.*;
+import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
+import static com.mygdx.etf.entity.componets.LeafsComponent.State.IDLE;
+import static com.mygdx.etf.entity.componets.LeafsComponent.State.IDLE_BITE;
+import static com.mygdx.etf.entity.componets.LeafsComponent.state;
 import static com.mygdx.etf.stages.GameStage.gameScript;
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
-import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FPS;
-import static com.mygdx.etf.utils.SoundMgr.soundMgr;
 
 public class LeafsSystem extends IteratingSystem {
 

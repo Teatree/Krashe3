@@ -23,8 +23,8 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
 
-import static com.mygdx.etf.entity.componets.FlowerComponent.*;
 import static com.mygdx.etf.entity.componets.CocoonComponent.*;
+import static com.mygdx.etf.entity.componets.FlowerComponent.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.mygdx.etf.entity.componets.LeafsComponent.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;

@@ -6,9 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.etf.entity.componets.BugComponent;
-import com.mygdx.etf.stages.GameScreenScript;
 import com.mygdx.etf.stages.GameStage;
-import com.mygdx.etf.stages.ui.GameOverDialog;
 import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -21,7 +19,6 @@ import static com.mygdx.etf.entity.componets.BugComponent.*;
 import static com.mygdx.etf.entity.componets.Goal.GoalType.*;
 import static com.mygdx.etf.stages.GameScreenScript.*;
 import static com.mygdx.etf.stages.GameStage.gameScript;
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.GlobalConstants.*;
 
 public class BugSystem extends IteratingSystem {

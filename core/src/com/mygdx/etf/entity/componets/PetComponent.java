@@ -2,13 +2,10 @@ package com.mygdx.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
-import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 
 import java.util.Random;
 

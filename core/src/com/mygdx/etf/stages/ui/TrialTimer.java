@@ -3,8 +3,6 @@ package com.mygdx.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.stages.GameScreenScript;
-import com.mygdx.etf.stages.GameStage;
-import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -12,9 +10,9 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.*;
-import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.utils.GlobalConstants.CUR_SCREEN;
+import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 /**
  * Created by ARudyk on 7/3/2016.

@@ -13,11 +13,10 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
-import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
-import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
-import static com.mygdx.etf.utils.GlobalConstants.ALPHA_TRANSITION_STEP;
+import static com.mygdx.etf.utils.GlobalConstants.*;
 
 public class MenuScreenScript implements IScript {
 

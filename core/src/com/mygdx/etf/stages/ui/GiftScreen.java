@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mygdx.etf.stages.GameScreenScript.isGameOver;
-import static com.mygdx.etf.stages.GameStage.GAME;
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.utils.EffectUtils.fade;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;

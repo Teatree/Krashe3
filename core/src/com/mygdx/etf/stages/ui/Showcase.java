@@ -17,7 +17,7 @@ import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.ResultScreenScript.show;
 import static com.mygdx.etf.stages.ResultScreenScript.showCaseVanity;
 import static com.mygdx.etf.utils.EffectUtils.fadeChildren;
-import static com.mygdx.etf.utils.GlobalConstants.*;
+import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class Showcase {
 

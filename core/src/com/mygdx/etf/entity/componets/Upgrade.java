@@ -1,6 +1,5 @@
 package com.mygdx.etf.entity.componets;
 
-import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.system.BugSystem;

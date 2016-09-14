@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.brashmonkey.spriter.Dimension;
 import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;

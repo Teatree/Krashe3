@@ -4,9 +4,6 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class NodeComponent implements Component {
 	public SnapshotArray<Entity> children = new SnapshotArray<Entity>(true, 1, Entity.class);
 
