@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
+import com.brashmonkey.spriter.Dimension;
 import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -39,6 +40,11 @@ public class ButterflySystem extends IteratingSystem {
             sasc.player.speed = 0;
             entity.getComponent(ButterflyComponent.class).state = DEAD;
         }
+        GameStage.sceneLoader.renderer.drawDebugRect(entity.getComponent(ButterflyComponent.class).boundsRect.x,
+                entity.getComponent(ButterflyComponent.class).boundsRect.y,
+                entity.getComponent(ButterflyComponent.class).boundsRect.width,
+                entity.getComponent(ButterflyComponent.class).boundsRect.height,
+                entity.toString());
 
         if (!isPause && !isGameOver && isStarted &&
                 entity.getComponent(ButterflyComponent.class).state != DEAD) {
@@ -55,7 +61,7 @@ public class ButterflySystem extends IteratingSystem {
                 bc.dataSet = new Vector2[3];
                 bc.dataSet[0] = new Vector2(tc.x, tc.y);
                 bc.dataSet[1] = new Vector2(-500, 400);
-                bc.dataSet[2] = new Vector2(1170,400);
+                bc.dataSet[2] = new Vector2(1170, 400);
 
                 bc.myCatmull = new Bezier<>(bc.dataSet);
                 bc.out = new Vector2(340, 200);
@@ -70,9 +76,9 @@ public class ButterflySystem extends IteratingSystem {
             tc.x = bc.out.x;
             tc.y = bc.out.y;
 
-            if(bc.current>0.4f){
+            if (bc.current > 0.4f) {
                 sasc.player.setAnimation(0);
-            }else{
+            } else {
                 sasc.player.setAnimation(1);
             }
 
@@ -92,7 +98,7 @@ public class ButterflySystem extends IteratingSystem {
                 GameStage.gameScript.reloadScoreLabel(GameStage.gameScript.fpc);
             }
 
-            if (entity.getComponent(ButterflyComponent.class).state == DEAD){
+            if (entity.getComponent(ButterflyComponent.class).state == DEAD) {
                 entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             }

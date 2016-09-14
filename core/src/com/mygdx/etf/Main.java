@@ -116,10 +116,4 @@ public class Main extends Game {
         SaveMngr.saveStats(GameStage.gameScript.fpc);
         mainController.signOut();
     }
-
-    public static void printMemoryInfo(){
-//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.engineByScene));
-//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.rootEntityByScene));
-//        System.err.println(inst.getObjectSize(Main.gameStage.sceneLoader.engine));
-    }
 }

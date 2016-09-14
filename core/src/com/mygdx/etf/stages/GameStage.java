@@ -79,7 +79,7 @@ public class GameStage extends Stage {
 //        Main.printMemoryInfo();
         if (changedFlower || changedFlower2) {
             changedFlower = false;
-//            sceneLoader.loadScene(MAIN_SCENE, viewport);
+            sceneLoader.loadScene(MAIN_SCENE, viewport);
             sceneLoader.setScene(MAIN_SCENE, viewport);
 
             BugPool.resetBugPool();
@@ -114,7 +114,6 @@ public class GameStage extends Stage {
     }
 
     public static void initMenu() {
-        Main.printMemoryInfo();
         if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
@@ -133,7 +132,6 @@ public class GameStage extends Stage {
     }
 
     public void initResult() {
-        Main.printMemoryInfo();
         sceneLoader.setScene(RESULT_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
@@ -147,7 +145,6 @@ public class GameStage extends Stage {
     }
 
     public static void initShop() {
-        Main.printMemoryInfo();
         sceneLoader.setScene(SHOP_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (shopScript == null) {
@@ -159,8 +156,7 @@ public class GameStage extends Stage {
     }
 
     public static void initShopWithAds() {
-        Main.printMemoryInfo();
-        if (gameScript.fpc.settings.shouldShowShopAd()){
+        if (gameScript.fpc.settings.shouldShowShopAd()) {
             mainController.showGeneralShopAd(new Runnable() {
                 @Override
                 public void run() {
@@ -173,8 +169,7 @@ public class GameStage extends Stage {
     }
 
     public void initResultWithAds() {
-        Main.printMemoryInfo();
-        if (gameScript.fpc.settings.shouldShowResultAd()){
+        if (gameScript.fpc.settings.shouldShowResultAd()) {
             mainController.showResultScreenAd(new Runnable() {
                 @Override
                 public void run() {
@@ -191,23 +186,22 @@ public class GameStage extends Stage {
     }
 
 
-    public static void resetAllProgress(){
-        for (VanityComponent vc : gameScript.fpc.vanities){
-            if (vc.enabled){
+    public static void resetAllProgress() {
+        for (VanityComponent vc : gameScript.fpc.vanities) {
+            if (vc.enabled) {
                 vc.disable();
             }
             vc.bought = false;
             vc.enabled = false;
             vc.advertised = false;
-
-            gameScript.fpc.score = 0;
-            gameScript.fpc.bestScore = 0;
-            gameScript.fpc.totalScore = 0;
-            gameScript.fpc.level.difficultyLevel = 0;
-            gameScript.fpc.level.resetNewInfo();
-
-            gameScript.fpc.currentPet = null;
-            gameScript.fpc.upgrades = new HashMap<>();
         }
+        gameScript.fpc.score = 0;
+        gameScript.fpc.bestScore = 0;
+        gameScript.fpc.totalScore = 0;
+        gameScript.fpc.level.difficultyLevel = 0;
+        gameScript.fpc.level.resetNewInfo();
+
+        gameScript.fpc.currentPet = null;
+        gameScript.fpc.upgrades = new HashMap<>();
     }
 }

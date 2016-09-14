@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VanityComponent extends ShopItem implements Component {
@@ -124,7 +126,24 @@ public class VanityComponent extends ShopItem implements Component {
             }
 
         }
-//        GameStage.updateFlowerAni();
+        GameStage.changedFlower = true;
+    }
+
+    public static void disableAllVanities (){
+        List<String> assetsToChange = new ArrayList<>();
+        assetsToChange.add("head_top");
+        assetsToChange.add("pot");
+        assetsToChange.add("leaf_left");
+        assetsToChange.add("leaf_right");
+
+        for (String flowerPart : assetsToChange) {
+            if (!flowerPart.equals(CLASS)) {
+                Gdx.files.local(PATH_PREFIX_LOCAL_ANI + flowerPart + TYPE_SUFFIX)
+                        .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + flowerPart
+                                + DEFAULT + TYPE_SUFFIX).readBytes(), false);
+            }
+
+        }
         GameStage.changedFlower = true;
     }
 }

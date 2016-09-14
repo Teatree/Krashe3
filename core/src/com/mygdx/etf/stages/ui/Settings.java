@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
+import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -42,7 +43,7 @@ public class Settings extends AbstractDialog {
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
 
-    private Entity settingsE;
+    public Entity settingsE;
     private Entity infoE;
 
     public Settings(ItemWrapper gameItem) {

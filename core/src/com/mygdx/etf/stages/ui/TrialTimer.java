@@ -33,6 +33,7 @@ public class TrialTimer {
 
     public TrialTimer(ItemWrapper gameItem, int x, int y) {
         this.mainItem = gameItem;
+
         this.x = x;
         this.y = y;
     }
@@ -45,11 +46,11 @@ public class TrialTimer {
         if (!ifShouldShowTimer() && timerE.getComponent(TransformComponent.class).x != FAR_FAR_AWAY_X) {
             PromoWindow.offerPromo = true;
 //            if (GlobalConstants.CUR_SCREEN.equals(GAME)) {
-                timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                if (timerLogo != null) {
-                    timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                    sceneLoader.getEngine().removeEntity(timerLogo);
-                }
+            timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            if (timerLogo != null) {
+                timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                sceneLoader.getEngine().removeEntity(timerLogo);
+            }
 //            } else {
 //                timerE.getComponent(LabelComponent.class).text.replace(0, timerE.getComponent(LabelComponent.class).text.length,
 //                        TIMER_LBL_TIME_UP);
@@ -59,6 +60,8 @@ public class TrialTimer {
         if (ifShouldShowTimer()) {
             timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
+        } else {
+            timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -81,13 +84,15 @@ public class TrialTimer {
     }
 
     private void showTimer(Entity timerE, String logoname) {
-        LabelComponent lc = timerE.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
-        addTimerLogo(logoname);
-        timerE.getComponent(TransformComponent.class).x = x
-                + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
-        timerE.getComponent(TransformComponent.class).y = y + 15;
-        timerE.getComponent(ZIndexComponent.class).setZIndex(10);
+        if (timerE != null) {
+            LabelComponent lc = timerE.getComponent(LabelComponent.class);
+            lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
+            addTimerLogo(logoname);
+            timerE.getComponent(TransformComponent.class).x = x
+                    + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
+            timerE.getComponent(TransformComponent.class).y = y + 15;
+            timerE.getComponent(ZIndexComponent.class).setZIndex(10);
+        }
     }
 
     private void addTimerLogo(String logoLibName) {

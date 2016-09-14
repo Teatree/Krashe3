@@ -2,6 +2,7 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -169,6 +170,9 @@ public class BasicDialog extends AbstractDialog {
                     @Override
                     public void clicked() {
                         close(dialogE);
+                        VanityComponent.disableAllVanities();
+                        GameStage.changedFlower = true;
+                        GameStage.initMenu();
                     }
                 });
     }

@@ -1,27 +1,18 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
-import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-
-import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_SCALE;
-import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_X_POS;
-import static com.mygdx.etf.entity.componets.FlowerComponent.FLOWER_Y_POS;
-import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
-import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
-import static com.mygdx.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.mygdx.etf.utils.GlobalConstants.BUTTON_TAG;
@@ -32,7 +23,6 @@ public class MenuScreenScript implements IScript {
 
     public static final String BTN_PLAY = "btn_play";
     public static final String BTN_SHOP = "btn_shop";
-    //    public static final String BTN_NO_ADS = "btn_noAds";
     public static final String BTN_SETTINGS = "btn_settings";
     public static final String BTN_RATE = "btn_rate";
     public static final String BTN_GOALS = "btn_goals";
@@ -46,7 +36,6 @@ public class MenuScreenScript implements IScript {
     public static final String MM_LEAFS = "MM_leafs";
 
     ItemWrapper menuItem;
-//    private GameStage stage;
     private Settings settings;
 
     //Dima's party time
@@ -69,7 +58,6 @@ public class MenuScreenScript implements IScript {
     public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
         GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-//        this.stage = stage;
     }
 
     @Override
@@ -85,8 +73,6 @@ public class MenuScreenScript implements IScript {
         startShopTransition = false;
         startTransitionIn = true;
 
-//        settings = new Settings(menuItem);
-//        settings.init();
         isDialogOpen = false;
         if (timer == null) {
             timer = new TrialTimer(menuItem, TIMER_X, TIMER_Y);
@@ -100,8 +86,6 @@ public class MenuScreenScript implements IScript {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
-//        pauseDialog = new PauseDialog(menuItem);
-//        pauseDialog.init();
     }
 
     public void initButtons() {
@@ -111,23 +95,6 @@ public class MenuScreenScript implements IScript {
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
         btnFB = menuItem.getChild(BTN_FB_INFO).getEntity();
         btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
-
-        // WE DO NOT NEED FLOWER
-
-//        Entity mmFlowerEntity = menuItem.getChild(MM_FLOWER).getEntity();
-//        TransformComponent tc = mmFlowerEntity.getComponent(TransformComponent.class);
-//        tc.x = FLOWER_X_POS;
-//        tc.y = FLOWER_Y_POS;
-//        tc.scaleX = FLOWER_SCALE;
-//        tc.scaleY = FLOWER_SCALE;
-//
-//        Entity mmLeafsEntity = menuItem.getChild(MM_LEAFS).getEntity();
-//
-//        TransformComponent tcL = mmLeafsEntity.getComponent(TransformComponent.class);
-//        tcL.x = LEAFS_X_POS;
-//        tcL.y = LEAFS_Y_POS;
-//        tcL.scaleX = LEAFS_SCALE;
-//        tcL.scaleY = LEAFS_SCALE;
 
         if (btnFB != null) {
             btnFB.add(new ButtonComponent());
