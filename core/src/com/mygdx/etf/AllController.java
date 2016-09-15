@@ -35,5 +35,7 @@ public interface AllController extends PlayServices {
 
     void rateMyApp();
 
+    void openFB();
+
     void restorePurchases() throws  Exception;
 }

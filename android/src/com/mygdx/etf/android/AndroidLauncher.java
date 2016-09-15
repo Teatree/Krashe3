@@ -296,4 +296,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
             signIn();
         }
     }
+
+    //TODO: ADD open in FB app
+    @Override
+    public void openFB(){
+        Gdx.net.openURI("https://facebook.com/Teatree1992");
+    }
 }

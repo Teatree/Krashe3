@@ -84,6 +84,11 @@ public class DummyAllController implements AllController {
     }
 
     @Override
+    public void openFB() {
+        System.out.println("I am at Facebook");
+    }
+
+    @Override
     public void restorePurchases() {
         System.out.println("restore purchases");
     }

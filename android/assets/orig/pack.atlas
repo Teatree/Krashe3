@@ -54,93 +54,114 @@ betaptoplay
   orig: 256, 38
   offset: 0, 0
   index: -1
-btnads
+btnachievements
   rotate: false
   xy: 1083, 708
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnback
+btnads
   rotate: false
   xy: 1083, 635
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btngoals
+btnback
   rotate: false
   xy: 906, 531
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnmusic
+btnfb
   rotate: false
   xy: 977, 531
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnmusicno
+btngoals
   rotate: false
   xy: 903, 458
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnnext
+btnleadrboard
   rotate: false
   xy: 974, 458
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnno
+btnmusic
   rotate: false
   xy: 899, 385
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnpause
+btnmusicno
   rotate: false
   xy: 899, 312
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnplay
+btnnext
   rotate: false
   xy: 970, 385
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettings
+btnno
   rotate: false
   xy: 899, 239
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshop
+btnpause
   rotate: false
   xy: 970, 312
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsound
+btnplay
   rotate: false
   xy: 899, 166
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundno
+btnsettings
   rotate: false
   xy: 970, 239
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnshop
+  rotate: false
+  xy: 970, 166
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsound
+  rotate: false
+  xy: 899, 93
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundno
+  rotate: false
+  xy: 970, 93
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -154,14 +175,14 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 970, 166
+  xy: 890, 20
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 899, 93
+  xy: 961, 20
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -214,14 +235,14 @@ buttoncameraon
   index: -1
 coin
   rotate: false
-  xy: 890, 32
+  xy: 1410, 1072
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
   index: -1
 coinap
   rotate: false
-  xy: 970, 101
+  xy: 1972, 1468
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
@@ -448,7 +469,7 @@ starY
   index: -1
 tempcurtain
   rotate: false
-  xy: 1972, 1499
+  xy: 1164, 1227
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

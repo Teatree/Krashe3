@@ -28,7 +28,9 @@ public class MenuScreenScript implements IScript {
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
     public static final String MM_FLOWER = "MM_flower";
-    public static final String BTN_FB_INFO = "btn_fb_info";
+    public static final String BTN_FB = "btn_fb";
+    public static final String BTN_LEADERBOARD = "btn_leaderboard";
+    public static final String BTN_ACHIEVEMENTS = "btn_achievements";
 
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
@@ -53,6 +55,8 @@ public class MenuScreenScript implements IScript {
     private static Entity rateAppBtn;
     private static Entity btnGoals;
     private static Entity btnFB;
+    private static Entity btnLB;
+    private static Entity btnAch;
 
     public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
@@ -92,20 +96,37 @@ public class MenuScreenScript implements IScript {
         btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
-        btnFB = menuItem.getChild(BTN_FB_INFO).getEntity();
+        btnFB = menuItem.getChild(BTN_FB).getEntity();
+        btnAch = menuItem.getChild(BTN_ACHIEVEMENTS).getEntity();
+        btnLB = menuItem.getChild(BTN_LEADERBOARD).getEntity();
         btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
 
-        if (btnFB != null) {
-            btnFB.add(new ButtonComponent());
-            btnFB.getComponent(ButtonComponent.class).addListener(
-                    new ImageButtonListener(btnFB) {
-                        @Override
-                        public void clicked() {
-                            Main.mainController.getAchievements();
-//                            Gdx.net.openURI("https://facebook.com/Teatree1992"); // opens site if app not installed
-                        }
-                    });
-        }
+        btnFB.add(new ButtonComponent());
+        btnFB.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnFB) {
+                    @Override
+                    public void clicked() {
+                        Main.mainController.openFB();
+                    }
+                });
+
+        btnAch.add(new ButtonComponent());
+        btnAch.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnAch) {
+                    @Override
+                    public void clicked() {
+                        Main.mainController.getAchievements();
+                    }
+                });
+
+        btnLB.add(new ButtonComponent());
+        btnLB.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnLB) {
+                    @Override
+                    public void clicked() {
+                        Main.mainController.getLeaderboard();
+                    }
+                });
 
         rateAppBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(rateAppBtn) {
@@ -192,7 +213,7 @@ public class MenuScreenScript implements IScript {
                 startGameTransition = false;
                 GameStage.initGame();
             }
-    }
+        }
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
