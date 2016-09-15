@@ -212,7 +212,6 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void signIn() {
-        System.err.println(">>>> Sign In");
         try {
             runOnUiThread(new Runnable() {
                 @Override
@@ -265,7 +264,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public void unlockAchievement(String achievementId) {
         Games.Achievements.unlock(gameHelper.getApiClient(),
-                getString(R.string.achievement_hunger_strike));
+                getString(R.string.achievement_queen_slayer));
     }
 
     @Override
