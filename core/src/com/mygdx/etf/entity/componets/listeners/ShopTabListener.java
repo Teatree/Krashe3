@@ -17,15 +17,15 @@ import static com.mygdx.etf.utils.GlobalConstants.BTN_PRESSED;
  */
 public class ShopTabListener implements ButtonComponent.ButtonListener {
 
-    private ShopScreenScript shopScreenScript;
+    private static ShopScreenScript shopScreenScript;
 
-    public ShopTabListener(ShopScreenScript shopScreenScript) {
-        this.shopScreenScript = shopScreenScript;
+    public ShopTabListener(ShopScreenScript shopScript) {
+        shopScreenScript = shopScript;
     }
 
     @Override
     public void touchUp() {
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             LayerMapComponent lc = shopScreenScript.btnShop.getComponent(LayerMapComponent.class);
             if (lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -39,7 +39,7 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             LayerMapComponent lc = shopScreenScript.btnShop.getComponent(LayerMapComponent.class);
             if (lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -53,7 +53,7 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void clicked() {
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             if (shopScreenScript.btnShop.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 shiftHCsections();
@@ -67,15 +67,15 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
         }
     }
 
-    private void shiftHCsections() {
+    private static void shiftHCsections() {
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(
-                Actions.moveTo(shopScreenScript.INIT_HC_ITEMS_X, shopScreenScript.hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+                Actions.moveTo(ShopScreenScript.INIT_HC_ITEMS_X, shopScreenScript.hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
         shopScreenScript.hcSectionE.add(ac);
     }
 
-    private void shiftTouchZone() {
+    private static void shiftTouchZone() {
         ActionComponent acTouchZone = new ActionComponent();
         Actions.checkInit();
 
@@ -84,7 +84,7 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
         shopScreenScript.touchZone.add(acTouchZone);
     }
 
-    private void shiftBags() {
+    private static void shiftBags() {
         float bagsShift = 73 - shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x;
         for (Entity bag : shopScreenScript.bags) {
             ActionComponent a = new ActionComponent();
@@ -99,8 +99,8 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
         shiftIcons(bagsShift);
     }
 
-    private void shiftIcons(float bagsShift) {
-        for (Entity icon : shopScreenScript.itemIcons.values()) {
+    private static void shiftIcons(float bagsShift) {
+        for (Entity icon : ShopScreenScript.itemIcons.values()) {
             ActionComponent a = new ActionComponent();
             Actions.checkInit();
 
@@ -113,7 +113,7 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
         }
     }
 
-    private void changeTabBtnsLayers() {
+    private static void changeTabBtnsLayers() {
         shopScreenScript.btnUpg.getComponent(ButtonComponent.class).enable = true;
         LayerMapComponent lc = shopScreenScript.btnUpg.getComponent(LayerMapComponent.class);
         lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -123,6 +123,20 @@ public class ShopTabListener implements ButtonComponent.ButtonListener {
         LayerMapComponent lc1 = shopScreenScript.btnShop.getComponent(LayerMapComponent.class);
         lc1.getLayer(BTN_NORMAL).isVisible = false;
         lc1.getLayer(BTN_PRESSED).isVisible = true;
+    }
+
+    public static void reset() {
+        changeTabBtnsLayers();
+        shopScreenScript.hcSectionE.getComponent(TransformComponent.class).x = ShopScreenScript.INIT_HC_ITEMS_X;
+        float bagsShift = 73 - shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x;
+        for (Entity bag : shopScreenScript.bags) {
+            bag.getComponent(TransformComponent.class).x += 1227 + bagsShift;
+        }
+        for (Entity icon : ShopScreenScript.itemIcons.values()) {
+            ActionComponent a = new ActionComponent();
+         icon.getComponent(TransformComponent.class).x += 1227 + bagsShift;
+        }
+        shiftTouchZone();
     }
 }
 

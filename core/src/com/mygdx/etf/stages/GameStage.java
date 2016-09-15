@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.VanityComponent;
+import com.mygdx.etf.entity.componets.listeners.ShopTabListener;
 import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -12,6 +13,7 @@ import com.mygdx.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+import javafx.scene.effect.Light;
 
 import java.util.HashMap;
 
@@ -152,6 +154,7 @@ public class GameStage extends Stage {
             root.addScript(shopScript);
         }
         ShopScreenScript.isPreviewOn = false;
+        ShopTabListener.reset();
         GlobalConstants.CUR_SCREEN = SHOP;
     }
 
