@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.stages.ui.GiftScreen;
+import com.mygdx.etf.system.AchievementSystem;
 import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
@@ -37,6 +38,14 @@ public class SaveMngr {
         gameStats.start_launchAd = fc.settings.start_launchAd;
         gameStats.start_reviveAd = fc.settings.start_reviveAd;
         gameStats.start_shopAd = fc.settings.start_shopAd;
+
+        //achievements
+        gameStats.bugAchCounter = AchievementSystem.bugAchCounter;
+        gameStats.queenAchCounter = AchievementSystem.queenAchCounter;
+        gameStats.butterflyAchCounter = AchievementSystem.butterflyAchCounter;
+        gameStats.queenAchGoal = AchievementSystem.queenAchGoal;
+        gameStats.bugAchGoal = AchievementSystem.bugAchGoal;
+        gameStats.butterflyAchGoal = AchievementSystem.butterflyAchGoal;
 
         gameStats.launchAd_max = fc.settings.launchAd_max;
         gameStats.resultScreenAd_max = fc.settings.resultScreenAd_max;
@@ -122,6 +131,15 @@ public class SaveMngr {
             fc.settings.totalPlayedGames = stats.totalPlayedGames;
             fc.settings.playedGames = 0;
             Level.goalStatusChanged = stats.goalStatusChanged;
+
+            //achievements
+            AchievementSystem.bugAchCounter = stats.bugAchCounter;
+            AchievementSystem.queenAchCounter = stats.queenAchCounter;
+            AchievementSystem.butterflyAchCounter = stats.butterflyAchCounter;
+            AchievementSystem.queenAchGoal = stats.queenAchGoal;
+            AchievementSystem.bugAchGoal = stats.bugAchGoal;
+            AchievementSystem.bugAchGoal = stats.bugAchGoal;
+
 
             fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
             fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
@@ -496,6 +514,15 @@ public class SaveMngr {
         public int start_getMoneyAd = 1;
         public int start_launchAd = 1;
         public int start_reviveAd = 1;
+
+        //achievements
+        public int queenAchGoal;
+        public int bugAchGoal;
+        public int butterflyAchGoal;
+
+        public int queenAchCounter;
+        public int bugAchCounter;
+        public int butterflyAchCounter;
     }
 
     private static class DailyGoalStats {
