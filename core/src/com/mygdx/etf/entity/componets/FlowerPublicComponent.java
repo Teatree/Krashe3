@@ -92,4 +92,14 @@ public class FlowerPublicComponent implements Component {
             scoreGoal.update();
         }
     }
+
+//
+//    public List<VanityComponent.VanityCollection> updateCollectionStates(){
+//        List<VanityComponent.VanityCollection> res = new ArrayList();
+//        for (VanityComponent vc : vanities){
+//            if (vc.collection != null && vc.collection != ""){
+//
+//            }
+//        }
+//    }
 }

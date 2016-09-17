@@ -11,6 +11,8 @@ import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
+import static com.mygdx.etf.entity.componets.VanityComponent.*;
+
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
@@ -234,9 +236,18 @@ public class SaveMngr {
             Json json = new Json();
             List<VanityJson> vinitys = json.fromJson(List.class, saved);
 
+            vanityCollections = new HashMap<>();
             for (VanityJson vs : vinitys) {
                 VanityComponent vc = new VanityComponent(vs);
                 vanComps.add(vc);
+                if (vc.collection != null && !vc.collection.equals("")){
+                    if (vanityCollections.get(vc.collection) == null){
+                        vanityCollections.put(vc.name, new VanityCollection(vc));
+                    } else {
+                        vanityCollections.get(vc.name).total++;
+                        vanityCollections.get(vc.name).unlocked+=vc.bought ? 1 : 0;
+                    }
+                }
             }
         }
 
@@ -574,6 +585,7 @@ public class SaveMngr {
         public int angeredBeesDuration;
         public PetJson pet;
         public boolean leaves;
+        public String collection;
 
         public VanityJson() {
         }
@@ -595,6 +607,7 @@ public class SaveMngr {
             this.dandelionChance = vc.dandelionChance;
             this.angeredBeesDuration = vc.angeredBeesDuration;
             this.pet = vc.pet != null ? new PetJson(vc.pet) : null;
+            this.collection = vc.collection;
         }
     }
 

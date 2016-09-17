@@ -18,19 +18,6 @@ public class VanityComponent extends ShopItem implements Component {
     public static final String PATH_PREFIX_LOCAL_LEAVES_ANI = "orig\\spriter_animations\\flower_leafs_idle\\";
     public static final String TYPE_SUFFIX = ".png";
 
-    public static final String HEAD_TOP = "head_top";
-    public static final String HEAD_BOTTOM = "head_bottom";
-//    public static final String HEAD_MID = "head_mid";
-//    public static final String leaf_left = "leaf_left";
-//    public static final String leaf_right = "leaf_right";
-    public static final String peduncle_bottom = "peducle_bottom";
-    public static final String peducle_middle = "peducle_middle";
-//    public static final String peducle_middle_aboveLeaf = "peducle_middle_aboveLeaf";
-    public static final String peducle_top = "peducle_top";
-//    public static final String peducle_top_under = "peducle_top_under";
-    public static final String item_back_shine = "item_back_shine";
-    public static final String flower_peducle = "flower_peducle";
-    public static final String flower_idle = "flower_idle.scml";
     public static final String CLASS = "class";
 
     //true when was presented in showcase
@@ -47,6 +34,10 @@ public class VanityComponent extends ShopItem implements Component {
     public Map<String, String> assetsToChange = new HashMap<String, String>();
 
     public PetComponent pet;
+
+    public String collection;
+
+    public static Map<String, VanityCollection> vanityCollections;
 
     public VanityComponent() {
         currencyType = SOFT;
@@ -71,6 +62,7 @@ public class VanityComponent extends ShopItem implements Component {
         this.angeredBeesDuration = vc.angeredBeesDuration;
         this.assetsToChange = vc.assetsToChange;
         this.pet = vc.pet != null ? new PetComponent(vc.pet) : pet;
+        this.collection = vc.collection;
     }
 
     public void apply() {
@@ -134,7 +126,7 @@ public class VanityComponent extends ShopItem implements Component {
         GameStage.changedFlower = true;
     }
 
-    public static void disableAllVanitiesAssets(){
+    public static void disableAllVanitiesAssets() {
         List<String> assetsToChangeFlower = new ArrayList<>();
         assetsToChangeFlower.add("head_top");
 
