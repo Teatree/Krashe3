@@ -44,7 +44,7 @@ public class AbstractDialog {
     protected void addShadow() {
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
-        shadowE.getComponent(ZIndexComponent.class).setZIndex(39);
+        shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
 //        sceneLoader.getEngine().addEntity(shadowE);
         shadowE.getComponent(TintComponent.class).color.a = 0;
 

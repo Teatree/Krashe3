@@ -90,6 +90,7 @@ public class Showcase {
     public void initShowCase() {
         show = true;
         Entity lbl_nameE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
+        showcaseE.getComponent(ZIndexComponent.class).setZIndex(150);
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
 
@@ -121,7 +122,7 @@ public class Showcase {
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
-        itemIcon.getComponent(ZIndexComponent.class).setZIndex(100);
+        itemIcon.getComponent(ZIndexComponent.class).setZIndex(showcaseE.getComponent(ZIndexComponent.class).getZIndex()+1);
 
         tcItem = itemIcon.getComponent(TransformComponent.class);
         tcItem.x = 445;
