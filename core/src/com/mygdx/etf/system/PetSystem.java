@@ -269,7 +269,7 @@ public class PetSystem extends IteratingSystem {
                 acc2.dataArray.add(Actions.moveTo(-320, tcPetBody.y, 1.6f, Interpolation.linear));
                 entity.add(ac2);
                 pc.petHead.add(acc2);
-                System.out.println("switching to linear");
+//                System.out.println("switching to linear");
             }else if(cannonsc.player.getTime() >= cannonsc.player.getAnimation().length/2){
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);

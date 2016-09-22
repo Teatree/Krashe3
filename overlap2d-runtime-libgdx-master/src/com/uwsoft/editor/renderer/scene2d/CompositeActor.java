@@ -276,9 +276,6 @@ public class CompositeActor extends Group {
     /**
      * get's list of children that contain a specified tag.
      * Does not yet go in depth.
-     *
-     * @param tag
-     * @return
      */
     public Array<Actor> getItemsByTag(String tag) {
         Array<Actor> items = new Array<Actor>();
@@ -296,8 +293,6 @@ public class CompositeActor extends Group {
 
     /**
      * returns children of this actor that are on specified layer
-     * @param layerName
-     * @return
      */
     public Array<Actor> getItemsByLayer(String layerName) {
         final int layerIndex = getLayerIndex(layerName);

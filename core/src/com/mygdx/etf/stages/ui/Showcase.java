@@ -2,6 +2,7 @@ package com.mygdx.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ResultScreenScript;
@@ -28,6 +29,7 @@ public class Showcase {
     public static final String SHOWCASE = "showcase_lib";
     public static final String LBL_ITEM_NAME = "lbl_item_name";
     public static final String LBL_ITEM_DESC = "lbl_item_desc";
+    public static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
     public static final String LBL_ITEM_PRICE = "lbl_item_price";
     public static final String SHOWCASE_ANI = "showcase_ani";
     public static final String BTN_NO = "btn_no";
@@ -102,6 +104,14 @@ public class Showcase {
             lc2.text.replace(0, lc2.text.capacity(), "");
         }
 
+        Entity lbl_collE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_COLLECTION);
+        LabelComponent lcColl = lbl_collE.getComponent(LabelComponent.class);
+        if (showCaseVanity.collection != null && !"".equals(showCaseVanity.collection)) {
+            lcColl.text.replace(0, lcColl.text.capacity(), "In " + showCaseVanity.collection + " collection");
+        } else {
+            lcColl.text.replace(0, lcColl.text.capacity(), "");
+        }
+
         Entity lbl_priceE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE);
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
@@ -122,7 +132,7 @@ public class Showcase {
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
-        itemIcon.getComponent(ZIndexComponent.class).setZIndex(showcaseE.getComponent(ZIndexComponent.class).getZIndex()+1);
+        itemIcon.getComponent(ZIndexComponent.class).setZIndex(showcaseE.getComponent(ZIndexComponent.class).getZIndex() + 1);
 
         tcItem = itemIcon.getComponent(TransformComponent.class);
         tcItem.x = 445;

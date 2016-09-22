@@ -135,7 +135,6 @@ public class ComponentRetriever {
      * Retrieves Component of provided type from a provided entity
      * @param entity of type Entity to retrieve component from
      * @param type of the component
-     * @param <T>
      *
      * @return Component subclass instance
      */
@@ -158,8 +157,6 @@ public class ComponentRetriever {
     /**
      * This is to add a new mapper type externally, in case of for example implementing the plugin system,
      * where components might be initialized on the fly
-     *
-     * @param type
      */
     @SuppressWarnings("unchecked")
     public static void addMapper(Class type) {

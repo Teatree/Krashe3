@@ -242,10 +242,10 @@ public class SaveMngr {
                 vanComps.add(vc);
                 if (vc.collection != null && !vc.collection.equals("")){
                     if (vanityCollections.get(vc.collection) == null){
-                        vanityCollections.put(vc.name, new VanityCollection(vc));
+                        vanityCollections.put(vc.collection, new VanityCollection(vc));
                     } else {
-                        vanityCollections.get(vc.name).total++;
-                        vanityCollections.get(vc.name).unlocked+=vc.bought ? 1 : 0;
+                        vanityCollections.get(vc.collection).total++;
+                        vanityCollections.get(vc.collection).unlocked+=vc.bought ? 1 : 0;
                     }
                 }
             }
@@ -318,11 +318,13 @@ public class SaveMngr {
         vanity1.name = "Sacrecrow Hat";
         vanity1.icon = "head_top_scarecrow";
         vanity1.shopIcon = "bug_juice_bubble_lib";
+        vanity1.collection = "scarecrow";
         vanity1.assetsToChange.put("head_top", "head_top_scarecrow");
 
         vanity2.cost = 250;
         vanity2.name = "Pot Lettuce";
         vanity2.icon = "deer";
+        vanity2.collection = "scarecrow";
         vanity2.leaves = true;
         vanity2.shopIcon = "item_deer_horns_n";
         vanity2.assetsToChange.put("leaf_right", "leaf_right_lettuce");
