@@ -1,6 +1,7 @@
 package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -57,6 +58,13 @@ public class MenuScreenScript implements IScript {
     private static Entity btnFB;
     private static Entity btnLB;
     private static Entity btnAch;
+
+    public float wrldW = 800;
+    public float wrldH = 524;
+    float dx;
+    float dy;
+
+    public int camPosX = 400;
 
     public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
@@ -202,15 +210,51 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+//        GameStage.viewport.getCamera()
+        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
+        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
+        GameStage.viewport.setWorldSize(wrldW, wrldH);
+        GameStage.viewport.getCamera().translate(camPosX,0,0);
+
         GameScreenScript.checkTryPeriod();
         timer.timer();
 
         if (pauseDialog != null)
             pauseDialog.update(delta);
         if (startGameTransition) {
-            curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
-            if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
+//            curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+//            if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
+//                startGameTransition = false;
+//                GameStage.initGame();
+//            }
+
+            //world size
+            dx = 1200 - 800;
+            dy = 786 - 524;
+
+            float length1 = (float) Math.sqrt(dx * dx + dy * dy);
+            dx /= length1;
+            dy /= length1;
+
+            wrldH += dy * 3.6f;
+            wrldW += dx * 3.6f;
+
+            camPosX = 1200 - (int)GameStage.viewport.getWorldWidth();
+
+            if (menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a >= 0) {
+                menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_SETTINGS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_SHOP).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_GOALS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_FB).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_LEADERBOARD).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                menuItem.getChild(BTN_ACHIEVEMENTS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+            }
+
+            if (GameStage.viewport.getWorldHeight() >= 785) {
                 startGameTransition = false;
+                GameStage.viewport.getCamera().translate(0,0,0);
                 GameStage.initGame();
             }
         }
