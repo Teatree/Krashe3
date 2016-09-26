@@ -285,6 +285,11 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         } else {
             signIn();
         }
+//        if (!isSignedIn()) {
+//            signIn();
+//        }
+//        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
+//                getString(R.string.leaderboard_stars)), requestCode);
     }
 
     @Override
@@ -294,6 +299,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         } else {
             signIn();
         }
+//        if (!isSignedIn()) {
+//            signIn();
+//        }
+//        startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
     }
 
     //TODO: ADD open in FB app

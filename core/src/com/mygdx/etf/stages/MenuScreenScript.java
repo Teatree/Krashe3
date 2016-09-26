@@ -1,18 +1,24 @@
 package com.mygdx.etf.stages;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
+import com.mygdx.etf.entity.componets.ToggleButtonComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
+import com.mygdx.etf.utils.GlobalConstants;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
+import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.GameStage.gameScript;
@@ -32,6 +38,7 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_FB = "btn_fb";
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
+    public static final String BTN_SIGN_IN_OUT = "btn_signInOut";
 
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
@@ -58,6 +65,7 @@ public class MenuScreenScript implements IScript {
     private static Entity btnFB;
     private static Entity btnLB;
     private static Entity btnAch;
+    private static Entity btnSignInOut;
 
     public float wrldW = 800;
     public float wrldH = 524;
@@ -108,6 +116,65 @@ public class MenuScreenScript implements IScript {
         btnAch = menuItem.getChild(BTN_ACHIEVEMENTS).getEntity();
         btnLB = menuItem.getChild(BTN_LEADERBOARD).getEntity();
         btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
+        btnSignInOut = menuItem.getChild(BTN_SIGN_IN_OUT).getEntity();
+
+        ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
+        btnSignInOut.add(signInOutTbc);
+        btnSignInOut.add(new ButtonComponent());
+        btnSignInOut.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
+
+        final LayerMapComponent lc = ComponentRetriever.get(btnSignInOut, LayerMapComponent.class);
+        if (Main.mainController.isSignedIn()) {
+            signInOutTbc.setOff();
+            lc.getLayer(BTN_NORMAL).isVisible = false;
+            lc.getLayer(BTN_PRESSED).isVisible = true;
+        } else {
+            signInOutTbc.setOn();
+            lc.getLayer(BTN_NORMAL).isVisible = true;
+            lc.getLayer(BTN_DEFAULT).isVisible = true;
+            lc.getLayer(BTN_PRESSED).isVisible = false;
+        }
+
+        if (0 == btnSignInOut.getComponent(ButtonComponent.class).listeners.size) {
+            btnSignInOut.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+                private ComponentMapper<ToggleButtonComponent> mapper = ComponentMapper.getFor(ToggleButtonComponent.class);
+
+                @Override
+                public void touchDown() {
+                    btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+                    btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+                    btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+                    btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                }
+
+                @Override
+                public void touchUp() {
+                    btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+                    btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+                    btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+                    btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                }
+
+                @Override
+                public void clicked() {
+                    final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
+                    if (tbc.isOn()) {
+                        lc.getLayer(BTN_NORMAL).isVisible = false;
+                        lc.getLayer(BTN_PRESSED).isVisible = true;
+//                        lc.getLayer(BTN_DEFAULT).isVisible = false;
+                        Main.mainController.signOut();
+                        tbc.setOff();
+                        System.out.println("Signed out");
+                    } else {
+                        lc.getLayer(BTN_NORMAL).isVisible = true;
+                        lc.getLayer(BTN_PRESSED).isVisible = false;
+                        Main.mainController.signIn();
+                        System.out.println("Signed in");
+                        tbc.setOn();
+                    }
+                }
+            });
+        }
 
         btnFB.add(new ButtonComponent());
         btnFB.getComponent(ButtonComponent.class).addListener(
@@ -244,12 +311,13 @@ public class MenuScreenScript implements IScript {
             if (menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a >= 0) {
                 menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
                 menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_SETTINGS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_SHOP).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_GOALS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_FB).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_LEADERBOARD).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild(BTN_ACHIEVEMENTS).getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
+                btnSettings.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnShop.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnGoals.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnFB.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnLB.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnAch.getComponent(TintComponent.class).color.a -= 0.05f;
+                btnSignInOut.getComponent(TintComponent.class).color.a -= 0.05f;
             }
 
             if (GameStage.viewport.getWorldHeight() >= 785) {

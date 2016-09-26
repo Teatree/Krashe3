@@ -316,7 +316,6 @@ public class Settings extends AbstractDialog {
 
                 @Override
                 public void touchDown() {
-
                     soundBtn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
                     soundBtn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
                     soundBtn.getComponent(TransformComponent.class).x += soundBtn.getComponent(DimensionsComponent.class).width / 20;
