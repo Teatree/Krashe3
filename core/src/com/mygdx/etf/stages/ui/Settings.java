@@ -37,9 +37,10 @@ public class Settings extends AbstractDialog {
     public static final String BTN_NO_ADS = "btn_noAds";
 
     public static final int SETTINGS_Y = 50;
-    public static final int SETTINGS_X = 260;
+    public static final int SETTINGS_X = 560;
     public static final int INFO_HIDDEN_X = 1600;
     public static final int SETTINGS_HIDDEN_X = -1000;
+    public static final float SETTINGS_SCALE = 0.65f;
 
     public Entity settingsE;
     private Entity infoE;
@@ -98,6 +99,9 @@ public class Settings extends AbstractDialog {
                         if (!isSecondDialogOpen && isActive) {
                             infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
                             infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
+                            infoE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
+                            infoE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
+
                             ActionComponent acSettings = new ActionComponent();
                             Actions.checkInit();
                             acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
@@ -187,6 +191,8 @@ public class Settings extends AbstractDialog {
         settingsE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), settingsE, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(settingsE);
+        settingsE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
+        settingsE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
     }
 
     private void loadInfoFromLib() {

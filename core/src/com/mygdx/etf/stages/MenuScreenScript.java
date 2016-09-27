@@ -2,7 +2,6 @@ package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
@@ -34,7 +33,6 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_GOALS = "btn_goals";
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
     public static final String CURTAIN = "curtain_mm";
-    public static final String MM_FLOWER = "MM_flower";
     public static final String BTN_FB = "btn_fb";
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
@@ -43,6 +41,7 @@ public class MenuScreenScript implements IScript {
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
     public static final String MM_LEAFS = "MM_leafs";
+    private static final float TINT_STEP = 0.05f;
 
     ItemWrapper menuItem;
     private Settings settings;
@@ -105,6 +104,25 @@ public class MenuScreenScript implements IScript {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
+    }
+
+    public void setupMenuScreenWorld() {
+        wrldW = 800;
+        wrldH = 524;
+        camPosX = 400;
+
+        menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a = 1;
+        menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a = 1;
+        btnSettings.getComponent(TintComponent.class).color.a = 1;
+        btnShop.getComponent(TintComponent.class).color.a = 1;
+        btnGoals.getComponent(TintComponent.class).color.a = 1;
+        btnFB.getComponent(TintComponent.class).color.a = 1;
+        btnLB.getComponent(TintComponent.class).color.a = 1;
+        btnAch.getComponent(TintComponent.class).color.a = 1;
+        btnSignInOut.getComponent(TintComponent.class).color.a = 1;
+
+        GameStage.viewport.setWorldSize(wrldW, wrldH);
+        GameStage.viewport.getCamera().translate(0,0,0);
     }
 
     public void initButtons() {
@@ -262,7 +280,7 @@ public class MenuScreenScript implements IScript {
 
                             if (pauseDialog == null) {
                                 pauseDialog = new PauseDialog(menuItem);
-                                pauseDialog.init();
+                                pauseDialog.initGoals();
                             }
                             pauseDialog.show();
                         }
@@ -296,35 +314,7 @@ public class MenuScreenScript implements IScript {
 //            }
 
             //world size
-            dx = 1200 - 800;
-            dy = 786 - 524;
-
-            float length1 = (float) Math.sqrt(dx * dx + dy * dy);
-            dx /= length1;
-            dy /= length1;
-
-            wrldH += dy * 3.6f;
-            wrldW += dx * 3.6f;
-
-            camPosX = 1200 - (int)GameStage.viewport.getWorldWidth();
-
-            if (menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a >= 0) {
-                menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a -= 0.05f;
-                btnSettings.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnShop.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnGoals.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnFB.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnLB.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnAch.getComponent(TintComponent.class).color.a -= 0.05f;
-                btnSignInOut.getComponent(TintComponent.class).color.a -= 0.05f;
-            }
-
-            if (GameStage.viewport.getWorldHeight() >= 785) {
-                startGameTransition = false;
-                GameStage.viewport.getCamera().translate(0,0,0);
-                GameStage.initGame();
-            }
+            gameTransition();
         }
 
         if (startShopTransition) {
@@ -340,6 +330,38 @@ public class MenuScreenScript implements IScript {
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
                 startTransitionIn = false;
             }
+        }
+    }
+
+    private void gameTransition() {
+        dx = 1200 - 800;
+        dy = 786 - 524;
+
+        float length1 = (float) Math.sqrt(dx * dx + dy * dy);
+        dx /= length1;
+        dy /= length1;
+
+        wrldH += dy * 4.1f;
+        wrldW += dx * 4.1f;
+
+        camPosX = 1200 - (int) GameStage.viewport.getWorldWidth();
+
+        if (menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a >= 0) {
+            menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
+            menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnSettings.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnShop.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnGoals.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnSignInOut.getComponent(TintComponent.class).color.a -= TINT_STEP;
+        }
+
+        if (GameStage.viewport.getWorldHeight() >= 785) {
+            startGameTransition = false;
+            GameStage.viewport.getCamera().translate(0,0,0);
+            GameStage.initGame();
         }
     }
 

@@ -16,6 +16,8 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.mygdx.etf.stages.ui.Settings.SETTINGS_SCALE;
+
 /**
  * Created by ARudyk on 7/1/2016.
  */
@@ -40,7 +42,7 @@ public class BasicDialog extends AbstractDialog {
     public static final String TYPE_RESTORE_PURCH_RESULT = "restore_purchases_res";
 
     public static final int DIALOG_Y = 130;
-    public static final int DIALOG_X = 260;
+    public static final int DIALOG_X = 630;
     public static final int OK_BTN_X = 110;
     public static final int BTN_Y = 60;
     public static final int CANCEL_BTN_X = 465;
@@ -69,6 +71,8 @@ public class BasicDialog extends AbstractDialog {
         loadFromLib();
         dialogE.getComponent(TransformComponent.class).x = DIALOG_X;
         dialogE.getComponent(TransformComponent.class).y = HIDE_Y;
+        dialogE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
+        dialogE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex());
 
         text = dialogE.getComponent(NodeComponent.class).getChild(DIALOG_TEXT);

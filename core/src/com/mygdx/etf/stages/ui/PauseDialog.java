@@ -22,6 +22,7 @@ import static com.mygdx.etf.stages.GameScreenScript.isPause;
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
+import static com.mygdx.etf.stages.ui.Settings.SETTINGS_SCALE;
 
 public class PauseDialog extends AbstractDialog {
 
@@ -42,6 +43,7 @@ public class PauseDialog extends AbstractDialog {
 
     public static final int PAUSE_Y = 50;
     public static final int PAUSE_X = 260;
+    public static final int GOALS_X = 630;
     public static final int GOAL_TILE_START_Y = 400;
     public static final int GOAL_TILE_SPACE_X = 170;
     public static final float GOAL_TILE_SCALE = 2f;
@@ -53,6 +55,8 @@ public class PauseDialog extends AbstractDialog {
     public static final String NOTACHIEVED = "notachieved";
     public static final String ENTER = " \n ";
     public static final int PAUSE_Y_UP = 460;
+    private static final String PAUSE_TEXT = "Pause";
+    private static final String CHALLENGES = "Challenges";
 
     private Map<Goal, Entity> tiles;
     private ItemWrapper gameItem;
@@ -64,6 +68,7 @@ public class PauseDialog extends AbstractDialog {
     private int tapCoolDown = 30;
 
     private String goalProgressValue;
+    private float popupX;
 
     public PauseDialog(ItemWrapper gameItem) {
         tiles = new HashMap<>();
@@ -97,7 +102,36 @@ public class PauseDialog extends AbstractDialog {
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
         }
+
+        final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
+        LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
+        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), PAUSE_TEXT);
+
+        final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
+        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), PAUSE_TEXT);
+
         createGoalTiles();
+
+        popupX = PAUSE_X;
+    }
+
+    public void initGoals() {
+        init();
+
+        final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
+        LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
+        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), CHALLENGES);
+
+        final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
+        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), CHALLENGES);
+
+
+        pauseDialogE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
+        pauseDialogE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
+
+        popupX = GOALS_X;
     }
 
     private void closePauseDialog() {
@@ -122,21 +156,13 @@ public class PauseDialog extends AbstractDialog {
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
         }
 
-        final Entity goalLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_S);
-        LabelComponent goalsLabelComps = goalLabels.getComponent(LabelComponent.class);
-        goalsLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "Pause");
-
-        final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
-        LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), "Pause");
-
         final Entity levelLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR_S);
         LabelComponent levelLabelComps = levelLabels.getComponent(LabelComponent.class);
-        levelLabelComps.text.replace(0, goalsLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
+        levelLabelComps.text.replace(0, levelLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
 
         final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
         LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
-        levelLabelsComp.text.replace(0, goalsLabelComp.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
+        levelLabelsComp.text.replace(0, levelLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
@@ -144,13 +170,13 @@ public class PauseDialog extends AbstractDialog {
             y -= GOAL_TILE_STEP_Y;
         }
 
-        pauseDialogE.getComponent(TransformComponent.class).x = PAUSE_X;
+        pauseDialogE.getComponent(TransformComponent.class).x = popupX;
         pauseDialogE.getComponent(TransformComponent.class).y = PAUSE_Y_UP;
         pauseDialogE.getComponent(ZIndexComponent.class).setZIndex(100);
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(PAUSE_X, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveTo(popupX, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         pauseDialogE.add(ac);
     }
 
