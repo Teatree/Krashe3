@@ -33,7 +33,6 @@ public class FlowerSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-
         SpriterComponent spriterComponentFlower = ComponentRetriever.get(entity, SpriterComponent.class);
         spriterComponentFlower.scale = FLOWER_SCALE;
 
@@ -57,7 +56,6 @@ public class FlowerSystem extends IteratingSystem {
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             sc.player.speed = FPS;
-
 
             if (state.equals(IDLE_BITE)) {
                 setBiteIdleAnimation(sc);

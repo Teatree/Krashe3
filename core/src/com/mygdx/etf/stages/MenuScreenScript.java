@@ -42,6 +42,8 @@ public class MenuScreenScript implements IScript {
     public static final int TIMER_Y = 500;
     public static final String MM_LEAFS = "MM_leafs";
     private static final float TINT_STEP = 0.05f;
+    private static final String IMG_LOGO = "img_logo";
+    private static final String TAP_TO_PLAY = "tap_to_play";
 
     ItemWrapper menuItem;
     private Settings settings;
@@ -72,6 +74,7 @@ public class MenuScreenScript implements IScript {
     float dy;
 
     public int camPosX = 400;
+    private double transitionCoefficient;
 
     public MenuScreenScript() {
         showGoalNotification = Level.goalStatusChanged;
@@ -111,8 +114,8 @@ public class MenuScreenScript implements IScript {
         wrldH = 524;
         camPosX = 400;
 
-        menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a = 1;
-        menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a = 1;
+        menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
+        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
         btnSettings.getComponent(TintComponent.class).color.a = 1;
         btnShop.getComponent(TintComponent.class).color.a = 1;
         btnGoals.getComponent(TintComponent.class).color.a = 1;
@@ -122,7 +125,7 @@ public class MenuScreenScript implements IScript {
         btnSignInOut.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
-        GameStage.viewport.getCamera().translate(0,0,0);
+        GameStage.viewport.getCamera().translate(0, 0, 0);
     }
 
     public void initButtons() {
@@ -296,10 +299,10 @@ public class MenuScreenScript implements IScript {
     @Override
     public void act(float delta) {
 //        GameStage.viewport.getCamera()
-        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
-        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
+//        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
+//        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
         GameStage.viewport.setWorldSize(wrldW, wrldH);
-        GameStage.viewport.getCamera().translate(camPosX,0,0);
+        GameStage.viewport.getCamera().translate(camPosX, 0, 0);
 
         GameScreenScript.checkTryPeriod();
         timer.timer();
@@ -314,6 +317,7 @@ public class MenuScreenScript implements IScript {
 //            }
 
             //world size
+            transitionCoefficient = 1;
             gameTransition();
         }
 
@@ -341,14 +345,14 @@ public class MenuScreenScript implements IScript {
         dx /= length1;
         dy /= length1;
 
-        wrldH += dy * 4.1f;
-        wrldW += dx * 4.1f;
-
+        transitionCoefficient += 1.3;
+        wrldH += 6.1f * dy * transitionCoefficient;
+        wrldW += 6.1f * dx * transitionCoefficient;
         camPosX = 1200 - (int) GameStage.viewport.getWorldWidth();
 
-        if (menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a >= 0) {
-            menuItem.getChild("tap_to_play").getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
-            menuItem.getChild("img_logo").getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
+        if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
+            menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
+            menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnSettings.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnShop.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnGoals.getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -360,7 +364,7 @@ public class MenuScreenScript implements IScript {
 
         if (GameStage.viewport.getWorldHeight() >= 785) {
             startGameTransition = false;
-            GameStage.viewport.getCamera().translate(0,0,0);
+            GameStage.viewport.getCamera().translate(0, 0, 0);
             GameStage.initGame();
         }
     }

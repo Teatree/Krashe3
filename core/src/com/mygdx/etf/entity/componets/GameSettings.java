@@ -65,14 +65,14 @@ public class GameSettings {
     }
 
     public boolean shouldShowLaunchAd() {
-        if (!noAds && Main.mainController.isWifiConnected() &&
-                totalPlayedGames >= start_launchAd &&
-                playedGames % fatigue_launchAd == 0) {
-            resetFatigueLaunchAd();
-            return true;
-        } else {
+//        if (!noAds && Main.mainController.isWifiConnected() &&
+//                totalPlayedGames >= start_launchAd &&
+//                playedGames % fatigue_launchAd == 0) {
+//            resetFatigueLaunchAd();
+//            return true;
+//        } else {
             return false;
-        }
+//        }
     }
 
     public boolean shouldShowShopAd() {
