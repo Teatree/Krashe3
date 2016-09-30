@@ -10,6 +10,8 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.Random;
 
+import static com.mygdx.etf.stages.GameStage.sceneLoader;
+
 public class PetComponent extends ShopItem implements Component {
 
     public static final int OUTSIDE_DURATION_MAX = 1000;
@@ -18,6 +20,8 @@ public class PetComponent extends ShopItem implements Component {
     public static final float X_SPAWN_POSITION = 1150;
     public static final int Y_SPAWN_POSITION_MAX = 568;
     public static final int Y_SPAWN_POSITION_MIN = 370;
+    private static final String HEAD_PREFFIX = "_head";
+    private static final String PET_CANNON = "pet_cannon";
 
     public State state;
     public Rectangle boundsRect;
@@ -36,7 +40,7 @@ public class PetComponent extends ShopItem implements Component {
     public String petCannonName;
     public Entity petCannon;
 
-//    public String petName;
+    //    public String petName;
     public Entity petHead;
 
     public int stageCounter;
@@ -77,7 +81,7 @@ public class PetComponent extends ShopItem implements Component {
             if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;
                 pet.isCollision = true;
-            }else if(pet.state.equals(State.DASH)){
+            } else if (pet.state.equals(State.DASH)) {
                 pet.isBiteDash = true;
             }
         }
@@ -154,14 +158,15 @@ public class PetComponent extends ShopItem implements Component {
     }
 
     private void loadFromLib(String petName) {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(petName+"_head").clone();
+        sceneLoader.rm.addSpriterToLoad(petName + HEAD_PREFFIX);
+        sceneLoader.rm.addSpriterToLoad(PET_CANNON);
+
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(petName + HEAD_PREFFIX);
         petHead = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petHead, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(petHead);
 
-        CompositeItemVO tempItemCannon = GameStage.sceneLoader.loadVoFromLibrary(petCannonName).clone();
+        CompositeItemVO tempItemCannon = GameStage.sceneLoader.loadVoFromLibrary(petCannonName);
         petCannon = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemCannon);
-//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petCannon, tempItemCannon.composite);
         GameStage.sceneLoader.getEngine().addEntity(petCannon);
     }
 }

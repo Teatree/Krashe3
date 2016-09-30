@@ -345,19 +345,9 @@ public class GameScreenScript implements IScript {
 
     public void initPet() {
         if (fpc.currentPet != null) {
-//            Entity petE = gameItem.getChild(fpc.currentPet.name).getEntity();
-
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name).clone();
-            FileHandle animFilePet = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + fpc.currentPet.name + File.separator + fpc.currentPet.name + ".scml");
-            sceneLoader.rm.spriterAnimations.put(fpc.currentPet.name, animFilePet);
-            FileHandle animFileHead = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + fpc.currentPet.name + "_head" + File.separator + fpc.currentPet.name + "_head" + ".scml");
-            sceneLoader.rm.spriterAnimations.put(fpc.currentPet.name + "_head", animFileHead);
-
-            FileHandle animFileCannon = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + "pet_cannon" + File.separator + "pet_cannon" + ".scml");
-            sceneLoader.rm.spriterAnimations.put("pet_cannon", animFileCannon);
-
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
+            sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
             Entity petE = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-//            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(petE);
 
             if (fpc.currentPet.enabled) {
