@@ -18,9 +18,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.mygdx.etf.stages.ui.Settings.SETTINGS_SCALE;
 
-/**
- * Created by ARudyk on 7/1/2016.
- */
 public class BasicDialog extends AbstractDialog {
 
     public static final String RESET_ALL_PROGRESS = "RESET ALL PROGRESS. ARE YOU SURE?";

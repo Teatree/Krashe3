@@ -147,6 +147,9 @@ public class GameStage extends Stage {
     }
 
     public static void initShop() {
+        GameStage.viewport.setWorldSize(1200, 786);
+        GameStage.viewport.getCamera().translate(0, 0, 0);
+
         sceneLoader.setScene(SHOP_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (shopScript == null) {
