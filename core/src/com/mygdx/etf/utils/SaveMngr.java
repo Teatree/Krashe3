@@ -653,7 +653,7 @@ public class SaveMngr {
             this.discountTransactionId = petComponent.discountTransactionId;
 
             this.petCannonName = petComponent.petCannonName;
-            this.petHeadName = petComponent.petHeadName;
+//            this.petHeadName = petComponent.petHeadName;
         }
     }
 

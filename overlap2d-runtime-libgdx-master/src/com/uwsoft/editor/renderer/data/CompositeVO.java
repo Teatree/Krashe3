@@ -382,6 +382,7 @@ public class CompositeVO {
                 vo.loadFromEntity(entity);
                 sSpriterAnimations.add(vo);
             }
+
             if(entityType == EntityFactory.SPINE_TYPE) {
                 SpineVO vo = new SpineVO();
                 vo.loadFromEntity(entity);

@@ -67,14 +67,14 @@ public class GameStage extends Stage {
         }
 
     }
-
-    public static void updateFlowerAni() {
-        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
-        if (sceneLoader.rootEntity != null) {
-            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
-                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
-        }
-    }
+//
+//    public static void updateFlowerAni() {
+//        ((ResourceManager) sceneLoader.getRm()).loadSpriterAnimations();
+//        if (sceneLoader.rootEntity != null) {
+//            sceneLoader.entityFactory.updateSpriterAnimation(sceneLoader.engine, sceneLoader.rootEntity,
+//                    sceneLoader.sceneVO.composite.sComposites.get(0).composite.sSpriterAnimations);
+//        }
+//    }
 
     public static void initGame() {
 //        Main.printMemoryInfo();

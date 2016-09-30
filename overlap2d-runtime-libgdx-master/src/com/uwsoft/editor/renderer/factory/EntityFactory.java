@@ -179,7 +179,17 @@ public class EntityFactory {
 		compositeComponentFactory.createComponents(root, entity, vo);
 
 		postProcessEntity(entity);
-		
+
+		return entity;
+	}
+
+	public Entity createSpriterEntity(Entity root, CompositeItemVO vo){
+
+		Entity entity = new Entity();
+
+		spriterComponentFactory.createComponents(root, entity, vo.composite.sSpriterAnimations.get(0));
+		postProcessEntity(entity);
+
 		return entity;
 	}
 

@@ -3,6 +3,7 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -18,9 +19,11 @@ import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.io.File;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.CocoonComponent.*;
@@ -227,10 +230,10 @@ public class GameScreenScript implements IScript {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
 //            tc.scaleX = 1;
 //            tc.scaleY = 0.6f;
-            if(gameScript.fpc.havePhoenixDouble()) {
+            if (gameScript.fpc.havePhoenixDouble()) {
                 tc.x = 117;
                 tc.y = 675;
-            }else{
+            } else {
                 tc.x = 15;
                 tc.y = 675;
             }
@@ -342,7 +345,21 @@ public class GameScreenScript implements IScript {
 
     public void initPet() {
         if (fpc.currentPet != null) {
-            Entity petE = gameItem.getChild(fpc.currentPet.name).getEntity();
+//            Entity petE = gameItem.getChild(fpc.currentPet.name).getEntity();
+
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name).clone();
+            FileHandle animFilePet = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + fpc.currentPet.name + File.separator + fpc.currentPet.name + ".scml");
+            sceneLoader.rm.spriterAnimations.put(fpc.currentPet.name, animFilePet);
+            FileHandle animFileHead = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + fpc.currentPet.name + "_head" + File.separator + fpc.currentPet.name + "_head" + ".scml");
+            sceneLoader.rm.spriterAnimations.put(fpc.currentPet.name + "_head", animFileHead);
+
+            FileHandle animFileCannon = Gdx.files.local("orig" + File.separator + sceneLoader.rm.spriterAnimationsPath + File.separator + "pet_cannon" + File.separator + "pet_cannon" + ".scml");
+            sceneLoader.rm.spriterAnimations.put("pet_cannon", animFileCannon);
+
+            Entity petE = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+//            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(petE);
+
             if (fpc.currentPet.enabled) {
                 fpc.currentPet.init();
 
@@ -352,8 +369,8 @@ public class GameScreenScript implements IScript {
                 tc.scaleX = 1.3f;
                 tc.scaleY = 1.3f;
 
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x+64;
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y-9;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
                 fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
                 petE.add(fpc.currentPet);
@@ -442,7 +459,7 @@ public class GameScreenScript implements IScript {
         gameOverReviveTimesLimit--;
         if (gameOverReviveTimesLimit <= 0) {
             shouldShowGameOverDialog = false;
-        }else{
+        } else {
             shouldShowGameOverDialog = true;
         }
 

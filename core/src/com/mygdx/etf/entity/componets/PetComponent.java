@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.SaveMngr;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.Random;
 
@@ -35,7 +36,7 @@ public class PetComponent extends ShopItem implements Component {
     public String petCannonName;
     public Entity petCannon;
 
-    public String petHeadName;
+//    public String petName;
     public Entity petHead;
 
     public int stageCounter;
@@ -60,7 +61,7 @@ public class PetComponent extends ShopItem implements Component {
         this.tryPeriodStart = petJson.tryPeriodStart;
         this.transactionId = petJson.transactionId;
         this.petCannonName = petJson.petCannonName;
-        this.petHeadName = petJson.petHeadName;
+//        this.petName = petJson.petName;
         this.logoName = petJson.logoName;
         this.discountTransactionId = petJson.discountTransactionId;
 //        init();
@@ -87,8 +88,9 @@ public class PetComponent extends ShopItem implements Component {
         this.boundsRect = new Rectangle();
         eatenBugsCounter = 0;
 
-        petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
-        petHead = GameStage.gameScript.gameItem.getChild("pet_head").getEntity();
+        loadFromLib(name);
+//        petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
+//        petHead = GameStage.gameScript.gameItem.getChild(name+"_head").getEntity();
         stageCounter = 0;
     }
 
@@ -151,4 +153,15 @@ public class PetComponent extends ShopItem implements Component {
         OUTSIDE
     }
 
+    private void loadFromLib(String petName) {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(petName+"_head").clone();
+        petHead = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petHead, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(petHead);
+
+        CompositeItemVO tempItemCannon = GameStage.sceneLoader.loadVoFromLibrary(petCannonName).clone();
+        petCannon = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemCannon);
+//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), petCannon, tempItemCannon.composite);
+        GameStage.sceneLoader.getEngine().addEntity(petCannon);
+    }
 }

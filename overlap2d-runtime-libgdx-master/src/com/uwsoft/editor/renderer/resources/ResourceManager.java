@@ -60,7 +60,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     protected HashMap<String, FileHandle> skeletonJSON = new HashMap<String, FileHandle>();
 
     protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<String, TextureAtlas>();
-    protected HashMap<String, FileHandle> spriterAnimations = new HashMap<String, FileHandle>();
+    public HashMap<String, FileHandle> spriterAnimations = new HashMap<String, FileHandle>();
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
     protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
 

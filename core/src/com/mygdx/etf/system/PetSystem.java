@@ -53,7 +53,7 @@ public class PetSystem extends IteratingSystem {
         TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
         SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
 
-        DimensionsComponent dcPetHead = entity.getComponent(DimensionsComponent.class);
+//        DimensionsComponent dcPetHead = entity.getComponent(DimensionsComponent.class);
         TransformComponent tcPetHead = pc.petHead.getComponent(TransformComponent.class);
         SpriterComponent scPetHead = pc.petHead.getComponent(SpriterComponent.class);
 
