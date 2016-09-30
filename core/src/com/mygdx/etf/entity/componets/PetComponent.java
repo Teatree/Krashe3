@@ -101,7 +101,9 @@ public class PetComponent extends ShopItem implements Component {
     @Override
     public void apply() {
         this.enabled = true;
+        GameStage.gameScript.hideCurrentPet();
         GameStage.gameScript.fpc.currentPet = this;
+//        GameStage.gameScript.initPet();
     }
 
     @Override

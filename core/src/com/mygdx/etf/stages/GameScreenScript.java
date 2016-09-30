@@ -85,6 +85,7 @@ public class GameScreenScript implements IScript {
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     public static boolean shouldShowGameOverDialog;
+    private Entity petE;
 
     public GameScreenScript(GameStage gamestage) {
         this.stage = gamestage;
@@ -343,11 +344,29 @@ public class GameScreenScript implements IScript {
         flowerEntity.add(fpc);
     }
 
+    public void hideCurrentPet(){
+        if (gameScript.fpc.currentPet != null) {
+//            gameScript.fpc.currentPet.disable();
+            if (petE != null) {
+                petE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                sceneLoader.getEngine().removeEntity(petE);
+            }
+            if (gameScript.fpc.currentPet.petHead != null) {
+                gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petCannon);
+                sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petHead);
+            }
+        }
+    }
+
     public void initPet() {
+        hideCurrentPet();
         if (fpc.currentPet != null) {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
             sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
-            Entity petE = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            petE = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.getEngine().addEntity(petE);
 
             if (fpc.currentPet.enabled) {

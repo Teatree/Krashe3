@@ -58,7 +58,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public void getBirdPet(PetComponent pet) {
-        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
+        pet.buyAndUse();
         System.out.println("pay to get pet");
     }
 
