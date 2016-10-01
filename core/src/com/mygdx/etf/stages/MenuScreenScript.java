@@ -37,6 +37,7 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
     public static final String BTN_SIGN_IN_OUT = "btn_signInOut";
+    public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
     public static final int TIMER_X = 680;
     public static final int TIMER_Y = 500;
@@ -66,6 +67,7 @@ public class MenuScreenScript implements IScript {
     private static Entity btnFB;
     private static Entity btnLB;
     private static Entity btnAch;
+    private static Entity btnPlayServices;
     private static Entity btnSignInOut;
 
     public float wrldW = 800;
@@ -133,6 +135,7 @@ public class MenuScreenScript implements IScript {
         btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
+        btnPlayServices = menuItem.getChild(BTN_PLAY_SERVICES).getEntity();
         btnFB = menuItem.getChild(BTN_FB).getEntity();
         btnAch = menuItem.getChild(BTN_ACHIEVEMENTS).getEntity();
         btnLB = menuItem.getChild(BTN_LEADERBOARD).getEntity();
@@ -360,6 +363,8 @@ public class MenuScreenScript implements IScript {
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnSignInOut.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            rateAppBtn.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
         }
 
         if (GameStage.viewport.getWorldHeight() >= 785) {
