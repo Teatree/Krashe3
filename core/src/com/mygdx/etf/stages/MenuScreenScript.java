@@ -2,6 +2,7 @@ package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
 import com.mygdx.etf.entity.componets.ToggleButtonComponent;
@@ -10,15 +11,15 @@ import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.LayerMapComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
+
+import javax.swing.*;
 
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
@@ -35,8 +36,11 @@ public class MenuScreenScript implements IScript {
     public static final String CURTAIN = "curtain_mm";
     public static final String BTN_FB = "btn_fb";
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
+    public static final String LEADERBOARD_C = "lederboard_composite";
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
+    public static final String ACHIEVEMENTS_C = "achievements_composite";
     public static final String BTN_SIGN_IN_OUT = "btn_signInOut";
+    public static final String SIGN_IN_OUT_C = "login_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
     public static final int TIMER_X = 680;
@@ -45,6 +49,9 @@ public class MenuScreenScript implements IScript {
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
+
+    public boolean playServiceFlapIsOut = false;
+    public boolean movingFlaps = false;
 
     ItemWrapper menuItem;
     private Settings settings;
@@ -69,6 +76,9 @@ public class MenuScreenScript implements IScript {
     private static Entity btnAch;
     private static Entity btnPlayServices;
     private static Entity btnSignInOut;
+    private static Entity leaderboard_C;
+    private static Entity login_C;
+    private static Entity achievements_C;
 
     public float wrldW = 800;
     public float wrldH = 524;
@@ -137,10 +147,15 @@ public class MenuScreenScript implements IScript {
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
         btnPlayServices = menuItem.getChild(BTN_PLAY_SERVICES).getEntity();
         btnFB = menuItem.getChild(BTN_FB).getEntity();
-        btnAch = menuItem.getChild(BTN_ACHIEVEMENTS).getEntity();
-        btnLB = menuItem.getChild(BTN_LEADERBOARD).getEntity();
         btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
-        btnSignInOut = menuItem.getChild(BTN_SIGN_IN_OUT).getEntity();
+
+        leaderboard_C = menuItem.getChild(LEADERBOARD_C).getEntity();
+        achievements_C = menuItem.getChild(ACHIEVEMENTS_C).getEntity();
+        login_C = menuItem.getChild(SIGN_IN_OUT_C).getEntity();
+
+        btnAch = achievements_C.getComponent(NodeComponent.class).getChild(BTN_ACHIEVEMENTS);
+        btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
+        btnSignInOut = login_C.getComponent(NodeComponent.class).getChild(BTN_SIGN_IN_OUT);
 
         ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
         btnSignInOut.add(signInOutTbc);
@@ -165,36 +180,42 @@ public class MenuScreenScript implements IScript {
 
                 @Override
                 public void touchDown() {
-                    btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
-                    btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
-                    btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-                    btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                    if(playServiceFlapIsOut) {
+                        btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+                        btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+                        btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+                        btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                    }
                 }
 
                 @Override
                 public void touchUp() {
-                    btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
-                    btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
-                    btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-                    btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                    if(playServiceFlapIsOut) {
+                        btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+                        btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+                        btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+                        btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+                    }
                 }
 
                 @Override
                 public void clicked() {
-                    final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
-                    if (tbc.isOn()) {
-                        lc.getLayer(BTN_NORMAL).isVisible = false;
-                        lc.getLayer(BTN_PRESSED).isVisible = true;
+                    if(playServiceFlapIsOut) {
+                        final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
+                        if (tbc.isOn()) {
+                            lc.getLayer(BTN_NORMAL).isVisible = false;
+                            lc.getLayer(BTN_PRESSED).isVisible = true;
 //                        lc.getLayer(BTN_DEFAULT).isVisible = false;
-                        Main.mainController.signOut();
-                        tbc.setOff();
-                        System.out.println("Signed out");
-                    } else {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                        Main.mainController.signIn();
-                        System.out.println("Signed in");
-                        tbc.setOn();
+                            Main.mainController.signOut();
+                            tbc.setOff();
+                            System.out.println("Signed out");
+                        } else {
+                            lc.getLayer(BTN_NORMAL).isVisible = true;
+                            lc.getLayer(BTN_PRESSED).isVisible = false;
+                            Main.mainController.signIn();
+                            System.out.println("Signed in");
+                            tbc.setOn();
+                        }
                     }
                 }
             });
@@ -214,7 +235,9 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnAch) {
                     @Override
                     public void clicked() {
-                        Main.mainController.getAchievements();
+                        if(playServiceFlapIsOut) {
+                            Main.mainController.getAchievements();
+                        }
                     }
                 });
 
@@ -223,17 +246,22 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnLB) {
                     @Override
                     public void clicked() {
-                        Main.mainController.getLeaderboard();
+
+                        if(playServiceFlapIsOut) {
+                            Main.mainController.getLeaderboard();
+                        }
                     }
                 });
 
         rateAppBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(rateAppBtn) {
                     @Override
+
                     public void clicked() {
-                        if (!isDialogOpen) {
-                            Main.mainController.rateMyApp();
-                        }
+                            if (!isDialogOpen) {
+                                Main.mainController.rateMyApp();
+                            }
+
                     }
                 });
 
@@ -273,6 +301,29 @@ public class MenuScreenScript implements IScript {
                     }
                 });
 
+        btnPlayServices.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnPlayServices) {
+                    @Override
+                    public void clicked() {
+//                        if(login_C.getComponent(TransformComponent.class).y >= 162) {
+//                        ActionComponent acLogin = new ActionComponent();
+//                        Actions.checkInit();
+//                        if(!playServiceFlapIsOut) {
+//                            acLogin.dataArray.add(Actions.moveTo(416, 162, 0.5f));
+//                        }else{
+//                            acLogin.dataArray.add(Actions.moveTo(416, 330, 0.3f));
+//                        }
+//                        login_C.add(acLogin);
+//
+//                        if(login_C.getComponent(TransformComponent.class).y <= 161){
+//                            playServiceFlapIsOut = true;
+//                        }else if(login_C.getComponent(TransformComponent.class).y >= 329){
+//                            playServiceFlapIsOut = false;
+//                        }
+                        movingFlaps = true;
+                    }
+                });
+
         btnGoals.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnGoals) {
                     @Override
@@ -304,6 +355,51 @@ public class MenuScreenScript implements IScript {
 //        GameStage.viewport.getCamera()
 //        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
 //        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
+
+        //move da other buttons
+        if(movingFlaps) {
+            if (!playServiceFlapIsOut) {
+                if (login_C.getComponent(TransformComponent.class).y > 162) {
+                    login_C.getComponent(TransformComponent.class).y -= 4;
+                    if (login_C.getComponent(TransformComponent.class).y <= 278 && achievements_C.getComponent(TransformComponent.class).y > 215) {
+                        achievements_C.getComponent(TransformComponent.class).y -= 4;
+                        if (achievements_C.getComponent(TransformComponent.class).y <= 279 && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
+                            leaderboard_C.getComponent(TransformComponent.class).y -= 4;
+                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 268.40f) {
+                                playServiceFlapIsOut = true;
+                                movingFlaps = false;
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (login_C.getComponent(TransformComponent.class).y < 330) {
+                    login_C.getComponent(TransformComponent.class).y += 4;
+                    if (login_C.getComponent(TransformComponent.class).y >= 328) {
+                        playServiceFlapIsOut = false;
+                        movingFlaps = false;
+                    }
+                }
+                if (achievements_C.getComponent(TransformComponent.class).y < 330) {
+                    achievements_C.getComponent(TransformComponent.class).y += 4;
+                }
+                if (leaderboard_C.getComponent(TransformComponent.class).y < 328) {
+                    leaderboard_C.getComponent(TransformComponent.class).y += 4;
+                }
+//                    if (login_C.getComponent(TransformComponent.class).y >= 278 && achievements_C.getComponent(TransformComponent.class).y < 331) {
+//                        achievements_C.getComponent(TransformComponent.class).y += 3;
+//                        if (achievements_C.getComponent(TransformComponent.class).y >= 279 && leaderboard_C.getComponent(TransformComponent.class).y < 328) {
+//                            leaderboard_C.getComponent(TransformComponent.class).y += 3;
+//                            if (leaderboard_C.getComponent(TransformComponent.class).y >= 328) {
+//                                playServiceFlapIsOut = false;
+//                                movingFlaps = false;
+//                            }
+//                        }
+//                    }
+//                }
+            }
+        }
+
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(camPosX, 0, 0);
 
@@ -378,4 +474,5 @@ public class MenuScreenScript implements IScript {
         if (pauseDialog != null)
             pauseDialog.deleteTiles();
     }
+
 }
