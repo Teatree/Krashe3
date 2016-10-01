@@ -39,8 +39,6 @@ public class MenuScreenScript implements IScript {
     public static final String LEADERBOARD_C = "lederboard_composite";
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
     public static final String ACHIEVEMENTS_C = "achievements_composite";
-    public static final String BTN_SIGN_IN_OUT = "btn_signInOut";
-    public static final String SIGN_IN_OUT_C = "login_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
     public static final int TIMER_X = 680;
@@ -77,7 +75,6 @@ public class MenuScreenScript implements IScript {
     private static Entity btnPlayServices;
     private static Entity btnSignInOut;
     private static Entity leaderboard_C;
-    private static Entity login_C;
     private static Entity achievements_C;
 
     public float wrldW = 800;
@@ -151,11 +148,9 @@ public class MenuScreenScript implements IScript {
 
         leaderboard_C = menuItem.getChild(LEADERBOARD_C).getEntity();
         achievements_C = menuItem.getChild(ACHIEVEMENTS_C).getEntity();
-        login_C = menuItem.getChild(SIGN_IN_OUT_C).getEntity();
 
         btnAch = achievements_C.getComponent(NodeComponent.class).getChild(BTN_ACHIEVEMENTS);
         btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
-        btnSignInOut = login_C.getComponent(NodeComponent.class).getChild(BTN_SIGN_IN_OUT);
 
         ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
         btnSignInOut.add(signInOutTbc);
@@ -344,9 +339,7 @@ public class MenuScreenScript implements IScript {
         //move da other buttons
         if(movingFlaps) {
             if (!playServiceFlapIsOut) {
-                if (login_C.getComponent(TransformComponent.class).y > 162) {
-                    login_C.getComponent(TransformComponent.class).y -= 4;
-                    if (login_C.getComponent(TransformComponent.class).y <= 275 && achievements_C.getComponent(TransformComponent.class).y > 215) {
+                    if (achievements_C.getComponent(TransformComponent.class).y > 215) {
                         achievements_C.getComponent(TransformComponent.class).y -= 4;
                         if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
                             leaderboard_C.getComponent(TransformComponent.class).y -= 4;
@@ -356,17 +349,13 @@ public class MenuScreenScript implements IScript {
                             }
                         }
                     }
-                }
             } else {
-                if (login_C.getComponent(TransformComponent.class).y < 338) {
-                    login_C.getComponent(TransformComponent.class).y += 4;
-                    if (login_C.getComponent(TransformComponent.class).y >= 338) {
+                if (achievements_C.getComponent(TransformComponent.class).y < 331) {
+                    achievements_C.getComponent(TransformComponent.class).y += 4;
+                    if (achievements_C.getComponent(TransformComponent.class).y >= 338) {
                         playServiceFlapIsOut = false;
                         movingFlaps = false;
                     }
-                }
-                if (achievements_C.getComponent(TransformComponent.class).y < 331) {
-                    achievements_C.getComponent(TransformComponent.class).y += 4;
                 }
                 if (leaderboard_C.getComponent(TransformComponent.class).y < 333) {
                     leaderboard_C.getComponent(TransformComponent.class).y += 4;
