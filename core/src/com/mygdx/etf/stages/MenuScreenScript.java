@@ -180,7 +180,7 @@ public class MenuScreenScript implements IScript {
 
                 @Override
                 public void touchDown() {
-                    if(playServiceFlapIsOut) {
+                    if(playServiceFlapIsOut && !movingFlaps) {
                         btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
                         btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
                         btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
@@ -190,7 +190,7 @@ public class MenuScreenScript implements IScript {
 
                 @Override
                 public void touchUp() {
-                    if(playServiceFlapIsOut) {
+                    if(playServiceFlapIsOut && !movingFlaps) {
                         btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
                         btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
                         btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
@@ -200,7 +200,7 @@ public class MenuScreenScript implements IScript {
 
                 @Override
                 public void clicked() {
-                    if(playServiceFlapIsOut) {
+                    if(playServiceFlapIsOut && !movingFlaps) {
                         final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
                         if (tbc.isOn()) {
                             lc.getLayer(BTN_NORMAL).isVisible = false;
@@ -305,21 +305,6 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnPlayServices) {
                     @Override
                     public void clicked() {
-//                        if(login_C.getComponent(TransformComponent.class).y >= 162) {
-//                        ActionComponent acLogin = new ActionComponent();
-//                        Actions.checkInit();
-//                        if(!playServiceFlapIsOut) {
-//                            acLogin.dataArray.add(Actions.moveTo(416, 162, 0.5f));
-//                        }else{
-//                            acLogin.dataArray.add(Actions.moveTo(416, 330, 0.3f));
-//                        }
-//                        login_C.add(acLogin);
-//
-//                        if(login_C.getComponent(TransformComponent.class).y <= 161){
-//                            playServiceFlapIsOut = true;
-//                        }else if(login_C.getComponent(TransformComponent.class).y >= 329){
-//                            playServiceFlapIsOut = false;
-//                        }
                         movingFlaps = true;
                     }
                 });
@@ -361,11 +346,11 @@ public class MenuScreenScript implements IScript {
             if (!playServiceFlapIsOut) {
                 if (login_C.getComponent(TransformComponent.class).y > 162) {
                     login_C.getComponent(TransformComponent.class).y -= 4;
-                    if (login_C.getComponent(TransformComponent.class).y <= 278 && achievements_C.getComponent(TransformComponent.class).y > 215) {
+                    if (login_C.getComponent(TransformComponent.class).y <= 275 && achievements_C.getComponent(TransformComponent.class).y > 215) {
                         achievements_C.getComponent(TransformComponent.class).y -= 4;
-                        if (achievements_C.getComponent(TransformComponent.class).y <= 279 && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
+                        if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
                             leaderboard_C.getComponent(TransformComponent.class).y -= 4;
-                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 268.40f) {
+                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 275.40f) {
                                 playServiceFlapIsOut = true;
                                 movingFlaps = false;
                             }
@@ -373,30 +358,19 @@ public class MenuScreenScript implements IScript {
                     }
                 }
             } else {
-                if (login_C.getComponent(TransformComponent.class).y < 330) {
+                if (login_C.getComponent(TransformComponent.class).y < 338) {
                     login_C.getComponent(TransformComponent.class).y += 4;
-                    if (login_C.getComponent(TransformComponent.class).y >= 328) {
+                    if (login_C.getComponent(TransformComponent.class).y >= 338) {
                         playServiceFlapIsOut = false;
                         movingFlaps = false;
                     }
                 }
-                if (achievements_C.getComponent(TransformComponent.class).y < 330) {
+                if (achievements_C.getComponent(TransformComponent.class).y < 331) {
                     achievements_C.getComponent(TransformComponent.class).y += 4;
                 }
-                if (leaderboard_C.getComponent(TransformComponent.class).y < 328) {
+                if (leaderboard_C.getComponent(TransformComponent.class).y < 333) {
                     leaderboard_C.getComponent(TransformComponent.class).y += 4;
                 }
-//                    if (login_C.getComponent(TransformComponent.class).y >= 278 && achievements_C.getComponent(TransformComponent.class).y < 331) {
-//                        achievements_C.getComponent(TransformComponent.class).y += 3;
-//                        if (achievements_C.getComponent(TransformComponent.class).y >= 279 && leaderboard_C.getComponent(TransformComponent.class).y < 328) {
-//                            leaderboard_C.getComponent(TransformComponent.class).y += 3;
-//                            if (leaderboard_C.getComponent(TransformComponent.class).y >= 328) {
-//                                playServiceFlapIsOut = false;
-//                                movingFlaps = false;
-//                            }
-//                        }
-//                    }
-//                }
             }
         }
 
