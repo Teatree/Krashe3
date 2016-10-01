@@ -73,7 +73,6 @@ public class MenuScreenScript implements IScript {
     private static Entity btnLB;
     private static Entity btnAch;
     private static Entity btnPlayServices;
-    private static Entity btnSignInOut;
     private static Entity leaderboard_C;
     private static Entity achievements_C;
 
@@ -131,7 +130,6 @@ public class MenuScreenScript implements IScript {
         btnFB.getComponent(TintComponent.class).color.a = 1;
         btnLB.getComponent(TintComponent.class).color.a = 1;
         btnAch.getComponent(TintComponent.class).color.a = 1;
-        btnSignInOut.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -153,68 +151,68 @@ public class MenuScreenScript implements IScript {
         btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
 
         ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
-        btnSignInOut.add(signInOutTbc);
-        btnSignInOut.add(new ButtonComponent());
-        btnSignInOut.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
+//        btnSignInOut.add(signInOutTbc);
+//        btnSignInOut.add(new ButtonComponent());
+//        btnSignInOut.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
 
-        final LayerMapComponent lc = ComponentRetriever.get(btnSignInOut, LayerMapComponent.class);
-        if (Main.mainController.isSignedIn()) {
-            signInOutTbc.setOff();
-            lc.getLayer(BTN_NORMAL).isVisible = false;
-            lc.getLayer(BTN_PRESSED).isVisible = true;
-        } else {
-            signInOutTbc.setOn();
-            lc.getLayer(BTN_NORMAL).isVisible = true;
-            lc.getLayer(BTN_DEFAULT).isVisible = true;
-            lc.getLayer(BTN_PRESSED).isVisible = false;
-        }
+//        final LayerMapComponent lc = ComponentRetriever.get(btnSignInOut, LayerMapComponent.class);
+//        if (Main.mainController.isSignedIn()) {
+//            signInOutTbc.setOff();
+//            lc.getLayer(BTN_NORMAL).isVisible = false;
+//            lc.getLayer(BTN_PRESSED).isVisible = true;
+//        } else {
+//            signInOutTbc.setOn();
+//            lc.getLayer(BTN_NORMAL).isVisible = true;
+//            lc.getLayer(BTN_DEFAULT).isVisible = true;
+//            lc.getLayer(BTN_PRESSED).isVisible = false;
+//        }
 
-        if (0 == btnSignInOut.getComponent(ButtonComponent.class).listeners.size) {
-            btnSignInOut.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                private ComponentMapper<ToggleButtonComponent> mapper = ComponentMapper.getFor(ToggleButtonComponent.class);
-
-                @Override
-                public void touchDown() {
-                    if(playServiceFlapIsOut && !movingFlaps) {
-                        btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
-                        btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
-                        btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-                        btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
-                    }
-                }
-
-                @Override
-                public void touchUp() {
-                    if(playServiceFlapIsOut && !movingFlaps) {
-                        btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
-                        btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
-                        btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-                        btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
-                    }
-                }
-
-                @Override
-                public void clicked() {
-                    if(playServiceFlapIsOut && !movingFlaps) {
-                        final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
-                        if (tbc.isOn()) {
-                            lc.getLayer(BTN_NORMAL).isVisible = false;
-                            lc.getLayer(BTN_PRESSED).isVisible = true;
-//                        lc.getLayer(BTN_DEFAULT).isVisible = false;
-                            Main.mainController.signOut();
-                            tbc.setOff();
-                            System.out.println("Signed out");
-                        } else {
-                            lc.getLayer(BTN_NORMAL).isVisible = true;
-                            lc.getLayer(BTN_PRESSED).isVisible = false;
-                            Main.mainController.signIn();
-                            System.out.println("Signed in");
-                            tbc.setOn();
-                        }
-                    }
-                }
-            });
-        }
+//        if (0 == btnSignInOut.getComponent(ButtonComponent.class).listeners.size) {
+//            btnSignInOut.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+//                private ComponentMapper<ToggleButtonComponent> mapper = ComponentMapper.getFor(ToggleButtonComponent.class);
+//
+//                @Override
+//                public void touchDown() {
+//                    if(playServiceFlapIsOut && !movingFlaps) {
+//                        btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+//                        btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+//                        btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+//                        btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+//                    }
+//                }
+//
+//                @Override
+//                public void touchUp() {
+//                    if(playServiceFlapIsOut && !movingFlaps) {
+//                        btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+//                        btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+//                        btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
+//                        btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
+//                    }
+//                }
+//
+//                @Override
+//                public void clicked() {
+//                    if(playServiceFlapIsOut && !movingFlaps) {
+//                        final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
+//                        if (tbc.isOn()) {
+//                            lc.getLayer(BTN_NORMAL).isVisible = false;
+//                            lc.getLayer(BTN_PRESSED).isVisible = true;
+////                        lc.getLayer(BTN_DEFAULT).isVisible = false;
+//                            Main.mainController.signOut();
+//                            tbc.setOff();
+//                            System.out.println("Signed out");
+//                        } else {
+//                            lc.getLayer(BTN_NORMAL).isVisible = true;
+//                            lc.getLayer(BTN_PRESSED).isVisible = false;
+//                            Main.mainController.signIn();
+//                            System.out.println("Signed in");
+//                            tbc.setOn();
+//                        }
+//                    }
+//                }
+//            });
+//        }
 
         btnFB.add(new ButtonComponent());
         btnFB.getComponent(ButtonComponent.class).addListener(
@@ -341,7 +339,7 @@ public class MenuScreenScript implements IScript {
             if (!playServiceFlapIsOut) {
                     if (achievements_C.getComponent(TransformComponent.class).y > 215) {
                         achievements_C.getComponent(TransformComponent.class).y -= 4;
-                        if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
+                        if (achievements_C.getComponent(TransformComponent.class).y <= 280.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
                             leaderboard_C.getComponent(TransformComponent.class).y -= 4;
                             if (leaderboard_C.getComponent(TransformComponent.class).y <= 275.40f) {
                                 playServiceFlapIsOut = true;
@@ -352,7 +350,7 @@ public class MenuScreenScript implements IScript {
             } else {
                 if (achievements_C.getComponent(TransformComponent.class).y < 331) {
                     achievements_C.getComponent(TransformComponent.class).y += 4;
-                    if (achievements_C.getComponent(TransformComponent.class).y >= 338) {
+                    if (achievements_C.getComponent(TransformComponent.class).y >= 331) {
                         playServiceFlapIsOut = false;
                         movingFlaps = false;
                     }
@@ -421,7 +419,6 @@ public class MenuScreenScript implements IScript {
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnSignInOut.getComponent(TintComponent.class).color.a -= TINT_STEP;
             rateAppBtn.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
         }
