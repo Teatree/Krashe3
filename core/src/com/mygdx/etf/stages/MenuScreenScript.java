@@ -33,6 +33,8 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_RATE = "btn_rate";
     public static final String BTN_GOALS = "btn_goals";
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
+    public static final String LBL_GOALS_NOTIFICATION_SH = "label_goal_notification_sh";
+    public static final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
     public static final String CURTAIN = "curtain_mm";
     public static final String BTN_FB = "btn_fb";
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
@@ -41,8 +43,8 @@ public class MenuScreenScript implements IScript {
     public static final String ACHIEVEMENTS_C = "achievements_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
-    public static final int TIMER_X = 680;
-    public static final int TIMER_Y = 500;
+    public static final int TIMER_X = 1018;
+    public static final int TIMER_Y = 441;
     public static final String MM_LEAFS = "MM_leafs";
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
@@ -63,7 +65,9 @@ public class MenuScreenScript implements IScript {
 
     private static TrialTimer timer;
     private static PauseDialog pauseDialog;
+    private static Entity imgGoalNotification;
     private static Entity lblGoalNotification;
+    private static Entity lblGoalNotificationSh;
     private static Entity playBtn;
     private static Entity btnShop;
     private static Entity btnSettings;
@@ -81,7 +85,7 @@ public class MenuScreenScript implements IScript {
     float dx;
     float dy;
 
-    public int camPosX = 400;
+    public int camPosX = 430;
     private double transitionCoefficient;
 
     public MenuScreenScript() {
@@ -111,25 +115,41 @@ public class MenuScreenScript implements IScript {
             lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             LabelComponent lc = lblGoalNotification.getComponent(LabelComponent.class);
             lc.text.replace(0, lc.text.length, gameScript.fpc.level.getRemainingGoals());
+            lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+            LabelComponent lcSh = lblGoalNotificationSh.getComponent(LabelComponent.class);
+            lcSh.text.replace(0, lcSh.text.length, gameScript.fpc.level.getRemainingGoals());
+            imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+            imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
         } else {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+            lblGoalNotificationSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+            imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
         }
     }
 
     public void setupMenuScreenWorld() {
         wrldW = 800;
         wrldH = 524;
-        camPosX = 400;
+        camPosX = 430;
 
         menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
         btnSettings.getComponent(TintComponent.class).color.a = 1;
+        btnPlayServices.getComponent(TintComponent.class).color.a = 1;
+        rateAppBtn.getComponent(TintComponent.class).color.a = 1;
         btnShop.getComponent(TintComponent.class).color.a = 1;
         btnGoals.getComponent(TintComponent.class).color.a = 1;
         btnFB.getComponent(TintComponent.class).color.a = 1;
         btnLB.getComponent(TintComponent.class).color.a = 1;
         btnAch.getComponent(TintComponent.class).color.a = 1;
+        leaderboard_C.getComponent(TintComponent.class).color.a = 1;
+        achievements_C.getComponent(TintComponent.class).color.a = 1;
+        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
+        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
+        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -312,6 +332,10 @@ public class MenuScreenScript implements IScript {
                             Level.goalStatusChanged = false;
                             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
                             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                            Entity lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+                            lblGoalNotificationSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                            Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+                            imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
 
                             if (pauseDialog == null) {
                                 pauseDialog = new PauseDialog(menuItem);
@@ -337,11 +361,11 @@ public class MenuScreenScript implements IScript {
         //move da other buttons
         if(movingFlaps) {
             if (!playServiceFlapIsOut) {
-                    if (achievements_C.getComponent(TransformComponent.class).y > 215) {
+                    if (achievements_C.getComponent(TransformComponent.class).y > 210) {
                         achievements_C.getComponent(TransformComponent.class).y -= 4;
-                        if (achievements_C.getComponent(TransformComponent.class).y <= 280.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
+                        if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
                             leaderboard_C.getComponent(TransformComponent.class).y -= 4;
-                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 275.40f) {
+                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 270.40f) {
                                 playServiceFlapIsOut = true;
                                 movingFlaps = false;
                             }
@@ -355,7 +379,7 @@ public class MenuScreenScript implements IScript {
                         movingFlaps = false;
                     }
                 }
-                if (leaderboard_C.getComponent(TransformComponent.class).y < 333) {
+                if (leaderboard_C.getComponent(TransformComponent.class).y < 331) {
                     leaderboard_C.getComponent(TransformComponent.class).y += 4;
                 }
             }
@@ -398,7 +422,7 @@ public class MenuScreenScript implements IScript {
     }
 
     private void gameTransition() {
-        dx = 1200 - 800;
+        dx = 1230 - 830;
         dy = 786 - 524;
 
         float length1 = (float) Math.sqrt(dx * dx + dy * dy);
@@ -408,7 +432,7 @@ public class MenuScreenScript implements IScript {
         transitionCoefficient += 1.3;
         wrldH += 6.1f * dy * transitionCoefficient;
         wrldW += 6.1f * dx * transitionCoefficient;
-        camPosX = 1200 - (int) GameStage.viewport.getWorldWidth();
+        camPosX = 1230 - (int) GameStage.viewport.getWorldWidth();
 
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -421,6 +445,12 @@ public class MenuScreenScript implements IScript {
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
             rateAppBtn.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            leaderboard_C.getComponent(TintComponent.class).color.a = 0;
+            achievements_C.getComponent(TintComponent.class).color.a = 0;
+            imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            lblGoalNotificationSh.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+
         }
 
         if (GameStage.viewport.getWorldHeight() >= 785) {
