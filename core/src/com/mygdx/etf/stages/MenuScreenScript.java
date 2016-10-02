@@ -85,7 +85,7 @@ public class MenuScreenScript implements IScript {
     float dx;
     float dy;
 
-    public int camPosX = 400;
+    public int camPosX = 430;
     private double transitionCoefficient;
 
     public MenuScreenScript() {
@@ -133,7 +133,7 @@ public class MenuScreenScript implements IScript {
     public void setupMenuScreenWorld() {
         wrldW = 800;
         wrldH = 524;
-        camPosX = 400;
+        camPosX = 430;
 
         menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
@@ -147,6 +147,9 @@ public class MenuScreenScript implements IScript {
         btnAch.getComponent(TintComponent.class).color.a = 1;
         leaderboard_C.getComponent(TintComponent.class).color.a = 1;
         achievements_C.getComponent(TintComponent.class).color.a = 1;
+        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
+        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
+        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -419,7 +422,7 @@ public class MenuScreenScript implements IScript {
     }
 
     private void gameTransition() {
-        dx = 1200 - 800;
+        dx = 1230 - 830;
         dy = 786 - 524;
 
         float length1 = (float) Math.sqrt(dx * dx + dy * dy);
@@ -429,7 +432,7 @@ public class MenuScreenScript implements IScript {
         transitionCoefficient += 1.3;
         wrldH += 6.1f * dy * transitionCoefficient;
         wrldW += 6.1f * dx * transitionCoefficient;
-        camPosX = 1200 - (int) GameStage.viewport.getWorldWidth();
+        camPosX = 1230 - (int) GameStage.viewport.getWorldWidth();
 
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -444,6 +447,10 @@ public class MenuScreenScript implements IScript {
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
             leaderboard_C.getComponent(TintComponent.class).color.a = 0;
             achievements_C.getComponent(TintComponent.class).color.a = 0;
+            imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            lblGoalNotificationSh.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+
         }
 
         if (GameStage.viewport.getWorldHeight() >= 785) {
