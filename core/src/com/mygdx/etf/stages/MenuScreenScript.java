@@ -41,8 +41,8 @@ public class MenuScreenScript implements IScript {
     public static final String ACHIEVEMENTS_C = "achievements_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
-    public static final int TIMER_X = 680;
-    public static final int TIMER_Y = 500;
+    public static final int TIMER_X = 1018;
+    public static final int TIMER_Y = 441;
     public static final String MM_LEAFS = "MM_leafs";
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
@@ -125,11 +125,15 @@ public class MenuScreenScript implements IScript {
         menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
         btnSettings.getComponent(TintComponent.class).color.a = 1;
+        btnPlayServices.getComponent(TintComponent.class).color.a = 1;
+        rateAppBtn.getComponent(TintComponent.class).color.a = 1;
         btnShop.getComponent(TintComponent.class).color.a = 1;
         btnGoals.getComponent(TintComponent.class).color.a = 1;
         btnFB.getComponent(TintComponent.class).color.a = 1;
         btnLB.getComponent(TintComponent.class).color.a = 1;
         btnAch.getComponent(TintComponent.class).color.a = 1;
+        leaderboard_C.getComponent(TintComponent.class).color.a = 1;
+        achievements_C.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -337,11 +341,11 @@ public class MenuScreenScript implements IScript {
         //move da other buttons
         if(movingFlaps) {
             if (!playServiceFlapIsOut) {
-                    if (achievements_C.getComponent(TransformComponent.class).y > 215) {
+                    if (achievements_C.getComponent(TransformComponent.class).y > 210) {
                         achievements_C.getComponent(TransformComponent.class).y -= 4;
-                        if (achievements_C.getComponent(TransformComponent.class).y <= 280.5f && leaderboard_C.getComponent(TransformComponent.class).y > 268.40f) {
+                        if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
                             leaderboard_C.getComponent(TransformComponent.class).y -= 4;
-                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 275.40f) {
+                            if (leaderboard_C.getComponent(TransformComponent.class).y <= 270.40f) {
                                 playServiceFlapIsOut = true;
                                 movingFlaps = false;
                             }
@@ -355,7 +359,7 @@ public class MenuScreenScript implements IScript {
                         movingFlaps = false;
                     }
                 }
-                if (leaderboard_C.getComponent(TransformComponent.class).y < 333) {
+                if (leaderboard_C.getComponent(TransformComponent.class).y < 331) {
                     leaderboard_C.getComponent(TransformComponent.class).y += 4;
                 }
             }
@@ -421,6 +425,8 @@ public class MenuScreenScript implements IScript {
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
             rateAppBtn.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            leaderboard_C.getComponent(TintComponent.class).color.a = 0;
+            achievements_C.getComponent(TintComponent.class).color.a = 0;
         }
 
         if (GameStage.viewport.getWorldHeight() >= 785) {

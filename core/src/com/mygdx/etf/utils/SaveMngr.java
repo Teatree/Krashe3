@@ -182,7 +182,7 @@ public class SaveMngr {
     }
 
     private static void dummyPet(FlowerPublicComponent fc) {
-//      c.currentPet.tryPeriodStart = System.currentTimeMillis();
+//      fc.currentPet.tryPeriodStart = System.currentTimeMillis();
     }
 
     private static void dummyUpgrade(FlowerPublicComponent fc) {
