@@ -28,23 +28,8 @@ public class BugPool {
     public static final String SIMPLE_BUG_ANI_2 = "simpleBugAni2";
     public static final String BEE_ANI_2 = "beeAni2";
     public static final String DRUNK_BUG_ANI_2 = "drunkBugAni2";
-    public static final String CHARGER_ANI_2 = "chargerAni2";
     public static final String SIMPLE_BUG_ANI_3 = "simpleBugAni3";
     public static final String BEE_ANI_3 = "beeAni3";
-    public static final String DRUNK_BUG_ANI_3 = "drunkBugAni3";
-    public static final String CHARGER_ANI_3 = "chargerAni3";
-//    public static final String SIMPLE_BUG_ANI_4 = "simpleBugAni4";
-    public static final String SIMPLE_BUG_ANI_5 = "simpleBugAni5";
-    public static final String SIMPLE_BUG_ANI_6 = "simpleBugAni6";
-    public static final String SIMPLE_BUG_ANI_7 = "simpleBugAni7";
-    public static final String SIMPLE_BUG_ANI_8 = "simpleBugAni8";
-//    public static final String BEE_ANI_4 = "beeAni4";
-    public static final String BEE_ANI_5 = "beeAni5";
-    public static final String BEE_ANI_6 = "beeAni6";
-    public static final String BEE_ANI_7 = "beeAni7";
-    public static final String BEE_ANI_8 = "beeAni8";
-    public static final String DRUNK_BUG_ANI_4 = "drunkBugAni4";
-    public static final String CHARGER_ANI_4 = "chargerAni4";
     private static BugPool instance;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private static Stack<Entity> simpleBugs = new Stack<>();
@@ -64,28 +49,8 @@ public class BugPool {
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_2).getEntity());
         bees.add(root.getChild(BEE_ANI_2).getEntity());
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_2).getEntity());
-//        chargerBugs.add(root.getChild(CHARGER_ANI_2).getEntity());
-//
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_3).getEntity());
         bees.add(root.getChild(BEE_ANI_3).getEntity());
-//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_3).getEntity());
-//        chargerBugs.add(root.getChild(CHARGER_ANI_3).getEntity());
-
-//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_4).getEntity());
-//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_5).getEntity());
-//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_6).getEntity());
-//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_7).getEntity());
-//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_8).getEntity());
-
-//
-//        bees.add(root.getChild(BEE_ANI_4).getEntity());
-//        bees.add(root.getChild(BEE_ANI_5).getEntity());
-//        bees.add(root.getChild(BEE_ANI_6).getEntity());
-//        bees.add(root.getChild(BEE_ANI_7).getEntity());
-//        bees.add(root.getChild(BEE_ANI_8).getEntity());
-
-//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_4).getEntity());
-//        chargerBugs.add(root.getChild(CHARGER_ANI_4).getEntity());
     }
 
     public static BugPool getInstance() {
