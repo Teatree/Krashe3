@@ -49,6 +49,7 @@ public class BugPool {
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_2).getEntity());
         bees.add(root.getChild(BEE_ANI_2).getEntity());
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_2).getEntity());
+
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_3).getEntity());
         bees.add(root.getChild(BEE_ANI_3).getEntity());
     }

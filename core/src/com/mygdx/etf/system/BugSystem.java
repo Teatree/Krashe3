@@ -39,8 +39,8 @@ public class BugSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        SpriteAnimationComponent sac = ComponentRetriever.get(entity, SpriteAnimationComponent.class);
-        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
+        SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
+        SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
 
         DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
         TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
