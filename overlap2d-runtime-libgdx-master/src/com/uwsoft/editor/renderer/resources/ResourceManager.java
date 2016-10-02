@@ -247,7 +247,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     }
 
     public void moveToLocal() {
-        if(Gdx.app.getType().equals(Application.ApplicationType.Android)) {
+        if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
             if (!Gdx.files.local("\\orig\\spriter_animations\\").exists()) {
                 Gdx.files.internal("orig\\spriter_animations\\").copyTo(Gdx.files.local("\\orig\\spriter_animations\\"));
             }
@@ -444,8 +444,14 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         return shaderPrograms.get(shaderName);
     }
 
-    public void addSpriterToLoad(String aniName){
+    public void addSpriterToLoad(String aniName) {
         FileHandle animFilePet = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + aniName + File.separator + aniName + ".scml");
         spriterAnimations.put(aniName, animFilePet);
+    }
+
+    public void addSPRITEtoLoad(String aniName) {
+        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + aniName + File.separator + aniName + ".atlas"));
+//        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + aniName + File.separator + aniName + ".atlas"));
+        spriteAnimations.put(aniName, animAtlas);
     }
 }

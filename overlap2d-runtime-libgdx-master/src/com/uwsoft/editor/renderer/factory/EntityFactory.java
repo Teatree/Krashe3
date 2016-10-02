@@ -183,13 +183,20 @@ public class EntityFactory {
 		return entity;
 	}
 
-	public Entity createSpriterEntity(Entity root, CompositeItemVO vo){
+	public Entity createSPRITERentity(Entity root, CompositeItemVO vo){
 
 		Entity entity = new Entity();
 
 		spriterComponentFactory.createComponents(root, entity, vo.composite.sSpriterAnimations.get(0));
 		postProcessEntity(entity);
 
+		return entity;
+	}
+
+	public Entity createSPRITEentity(Entity root, CompositeItemVO vo){
+		Entity entity = new Entity();
+		spriteComponentFactory.createComponents(root, entity, vo.composite.sSpriteAnimations.get(0));
+		postProcessEntity(entity);
 		return entity;
 	}
 

@@ -364,10 +364,7 @@ public class GameScreenScript implements IScript {
     public void initPet() {
         hideCurrentPet();
         if (fpc.currentPet != null) {
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
-            sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
-            petE = GameStage.sceneLoader.entityFactory.createSpriterEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-            GameStage.sceneLoader.getEngine().addEntity(petE);
+            loadPetFromLib();
 
             if (fpc.currentPet.enabled) {
                 fpc.currentPet.init();
@@ -391,6 +388,13 @@ public class GameScreenScript implements IScript {
                 }
             }
         }
+    }
+
+    private void loadPetFromLib() {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
+        sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
+        petE = GameStage.sceneLoader.entityFactory.createSPRITERentity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.getEngine().addEntity(petE);
     }
 
     @Override
