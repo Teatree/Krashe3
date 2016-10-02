@@ -33,6 +33,8 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_RATE = "btn_rate";
     public static final String BTN_GOALS = "btn_goals";
     public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
+    public static final String LBL_GOALS_NOTIFICATION_SH = "label_goal_notification_sh";
+    public static final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
     public static final String CURTAIN = "curtain_mm";
     public static final String BTN_FB = "btn_fb";
     public static final String BTN_LEADERBOARD = "btn_leaderboard";
@@ -63,7 +65,9 @@ public class MenuScreenScript implements IScript {
 
     private static TrialTimer timer;
     private static PauseDialog pauseDialog;
+    private static Entity imgGoalNotification;
     private static Entity lblGoalNotification;
+    private static Entity lblGoalNotificationSh;
     private static Entity playBtn;
     private static Entity btnShop;
     private static Entity btnSettings;
@@ -111,9 +115,18 @@ public class MenuScreenScript implements IScript {
             lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             LabelComponent lc = lblGoalNotification.getComponent(LabelComponent.class);
             lc.text.replace(0, lc.text.length, gameScript.fpc.level.getRemainingGoals());
+            lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+            LabelComponent lcSh = lblGoalNotificationSh.getComponent(LabelComponent.class);
+            lcSh.text.replace(0, lcSh.text.length, gameScript.fpc.level.getRemainingGoals());
+            imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+            imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
         } else {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+            lblGoalNotificationSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+            imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
         }
     }
 
@@ -316,6 +329,10 @@ public class MenuScreenScript implements IScript {
                             Level.goalStatusChanged = false;
                             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
                             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                            Entity lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
+                            lblGoalNotificationSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                            Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+                            imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
 
                             if (pauseDialog == null) {
                                 pauseDialog = new PauseDialog(menuItem);

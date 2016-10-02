@@ -56,119 +56,119 @@ betaptoplay
   index: -1
 btnachievements
   rotate: false
-  xy: 978, 531
+  xy: 1410, 1128
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnads
   rotate: false
-  xy: 903, 459
+  xy: 1410, 1055
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnback
   rotate: false
-  xy: 899, 386
+  xy: 1972, 1460
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnfb
   rotate: false
-  xy: 899, 313
+  xy: 1972, 1387
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoals
   rotate: false
-  xy: 899, 240
+  xy: 1972, 1314
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnleadrboard
   rotate: false
-  xy: 899, 167
+  xy: 1972, 1241
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusic
   rotate: false
-  xy: 974, 458
+  xy: 1128, 902
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusicno
   rotate: false
-  xy: 970, 385
+  xy: 1128, 829
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnnext
   rotate: false
-  xy: 970, 312
+  xy: 1199, 902
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 970, 239
+  xy: 1199, 829
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 970, 166
+  xy: 1822, 456
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplay
   rotate: false
-  xy: 899, 94
+  xy: 1893, 466
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplayservices
   rotate: false
-  xy: 970, 93
+  xy: 1964, 466
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettings
   rotate: false
-  xy: 892, 21
+  xy: 1450, 1254
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 963, 20
+  xy: 1521, 1259
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1410, 1128
+  xy: 1592, 1259
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1410, 1055
+  xy: 1370, 982
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -182,14 +182,14 @@ btntext
   index: -1
 btnup
   rotate: false
-  xy: 1972, 1460
+  xy: 1441, 982
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1972, 1387
+  xy: 1157, 756
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -242,14 +242,14 @@ buttoncameraon
   index: -1
 coin
   rotate: false
-  xy: 1972, 1261
+  xy: 1157, 630
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
   index: -1
 coinap
   rotate: false
-  xy: 1972, 1322
+  xy: 1157, 691
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
@@ -263,7 +263,7 @@ dnaamountbackground
   index: -1
 dnaamountbackground1
   rotate: false
-  xy: 774, 2
+  xy: 808, 2
   size: 7, 38
   orig: 7, 38
   offset: 0, 0
@@ -298,7 +298,7 @@ flowerpeducle
   index: -1
 gifticonmaker
   rotate: false
-  xy: 906, 532
+  xy: 1750, 457
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
@@ -373,6 +373,13 @@ notachievedgoal
   orig: 300, 65
   offset: 0, 0
   index: -1
+notification
+  rotate: false
+  xy: 1164, 1227
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
 pinata
   rotate: false
   xy: 906, 1003
@@ -414,7 +421,7 @@ previewTagBg.9
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1972, 1193
+  xy: 1228, 761
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0
@@ -428,6 +435,13 @@ progressbarframe
   split: 40, 42, 42, 42
   pad: 0, 0, 0, 0
   orig: 90, 92
+  offset: 0, 0
+  index: -1
+rateus
+  rotate: false
+  xy: 906, 565
+  size: 149, 37
+  orig: 149, 37
   offset: 0, 0
   index: -1
 resultscreenboard
@@ -476,7 +490,7 @@ starY
   index: -1
 tempcurtain
   rotate: false
-  xy: 1164, 1227
+  xy: 774, 8
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
