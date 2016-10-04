@@ -120,6 +120,8 @@ public class MenuScreenScript implements IScript {
             lcSh.text.replace(0, lcSh.text.length, gameScript.fpc.level.getRemainingGoals());
             imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
             imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
+            lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
+            lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
         } else {
             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -147,9 +149,9 @@ public class MenuScreenScript implements IScript {
         btnAch.getComponent(TintComponent.class).color.a = 1;
         leaderboard_C.getComponent(TintComponent.class).color.a = 1;
         achievements_C.getComponent(TintComponent.class).color.a = 1;
-        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
-        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
-        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
+//        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
+//        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
+//        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -447,9 +449,11 @@ public class MenuScreenScript implements IScript {
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
             leaderboard_C.getComponent(TintComponent.class).color.a = 0;
             achievements_C.getComponent(TintComponent.class).color.a = 0;
-            imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            lblGoalNotificationSh.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            if(imgGoalNotification.getComponent(TintComponent.class).color.a!=0) {
+                imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+                lblGoalNotificationSh.getComponent(TintComponent.class).color.a -= TINT_STEP;
+                lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            }
 
         }
 
