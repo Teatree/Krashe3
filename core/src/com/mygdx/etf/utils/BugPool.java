@@ -82,11 +82,11 @@ public class BugPool {
                 }
             }
             case CHARGER: {
-                if(chargerBugs.isEmpty()){
+//                if(chargerBugs.isEmpty()){
                     return loadBugFromLib("chargerBugAni");
-                } else {
-                    chargerBugs.pop();
-                }
+//                } else {
+//                    return chargerBugs.pop();
+//                }
             }
             case BEE: {
                 if(bees.isEmpty()){

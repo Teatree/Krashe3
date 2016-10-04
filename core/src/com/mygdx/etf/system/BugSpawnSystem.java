@@ -20,8 +20,8 @@ public class BugSpawnSystem extends EntitySystem {
     // spawn probability
     // combined has to be equal to 100
     public static final int DRUNK_SPAWN_PROB = 10;
-    public static final int SIMPLE_SPAWN_PROB = 50;
-    public static final int CHARGER_SPAWN_PROB = 7;
+    public static final int SIMPLE_SPAWN_PROB = 30;
+    public static final int CHARGER_SPAWN_PROB = 27;
     public static final int QUEENBEE_SPAWN_PROB = 3;
     public static final int BEE_SPAWN_PROB = 30;
 

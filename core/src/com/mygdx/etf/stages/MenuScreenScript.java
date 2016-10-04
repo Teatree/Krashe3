@@ -445,7 +445,7 @@ public class MenuScreenScript implements IScript {
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            rateAppBtn.getComponent(TintComponent.class).color.a -= TINT_STEP;
+                rateAppBtn.getComponent(TintComponent.class).color.a = 0;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
             leaderboard_C.getComponent(TintComponent.class).color.a = 0;
             achievements_C.getComponent(TintComponent.class).color.a = 0;
