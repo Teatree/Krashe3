@@ -103,6 +103,8 @@ public class PromoWindow extends AbstractDialog {
 
         Entity lbl = promoWindowE.getComponent(NodeComponent.class).getChild(DISC_TEXT_LBL);
         LabelComponent lc = lbl.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.capacity(), "Buy " + offer.name + " with discount!!! ");
+        if(offer != null) {
+            lc.text.replace(0, lc.text.capacity(), "Buy " + offer.name + " with discount!!! ");
+        }
     }
 }
