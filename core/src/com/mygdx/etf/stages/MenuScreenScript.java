@@ -356,6 +356,8 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+        System.out.println("MENU!!!! LEAFS_X_POS " + menuItem.getChild("MM_leafs").getEntity().getComponent(TransformComponent.class).x + " LEAFS_Y_POS " +  menuItem.getChild("MM_leafs").getEntity().getComponent(TransformComponent.class).y
+                + " FLOWER_X_POS " +  menuItem.getChild("MM_flower").getEntity().getComponent(TransformComponent.class).x + " FLOWER_Y_POS " + menuItem.getChild("MM_flower").getEntity().getComponent(TransformComponent.class).y);
 //        GameStage.viewport.getCamera()
 //        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
 //        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
@@ -424,7 +426,7 @@ public class MenuScreenScript implements IScript {
     }
 
     private void gameTransition() {
-        dx = 1260 - 860;
+        dx = 1230 - 830;
         dy = 786 - 524;
 
         float length1 = (float) Math.sqrt(dx * dx + dy * dy);
@@ -434,7 +436,7 @@ public class MenuScreenScript implements IScript {
         transitionCoefficient += 1.3;
         wrldH += 6.1f * dy * transitionCoefficient;
         wrldW += 6.1f * dx * transitionCoefficient;
-        camPosX = 1260 - (int) GameStage.viewport.getWorldWidth();
+        camPosX = 1200 - (int) wrldW;
 
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -457,7 +459,7 @@ public class MenuScreenScript implements IScript {
 
         }
 
-        if (GameStage.viewport.getWorldHeight() >= 785) {
+        if (camPosX <= 1) {
             startGameTransition = false;
             GameStage.viewport.getCamera().translate(0, 0, 0);
             GameStage.initGame();
