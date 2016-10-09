@@ -43,7 +43,7 @@ public class MenuScreenScript implements IScript {
     public static final String ACHIEVEMENTS_C = "achievements_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
 
-    public static final int TIMER_X = 1018;
+    public static final int TIMER_X = 945;
     public static final int TIMER_Y = 441;
     public static final String MM_LEAFS = "MM_leafs";
     private static final float TINT_STEP = 0.05f;
@@ -150,6 +150,11 @@ public class MenuScreenScript implements IScript {
         btnAch.getComponent(TintComponent.class).color.a = 1;
         leaderboard_C.getComponent(TintComponent.class).color.a = 1;
         achievements_C.getComponent(TintComponent.class).color.a = 1;
+        if(timer!=null) {
+            timer.timerE.getComponent(TintComponent.class).color.a = 1;
+            timer.timerEsh.getComponent(TintComponent.class).color.a = 1;
+            timer.timerLogo.getComponent(TintComponent.class).color.a = 1;
+        }
 //        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
 //        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
 //        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
@@ -174,67 +179,6 @@ public class MenuScreenScript implements IScript {
         btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
 
         ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
-//        btnSignInOut.add(signInOutTbc);
-//        btnSignInOut.add(new ButtonComponent());
-//        btnSignInOut.getComponent(ButtonComponent.class).isDefaultLayersChange = false;
-
-//        final LayerMapComponent lc = ComponentRetriever.get(btnSignInOut, LayerMapComponent.class);
-//        if (Main.mainController.isSignedIn()) {
-//            signInOutTbc.setOff();
-//            lc.getLayer(BTN_NORMAL).isVisible = false;
-//            lc.getLayer(BTN_PRESSED).isVisible = true;
-//        } else {
-//            signInOutTbc.setOn();
-//            lc.getLayer(BTN_NORMAL).isVisible = true;
-//            lc.getLayer(BTN_DEFAULT).isVisible = true;
-//            lc.getLayer(BTN_PRESSED).isVisible = false;
-//        }
-
-//        if (0 == btnSignInOut.getComponent(ButtonComponent.class).listeners.size) {
-//            btnSignInOut.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-//                private ComponentMapper<ToggleButtonComponent> mapper = ComponentMapper.getFor(ToggleButtonComponent.class);
-//
-//                @Override
-//                public void touchDown() {
-//                    if(playServiceFlapIsOut && !movingFlaps) {
-//                        btnSignInOut.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
-//                        btnSignInOut.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
-//                        btnSignInOut.getComponent(TransformComponent.class).x += btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-//                        btnSignInOut.getComponent(TransformComponent.class).y += btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
-//                    }
-//                }
-//
-//                @Override
-//                public void touchUp() {
-//                    if(playServiceFlapIsOut && !movingFlaps) {
-//                        btnSignInOut.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
-//                        btnSignInOut.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
-//                        btnSignInOut.getComponent(TransformComponent.class).x -= btnSignInOut.getComponent(DimensionsComponent.class).width / 20;
-//                        btnSignInOut.getComponent(TransformComponent.class).y -= btnSignInOut.getComponent(DimensionsComponent.class).height / 20;
-//                    }
-//                }
-//
-//                @Override
-//                public void clicked() {
-//                    if(playServiceFlapIsOut && !movingFlaps) {
-//                        final ToggleButtonComponent tbc = mapper.get(btnSignInOut);
-//                        if (tbc.isOn()) {
-//                            lc.getLayer(BTN_NORMAL).isVisible = false;
-//                            lc.getLayer(BTN_PRESSED).isVisible = true;
-////                        lc.getLayer(BTN_DEFAULT).isVisible = false;
-//                            Main.mainController.signOut();
-//                            tbc.setOff();
-//                            System.out.println("Signed out");
-//                        } else {
-//                            lc.getLayer(BTN_NORMAL).isVisible = true;
-//                            lc.getLayer(BTN_PRESSED).isVisible = false;
-//                            Main.mainController.signIn();
-//                            System.out.println("Signed in");
-//                            tbc.setOn();
-//                        }
-//                    }
-//                }
-//            });
 //        }
 
         btnFB.add(new ButtonComponent());
@@ -443,7 +387,6 @@ public class MenuScreenScript implements IScript {
 
             frames++;
         }
-        System.out.println("what!: " + fg * frames);
 
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -454,6 +397,11 @@ public class MenuScreenScript implements IScript {
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            if(timer!=null) {
+                timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
+                timer.timerEsh.getComponent(TintComponent.class).color.a -= TINT_STEP;
+                timer.timerLogo.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            }
             rateAppBtn.getComponent(TintComponent.class).color.a = 0;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
             leaderboard_C.getComponent(TintComponent.class).color.a = 0;

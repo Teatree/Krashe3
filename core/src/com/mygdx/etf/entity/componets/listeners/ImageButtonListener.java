@@ -10,7 +10,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
  * Created by ARudyk on 8/3/2016.
  */
 public abstract class ImageButtonListener implements ButtonComponent.ButtonListener {
-    private Entity btn;
+    public Entity btn;
 
     public ImageButtonListener(Entity btn) {
         this.btn = btn;

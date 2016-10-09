@@ -183,11 +183,22 @@ public class SaveMngr {
 
     private static void dummyPet(FlowerPublicComponent fc) {
 //      fc.currentPet.tryPeriodStart = System.currentTimeMillis();
+        PetComponent u = fc.pets.get(0);
+        u.tryPeriod = true;
+//        fc.currentPet.tryPeriod = true;
+//        fc.currentPet.enabled = true;
+//        fc.currentPet.tryPeriodDuration = 30;
+//        f
+        u.tryPeriodDuration = 2 * 60;
+        u.tryPeriodStart = System.currentTimeMillis();
+        u.bought = true;
+        u.enabled = true;
+        fc.currentPet = u;
     }
 
     private static void dummyUpgrade(FlowerPublicComponent fc) {
         Upgrade u = Upgrade.getBJDouble();
-        u.tryPeriod = true;  fc.currentPet = fc.pets.get(0);
+        u.tryPeriod = true;
 //        fc.currentPet.tryPeriod = true;
 //        fc.currentPet.enabled = true;
 //        fc.currentPet.tryPeriodDuration = 30;

@@ -9,10 +9,7 @@ import com.mygdx.etf.stages.ui.PromoWindow;
 import com.mygdx.etf.stages.ui.Showcase;
 import com.mygdx.etf.stages.ui.TrialTimer;
 import com.mygdx.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -97,7 +94,7 @@ public class ResultScreenScript implements IScript {
         initResultScreen();
         showcase = new Showcase(resultScreenItem, this);
         if (timer == null) {
-            timer = new TrialTimer(resultScreenItem, 120, 650);
+            timer = new TrialTimer(resultScreenItem, 918, 289);
         }
     }
 
@@ -209,7 +206,11 @@ public class ResultScreenScript implements IScript {
     @Override
     public void act(float delta) {
         timer.timer();
-        if (offerPromo && active) {
+        if (timer.timerE!=null && showcase.showcaseE!=null) {
+            timer.timerE.getComponent(ZIndexComponent.class).setZIndex(showcase.showcaseE.getComponent(ZIndexComponent.class).getZIndex()-2);
+            timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerEsh.getComponent(ZIndexComponent.class).getZIndex()+1);
+        }
+        if (offerPromo && active && !timer.ifShouldShowTimer()) {
             if (promoWindow == null) {
                 promoWindow = new PromoWindow(resultScreenItem);
             }
@@ -234,7 +235,10 @@ public class ResultScreenScript implements IScript {
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
-            showcase.showFading();
+//            showcase.showFading();
+        }
+        if(showcase.showcaseE!=null){
+            showcase.act(delta);
         }
 
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.entity.componets.Goal;
+import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
@@ -29,7 +30,7 @@ public class GoalFeedbackScreen {
 
     public static final String GOALFEEDBACK = "lib_gift_feedbacker";
     public static final String LBL_DIALOG = "lbl_level";
-    public static final String GOAL_LIB = "goal_ani_lib";
+    public static final String GOAL_LIB = "goalTile";
     public static final String GOAL_PROGRESS = "goal_progress";
     public static final String GOAL_LBL = "goal_lbl";
     public static final int POS_X = -22;
@@ -196,6 +197,8 @@ public class GoalFeedbackScreen {
 
     private Entity createGoalTile(Goal goal, int y) {
         CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GOAL_LIB).clone();
+
+        sceneLoader.rm.addSPRITEtoLoad("goalTile");
         final Entity tile = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
         sceneLoader.getEngine().addEntity(tile);
@@ -251,6 +254,14 @@ public class GoalFeedbackScreen {
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
+    }
+
+    private Entity loadGoalFromLib(String goalLib) {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(goalLib);
+        sceneLoader.rm.addSPRITEtoLoad(goalLib);
+        Entity bugE = GameStage.sceneLoader.entityFactory.createSPRITEentity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.getEngine().addEntity(bugE);
+        return bugE;
     }
 
     public void update() {
