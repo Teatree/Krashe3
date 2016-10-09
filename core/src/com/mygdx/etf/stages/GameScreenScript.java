@@ -403,8 +403,6 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        System.out.println("GAME!!!! LEAFS_X_POS " + LEAFS_X_POS + " LEAFS_Y_POS " + LEAFS_Y_POS + " FLOWER_X_POS " + FLOWER_X_POS + " FLOWER_Y_POS " + FLOWER_Y_POS);
-
         if (blowUpAllBugs) {
             blowUpCounter--;
         }

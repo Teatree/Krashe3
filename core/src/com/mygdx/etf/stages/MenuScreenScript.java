@@ -84,6 +84,7 @@ public class MenuScreenScript implements IScript {
     public float wrldH = 524;
     float dx;
     float dy;
+    int frames;
 
     public int camPosX = 430;
     private double transitionCoefficient;
@@ -98,7 +99,7 @@ public class MenuScreenScript implements IScript {
 //        System.err.print("init menu ");
 //        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
 //                Gdx.app.getNativeHeap());
-
+        frames = 0;
         menuItem = new ItemWrapper(item);
         curtain_mm = menuItem.getChild(CURTAIN).getEntity();
         curtain_mm.getComponent(TintComponent.class).color.a = 1f;
@@ -356,8 +357,6 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        System.out.println("MENU!!!! LEAFS_X_POS " + menuItem.getChild("MM_leafs").getEntity().getComponent(TransformComponent.class).x + " LEAFS_Y_POS " +  menuItem.getChild("MM_leafs").getEntity().getComponent(TransformComponent.class).y
-                + " FLOWER_X_POS " +  menuItem.getChild("MM_flower").getEntity().getComponent(TransformComponent.class).x + " FLOWER_Y_POS " + menuItem.getChild("MM_flower").getEntity().getComponent(TransformComponent.class).y);
 //        GameStage.viewport.getCamera()
 //        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
 //        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
@@ -426,17 +425,25 @@ public class MenuScreenScript implements IScript {
     }
 
     private void gameTransition() {
-        dx = 1230 - 830;
+        dx = 1200 - 800;
         dy = 786 - 524;
 
         float length1 = (float) Math.sqrt(dx * dx + dy * dy);
         dx /= length1;
         dy /= length1;
 
-        transitionCoefficient += 1.3;
-        wrldH += 6.1f * dy * transitionCoefficient;
-        wrldW += 6.1f * dx * transitionCoefficient;
-        camPosX = 1200 - (int) wrldW;
+        transitionCoefficient += 6.3;
+
+        wrldH += dy * transitionCoefficient;
+        wrldW += dx * transitionCoefficient;
+
+        float fg = 30f/67;
+        if(fg<30) {
+            camPosX = (int) (1230 - wrldW - fg * frames);
+
+            frames++;
+        }
+        System.out.println("what!: " + fg * frames);
 
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -459,7 +466,7 @@ public class MenuScreenScript implements IScript {
 
         }
 
-        if (camPosX <= 1) {
+        if (GameStage.viewport.getWorldWidth() >= 1195) {
             startGameTransition = false;
             GameStage.viewport.getCamera().translate(0, 0, 0);
             GameStage.initGame();
