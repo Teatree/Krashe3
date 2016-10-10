@@ -204,6 +204,7 @@ public class GameScreenScript implements IScript {
         initFlower();
         initLeafs();
         initPet();
+        System.out.println("init pet");
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();
@@ -363,7 +364,7 @@ public class GameScreenScript implements IScript {
 
     public void initPet() {
         hideCurrentPet();
-        if (fpc.currentPet != null) {
+        if (fpc.currentPet != null && fpc.currentPet.enabled) {
             loadPetFromLib();
 
             if (fpc.currentPet.enabled) {

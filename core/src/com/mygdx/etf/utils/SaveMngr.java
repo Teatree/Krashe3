@@ -189,7 +189,7 @@ public class SaveMngr {
 //        fc.currentPet.enabled = true;
 //        fc.currentPet.tryPeriodDuration = 30;
 //        f
-        u.tryPeriodDuration = 2 * 60;
+        u.tryPeriodDuration = 30;
         u.tryPeriodStart = System.currentTimeMillis();
         u.bought = true;
         u.enabled = true;

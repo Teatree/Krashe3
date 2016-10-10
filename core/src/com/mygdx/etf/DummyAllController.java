@@ -65,11 +65,13 @@ public class DummyAllController implements AllController {
     @Override
     public void getPhoenixDiscount(Upgrade phoenix) {
         System.out.println("pay to get phoenix cheaper");
+        Upgrade.getPhoenix().buyAndUse();
     }
 
     @Override
     public void getBJDoubleDiscount(Upgrade bj) {
         System.out.println("pay to get bj cheaper");
+        Upgrade.getBJDouble().buyAndUse();
     }
 
     @Override
