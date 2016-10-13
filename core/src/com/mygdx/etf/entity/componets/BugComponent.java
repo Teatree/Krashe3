@@ -57,14 +57,14 @@ public class BugComponent implements Component {
         this.state = IDLE;
         switch (type) {
             case DRUNK: {
-                duration = 24 *m.drunkBugMoveDuration *GameStage.gameScript.fpc.level.drunkBugMoveDuration;
-                amplitude = 50 *m.drunkBugAmplitude *GameStage.gameScript.fpc.level.drunkBugAmplitude;
+                duration = 24 * m.drunkBugMoveDuration * GameStage.gameScript.fpc.level.drunkBugMoveDuration;
+                amplitude = 50 * m.drunkBugAmplitude * GameStage.gameScript.fpc.level.drunkBugAmplitude;
                 points = 4;
                 break;
             }
             case BEE: {
-                duration = 28 *m.beeMoveDuration *GameStage.gameScript.fpc.level.beeMoveDuration;
-                amplitude = 0 *m.beeAmplitude *GameStage.gameScript.fpc.level.beeAmplitude;
+                duration = 28 * m.beeMoveDuration * GameStage.gameScript.fpc.level.beeMoveDuration;
+                amplitude = 0 * m.beeAmplitude * GameStage.gameScript.fpc.level.beeAmplitude;
                 points = 6;
                 break;
             }
@@ -76,14 +76,14 @@ public class BugComponent implements Component {
                 break;
             }
             case QUEENBEE: {
-                duration = 24 *m.queenBeeMoveDuration *GameStage.gameScript.fpc.level.queenBeeMoveDuration;
-                amplitude = 50 *m.queenBeeAmplitude *GameStage.gameScript.fpc.level.queenBeeAmplitude;
+                duration = 24 * m.queenBeeMoveDuration * GameStage.gameScript.fpc.level.queenBeeMoveDuration;
+                amplitude = 50 * m.queenBeeAmplitude * GameStage.gameScript.fpc.level.queenBeeAmplitude;
                 points = 12;
                 break;
             }
             default: {
-                duration = 24 *m.simpleBugMoveDuration *GameStage.gameScript.fpc.level.simpleBugMoveDuration;
-                amplitude = 0 *m.simpleBugAmplitude *GameStage.gameScript.fpc.level.simpleBugAmplitude;
+                duration = 24 * m.simpleBugMoveDuration * GameStage.gameScript.fpc.level.simpleBugMoveDuration;
+                amplitude = 0 * m.simpleBugAmplitude * GameStage.gameScript.fpc.level.simpleBugAmplitude;
                 points = 3;
                 break;
             }

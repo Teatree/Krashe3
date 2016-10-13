@@ -30,6 +30,10 @@ public class BugPool {
     public static final String DRUNK_BUG_ANI_2 = "drunkBugAni2";
     public static final String SIMPLE_BUG_ANI_3 = "simpleBugAni3";
     public static final String BEE_ANI_3 = "beeAni3";
+    private static final String SIMPLE_BUG_ANI = "simpleBugAni";
+    private static final String DRUNK_BUG_ANI = "drunkBugAni";
+    private static final String CHARGER_BUG_ANI = "chargerBugAni";
+    private static final String BEE_ANI = "beeAni";
     private static BugPool instance;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
     private static Stack<Entity> simpleBugs = new Stack<>();
@@ -58,6 +62,11 @@ public class BugPool {
         if (instance == null) {
             instance = new BugPool();
         }
+
+//        System.out.println("SIMPLE  " + simpleBugs.size());
+//        System.out.println("DRUNK  " + drunkBugs.size());
+//        System.out.println("BEE  " + bees.size());
+//        System.out.println("CHARGER  " + chargerBugs.size());
         return instance;
     }
 
@@ -69,28 +78,28 @@ public class BugPool {
         switch (type) {
             case SIMPLE: {
                 if(simpleBugs.isEmpty()){
-                    return loadBugFromLib("simpleBugAni");
+                    return loadBugFromLib(SIMPLE_BUG_ANI);
                 } else {
                     return simpleBugs.pop();
                 }
             }
             case DRUNK: {
                 if(drunkBugs.isEmpty()){
-                    return loadBugFromLib("drunkBugAni");
+                    return loadBugFromLib(DRUNK_BUG_ANI);
                 } else {
                     return drunkBugs.pop();
                 }
             }
             case CHARGER: {
-//                if(chargerBugs.isEmpty()){
-                    return loadBugFromLib("chargerBugAni");
-//                } else {
-//                    return chargerBugs.pop();
-//                }
+                if(chargerBugs.isEmpty()){
+                    return loadBugFromLib(CHARGER_BUG_ANI);
+                } else {
+                    return chargerBugs.pop();
+                }
             }
             case BEE: {
                 if(bees.isEmpty()){
-                    return loadBugFromLib("beeAni");
+                    return loadBugFromLib(BEE_ANI);
                 } else {
                     return bees.pop();
                 }
