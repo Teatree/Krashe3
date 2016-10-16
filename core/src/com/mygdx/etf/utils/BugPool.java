@@ -23,7 +23,7 @@ public class BugPool {
     public static final String SIMPLE_BUG_ANI_1 = "simpleBugAni1";
     public static final String BEE_ANI_1 = "beeAni1";
     public static final String DRUNK_BUG_ANI_1 = "drunkBugAni1";
-    public static final String CHARGER_ANI_1 = "chargerAni1";
+    public static final String CHARGER_ANI_1 = "changerAni1";
     public static final String QUEEN_BEE_ANI_1 = "queenBeeAni1";
     public static final String SIMPLE_BUG_ANI_2 = "simpleBugAni2";
     public static final String BEE_ANI_2 = "beeAni2";

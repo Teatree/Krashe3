@@ -240,6 +240,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
+                            movingFlaps = true;
                             startShopTransition = true;
                             resetPauseDialog();
                         }
@@ -251,6 +252,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
+                            movingFlaps = true;
                             isDialogOpen = true;
                             if (settings == null) {
                                 settings = new Settings(menuItem);
@@ -274,6 +276,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
+                            movingFlaps = true;
                             isDialogOpen = true;
                             showGoalNotification = false;
                             Level.goalStatusChanged = false;

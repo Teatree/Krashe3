@@ -28,7 +28,8 @@ public class PetComponent extends ShopItem implements Component {
     public float velocity;
     public boolean isCollision;
     public boolean isBiteDash;
-    public boolean tappedback;
+    public float previousX;
+//    public boolean tappedback;
 
     public int outsideCounter;
     public int amountBugsBeforeCharging;
@@ -39,8 +40,6 @@ public class PetComponent extends ShopItem implements Component {
 
     public String petCannonName;
     public Entity petCannon;
-
-    //    public String petName;
     public Entity petHead;
 
     public int stageCounter;
