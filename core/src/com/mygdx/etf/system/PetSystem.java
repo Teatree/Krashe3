@@ -95,7 +95,6 @@ public class PetSystem extends IteratingSystem {
         if (pc.state.equals(TAPPED)) {
             if (tcPetBody.x == pc.previousX) {
                 pc.state = TAPPED_BACK;
-                System.out.println("add ac back");
                 entity.remove(ActionComponent.class);
                 pc.petCannon.remove(ActionComponent.class);
 
