@@ -204,7 +204,6 @@ public class GameScreenScript implements IScript {
         initFlower();
         initLeafs();
         initPet();
-        System.out.println("init pet");
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();

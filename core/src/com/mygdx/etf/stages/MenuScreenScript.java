@@ -131,6 +131,13 @@ public class MenuScreenScript implements IScript {
             Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
             imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
         }
+
+        if (achievements_C != null){
+            achievements_C.getComponent(TransformComponent.class).y = 330f;
+            leaderboard_C.getComponent(TransformComponent.class).y = 330f;
+            leaderboard_C.getComponent(TintComponent.class).color.a = 1f;
+            achievements_C.getComponent(TintComponent.class).color.a = 1f;
+        }
     }
 
     public void setupMenuScreenWorld() {
@@ -240,7 +247,6 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
-                            movingFlaps = true;
                             startShopTransition = true;
                             resetPauseDialog();
                         }
@@ -313,7 +319,8 @@ public class MenuScreenScript implements IScript {
             if (!playServiceFlapIsOut) {
                 if (achievements_C.getComponent(TransformComponent.class).y > 210) {
                     achievements_C.getComponent(TransformComponent.class).y -= 4;
-                    if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
+                    if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f
+                            && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
                         leaderboard_C.getComponent(TransformComponent.class).y -= 4;
                         if (leaderboard_C.getComponent(TransformComponent.class).y <= 270.40f) {
                             playServiceFlapIsOut = true;
