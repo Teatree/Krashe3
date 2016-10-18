@@ -31,7 +31,7 @@ public class Preview extends AbstractDialog {
     public static final String ITEM_UNKNOWN = "item_unknown_n";
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
-    public static final String LBL_NOT_ENOUGH = "tag_lbl_not_enough";
+//    public static final String LBL_NOT_ENOUGH = "tag_lbl_not_enough";
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
     public static final String BTN_BUY = "tag_btn_buy";
     public static final String BTN_ENABLE = "tag_btn_enable";
@@ -75,7 +75,7 @@ public class Preview extends AbstractDialog {
         lbl_title =previewE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lbl_price =previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         bg =previewE.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
-        lbl_not_enough =previewE.getComponent(NodeComponent.class).getChild(LBL_NOT_ENOUGH);
+        lbl_not_enough =previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         btnLeft =previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
 
         btnNext =previewE.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
