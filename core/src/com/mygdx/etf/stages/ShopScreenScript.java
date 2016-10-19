@@ -244,18 +244,18 @@ public class ShopScreenScript implements IScript {
     }
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
-        Entity itemIcon;
         if (!vc.bought) {
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN_N).clone();
-            itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            return getIconFromLib(ITEM_UNKNOWN_N);
         } else {
-            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon).clone();
-            itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            return getIconFromLib(vc.shopIcon);
         }
+    }
+
+    private Entity getIconFromLib(String name) {
+        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(name).clone();
+        Entity itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(itemIcon);
         return itemIcon;
     }
 
