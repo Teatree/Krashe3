@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -217,9 +218,9 @@ public class Preview extends AbstractDialog {
             previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
         }
 
-        previewBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x + 40,
+        previewBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x - 120,
                 30,
-                648,
+                448,
                 previewE.getComponent(DimensionsComponent.class).height);
         previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
@@ -409,6 +410,14 @@ public class Preview extends AbstractDialog {
     }
 
     public void checkAndClose() {
+
+//        if (previewBoundingBox != null) {
+//            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
+//                    previewBoundingBox.y,
+//                    previewBoundingBox.width,
+//                    previewBoundingBox.height,
+//                    previewBoundingBox.toString());
+//        }
         if (previewE != null) {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();

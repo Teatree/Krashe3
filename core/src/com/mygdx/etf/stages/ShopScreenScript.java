@@ -45,7 +45,7 @@ public class ShopScreenScript implements IScript {
     public static final int Y_ICON_ON_BAG = 100;
     public static final int STOP_VELOCITY_DIV = 20;
     public static final int FIRST_BAG_X = 1300;
-    public static final int FIRST_BAG_Y = 450;
+    public static final int FIRST_BAG_Y = 400;
     public static final float BAG_POS_COEFFICIENT = 0.6f;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
@@ -382,14 +382,14 @@ public class ShopScreenScript implements IScript {
         switch (bagPosId) {
             case 0: {
                 tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
-                tc.y = previous.y - previousDc.height;
+                tc.y = previous.y - previousDc.height + 60;
 
                 bagPosId++;
                 break;
             }
             case 1: {
                 tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
-                tc.y = previous.y + previousDc.height;
+                tc.y = previous.y + previousDc.height - 60;
 
                 bagPosId = 0;
                 break;
