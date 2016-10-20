@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.etf.entity.componets.ButterflyComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -32,7 +31,6 @@ public class Preview extends AbstractDialog {
     public static final String ITEM_UNKNOWN = "item_unknown_n";
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
-    //    public static final String LBL_NOT_ENOUGH = "tag_lbl_not_enough";
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
     public static final String BTN_BUY = "tag_btn_buy";
     public static final String BTN_ENABLE = "tag_btn_enable";
@@ -40,7 +38,7 @@ public class Preview extends AbstractDialog {
     public static final String LBL_PRICE = "tag_lbl_price";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
-    public static final String TAG_NOT_NUFF = "tag_notNuff";
+    public static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
 
     public static final int ICON_X = 550;
     public static final int ICON_X_RELATIVE = 270;
@@ -144,11 +142,12 @@ public class Preview extends AbstractDialog {
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
-            lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+            lbl_not_enough.getComponent(TintComponent.class).color.a = 0;
             return true;
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_not_enough.getComponent(TintComponent.class).color.a = 1;
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
             return false;
         }
