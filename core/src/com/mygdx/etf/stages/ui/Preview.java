@@ -44,7 +44,7 @@ public class Preview extends AbstractDialog {
 
     public static final int ICON_X = 550;
     public static final int ICON_X_RELATIVE = 270;
-    public static final int ICON_Y_RELATIVE = 350;
+    public static final int ICON_Y_RELATIVE = 370;
     public static final int PREVIEW_X = 260;
     public static final int PREVIEW_Y = 30;
     public static final float PREVIEW_SCALE = 0.9f;
@@ -411,20 +411,20 @@ public class Preview extends AbstractDialog {
 
     public void checkAndClose() {
 
-//        if (previewBoundingBox != null) {
-//            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
-//                    previewBoundingBox.y,
-//                    previewBoundingBox.width,
-//                    previewBoundingBox.height,
-//                    previewBoundingBox.toString());
-//        }
+        if (previewBoundingBox != null) {
+            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
+                    previewBoundingBox.y,
+                    previewBoundingBox.width,
+                    previewBoundingBox.height,
+                    previewBoundingBox.toString());
+        }
         if (previewE != null) {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();
             boolean isOutside = previewBoundingBox == null ||
                     !previewBoundingBox.contains(v.x, v.y);
             float currentYpos = previewE.getComponent(TransformComponent.class).y;
-            if (Gdx.input.isTouched() && currentYpos <= 50 || currentYpos >= 800) {
+            if (Gdx.input.isTouched() && currentYpos <= PREVIEW_Y || currentYpos >= 800) {
                 if (isPreviewOn && isOutside) {
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();

@@ -35,20 +35,20 @@ public class ShopScreenScript implements IScript {
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
-    public static final String DOT_LIB = "dot_lib";
     public static final String HC_SHOP_SEC = "HC_shop_sec";
     public static final String TAB_BTN_SHOP = "tab_btn_shop";
     public static final String TAB_BTN_UPG = "tab_btn_upg";
     public static final String CURTAIN_SHOP = "curtain_shop";
     public static final int INIT_HC_ITEMS_X = 146;
     public static final int X_ICON_ON_BAG = 70;
-    public static final int Y_ICON_ON_BAG = 100;
+    public static final int Y_ICON_ON_BAG = 60;
     public static final int STOP_VELOCITY_DIV = 20;
     public static final int FIRST_BAG_X = 1300;
     public static final int FIRST_BAG_Y = 400;
     public static final float BAG_POS_COEFFICIENT = 0.6f;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
+    private static final String TITLE = "title";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -72,7 +72,7 @@ public class ShopScreenScript implements IScript {
     public int bagPosId;
     public Preview preview;
     float stopVelocity;
-//    private GameStage stage;
+    //    private GameStage stage;
     private ItemWrapper shopItem;
     public Entity hcSectionE;
     public Entity btnShop;
@@ -161,6 +161,14 @@ public class ShopScreenScript implements IScript {
         int i = 0;
         for (Entity e : nc.children) {
             final ShopItem hc = allHCItems.get(i);
+
+            // set item title
+            Entity child = e.getComponent(NodeComponent.class).getChild(TITLE);
+            child.getComponent(LabelComponent.class).text.replace(
+                    0, child.getComponent(LabelComponent.class).text.length,
+                    hc.name
+            );
+
             e.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
                 @Override
                 public void touchUp() {
@@ -190,7 +198,7 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon = initSoftCurrencyShopItem(vc);
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(bagsZindex+1);
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(bagsZindex + 1);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
@@ -201,6 +209,10 @@ public class ShopScreenScript implements IScript {
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x + X_ICON_ON_BAG;
             tcb.y = tc.y + Y_ICON_ON_BAG;
+            bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
+                    0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
+                    vc.name
+            );
 
             bags.add(bagEntity);
             itemIcons.put(vc.shopIcon, itemIcon);
@@ -211,9 +223,11 @@ public class ShopScreenScript implements IScript {
                         @Override
                         public void touchUp() {
                         }
+
                         @Override
                         public void touchDown() {
                         }
+
                         @Override
                         public void clicked() {
                             if (!isPreviewOn && canOpenPreview) {
