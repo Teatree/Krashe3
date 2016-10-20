@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
+import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -128,7 +129,11 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         if (allShopItems.isEmpty()) {
-            allHCItems.addAll(GameStage.gameScript.fpc.pets);
+            for(PetComponent pet : GameStage.gameScript.fpc.pets) {
+                if (pet.isHardCurr) {
+                    allHCItems.add(pet);
+                }
+            }
             allHCItems.addAll(getAllUpgrades());
             allShopItems.addAll(GameStage.gameScript.fpc.vanities);
         }
