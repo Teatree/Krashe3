@@ -129,7 +129,7 @@ public class ShopScreenScript implements IScript {
 
     private void getAllAllVanities() {
         if (allShopItems.isEmpty()) {
-            for(PetComponent pet : GameStage.gameScript.fpc.pets) {
+            for (PetComponent pet : GameStage.gameScript.fpc.pets) {
                 if (pet.isHardCurr) {
                     allHCItems.add(pet);
                 }
@@ -174,22 +174,15 @@ public class ShopScreenScript implements IScript {
                     hc.name
             );
 
-            e.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
-                @Override
-                public void touchUp() {
-                }
-
-                @Override
-                public void touchDown() {
-                }
-
-                @Override
-                public void clicked() {
-                    if (!isPreviewOn && canOpenPreview) {
-                        preview.showPreview(hc, true, false);
-                    }
-                }
-            });
+            e.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(e) {
+                        @Override
+                        public void clicked() {
+                            if (!isPreviewOn && canOpenPreview) {
+                                preview.showPreview(hc, true, false);
+                            }
+                        }
+                    });
             i++;
         }
     }
@@ -225,14 +218,6 @@ public class ShopScreenScript implements IScript {
             bagEntity.add(new ButtonComponent());
             bagEntity.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(bagEntity) {
-                        @Override
-                        public void touchUp() {
-                        }
-
-                        @Override
-                        public void touchDown() {
-                        }
-
                         @Override
                         public void clicked() {
                             if (!isPreviewOn && canOpenPreview) {
