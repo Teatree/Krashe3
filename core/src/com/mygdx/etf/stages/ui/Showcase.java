@@ -6,6 +6,7 @@ import com.mygdx.etf.entity.componets.VanityComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.GameStage;
 import com.mygdx.etf.stages.ResultScreenScript;
+import com.mygdx.etf.utils.EffectUtils;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -28,7 +29,7 @@ public class Showcase {
     public static final String INTRO = "intro";
     public static final String SHOWCASE = "showcase_lib";
     public static final String LBL_ITEM_NAME = "lbl_item_name";
-    public static final String LBL_ITEM_DESC = "lbl_item_desc";
+    public static final String LBL_ITEM_DESC = "lbl_item_desc2";
     public static final String SPOTLIGHT = "spotLight";
     public static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
     public static final String LBL_ITEM_PRICE = "lbl_item_price";
@@ -42,6 +43,7 @@ public class Showcase {
     public Entity showcaseE;
     private TransformComponent tcItem;
     private int counter = 0;
+    private int celebratingCounter = 0;
 
     private Entity itemIcon;
     public Entity spotLightE;
@@ -55,6 +57,7 @@ public class Showcase {
 
     public boolean dropItem = false;
     public boolean isActing = false;
+    public boolean isCelebrating = false;
 
     public Showcase(ItemWrapper resultScreenItem, ResultScreenScript resultScreen) {
         this.screenItem = resultScreenItem;
@@ -70,15 +73,15 @@ public class Showcase {
     public void act(float delta) {
         if(isActing) {
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(1000);
-            System.out.println("ACT lbl_priceE.getComponent(TintComponent.class).color.a: " + lbl_priceE.getComponent(TintComponent.class).color.a);
+            System.out.println("ACT lbl_descE.getComponent(TintComponent.class).color.a: " + lbl_descE.getComponent(TintComponent.class).color.a);
             System.out.println("ACT lbl_collE.getComponent(TintComponent.class).color.a: " + lbl_collE.getComponent(TintComponent.class).color.a);
             System.out.println("SHOWCASE ACTING!" + " counter: " + counter);
             counter += 1;
-            if (counter >= 450 && spotLightE != null) {
+            if (counter >= 70 && spotLightE != null) {
                 if (spotLightE.getComponent(TintComponent.class).color.a < 1 ) {
                     spotLightE.getComponent(TintComponent.class).color.a += 0.05f;
                 }
-                if (counter == 700) {
+                if (counter == 150) {
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveTo(570, 347, 0.8f));
@@ -94,6 +97,37 @@ public class Showcase {
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
                     coin.getComponent(TintComponent.class).color.a += 0.05f;
                 }
+            }
+        }
+
+        if(isCelebrating){
+            System.out.println("celebrating");
+            celebratingCounter++;
+            System.out.println("celebratiion counter: " + celebratingCounter);
+            if(celebratingCounter > 30 && celebratingCounter < 33) {
+                EffectUtils.playYellowStarsParticleEffect(300, 300);
+            }
+            if (celebratingCounter > 100) {
+                celebratingCounter = 0;
+                isCelebrating = false;
+                isActing = false;
+                ResultScreenScript.isWasShowcase = true;
+                resultScreen.initResultScreen();
+                showCaseVanity = null;
+                counter = 0;
+
+                if(lbl_priceE != null) {
+                    backBtn.getComponent(TintComponent.class).color.a = 0;
+                    buyBtn.getComponent(TintComponent.class).color.a = 0;
+                    lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+                    lbl_collE.getComponent(TintComponent.class).color.a = 0;
+                    coin.getComponent(TintComponent.class).color.a = 0;
+                    lbl_descE.getComponent(TintComponent.class).color.a = 0;
+                    spotLightE.getComponent(TintComponent.class).color.a = 0;
+                    lbl_nameE.getComponent(TintComponent.class).color.a = 0;
+                }
+
+
             }
         }
     }
@@ -118,6 +152,14 @@ public class Showcase {
             fadeChildren(nc, fadeCoefficient);
             if (itemIcon != null && fadeCoefficient < 0)
                 fadeChildren(itemIcon.getComponent(NodeComponent.class), fadeCoefficient);
+            if (lbl_descE != null) {
+                lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+                lbl_collE.getComponent(TintComponent.class).color.a = 0;
+                coin.getComponent(TintComponent.class).color.a = 0;
+                lbl_descE.getComponent(TintComponent.class).color.a = 0;
+                spotLightE.getComponent(TintComponent.class).color.a = 0;
+                lbl_nameE.getComponent(TintComponent.class).color.a = 0;
+            }
         }
         hideWindow(tcp);
 
@@ -174,15 +216,14 @@ public class Showcase {
 
         initShowCaseItem();
 
-
-        lbl_priceE.getComponent(TintComponent.class).color.a = 0;
-        lbl_collE.getComponent(TintComponent.class).color.a = 0;
-        coin.getComponent(TintComponent.class).color.a = 0;
-        lbl_descE.getComponent(TintComponent.class).color.a = 0;
-        spotLightE.getComponent(TintComponent.class).color.a = 0;
-        lbl_nameE.getComponent(TintComponent.class).color.a = 0;
-        System.out.println("lbl_priceE.getComponent(TintComponent.class).color.a: " + lbl_priceE.getComponent(TintComponent.class).color.a);
-        System.out.println("lbl_collE.getComponent(TintComponent.class).color.a: " + lbl_collE.getComponent(TintComponent.class).color.a);
+//        lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+//        lbl_collE.getComponent(TintComponent.class).color.a = 0;
+//        coin.getComponent(TintComponent.class).color.a = 0;
+//        lbl_descE.getComponent(TintComponent.class).color.a = 0;
+//        spotLightE.getComponent(TintComponent.class).color.a = 0;
+//        lbl_nameE.getComponent(TintComponent.class).color.a = 0;
+//        System.out.println("lbl_descE.getComponent(TintComponent.class).color.a: " + lbl_descE.getComponent(TintComponent.class).color.a);
+//        System.out.println("lbl_collE.getComponent(TintComponent.class).color.a: " + lbl_collE.getComponent(TintComponent.class).color.a);
 
         tcShowCase.x = -25;
         tcShowCase.y = -35;
@@ -229,6 +270,15 @@ public class Showcase {
                     resultScreen.initResultScreen();
                     showCaseVanity = null;
                     counter = 0;
+
+                    backBtn.getComponent(TintComponent.class).color.a = 0;
+                    buyBtn.getComponent(TintComponent.class).color.a = 0;
+                    lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+                    lbl_collE.getComponent(TintComponent.class).color.a = 0;
+                    coin.getComponent(TintComponent.class).color.a = 0;
+                    lbl_descE.getComponent(TintComponent.class).color.a = 0;
+                    spotLightE.getComponent(TintComponent.class).color.a = 0;
+                    lbl_nameE.getComponent(TintComponent.class).color.a = 0;
                 }
             }
         });
@@ -244,17 +294,8 @@ public class Showcase {
         buyBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(buyBtn) {
             @Override
             public void clicked() {
-                if(btn.getComponent(TintComponent.class).color.a >= 1) {
-                    counter = 0;
-                    isActing = false;
-                    showCaseVanity.buyAndUse();
-                    GameStage.changedFlower2 = true;
-                    ResultScreenScript.isWasShowcase = true;
-                    resultScreen.initResultScreen();
-                    if (GameStage.shopScript != null) {
-                        GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
-                    }
-                    showCaseVanity = null;
+                if (btn.getComponent(TintComponent.class).color.a > 0) {
+                    isCelebrating = true;
                 }
             }
         });

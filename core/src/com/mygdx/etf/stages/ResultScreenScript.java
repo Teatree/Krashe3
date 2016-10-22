@@ -60,7 +60,7 @@ public class ResultScreenScript implements IScript {
 
     LabelComponent earnedLabel;
     LabelComponent earnedLabels;
-    long need;
+    public long need;
     int i = 0;
     int j = 0;
     Entity backPlay;
@@ -136,7 +136,7 @@ public class ResultScreenScript implements IScript {
         }
     }
 
-    private long getNeedForNextItem() {
+    public long getNeedForNextItem() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
             if (!vc.bought) {
                 if (vc.cost >= gameScript.fpc.totalScore) {
@@ -235,7 +235,7 @@ public class ResultScreenScript implements IScript {
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
-//            showcase.showFading();
+            showcase.showFading();
         }
         if(showcase.showcaseE!=null){
             showcase.act(delta);

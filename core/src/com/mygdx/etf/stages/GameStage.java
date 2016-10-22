@@ -201,6 +201,7 @@ public class GameStage extends Stage {
             vc.enabled = false;
             vc.advertised = false;
         }
+        ResultScreenScript.showCaseVanity = null;
         gameScript.fpc.score = 0;
         gameScript.fpc.bestScore = 0;
         gameScript.fpc.totalScore = 0;
