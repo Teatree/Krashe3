@@ -11,6 +11,7 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import java.util.Random;
 
 import static com.mygdx.etf.stages.GameStage.sceneLoader;
+import static com.mygdx.etf.stages.GameStage.gameScript;
 
 public class PetComponent extends ShopItem implements Component {
 
@@ -43,6 +44,7 @@ public class PetComponent extends ShopItem implements Component {
     public Entity petHead;
 
     public int stageCounter;
+    public boolean isHardCurr;
 
     public PetComponent() {
 //        init();
@@ -67,6 +69,7 @@ public class PetComponent extends ShopItem implements Component {
 //        this.petName = petJson.petName;
         this.logoName = petJson.logoName;
         this.discountTransactionId = petJson.discountTransactionId;
+        this.isHardCurr = petJson.isHardCurr;
 //        init();
     }
 
@@ -92,17 +95,23 @@ public class PetComponent extends ShopItem implements Component {
         eatenBugsCounter = 0;
 
         loadFromLib(name);
-//        petCannon = GameStage.gameScript.gameItem.getChild(petCannonName).getEntity();
-//        petHead = GameStage.gameScript.gameItem.getChild(name+"_head").getEntity();
+//        petCannon = gameScript.gameItem.getChild(petCannonName).getEntity();
+//        petHead = gameScript.gameItem.getChild(name+"_head").getEntity();
         stageCounter = 0;
     }
 
     @Override
     public void apply() {
         this.enabled = true;
-        GameStage.gameScript.hideCurrentPet();
-        GameStage.gameScript.fpc.currentPet = this;
-//        GameStage.gameScript.initPet();
+        gameScript.hideCurrentPet();
+        gameScript.fpc.currentPet = this;
+        for (PetComponent petComponent : gameScript.fpc.pets){
+            if (petComponent != this){
+                petComponent.enabled = false;
+            }
+        }
+
+//        gameScript.initPet();
     }
 
     @Override
@@ -114,8 +123,8 @@ public class PetComponent extends ShopItem implements Component {
     @Override
     public void buyAndUse() {
         this.bought = true;
-        if (GameStage.gameScript.fpc.currentPet != null) {
-            GameStage.gameScript.fpc.currentPet.tryPeriod = false;
+        if (gameScript.fpc.currentPet != null) {
+            gameScript.fpc.currentPet.tryPeriod = false;
         }
         apply();
     }

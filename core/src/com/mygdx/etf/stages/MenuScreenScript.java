@@ -193,6 +193,9 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnFB) {
                     @Override
                     public void clicked() {
+                        if (playServiceFlapIsOut) {
+                            movingFlaps = true;
+                        }
                         Main.mainController.openFB();
                     }
                 });
@@ -258,7 +261,9 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
-                            movingFlaps = true;
+                            if (playServiceFlapIsOut) {
+                                movingFlaps = true;
+                            }
                             isDialogOpen = true;
                             if (settings == null) {
                                 settings = new Settings(menuItem);
@@ -282,7 +287,9 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen) {
-                            movingFlaps = true;
+                            if (playServiceFlapIsOut) {
+                                movingFlaps = true;
+                            }
                             isDialogOpen = true;
                             showGoalNotification = false;
                             Level.goalStatusChanged = false;

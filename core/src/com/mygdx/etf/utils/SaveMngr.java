@@ -641,6 +641,7 @@ public class SaveMngr {
         public String petCannonName;
         public String petHeadName;
         public String logoName;
+        public boolean isHardCurr;
 
         public PetJson() {
         }
@@ -653,6 +654,7 @@ public class SaveMngr {
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
             this.totalEatenBugs = petComponent.totalEatenBugs;
             this.shopIcon = petComponent.shopIcon;
+            this.isHardCurr = petComponent.isHardCurr;
 
             this.tryPeriod = petComponent.tryPeriod;
             this.logoName = petComponent.logoName;
