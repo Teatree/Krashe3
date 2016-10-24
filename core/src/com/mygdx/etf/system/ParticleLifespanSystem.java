@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.etf.entity.componets.ParticleLifespanComponent;
+import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 
 public class ParticleLifespanSystem extends IteratingSystem {
 
@@ -21,6 +22,8 @@ public class ParticleLifespanSystem extends IteratingSystem {
 
         if (component.duration <= 0) {
             getEngine().removeEntity(entity);
+            ParticleComponent pc = entity.getComponent(ParticleComponent.class);
+            pc.particleEffect.dispose();
         }
     }
 }

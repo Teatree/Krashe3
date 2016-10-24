@@ -72,6 +72,7 @@ public class EffectUtils {
         ParticleLifespanComponent lifespanComponent = new ParticleLifespanComponent();
         lifespanComponent.duration = duration;
         particleE.add(lifespanComponent);
+
         pc.particleEffect.setPosition(x, y);
         pc.particleEffect.start();
     }

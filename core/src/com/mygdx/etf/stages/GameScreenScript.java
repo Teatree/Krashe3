@@ -3,7 +3,6 @@ package com.mygdx.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.*;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
@@ -23,7 +22,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.io.File;
 import java.util.Random;
 
 import static com.mygdx.etf.entity.componets.CocoonComponent.*;
@@ -51,7 +49,7 @@ public class GameScreenScript implements IScript {
     public final String BTN_PAUSE = "btn_pause";
     public final String MEGA_FLOWER = "mega_flower";
     public final String MEGA_LEAFS = "mega_leafs";
-    public final String COCCOON = "coccoon";
+    public final String COCOON = "cocoon";
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
@@ -516,16 +514,16 @@ public class GameScreenScript implements IScript {
     }
 
     private void initCocoon() {
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Entity cocoonEntity = root.getChild(COCCOON).getEntity();
+//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
         if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
-            CocoonComponent dc = new CocoonComponent();
-            cocoonEntity.add(dc);
+            CocoonComponent cocoonComponentc = new CocoonComponent();
+            cocoonEntity.add(cocoonComponentc);
         }
         cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.DEAD;
         cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
 
-        Entity butEntity = root.getChild(CocoonSystem.BUTTERFLY_ANI).getEntity();
+        Entity butEntity = gameItem.getChild(CocoonSystem.BUTTERFLY_ANI).getEntity();
         if (butEntity.getComponent(ButterflyComponent.class) == null) {
             ButterflyComponent dc = new ButterflyComponent();
             butEntity.add(dc);
@@ -534,8 +532,8 @@ public class GameScreenScript implements IScript {
     }
 
     private void initUmbrella() {
-        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-        Entity umbrellaEntity = root.getChild(UMBRELLA_ANI).getEntity();
+//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
             umbrellaEntity.remove(UmbrellaComponent.class);
         }
@@ -564,8 +562,8 @@ public class GameScreenScript implements IScript {
         if (canCocoonSpawn()) {
             cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
-            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            Entity cocoonEntity = root.getChild(COCCOON).getEntity();
+//            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
 
             cocoonEntity.getComponent(SpriterComponent.class).scale = COCOON_SCALE;
             cocoonEntity.getComponent(SpriterComponent.class).player.setAnimation(0);

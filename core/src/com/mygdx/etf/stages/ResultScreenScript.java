@@ -8,6 +8,7 @@ import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PromoWindow;
 import com.mygdx.etf.stages.ui.Showcase;
 import com.mygdx.etf.stages.ui.TrialTimer;
+import com.mygdx.etf.system.ParticleLifespanSystem;
 import com.mygdx.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -77,6 +78,8 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
+
+        sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         i = 0;
         j = 0;
