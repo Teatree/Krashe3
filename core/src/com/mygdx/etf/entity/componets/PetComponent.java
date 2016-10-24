@@ -10,8 +10,8 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.Random;
 
-import static com.mygdx.etf.stages.GameStage.sceneLoader;
 import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.GameStage.sceneLoader;
 
 public class PetComponent extends ShopItem implements Component {
 

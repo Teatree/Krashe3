@@ -1,25 +1,19 @@
 package com.mygdx.etf.stages;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.math.Interpolation;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.Level;
-import com.mygdx.etf.entity.componets.ToggleButtonComponent;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
 import com.mygdx.etf.stages.ui.PauseDialog;
 import com.mygdx.etf.stages.ui.Settings;
 import com.mygdx.etf.stages.ui.TrialTimer;
-import com.mygdx.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.NodeComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
-
-import javax.swing.*;
 
 import static com.mygdx.etf.stages.GameStage.gameScript;
 import static com.mygdx.etf.stages.ui.AbstractDialog.isDialogOpen;
@@ -45,7 +39,6 @@ public class MenuScreenScript implements IScript {
 
     public static final int TIMER_X = 945;
     public static final int TIMER_Y = 441;
-    public static final String MM_LEAFS = "MM_leafs";
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
@@ -184,9 +177,6 @@ public class MenuScreenScript implements IScript {
 
         btnAch = achievements_C.getComponent(NodeComponent.class).getChild(BTN_ACHIEVEMENTS);
         btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
-
-        ToggleButtonComponent signInOutTbc = new ToggleButtonComponent();
-//        }
 
         btnFB.add(new ButtonComponent());
         btnFB.getComponent(ButtonComponent.class).addListener(

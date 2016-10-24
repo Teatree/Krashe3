@@ -20,9 +20,9 @@ import java.util.Map;
 
 import static com.mygdx.etf.stages.GameScreenScript.isPause;
 import static com.mygdx.etf.stages.GameStage.gameScript;
+import static com.mygdx.etf.stages.ui.Settings.SETTINGS_SCALE;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.mygdx.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
-import static com.mygdx.etf.stages.ui.Settings.SETTINGS_SCALE;
 
 public class PauseDialog extends AbstractDialog {
 

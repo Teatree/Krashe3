@@ -1,6 +1,5 @@
 package com.mygdx.etf.entity.componets;
 
-import com.badlogic.gdx.Gdx;
 import com.mygdx.etf.stages.ui.TrialTimer;
 
 public abstract class ShopItem {

@@ -464,11 +464,7 @@ public class GameScreenScript implements IScript {
 
     private void endGame() {
         gameOverReviveTimesLimit--;
-        if (gameOverReviveTimesLimit <= 0) {
-            shouldShowGameOverDialog = false;
-        } else {
-            shouldShowGameOverDialog = true;
-        }
+        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0;
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();

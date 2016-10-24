@@ -11,7 +11,7 @@ import com.mygdx.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
-import static com.mygdx.etf.entity.componets.VanityComponent.*;
+import static com.mygdx.etf.entity.componets.VanityComponent.vanityCollections;
 
 public class SaveMngr {
 

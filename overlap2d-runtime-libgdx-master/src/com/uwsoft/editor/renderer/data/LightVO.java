@@ -5,7 +5,7 @@ import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 
 public class LightVO extends MainItemVO{
 	//public int itemId = -1;
-	public static enum LightType {POINT, CONE}
+	public enum LightType {POINT, CONE}
 	public LightType type;
 	public int rays = 12;
 	public float distance = 300;

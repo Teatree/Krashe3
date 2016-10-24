@@ -24,9 +24,9 @@ public class ShopUpgrTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             LayerMapComponent lc = shopScreenScript.btnUpg.getComponent(LayerMapComponent.class);
-            if (shopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
+            if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
                 lc.getLayer(BTN_PRESSED).isVisible = false;
             } else {
@@ -38,9 +38,9 @@ public class ShopUpgrTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             LayerMapComponent lc = shopScreenScript.btnUpg.getComponent(LayerMapComponent.class);
-            if (shopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
+            if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
                 lc.getLayer(BTN_PRESSED).isVisible = false;
             } else {
@@ -53,11 +53,11 @@ public class ShopUpgrTabListener implements ButtonComponent.ButtonListener {
     @Override
     public void clicked() {
 
-        if (!shopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn) {
             if (shopScreenScript.btnUpg.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
-            } else if (!shopScreenScript.isPreviewOn) {
+            } else if (!ShopScreenScript.isPreviewOn) {
                 LayerMapComponent lc1 = shopScreenScript.btnUpg.getComponent(LayerMapComponent.class);
                 lc1.getLayer(BTN_PRESSED).isVisible = true;
                 lc1.getLayer(BTN_NORMAL).isVisible = false;
@@ -96,7 +96,7 @@ public class ShopUpgrTabListener implements ButtonComponent.ButtonListener {
             bag.add(a);
         }
 
-        for (Entity icon : shopScreenScript.itemIcons.values()) {
+        for (Entity icon : ShopScreenScript.itemIcons.values()) {
             ActionComponent a = new ActionComponent();
             Actions.checkInit();
 

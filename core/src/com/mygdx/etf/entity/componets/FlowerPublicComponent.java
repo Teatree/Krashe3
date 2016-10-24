@@ -84,7 +84,7 @@ public class FlowerPublicComponent implements Component {
         Goal scoreGoal = level.getGoalByType(Goal.GoalType.GET_N_POINTS);
         if (scoreGoal != null) {
             if (scoreGoal.periodType.equals(Goal.PeriodType.IN_ONE_LIFE)) {
-                scoreGoal.counter = (int) score;
+                scoreGoal.counter = score;
             }
             if (scoreGoal.periodType.equals(Goal.PeriodType.TOTAL)) {
                 scoreGoal.counter = (int) totalScore;
