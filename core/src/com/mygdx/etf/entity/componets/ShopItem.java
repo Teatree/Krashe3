@@ -40,8 +40,6 @@ public abstract class ShopItem {
 
 
     public String updateTryPeriodTimer() {
-        float deltaTime = Gdx.graphics.getDeltaTime();
-
         tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
 
         int minutes = ((int) tryPeriodTimer) / 60;

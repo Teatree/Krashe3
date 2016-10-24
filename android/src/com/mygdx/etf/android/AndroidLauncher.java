@@ -79,7 +79,6 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
-//        setupPlayServices();
         gameHelper.onStart(this);
     }
 

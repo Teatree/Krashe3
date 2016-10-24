@@ -80,6 +80,7 @@ public class Main extends Game {
             GameStage.viewport.update(viewportWidth, viewportHeight, true);
             gameStage.draw();
         } else {
+            System.out.println("post runnable!!!");
             Gdx.app.postRunnable(new Runnable() {
                 @Override
                 public void run() {

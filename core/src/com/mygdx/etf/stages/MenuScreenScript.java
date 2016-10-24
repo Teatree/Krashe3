@@ -132,7 +132,7 @@ public class MenuScreenScript implements IScript {
             imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
         }
 
-        if (achievements_C != null){
+        if (achievements_C != null) {
             achievements_C.getComponent(TransformComponent.class).y = 330f;
             leaderboard_C.getComponent(TransformComponent.class).y = 330f;
             leaderboard_C.getComponent(TintComponent.class).color.a = 1f;
@@ -157,7 +157,7 @@ public class MenuScreenScript implements IScript {
         btnAch.getComponent(TintComponent.class).color.a = 1;
         leaderboard_C.getComponent(TintComponent.class).color.a = 1;
         achievements_C.getComponent(TintComponent.class).color.a = 1;
-        if(timer!=null) {
+        if (timer != null) {
             timer.timerE.getComponent(TintComponent.class).color.a = 1;
             timer.timerEsh.getComponent(TintComponent.class).color.a = 1;
             timer.timerLogo.getComponent(TintComponent.class).color.a = 1;
@@ -206,6 +206,7 @@ public class MenuScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (playServiceFlapIsOut) {
+                            movingFlaps = true;
                             Main.mainController.getAchievements();
                         }
                     }
@@ -218,6 +219,7 @@ public class MenuScreenScript implements IScript {
                     public void clicked() {
 
                         if (playServiceFlapIsOut) {
+                            movingFlaps = true;
                             Main.mainController.getLeaderboard();
                         }
                     }
@@ -229,6 +231,9 @@ public class MenuScreenScript implements IScript {
 
                     public void clicked() {
                         if (!isDialogOpen) {
+                            if (playServiceFlapIsOut) {
+                                movingFlaps = true;
+                            }
                             Main.mainController.rateMyApp();
                         }
 
@@ -398,8 +403,8 @@ public class MenuScreenScript implements IScript {
         wrldH += dy * transitionCoefficient;
         wrldW += dx * transitionCoefficient;
 
-        float fg = 30f/67;
-        if(fg<30) {
+        float fg = 30f / 67;
+        if (fg < 30) {
             camPosX = (int) (1230 - wrldW - fg * frames);
 
             frames++;
@@ -414,7 +419,7 @@ public class MenuScreenScript implements IScript {
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            if(timer!=null) {
+            if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
                 timer.timerEsh.getComponent(TintComponent.class).color.a -= TINT_STEP;
                 timer.timerLogo.getComponent(TintComponent.class).color.a -= TINT_STEP;

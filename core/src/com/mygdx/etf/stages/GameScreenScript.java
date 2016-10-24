@@ -55,9 +55,6 @@ public class GameScreenScript implements IScript {
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
-    public static final int TRIAL_TIMER_X = 120;
-    public static final int TRIAL_TIMER_Y = 650;
-
     public static boolean isPause;
     public static boolean isGameOver;
     public static boolean isStarted;
@@ -207,7 +204,7 @@ public class GameScreenScript implements IScript {
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();
-        initCocoon();
+//        initCocoon();
 
         checkTryPeriod();
 
@@ -431,9 +428,9 @@ public class GameScreenScript implements IScript {
                     spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 }
                 //spawn Cocoon
-                if (cocoonSpawnCounter <= 0) {
-                    spawnCocoon();
-                }
+//                if (cocoonSpawnCounter <= 0) {
+//                    spawnCocoon();
+//                }
             }
 
             if (gameOverDialog != null) {
