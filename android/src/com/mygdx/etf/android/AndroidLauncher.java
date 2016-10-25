@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -31,6 +32,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     //game play service
     private GameHelper gameHelper;
+    private boolean showAchievements;
+    private boolean showLeaders;
     private final static int requestCode = 1;
 
     @Override
@@ -53,13 +56,20 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
         gameHelper.enableDebugLog(false);
 
-        GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
+        final GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
             @Override
             public void onSignInFailed() {
             }
 
             @Override
             public void onSignInSucceeded() {
+//                System.out.println("show A >>>" + showAchievements + " show L >>>" + showLeaders);
+//                if (showAchievements) {
+//                    getAchievements();
+//                }
+//                if (showLeaders) {
+//                    getLeaderboard();
+//                }
             }
         };
 
@@ -81,7 +91,6 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         super.onStart();
         gameHelper.onStart(this);
     }
-
 
     public void setupAds() {
         adsHelper = new EtfAdsHelper(this);
@@ -128,72 +137,44 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     public void removeAds() {
-        try {
-            iapHelper.iapRemoveAds();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapRemoveAds();
     }
 
     @Override
     public void getPhoenix(Upgrade phoenix) {
-        try {
-            iapHelper.iapGetPhoenix(phoenix);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetPhoenix(phoenix);
     }
 
     @Override
     public void getBJDouble(Upgrade bj) {
-        try {
-            iapHelper.iapGetBj(bj);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetBj(bj);
     }
 
 
     @Override
     public void getBirdPet(PetComponent petComponent) {
-        try {
-            iapHelper.iapGetBirdPet(petComponent);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetBirdPet(petComponent);
     }
 
     @Override
     public void getPhoenixDiscount(Upgrade phoenix) {
-        try {
-            iapHelper.iapGetPhoenixDiscount(phoenix);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetPhoenixDiscount(phoenix);
+
     }
 
     @Override
     public void getBJDoubleDiscount(Upgrade bj) {
-        try {
-            iapHelper.iapGetBjDiscount(bj);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetBjDiscount(bj);
     }
 
 
     @Override
     public void getBirdPetDiscount(PetComponent petComponent) {
-        try {
-            iapHelper.iapGetBirdPetDiscount(petComponent);
-        } catch (IabHelper.IabAsyncInProgressException e) {
-            e.printStackTrace();
-        }
+        iapHelper.iapGetBirdPetDiscount(petComponent);
     }
 
     @Override
     public void rateMyApp() {
-//        Gdx.net.openURI(ANDROID_APP_LINK);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ANDROID_APP_LINK)));
     }
 
@@ -278,35 +259,34 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getLeaderboard() {
+        showLeaders = true;
+        Log.e("Alauncher", "show L !!!");
         if (isSignedIn()) {
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
                     getString(R.string.leaderboard_stars)), requestCode);
+            showLeaders = false;
         } else {
+            Log.e("Alauncher", "sign in on leaders");
             signIn();
         }
-//        if (!isSignedIn()) {
-//            signIn();
-//        }
-//        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-//                getString(R.string.leaderboard_stars)), requestCode);
     }
 
     @Override
-    public void getAchievements(){
+    public void getAchievements() {
+        showAchievements = true;
+        Log.e("Alauncher", " show Achievements!");
         if (isSignedIn()) {
             startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
+            showAchievements = false;
         } else {
+            Log.e("Alauncher", " sign in on achievemnts");
             signIn();
         }
-//        if (!isSignedIn()) {
-//            signIn();
-//        }
-//        startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
     }
 
     //TODO: ADD open in FB app
     @Override
-    public void openFB(){
+    public void openFB() {
         Gdx.net.openURI("https://facebook.com/Teatree1992");
     }
 }

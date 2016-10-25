@@ -77,162 +77,190 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapRemoveAds() throws IabHelper.IabAsyncInProgressException {
+    public void iapRemoveAds() {
         // Callback for when a purchase is finished
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                // if we were disposed of in the meantime, quit.
-                if (mHelper == null) return;
+                    // if we were disposed of in the meantime, quit.
+                    if (mHelper == null) return;
 
-                if (result.isFailure()) {
-                    //complain("Error purchasing: " + result);
-                    //setWaitScreen(false);
-                    return;
-                }
+                    if (result.isFailure()) {
+                        //complain("Error purchasing: " + result);
+                        //setWaitScreen(false);
+                        return;
+                    }
 //            if (!verifyDeveloperPayload(purchase)) {
 //                //complain("Error purchasing. Authenticity verification failed.");
 //                //setWaitScreen(false);
 //                return;
 //            }
 
-                Log.d("IAB", "Purchase successful.");
+                    Log.d("IAB", "Purchase successful.");
 
-                if (purchase.getSku().equals(SKU_NO_ADS)) {
-                    gameScript.fpc.settings.noAds = true;
+                    if (purchase.getSku().equals(SKU_NO_ADS)) {
+                        gameScript.fpc.settings.noAds = true;
+                    }
                 }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetBirdPet(final PetComponent petComponent) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetBirdPet(final PetComponent petComponent) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
+                    if (mHelper == null) return;
 
-                if (result.isFailure()) {
-                    return;
+                    if (result.isFailure()) {
+                        return;
+                    }
+
+                    if (purchase.getSku().equals(SKU_PET)) {
+                        petComponent.buyAndUse();
+                    }
                 }
-
-                if (purchase.getSku().equals(SKU_PET)) {
-                    petComponent.buyAndUse();
-                }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetBj(final Upgrade bj) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetBj(final Upgrade bj) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
-                if (result.isFailure()) {
-                    return;
-                }
+                    if (mHelper == null) return;
+                    if (result.isFailure()) {
+                        return;
+                    }
 
-                Log.d("IAB", "Purchase successful.");
-                if (purchase.getSku().equals(SKU_BJ)) {
-                    bj.buyAndUse();
+                    Log.d("IAB", "Purchase successful.");
+                    if (purchase.getSku().equals(SKU_BJ)) {
+                        bj.buyAndUse();
+                    }
                 }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetPhoenix(final Upgrade phoenix) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetPhoenix(final Upgrade phoenix) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
-                if (result.isFailure()) {
-                    return;
-                }
+                    if (mHelper == null) return;
+                    if (result.isFailure()) {
+                        return;
+                    }
 
-                Log.d("IAB", "Purchase successful.");
-                if (purchase.getSku().equals(SKU_PHOENIX)) {
-                    phoenix.buyAndUse();
+                    Log.d("IAB", "Purchase successful.");
+                    if (purchase.getSku().equals(SKU_PHOENIX)) {
+                        phoenix.buyAndUse();
+                    }
                 }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetBirdPetDiscount(final PetComponent petComponent) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetBirdPetDiscount(final PetComponent petComponent) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
+                    if (mHelper == null) return;
 
-                if (result.isFailure()) {
-                    return;
+                    if (result.isFailure()) {
+                        return;
+                    }
+
+                    if (purchase.getSku().equals(SKU_PET)) {
+                        petComponent.buyAndUse();
+                    }
                 }
-
-                if (purchase.getSku().equals(SKU_PET)) {
-                    petComponent.buyAndUse();
-                }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetBjDiscount(final Upgrade bj) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetBjDiscount(final Upgrade bj) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
-                if (result.isFailure()) {
-                    return;
-                }
+                    if (mHelper == null) return;
+                    if (result.isFailure()) {
+                        return;
+                    }
 
-                Log.d("IAB", "Purchase successful.");
-                if (purchase.getSku().equals(SKU_BJ)) {
-                    bj.buyAndUse();
+                    Log.d("IAB", "Purchase successful.");
+                    if (purchase.getSku().equals(SKU_BJ)) {
+                        bj.buyAndUse();
+                    }
                 }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void iapGetPhoenixDiscount(final Upgrade phoenix) throws IabHelper.IabAsyncInProgressException {
-        IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-            public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                if (purchase == null) return;
-                Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
+    public void iapGetPhoenixDiscount(final Upgrade phoenix) {
+        try {
+            IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (purchase == null) return;
+                    Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
-                if (mHelper == null) return;
-                if (result.isFailure()) {
-                    return;
-                }
+                    if (mHelper == null) return;
+                    if (result.isFailure()) {
+                        return;
+                    }
 
-                Log.d("IAB", "Purchase successful.");
-                if (purchase.getSku().equals(SKU_PHOENIX)) {
-                    phoenix.buyAndUse();
+                    Log.d("IAB", "Purchase successful.");
+                    if (purchase.getSku().equals(SKU_PHOENIX)) {
+                        phoenix.buyAndUse();
+                    }
                 }
-            }
-        };
-        mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
-                mPurchaseFinishedListener);
+            };
+            mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
+                    mPurchaseFinishedListener);
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
     }
 
 }
