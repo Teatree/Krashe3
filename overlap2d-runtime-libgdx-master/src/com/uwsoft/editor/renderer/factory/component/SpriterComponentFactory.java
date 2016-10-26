@@ -74,7 +74,8 @@ public class SpriterComponentFactory extends ComponentFactory {
         component. animationName = vo.animationName;
         component.scale = vo.scale;
 
-        FileHandle handle 	=	rm.getSCMLFile(vo.animationName);
+        System.err.println(vo.animationName);
+        FileHandle handle = rm.getSCMLFile(vo.animationName);
         component.data = new SCMLReader(handle.read()).getData();
         LibGdxLoader loader = 	new LibGdxLoader(component.data);
         loader.load(handle.file());
