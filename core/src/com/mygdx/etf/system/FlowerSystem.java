@@ -25,7 +25,6 @@ import static com.mygdx.etf.utils.SoundMgr.soundMgr;
 public class FlowerSystem extends IteratingSystem {
 
     public static final String TUTORIAL_LINE = "tutorial_line";
-//    public Vector2 tempGdx = new Vector2();
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -64,7 +63,7 @@ public class FlowerSystem extends IteratingSystem {
 
             transition(sc);
 
-            transitionBack(tc, sc);
+            transitionBack(sc);
 
             attackAndRetreat(tc, sc, delta);
 
@@ -178,7 +177,7 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
-    private void transitionBack(TransformComponent tc, SpriterComponent sc) {
+    private void transitionBack(SpriterComponent sc) {
         if (state.equals(TRANSITION_BACK)) {
             setTransitionBackAnimation(sc);
 
