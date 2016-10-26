@@ -43,7 +43,7 @@ public class ResultScreenScript implements IScript {
     public static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
     public static final String LBL_BET_SCORE = "lbl_BET_SCORE";
     public static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
-    private static final String TRIAL_TIMER = "timer_lbl";
+//    private static final String TRIAL_TIMER = "timer_lbl";
 
     public static VanityComponent showCaseVanity;
     public static boolean show;
@@ -65,16 +65,12 @@ public class ResultScreenScript implements IScript {
     int i = 0;
     int j = 0;
     Entity backPlay;
-    private GameStage stage;
+//    private GameStage stage;
     private ItemWrapper resultScreenItem;
     private Entity adsBtn;
     private Showcase showcase;
     private TrialTimer timer;
     private PromoWindow promoWindow;
-
-    public ResultScreenScript(GameStage stage) {
-        this.stage = stage;
-    }
 
     @Override
     public void init(Entity item) {
@@ -208,7 +204,9 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        timer.timer();
+        if (timer !=null) {
+            timer.timer();
+        }
         if (timer.timerE!=null && showcase.showcaseE!=null) {
             timer.timerE.getComponent(ZIndexComponent.class).setZIndex(showcase.showcaseE.getComponent(ZIndexComponent.class).getZIndex()-2);
             timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerEsh.getComponent(ZIndexComponent.class).getZIndex()+1);

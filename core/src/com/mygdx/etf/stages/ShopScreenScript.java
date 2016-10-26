@@ -30,7 +30,8 @@ public class ShopScreenScript implements IScript {
 
     public static final Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final int SENSITIVITY = 7;
-    public static final String SCORE_LBL = "score_lbl";
+    public static final String SCORE_LBL = "total_coins";
+    public static final String SCORE_LBL_SH = "total_coins_sh";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_SHOP_ICON_LIB = "btn_shop_icon_lib";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
@@ -57,6 +58,7 @@ public class ShopScreenScript implements IScript {
     boolean startTransitionOut;
 
     public static Entity scoreLbl;
+    public static Entity scoreLblsh;
     public static boolean isPreviewOn;
     public static boolean canOpenPreview = true;
     public static int bagsZindex;
@@ -66,6 +68,7 @@ public class ShopScreenScript implements IScript {
 
     public Entity touchZone;
     public LabelComponent lc;
+    public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
     public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
@@ -102,9 +105,13 @@ public class ShopScreenScript implements IScript {
         startTransitionIn = true;
         startTransitionOut = false;
 
+
+
         addBackButtonPlease();
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
+        scoreLblsh = shopItem.getChild(SCORE_LBL_SH).getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
+        lcsh = scoreLblsh.getComponent(LabelComponent.class);
         touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         createIconsForAllShopItems();
@@ -294,6 +301,7 @@ public class ShopScreenScript implements IScript {
         }
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
+        lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
     }
 
     private void transitionOut() {

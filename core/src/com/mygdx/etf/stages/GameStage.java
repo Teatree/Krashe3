@@ -136,7 +136,7 @@ public class GameStage extends Stage {
         sceneLoader.setScene(RESULT_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
-            resultScript = new ResultScreenScript(this);
+            resultScript = new ResultScreenScript();
             root.addScript(resultScript);
             resultScript.initButtons();
         } else {
