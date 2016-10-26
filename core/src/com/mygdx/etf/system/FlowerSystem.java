@@ -25,6 +25,7 @@ import static com.mygdx.etf.utils.SoundMgr.soundMgr;
 public class FlowerSystem extends IteratingSystem {
 
     public static final String TUTORIAL_LINE = "tutorial_line";
+//    public Vector2 tempGdx = new Vector2();
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -57,117 +58,148 @@ public class FlowerSystem extends IteratingSystem {
         if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
             sc.player.speed = FPS;
 
-            if (state.equals(IDLE_BITE)) {
-                setBiteIdleAnimation(sc);
-            }
+            idle(sc);
 
-            if (state.equals(IDLE)) {
-                if (gameScript.fpc.isCollision) {
-                    state = IDLE_BITE;
-                    gameScript.fpc.isCollision = false;
+            ifIsTouched(tc, sc);
 
-                    soundMgr.play(SoundMgr.EAT_SOUND);
-                } else {
-                    setIdleAnimation(sc);
-                }
-            }
-            if (Gdx.input.isTouched() && state.equals(IDLE) &&
-                    canAttackCoord()) {
-                state = TRANSITION;
-            }
+            transition(sc);
 
-            if (Gdx.input.isTouched()
-                    && !state.equals(TRANSITION)
-                    && !state.equals(ATTACK) && canAttackCoord()) {
-                state = ATTACK;
+            transitionBack(tc, sc);
 
-                setAttackAnimation(sc);
-            }
+            attackAndRetreat(tc, sc, delta);
 
-            if (state.equals(TRANSITION)) {
-                setTransitionAnimation(sc);
-                if (isAnimationFinished(sc)) {
-                    setAttackAnimation(sc);
-                    state = ATTACK;
-                }
-            }
+            bite(sc);
 
-            if (state.equals(TRANSITION_BACK)) {
-                setTransitionBackAnimation(sc);
-
-                if (Gdx.input.justTouched() && canAttackCoord()) {  // This is added for quick breaking of an animation
-                    setAttackAnimation(sc);
-                    state = ATTACK;
-                }
-
-                if (sc.player.getTime() > 20 && sc.player.getTime() < 62) {
-                    setIdleAnimation(sc);
-                    state = IDLE;
-                }
-            }
-
-            if (state.equals(ATTACK) || state.equals(RETREAT)) {
-
-                if (gameScript.fpc.isCollision) {
-                    state = ATTACK_BITE;
-                    setBiteAttackAnimation(sc);
-                    gameScript.fpc.isCollision = false;
-
-                    soundMgr.play(SoundMgr.EAT_SOUND);
-                } else {
-                    move(tc, delta);
-                    if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK)) {
-                        state = RETREAT;
-                        hideTutorialLine();
-                    }
-                    if (tc.y <= FLOWER_Y_POS + FLOWER_MOVE_SPEED * delta * FPS && state.equals(RETREAT)) {
-                        tc.y = FLOWER_Y_POS;
-                        sc.player.setTime(sc.player.getAnimation().length);
-                        state = TRANSITION_BACK;
-                    }
-                }
-            }
-
-            if (state.equals(ATTACK_BITE) || state.equals(IDLE_BITE)) {
-
-                if (state.equals(ATTACK_BITE)) {
-                    if (isAnimationFinished(sc)) {
-                        state = RETREAT;
-                        setAttackAnimation(sc);
-                    }
-
-                    if (gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
-                        state = ATTACK_BITE;
-                        setBiteAttackAnimation(sc);
-                    }
-                }
-
-                if (state.equals(IDLE_BITE) && isAnimationFinished(sc)) {
-                    state = IDLE;
-                    setIdleAnimation(sc);
-                }
-            }
-
-            if (state.equals(PHOENIX)) {
-                tc.x = FLOWER_X_POS;
-                tc.y = FLOWER_Y_POS;
-                setBiteIdleAnimation(sc);
-                if (isAnimationFinished(sc)) {
-                    state = IDLE;
-                    setIdleAnimation(sc);
-                    BugSystem.blowUpAllBugs = false;
-                }
-            }
+            usePhoenix(tc, sc);
         } else {
             sc.player.speed = 0;
         }
     }
 
-    //:TODO NPE
+    private void attackAndRetreat(TransformComponent tc, SpriterComponent sc, float delta) {
+        if (state.equals(ATTACK) || state.equals(RETREAT)) {
+
+            if (gameScript.fpc.isCollision) {
+                state = ATTACK_BITE;
+                setBiteAttackAnimation(sc);
+                gameScript.fpc.isCollision = false;
+
+                soundMgr.play(SoundMgr.EAT_SOUND);
+            } else {
+                if (tc.y < FLOWER_MAX_Y_POS || !Gdx.input.isTouched()) {
+                    move(tc, delta);
+                }
+                if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK)) {
+                    state = RETREAT;
+                    hideTutorialLine();
+                }
+                if (tc.y <= FLOWER_Y_POS + FLOWER_MOVE_SPEED * delta * FPS && state.equals(RETREAT)) {
+                    tc.y = FLOWER_Y_POS;
+                    sc.player.setTime(sc.player.getAnimation().length);
+                    state = TRANSITION_BACK;
+                }
+            }
+        }
+    }
+
+    private void idle(SpriterComponent sc) {
+        if (state.equals(IDLE_BITE)) {
+            setBiteIdleAnimation(sc);
+        }
+
+        if (state.equals(IDLE)) {
+            if (gameScript.fpc.isCollision) {
+                state = IDLE_BITE;
+                gameScript.fpc.isCollision = false;
+
+                soundMgr.play(SoundMgr.EAT_SOUND);
+            } else {
+                setIdleAnimation(sc);
+            }
+        }
+    }
+
+    private void transition(SpriterComponent sc) {
+        if (state.equals(TRANSITION)) {
+            setTransitionAnimation(sc);
+            if (isAnimationFinished(sc)) {
+                setAttackAnimation(sc);
+                state = ATTACK;
+            }
+        }
+    }
+
+    private void ifIsTouched(TransformComponent tc, SpriterComponent sc) {
+        if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord()) {
+            state = TRANSITION;
+        }
+
+        if (Gdx.input.isTouched()
+                && !state.equals(TRANSITION)
+                && !state.equals(ATTACK) && canAttackCoord()) {
+            state = ATTACK;
+
+            setAttackAnimation(sc);
+        }
+    }
+
+    private void usePhoenix(TransformComponent tc, SpriterComponent sc) {
+        if (state.equals(PHOENIX)) {
+            tc.x = FLOWER_X_POS;
+            tc.y = FLOWER_Y_POS;
+            setBiteIdleAnimation(sc);
+            if (isAnimationFinished(sc)) {
+                state = IDLE;
+                setIdleAnimation(sc);
+                BugSystem.blowUpAllBugs = false;
+            }
+        }
+    }
+
+    private void bite(SpriterComponent sc) {
+        if (state.equals(ATTACK_BITE) || state.equals(IDLE_BITE)) {
+
+            if (state.equals(ATTACK_BITE)) {
+                if (isAnimationFinished(sc)) {
+                    state = RETREAT;
+                    setAttackAnimation(sc);
+                }
+
+                if (gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
+                    state = ATTACK_BITE;
+                    setBiteAttackAnimation(sc);
+                }
+            }
+
+            if (state.equals(IDLE_BITE) && isAnimationFinished(sc)) {
+                state = IDLE;
+                setIdleAnimation(sc);
+            }
+        }
+    }
+
+    private void transitionBack(TransformComponent tc, SpriterComponent sc) {
+        if (state.equals(TRANSITION_BACK)) {
+            setTransitionBackAnimation(sc);
+
+            if (Gdx.input.justTouched() && canAttackCoord()) {  // This is added for quick breaking of an animation
+                setAttackAnimation(sc);
+                state = ATTACK;
+            }
+
+            if (sc.player.getTime() > 20 && sc.player.getTime() < 62) {
+                setIdleAnimation(sc);
+                state = IDLE;
+            }
+        }
+    }
+
     private boolean canAttackCoord() {
-        return (gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.enabled ||
-                !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
-                && !gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates());
+        return (
+                gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.enabled ||
+                        !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                && !gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates()
+        );
     }
 
     private void hideTutorialLine() {
