@@ -49,7 +49,8 @@ public class GameScreenScript implements IScript {
     public final String BTN_PAUSE = "btn_pause";
     public final String MEGA_FLOWER = "mega_flower";
     public final String MEGA_LEAFS = "mega_leafs";
-    public final String COCOON = "cocoon";
+    public final String COCOON = "power_up_coccoon";
+//    public final String COCOON_ANI = "power_up_coccoon";
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
@@ -202,7 +203,7 @@ public class GameScreenScript implements IScript {
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();
-//        initCocoon();
+        initCocoon();
 
         checkTryPeriod();
 
