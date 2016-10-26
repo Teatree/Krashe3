@@ -12,7 +12,6 @@
         <file id="8" name="flower_peducle.png" width="63" height="1550" pivot_x="0" pivot_y="1"/>
         <file id="9" name="head_bottom_default.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
         <file id="10" name="head_top_default.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="11" name="head_top_baseball_cap.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <obj_info name="bone_peducle_bottom" type="bone" w="60.0083" h="10"/>
@@ -99,7 +98,7 @@
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="225.646023" y="-58.076435" angle="192.351559"/>
+                    <object folder="0" file="1" x="225.646023" y="-58.076435" angle="192.351559"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
