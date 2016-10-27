@@ -116,7 +116,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         Actions.checkInit();
 
         acTouchZone.dataArray.add(
-                Actions.moveTo(0, shopScreenScript.touchZone.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
-        shopScreenScript.touchZone.add(acTouchZone);
+                Actions.moveTo(0, shopScreenScript.touchZoneNButton.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
+        shopScreenScript.touchZoneNButton.add(acTouchZone);
     }
 }

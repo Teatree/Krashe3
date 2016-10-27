@@ -34,6 +34,7 @@ public class ShopScreenScript implements IScript {
     public static final int SENSITIVITY = 7;
     public static final String SCORE_LBL = "total_coins";
     public static final String SCORE_LBL_SH = "total_coins_sh";
+    public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
@@ -66,6 +67,10 @@ public class ShopScreenScript implements IScript {
     public static List<ShopItem> allShopItems = new ArrayList<>();
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
+    int numberOfPages;
+    int[] pages;
+
+    public Entity touchZoneNButton;
     public Entity touchZone;
     public LabelComponent lc;
     public LabelComponent lcsh;
@@ -113,13 +118,14 @@ public class ShopScreenScript implements IScript {
         scoreLblsh = shopItem.getChild(SCORE_LBL_SH).getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
         lcsh = scoreLblsh.getComponent(LabelComponent.class);
-        touchZone = shopItem.getChild(TOUCH_ZONE_SCROLL).getEntity();
+        touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
+        touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
-//        initScrollLeftBtn();
-//        initScrollRightBtn();
+        initScrollLeftBtn();
+        initScrollRightBtn();
         bagPosIdX = 0;
         bagPosIdY = 0;
         bagPageId = 0;
@@ -439,7 +445,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void initScrollLeftBtn (){
-        Entity scrollLeftBtn = touchZone.getComponent(NodeComponent.class).getChild("btn_scroll_left");
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild("btn_scroll_left");
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
@@ -472,7 +478,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void initScrollRightBtn (){
-        Entity scrollLeftBtn = touchZone.getComponent(NodeComponent.class).getChild("btn_scroll_right");
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild("btn_scroll_right");
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
