@@ -2,6 +2,7 @@ package com.mygdx.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.etf.entity.componets.FlowerPublicComponent;
 import com.mygdx.etf.entity.componets.PetComponent;
@@ -18,6 +19,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.*;
@@ -116,10 +118,13 @@ public class ShopScreenScript implements IScript {
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
+//        initScrollLeftBtn();
+//        initScrollRightBtn();
         bagPosIdX = 0;
         bagPosIdY = 0;
         bagPageId = 0;
         isPreviewOn = false;
+
     }
 
     public void initTabBtns() {
@@ -431,6 +436,72 @@ public class ShopScreenScript implements IScript {
 //            bagPosIdX = 0;
 //        }
         return tc;
+    }
+
+    private void initScrollLeftBtn (){
+        Entity scrollLeftBtn = touchZone.getComponent(NodeComponent.class).getChild("btn_scroll_left");
+        scrollLeftBtn.add(new ButtonComponent());
+        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
+            @Override
+            public void clicked() {
+                for (Entity bag : bags) {
+                    ActionComponent a = new ActionComponent();
+                    Actions.checkInit();
+
+                    a.dataArray.add(
+                            Actions.moveTo(bag.getComponent(TransformComponent.class).x - 1227,
+                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                    );
+                    bag.add(a);
+                }
+
+                for (Entity icon : ShopScreenScript.itemIcons.values()) {
+                    ActionComponent a = new ActionComponent();
+                    Actions.checkInit();
+
+                    a.dataArray.add(
+                            Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
+                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                    );
+
+                    icon.add(a);
+                }
+            }
+        });
+
+    }
+
+    private void initScrollRightBtn (){
+        Entity scrollLeftBtn = touchZone.getComponent(NodeComponent.class).getChild("btn_scroll_right");
+        scrollLeftBtn.add(new ButtonComponent());
+        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
+            @Override
+            public void clicked() {
+                for (Entity bag : bags) {
+                    ActionComponent a = new ActionComponent();
+                    Actions.checkInit();
+
+                    a.dataArray.add(
+                            Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227,
+                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                    );
+                    bag.add(a);
+                }
+
+                for (Entity icon : ShopScreenScript.itemIcons.values()) {
+                    ActionComponent a = new ActionComponent();
+                    Actions.checkInit();
+
+                    a.dataArray.add(
+                            Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
+                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                    );
+
+                    icon.add(a);
+                }
+            }
+        });
+
     }
 
     @Override
