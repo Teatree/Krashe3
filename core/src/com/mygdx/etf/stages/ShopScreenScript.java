@@ -41,8 +41,8 @@ public class ShopScreenScript implements IScript {
     public static final String TAB_BTN_UPG = "tab_btn_upg";
     public static final String CURTAIN_SHOP = "curtain_shop";
     public static final int INIT_HC_ITEMS_X = 146;
-    public static final int X_ICON_ON_BAG = 70;
-    public static final int Y_ICON_ON_BAG = 60;
+    public static final int X_ICON_ON_BAG = 15;
+    public static final int Y_ICON_ON_BAG = 15;
     public static final int STOP_VELOCITY_DIV = 20;
     public static final int FIRST_BAG_X = 1300;
     public static final int FIRST_BAG_Y = 465;
@@ -71,7 +71,7 @@ public class ShopScreenScript implements IScript {
     public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
-    public int bagPosId;
+    public int bagPosIdX;
     public Preview preview;
     float stopVelocity;
 
@@ -79,6 +79,8 @@ public class ShopScreenScript implements IScript {
     public Entity hcSectionE;
     public Entity btnClothing;
     public Entity btnPowerUp;
+    private int bagPosIdY;
+    private int bagPageId;
 
     public ShopScreenScript() {
 //        this.stage = stage;
@@ -114,7 +116,9 @@ public class ShopScreenScript implements IScript {
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
-        bagPosId = 0;
+        bagPosIdX = 0;
+        bagPosIdY = 0;
+        bagPageId = 0;
         isPreviewOn = false;
     }
 
@@ -255,11 +259,11 @@ public class ShopScreenScript implements IScript {
     }
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
-        if (!vc.bought) {
+//        if (!vc.bought) {
             return getIconFromLib(ITEM_UNKNOWN_N);
-        } else {
-            return getIconFromLib(vc.shopIcon);
-        }
+//        } else {
+//            return getIconFromLib(vc.shopIcon);
+//        }
     }
 
     private Entity getIconFromLib(String name) {
@@ -386,27 +390,46 @@ public class ShopScreenScript implements IScript {
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
         TransformComponent tc = new TransformComponent();
+
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
-            bagPosId++;
             return tc;
         }
-        if (bagPosId < 4) {
-            tc.x = previous.x + previousDc.width + 10;
-            tc.y = FIRST_BAG_Y;
-            bagPosId++;
-        } else if (bagPosId >= 4 && bagPosId < 8) {
-            if (bagPosId == 4) {
-                tc.x = FIRST_BAG_X;
-            } else {
-                tc.x = previous.x + previousDc.width + 10;
-            }
-            tc.y = FIRST_BAG_Y - previousDc.height + 20;
-            bagPosId++;
+
+        if (bagPosIdX % 4 == 0){
+            tc.x = FIRST_BAG_X + bagPageId * 1050;
         } else {
-            bagPosId = 0;
+            tc.x = previous.x + previousDc.width + 13;
         }
+
+        if (bagPosIdY < 4) {
+            tc.y = FIRST_BAG_Y;
+        } else if (bagPosIdY >= 4 && bagPosIdY < 8){
+            tc.y = FIRST_BAG_Y - previousDc.height + 20;
+            if (bagPosIdY == 7){
+                bagPosIdY = 0;
+                bagPageId++;
+            }
+        }
+
+        bagPosIdY++;
+        bagPosIdX++;
+//        if (bagPosIdX < 4) {
+//            tc.x = previous.x + previousDc.width + 13;
+//            tc.y = FIRST_BAG_Y;
+//            bagPosIdX++;
+//        } else if (bagPosIdX >= 4 && bagPosIdX < 8) {
+//            if (bagPosIdX == 4) {
+//                tc.x = FIRST_BAG_X;
+//            } else {
+//                tc.x = previous.x + previousDc.width + 13;
+//            }
+//            tc.y = FIRST_BAG_Y - previousDc.height + 20;
+//            bagPosIdX++;
+//        } else {
+//            bagPosIdX = 0;
+//        }
         return tc;
     }
 
