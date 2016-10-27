@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.etf.Main;
 import com.mygdx.etf.entity.componets.VanityComponent;
-import com.mygdx.etf.entity.componets.listeners.ShopTabListener;
+import com.mygdx.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.mygdx.etf.utils.BugPool;
 import com.mygdx.etf.utils.ETFSceneLoader;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -156,7 +156,7 @@ public class GameStage extends Stage {
             root.addScript(shopScript);
         }
         ShopScreenScript.isPreviewOn = false;
-        ShopTabListener.reset();
+        ShopPoverUpTabListener.reset();
         GlobalConstants.CUR_SCREEN = SHOP;
     }
 

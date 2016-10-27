@@ -8,8 +8,8 @@ import com.mygdx.etf.entity.componets.PetComponent;
 import com.mygdx.etf.entity.componets.ShopItem;
 import com.mygdx.etf.entity.componets.Upgrade;
 import com.mygdx.etf.entity.componets.listeners.ImageButtonListener;
-import com.mygdx.etf.entity.componets.listeners.ShopTabListener;
-import com.mygdx.etf.entity.componets.listeners.ShopUpgrTabListener;
+import com.mygdx.etf.entity.componets.listeners.ShopPoverUpTabListener;
+import com.mygdx.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.mygdx.etf.stages.ui.Preview;
 import com.mygdx.etf.system.ParticleLifespanSystem;
 import com.mygdx.etf.utils.GlobalConstants;
@@ -33,7 +33,6 @@ public class ShopScreenScript implements IScript {
     public static final String SCORE_LBL = "total_coins";
     public static final String SCORE_LBL_SH = "total_coins_sh";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
-    public static final String BTN_SHOP_ICON_LIB = "btn_shop_icon_lib";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
@@ -76,11 +75,11 @@ public class ShopScreenScript implements IScript {
     public int bagPosId;
     public Preview preview;
     float stopVelocity;
-    //    private GameStage stage;
+
     private ItemWrapper shopItem;
     public Entity hcSectionE;
-    public Entity btnShop;
-    public Entity btnUpg;
+    public Entity btnClothing;
+    public Entity btnPowerUp;
 
     public ShopScreenScript() {
 //        this.stage = stage;
@@ -123,15 +122,18 @@ public class ShopScreenScript implements IScript {
 
     public void initTabBtns() {
 
-        btnShop = shopItem.getChild(TAB_BTN_SHOP).getEntity();
-        btnShop.getComponent(ButtonComponent.class).enable = false;
-        btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
-        btnShop.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = false;
-        btnShop.getComponent(ButtonComponent.class).addListener(new ShopTabListener(this));
+        btnClothing = shopItem.getChild(TAB_BTN_SHOP).getEntity();
+        btnClothing.getComponent(ButtonComponent.class).enable = false;
+        btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = true;
+        btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = false;
+        btnClothing.getComponent(ButtonComponent.class).addListener(new ShopPoverUpTabListener(this));
 
-        btnUpg = shopItem.getChild(TAB_BTN_UPG).getEntity();
-        btnUpg.getComponent(ButtonComponent.class).enable = true;
-        btnUpg.getComponent(ButtonComponent.class).addListener(new ShopUpgrTabListener(this));
+        btnPowerUp = shopItem.getChild(TAB_BTN_UPG).getEntity();
+        btnPowerUp.getComponent(ButtonComponent.class).enable = true;
+        btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = false;
+        btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+        btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
+        btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
     }
 
     private void getAllAllVanities() {
