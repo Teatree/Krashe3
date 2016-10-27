@@ -45,8 +45,7 @@ public class ShopScreenScript implements IScript {
     public static final int Y_ICON_ON_BAG = 60;
     public static final int STOP_VELOCITY_DIV = 20;
     public static final int FIRST_BAG_X = 1300;
-    public static final int FIRST_BAG_Y = 400;
-    public static final float BAG_POS_COEFFICIENT = 0.6f;
+    public static final int FIRST_BAG_Y = 465;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
     private static final String TITLE = "title";
@@ -103,7 +102,6 @@ public class ShopScreenScript implements IScript {
         curtain_shop.getComponent(TintComponent.class).color.a = 1f;
         startTransitionIn = true;
         startTransitionOut = false;
-
 
 
         addBackButtonPlease();
@@ -391,23 +389,23 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
+            bagPosId++;
             return tc;
         }
-        switch (bagPosId) {
-            case 0: {
-                tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
-                tc.y = previous.y - previousDc.height + 60;
-
-                bagPosId++;
-                break;
+        if (bagPosId < 4) {
+            tc.x = previous.x + previousDc.width + 10;
+            tc.y = FIRST_BAG_Y;
+            bagPosId++;
+        } else if (bagPosId >= 4 && bagPosId < 8) {
+            if (bagPosId == 4) {
+                tc.x = FIRST_BAG_X;
+            } else {
+                tc.x = previous.x + previousDc.width + 10;
             }
-            case 1: {
-                tc.x = previous.x + previousDc.width * BAG_POS_COEFFICIENT;
-                tc.y = previous.y + previousDc.height - 60;
-
-                bagPosId = 0;
-                break;
-            }
+            tc.y = FIRST_BAG_Y - previousDc.height + 20;
+            bagPosId++;
+        } else {
+            bagPosId = 0;
         }
         return tc;
     }
