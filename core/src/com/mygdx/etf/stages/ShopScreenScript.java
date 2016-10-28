@@ -44,17 +44,21 @@ public class ShopScreenScript implements IScript {
     public static final String TAB_BTN_UPG = "tab_btn_upg";
     public static final String CURTAIN_SHOP = "curtain_shop";
     public static final int INIT_HC_ITEMS_X = 146;
-    public static final int X_ICON_ON_BAG = 15;
-    public static final int Y_ICON_ON_BAG = 15;
+
     public static final int STOP_VELOCITY_DIV = 20;
+
     public static final int FIRST_BAG_X = 1950;
-    public static final int FIRST_BAG_Y = 465;
+    public static final int FIRST_BAG_Y = 435;
+    public static final int X_ICON_ON_BAG = 55;
+    public static final int Y_ICON_ON_BAG = 55;
+    private static final int SPACE_BETWEEN_BAGS_X = 20;
+    private static final int SPACE_BETWEEN_BAGS_Y = -25;
+
+    private static final int PAGE_SIZE = 1050;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
+
     private static final String TITLE = "title";
-    private static final int SPACE_BETWEEN_BAGS_X = 13;
-    private static final int PAGE_SIZE = 1050;
-    private static final int SPACE_BETWEEN_BAGS_Y = 20;
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
     private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
@@ -412,11 +416,10 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
-//            return tc;
         } else {
 
             if (bagPosIdX % 4 == 0) {
-                tc.x = FIRST_BAG_X + bagPageId * (PAGE_SIZE + 150);
+                tc.x = FIRST_BAG_X + bagPageId * (PAGE_SIZE + 180);
             } else {
                 tc.x = previous.x + previousDc.width + SPACE_BETWEEN_BAGS_X;
             }
@@ -425,10 +428,6 @@ public class ShopScreenScript implements IScript {
                 tc.y = FIRST_BAG_Y;
             } else if (bagPosIdY >= 4 && bagPosIdY < 8) {
                 tc.y = FIRST_BAG_Y - previousDc.height + SPACE_BETWEEN_BAGS_Y;
-//                if (bagPosIdY == 7) {
-//                    bagPosIdY = 0;
-//                    bagPageId++;
-//                }
             }
         }
         if (bagPosIdY == 7) {
@@ -474,35 +473,6 @@ public class ShopScreenScript implements IScript {
                 }
             }
         });
-//            @Override
-//            public void clicked() {
-//                if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
-//                    for (Entity bag : bags) {
-//                        ActionComponent a = new ActionComponent();
-//                        Actions.checkInit();
-//
-//                        a.dataArray.add(
-//                                Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
-//                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-//                        );
-//                        bag.add(a);
-//                    }
-//
-//                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
-//                        ActionComponent a = new ActionComponent();
-//                        Actions.checkInit();
-//
-//                        a.dataArray.add(
-//                                Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
-//                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-//                        );
-//
-//                        icon.add(a);
-//                    }
-//                }
-//            }
-//        });
-
     }
 
     private void initScrollRightBtn() {
@@ -537,35 +507,6 @@ public class ShopScreenScript implements IScript {
                 }
             }
         });
-//            @Override
-//            public void clicked() {
-//                if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
-//                    for (Entity bag : bags) {
-//                        ActionComponent a = new ActionComponent();
-//                        Actions.checkInit();
-//
-//                        a.dataArray.add(
-//                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
-//                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-//                        );
-//                        bag.add(a);
-//                    }
-//
-//                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
-//                        ActionComponent a = new ActionComponent();
-//                        Actions.checkInit();
-//
-//                        a.dataArray.add(
-//                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
-//                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-//                        );
-//
-//                        icon.add(a);
-//                    }
-//                }
-//            }
-//        });
-
     }
 
     @Override

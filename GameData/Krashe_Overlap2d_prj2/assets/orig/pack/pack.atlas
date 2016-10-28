@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 achievedgoal
   rotate: false
-  xy: 516, 42
+  xy: 618, 844
   size: 300, 65
   orig: 300, 65
   offset: 0, 0
@@ -20,14 +20,14 @@ background
   index: -1
 backgroundforeground
   rotate: false
-  xy: 1530, 855
+  xy: 626, 249
   size: 112, 102
   orig: 112, 102
   offset: 0, 0
   index: -1
 backshadow
   rotate: false
-  xy: 1402, 795
+  xy: 733, 516
   size: 126, 126
   split: 89, 11, 80, 10
   orig: 126, 126
@@ -35,224 +35,224 @@ backshadow
   index: -1
 backshadow1
   rotate: false
-  xy: 1180, 728
+  xy: 1507, 1025
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 bepopuptitle
   rotate: false
-  xy: 1404, 1278
+  xy: 104, 722
   size: 424, 107
   orig: 424, 107
   offset: 0, 0
   index: -1
 betaptoplay
   rotate: false
-  xy: 516, 2
+  xy: 920, 843
   size: 256, 38
   orig: 256, 38
   offset: 0, 0
   index: -1
 btnachievements
   rotate: false
-  xy: 1644, 886
+  xy: 179, 2
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnads
   rotate: false
-  xy: 1796, 1408
+  xy: 530, 758
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnarrowleft
   rotate: false
-  xy: 1157, 511
+  xy: 1950, 511
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrownoleft
   rotate: false
-  xy: 1830, 1309
+  xy: 362, 28
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrownoright
   rotate: false
-  xy: 1273, 28
+  xy: 412, 28
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrowright
   rotate: false
-  xy: 1654, 68
+  xy: 462, 28
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnback
   rotate: false
-  xy: 1962, 1881
+  xy: 1950, 1793
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnbuy
   rotate: false
-  xy: 1725, 944
+  xy: 362, 200
   size: 156, 68
   orig: 156, 68
   offset: 0, 0
   index: -1
 btnfb
   rotate: false
-  xy: 1962, 1808
+  xy: 1950, 1720
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoals
   rotate: false
-  xy: 818, 36
+  xy: 1950, 1647
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnleadrboard
   rotate: false
-  xy: 1715, 871
+  xy: 1950, 1574
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusic
   rotate: false
-  xy: 1786, 871
+  xy: 1950, 1501
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusicno
   rotate: false
-  xy: 1644, 813
+  xy: 1950, 1428
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnnext
   rotate: false
-  xy: 1715, 798
+  xy: 1950, 1355
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1786, 798
+  xy: 1950, 1282
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 1629, 740
+  xy: 1950, 1209
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplay
   rotate: false
-  xy: 1700, 725
+  xy: 1950, 1136
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplayservices
   rotate: false
-  xy: 1771, 725
+  xy: 1950, 1063
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsettings
   rotate: false
-  xy: 1430, 656
+  xy: 1950, 990
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1430, 583
+  xy: 1950, 917
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1430, 510
+  xy: 1950, 844
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1441, 37
+  xy: 1950, 771
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btntext
   rotate: false
-  xy: 1157, 70
+  xy: 618, 774
   size: 210, 68
   orig: 210, 68
   offset: 0, 0
   index: -1
 btntextofff
   rotate: false
-  xy: 1513, 959
+  xy: 378, 402
   size: 210, 68
   orig: 210, 68
   offset: 0, 0
   index: -1
 btnup
   rotate: false
-  xy: 1512, 37
+  xy: 1950, 698
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1583, 37
+  xy: 1950, 625
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 bugjuicebubble
   rotate: false
-  xy: 1830, 1351
+  xy: 1222, 893
   size: 53, 55
   orig: 53, 55
   offset: 0, 0
   index: -1
 bugslogo
   rotate: false
-  xy: 2, 109
+  xy: 2, 911
   size: 895, 348
   orig: 895, 348
   offset: 0, 0
   index: -1
 buttonback
   rotate: false
-  xy: 1466, 374
+  xy: 1729, 737
   size: 121, 120
   split: 17, 20, 17, 21
   orig: 121, 120
@@ -260,73 +260,57 @@ buttonback
   index: -1
 buttonbackoff
   rotate: false
-  xy: 1589, 374
+  xy: 626, 353
   size: 121, 120
   split: 45, 58, 42, 68
   orig: 121, 120
   offset: 0, 0
   index: -1
-buttoncameraoff
-  rotate: false
-  xy: 1712, 374
-  size: 121, 120
-  split: 23, 18, 17, 29
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
-buttoncameraon
-  rotate: false
-  xy: 1835, 374
-  size: 121, 120
-  split: 23, 17, 17, 29
-  orig: 121, 120
-  offset: 0, 0
-  index: -1
 coin
   rotate: false
-  xy: 1468, 734
+  xy: 250, 14
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
   index: -1
 coinap
   rotate: false
-  xy: 1209, 5
+  xy: 520, 205
   size: 62, 63
   orig: 62, 63
   offset: 0, 0
   index: -1
 dnaamountbackground
   rotate: false
-  xy: 1157, 207
+  xy: 1281, 876
   size: 220, 120
   orig: 220, 120
   offset: 0, 0
   index: -1
 dnaamountbackground1
   rotate: false
-  xy: 774, 2
+  xy: 362, 425
   size: 7, 38
   orig: 7, 38
   offset: 0, 0
   index: -1
 eattheflylogo
   rotate: false
-  xy: 2, 29
+  xy: 104, 831
   size: 512, 78
   orig: 512, 78
   offset: 0, 0
   index: -1
 emptyStar
   rotate: false
-  xy: 1643, 244
+  xy: 311, 70
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 extralife
   rotate: false
-  xy: 1157, 329
+  xy: 2, 30
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
@@ -340,126 +324,126 @@ flowerpeducle
   index: -1
 gifticonmaker
   rotate: false
-  xy: 1369, 68
+  xy: 1950, 553
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 img
   rotate: false
-  xy: 2, 5
+  xy: 2024, 1930
   size: 22, 22
   orig: 22, 22
   offset: 0, 0
   index: -1
 itembaseballcap
   rotate: false
-  xy: 1334, 374
+  xy: 179, 75
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itembikerhelmon
   rotate: false
-  xy: 1773, 244
+  xy: 441, 70
   size: 126, 128
   orig: 126, 128
   offset: 0, 0
   index: -1
 itemdeerhornson
   rotate: false
-  xy: 1723, 114
+  xy: 603, 644
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 itemiceycrown
   rotate: false
-  xy: 1739, 1146
+  xy: 1706, 1255
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itempilotscarfon
   rotate: false
-  xy: 1739, 1014
+  xy: 1729, 1123
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemsantabeard
   rotate: false
-  xy: 1379, 242
+  xy: 1729, 991
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemsantahaton
   rotate: false
-  xy: 1511, 242
+  xy: 1729, 859
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemsunglasseson
   rotate: false
-  xy: 1901, 244
+  xy: 603, 514
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 itemteacupon
   rotate: false
-  xy: 1459, 110
+  xy: 362, 270
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 itemunknown
   rotate: false
-  xy: 1591, 110
+  xy: 494, 270
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
 new shopicon
   rotate: false
-  xy: 1513, 1029
+  xy: 1281, 998
   size: 224, 247
   orig: 224, 247
   offset: 0, 0
   index: -1
 new shopicon2
   rotate: false
-  xy: 1288, 1011
+  xy: 378, 472
   size: 223, 248
   orig: 223, 248
   offset: 0, 0
   index: -1
 notachievedgoal
   rotate: false
-  xy: 1157, 140
+  xy: 920, 883
   size: 300, 65
   orig: 300, 65
   offset: 0, 0
   index: -1
 notification
   rotate: false
-  xy: 1379, 208
+  xy: 1178, 849
   size: 33, 32
   orig: 33, 32
   offset: 0, 0
   index: -1
 pinata
   rotate: false
-  xy: 899, 295
+  xy: 104, 207
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 pop-upback
   rotate: false
-  xy: 1208, 506
+  xy: 1507, 803
   size: 220, 220
   split: 89, 103, 111, 101
   pad: 89, 103, 111, 102
@@ -468,30 +452,21 @@ pop-upback
   index: -1
 pop-up_back
   rotate: false
-  xy: 1208, 506
+  xy: 1507, 803
   size: 220, 220
   orig: 220, 220
   offset: 0, 0
   index: -1
 pot
   rotate: false
-  xy: 906, 693
+  xy: 104, 465
   size: 272, 255
   orig: 272, 255
   offset: 0, 0
   index: -1
-previewTagBg.9
-  rotate: false
-  xy: 2, 459
-  size: 800, 800
-  split: 287, 461, 0, 0
-  pad: -1, -1, 159, 640
-  orig: 800, 800
-  offset: 0, 0
-  index: -1
 progressbarfiller
   rotate: false
-  xy: 1157, 2
+  xy: 310, 2
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0
@@ -509,37 +484,30 @@ progressbarframe
   index: -1
 rateus
   rotate: false
-  xy: 1288, 972
+  xy: 603, 475
   size: 149, 37
   orig: 149, 37
   offset: 0, 0
   index: -1
 resultscreenboard
   rotate: false
-  xy: 1950, 1805
+  xy: 1870, 1420
   size: 10, 147
   split: 3, 3, 49, 49
   pad: 0, 0, 0, 0
   orig: 10, 147
   offset: 0, 0
   index: -1
-shopitem1
-  rotate: false
-  xy: 899, 37
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
 shoppreviewdescblue
   rotate: false
-  xy: 906, 950
+  xy: 899, 950
   size: 380, 309
   orig: 380, 309
   offset: 0, 0
   index: -1
 shopshadow
   rotate: false
-  xy: 906, 553
+  xy: 1404, 1247
   size: 300, 138
   orig: 300, 138
   offset: 0, 0
@@ -553,7 +521,7 @@ showcasespotlight
   index: -1
 sludge
   rotate: false
-  xy: 1334, 330
+  xy: 512, 26
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
@@ -567,56 +535,56 @@ standardpopup
   index: -1
 star
   rotate: false
-  xy: 1853, 114
+  xy: 733, 644
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 starY
   rotate: false
-  xy: 1402, 729
+  xy: 830, 778
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tempcurtain
   rotate: false
-  xy: 1983, 210
+  xy: 530, 724
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 tutorialline
   rotate: false
-  xy: 804, 559
+  xy: 2, 209
   size: 100, 700
   orig: 100, 700
   offset: 0, 0
   index: -1
 uibtnback1
   rotate: false
-  xy: 1439, 923
+  xy: 1796, 1481
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 uibtnback2
   rotate: false
-  xy: 1796, 1481
+  xy: 1950, 1866
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 uibtnback3
   rotate: false
-  xy: 804, 471
+  xy: 1796, 1393
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 x2upgrade
   rotate: false
-  xy: 1530, 757
+  xy: 754, 418
   size: 97, 96
   orig: 97, 96
   offset: 0, 0
