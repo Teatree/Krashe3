@@ -17,6 +17,9 @@ import static com.mygdx.etf.utils.GlobalConstants.BTN_PRESSED;
  * Created by ARudyk on 8/1/2016.
  */
 public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
+
+    private static final int SCREEN_WIDTH = 1227;
+    private static final int PADDING = 50;
     private ShopScreenScript shopScreenScript;
 
     public ShopClothingTabListener(ShopScreenScript shopScreenScript) {
@@ -95,7 +98,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
             Actions.checkInit();
 
             a.dataArray.add(
-                    Actions.moveTo(bag.getComponent(TransformComponent.class).x - 1227,
+                    Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING,
                             bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
             );
             bag.add(a);
@@ -106,7 +109,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
             Actions.checkInit();
 
             a.dataArray.add(
-                    Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
+                    Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING,
                             icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
             );
 

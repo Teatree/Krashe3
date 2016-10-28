@@ -47,11 +47,17 @@ public class ShopScreenScript implements IScript {
     public static final int X_ICON_ON_BAG = 15;
     public static final int Y_ICON_ON_BAG = 15;
     public static final int STOP_VELOCITY_DIV = 20;
-    public static final int FIRST_BAG_X = 1300;
+    public static final int FIRST_BAG_X = 1950;
     public static final int FIRST_BAG_Y = 465;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
     private static final String TITLE = "title";
+    private static final int SPACE_BETWEEN_BAGS_X = 13;
+    private static final int PAGE_SIZE = 1050;
+    private static final int SPACE_BETWEEN_BAGS_Y = 20;
+    private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
+    private static final int SCCREEN_WIDTH = 1227;
+    private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -270,8 +276,9 @@ public class ShopScreenScript implements IScript {
     }
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
+        //TODO: Should not be deleted!
 //        if (!vc.bought) {
-            return getIconFromLib(ITEM_UNKNOWN_N);
+        return getIconFromLib(ITEM_UNKNOWN_N);
 //        } else {
 //            return getIconFromLib(vc.shopIcon);
 //        }
@@ -405,108 +412,159 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
-            return tc;
-        }
-
-        if (bagPosIdX % 4 == 0){
-            tc.x = FIRST_BAG_X + bagPageId * 1050;
+//            return tc;
         } else {
-            tc.x = previous.x + previousDc.width + 13;
-        }
 
-        if (bagPosIdY < 4) {
-            tc.y = FIRST_BAG_Y;
-        } else if (bagPosIdY >= 4 && bagPosIdY < 8){
-            tc.y = FIRST_BAG_Y - previousDc.height + 20;
-            if (bagPosIdY == 7){
-                bagPosIdY = 0;
-                bagPageId++;
+            if (bagPosIdX % 4 == 0) {
+                tc.x = FIRST_BAG_X + bagPageId * (PAGE_SIZE + 150);
+            } else {
+                tc.x = previous.x + previousDc.width + SPACE_BETWEEN_BAGS_X;
+            }
+
+            if (bagPosIdY < 4) {
+                tc.y = FIRST_BAG_Y;
+            } else if (bagPosIdY >= 4 && bagPosIdY < 8) {
+                tc.y = FIRST_BAG_Y - previousDc.height + SPACE_BETWEEN_BAGS_Y;
+//                if (bagPosIdY == 7) {
+//                    bagPosIdY = 0;
+//                    bagPageId++;
+//                }
             }
         }
-
-        bagPosIdY++;
-        bagPosIdX++;
-//        if (bagPosIdX < 4) {
-//            tc.x = previous.x + previousDc.width + 13;
-//            tc.y = FIRST_BAG_Y;
-//            bagPosIdX++;
-//        } else if (bagPosIdX >= 4 && bagPosIdX < 8) {
-//            if (bagPosIdX == 4) {
-//                tc.x = FIRST_BAG_X;
-//            } else {
-//                tc.x = previous.x + previousDc.width + 13;
-//            }
-//            tc.y = FIRST_BAG_Y - previousDc.height + 20;
-//            bagPosIdX++;
-//        } else {
-//            bagPosIdX = 0;
-//        }
+        if (bagPosIdY == 7) {
+            bagPosIdY = 0;
+            bagPosIdX++;
+            bagPageId++;
+        } else {
+            bagPosIdY++;
+            bagPosIdX++;
+        }
         return tc;
     }
 
-    private void initScrollLeftBtn (){
-        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild("btn_scroll_left");
+    private void initScrollLeftBtn() {
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT);
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
             public void clicked() {
-                for (Entity bag : bags) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
+                if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
+                    for (Entity bag : bags) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
 
-                    a.dataArray.add(
-                            Actions.moveTo(bag.getComponent(TransformComponent.class).x - 1227,
-                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-                    bag.add(a);
-                }
+                        a.dataArray.add(
+                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
+                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+                        bag.add(a);
+                    }
 
-                for (Entity icon : ShopScreenScript.itemIcons.values()) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
+                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
 
-                    a.dataArray.add(
-                            Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
-                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
+                        a.dataArray.add(
+                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
+                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
 
-                    icon.add(a);
+                        icon.add(a);
+                    }
                 }
             }
         });
+//            @Override
+//            public void clicked() {
+//                if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
+//                    for (Entity bag : bags) {
+//                        ActionComponent a = new ActionComponent();
+//                        Actions.checkInit();
+//
+//                        a.dataArray.add(
+//                                Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
+//                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+//                        );
+//                        bag.add(a);
+//                    }
+//
+//                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
+//                        ActionComponent a = new ActionComponent();
+//                        Actions.checkInit();
+//
+//                        a.dataArray.add(
+//                                Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
+//                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+//                        );
+//
+//                        icon.add(a);
+//                    }
+//                }
+//            }
+//        });
 
     }
 
-    private void initScrollRightBtn (){
-        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild("btn_scroll_right");
+    private void initScrollRightBtn() {
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT);
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
             public void clicked() {
-                for (Entity bag : bags) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
+                if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
+                    for (Entity bag : bags) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
 
-                    a.dataArray.add(
-                            Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227,
-                                    bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
-                    bag.add(a);
-                }
+                        a.dataArray.add(
+                                Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
+                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
+                        bag.add(a);
+                    }
 
-                for (Entity icon : ShopScreenScript.itemIcons.values()) {
-                    ActionComponent a = new ActionComponent();
-                    Actions.checkInit();
+                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
+                        ActionComponent a = new ActionComponent();
+                        Actions.checkInit();
 
-                    a.dataArray.add(
-                            Actions.moveTo(icon.getComponent(TransformComponent.class).x - 1227,
-                                    icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
-                    );
+                        a.dataArray.add(
+                                Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
+                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+                        );
 
-                    icon.add(a);
+                        icon.add(a);
+                    }
                 }
             }
         });
+//            @Override
+//            public void clicked() {
+//                if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
+//                    for (Entity bag : bags) {
+//                        ActionComponent a = new ActionComponent();
+//                        Actions.checkInit();
+//
+//                        a.dataArray.add(
+//                                Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
+//                                        bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+//                        );
+//                        bag.add(a);
+//                    }
+//
+//                    for (Entity icon : ShopScreenScript.itemIcons.values()) {
+//                        ActionComponent a = new ActionComponent();
+//                        Actions.checkInit();
+//
+//                        a.dataArray.add(
+//                                Actions.moveTo(icon.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
+//                                        icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
+//                        );
+//
+//                        icon.add(a);
+//                    }
+//                }
+//            }
+//        });
 
     }
 
