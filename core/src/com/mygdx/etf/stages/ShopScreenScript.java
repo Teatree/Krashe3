@@ -77,9 +77,6 @@ public class ShopScreenScript implements IScript {
     public static List<ShopItem> allShopItems = new ArrayList<>();
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
-    int numberOfPages;
-    int[] pages;
-
     public Entity touchZoneNButton;
     public Entity touchZone;
     public LabelComponent lc;
