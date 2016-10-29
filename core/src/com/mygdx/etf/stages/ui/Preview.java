@@ -239,10 +239,10 @@ public class Preview extends AbstractDialog {
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
-            btnBuy.getComponent(TransformComponent.class).x =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-            btnBuy.getComponent(TransformComponent.class).y =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+//            btnBuy.getComponent(TransformComponent.class).x =
+//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+//            btnBuy.getComponent(TransformComponent.class).y =
+//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());
             }
