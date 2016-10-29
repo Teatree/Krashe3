@@ -48,11 +48,11 @@ public class ShopScreenScript implements IScript {
     public static final int STOP_VELOCITY_DIV = 20;
 
     public static final int FIRST_BAG_X = 1950;
-    public static final int FIRST_BAG_Y = 435;
+    public static final int FIRST_BAG_Y = 440;
     public static final int X_ICON_ON_BAG = 55;
     public static final int Y_ICON_ON_BAG = 55;
     private static final int SPACE_BETWEEN_BAGS_X = 20;
-    private static final int SPACE_BETWEEN_BAGS_Y = -25;
+    private static final int SPACE_BETWEEN_BAGS_Y = 0;
 
     private static final int PAGE_SIZE = 1050;
     public static final int CAN_MOVE_LEFT_BAG_X = 990;
@@ -62,6 +62,7 @@ public class ShopScreenScript implements IScript {
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
     private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
+    private static final String DOTZ_LIB = "dotz_lib";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -95,6 +96,9 @@ public class ShopScreenScript implements IScript {
     public Entity btnPowerUp;
     private int bagPosIdY;
     private int bagPageId;
+
+    private List<Entity> pageDots = new ArrayList<>();
+    private int pageIndex = 0;
 
     public ShopScreenScript() {
 //        this.stage = stage;
@@ -136,8 +140,9 @@ public class ShopScreenScript implements IScript {
         bagPosIdX = 0;
         bagPosIdY = 0;
         bagPageId = 0;
-        isPreviewOn = false;
+        pageIndex = 0;
 
+        isPreviewOn = false;
     }
 
     public void initTabBtns() {
@@ -413,6 +418,7 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
+            createTheDot(bagPageId);
         } else {
 
             if (bagPosIdX % 4 == 0) {
@@ -431,11 +437,38 @@ public class ShopScreenScript implements IScript {
             bagPosIdY = 0;
             bagPosIdX++;
             bagPageId++;
+            createTheDot(bagPageId);
         } else {
             bagPosIdY++;
             bagPosIdX++;
         }
         return tc;
+    }
+
+    private void createTheDot(int pageId){
+        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(DOTZ_LIB);
+        final Entity dotEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotEntity, tempC.composite);
+        GameStage.sceneLoader.getEngine().addEntity(dotEntity);
+
+        touchZoneNButton.getComponent(NodeComponent.class).addChild(dotEntity);
+        dotEntity.getComponent(MainItemComponent.class).uniqueId += pageId;
+        pageDots.add(dotEntity);
+        dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
+        dotEntity.getComponent(TransformComponent.class).y = 10;
+    }
+
+    public void setDotActive(int pagIndex){
+
+        for (int i = 0; i < pageDots.size(); i++) {
+            if (i != pagIndex) {
+                pageDots.get(i).getComponent(LayerMapComponent.class).getLayer("Default").isVisible = true;
+                pageDots.get(i).getComponent(LayerMapComponent.class).getLayer("Active").isVisible = false;
+            } else {
+                pageDots.get(i).getComponent(LayerMapComponent.class).getLayer("Default").isVisible = false;
+                pageDots.get(i).getComponent(LayerMapComponent.class).getLayer("Active").isVisible = true;
+            }
+        }
     }
 
     private void initScrollLeftBtn() {
@@ -467,6 +500,8 @@ public class ShopScreenScript implements IScript {
 
                         icon.add(a);
                     }
+                    pageIndex--;
+                    setDotActive(pageIndex);
                 }
             }
         });
@@ -501,6 +536,8 @@ public class ShopScreenScript implements IScript {
 
                         icon.add(a);
                     }
+                    pageIndex++;
+                    setDotActive(pageIndex);
                 }
             }
         });

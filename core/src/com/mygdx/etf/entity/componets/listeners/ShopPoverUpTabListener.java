@@ -100,6 +100,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
             bag.add(a);
         }
         shiftIcons(bagsShift);
+        shopScreenScript.setDotActive(0);
     }
 
     private static void shiftIcons(float bagsShift) {
