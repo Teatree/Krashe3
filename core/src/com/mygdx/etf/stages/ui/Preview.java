@@ -36,9 +36,12 @@ public class Preview extends AbstractDialog {
     public static final String BTN_ENABLE = "tag_btn_enable";
     public static final String BTN_DISABLE = "tag_btn_disable";
     public static final String LBL_PRICE = "tag_lbl_price";
+    public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_DESC = "tag_lbl_desc";
     public static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
+    public static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
+    public static final String PAPER_PIECE_IMG = "paper_piece_img";
 
     public static final int ICON_X = 550;
     public static final int ICON_X_RELATIVE = 270;
@@ -54,11 +57,17 @@ public class Preview extends AbstractDialog {
     public Entity lbl_desc;
     public Entity lbl_title;
     public Entity lbl_price;
+    public Entity lbl_price_sh;
     public Entity lbl_not_enough;
+    public Entity lbl_not_enough_sh;
     public Entity bg;
     private Entity iconE;
+    private Entity disableBtn;
+    private Entity enableBtn;
+    private Entity btnBuy;
     private Entity btnLeft;
     private Entity btnNext;
+    private Entity paper_pieceE;
 
     private Rectangle previewBoundingBox;
     private ShopItem vc;
@@ -78,10 +87,13 @@ public class Preview extends AbstractDialog {
         lbl_desc = previewE.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lbl_title = previewE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lbl_price = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE);
+        lbl_price_sh = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
         bg = previewE.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
         lbl_not_enough = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
+        lbl_not_enough_sh = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);
         btnLeft = previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
         btnNext = previewE.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
+        paper_pieceE = previewE.getComponent(NodeComponent.class).getChild(PAPER_PIECE_IMG);
 
         previewE.getComponent(ZIndexComponent.class).setZIndex(51);
         initShadow();
@@ -135,20 +147,25 @@ public class Preview extends AbstractDialog {
         }
         lbl_title.getComponent(LabelComponent.class).text.replace(0, lbl_title.getComponent(LabelComponent.class).text.length, vc.name);
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
+        lbl_price_sh.getComponent(LabelComponent.class).text.replace(0, lbl_price_sh.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+        lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lbl_not_enough.getComponent(TintComponent.class).color.a = 0;
+            lbl_not_enough_sh.getComponent(TintComponent.class).color.a = 0;
             return true;
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lbl_not_enough.getComponent(TintComponent.class).color.a = 1;
+            lbl_not_enough_sh.getComponent(TintComponent.class).color.a = 1;
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
+            lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(100);
             return false;
         }
     }
@@ -161,6 +178,7 @@ public class Preview extends AbstractDialog {
         sceneLoader.getEngine().addEntity(iconE);
 
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(52);
+        lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(52);
         iconE.getComponent(TransformComponent.class).x = ICON_X;
         if (!jump) {
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
@@ -219,7 +237,7 @@ public class Preview extends AbstractDialog {
 
         previewBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x - 120,
                 30,
-                448,
+                700,
                 previewE.getComponent(DimensionsComponent.class).height);
         previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
@@ -233,16 +251,16 @@ public class Preview extends AbstractDialog {
     }
 
     public void initBuyButton(final ShopItem vc) {
-        final Entity btnBuy = previewE.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        btnBuy = previewE.getComponent(NodeComponent.class).getChild(BTN_BUY);
         previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
-//            btnBuy.getComponent(TransformComponent.class).x =
-//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-//            btnBuy.getComponent(TransformComponent.class).y =
-//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            btnBuy.getComponent(TransformComponent.class).x =
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+            btnBuy.getComponent(TransformComponent.class).y =
+                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());
             }
@@ -287,12 +305,12 @@ public class Preview extends AbstractDialog {
         if (vc.bought && !vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity enableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
-            enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
-            enableBtn.getComponent(TransformComponent.class).x =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-            enableBtn.getComponent(TransformComponent.class).y =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            enableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
+//            enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
+//            enableBtn.getComponent(TransformComponent.class).x =
+//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
+//            enableBtn.getComponent(TransformComponent.class).y =
+//                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
 
             if (enableBtn.getComponent(ButtonComponent.class) == null) {
                 enableBtn.add(new ButtonComponent());
@@ -314,7 +332,7 @@ public class Preview extends AbstractDialog {
         if (vc.bought && vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            Entity disableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
+            disableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
             disableBtn.getComponent(TransformComponent.class).x =
                     previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
@@ -410,18 +428,43 @@ public class Preview extends AbstractDialog {
 
     public void checkAndClose() {
 
+
+
         if (previewBoundingBox != null) {
             GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
                     previewBoundingBox.y,
                     previewBoundingBox.width,
                     previewBoundingBox.height,
                     previewBoundingBox.toString());
+
         }
         if (previewE != null) {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();
-            boolean isOutside = previewBoundingBox == null ||
-                    !previewBoundingBox.contains(v.x, v.y);
+//            boolean isOutside = previewBoundingBox == null ||
+//                    !previewBoundingBox.contains(v.x, v.y);
+//            boolean isOutside = false;
+//                    if(new Rectangle(paper_pieceE.getComponent(TransformComponent.class).x, paper_pieceE.getComponent(TransformComponent.class).y, paper_pieceE.getComponent(DimensionsComponent.class).width, paper_pieceE.getComponent(DimensionsComponent.class).height).contains(v.x, v.y) != true &&
+//                            new Rectangle(btnLeft.getComponent(TransformComponent.class).x, btnLeft.getComponent(TransformComponent.class).y, btnLeft.getComponent(DimensionsComponent.class).width, btnLeft.getComponent(DimensionsComponent.class).height).contains(v.x, v.y) != true &&
+//                            new Rectangle(btnNext.getComponent(TransformComponent.class).x, btnNext.getComponent(TransformComponent.class).y, btnNext.getComponent(DimensionsComponent.class).width, btnNext.getComponent(DimensionsComponent.class).height).contains(v.x, v.y) != true &&
+//                            new Rectangle(enableBtn.getComponent(TransformComponent.class).x, enableBtn.getComponent(TransformComponent.class).y, enableBtn.getComponent(DimensionsComponent.class).width, enableBtn.getComponent(DimensionsComponent.class).height).contains(v.x, v.y) != true){
+//                        isOutside = true;
+//                    }
+            boolean isOutside = false;
+            Rectangle r = new Rectangle(paper_pieceE.getComponent(TransformComponent.class).x,
+                    paper_pieceE.getComponent(TransformComponent.class).y,
+                    paper_pieceE.getComponent(DimensionsComponent.class).width,
+                    paper_pieceE.getComponent(DimensionsComponent.class).height);
+
+
+            if(Gdx.input.isTouched() && r.contains(v.x, v.y) != true){
+                System.out.println("you are touching the paper!");
+                System.out.println(paper_pieceE.getComponent(TransformComponent.class).x + " " +  paper_pieceE.getComponent(TransformComponent.class).y + " " + paper_pieceE.getComponent(DimensionsComponent.class).width + " " + paper_pieceE.getComponent(DimensionsComponent.class).height );
+                System.out.println(v.x + " " +  v.y);
+//                isOutside = true;
+                GameStage.sceneLoader.renderer.drawDebugRect(r.x, r.y, r.width, r.height, paper_pieceE.toString());
+            }
+
             float currentYpos = previewE.getComponent(TransformComponent.class).y;
             if (Gdx.input.isTouched() && currentYpos <= PREVIEW_Y || currentYpos >= 800) {
                 if (isPreviewOn && isOutside) {
