@@ -77,21 +77,21 @@ btnarrowleft
   index: -1
 btnarrownoleft
   rotate: false
-  xy: 1546, 926
+  xy: 1454, 1270
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrownoright
   rotate: false
-  xy: 1454, 1270
+  xy: 1500, 926
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrowright
   rotate: false
-  xy: 1596, 926
+  xy: 1550, 926
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
@@ -180,30 +180,44 @@ btnplayservices
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsettings
+btnpreviewoff
   rotate: false
   xy: 1950, 914
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnshop
+btnpreviewon
   rotate: false
   xy: 1950, 841
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsound
+btnsettings
   rotate: false
   xy: 1950, 768
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnsoundno
+btnshop
   rotate: false
   xy: 1950, 695
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsound
+  rotate: false
+  xy: 1950, 622
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnsoundno
+  rotate: false
+  xy: 1950, 549
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -259,21 +273,21 @@ btntextofff
   index: -1
 btnup
   rotate: false
-  xy: 1950, 622
+  xy: 248, 3
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1950, 549
+  xy: 319, 3
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 bugjuicebubble
   rotate: false
-  xy: 1950, 492
+  xy: 1235, 454
   size: 53, 55
   orig: 53, 55
   offset: 0, 0
@@ -303,7 +317,7 @@ buttonbackoff
   index: -1
 coin
   rotate: false
-  xy: 1434, 883
+  xy: 1175, 450
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
@@ -324,7 +338,7 @@ dnaamountbackground
   index: -1
 dnaamountbackground1
   rotate: false
-  xy: 1870, 1526
+  xy: 362, 273
   size: 7, 38
   orig: 7, 38
   offset: 0, 0
@@ -373,21 +387,21 @@ flowerpeducle
   index: -1
 gifticonmaker
   rotate: false
-  xy: 248, 4
+  xy: 1950, 477
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 iconclothing
   rotate: false
-  xy: 1175, 473
+  xy: 1421, 397
   size: 49, 36
   orig: 49, 36
   offset: 0, 0
   index: -1
 iconclothingd
   rotate: false
-  xy: 1646, 930
+  xy: 1472, 397
   size: 49, 36
   orig: 49, 36
   offset: 0, 0
@@ -401,7 +415,7 @@ iconpowerups
   index: -1
 iconpowerupsd
   rotate: false
-  xy: 1697, 927
+  xy: 1544, 885
   size: 29, 39
   orig: 29, 39
   offset: 0, 0
@@ -550,7 +564,7 @@ pot
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1494, 900
+  xy: 1831, 1322
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0
@@ -605,7 +619,7 @@ showcasespotlight
   index: -1
 sludge
   rotate: false
-  xy: 1226, 467
+  xy: 1500, 882
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
@@ -626,7 +640,7 @@ star
   index: -1
 starY
   rotate: false
-  xy: 320, 10
+  xy: 1434, 878
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
