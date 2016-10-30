@@ -1,5 +1,5 @@
 [{
-	class: com.mygdx.etf.system.BugSpawnSystem$Multiplier,
+	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
 	startOn: 0,
     finishOn: 20,
     spawnInterval: 1,
@@ -23,7 +23,7 @@
 	chargerBugMove: 1
 },
 {
-	class: com.mygdx.etf.system.BugSpawnSystem$Multiplier,
+	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
 	startOn: 21,
     finishOn: 40,
     spawnInterval: 0.95,
@@ -47,7 +47,7 @@
 	chargerBugMove: 3
 },
 {
-	class: com.mygdx.etf.system.BugSpawnSystem$Multiplier,
+	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
 	startOn: 41,
     finishOn: 60,
     spawnInterval: 0.9,
@@ -71,7 +71,7 @@
 	chargerBugMove: 1
 },
 {
-	class: com.mygdx.etf.system.BugSpawnSystem$Multiplier,
+	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
 	startOn: 61,
     finishOn: 80,
     spawnInterval: 0.75,
@@ -95,7 +95,7 @@
 	chargerBugMove: 1
 },
 {
-	class: com.mygdx.etf.system.BugSpawnSystem$Multiplier,
+	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
 	startOn: 81,
     finishOn: 100,
     spawnInterval: 0.7,

@@ -4,7 +4,7 @@ android {
         /* TODO(developer): Configure to sign app with a release key for testing.*/
         release {
             storeFile file('/keystore.jks')
-            keyAlias 'release_key_alias'
+            keyAlias 'key'
             keyPassword "66236zair!"
             storePassword "66236zair!"
         }
@@ -90,7 +90,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.etf.android/com.mygdx.etf.android.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.fd.etf.android/com.fd.etf.android.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {

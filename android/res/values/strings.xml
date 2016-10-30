@@ -2,14 +2,14 @@
 <resources>
 
     <string name="app_name">Eat the fly</string>
-    <string name="app_id">489759683196</string>
-    <string name="package_name">com.mygdx.etf.android</string>
+    <string name="app_id">510295484890</string>
+    <string name="package_name">com.fd.etf.android</string>
+    <string name="achievement_queens_slayer">CgkI2tPs_-wOEAIQAQ</string>
+    <string name="achievement_dog_person">CgkI2tPs_-wOEAIQAg</string>
+    <string name="achievement_hunger_strike">CgkI2tPs_-wOEAIQAw</string>
+    <string name="achievement_the_great_collector">CgkI2tPs_-wOEAIQBA</string>
+    <string name="achievement_butterfly_eater">CgkI2tPs_-wOEAIQBQ</string>
 
-    <string name="achievement_hunger_strike">CgkI_OTOv6AOEAIQAg</string>
-    <string name="achievement_buttefly_eater">CgkI_OTOv6AOEAIQAw</string>
-    <string name="achievement_collector">CgkI_OTOv6AOEAIQBA</string>
-    <string name="achievement_dog_persone">CgkI_OTOv6AOEAIQBQ</string>
-    <string name="achievement_queen_slayer">CgkI_OTOv6AOEAIQBg</string>
-    <string name="leaderboard_stars">CgkI_OTOv6AOEAIQAQ</string>
-    <!--<string name="app_id">EatTheFly</string>-->
+    <string name="leaderboard_leaderboard">CgkI2tPs_-wOEAIQBg</string>
+    <!--<string name="app_id">Eat The Fly!</string>-->
 </resources>
