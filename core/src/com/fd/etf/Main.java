@@ -50,7 +50,7 @@ public class Main extends Game {
     }
 
     public void async() {
-        SaveMngr.generateVanityJson();
+//        SaveMngr.generateVanityJson();
 //        SaveMngr.generatePetsJson();
         SaveMngr.generateLevelsJson();
 

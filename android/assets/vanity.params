@@ -1,1 +1,149 @@
-[{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_scarecrow},icon:head_top_scarecrow,shopIcon:bug_juice_bubble_lib,name:Sacrecrow Hat,cost:140,collection:scarecrow},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,pot:pot_lettuce,leaf_left:leaf_left_lettuce,leaf_right:leaf_right_lettuce},icon:deer,shopIcon:item_deer_horns_n,name:Pot Lettuce,cost:250,leaves:true,collection:scarecrow},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_baseball_cap},icon:head_top_baseball_cap,shopIcon:bug_juice_bubble_lib02,name:Baseball Cap,cost:450},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_scarecrow},icon:head_top_scarecrow3,shopIcon:bug_juice_bubble_lib3,name:Sacrecrow Hat3,cost:720},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,pot:pot_lettuce,leaf_left:leaf_left_lettuce,leaf_right:leaf_right_lettuce},icon:deer3,shopIcon:item_deer_horns_n3,name:Pot Lettuce3,cost:1000},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_baseball_cap},icon:head_top_baseball_cap3,shopIcon:bug_juice_bubble_lib32,name:Baseball Cap3,cost:1350},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_scarecrow},icon:head_top_scarecrow2,shopIcon:bug_juice_bubble_lib2,name:Sacrecrow Hat2,cost:140,collection:scarecrow},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,pot:pot_lettuce,leaf_left:leaf_left_lettuce,leaf_right:leaf_right_lettuce},icon:deer2,shopIcon:item_deer_horns_n2,name:Pot Lettuce2,cost:250,leaves:true,collection:scarecrow},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_baseball_cap},icon:head_top_baseball_cap2,shopIcon:bug_juice_bubble_lib22,name:Baseball Cap2,cost:450},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_scarecrow},icon:head_top_scarecrow1,shopIcon:bug_juice_bubble_lib1,name:Sacrecrow Hat1,cost:720},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,pot:pot_lettuce,leaf_left:leaf_left_lettuce,leaf_right:leaf_right_lettuce},icon:deer1,shopIcon:item_deer_horns_n1,name:Pot Lettuce1,cost:1000,leaves:true},{class:com.fd.etf.utils.SaveMngr$VanityJson,assetsToChange:{class:java.util.HashMap,head_top:head_top_baseball_cap},icon:head_top_baseball_cap1,shopIcon:bug_juice_bubble_lib12,name:Bf1,cost:1350}]
+[{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		head_top: head_top_baseball_cap
+	},
+	icon: head_top_baseball_cap,
+	shopIcon: itembaseballcap,
+	name: Baseball Cap,
+	cost: 100,
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_lettuce,
+		leaf_left: leaf_left_lettuce,
+		leaf_right: leaf_right_lettuce
+	},
+	icon: itembaseballcap,
+	shopIcon: itembaseballcap,
+	name: Lettuce leaves,
+	cost: 140,
+	leaves: true,
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		middle_leafs: middle_leafs_sunflower
+	},
+	icon: itemsunflower,
+	shopIcon: itemsunflower,
+	name: Sunflower leaves,
+	cost: 180
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_bricks
+	},
+	icon: itembricks,
+	shopIcon: itembricks,
+	name: Red brick pot,
+	leaves: true,
+	cost: 240
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		head_bottom: head_bottom_beard,
+	},
+	icon: itembeard,
+	shopIcon: itembeard,
+	name: Beard,
+	collection: hipster,
+	cost: 320
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_mason_jar
+	},
+	icon: itemmasonjar,
+	shopIcon: itemmasonjar,
+	name: Mason jar,
+	collection: hipster,
+	cost: 410
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		head_top: head_top_scarecrow
+	},
+	icon: itembricks,
+	shopIcon: itembricks,
+	name: Sacrecrow hat,
+	cost: 540,
+	collection: scarecrow
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_default,
+		leaf_left: leaf_left_coffe_cup,
+		leaf_right: leaf_right_default
+	},
+	icon: itemcoffeecup,
+	shopIcon: itemcoffeecup,
+	name: Cup of starbugs,
+	cost: 710,
+	leaves: true,
+	collection: hipster
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		head_top: head_top_party hat_1
+	},
+	icon: itempartyhat,
+	shopIcon: itempartyhat,
+	name: Party hat,
+	cost: 920
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_default,
+		leaf_left: leaf_left_knife,
+		leaf_right: leaf_right_default
+	},
+	icon: itemknife,
+	shopIcon: itemknife,
+	leaves: true,
+	name: Knife!,
+	cost: 1550
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		pot: pot_shoe,
+		leaf_left: leaf_left_default,
+		leaf_right: leaf_right_default
+	},
+	icon: itemshoe,
+	shopIcon: itemshoe,
+	name: A Shoe,
+	cost: 2000,
+	leaves: true
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		middle_leafs: middle_leafs_scarf
+	},
+	icon: itemscarf,
+	shopIcon: itemscarf,
+	name: Scarf,
+	cost: 3400
+}]

@@ -283,11 +283,11 @@ public class ShopScreenScript implements IScript {
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
         //TODO: Should not be deleted!
-//        if (!vc.bought) {
+        if (!vc.bought) {
         return getIconFromLib(ITEM_UNKNOWN_N);
-//        } else {
-//            return getIconFromLib(vc.shopIcon);
-//        }
+        } else {
+            return getIconFromLib(vc.shopIcon);
+        }
     }
 
     private Entity getIconFromLib(String name) {

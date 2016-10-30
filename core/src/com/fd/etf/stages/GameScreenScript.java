@@ -203,7 +203,7 @@ public class GameScreenScript implements IScript {
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();
-        initCocoon();
+//        initCocoon();
 
         checkTryPeriod();
 

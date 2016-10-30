@@ -153,7 +153,7 @@ public class MenuScreenScript implements IScript {
         if (timer != null) {
             timer.timerE.getComponent(TintComponent.class).color.a = 1;
             timer.timerEsh.getComponent(TintComponent.class).color.a = 1;
-            timer.timerLogo.getComponent(TintComponent.class).color.a = 1;
+//            timer.timerLogo.getComponent(TintComponent.class).color.a = 1;
         }
 //        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
 //        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
@@ -412,7 +412,7 @@ public class MenuScreenScript implements IScript {
             if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
                 timer.timerEsh.getComponent(TintComponent.class).color.a -= TINT_STEP;
-                timer.timerLogo.getComponent(TintComponent.class).color.a -= TINT_STEP;
+//                timer.timerLogo.getComponent(TintComponent.class).color.a -= TINT_STEP;
             }
             rateAppBtn.getComponent(TintComponent.class).color.a = 0;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
