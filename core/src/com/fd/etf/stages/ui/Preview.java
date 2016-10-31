@@ -255,17 +255,9 @@ public class Preview extends AbstractDialog {
                             vc.buyHard(); // TODO: http://cdn.collider.com/wp-content/uploads/die-hard-with-a-vengeance-bruce-willis.jpg
                         } else {
                             vc.buyAndUse();
-
                             putInPlaceNewIconPosition();
                         }
                         showPreview(vc, false, true);
-//                        if (vc.currencyType.equals(SOFT)) {
-//                            changeBagIcon(vc);
-//                            sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
-//                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x;
-//                            itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y;
-//                            itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
-//                        }
                         ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
                 }
@@ -277,7 +269,7 @@ public class Preview extends AbstractDialog {
                             ShopScreenScript.bagsZindex + 1
                     );
                     sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
-//                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(36);
+                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(136);
                 }
             });
         }

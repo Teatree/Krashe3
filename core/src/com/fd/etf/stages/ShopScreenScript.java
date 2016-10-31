@@ -132,6 +132,7 @@ public class ShopScreenScript implements IScript {
         touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
         touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
+        touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
@@ -230,7 +231,7 @@ public class ShopScreenScript implements IScript {
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon = initSoftCurrencyShopItem(vc);
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(bagsZindex + 1);
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(130);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
@@ -282,7 +283,6 @@ public class ShopScreenScript implements IScript {
     }
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
-        //TODO: Should not be deleted!
         if (!vc.bought) {
         return getIconFromLib(ITEM_UNKNOWN_N);
         } else {

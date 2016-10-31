@@ -141,7 +141,8 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
             icon.getComponent(TransformComponent.class).x += 1227 + bagsShift;
         }
-        shiftTouchZone();
+        shopScreenScript.touchZoneNButton.getComponent(TransformComponent.class).x = 1300;
+//        shiftTouchZone();
     }
 }
 
