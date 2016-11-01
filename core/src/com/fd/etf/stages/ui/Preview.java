@@ -97,18 +97,18 @@ public class Preview extends AbstractDialog {
 
         if (playAni) {
             if (vc.currencyType.equals(SOFT)) {
-                iconE.getComponent(TransformComponent.class).scaleX = GlobalConstants.TENTH;
-                iconE.getComponent(TransformComponent.class).scaleY = GlobalConstants.TENTH;
+//                iconE.getComponent(TransformComponent.class).scaleX = GlobalConstants.TENTH;
+//                iconE.getComponent(TransformComponent.class).scaleY = GlobalConstants.TENTH;
                 iconE.getComponent(TransformComponent.class).x = 575;
                 iconE.getComponent(TransformComponent.class).y = 409;
 
-                ActionComponent ac = new ActionComponent();
-                Actions.checkInit();
-                ac.dataArray.add(Actions.parallel(
-                        Actions.scaleTo(1, 1, 0.7f, Interpolation.exp5Out),
-                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 0.7f, Interpolation.exp5Out)));
-                iconE.add(ac);
-                iconE.getComponent(ZIndexComponent.class).setZIndex(101);
+//                ActionComponent ac = new ActionComponent();
+//                Actions.checkInit();
+//                ac.dataArray.add(Actions.parallel(
+//                        Actions.scaleTo(1, 1, 0.7f, Interpolation.exp5Out),
+//                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 0.7f, Interpolation.exp5Out)));
+//                iconE.add(ac);
+                iconE.getComponent(ZIndexComponent.class).setZIndex(previewE.getComponent(ZIndexComponent.class).getZIndex()+10);
 
             }
             playYellowStarsParticleEffect(544, 467);
@@ -117,7 +117,7 @@ public class Preview extends AbstractDialog {
                 iconE.getComponent(TransformComponent.class).x = PREVIEW_X + ICON_X_RELATIVE;
                 iconE.getComponent(TransformComponent.class).y = PREVIEW_Y + ICON_Y_RELATIVE;
             }
-            iconE.getComponent(ZIndexComponent.class).setZIndex(101);
+            iconE.getComponent(ZIndexComponent.class).setZIndex(previewE.getComponent(ZIndexComponent.class).getZIndex()+200);
         }
     }
 
@@ -167,7 +167,7 @@ public class Preview extends AbstractDialog {
         } else {
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y_ON_JUMP;
         }
-        iconE.getComponent(ZIndexComponent.class).setZIndex(101);
+        iconE.getComponent(ZIndexComponent.class).setZIndex(previewE.getComponent(ZIndexComponent.class).getZIndex()+100);
         return iconE;
     }
 
@@ -266,10 +266,10 @@ public class Preview extends AbstractDialog {
                     TransformComponent tc = changeBagIcon(vc);
                     itemIcons.get(vc.shopIcon).add(tc);
                     itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
-                            ShopScreenScript.bagsZindex + 1
-                    );
+                            ShopScreenScript.bagsZindex + 10);
                     sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
-                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(136);
+                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                            shadowE.getComponent(ZIndexComponent.class).getZIndex()-1);
                 }
             });
         }
@@ -403,11 +403,11 @@ public class Preview extends AbstractDialog {
     public void checkAndClose() {
 
         if (previewBoundingBox != null) {
-            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
-                    previewBoundingBox.y,
-                    previewBoundingBox.width,
-                    previewBoundingBox.height,
-                    previewBoundingBox.toString());
+//            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
+//                    previewBoundingBox.y,
+//                    previewBoundingBox.width,
+//                    previewBoundingBox.height,
+//                    previewBoundingBox.toString());
         }
         if (previewE != null) {
             updateTagIcon();

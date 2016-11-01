@@ -19,14 +19,14 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
  */
 public class TrialTimer {
 
-    private static final String TRIAL_TIMER = "timer_lbl";
-    private static final String TRIAL_TIMER_SH = "timer_lbl_sh";
+    public static final String TRIAL_TIMER = "timer_lbl";
+    public static final String TRIAL_TIMER_SH = "timer_lbl_sh";
     public static final String TIMER_LBL_TIME_UP = "TIME'S UP";
 
     public Entity timerLogo;
     public Entity timerE;
     public Entity timerEsh;
-    private ItemWrapper mainItem;
+    public ItemWrapper mainItem;
 
     //to be deleted
     public int x;
@@ -47,33 +47,20 @@ public class TrialTimer {
         timerEsh = mainItem.getChild(TRIAL_TIMER_SH).getEntity();
         if (!ifShouldShowTimer()) {
 
-//            PromoWindow.offerPromo = true;
-//            if (GlobalConstants.CUR_SCREEN.equals(GAME)) {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             if (timerLogo != null) {
                 timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 sceneLoader.getEngine().removeEntity(timerLogo);
             }
-//            } else {
-//                timerE.getComponent(LabelComponent.class).text.replace(0, timerE.getComponent(LabelComponent.class).text.length,
-//                        TIMER_LBL_TIME_UP);
-//
-//            }
         }
         if (ifShouldShowTimer()) {
             timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
             timerEsh.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerEsh.getComponent(TransformComponent.class).y = y + 15;
-
-//            timerE.getComponent(TintComponent.class).color.a = 1;
-//            timerEsh.getComponent(TintComponent.class).color.a = 1;
         } else {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             timerEsh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-
-//            timerE.getComponent(TintComponent.class).color.a = 0;
-//            timerEsh.getComponent(TintComponent.class).color.a = 0;
         }
     }
 
@@ -120,7 +107,7 @@ public class TrialTimer {
             sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
             sceneLoader.getEngine().addEntity(timerLogo);
         }
-        timerLogo.getComponent(TransformComponent.class).x = this.x +190 ;
+        timerLogo.getComponent(TransformComponent.class).x = this.x + 190;
         timerLogo.getComponent(TransformComponent.class).y = this.y;
         timerLogo.getComponent(TransformComponent.class).scaleX = 0.7f;
         timerLogo.getComponent(TransformComponent.class).scaleY = 0.7f;

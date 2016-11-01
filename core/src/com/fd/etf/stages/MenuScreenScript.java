@@ -103,6 +103,8 @@ public class MenuScreenScript implements IScript {
         isDialogOpen = false;
         if (timer == null) {
             timer = new TrialTimer(menuItem, TIMER_X, TIMER_Y);
+        } else {
+            timer.mainItem = menuItem;
         }
 
         if (showGoalNotification) {
