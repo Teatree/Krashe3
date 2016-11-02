@@ -32,13 +32,34 @@ public class Preview extends AbstractDialog {
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
-    public static final String BTN_BUY = "tag_btn_buy";
-    public static final String BTN_ENABLE = "tag_btn_enable";
-    public static final String BTN_DISABLE = "tag_btn_disable";
-    public static final String LBL_PRICE = "tag_lbl_price";
+
+
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
-    public static final String LBL_DESC = "tag_lbl_desc";
+    public Entity lbl_title;
+
+    // Disable/Enable buttons
+    public static final String BTN_DISABLE = "tag_btn_disable";
+    public static final String BTN_ENABLE = "tag_btn_enable";
+
+    // Buy button
+    public static final String BTN_BUY = "tag_btn_buy";
+    public static final String COINZ_ICON = "coinz_icon";
+    public static final String LBL_PRICE = "tag_lbl_price";
+    public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
+    public Entity lbl_price;
+    public Entity lbl_price_sh;
+
+    // Not enough
     public static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
+    public static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
+    public Entity lbl_not_enough;
+    public Entity lbl_not_enough_sh;
+
+    // Description
+    public static final String LBL_DESC = "tag_lbl_desc";
+    public static final String IMG_SEC_BUBBLE = "img_sec_bubble";
+    public Entity lbl_desc;
+    public Entity img_sec_bubble;
 
     public static final int ICON_X = 550;
     public static final int ICON_X_RELATIVE = 270;
@@ -51,10 +72,6 @@ public class Preview extends AbstractDialog {
 
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
-    public Entity lbl_desc;
-    public Entity lbl_title;
-    public Entity lbl_price;
-    public Entity lbl_not_enough;
     public Entity bg;
     private Entity iconE;
     private Entity btnLeft;
@@ -78,12 +95,15 @@ public class Preview extends AbstractDialog {
         lbl_desc = previewE.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lbl_title = previewE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lbl_price = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE);
+        lbl_price_sh = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
         bg = previewE.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
         lbl_not_enough = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
+        lbl_not_enough_sh = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);
         btnLeft = previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
         btnNext = previewE.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
 
         previewE.getComponent(ZIndexComponent.class).setZIndex(51);
+
         initShadow();
     }
 
@@ -133,22 +153,35 @@ public class Preview extends AbstractDialog {
         if (vc.description != null) {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
         }
+        if (vc.collection != null){
+            lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.collection);
+        }
         lbl_title.getComponent(LabelComponent.class).text.replace(0, lbl_title.getComponent(LabelComponent.class).text.length, vc.name);
         lbl_price.getComponent(LabelComponent.class).text.replace(0, lbl_price.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
+        lbl_price_sh.getComponent(LabelComponent.class).text.replace(0, lbl_price_sh.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
+        lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lbl_not_enough.getComponent(TintComponent.class).color.a = 0;
+            lbl_not_enough_sh.getComponent(TintComponent.class).color.a = 0;
             return true;
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_not_enough.getComponent(TransformComponent.class).x = 100;
+            lbl_not_enough_sh.getComponent(TransformComponent.class).x = 100;
             lbl_not_enough.getComponent(TintComponent.class).color.a = 1;
-            lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(100);
+            lbl_not_enough_sh.getComponent(TintComponent.class).color.a = 1;
+            lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(99);
+            lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(100);
+            lbl_price_sh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_price.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             return false;
         }
     }
@@ -161,6 +194,7 @@ public class Preview extends AbstractDialog {
         sceneLoader.getEngine().addEntity(iconE);
 
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(52);
+        lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(53);
         iconE.getComponent(TransformComponent.class).x = ICON_X;
         if (!jump) {
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
@@ -217,6 +251,18 @@ public class Preview extends AbstractDialog {
             previewE.getComponent(TransformComponent.class).y = PREVIEW_Y;
         }
 
+
+        // Showing and not showing of Description/Collections section
+        if(vc.description == null) {
+            previewE.getComponent(NodeComponent.class).getChild(LBL_DESC).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            System.out.println("SHOULD NOT SHOW!");
+        }else{
+            previewE.getComponent(NodeComponent.class).getChild(LBL_DESC).getComponent(TransformComponent.class).x = 604;
+            previewE.getComponent(NodeComponent.class).getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 580;
+//            System.out.println("SHOULD SHOW!");
+        }
+
         previewBoundingBox = new Rectangle(previewE.getComponent(TransformComponent.class).x - 120,
                 30,
                 448,
@@ -234,15 +280,28 @@ public class Preview extends AbstractDialog {
 
     public void initBuyButton(final ShopItem vc) {
         final Entity btnBuy = previewE.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        final Entity coinzE = previewE.getComponent(NodeComponent.class).getChild(COINZ_ICON);
         previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TintComponent.class).color.a = 0;
+        previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TintComponent.class).color.a = 0;
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
-            btnBuy.getComponent(TransformComponent.class).x =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-            btnBuy.getComponent(TransformComponent.class).y =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            btnBuy.getComponent(TransformComponent.class).x = 197;
+            btnBuy.getComponent(TransformComponent.class).y = 5;
+            lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lbl_price.getComponent(ZIndexComponent.class).setZIndex(lbl_price_sh.getComponent(ZIndexComponent.class).getZIndex()+1);
+            coinzE.getComponent(ZIndexComponent.class).setZIndex(lbl_price.getComponent(ZIndexComponent.class).getZIndex()+1);
+
+            // Finding the middle of the button to display price and coin icon
+            // only works if width of text label is 1
+            int wordCount = lbl_price.getComponent(LabelComponent.class).getText().length;
+            int base = 332; // x pos
+            lbl_price_sh.getComponent(TransformComponent.class).x = base+15*wordCount;
+            lbl_price.getComponent(TransformComponent.class).x = base+15*wordCount;
+            coinzE.getComponent(TransformComponent.class).x = base+15*wordCount;
+
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());
             }
@@ -252,7 +311,7 @@ public class Preview extends AbstractDialog {
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
                         if (vc.currencyType.equals(HARD)) {
-                            vc.buyHard(); // TODO: http://cdn.collider.com/wp-content/uploads/die-hard-with-a-vengeance-bruce-willis.jpg
+                            vc.buyHard(); // TODO: http://cdn.collider.com/wp-content/uploads/die-hard-with-a-vengeance-bruce-willis.jpg // Oh Nastya
                         } else {
                             vc.buyAndUse();
                             putInPlaceNewIconPosition();
@@ -276,15 +335,19 @@ public class Preview extends AbstractDialog {
     }
 
     public void initEnableButton(final ShopItem vc) {
-        if (vc.bought && !vc.enabled) {
+        if (vc.bought && vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_price_sh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_price.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
             Entity enableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
-            enableBtn.getComponent(TransformComponent.class).x =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-            enableBtn.getComponent(TransformComponent.class).y =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            enableBtn.getComponent(TransformComponent.class).x = 282;
+            enableBtn.getComponent(TransformComponent.class).y = 0;
 
             if (enableBtn.getComponent(ButtonComponent.class) == null) {
                 enableBtn.add(new ButtonComponent());
@@ -294,7 +357,7 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.apply();
+                        vc.disable();
                         showPreview(vc, false, false);
                     }
                 }
@@ -303,15 +366,19 @@ public class Preview extends AbstractDialog {
     }
 
     public void initDisableButton(final ShopItem vc) {
-        if (vc.bought && vc.enabled) {
+        if (vc.bought && !vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            previewE.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_price_sh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lbl_price.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
             Entity disableBtn = previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
-            disableBtn.getComponent(TransformComponent.class).x =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x;
-            disableBtn.getComponent(TransformComponent.class).y =
-                    previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y;
+            disableBtn.getComponent(TransformComponent.class).x = 282;
+            disableBtn.getComponent(TransformComponent.class).y = 0;
 
             disableBtn.add(new ButtonComponent());
             if (disableBtn.getComponent(ButtonComponent.class) == null) {
@@ -321,7 +388,7 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.disable();
+                        vc.apply();
                         showPreview(vc, false, false);
                     }
                 }

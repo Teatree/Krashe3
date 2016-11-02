@@ -11,6 +11,7 @@ public abstract class ShopItem {
     public String name;
     public long cost;
     public String description;
+    public String collection;
     public String currencyType;
 
     public String transactionId;
