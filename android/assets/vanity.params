@@ -5,7 +5,7 @@
 		head_top: head_top_baseball_cap
 	},
 	shopIcon: itembaseballcap,
-	name: Baseball Cap,
+	name: Baseball \n Cap,
 	cost: 100,
 	bought: true,
 	enabled: true,
@@ -20,7 +20,7 @@
 		leaf_right: leaf_right_lettuce
 	},
 	shopIcon: itemlettuce,
-	name: Lettuce leaves,
+	name: Lettuce \n leaves,
 	cost: 140,
 	bought: true,
 	enabled: true,
@@ -33,7 +33,7 @@
 		middle_leafs: middle_leafs_sunflower
 	},
 	shopIcon: itemsunflower,
-	name: Sunflower leaves,
+	name: Sunflower \n leaves,
 	cost: 180,
 	enabled: true
 },
@@ -44,7 +44,7 @@
 		pot: pot_bricks
 	},
 	shopIcon: itembricks,
-	name: Red brick pot,
+	name: Red \n brick pot,
 	cost: 240,
 	enabled: true,
 	leaves: true
@@ -68,7 +68,7 @@
 		pot: pot_mason_jar
 	},
 	shopIcon: itemmasonjar,
-	name: Mason jar,
+	name: Mason \n jar,
 	cost: 410,
 	enabled: true,
 	description: Part of Hipster collection
@@ -82,12 +82,12 @@
 		leaf_right: leaf_right_default
 	},
 	shopIcon: itemcoffeecup,
-	name: Cup of starbugs,
+	name: Cup of \n starbugs,
 	cost: 710,
 	bought: true,
 	enabled: true,
 	leaves: true,
-	description: Part of Hipster collection
+	description: Part of Hipster \n collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -96,7 +96,7 @@
 		head_top: head_top_partyhat_1
 	},
 	shopIcon: itempartyhat,
-	name: Party hat,
+	name: Party \n hat,
 	cost: 920
 },
 {
@@ -122,7 +122,7 @@
 		leaf_right: leaf_right_default
 	},
 	shopIcon: itemshoe,
-	name: A shoe,
+	name: A Shoe,
 	cost: 2000,
 	enabled: true,
 	leaves: true
