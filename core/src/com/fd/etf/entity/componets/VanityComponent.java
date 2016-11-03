@@ -38,6 +38,7 @@ public class VanityComponent extends ShopItem implements Component {
     public String collection;
 
     public static Map<String, VanityCollection> vanityCollections;
+    public static Map<String, List<VanityComponent>> vanityComponentsByChangedAssets;
 
     public VanityComponent() {
         currencyType = SOFT;
@@ -66,24 +67,35 @@ public class VanityComponent extends ShopItem implements Component {
     }
 
     public void apply() {
-//        moveToLocal();
-
         if (bought) {
-            this.enabled = true;
-            for (Map.Entry entry : assetsToChange.entrySet()) {
-//                FileHandle newAsset = Gdx.files.internal(PATH_PREFIX + entry.getValue() + TYPE_SUFFIX);
-//                newAsset.copyTo(Gdx.files.local(entry.getKey() + TYPE_SUFFIX));
-                if (!entry.getKey().equals(CLASS)) {
-                    String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
-                    Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
-                }
-            }
+            disableSimilarVanities();
 
+            this.enabled = true;
+            overrideAnimationFiles();
             if (this.pet != null) {
                 GameStage.gameScript.fpc.currentPet = this.pet;
             }
-//            GameStage.updateFlowerAni();
+
             GameStage.changedFlower = true;
+        }
+    }
+
+    private void disableSimilarVanities() {
+        for (String fileName : assetsToChange.keySet()){
+            for (VanityComponent vc : vanityComponentsByChangedAssets.get(fileName)){
+                if (vc.enabled) {
+                    vc.enabled = false;
+                }
+            }
+        }
+    }
+
+    private void overrideAnimationFiles() {
+        for (Map.Entry entry : assetsToChange.entrySet()) {
+            if (!entry.getKey().equals(CLASS)) {
+                String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+                Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
+            }
         }
     }
 
@@ -114,6 +126,14 @@ public class VanityComponent extends ShopItem implements Component {
     public void disable() {
         this.enabled = false;
 
+        backToDefaultAnimation();
+        GameStage.changedFlower = true;
+        if (this.pet != null) {
+            GameStage.gameScript.fpc.currentPet = this.pet;
+        }
+    }
+
+    private void backToDefaultAnimation() {
         for (Map.Entry entry : assetsToChange.entrySet()) {
             if (!entry.getKey().equals(CLASS)) {
                 String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
@@ -121,9 +141,7 @@ public class VanityComponent extends ShopItem implements Component {
                         .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
                                 + DEFAULT + TYPE_SUFFIX).readBytes(), false);
             }
-
         }
-        GameStage.changedFlower = true;
     }
 
     public static void disableAllVanitiesAssets() {

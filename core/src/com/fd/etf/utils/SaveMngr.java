@@ -5,14 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.fd.etf.entity.componets.*;
-import com.fd.etf.stages.ui.GiftScreen;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
 import static com.fd.etf.entity.componets.VanityComponent.vanityCollections;
-import static com.fd.etf.stages.ui.GiftScreen.*;
+import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChangedAssets;
 
 public class SaveMngr {
 
@@ -243,26 +242,36 @@ public class SaveMngr {
     public static List<VanityComponent> getAllVanity() {
         String saved = readFile(VANITIES_FILE);
         List<VanityComponent> vanComps = new ArrayList<VanityComponent>();
+        vanityCollections = new HashMap<>();
+        vanityComponentsByChangedAssets = new HashMap<>();
 
         if (!"".equals(saved)) {
             Json json = new Json();
             List<VanityJson> vinitys = json.fromJson(List.class, saved);
-
-            vanityCollections = new HashMap<>();
             for (VanityJson vs : vinitys) {
                 VanityComponent vc = new VanityComponent(vs);
                 vanComps.add(vc);
-                if (vc.collection != null && !vc.collection.equals("")){
-                    if (vanityCollections.get(vc.collection) == null){
-                        vanityCollections.put(vc.collection, new VanityCollection(vc));
-                    } else {
-                        vanityCollections.get(vc.collection).total++;
-                        vanityCollections.get(vc.collection).unlocked+=vc.bought ? 1 : 0;
-                    }
-                }
+                groupVanitiesByChangedAssets(vc);
+                groupVanitiesByCollection(vc);
             }
         }
+        sortVanities(vanComps);
+        return vanComps;
+    }
 
+    private static void groupVanitiesByChangedAssets(VanityComponent vc) {
+        for (String fileName : vc.assetsToChange.keySet()) {
+            if (vanityComponentsByChangedAssets.get(fileName) != null) {
+                vanityComponentsByChangedAssets.get(fileName).add(vc);
+            } else {
+                List<VanityComponent> list = new ArrayList<>();
+                list.add(vc);
+                vanityComponentsByChangedAssets.put(fileName, list);
+            }
+        }
+    }
+
+    private static void sortVanities(List<VanityComponent> vanComps) {
         Comparator vanitiesComparator = new Comparator<VanityComponent>() {
             @Override
             public int compare(VanityComponent o1, VanityComponent o2) {
@@ -277,8 +286,19 @@ public class SaveMngr {
                 }
             }
         };
+
         Collections.sort(vanComps, vanitiesComparator);
-        return vanComps;
+    }
+
+    private static void groupVanitiesByCollection(VanityComponent vc) {
+        if (vc.collection != null && !vc.collection.equals("")) {
+            if (vanityCollections.get(vc.collection) == null) {
+                vanityCollections.put(vc.collection, new VanityCollection(vc));
+            } else {
+                vanityCollections.get(vc.collection).total++;
+                vanityCollections.get(vc.collection).unlocked += vc.bought ? 1 : 0;
+            }
+        }
     }
 
     public static List<PetComponent> getAllPets() {
@@ -478,8 +498,8 @@ public class SaveMngr {
         String saved = readFile(LEVELS_JSON);
         Level.levelsInfo = new ArrayList<>();
         List levels = new Json().fromJson(List.class, saved);
-        for (Object l : levels){
-            Level.levelsInfo.add((LevelInfo)l);
+        for (Object l : levels) {
+            Level.levelsInfo.add((LevelInfo) l);
         }
     }
 
@@ -487,7 +507,7 @@ public class SaveMngr {
         String file = readFile(MULTIPLIERS_JSON);
         List<BugSpawnSystem.Multiplier> multipliers = new Json().fromJson(List.class, file);
         BugSpawnSystem.mulipliers = new ArrayList<>();
-        for (BugSpawnSystem.Multiplier m : multipliers){
+        for (BugSpawnSystem.Multiplier m : multipliers) {
             BugSpawnSystem.mulipliers.add(m);
         }
     }
@@ -563,7 +583,7 @@ public class SaveMngr {
         public int chanceMONEY_100 = 10;
         public int chanceMONEY_150 = 10;
         public int chanceMONEY_200 = 10;
-        public int chanceMONEY_250= 10;
+        public int chanceMONEY_250 = 10;
         public int chancePHOENIX = 10;
         public int chancePET1 = 10;
         public int chancePET2 = 10;
