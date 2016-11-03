@@ -133,6 +133,11 @@ public class ShopScreenScript implements IScript {
         touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
+        for (Entity e: touchZoneNButton.getComponent(NodeComponent.class).children){
+            if(e.getComponent(MainItemComponent.class).tags.contains("dot")) {
+                e.getComponent(TintComponent.class).color.a = 0;
+            }
+        }
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
@@ -418,7 +423,7 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
-            createTheDot(bagPageId);
+            placeTheDot(bagPageId);
         } else {
 
             if (bagPosIdX % 4 == 0) {
@@ -437,7 +442,7 @@ public class ShopScreenScript implements IScript {
             bagPosIdY = 0;
             bagPosIdX++;
             bagPageId++;
-            createTheDot(bagPageId);
+            placeTheDot(bagPageId);
         } else {
             bagPosIdY++;
             bagPosIdX++;
@@ -445,15 +450,16 @@ public class ShopScreenScript implements IScript {
         return tc;
     }
 
-    private void createTheDot(int pageId){
-        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(DOTZ_LIB);
-        final Entity dotEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotEntity, tempC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(dotEntity);
-
-        touchZoneNButton.getComponent(NodeComponent.class).addChild(dotEntity);
-        dotEntity.getComponent(MainItemComponent.class).uniqueId += pageId;
+    private void placeTheDot(int pageId){
+//        CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(DOTZ_LIB);
+//        final Entity dotEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
+//        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dotEntity, tempC.composite);
+//        GameStage.sceneLoader.getEngine().addEntity(dotEntity);
+        int vV = pageId+1;
+        Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild("dotz_" + vV);
         pageDots.add(dotEntity);
+        System.out.println("pageID: " + pageId);
+        dotEntity.getComponent(TintComponent.class).color.a = 1;
         dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
         dotEntity.getComponent(TransformComponent.class).y = 10;
     }
