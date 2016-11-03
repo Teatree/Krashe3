@@ -117,19 +117,9 @@ public class Preview extends AbstractDialog {
 
         if (playAni) {
             if (vc.currencyType.equals(SOFT)) {
-//                iconE.getComponent(TransformComponent.class).scaleX = GlobalConstants.TENTH;
-//                iconE.getComponent(TransformComponent.class).scaleY = GlobalConstants.TENTH;
                 iconE.getComponent(TransformComponent.class).x = 575;
                 iconE.getComponent(TransformComponent.class).y = 409;
-
-//                ActionComponent ac = new ActionComponent();
-//                Actions.checkInit();
-//                ac.dataArray.add(Actions.parallel(
-//                        Actions.scaleTo(1, 1, 0.7f, Interpolation.exp5Out),
-//                        Actions.moveTo(PREVIEW_X + ICON_X_RELATIVE, PREVIEW_Y + ICON_Y_RELATIVE, 0.7f, Interpolation.exp5Out)));
-//                iconE.add(ac);
                 iconE.getComponent(ZIndexComponent.class).setZIndex(previewE.getComponent(ZIndexComponent.class).getZIndex()+10);
-
             }
             playYellowStarsParticleEffect(544, 467);
         } else {
@@ -231,9 +221,6 @@ public class Preview extends AbstractDialog {
             if (iconE != null) {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
-//            iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PREVIEW).getChild(vc.name);
-//            iconE.getComponent(TransformComponent.class).x = ICON_X_RELATIVE;
-//            iconE.getComponent(TransformComponent.class).y = ICON_Y_RELATIVE;
         }
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
@@ -335,7 +322,7 @@ public class Preview extends AbstractDialog {
     }
 
     public void initEnableButton(final ShopItem vc) {
-        if (vc.bought && vc.enabled) {
+        if (vc.bought && !vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -357,7 +344,7 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.disable();
+                        vc.apply();
                         showPreview(vc, false, false);
                     }
                 }
@@ -366,7 +353,7 @@ public class Preview extends AbstractDialog {
     }
 
     public void initDisableButton(final ShopItem vc) {
-        if (vc.bought && !vc.enabled) {
+        if (vc.bought && vc.enabled) {
             previewE.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -388,7 +375,8 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (animFinished()) {
-                        vc.apply();
+//                        vc.apply();
+                        vc.disable();
                         showPreview(vc, false, false);
                     }
                 }

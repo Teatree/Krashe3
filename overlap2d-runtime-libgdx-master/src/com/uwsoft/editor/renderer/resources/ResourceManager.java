@@ -64,11 +64,15 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
     protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
 
+    List<String> animationsToOverride;
+
     /**
      * Constructor does nothing
      */
     public ResourceManager() {
-
+        animationsToOverride = new ArrayList();
+        animationsToOverride.add("flower_idle");
+        animationsToOverride.add("flower_leafs_idle");
     }
 
     /**
@@ -248,8 +252,11 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     public void moveToLocal() {
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-            if (!Gdx.files.local("\\orig\\spriter_animations\\").exists()) {
-                Gdx.files.internal("orig\\spriter_animations\\").copyTo(Gdx.files.local("\\orig\\spriter_animations\\"));
+            for (String ani : animationsToOverride) {
+                if (!Gdx.files.local("\\orig\\spriter_animations\\" + ani).exists()) {
+                    Gdx.files.internal("orig\\spriter_animations\\" + ani).
+                            copyTo(Gdx.files.local("\\orig\\spriter_animations\\" + ani));
+                }
             }
         }
     }
@@ -263,8 +270,13 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
             }
         }
         for (String name : spriterAnimNamesToLoad) {
-            FileHandle animFile = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
-            spriterAnimations.put(name, animFile);
+            if (!animationsToOverride.contains(name)) {
+                FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+                spriterAnimations.put(name, animFile);
+            } else {
+                FileHandle animFile = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+                spriterAnimations.put(name, animFile);
+            }
         }
     }
 
