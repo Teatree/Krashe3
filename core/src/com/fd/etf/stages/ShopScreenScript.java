@@ -57,10 +57,11 @@ public class ShopScreenScript implements IScript {
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
 
     private static final String TITLE = "title";
-    private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
+    private static final String BTN_FLIP_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
-    private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
+    private static final String BTN_FLIP_RIGHT = "btn_scroll_right";
     private static final String DOTZ_LIB = "dotz_lib";
+    private static final String INACTIVE_FLIP_BTN_STATE = "Gray";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -140,8 +141,8 @@ public class ShopScreenScript implements IScript {
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
-        initScrollLeftBtn();
-        initScrollRightBtn();
+        initFlipLeftBtn();
+        initFlipRightBtn();
         bagPosIdX = 0;
         bagPosIdY = 0;
         bagPageId = 0;
@@ -325,12 +326,12 @@ public class ShopScreenScript implements IScript {
                 startScrolling();
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
                 if (!canOpenPreview) {
-                    swipePages();
+                    flipPages();
                 }
             }
             stopScrolling();
         }
-        updateScrollButtonsState();
+        updatePageFlipButtonsState();
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
@@ -362,7 +363,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void swipePages() {
+    private void flipPages() {
         ButtonComponent.skipDefaultLayersChange = true;
         if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
             scrollBagsOnePageLeft();
@@ -425,7 +426,6 @@ public class ShopScreenScript implements IScript {
         int vV = pageId+1;
         Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild("dotz_" + vV);
         pageDots.add(dotEntity);
-        System.out.println("pageID: " + pageId);
         dotEntity.getComponent(TintComponent.class).color.a = 1;
         dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
         dotEntity.getComponent(TransformComponent.class).y = 10;
@@ -444,8 +444,8 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void initScrollLeftBtn() {
-        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT);
+    private void initFlipLeftBtn() {
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT);
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
@@ -487,10 +487,10 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void initScrollRightBtn() {
-        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT);
-        scrollLeftBtn.add(new ButtonComponent());
-        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
+    private void initFlipRightBtn() {
+        Entity flipLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT);
+        flipLeftBtn.add(new ButtonComponent());
+        flipLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(flipLeftBtn) {
             @Override
             public void clicked() {
                 scrollBagsOnePageRight();
@@ -529,28 +529,28 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void updateScrollButtonsState(){
+    private void updatePageFlipButtonsState(){
         if (canMoveBagsRight()) {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = true;
         } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = false;
         }
         if (canMoveBagsLeft()) {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = true;
         } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = false;
         }
     }
 
