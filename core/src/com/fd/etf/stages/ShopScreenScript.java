@@ -86,7 +86,6 @@ public class ShopScreenScript implements IScript {
     public ButtonComponent touchZoneBtn;
     public int bagPosIdX;
     public Preview preview;
-    float stopVelocity;
 
     private ItemWrapper shopItem;
     public Entity hcSectionE;
@@ -331,6 +330,7 @@ public class ShopScreenScript implements IScript {
             }
             stopScrolling();
         }
+        updateScrollButtonsState();
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
@@ -484,7 +484,6 @@ public class ShopScreenScript implements IScript {
             currentPageIndex--;
             setDotActive(currentPageIndex);
             firstBagTargetPos = bags.get(0).getComponent(TransformComponent.class).x + SCCREEN_WIDTH;
-
         }
     }
 
@@ -527,6 +526,31 @@ public class ShopScreenScript implements IScript {
             currentPageIndex++;
             setDotActive(currentPageIndex);
             firstBagTargetPos = bags.get(0).getComponent(TransformComponent.class).x - SCCREEN_WIDTH;
+        }
+    }
+
+    private void updateScrollButtonsState(){
+        if (canMoveBagsRight()) {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+        } else {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
+        }
+        if (canMoveBagsLeft()) {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+        } else {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
         }
     }
 
