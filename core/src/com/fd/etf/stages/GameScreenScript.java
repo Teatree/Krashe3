@@ -97,7 +97,6 @@ public class GameScreenScript implements IScript {
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
         beesModeAni.getComponent(SpriterComponent.class).player.setTime(0);
-
     }
 
     private void updateAngeredBeesMode() {
@@ -426,9 +425,9 @@ public class GameScreenScript implements IScript {
                     spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 }
                 //spawn Cocoon
-//                if (cocoonSpawnCounter <= 0) {
-//                    spawnCocoon();
-//                }
+                if (cocoonSpawnCounter <= 0) {
+                    spawnCocoon();
+                }
             }
 
             if (gameOverDialog != null) {

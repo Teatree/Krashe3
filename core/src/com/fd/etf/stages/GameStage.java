@@ -81,7 +81,6 @@ public class GameStage extends Stage {
             root.addScript(gameScript);
             gameScript.initButtons();
             gameScript.reset();
-
         } else {
             sceneLoader.setScene(MAIN_SCENE, viewport);
             if (justCreated) {
@@ -152,29 +151,29 @@ public class GameStage extends Stage {
     }
 
     public static void initShopWithAds() {
-        if (gameScript.fpc.settings.shouldShowShopAd()) {
-            mainController.showGeneralShopAd(new Runnable() {
-                @Override
-                public void run() {
-                    initShop();
-                }
-            });
-        } else {
+//        if (gameScript.fpc.settings.shouldShowShopAd()) {
+//            mainController.showGeneralShopAd(new Runnable() {
+//                @Override
+//                public void run() {
+//                    initShop();
+//                }
+//            });
+//        } else {
             initShop();
-        }
+//        }
     }
 
     public void initResultWithAds() {
-        if (gameScript.fpc.settings.shouldShowResultAd()) {
-            mainController.showResultScreenAd(new Runnable() {
-                @Override
-                public void run() {
-                    initResult();
-                }
-            });
-        } else {
+//        if (gameScript.fpc.settings.shouldShowResultAd()) {
+//            mainController.showResultScreenAd(new Runnable() {
+//                @Override
+//                public void run() {
+//                    initResult();
+//                }
+//            });
+//        } else {
             initResult();
-        }
+//        }
     }
 
     public void update() {

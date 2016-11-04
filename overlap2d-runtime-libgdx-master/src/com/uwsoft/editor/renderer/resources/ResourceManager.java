@@ -457,7 +457,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     }
 
     public void addSpriterToLoad(String aniName) {
-        FileHandle animFilePet = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + aniName + File.separator + aniName + ".scml");
+        FileHandle animFilePet = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + aniName + File.separator + aniName + ".scml");
         spriterAnimations.put(aniName, animFilePet);
     }
 
