@@ -18,17 +18,17 @@ public abstract class ImageButtonListener implements ButtonComponent.ButtonListe
 
     @Override
     public void touchUp() {
-        btn.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
-        btn.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
-        btn.getComponent(TransformComponent.class).x -= btn.getComponent(DimensionsComponent.class).width / 20;
-        btn.getComponent(TransformComponent.class).y -= btn.getComponent(DimensionsComponent.class).height / 20;
+            btn.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
+            btn.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
+            btn.getComponent(TransformComponent.class).x -= btn.getComponent(DimensionsComponent.class).width / 20;
+            btn.getComponent(TransformComponent.class).y -= btn.getComponent(DimensionsComponent.class).height / 20;
     }
 
     @Override
     public void touchDown() {
-        btn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
-        btn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
-        btn.getComponent(TransformComponent.class).x += btn.getComponent(DimensionsComponent.class).width / 20;
-        btn.getComponent(TransformComponent.class).y += btn.getComponent(DimensionsComponent.class).height / 20;
+            btn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
+            btn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
+            btn.getComponent(TransformComponent.class).x += btn.getComponent(DimensionsComponent.class).width / 20;
+            btn.getComponent(TransformComponent.class).y += btn.getComponent(DimensionsComponent.class).height / 20;
     }
 }

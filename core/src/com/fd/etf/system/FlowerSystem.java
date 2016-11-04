@@ -38,7 +38,7 @@ public class FlowerSystem extends IteratingSystem {
 
         updateRect(transformComponent);
         act(transformComponent, spriterComponentFlower, deltaTime);
-        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
+//        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
     }
 
     public void updateRect(TransformComponent tc) {
