@@ -470,8 +470,6 @@ public class Preview extends AbstractDialog {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();
             canClosePreview = previewBoundingBox == null || !previewBoundingBox.contains(v.x, v.y);
-            System.out.println("canClosePrev >>> " + canClosePreview );
-            System.out.println("canOpenPrev >>> " + canOpenPreview);
             float currentYpos = previewE.getComponent(TransformComponent.class).y;
             if (Gdx.input.isTouched() && currentYpos <= PREVIEW_Y || currentYpos >= 800) {
                 if (isPreviewOn && canClosePreview) {

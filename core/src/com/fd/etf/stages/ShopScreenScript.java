@@ -2,6 +2,7 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
@@ -35,6 +36,7 @@ public class ShopScreenScript implements IScript {
     public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
+    public static final String BTN_IMG_SHOP_ICON_LIB_2 = "btn_img_shop_icon_lib2";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
     public static final String HC_SHOP_SEC = "HC_shop_sec";
@@ -71,7 +73,6 @@ public class ShopScreenScript implements IScript {
     public static Entity scoreLbl;
     public static Entity scoreLblsh;
     public static boolean isPreviewOn;
-    public static boolean canOpenPreview = true;
     public static int bagsZindex;
 
     public static List<ShopItem> allShopItems = new ArrayList<>();
@@ -216,10 +217,31 @@ public class ShopScreenScript implements IScript {
 
             e.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(e) {
+
+                        @Override
+                        public void touchUp() {
+
+                            if (!ButtonComponent.skipDefaultLayersChange)
+                            super.touchUp();
+                        }
+
+                        @Override
+                        public void touchDown() {
+                            startScrolling();
+                            if (!ButtonComponent.skipDefaultLayersChange)
+                            super.touchDown();
+                        }
+
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn && canOpenPreview) {
-                                preview.showPreview(hc, true, false);
+                            if (!isPreviewOn && !ButtonComponent.skipDefaultLayersChange) {
+
+                                if (touchZoneBtn.isTouched) {
+                                    boolean shouldScroll = tempGdx.x != Gdx.input.getX();
+                                    if (!shouldScroll) {
+                                        preview.showPreview(hc, true, false);
+                                    }
+                                }
                             }
                         }
                     });
@@ -230,7 +252,14 @@ public class ShopScreenScript implements IScript {
     private void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
-            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
+
+            Boolean secondBag = new Random().nextBoolean();
+            CompositeItemVO tempC;
+            if (secondBag) {
+                tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB);
+            } else {
+                tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB_2);
+            }
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
@@ -260,11 +289,57 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(bagEntity) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn && canOpenPreview) {
+                            if (!isPreviewOn) {
                                 preview.showPreview(vc, true, false);
                             }
                         }
                     });
+
+                    Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureListener() {
+
+                        @Override
+                        public boolean touchDown(float x, float y, int pointer, int button) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean tap(float x, float y, int count, int button) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean longPress(float x, float y) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean fling(float velocityX, float velocityY, int button) {
+                            flipPages();
+                            return true;
+                        }
+
+                        @Override
+                        public boolean pan(float x, float y, float deltaX, float deltaY) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean panStop(float x, float y, int pointer, int button) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean zoom(float initialDistance, float distance) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+                            return false;
+                        }
+                        public void pinchStop () {
+                        }
+                    }));
         }
     }
 
@@ -322,19 +397,24 @@ public class ShopScreenScript implements IScript {
             transitionIn();
             transitionOut();
 
-            if (touchZoneBtn.isTouched) {
-                startScrolling();
-                canOpenPreview = tempGdx.x == Gdx.input.getX();
-                if (!canOpenPreview) {
-                    flipPages();
-                }
-            }
+            manageScrolling();
             stopScrolling();
         }
         updatePageFlipButtonsState();
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
+    }
+
+    private void manageScrolling() {
+        if (touchZoneBtn.isTouched) {
+            startScrolling();
+            boolean shouldScroll = tempGdx.x != Gdx.input.getX();
+            if (shouldScroll) {
+                ButtonComponent.skipDefaultLayersChange = true;
+                flipPages();
+            }
+        }
     }
 
     private void transitionOut() {

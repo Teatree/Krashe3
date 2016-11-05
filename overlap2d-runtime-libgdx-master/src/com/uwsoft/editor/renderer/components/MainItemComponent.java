@@ -2,8 +2,7 @@ package com.uwsoft.editor.renderer.components;
 
 import com.badlogic.ashley.core.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class MainItemComponent implements Component {
     public int uniqueId = 0;
