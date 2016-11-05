@@ -54,7 +54,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="1" name="hit1" length="300" interval="100" looping="false">
+        <animation id="1" name="hit_1" length="300" interval="100" looping="false">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -112,7 +112,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="2" name="hit2" length="300" interval="100">
+        <animation id="2" name="hit_2" length="300" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="0" key="0"/>
@@ -242,7 +242,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="hit3" length="450" interval="100">
+        <animation id="3" name="hit_3" length="450" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="0" key="0"/>

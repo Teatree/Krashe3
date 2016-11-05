@@ -223,8 +223,6 @@ public class GameScreenScript implements IScript {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
         if (gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-//            tc.scaleX = 1;
-//            tc.scaleY = 0.6f;
             if (gameScript.fpc.havePhoenixDouble()) {
                 tc.x = 117;
                 tc.y = 675;
@@ -280,6 +278,8 @@ public class GameScreenScript implements IScript {
 
     public void resetPauseDialog() {
         if (pauseDialog != null) {
+            gameItem.getChild(PauseDialog.LBL_PAUSE_TIMER).getEntity()
+                    .getComponent(LabelComponent.class).text.replace(0, 1, "");
             pauseDialog.deleteTiles();
         }
     }

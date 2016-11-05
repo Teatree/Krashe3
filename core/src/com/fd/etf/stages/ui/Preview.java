@@ -10,7 +10,6 @@ import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
-import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -30,7 +29,7 @@ public class Preview extends AbstractDialog {
     public static final String PREVIEW = "tag_lib";
     public static final String ITEM_UNKNOWN = "item_unknown_n";
     public static final String BTN_RIGHT = "tag_right_btn";
-    public static final String BTN_LEFT = "tag_left_btn";
+    public static final String BTN_PREV = "tag_left_btn";
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
 
 
@@ -74,11 +73,12 @@ public class Preview extends AbstractDialog {
     public Entity previewE;
     public Entity bg;
     private Entity iconE;
-    private Entity btnLeft;
+    private Entity btnPrev;
     private Entity btnNext;
 
     private Rectangle previewBoundingBox;
     private ShopItem vc;
+    private boolean canClosePreview;
 
     private void loadPreviewFromLib() {
         CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(PREVIEW).clone();
@@ -99,7 +99,7 @@ public class Preview extends AbstractDialog {
         bg = previewE.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
         lbl_not_enough = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         lbl_not_enough_sh = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);
-        btnLeft = previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
+        btnPrev = previewE.getComponent(NodeComponent.class).getChild(BTN_PREV);
         btnNext = previewE.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
 
         previewE.getComponent(ZIndexComponent.class).setZIndex(51);
@@ -385,14 +385,15 @@ public class Preview extends AbstractDialog {
     }
 
     private void initPrevButton(final ShopItem vc) {
-        if (btnLeft.getComponent(ButtonComponent.class) == null) {
-            btnLeft.add(new ButtonComponent());
+        if (btnPrev.getComponent(ButtonComponent.class) == null) {
+            btnPrev.add(new ButtonComponent());
         }
-        btnLeft.getComponent(ButtonComponent.class).clearListeners();
-        btnLeft.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnLeft) {
+        btnPrev.getComponent(ButtonComponent.class).clearListeners();
+        btnPrev.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnPrev) {
 
             @Override
             public void clicked() {
+                canClosePreview = false;
                 if (animFinished()) {
                     if (vc.currencyType.equals(SOFT)) {
                         prevSoftItem();
@@ -428,6 +429,8 @@ public class Preview extends AbstractDialog {
         btnNext.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnNext) {
             @Override
             public void clicked() {
+                System.out.println("next");
+                canClosePreview = false;
                 if (animFinished()) {
                     if (vc.currencyType.equals(SOFT)) {
                         nextSoftItem();
@@ -456,22 +459,22 @@ public class Preview extends AbstractDialog {
     }
 
     public void checkAndClose() {
-
         if (previewBoundingBox != null) {
-//            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
-//                    previewBoundingBox.y,
-//                    previewBoundingBox.width,
-//                    previewBoundingBox.height,
-//                    previewBoundingBox.toString());
+            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
+                    previewBoundingBox.y,
+                    previewBoundingBox.width,
+                    previewBoundingBox.height,
+                    previewBoundingBox.toString());
         }
         if (previewE != null) {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();
-            boolean isOutside = previewBoundingBox == null ||
-                    !previewBoundingBox.contains(v.x, v.y);
+            canClosePreview = previewBoundingBox == null || !previewBoundingBox.contains(v.x, v.y);
+            System.out.println("canClosePrev >>> " + canClosePreview );
+            System.out.println("canOpenPrev >>> " + canOpenPreview);
             float currentYpos = previewE.getComponent(TransformComponent.class).y;
             if (Gdx.input.isTouched() && currentYpos <= PREVIEW_Y || currentYpos >= 800) {
-                if (isPreviewOn && isOutside) {
+                if (isPreviewOn && canClosePreview) {
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
