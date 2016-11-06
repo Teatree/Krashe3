@@ -2,7 +2,6 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
@@ -36,7 +35,6 @@ public class ShopScreenScript implements IScript {
     public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
     public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
-    public static final String BTN_IMG_SHOP_ICON_LIB_2 = "btn_img_shop_icon_lib2";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
     public static final String HC_SHOP_SEC = "HC_shop_sec";
@@ -59,11 +57,10 @@ public class ShopScreenScript implements IScript {
     public static final int CAN_MOVE_RIGHT_BAG_X = 10;
 
     private static final String TITLE = "title";
-    private static final String BTN_FLIP_LEFT = "btn_scroll_left";
+    private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
-    private static final String BTN_FLIP_RIGHT = "btn_scroll_right";
+    private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
     private static final String DOTZ_LIB = "dotz_lib";
-    private static final String INACTIVE_FLIP_BTN_STATE = "Gray";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -73,6 +70,7 @@ public class ShopScreenScript implements IScript {
     public static Entity scoreLbl;
     public static Entity scoreLblsh;
     public static boolean isPreviewOn;
+    public static boolean canOpenPreview = true;
     public static int bagsZindex;
 
     public static List<ShopItem> allShopItems = new ArrayList<>();
@@ -142,8 +140,8 @@ public class ShopScreenScript implements IScript {
         createIconsForAllShopItems();
         createIconsForAllHCItems();
         initTabBtns();
-        initFlipLeftBtn();
-        initFlipRightBtn();
+        initScrollLeftBtn();
+        initScrollRightBtn();
         bagPosIdX = 0;
         bagPosIdY = 0;
         bagPageId = 0;
@@ -217,31 +215,10 @@ public class ShopScreenScript implements IScript {
 
             e.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(e) {
-
-                        @Override
-                        public void touchUp() {
-
-                            if (!ButtonComponent.skipDefaultLayersChange)
-                            super.touchUp();
-                        }
-
-                        @Override
-                        public void touchDown() {
-                            startScrolling();
-                            if (!ButtonComponent.skipDefaultLayersChange)
-                            super.touchDown();
-                        }
-
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn && !ButtonComponent.skipDefaultLayersChange) {
-
-                                if (touchZoneBtn.isTouched) {
-                                    boolean shouldScroll = tempGdx.x != Gdx.input.getX();
-                                    if (!shouldScroll) {
-                                        preview.showPreview(hc, true, false);
-                                    }
-                                }
+                            if (!isPreviewOn && canOpenPreview) {
+                                preview.showPreview(hc, true, false);
                             }
                         }
                     });
@@ -252,14 +229,7 @@ public class ShopScreenScript implements IScript {
     private void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allShopItems) {
-
-            Boolean secondBag = new Random().nextBoolean();
-            CompositeItemVO tempC;
-            if (secondBag) {
-                tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB);
-            } else {
-                tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB_2);
-            }
+            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(bagEntity);
@@ -289,57 +259,11 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(bagEntity) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn) {
+                            if (!isPreviewOn && canOpenPreview) {
                                 preview.showPreview(vc, true, false);
                             }
                         }
                     });
-
-                    Gdx.input.setInputProcessor(new GestureDetector(new GestureDetector.GestureListener() {
-
-                        @Override
-                        public boolean touchDown(float x, float y, int pointer, int button) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean tap(float x, float y, int count, int button) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean longPress(float x, float y) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean fling(float velocityX, float velocityY, int button) {
-                            flipPages();
-                            return true;
-                        }
-
-                        @Override
-                        public boolean pan(float x, float y, float deltaX, float deltaY) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean panStop(float x, float y, int pointer, int button) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean zoom(float initialDistance, float distance) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-                            return false;
-                        }
-                        public void pinchStop () {
-                        }
-                    }));
         }
     }
 
@@ -364,7 +288,7 @@ public class ShopScreenScript implements IScript {
 
     private Entity initSoftCurrencyShopItem(ShopItem vc) {
         if (!vc.bought) {
-        return getIconFromLib(ITEM_UNKNOWN_N);
+            return getIconFromLib(ITEM_UNKNOWN_N);
         } else {
             return getIconFromLib(vc.shopIcon);
         }
@@ -397,24 +321,19 @@ public class ShopScreenScript implements IScript {
             transitionIn();
             transitionOut();
 
-            manageScrolling();
+            if (touchZoneBtn.isTouched) {
+                startScrolling();
+                canOpenPreview = tempGdx.x == Gdx.input.getX();
+                if (!canOpenPreview) {
+                    swipePages();
+                }
+            }
             stopScrolling();
         }
-        updatePageFlipButtonsState();
+        updateScrollButtonsState();
         preview.checkAndClose();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
-    }
-
-    private void manageScrolling() {
-        if (touchZoneBtn.isTouched) {
-            startScrolling();
-            boolean shouldScroll = tempGdx.x != Gdx.input.getX();
-            if (shouldScroll) {
-                ButtonComponent.skipDefaultLayersChange = true;
-                flipPages();
-            }
-        }
     }
 
     private void transitionOut() {
@@ -441,9 +360,16 @@ public class ShopScreenScript implements IScript {
         if (bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos) {
             canScroll = true;
         }
+
+        for (Entity b : bags){
+            b.getComponent(TransformComponent.class).scaleX = 1;
+            b.getComponent(TransformComponent.class).scaleY = 1;
+            b.getComponent(TransformComponent.class).y =
+                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
+        }
     }
 
-    private void flipPages() {
+    private void swipePages() {
         ButtonComponent.skipDefaultLayersChange = true;
         if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
             scrollBagsOnePageLeft();
@@ -506,6 +432,7 @@ public class ShopScreenScript implements IScript {
         int vV = pageId+1;
         Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild("dotz_" + vV);
         pageDots.add(dotEntity);
+        System.out.println("pageID: " + pageId);
         dotEntity.getComponent(TintComponent.class).color.a = 1;
         dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
         dotEntity.getComponent(TransformComponent.class).y = 10;
@@ -524,8 +451,8 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void initFlipLeftBtn() {
-        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT);
+    private void initScrollLeftBtn() {
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT);
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
@@ -567,10 +494,10 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void initFlipRightBtn() {
-        Entity flipLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT);
-        flipLeftBtn.add(new ButtonComponent());
-        flipLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(flipLeftBtn) {
+    private void initScrollRightBtn() {
+        Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT);
+        scrollLeftBtn.add(new ButtonComponent());
+        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
             @Override
             public void clicked() {
                 scrollBagsOnePageRight();
@@ -609,28 +536,28 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void updatePageFlipButtonsState(){
+    private void updateScrollButtonsState(){
         if (canMoveBagsRight()) {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
         } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
         }
         if (canMoveBagsLeft()) {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
         } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_FLIP_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(INACTIVE_FLIP_BTN_STATE).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
         }
     }
 

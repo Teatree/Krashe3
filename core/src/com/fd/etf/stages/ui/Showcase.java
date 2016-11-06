@@ -294,6 +294,14 @@ public class Showcase {
             @Override
             public void clicked() {
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
+                    showCaseVanity.buyAndUse();
+                    GameStage.changedFlower2 = true;
+                    ResultScreenScript.isWasShowcase = true;
+                    resultScreen.initResultScreen();
+                    if (GameStage.shopScript != null) {
+                        GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
+                    }
+                    showCaseVanity = null;
                     isCelebrating = true;
                 }
             }
