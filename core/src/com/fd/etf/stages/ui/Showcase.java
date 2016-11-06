@@ -69,14 +69,14 @@ public class Showcase {
     }
 
     public void act(float delta) {
-        if(isActing) {
-        itemIcon.getComponent(ZIndexComponent.class).setZIndex(1000);
+        if (isActing) {
+            itemIcon.getComponent(ZIndexComponent.class).setZIndex(1000);
 //            System.out.println("ACT lbl_descE.getComponent(TintComponent.class).color.a: " + lbl_descE.getComponent(TintComponent.class).color.a);
 //            System.out.println("ACT lbl_collE.getComponent(TintComponent.class).color.a: " + lbl_collE.getComponent(TintComponent.class).color.a);
 //            System.out.println("SHOWCASE ACTING!" + " counter: " + counter);
             counter += 1;
             if (counter >= 70 && spotLightE != null) {
-                if (spotLightE.getComponent(TintComponent.class).color.a < 1 ) {
+                if (spotLightE.getComponent(TintComponent.class).color.a < 1) {
                     spotLightE.getComponent(TintComponent.class).color.a += 0.05f;
                 }
                 if (counter == 150) {
@@ -98,11 +98,11 @@ public class Showcase {
             }
         }
 
-        if(isCelebrating){
+        if (isCelebrating) {
 //            System.out.println("celebrating");
             celebratingCounter++;
 //            System.out.println("celebratiion counter: " + celebratingCounter);
-            if(celebratingCounter == 31) {
+            if (celebratingCounter == 31) {
                 System.out.println("Showcase starts starts");
                 EffectUtils.playYellowStarsParticleEffect(300, 300);
             }
@@ -115,7 +115,7 @@ public class Showcase {
                 showCaseVanity = null;
                 counter = 0;
 
-                if(lbl_priceE != null) {
+                if (lbl_priceE != null) {
                     backBtn.getComponent(TintComponent.class).color.a = 0;
                     buyBtn.getComponent(TintComponent.class).color.a = 0;
                     lbl_priceE.getComponent(TintComponent.class).color.a = 0;
@@ -125,8 +125,6 @@ public class Showcase {
                     spotLightE.getComponent(TintComponent.class).color.a = 0;
                     lbl_nameE.getComponent(TintComponent.class).color.a = 0;
                 }
-
-
             }
         }
     }
@@ -263,7 +261,7 @@ public class Showcase {
         backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
             @Override
             public void clicked() {
-                if(btn.getComponent(TintComponent.class).color.a >= 1) {
+                if (btn.getComponent(TintComponent.class).color.a >= 1) {
                     isActing = false;
                     ResultScreenScript.isWasShowcase = true;
                     resultScreen.initResultScreen();

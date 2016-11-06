@@ -279,15 +279,27 @@ public class Preview extends AbstractDialog {
             btnBuy.getComponent(TransformComponent.class).y = 5;
             lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+1);
             lbl_price.getComponent(ZIndexComponent.class).setZIndex(lbl_price_sh.getComponent(ZIndexComponent.class).getZIndex()+1);
-            coinzE.getComponent(ZIndexComponent.class).setZIndex(lbl_price.getComponent(ZIndexComponent.class).getZIndex()+1);
-
+            if (vc.currencyType.equals(HARD)){
+                coinzE.getComponent(TintComponent.class).color.a = 0;
+                lbl_price.getComponent(LabelComponent.class).text.append("$");
+                lbl_price_sh.getComponent(LabelComponent.class).text.append("$");
+            } else {
+                coinzE.getComponent(TintComponent.class).color.a = 1;
+                coinzE.getComponent(ZIndexComponent.class).setZIndex(lbl_price.getComponent(ZIndexComponent.class).getZIndex() + 1);
+            }
             // Finding the middle of the button to display price and coin icon
             // only works if width of text label is 1
             int wordCount = lbl_price.getComponent(LabelComponent.class).getText().length;
             int base = 332; // x pos
-            lbl_price_sh.getComponent(TransformComponent.class).x = base+15*wordCount;
-            lbl_price.getComponent(TransformComponent.class).x = base+15*wordCount;
-            coinzE.getComponent(TransformComponent.class).x = base+15*wordCount;
+            if (vc.currencyType.equals(SOFT)) {
+                lbl_price_sh.getComponent(TransformComponent.class).x = base + 15 * wordCount;
+                lbl_price.getComponent(TransformComponent.class).x = base + 15 * wordCount;
+                coinzE.getComponent(TransformComponent.class).x = base + 15 * wordCount;
+            } else {
+                lbl_price_sh.getComponent(TransformComponent.class).x = base + 20 * wordCount;
+                lbl_price.getComponent(TransformComponent.class).x = base + 20 * wordCount;
+//                coinzE.getComponent(TransformComponent.class).x = base + 20 * wordCount;
+            }
 
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());

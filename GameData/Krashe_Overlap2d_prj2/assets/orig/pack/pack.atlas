@@ -654,15 +654,6 @@ shopshadow
   rotate: false
   xy: 1950, 1725
   size: 7, 138
-  split: 1, 1, 0, 0
-  pad: 0, 0, 0, 0
-  orig: 7, 138
-  offset: 0, 0
-  index: -1
-shopshadow
-  rotate: false
-  xy: 1950, 1725
-  size: 7, 138
   orig: 7, 138
   offset: 0, 0
   index: -1
