@@ -364,8 +364,13 @@ public class ShopScreenScript implements IScript {
         for (Entity b : bags){
             b.getComponent(TransformComponent.class).scaleX = 1;
             b.getComponent(TransformComponent.class).scaleY = 1;
-            b.getComponent(TransformComponent.class).y =
-                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
+            if (            b.getComponent(TransformComponent.class).y !=
+                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y) {
+                b.getComponent(TransformComponent.class).y =
+                        ((ImageButtonListener) (b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
+                b.getComponent(TransformComponent.class).x -= b.getComponent(DimensionsComponent.class).width / 20;
+            }
+
         }
     }
 

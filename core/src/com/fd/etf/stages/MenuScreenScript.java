@@ -42,6 +42,7 @@ public class MenuScreenScript implements IScript {
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
+    private static final float RATE_APP_BTN_ALPHA = 0.8352941f;
 
     public boolean playServiceFlapIsOut = false;
     public boolean movingFlaps = false;
@@ -144,7 +145,7 @@ public class MenuScreenScript implements IScript {
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
         btnSettings.getComponent(TintComponent.class).color.a = 1;
         btnPlayServices.getComponent(TintComponent.class).color.a = 1;
-        rateAppBtn.getComponent(TintComponent.class).color.a = 1;
+        rateAppBtn.getComponent(TintComponent.class).color.a = RATE_APP_BTN_ALPHA;
         btnShop.getComponent(TintComponent.class).color.a = 1;
         btnGoals.getComponent(TintComponent.class).color.a = 1;
         btnFB.getComponent(TintComponent.class).color.a = 1;
