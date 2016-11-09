@@ -200,7 +200,6 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     public void setScene(String sceneName, Viewport viewport) {
-
         if (rootEntityByScene.get(sceneName) == null) {
             loadScene(sceneName, viewport);
             this.rootEntity = rootEntityByScene.get(sceneName);

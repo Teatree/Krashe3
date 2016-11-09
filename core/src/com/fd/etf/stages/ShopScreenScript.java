@@ -217,7 +217,7 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(e) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn && canOpenPreview) {
+                            if (!isPreviewOn) {
                                 preview.showPreview(hc, true, false);
                             }
                         }
@@ -259,7 +259,7 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(bagEntity) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn && canOpenPreview) {
+                            if (!isPreviewOn) {
                                 preview.showPreview(vc, true, false);
                             }
                         }
@@ -321,17 +321,17 @@ public class ShopScreenScript implements IScript {
             transitionIn();
             transitionOut();
 
-            startScrolling();
+//            startScrolling();
             if (touchZoneBtn.isTouched) {
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
-                System.out.print("temp >>" + tempGdx.x);
-                System.out.print(" gdx >>" + Gdx.input.getX());
-                System.out.println(" canopenPreview " + canOpenPreview);
-                if (!canOpenPreview) {
-                    swipePages();
-                }
+//                System.out.print("temp >>" + tempGdx.x);
+//                System.out.print(" gdx >>" + Gdx.input.getX());
+//                System.out.println(" canopenPreview " + canOpenPreview);
+//                if (!canOpenPreview) {
+//                    swipePages();
+//                }
             }
-            stopScrolling();
+//            stopScrolling();
         }
         updateScrollButtonsState();
         preview.checkAndClose();
@@ -362,18 +362,19 @@ public class ShopScreenScript implements IScript {
     private void stopScrolling() {
         if (bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos) {
             canScroll = true;
+            isGdxWritten = false;
         }
 
         for (Entity b : bags){
             b.getComponent(TransformComponent.class).scaleX = 1;
             b.getComponent(TransformComponent.class).scaleY = 1;
 
-            if (b.getComponent(TransformComponent.class).y !=
-                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y) {
-                b.getComponent(TransformComponent.class).y =
-                        ((ImageButtonListener) (b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
-                b.getComponent(TransformComponent.class).x -= b.getComponent(DimensionsComponent.class).width / 20;
-            }
+//            if (b.getComponent(TransformComponent.class).y !=
+//                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y) {
+//                b.getComponent(TransformComponent.class).y =
+//                        ((ImageButtonListener) (b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
+//                b.getComponent(TransformComponent.class).x -= b.getComponent(DimensionsComponent.class).width / 20;
+//            }
         }
     }
 
@@ -388,6 +389,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void startScrolling() {
+//        System.out.println("start scrolling & "  + isGdxWritten);
         if (!isGdxWritten) {
             tempGdx.x = Gdx.input.getX();
             isGdxWritten = true;
@@ -471,7 +473,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void scrollBagsOnePageLeft() {
-        if (canScroll && bags.get(0).getComponent(TransformComponent.class).x < 100) {
+        if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
             canScroll = false;
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
@@ -481,10 +483,10 @@ public class ShopScreenScript implements IScript {
                                 bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                 );
                 bag.add(a);
-                if(bag.getComponent(ButtonComponent.class).isTouched) {
-                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
-                    bag.getComponent(ButtonComponent.class).isTouched = false;
-                }
+//                if(bag.getComponent(ButtonComponent.class).isTouched) {
+//                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
+//                    bag.getComponent(ButtonComponent.class).isTouched = false;
+//                }
             }
             for (Entity icon : ShopScreenScript.itemIcons.values()) {
                 ActionComponent a = new ActionComponent();
@@ -514,7 +516,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void scrollBagsOnePageRight() {
-        if (canScroll && bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
+        if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
             canScroll = false;
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
@@ -524,10 +526,10 @@ public class ShopScreenScript implements IScript {
                                 bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                 );
                 bag.add(a);
-                if(bag.getComponent(ButtonComponent.class).isTouched) {
-                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
-                    bag.getComponent(ButtonComponent.class).isTouched = false;
-                }
+//                if(bag.getComponent(ButtonComponent.class).isTouched) {
+//                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
+//                    bag.getComponent(ButtonComponent.class).isTouched = false;
+//                }
             }
             for (Entity icon : ShopScreenScript.itemIcons.values()) {
                 ActionComponent a = new ActionComponent();
