@@ -5,8 +5,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
@@ -50,12 +52,14 @@ public class DebugSystem extends IteratingSystem {
                         e.getComponent(DebugComponent.class).boundingBox.width,
                         e.getComponent(DebugComponent.class).boundingBox.height,
                         e.toString());
+//                System.out.println("E: " + e + " bounding Bx!");
             } else {
                 sceneLoader.renderer.drawDebugRect(e.getComponent(TransformComponent.class).x,
                         e.getComponent(TransformComponent.class).y,
                         e.getComponent(DimensionsComponent.class).width,
                         e.getComponent(DimensionsComponent.class).height,
                         e.toString());
+//                System.out.println("E: " + e + " TRANSFORM + DIMENSION!");
             }
         }
     }

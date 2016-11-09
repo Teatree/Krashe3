@@ -58,11 +58,13 @@ public class GameStage extends Stage {
 //            Main.mainController.showLaunchAd(new Runnable() {
 //                @Override
 //                public void run() {
-                    initMenu();
+//                    initMenu();
+                    initGame();
 //                }
 //            });
         } else {
-            initMenu();
+//            initMenu();
+            initGame();
         }
 
     }
@@ -83,8 +85,9 @@ public class GameStage extends Stage {
             gameScript.reset();
         } else {
             sceneLoader.setScene(MAIN_SCENE, viewport);
-            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             if (justCreated) {
+                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+                sceneLoader.engine.addSystem(sceneLoader.renderer);
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 root.addScript(gameScript);
                 gameScript.initButtons();

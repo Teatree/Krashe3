@@ -69,6 +69,7 @@ public class Overlap2dRenderer extends IteratingSystem {
         batch.begin();
         drawRecursively(entity, 1f);
 
+        sr.setProjectionMatrix(camera.combined);
         sr.begin(ShapeRenderer.ShapeType.Line);
 
         for (DebugRectangle dp : debugRects) {
