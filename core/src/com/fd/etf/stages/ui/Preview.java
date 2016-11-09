@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -85,6 +86,7 @@ public class Preview extends AbstractDialog {
         previewE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), previewE, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(previewE);
+        previewE.add(new DebugComponent(previewBoundingBox));
     }
 
     public Preview() {
@@ -471,13 +473,15 @@ public class Preview extends AbstractDialog {
     }
 
     public void checkAndClose() {
-        if (previewBoundingBox != null) {
-            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
-                    previewBoundingBox.y,
-                    previewBoundingBox.width,
-                    previewBoundingBox.height,
-                    previewBoundingBox.toString());
-        }
+//        sceneLoader.renderer.drawDebugRect(100, 100, 100, 100, "w");
+//        if (previewBoundingBox != null) {
+//            GameStage.sceneLoader.renderer.drawDebugRect(previewBoundingBox.x,
+//                    previewBoundingBox.y,
+//                    previewBoundingBox.width,
+//                    previewBoundingBox.height,
+//                    previewBoundingBox.toString());
+//        }
+
         if (previewE != null) {
             updateTagIcon();
             Vector2 v = getTouchCoordinates();

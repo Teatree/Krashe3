@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
+import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.entity.componets.ParticleLifespanComponent;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;

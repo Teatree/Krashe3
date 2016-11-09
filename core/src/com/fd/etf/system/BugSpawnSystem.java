@@ -3,6 +3,7 @@ package com.fd.etf.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.fd.etf.entity.componets.BugComponent;
+import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -141,6 +142,8 @@ public class BugSpawnSystem extends EntitySystem {
         bc.startYPosition = tc.y;
         bugEntity.getComponent(TransformComponent.class).x = tc.x;
         bugEntity.getComponent(TransformComponent.class).y = tc.y;
+
+        bugEntity.add(new DebugComponent(bugEntity.getComponent(BugComponent.class).boundsRect));
     }
 
     @Override

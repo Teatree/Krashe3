@@ -207,6 +207,7 @@ public class ETFSceneLoader extends SceneLoader {
         } else {
             this.rootEntity = rootEntityByScene.get(sceneName);
             this.engine = engineByScene.get(sceneName);
+            this.engine.addSystem(renderer);
         }
     }
 

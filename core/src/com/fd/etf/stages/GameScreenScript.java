@@ -3,6 +3,7 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.Main;
@@ -14,12 +15,14 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
+import com.fd.etf.utils.DebugSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
@@ -31,6 +34,7 @@ import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ShopScreenScript.allShopItems;
+import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
@@ -249,6 +253,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
+        sceneLoader.getEngine().addSystem(new DebugSystem());
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         sceneLoader.getEngine().addSystem(new LeafsSystem());
         sceneLoader.getEngine().addSystem(new ButterflySystem());
@@ -314,8 +319,8 @@ public class GameScreenScript implements IScript {
         leafsEntity.add(tcL);
 
         LeafsComponent lc = new LeafsComponent();
-
         leafsEntity.add(lc);
+        leafsEntity.add(new DebugComponent());
     }
 
     private void initFlower() {
@@ -336,9 +341,10 @@ public class GameScreenScript implements IScript {
 
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
+        flowerEntity.add(new DebugComponent(flowerEntity.getComponent(FlowerPublicComponent.class).boundsRect));
     }
 
-    public void hideCurrentPet(){
+    public void hideCurrentPet() {
         if (gameScript.fpc.currentPet != null) {
 //            gameScript.fpc.currentPet.disable();
             if (petE != null) {
@@ -374,6 +380,7 @@ public class GameScreenScript implements IScript {
                 fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
                 petE.add(fpc.currentPet);
+                petE.add(new DebugComponent());
             } else {
                 if (petE != null && !fpc.currentPet.enabled) {
                     if (fpc.currentPet.petCannon != null) {
@@ -397,18 +404,6 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-
-        Rectangle mPos = new Rectangle();
-        for (Entity e : gameItem.getEntity().getComponent(NodeComponent.class).children){
-            mPos.setX(e.getComponent(TransformComponent.class).x);
-            mPos.setY(e.getComponent(TransformComponent.class).y);
-            mPos.setWidth(e.getComponent(DimensionsComponent.class).width);
-            mPos.setHeight(e.getComponent(DimensionsComponent.class).height);
-            if (mPos.contains(new Vector2(Gdx.input.getX(), Gdx.input.getY()) {
-                GameStage.sceneLoader.renderer.drawDebugRect();
-            }
-        }
-
         if (blowUpAllBugs) {
             blowUpCounter--;
         }
@@ -523,12 +518,14 @@ public class GameScreenScript implements IScript {
     private void initCocoon() {
 //        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
+
         if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
             CocoonComponent cocoonComponentc = new CocoonComponent();
             cocoonEntity.add(cocoonComponentc);
         }
         cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.DEAD;
         cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
+        cocoonEntity.add(new DebugComponent(cocoonEntity.getComponent(CocoonComponent.class).boundsRect));
 
         Entity butEntity = gameItem.getChild(CocoonSystem.BUTTERFLY_ANI).getEntity();
         if (butEntity.getComponent(ButterflyComponent.class) == null) {
@@ -536,6 +533,7 @@ public class GameScreenScript implements IScript {
             butEntity.add(dc);
         }
         butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
+        butEntity.add(new DebugComponent(butEntity.getComponent(ButterflyComponent.class).boundsRect));
     }
 
     private void initUmbrella() {
@@ -555,6 +553,7 @@ public class GameScreenScript implements IScript {
             UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
             umbrellaComponent.setToSpawningState();
             umbrellaEntity.add(umbrellaComponent);
+
         } else {
             umbrellaEntity.getComponent(UmbrellaComponent.class).setToSpawningState();
         }
@@ -563,6 +562,7 @@ public class GameScreenScript implements IScript {
         umbrellaEntity.getComponent(TransformComponent.class).y = y;
 
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        umbrellaEntity.add(new DebugComponent(umbrellaEntity.getComponent(UmbrellaComponent.class).boundsRect));
     }
 
     private void spawnCocoon() {

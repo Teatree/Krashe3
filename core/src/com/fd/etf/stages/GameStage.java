@@ -55,12 +55,12 @@ public class GameStage extends Stage {
         justCreated = true;
 
         if (gameScript.fpc.settings.shouldShowLaunchAd()) {
-            Main.mainController.showLaunchAd(new Runnable() {
-                @Override
-                public void run() {
+//            Main.mainController.showLaunchAd(new Runnable() {
+//                @Override
+//                public void run() {
                     initMenu();
-                }
-            });
+//                }
+//            });
         } else {
             initMenu();
         }
@@ -83,8 +83,8 @@ public class GameStage extends Stage {
             gameScript.reset();
         } else {
             sceneLoader.setScene(MAIN_SCENE, viewport);
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             if (justCreated) {
-                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 root.addScript(gameScript);
                 gameScript.initButtons();

@@ -178,5 +178,8 @@ public class PetComponent extends ShopItem implements Component {
         CompositeItemVO tempItemCannon = GameStage.sceneLoader.loadVoFromLibrary(petCannonName);
         petCannon = GameStage.sceneLoader.entityFactory.createSPRITERentity(GameStage.sceneLoader.getRoot(), tempItemCannon);
         GameStage.sceneLoader.getEngine().addEntity(petCannon);
+
+        petCannon.add(new DebugComponent());
+        petCannon.add(new DebugComponent());
     }
 }

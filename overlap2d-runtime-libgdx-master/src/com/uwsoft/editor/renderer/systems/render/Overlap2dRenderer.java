@@ -23,226 +23,224 @@ import java.util.List;
 
 
 public class Overlap2dRenderer extends IteratingSystem {
-	private final float TIME_STEP = 1f/60;
-	
-	private ComponentMapper<ViewPortComponent> viewPortMapper = ComponentMapper.getFor(ViewPortComponent.class);
-	private ComponentMapper<CompositeTransformComponent> compositeTransformMapper = ComponentMapper.getFor(CompositeTransformComponent.class);
-	private ComponentMapper<NodeComponent> nodeMapper = ComponentMapper.getFor(NodeComponent.class);
-	private ComponentMapper<ParentNodeComponent> parentNodeMapper = ComponentMapper.getFor(ParentNodeComponent.class);
-	private ComponentMapper<TransformComponent> transformMapper = ComponentMapper.getFor(TransformComponent.class);
-	private ComponentMapper<MainItemComponent> mainItemComponentMapper = ComponentMapper.getFor(MainItemComponent.class);
-	
-	private DrawableLogicMapper drawableLogicMapper;
-	private RayHandler rayHandler;
-	private World world;
-	private boolean isPhysicsOn = true;
-	
-	private float accumulator = 0;
-	//private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    private final float TIME_STEP = 1f / 60;
 
-	public static float timeRunning = 0;
-	
-	public Batch batch;
-	public ShapeRenderer sr;
+    private ComponentMapper<ViewPortComponent> viewPortMapper = ComponentMapper.getFor(ViewPortComponent.class);
+    private ComponentMapper<CompositeTransformComponent> compositeTransformMapper = ComponentMapper.getFor(CompositeTransformComponent.class);
+    private ComponentMapper<NodeComponent> nodeMapper = ComponentMapper.getFor(NodeComponent.class);
+    private ComponentMapper<ParentNodeComponent> parentNodeMapper = ComponentMapper.getFor(ParentNodeComponent.class);
+    private ComponentMapper<TransformComponent> transformMapper = ComponentMapper.getFor(TransformComponent.class);
+    private ComponentMapper<MainItemComponent> mainItemComponentMapper = ComponentMapper.getFor(MainItemComponent.class);
 
-	private List debugRects = new ArrayList();
+    private DrawableLogicMapper drawableLogicMapper;
+    private RayHandler rayHandler;
+    private World world;
+    private boolean isPhysicsOn = true;
 
-	public Overlap2dRenderer(Batch batch) {
-		super(Family.all(ViewPortComponent.class).get());
-		this.batch = batch;
-		sr = new ShapeRenderer();
-		drawableLogicMapper = new DrawableLogicMapper();
-	}
+    private float accumulator = 0;
+    //private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-	public void addDrawableType(IExternalItemType itemType) {
-		drawableLogicMapper.addDrawableToMap(itemType.getTypeId(), itemType.getDrawable());
-	}
+    public static float timeRunning = 0;
 
-	@Override
-	public void processEntity(Entity entity, float deltaTime) {
-		timeRunning+=deltaTime;
+    public Batch batch;
+    public ShapeRenderer sr;
 
-		ViewPortComponent ViewPortComponent = viewPortMapper.get(entity);
-		Camera camera = ViewPortComponent.viewPort.getCamera();
-		camera.update();
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		drawRecursively(entity, 1f);
+    public List<DebugRectangle> debugRects = new ArrayList();
 
-//		 This is the renderer
-		sr.begin(ShapeRenderer.ShapeType.Line);
-		for(Object dp: debugRects){
-			DebugRectangle d = (DebugRectangle) dp;
-			sr.rect(d.dx,d.dy,d.dw,d.dh);
-		}
-		sr.end();
+    public Overlap2dRenderer(Batch batch) {
+        super(Family.all(ViewPortComponent.class).get());
+        this.batch = batch;
+        sr = new ShapeRenderer();
+        drawableLogicMapper = new DrawableLogicMapper();
+    }
 
-		batch.end();
-		debugRects = new ArrayList();
+    public void addDrawableType(IExternalItemType itemType) {
+        drawableLogicMapper.addDrawableToMap(itemType.getTypeId(), itemType.getDrawable());
+    }
 
-		
-		//TODO kinda not cool (this should be done in separate lights renderer maybe?
-		if(rayHandler != null) {
-			rayHandler.setCulling(false);
-			OrthographicCamera orthoCamera = (OrthographicCamera) camera;
-			camera.combined.scl(1f/PhysicsBodyLoader.getScale());
-			rayHandler.setCombinedMatrix(orthoCamera); 
-			rayHandler.updateAndRender();
-		}
-		
-		if(world != null && isPhysicsOn) {
-			doPhysicsStep(deltaTime);
+    @Override
+    public void processEntity(Entity entity, float deltaTime) {
+        timeRunning += deltaTime;
+
+        ViewPortComponent ViewPortComponent = viewPortMapper.get(entity);
+        Camera camera = ViewPortComponent.viewPort.getCamera();
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        drawRecursively(entity, 1f);
+
+        sr.begin(ShapeRenderer.ShapeType.Line);
+
+        for (DebugRectangle dp : debugRects) {
+            sr.rect(dp.dx, dp.dy, dp.dw, dp.dh);
+        }
+        sr.end();
+        batch.end();
+
+        //TODO kinda not cool (this should be done in separate lights renderer maybe?
+        if (rayHandler != null) {
+            rayHandler.setCulling(false);
+            OrthographicCamera orthoCamera = (OrthographicCamera) camera;
+            camera.combined.scl(1f / PhysicsBodyLoader.getScale());
+            rayHandler.setCombinedMatrix(orthoCamera);
+            rayHandler.updateAndRender();
         }
 
-		//debugRenderer.render(world, camera.combined);
-		//TODO Spine rendere thing
-	}
+//        if (world != null && isPhysicsOn) {
+//            doPhysicsStep(deltaTime);
+//        }
 
-	private void doPhysicsStep(float deltaTime) {
-	    // fixed time step
-	    // max frame time to avoid spiral of death (on slow devices)
-	    float frameTime = Math.min(deltaTime, 0.25f);
-	    accumulator += frameTime;
-	    while (accumulator >= TIME_STEP) {
-	        world.step(TIME_STEP, 6, 2);
-	        accumulator -= TIME_STEP;
-	    }
-	}
+        debugRects.clear();
+    }
 
-	private void drawRecursively(Entity rootEntity, float parentAlpha) {
+    private void doPhysicsStep(float deltaTime) {
+        // fixed time step
+        // max frame time to avoid spiral of death (on slow devices)
+        float frameTime = Math.min(deltaTime, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6, 2);
+            accumulator -= TIME_STEP;
+        }
+    }
 
-		
-		//currentComposite = rootEntity;
-		CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
-		TransformComponent transform = transformMapper.get(rootEntity);
-		
-		
-		if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX !=1 || transform.scaleY !=1){
-			computeTransform(rootEntity);
-			applyTransform(rootEntity, batch);
-		}
+    private void drawRecursively(Entity rootEntity, float parentAlpha) {
+
+
+        //currentComposite = rootEntity;
+        CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
+        TransformComponent transform = transformMapper.get(rootEntity);
+
+
+        if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX != 1 || transform.scaleY != 1) {
+            computeTransform(rootEntity);
+            applyTransform(rootEntity, batch);
+        }
         TintComponent tintComponent = ComponentRetriever.get(rootEntity, TintComponent.class);
         parentAlpha *= tintComponent.color.a;
 
-		drawChildren(rootEntity, batch, curCompositeTransformComponent, parentAlpha);
-		if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX !=1 || transform.scaleY !=1)
-			resetTransform(rootEntity, batch);
-	}
+        drawChildren(rootEntity, batch, curCompositeTransformComponent, parentAlpha);
+        if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX != 1 || transform.scaleY != 1)
+            resetTransform(rootEntity, batch);
+    }
 
-	private void drawChildren(Entity rootEntity, Batch batch, CompositeTransformComponent curCompositeTransformComponent, float parentAlpha) {
-		NodeComponent nodeComponent = nodeMapper.get(rootEntity);
-		Entity[] children = nodeComponent.children.begin();
-		TransformComponent transform = transformMapper.get(rootEntity);
-		if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX !=1 || transform.scaleY !=1) {
-			for (int i = 0, n = nodeComponent.children.size; i < n; i++) {
-				Entity child = children[i];
+    private void drawChildren(Entity rootEntity, Batch batch, CompositeTransformComponent curCompositeTransformComponent, float parentAlpha) {
+        NodeComponent nodeComponent = nodeMapper.get(rootEntity);
+        Entity[] children = nodeComponent.children.begin();
+        TransformComponent transform = transformMapper.get(rootEntity);
+        if (curCompositeTransformComponent.transform || transform.rotation != 0 || transform.scaleX != 1 || transform.scaleY != 1) {
+            for (int i = 0, n = nodeComponent.children.size; i < n; i++) {
+                Entity child = children[i];
 
-				LayerMapComponent rootLayers = ComponentRetriever.get(rootEntity, LayerMapComponent.class);
-				ZIndexComponent childZIndexComponent = ComponentRetriever.get(child, ZIndexComponent.class);
+                LayerMapComponent rootLayers = ComponentRetriever.get(rootEntity, LayerMapComponent.class);
+                ZIndexComponent childZIndexComponent = ComponentRetriever.get(child, ZIndexComponent.class);
 
-				if(!rootLayers.isVisible(childZIndexComponent.layerName)) {
-					continue;
-				}
+                if (!rootLayers.isVisible(childZIndexComponent.layerName)) {
+                    continue;
+                }
 
-				MainItemComponent childMainItemComponent = mainItemComponentMapper.get(child);
-				if(!childMainItemComponent.visible){
-					continue;
-				}
-				
-				int entityType = childMainItemComponent.entityType;
+                MainItemComponent childMainItemComponent = mainItemComponentMapper.get(child);
+                if (!childMainItemComponent.visible) {
+                    continue;
+                }
 
-				NodeComponent childNodeComponent = nodeMapper.get(child);
-				
-				
-				if(childNodeComponent ==null){
-					//Find logic from the mapper and draw it
-					drawableLogicMapper.getDrawable(entityType).draw(batch, child, parentAlpha);
-				}else{
-					//Step into Composite
-					drawRecursively(child, parentAlpha);
-				}
-			}
-		} else {
-			// No transform for this group, offset each child.
-			TransformComponent compositeTransform = transformMapper.get(rootEntity);
-			
-			float offsetX = compositeTransform.x, offsetY = compositeTransform.y;
-			
-			if(viewPortMapper.has(rootEntity)){
-				offsetX = 0;
-				offsetY = 0;
-			}
-			
-			for (int i = 0, n = nodeComponent.children.size; i < n; i++) {
-				Entity child = children[i];
+                int entityType = childMainItemComponent.entityType;
 
-				LayerMapComponent rootLayers = ComponentRetriever.get(rootEntity, LayerMapComponent.class);
-				ZIndexComponent childZIndexComponent = ComponentRetriever.get(child, ZIndexComponent.class);
+                NodeComponent childNodeComponent = nodeMapper.get(child);
 
-				if(!rootLayers.isVisible(childZIndexComponent.layerName)) {
-					continue;
-				}
 
-				MainItemComponent childMainItemComponent = mainItemComponentMapper.get(child);
-				if(!childMainItemComponent.visible){
-					continue;
-				}
+                if (childNodeComponent == null) {
+                    //Find logic from the mapper and draw it
+                    drawableLogicMapper.getDrawable(entityType).draw(batch, child, parentAlpha);
+                } else {
+                    //Step into Composite
+                    drawRecursively(child, parentAlpha);
+                }
+            }
+        } else {
+            // No transform for this group, offset each child.
+            TransformComponent compositeTransform = transformMapper.get(rootEntity);
 
-				TransformComponent childTransformComponent = transformMapper.get(child);
-				float cx = childTransformComponent.x, cy = childTransformComponent.y;
-				childTransformComponent.x = cx + offsetX;
-				childTransformComponent.y = cy + offsetY;
-				
-				NodeComponent childNodeComponent = nodeMapper.get(child);
-				int entityType = mainItemComponentMapper.get(child).entityType;
-				
-				if(childNodeComponent ==null){
-					//Find the logic from mapper and draw it
-					drawableLogicMapper.getDrawable(entityType).draw(batch, child, parentAlpha);
-				}else{
-					//Step into Composite
-					drawRecursively(child, parentAlpha);
-				}
-				childTransformComponent.x = cx;
-				childTransformComponent.y = cy;
-			}
-		}
-		nodeComponent.children.end();
-	}
+            float offsetX = compositeTransform.x, offsetY = compositeTransform.y;
 
-	/** Returns the transform for this group's coordinate system. 
-	 * @param rootEntity */
-	protected Matrix4 computeTransform (Entity rootEntity) {
-		CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
-		//NodeComponent nodeComponent = nodeMapper.get(rootEntity);
-		ParentNodeComponent parentNodeComponent = parentNodeMapper.get(rootEntity);
-		TransformComponent curTransform = transformMapper.get(rootEntity);
-		Affine2 worldTransform = curCompositeTransformComponent.worldTransform;
-		//TODO origin thing
-		float originX = 0;
-		float originY = 0;
-		float x = curTransform.x;
-		float y = curTransform.y;
-		float rotation = curTransform.rotation;
-		float scaleX = curTransform.scaleX;
-		float scaleY = curTransform.scaleY;
+            if (viewPortMapper.has(rootEntity)) {
+                offsetX = 0;
+                offsetY = 0;
+            }
 
-		worldTransform.setToTrnRotScl(x + originX, y + originY, rotation, scaleX, scaleY);
-		if (originX != 0 || originY != 0) worldTransform.translate(-originX, -originY);
+            for (int i = 0, n = nodeComponent.children.size; i < n; i++) {
+                Entity child = children[i];
 
-		// Find the first parent that transforms.
-		
-		CompositeTransformComponent parentTransformComponent = null;
-		//NodeComponent parentNodeComponent;
-		
-		Entity parentEntity = null;
-		if(parentNodeComponent != null){
-			parentEntity = parentNodeComponent.parentEntity;
-		}
+                LayerMapComponent rootLayers = ComponentRetriever.get(rootEntity, LayerMapComponent.class);
+                ZIndexComponent childZIndexComponent = ComponentRetriever.get(child, ZIndexComponent.class);
+
+                if (!rootLayers.isVisible(childZIndexComponent.layerName)) {
+                    continue;
+                }
+
+                MainItemComponent childMainItemComponent = mainItemComponentMapper.get(child);
+                if (!childMainItemComponent.visible) {
+                    continue;
+                }
+
+                TransformComponent childTransformComponent = transformMapper.get(child);
+                float cx = childTransformComponent.x, cy = childTransformComponent.y;
+                childTransformComponent.x = cx + offsetX;
+                childTransformComponent.y = cy + offsetY;
+
+                NodeComponent childNodeComponent = nodeMapper.get(child);
+                int entityType = mainItemComponentMapper.get(child).entityType;
+
+                if (childNodeComponent == null) {
+                    //Find the logic from mapper and draw it
+                    drawableLogicMapper.getDrawable(entityType).draw(batch, child, parentAlpha);
+                } else {
+                    //Step into Composite
+                    drawRecursively(child, parentAlpha);
+                }
+                childTransformComponent.x = cx;
+                childTransformComponent.y = cy;
+            }
+        }
+        nodeComponent.children.end();
+    }
+
+    /**
+     * Returns the transform for this group's coordinate system.
+     *
+     * @param rootEntity
+     */
+    protected Matrix4 computeTransform(Entity rootEntity) {
+        CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
+        //NodeComponent nodeComponent = nodeMapper.get(rootEntity);
+        ParentNodeComponent parentNodeComponent = parentNodeMapper.get(rootEntity);
+        TransformComponent curTransform = transformMapper.get(rootEntity);
+        Affine2 worldTransform = curCompositeTransformComponent.worldTransform;
+        //TODO origin thing
+        float originX = 0;
+        float originY = 0;
+        float x = curTransform.x;
+        float y = curTransform.y;
+        float rotation = curTransform.rotation;
+        float scaleX = curTransform.scaleX;
+        float scaleY = curTransform.scaleY;
+
+        worldTransform.setToTrnRotScl(x + originX, y + originY, rotation, scaleX, scaleY);
+        if (originX != 0 || originY != 0) worldTransform.translate(-originX, -originY);
+
+        // Find the first parent that transforms.
+
+        CompositeTransformComponent parentTransformComponent = null;
+        //NodeComponent parentNodeComponent;
+
+        Entity parentEntity = null;
+        if (parentNodeComponent != null) {
+            parentEntity = parentNodeComponent.parentEntity;
+        }
 //		if (parentEntity != null){
 //			
 //		}
-		
+
 //		while (parentEntity != null) {
 //			parentNodeComponent = nodeMapper.get(parentEntity);
 //			if (parentTransformComponent.transform) break;
@@ -251,83 +249,83 @@ public class Overlap2dRenderer extends IteratingSystem {
 //			parentTransformComponent = compositeTransformMapper.get(parentEntity);
 //			
 //		}
-		
-		if (parentEntity != null){
-			parentTransformComponent = compositeTransformMapper.get(parentEntity);
-			worldTransform.preMul(parentTransformComponent.worldTransform);
-			//MainItemComponent main = parentEntity.getComponent(MainItemComponent.class);
-			//System.out.println("NAME " + main.itemIdentifier);
-		}
 
-		curCompositeTransformComponent.computedTransform.set(worldTransform);
-		return curCompositeTransformComponent.computedTransform;
-	}
+        if (parentEntity != null) {
+            parentTransformComponent = compositeTransformMapper.get(parentEntity);
+            worldTransform.preMul(parentTransformComponent.worldTransform);
+            //MainItemComponent main = parentEntity.getComponent(MainItemComponent.class);
+            //System.out.println("NAME " + main.itemIdentifier);
+        }
 
-	protected void applyTransform (Entity rootEntity, Batch batch) {
-		CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
-		curCompositeTransformComponent.oldTransform.set(batch.getTransformMatrix());
-		batch.setTransformMatrix(curCompositeTransformComponent.computedTransform);
-	}
+        curCompositeTransformComponent.computedTransform.set(worldTransform);
+        return curCompositeTransformComponent.computedTransform;
+    }
 
-	protected void resetTransform (Entity rootEntity, Batch batch) {
-		CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
-		batch.setTransformMatrix(curCompositeTransformComponent.oldTransform);
-	}
-	
-	public void setRayHandler(RayHandler rayHandler){
-		this.rayHandler = rayHandler;
-	}
+    protected void applyTransform(Entity rootEntity, Batch batch) {
+        CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
+        curCompositeTransformComponent.oldTransform.set(batch.getTransformMatrix());
+        batch.setTransformMatrix(curCompositeTransformComponent.computedTransform);
+    }
 
-	public void setBox2dWorld(World world) {
-		this.world = world;
-	}
-	
-	public void setPhysicsOn(boolean isPhysicsOn) {
-		this.isPhysicsOn = isPhysicsOn;
-	}
+    protected void resetTransform(Entity rootEntity, Batch batch) {
+        CompositeTransformComponent curCompositeTransformComponent = compositeTransformMapper.get(rootEntity);
+        batch.setTransformMatrix(curCompositeTransformComponent.oldTransform);
+    }
+
+    public void setRayHandler(RayHandler rayHandler) {
+        this.rayHandler = rayHandler;
+    }
+
+    public void setBox2dWorld(World world) {
+        this.world = world;
+    }
+
+    public void setPhysicsOn(boolean isPhysicsOn) {
+        this.isPhysicsOn = isPhysicsOn;
+    }
 
     public Batch getBatch() {
         return batch;
     }
 
-	public void drawDebugRect(float x, float y, float w, float h, String e){
-		debugRects.add(new DebugRectangle(x,y,w,h,e));
-	}
+    public void drawDebugRect(float x, float y, float w, float h, String e) {
+        debugRects.add(new DebugRectangle(x, y, w, h, e));
+    }
 
-	public class DebugRectangle{
-		public float dx;
-		public float dy;
-		public float dw;
-		public float dh;
+    public static class DebugRectangle {
+        public float dx;
+        public float dy;
+        public float dw;
+        public float dh;
 
-		String entity;
+        String entity;
 
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-			DebugRectangle that = (DebugRectangle) o;
+            DebugRectangle that = (DebugRectangle) o;
 
-			return entity.equals(that.entity);
+            return entity.equals(that.entity);
 
-		}
+        }
 
-		@Override
-		public int hashCode() {
-			return entity.hashCode();
-		}
+        @Override
+        public int hashCode() {
+            return entity.hashCode();
+        }
 
-		public DebugRectangle(float x, float y, float width, float height, String entity) {
-			this.entity = entity;
+        public DebugRectangle(float x, float y, float width, float height, String entity) {
+            this.entity = entity;
 
-			dx = x;
-			dy = y;
-			dw = width;
-			dh = height;
-		}
+            dx = x;
+            dy = y;
+            dw = width;
+            dh = height;
+        }
 
-	}
+    }
 }
 
 

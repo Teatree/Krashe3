@@ -16,6 +16,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.GameStage.gameScript;
+import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 

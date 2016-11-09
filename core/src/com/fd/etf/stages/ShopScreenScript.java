@@ -13,6 +13,7 @@ import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.fd.etf.stages.ui.Preview;
 import com.fd.etf.system.ParticleLifespanSystem;
+import com.fd.etf.utils.DebugSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -115,6 +116,7 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
         preview = new Preview();
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+        GameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
 
         // Dima's fun house
         curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();
@@ -321,6 +323,7 @@ public class ShopScreenScript implements IScript {
             transitionIn();
             transitionOut();
 
+
 //            startScrolling();
             if (touchZoneBtn.isTouched) {
                 canOpenPreview = tempGdx.x == Gdx.input.getX();
@@ -442,7 +445,6 @@ public class ShopScreenScript implements IScript {
         int vV = pageId+1;
         Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild("dotz_" + vV);
         pageDots.add(dotEntity);
-        System.out.println("pageID: " + pageId);
         dotEntity.getComponent(TintComponent.class).color.a = 1;
         dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
         dotEntity.getComponent(TransformComponent.class).y = 10;
