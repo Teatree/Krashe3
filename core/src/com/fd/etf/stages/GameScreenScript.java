@@ -3,6 +3,8 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -12,9 +14,7 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -397,6 +397,18 @@ public class GameScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+
+        Rectangle mPos = new Rectangle();
+        for (Entity e : gameItem.getEntity().getComponent(NodeComponent.class).children){
+            mPos.setX(e.getComponent(TransformComponent.class).x);
+            mPos.setY(e.getComponent(TransformComponent.class).y);
+            mPos.setWidth(e.getComponent(DimensionsComponent.class).width);
+            mPos.setHeight(e.getComponent(DimensionsComponent.class).height);
+            if (mPos.contains(new Vector2(Gdx.input.getX(), Gdx.input.getY()) {
+                GameStage.sceneLoader.renderer.drawDebugRect();
+            }
+        }
+
         if (blowUpAllBugs) {
             blowUpCounter--;
         }
