@@ -138,6 +138,8 @@ public class BugSystem extends IteratingSystem {
 
         switch (bugComponent.type) {
             case SIMPLE:
+                bugComponent.boundsRect.setHeight(70);
+                bugComponent.boundsRect.setY(transformComponent.y + 90);
                 moveSimple(deltaTime, transformComponent, bugComponent);
                 break;
             case DRUNK:
@@ -147,6 +149,7 @@ public class BugSystem extends IteratingSystem {
                 moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
                 break;
             case BEE:
+                bugComponent.boundsRect.setHeight(70);
                 moveSimple(deltaTime, transformComponent, bugComponent);
                 break;
             case QUEENBEE:

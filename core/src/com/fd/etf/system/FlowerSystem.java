@@ -44,8 +44,8 @@ public class FlowerSystem extends IteratingSystem {
     public void updateRect(TransformComponent tc) {
         gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
         gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
-        gameScript.fpc.boundsRect.width = 200 * tc.scaleX;
-        gameScript.fpc.boundsRect.height = 200 * tc.scaleY;
+        gameScript.fpc.boundsRect.width = 160 * tc.scaleX;
+        gameScript.fpc.boundsRect.height = 180 * tc.scaleY;
         if (state.equals(IDLE) || state.equals(IDLE_BITE)) {
             gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
             gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;

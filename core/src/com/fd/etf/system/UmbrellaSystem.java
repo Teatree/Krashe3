@@ -176,8 +176,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
-        uc.boundsRect.x = (int) tc.x;
-        uc.boundsRect.y = (int) tc.y;
+        uc.boundsRect.x = (int) tc.x - 30;
+        uc.boundsRect.y = (int) tc.y - 30;
         uc.boundsRect.width = (int) dc.width * tc.scaleX;
         uc.boundsRect.height = (int) dc.height * tc.scaleY;
     }
