@@ -59,12 +59,10 @@ public class GameStage extends Stage {
 //                @Override
 //                public void run() {
                     initMenu();
-//                    initGame();
 //                }
 //            });
         } else {
             initMenu();
-//            initGame();
         }
 
     }

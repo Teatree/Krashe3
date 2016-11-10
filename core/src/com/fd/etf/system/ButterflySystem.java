@@ -126,6 +126,9 @@ public class ButterflySystem extends IteratingSystem {
 
     private boolean checkCollision(ButterflyComponent bc) {
         checkGoal(bc);
+//        System.out.print("bounds >> " + bc.boundsRect);
+//        System.out.print(" || flower >> " + gameScript.fpc.boundsRect);
+//        System.out.println(" || overlap >>> " + gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect) );
         return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 

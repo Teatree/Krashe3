@@ -68,7 +68,7 @@ public class BugSystem extends IteratingSystem {
                     gameScript.fpc.isScary = true;
                 }
 
-                if (checkFlowerCollision(bc)) {
+                if (checkCollision(bc)) {
                     bc.state = DEAD;
 
                     gameScript.fpc.addScore(bc.points);
@@ -126,7 +126,7 @@ public class BugSystem extends IteratingSystem {
         BugPool.getInstance().release(bugE);
     }
 
-    private boolean checkFlowerCollision(BugComponent bc) {
+    private boolean checkCollision(BugComponent bc) {
         return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 
@@ -196,7 +196,7 @@ public class BugSystem extends IteratingSystem {
             bc.velocity += deltaTime * 3.4;
         }
 
-        if (checkFlowerCollision(bc) || isOutOfBounds(bc)) {
+        if (checkCollision(bc) || isOutOfBounds(bc)) {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
@@ -206,13 +206,13 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void updateChargerGoals(BugComponent bc) {
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkFlowerCollision(bc)) {
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkCollision(bc)) {
             GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS).update();
         }
     }
 
     private void updateBugGoals(BugComponent bc) {
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkFlowerCollision(bc)) {
+        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkCollision(bc)) {
             GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS).update();
         }
     }
