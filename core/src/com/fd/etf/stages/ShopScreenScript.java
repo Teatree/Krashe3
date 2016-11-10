@@ -42,9 +42,8 @@ public class ShopScreenScript implements IScript {
     public static final String TAB_BTN_SHOP = "tab_btn_shop";
     public static final String TAB_BTN_UPG = "tab_btn_upg";
     public static final String CURTAIN_SHOP = "curtain_shop";
-    public static final int INIT_HC_ITEMS_X = 146;
 
-    public static final int STOP_VELOCITY_DIV = 20;
+    public static final int INIT_HC_ITEMS_X = 146;
 
     public static final int FIRST_BAG_X = 1950;
     public static final int FIRST_BAG_Y = 440;
@@ -61,7 +60,9 @@ public class ShopScreenScript implements IScript {
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
     private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
-    private static final String DOTZ_LIB = "dotz_lib";
+    private static final String BTN_SCROLL_INACTIVE = "Gray";
+    private static final String DOTZ = "dotz_";
+    private static final String DOT_TAG = "dot";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -71,7 +72,6 @@ public class ShopScreenScript implements IScript {
     public static Entity scoreLbl;
     public static Entity scoreLblsh;
     public static boolean isPreviewOn;
-    public static boolean canOpenPreview = true;
     public static int bagsZindex;
 
     public static List<ShopItem> allShopItems = new ArrayList<>();
@@ -98,7 +98,6 @@ public class ShopScreenScript implements IScript {
     private List<Entity> pageDots = new ArrayList<>();
     private int currentPageIndex = 0;
 
-    private boolean canScroll;
     private float firstBagTargetPos;
 
     public ShopScreenScript() {
@@ -135,7 +134,7 @@ public class ShopScreenScript implements IScript {
         touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
         for (Entity e: touchZoneNButton.getComponent(NodeComponent.class).children){
-            if(e.getComponent(MainItemComponent.class).tags.contains("dot")) {
+            if(e.getComponent(MainItemComponent.class).tags.contains(DOT_TAG)) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
@@ -148,7 +147,6 @@ public class ShopScreenScript implements IScript {
         bagPosIdY = 0;
         bagPageId = 0;
         currentPageIndex = 0;
-        canScroll = true;
         isPreviewOn = false;
     }
 
@@ -322,19 +320,6 @@ public class ShopScreenScript implements IScript {
         if (!isPreviewOn) {
             transitionIn();
             transitionOut();
-
-
-//            startScrolling();
-            if (touchZoneBtn.isTouched) {
-                canOpenPreview = tempGdx.x == Gdx.input.getX();
-//                System.out.print("temp >>" + tempGdx.x);
-//                System.out.print(" gdx >>" + Gdx.input.getX());
-//                System.out.println(" canopenPreview " + canOpenPreview);
-//                if (!canOpenPreview) {
-//                    swipePages();
-//                }
-            }
-//            stopScrolling();
         }
         updateScrollButtonsState();
         preview.checkAndClose();
@@ -359,45 +344,6 @@ public class ShopScreenScript implements IScript {
             if (curtain_shop.getComponent(TintComponent.class).color.a <= 0) {
                 startTransitionIn = false;
             }
-        }
-    }
-
-    private void stopScrolling() {
-        if (bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos) {
-            canScroll = true;
-            isGdxWritten = false;
-        }
-
-        for (Entity b : bags){
-            b.getComponent(TransformComponent.class).scaleX = 1;
-            b.getComponent(TransformComponent.class).scaleY = 1;
-
-//            if (b.getComponent(TransformComponent.class).y !=
-//                    ((ImageButtonListener)(b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y) {
-//                b.getComponent(TransformComponent.class).y =
-//                        ((ImageButtonListener) (b.getComponent(ButtonComponent.class).listeners.get(0))).getInitialPos().y;
-//                b.getComponent(TransformComponent.class).x -= b.getComponent(DimensionsComponent.class).width / 20;
-//            }
-        }
-    }
-
-    private void swipePages() {
-        ButtonComponent.skipDefaultLayersChange = true;
-        if (tempGdx.x < Gdx.input.getX() && canMoveBagsRight()) {
-            scrollBagsOnePageLeft();
-        }
-        if (tempGdx.x > Gdx.input.getX() && canMoveBagsLeft()) {
-            scrollBagsOnePageRight();
-        }
-    }
-
-    private void startScrolling() {
-//        System.out.println("start scrolling & "  + isGdxWritten);
-        if (!isGdxWritten) {
-            tempGdx.x = Gdx.input.getX();
-            isGdxWritten = true;
-            canScroll = true;
-            ButtonComponent.skipDefaultLayersChange = false;
         }
     }
 
@@ -443,7 +389,7 @@ public class ShopScreenScript implements IScript {
 
     private void placeTheDot(int pageId){
         int vV = pageId+1;
-        Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild("dotz_" + vV);
+        Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild(DOTZ + vV);
         pageDots.add(dotEntity);
         dotEntity.getComponent(TintComponent.class).color.a = 1;
         dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
@@ -476,7 +422,6 @@ public class ShopScreenScript implements IScript {
 
     private void scrollBagsOnePageLeft() {
         if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
-            canScroll = false;
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
                 Actions.checkInit();
@@ -485,10 +430,6 @@ public class ShopScreenScript implements IScript {
                                 bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                 );
                 bag.add(a);
-//                if(bag.getComponent(ButtonComponent.class).isTouched) {
-//                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
-//                    bag.getComponent(ButtonComponent.class).isTouched = false;
-//                }
             }
             for (Entity icon : ShopScreenScript.itemIcons.values()) {
                 ActionComponent a = new ActionComponent();
@@ -519,7 +460,6 @@ public class ShopScreenScript implements IScript {
 
     private void scrollBagsOnePageRight() {
         if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
-            canScroll = false;
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
                 Actions.checkInit();
@@ -528,10 +468,6 @@ public class ShopScreenScript implements IScript {
                                 bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
                 );
                 bag.add(a);
-//                if(bag.getComponent(ButtonComponent.class).isTouched) {
-//                    bag.getComponent(ButtonComponent.class).listeners.get(0).touchUp();
-//                    bag.getComponent(ButtonComponent.class).isTouched = false;
-//                }
             }
             for (Entity icon : ShopScreenScript.itemIcons.values()) {
                 ActionComponent a = new ActionComponent();
@@ -553,23 +489,23 @@ public class ShopScreenScript implements IScript {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
         } else {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
         if (canMoveBagsLeft()) {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
         } else {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer("Gray").isVisible = false;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
     }
 

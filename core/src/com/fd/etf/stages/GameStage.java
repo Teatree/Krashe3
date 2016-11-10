@@ -58,13 +58,11 @@ public class GameStage extends Stage {
 //            Main.mainController.showLaunchAd(new Runnable() {
 //                @Override
 //                public void run() {
-//                    initMenu();
-                    initGame();
+                    initMenu();
 //                }
 //            });
         } else {
-//            initMenu();
-            initGame();
+            initMenu();
         }
 
     }
