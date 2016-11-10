@@ -143,7 +143,7 @@ public class BugSpawnSystem extends EntitySystem {
         bugEntity.getComponent(TransformComponent.class).x = tc.x;
         bugEntity.getComponent(TransformComponent.class).y = tc.y;
 
-        bugEntity.add(new DebugComponent(bugEntity.getComponent(BugComponent.class).boundsRect));
+//        bugEntity.add(new DebugComponent(bugEntity.getComponent(BugComponent.class).boundsRect));
     }
 
     @Override
