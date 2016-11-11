@@ -156,6 +156,9 @@ public class GameOverDialog extends AbstractDialog {
                 gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter--));
             }
             finishGame();
+        } else {
+            shadowE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            gameOverDialogE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 

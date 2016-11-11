@@ -70,12 +70,14 @@ public class Showcase {
 
     public void act(float delta) {
         if (isActing) {
-            itemIcon.getComponent(ZIndexComponent.class).setZIndex(1000);
+            //TODO: NPE when item is bought
+
 //            System.out.println("ACT lbl_descE.getComponent(TintComponent.class).color.a: " + lbl_descE.getComponent(TintComponent.class).color.a);
 //            System.out.println("ACT lbl_collE.getComponent(TintComponent.class).color.a: " + lbl_collE.getComponent(TintComponent.class).color.a);
 //            System.out.println("SHOWCASE ACTING!" + " counter: " + counter);
             counter += 1;
-            if (counter >= 70 && spotLightE != null) {
+            if (counter >= 70 && spotLightE != null && itemIcon != null) {
+                itemIcon.getComponent(ZIndexComponent.class).setZIndex(1000);
                 if (spotLightE.getComponent(TintComponent.class).color.a < 1) {
                     spotLightE.getComponent(TintComponent.class).color.a += 0.05f;
                 }
@@ -103,7 +105,6 @@ public class Showcase {
             celebratingCounter++;
 //            System.out.println("celebratiion counter: " + celebratingCounter);
             if (celebratingCounter == 31) {
-                System.out.println("Showcase starts starts");
                 EffectUtils.playYellowStarsParticleEffect(300, 300);
             }
             if (celebratingCounter > 100) {

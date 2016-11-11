@@ -3,9 +3,6 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -22,7 +19,6 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
-import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
@@ -34,7 +30,6 @@ import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ShopScreenScript.allShopItems;
-import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
@@ -267,16 +262,18 @@ public class GameScreenScript implements IScript {
     }
 
     private void initBackButton() {
-        Entity backBtn = gameItem.getChild(BTN_BACK).getEntity();
+        Entity backMenuBtn = gameItem.getChild(BTN_BACK).getEntity();
 
 //        backBtn.getComponent(TransformComponent.class).x = 10;
 //        backBtn.getComponent(TransformComponent.class).y = 640;
 
-        backBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backBtn) {
+        backMenuBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backMenuBtn) {
             @Override
             public void clicked() {
-                resetPauseDialog();
-                GameStage.initMenu();
+                if (!isPause && !isGameOver) {
+                    resetPauseDialog();
+                    GameStage.initMenu();
+                }
             }
         });
     }
@@ -297,7 +294,7 @@ public class GameScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         isPause = true;
-                        if (!isGameOver && isStarted) {
+                        if (!isGameOver && isStarted && !isPause) {
                             if (pauseDialog == null) {
                                 pauseDialog = new PauseDialog(gameItem);
                                 pauseDialog.init();
