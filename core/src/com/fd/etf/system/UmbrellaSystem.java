@@ -42,7 +42,7 @@ public class UmbrellaSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
 
-        if (!isStarted || isGameOver) {
+        if (!isStarted) {
             hide(entity);
 //            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 //            entity.getComponent(UmbrellaComponent.class).state = DEAD;
@@ -159,7 +159,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public static void hide(Entity entity) {
         umbrellaSpawnCounter = getNextSpawnInterval();
-//        dandelionSpawnCounter = getNextSpawnInterval();
         UmbrellaComponent uc = new UmbrellaComponent();
         entity.add(uc);
         entity.getComponent(UmbrellaComponent.class).state = DEAD;
@@ -172,7 +171,6 @@ public class UmbrellaSystem extends IteratingSystem {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
         return UmbrellaComponent.SPAWN_INTERVAL_BASE*randCoefficient;
-//        return 13;
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {
