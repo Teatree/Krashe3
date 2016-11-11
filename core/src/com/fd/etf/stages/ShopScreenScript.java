@@ -82,7 +82,6 @@ public class ShopScreenScript implements IScript {
     public LabelComponent lc;
     public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
-    public boolean isGdxWritten;
     public List<Entity> bags = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
     public int bagPosIdX;
@@ -98,7 +97,8 @@ public class ShopScreenScript implements IScript {
     private List<Entity> pageDots = new ArrayList<>();
     private int currentPageIndex = 0;
 
-    private float firstBagTargetPos;
+    public static float firstBagTargetPos;
+    public static boolean canScroll;
 
     public ShopScreenScript() {
         getAllAllVanities();
@@ -147,6 +147,7 @@ public class ShopScreenScript implements IScript {
         bagPosIdY = 0;
         bagPageId = 0;
         currentPageIndex = 0;
+        canScroll = true;
         isPreviewOn = false;
     }
 
@@ -317,6 +318,9 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+        if (!canScroll && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
+            canScroll = true;
+        }
         if (!isPreviewOn) {
             transitionIn();
             transitionOut();

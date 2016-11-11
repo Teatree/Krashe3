@@ -537,7 +537,6 @@ public class GameScreenScript implements IScript {
     }
 
     private void initUmbrella() {
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
             umbrellaEntity.remove(UmbrellaComponent.class);
@@ -569,7 +568,6 @@ public class GameScreenScript implements IScript {
         if (canCocoonSpawn()) {
             cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
 
-//            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
 
             cocoonEntity.getComponent(SpriterComponent.class).scale = COCOON_SCALE;

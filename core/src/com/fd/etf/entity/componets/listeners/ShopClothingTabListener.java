@@ -28,7 +28,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -43,7 +43,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -59,7 +59,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     @Override
     public void clicked() {
 
-        if (!ShopScreenScript.isPreviewOn) {
+        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
@@ -86,6 +86,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     }
 
     private void switchScreenToUpgrds() {
+        ShopScreenScript.canScroll = false;
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
 
@@ -103,6 +104,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
             );
             bag.add(a);
         }
+        ShopScreenScript.firstBagTargetPos = shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING;
 
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
             ActionComponent a = new ActionComponent();
