@@ -49,7 +49,7 @@ public class LeafsSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
-        if (!GameScreenScript.isPause && !GameScreenScript.isGameOver) {
+        if (!GameScreenScript.isPause.get() && !GameScreenScript.isGameOver.get()) {
             sc.player.speed = FPS;
 
 //            if (state.equals(IDLE_BITE)) {

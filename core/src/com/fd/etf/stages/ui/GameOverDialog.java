@@ -43,13 +43,13 @@ public class GameOverDialog extends AbstractDialog {
     public static Entity gameOverDialogE;
 
     public static boolean releaseAllBugs() {
-        return (isGameOver && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
+        return (isGameOver.get() && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
     }
 
     public void show() {
         addShadow();
         isActive = true;
-        isGameOver = true;
+        isGameOver.set(true);
         System.gc();
 
         final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
@@ -108,7 +108,7 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void continueGame(TransformComponent dialogTc) {
-        isGameOver = false;
+        isGameOver.set(false);
         dialogTc.x = -1000;
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
@@ -133,8 +133,8 @@ public class GameOverDialog extends AbstractDialog {
 
     public void update(float deltaTime) {
 
-        fade(gameOverDialogE, isGameOver);
-        if (isGameOver) {
+        fade(gameOverDialogE, isGameOver.get());
+        if (isGameOver.get()) {
             final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
@@ -171,11 +171,11 @@ public class GameOverDialog extends AbstractDialog {
                                 !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
                     gameScript.showGoalFeedback();
                     close(gameOverDialogE);
-                    isGameOver = true;
+                    isGameOver.set(true);
                 } else if ((gameScript.goalFeedbackScreen == null ||
                         !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
                         (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
-                    isGameOver = false;
+                    isGameOver.set(false);
                     gameScript.resetPauseDialog();
                     gameScript.stage.initResultWithAds();
                     close(gameOverDialogE);
@@ -188,7 +188,7 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isStarted = false;
-        isPause = false;
+        isPause.set(false);
         isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;
         if (gameScript.fpc.bestScore < gameScript.fpc.score) {

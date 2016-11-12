@@ -33,7 +33,7 @@ public class ButterflySystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
 
-        if (!isStarted || isGameOver) {
+        if (!isStarted || isGameOver.get()) {
             entity.getComponent(TransformComponent.class).x = -900;
             entity.getComponent(TransformComponent.class).y = -900;
             sasc.player.speed = 0;
@@ -45,7 +45,7 @@ public class ButterflySystem extends IteratingSystem {
                 entity.getComponent(ButterflyComponent.class).boundsRect.height,
                 entity.toString());
 
-        if (!isPause && !isGameOver && isStarted &&
+        if (!isPause.get() && !isGameOver.get() && isStarted &&
                 entity.getComponent(ButterflyComponent.class).state != DEAD) {
             sasc.player.speed = FPS;
 

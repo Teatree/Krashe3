@@ -203,7 +203,7 @@ public class Preview extends AbstractDialog {
         }
 
         this.vc = vc;
-        isPreviewOn = true;
+        isPreviewOn.set(true);
         setLabelsValues();
 
         if (!vc.bought) {
@@ -488,7 +488,7 @@ public class Preview extends AbstractDialog {
             canClosePreview = previewBoundingBox == null || !previewBoundingBox.contains(v.x, v.y);
             float currentYpos = previewE.getComponent(TransformComponent.class).y;
             if (Gdx.input.isTouched() && currentYpos <= PREVIEW_Y || currentYpos >= 800) {
-                if (isPreviewOn && canClosePreview) {
+                if (isPreviewOn.get() && canClosePreview) {
                     ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveTo(PREVIEW_X, 900, 1, Interpolation.exp10));
@@ -501,7 +501,7 @@ public class Preview extends AbstractDialog {
             }
 
             if (previewE.getComponent(TransformComponent.class).y >= 790) {
-                isPreviewOn = false;
+                isPreviewOn.set(false);
                 setShouldDeleteIconE();
                 removeIconE();
             }

@@ -22,6 +22,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.CocoonComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -52,8 +53,8 @@ public class GameScreenScript implements IScript {
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
-    public static boolean isPause;
-    public static boolean isGameOver;
+    public static AtomicBoolean isPause  = new AtomicBoolean(false);;
+    public static AtomicBoolean isGameOver = new AtomicBoolean(false);
     public static boolean isStarted;
 
     public GameStage stage;
@@ -267,15 +268,16 @@ public class GameScreenScript implements IScript {
 //        backBtn.getComponent(TransformComponent.class).x = 10;
 //        backBtn.getComponent(TransformComponent.class).y = 640;
 
-        backMenuBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(backMenuBtn) {
-            @Override
-            public void clicked() {
-                if (!isPause && !isGameOver) {
-                    resetPauseDialog();
-                    GameStage.initMenu();
-                }
-            }
-        });
+        backMenuBtn.getComponent(ButtonComponent.class)
+                .addListener(new ImageButtonListener(backMenuBtn, new AtomicBoolean[]{isGameOver, isPause}) {
+                    @Override
+                    public void clicked() {
+                        if (!isPause.get() && !isGameOver.get()) {
+                            resetPauseDialog();
+                            GameStage.initMenu();
+                        }
+                    }
+                });
     }
 
     public void resetPauseDialog() {
@@ -290,11 +292,11 @@ public class GameScreenScript implements IScript {
         pauseBtn = gameItem.getChild(BTN_PAUSE).getEntity();
 
         pauseBtn.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(pauseBtn) {
+                new ImageButtonListener(pauseBtn, new AtomicBoolean[]{isGameOver, isPause}) {
                     @Override
                     public void clicked() {
-                        isPause = true;
-                        if (!isGameOver && isStarted && !isPause) {
+                        if (!isGameOver.get() && isStarted && !isPause.get()) {
+                            isPause.set(true);
                             if (pauseDialog == null) {
                                 pauseDialog = new PauseDialog(gameItem);
                                 pauseDialog.init();
@@ -418,7 +420,7 @@ public class GameScreenScript implements IScript {
                 updateTapGoal();
             }
 
-            if (!isPause && !isGameOver && isStarted) {
+            if (!isPause.get() && !isGameOver.get() && isStarted) {
                 if (canUmbrellaSpawn()) {
                     umbrellaSpawnCounter -= delta;
                 }
@@ -472,15 +474,15 @@ public class GameScreenScript implements IScript {
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
-            isGameOver = false;
+            isGameOver.set(false);
             if (GoalFeedbackScreen.shouldShow &&
                     (gameScript.giftScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
                 showGoalFeedback();
-                isGameOver = true;
+                isGameOver.set(true);
             } else if ((gameScript.goalFeedbackScreen == null ||
                     !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
                     (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
-                isGameOver = false;
+                isGameOver.set(false);
                 gameScript.resetPauseDialog();
                 Main.mainController.submitScore(fpc.score);
                 gameScript.stage.initResultWithAds();

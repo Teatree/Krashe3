@@ -84,7 +84,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(btnNoAds) {
                     @Override
                     public void clicked() {
-                        if (!isSecondDialogOpen) {
+                        if (!isSecondDialogOpen.get()) {
                             Main.mainController.removeAds();
                         }
                     }
@@ -96,7 +96,7 @@ public class Settings extends AbstractDialog {
                     @Override
                     public void clicked() {
                         checkSecondaryDialog();
-                        if (!isSecondDialogOpen && isActive) {
+                        if (!isSecondDialogOpen.get() && isActive) {
                             infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
                             infoE.getComponent(TransformComponent.class).y = SETTINGS_Y;
                             infoE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
@@ -123,7 +123,7 @@ public class Settings extends AbstractDialog {
                     @Override
                     public void clicked() {
                         checkSecondaryDialog();
-                        if (!isSecondDialogOpen && isActive) {
+                        if (!isSecondDialogOpen.get() && isActive) {
                             dialog.show(BasicDialog.TYPE_RESET);
                         }
                     }
@@ -134,7 +134,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(restorePurchasesBtn) {
                     @Override
                     public void clicked() {
-                        if (!isSecondDialogOpen && isActive) {
+                        if (!isSecondDialogOpen.get() && isActive) {
                             try {
                                 Main.mainController.restorePurchases();
                                 dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);

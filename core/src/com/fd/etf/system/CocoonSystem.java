@@ -45,7 +45,7 @@ public class CocoonSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
 
-        if (!isPause && !isGameOver && isStarted) {
+        if (!isPause.get() && !isGameOver.get() && isStarted) {
             CocoonComponent cc = mapper.get(entity);
             DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
@@ -111,7 +111,7 @@ public class CocoonSystem extends IteratingSystem {
             cc.state = HIT;
 //            cc.hitCounter+=1;
             cc.canHit = true;
-            if (!isPause && !isGameOver) {
+            if (!isPause.get() && !isGameOver.get()) {
                 sc.player.speed = 24;
             }
             if (cc.hitCounter <= 3) {

@@ -54,7 +54,7 @@ public class UmbrellaSystem extends IteratingSystem {
 //            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
 //        }
 
-        if (!isPause && !isGameOver && isStarted &&
+        if (!isPause.get() && !isGameOver.get() && isStarted &&
                 entity.getComponent(UmbrellaComponent.class).state != DEAD) {
 
             UmbrellaComponent uc = mapper.get(entity);

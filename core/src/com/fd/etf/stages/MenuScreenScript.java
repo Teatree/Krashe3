@@ -15,8 +15,9 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -67,10 +68,10 @@ public class MenuScreenScript implements IScript {
     private static Entity btnShop;
     private static Entity btnSettings;
     private static Entity rateAppBtn;
-    private static Entity btnGoals;
+    private static Entity btnChalenges;
     private static Entity btnFB;
     private static Entity btnLB;
-    private static Entity btnAch;
+    private static Entity btnAchievements;
     private static Entity btnPlayServices;
     private static Entity leaderboard_C;
     private static Entity achievements_C;
@@ -102,7 +103,7 @@ public class MenuScreenScript implements IScript {
         startShopTransition = false;
         startTransitionIn = true;
 
-        isDialogOpen = false;
+        isDialogOpen.set(false);
         if (timer == null) {
             timer = new TrialTimer(menuItem, TIMER_X, TIMER_Y);
         } else {
@@ -148,10 +149,10 @@ public class MenuScreenScript implements IScript {
         btnPlayServices.getComponent(TintComponent.class).color.a = 1;
         rateAppBtn.getComponent(TintComponent.class).color.a = RATE_APP_BTN_ALPHA;
         btnShop.getComponent(TintComponent.class).color.a = 1;
-        btnGoals.getComponent(TintComponent.class).color.a = 1;
+        btnChalenges.getComponent(TintComponent.class).color.a = 1;
         btnFB.getComponent(TintComponent.class).color.a = 1;
         btnLB.getComponent(TintComponent.class).color.a = 1;
-        btnAch.getComponent(TintComponent.class).color.a = 1;
+        btnAchievements.getComponent(TintComponent.class).color.a = 1;
         leaderboard_C.getComponent(TintComponent.class).color.a = 1;
         achievements_C.getComponent(TintComponent.class).color.a = 1;
         if (timer != null) {
@@ -174,29 +175,29 @@ public class MenuScreenScript implements IScript {
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
         btnPlayServices = menuItem.getChild(BTN_PLAY_SERVICES).getEntity();
         btnFB = menuItem.getChild(BTN_FB).getEntity();
-        btnGoals = menuItem.getChild(BTN_GOALS).getEntity();
+        btnChalenges = menuItem.getChild(BTN_GOALS).getEntity();
 
         leaderboard_C = menuItem.getChild(LEADERBOARD_C).getEntity();
         achievements_C = menuItem.getChild(ACHIEVEMENTS_C).getEntity();
 
-        btnAch = achievements_C.getComponent(NodeComponent.class).getChild(BTN_ACHIEVEMENTS);
+        btnAchievements = achievements_C.getComponent(NodeComponent.class).getChild(BTN_ACHIEVEMENTS);
         btnLB = leaderboard_C.getComponent(NodeComponent.class).getChild(BTN_LEADERBOARD);
 
         btnFB.add(new ButtonComponent());
         btnFB.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnFB) {
+                new ImageButtonListener(btnFB, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (playServiceFlapIsOut) {
-                            movingFlaps = true;
+                        if (!isDialogOpen.get()) {
+                            movingFlaps = playServiceFlapIsOut;
+                            Main.mainController.openFB();
                         }
-                        Main.mainController.openFB();
                     }
                 });
 
-        btnAch.add(new ButtonComponent());
-        btnAch.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnAch) {
+        btnAchievements.add(new ButtonComponent());
+        btnAchievements.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnAchievements, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
                         if (playServiceFlapIsOut) {
@@ -211,7 +212,6 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnLB) {
                     @Override
                     public void clicked() {
-
                         if (playServiceFlapIsOut) {
                             movingFlaps = true;
                             Main.mainController.getLeaderboard();
@@ -224,7 +224,7 @@ public class MenuScreenScript implements IScript {
                     @Override
 
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isDialogOpen.get()) {
                             if (playServiceFlapIsOut) {
                                 movingFlaps = true;
                             }
@@ -235,20 +235,20 @@ public class MenuScreenScript implements IScript {
                 });
 
         playBtn.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(playBtn) {
+                new ImageButtonListener(playBtn, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isDialogOpen.get()) {
                             startGameTransition = true;
                         }
                     }
                 });
 
         btnShop.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnShop) {
+                new ImageButtonListener(btnShop, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isDialogOpen.get()) {
                             startShopTransition = true;
                             resetPauseDialog();
                         }
@@ -256,14 +256,14 @@ public class MenuScreenScript implements IScript {
                 });
 
         btnSettings.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnSettings) {
+                new ImageButtonListener(btnSettings, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isDialogOpen.get()) {
                             if (playServiceFlapIsOut) {
                                 movingFlaps = true;
                             }
-                            isDialogOpen = true;
+                            isDialogOpen.set(true);
                             if (settings == null) {
                                 settings = new Settings(menuItem);
                                 settings.init();
@@ -274,22 +274,22 @@ public class MenuScreenScript implements IScript {
                 });
 
         btnPlayServices.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnPlayServices) {
+                new ImageButtonListener(btnPlayServices, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
                         movingFlaps = true;
                     }
                 });
 
-        btnGoals.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnGoals) {
+        btnChalenges.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnChalenges, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen) {
+                        if (!isDialogOpen.get()) {
                             if (playServiceFlapIsOut) {
                                 movingFlaps = true;
                             }
-                            isDialogOpen = true;
+                            isDialogOpen.set(true);
                             showGoalNotification = false;
                             Level.goalStatusChanged = false;
                             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
@@ -409,10 +409,10 @@ public class MenuScreenScript implements IScript {
             menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnSettings.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnShop.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnGoals.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnChalenges.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnAch.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            btnAchievements.getComponent(TintComponent.class).color.a -= TINT_STEP;
             if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
                 timer.timerEsh.getComponent(TintComponent.class).color.a -= TINT_STEP;

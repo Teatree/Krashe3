@@ -52,7 +52,7 @@ public class BugSystem extends IteratingSystem {
             if(blowUpCounter<=0 && blowUpAllBugs){
                 blowUpAllBugs = false;
             }
-        } else if (!isPause && !isGameOver && isStarted ) {
+        } else if (!isPause.get() && !isGameOver.get() && isStarted ) {
 
             sasc.paused = false;
 
@@ -97,10 +97,10 @@ public class BugSystem extends IteratingSystem {
 //            GameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
-        if (isPause){
+        if (isPause.get()){
             sasc.paused = true;
         }
-        if(isGameOver || !isStarted ){
+        if(isGameOver.get() || !isStarted ){
             sasc.paused = true;
             if (!blowUpAllBugs) {
                 BugPool.getInstance().release(entity);

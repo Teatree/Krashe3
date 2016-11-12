@@ -146,7 +146,7 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void show() {
-        isPause = true;
+        isPause.set(true);
         isActive = true;
         pauseCounter = 10;
         addShadow();
@@ -253,8 +253,8 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void update(float delta) {
-        if (pauseCounter == 0 && isPause && pauseTimer >= 1 && lblPauseTimer != null) {
-            isPause = false;
+        if (pauseCounter == 0 && isPause.get() && pauseTimer >= 1 && lblPauseTimer != null) {
+            isPause.set(false);
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");

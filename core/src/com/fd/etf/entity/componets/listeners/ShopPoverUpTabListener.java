@@ -26,9 +26,9 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnClothing.getComponent(LayerMapComponent.class);
-            if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
+            if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
                 lc.getLayer(BTN_PRESSED).isVisible = false;
             } else {
@@ -41,7 +41,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnClothing.getComponent(LayerMapComponent.class);
             if (lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -55,7 +55,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void clicked() {
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             if (shopScreenScript.btnClothing.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 shiftHCsections();

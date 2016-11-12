@@ -130,7 +130,7 @@ public class GiftScreen {
     }
 
     public void update() {
-        if (Gdx.input.justTouched() && isGameOver && showNewLevelAnim) {
+        if (Gdx.input.justTouched() && isGameOver.get() && showNewLevelAnim) {
             showNewLevelScreen();
             showNewLevelAnim = false;
         }

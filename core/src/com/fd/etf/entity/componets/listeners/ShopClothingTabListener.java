@@ -28,9 +28,9 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-            if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
+            if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
                 lc.getLayer(BTN_PRESSED).isVisible = false;
             } else {
@@ -43,9 +43,9 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-            if (ShopScreenScript.isPreviewOn && lc.getLayer(BTN_NORMAL).isVisible) {
+            if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
                 lc.getLayer(BTN_PRESSED).isVisible = false;
             } else {
@@ -59,11 +59,11 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     @Override
     public void clicked() {
 
-        if (!ShopScreenScript.isPreviewOn && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
-            } else if (!ShopScreenScript.isPreviewOn) {
+            } else if (!ShopScreenScript.isPreviewOn.get()) {
                 LayerMapComponent lc1 = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
                 lc1.getLayer(BTN_PRESSED).isVisible = true;
                 lc1.getLayer(BTN_DEFAULT).isVisible = true;

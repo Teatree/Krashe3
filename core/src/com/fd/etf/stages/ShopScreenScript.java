@@ -1,7 +1,6 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
@@ -23,8 +22,10 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
+import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 
@@ -71,7 +72,7 @@ public class ShopScreenScript implements IScript {
 
     public static Entity scoreLbl;
     public static Entity scoreLblsh;
-    public static boolean isPreviewOn;
+    public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
     public static int bagsZindex;
 
     public static List<ShopItem> allShopItems = new ArrayList<>();
@@ -148,7 +149,7 @@ public class ShopScreenScript implements IScript {
         bagPageId = 0;
         currentPageIndex = 0;
         canScroll = true;
-        isPreviewOn = false;
+        isPreviewOn.set(false);
     }
 
     public void initTabBtns() {
@@ -215,10 +216,10 @@ public class ShopScreenScript implements IScript {
             );
 
             e.getComponent(ButtonComponent.class).addListener(
-                    new ImageButtonListener(e) {
+                    new ImageButtonListener(e, new AtomicBoolean[]{isPreviewOn}) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn) {
+                            if (!isPreviewOn.get()) {
                                 preview.showPreview(hc, true, false);
                             }
                         }
@@ -257,10 +258,10 @@ public class ShopScreenScript implements IScript {
 
             bagEntity.add(new ButtonComponent());
             bagEntity.getComponent(ButtonComponent.class).addListener(
-                    new ImageButtonListener(bagEntity) {
+                    new ImageButtonListener(bagEntity, new AtomicBoolean[]{isPreviewOn}) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn) {
+                            if (!isPreviewOn.get()) {
                                 preview.showPreview(vc, true, false);
                             }
                         }
@@ -306,10 +307,10 @@ public class ShopScreenScript implements IScript {
     private void addBackButtonPlease() {
         Entity btnBack = shopItem.getChild(BTN_BACK).getEntity();
         btnBack.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnBack) {
+                new ImageButtonListener(btnBack, new AtomicBoolean[]{isPreviewOn}) {
                     @Override
                     public void clicked() {
-                        if (!isPreviewOn) {
+                        if (!isPreviewOn.get()) {
                             startTransitionOut = true;
                         }
                     }
@@ -321,7 +322,7 @@ public class ShopScreenScript implements IScript {
         if (!canScroll && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
             canScroll = true;
         }
-        if (!isPreviewOn) {
+        if (!isPreviewOn.get()) {
             transitionIn();
             transitionOut();
         }
@@ -416,12 +417,13 @@ public class ShopScreenScript implements IScript {
     private void initScrollLeftBtn() {
         Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT);
         scrollLeftBtn.add(new ButtonComponent());
-        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
-            @Override
-            public void clicked() {
-                scrollBagsOnePageLeft();
-            }
-        });
+        scrollLeftBtn.getComponent(ButtonComponent.class)
+                .addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
+                    @Override
+                    public void clicked() {
+                        scrollBagsOnePageLeft();
+                    }
+                });
     }
 
     private void scrollBagsOnePageLeft() {
@@ -454,7 +456,7 @@ public class ShopScreenScript implements IScript {
     private void initScrollRightBtn() {
         Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT);
         scrollLeftBtn.add(new ButtonComponent());
-        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn) {
+        scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
             @Override
             public void clicked() {
                 scrollBagsOnePageRight();

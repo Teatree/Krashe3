@@ -160,7 +160,7 @@ public class BugSpawnSystem extends EntitySystem {
         curQueenBeeProb = (int)(QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * GameStage.gameScript.fpc.level.queenBeeSpawnChance);
         curBeeProb = (int)(BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * GameStage.gameScript.fpc.level.beeSpawnChance);
 
-        if (!isPause && !isGameOver) {
+        if (!isPause.get() && !isGameOver.get()) {
             if (isStarted) {
                 super.update(deltaTime);
                 if(bugsSpawned >= currentMultiplier.finishOn){

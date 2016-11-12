@@ -37,11 +37,11 @@ public class DebugSystem extends IteratingSystem {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            GameScreenScript.isPause = true;
+            GameScreenScript.isPause.set(true);
             traceEveryone = true;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.O)) {
-            GameScreenScript.isPause = false;
+            GameScreenScript.isPause.set(false);
             traceEveryone = false;
         }
 

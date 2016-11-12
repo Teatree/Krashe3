@@ -106,7 +106,7 @@ public class BasicDialog extends AbstractDialog {
         parent.isActive = false;
         this.isActive = true;
         addShadow();
-        AbstractDialog.isSecondDialogOpen = true;
+        AbstractDialog.isSecondDialogOpen.set(true);
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
 
         okBtn.remove(ButtonComponent.class);

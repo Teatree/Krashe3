@@ -62,7 +62,7 @@ public class PetSystem extends IteratingSystem {
         dcPetBody.height = 100;
         updateRect(pc, tcPetBody, dcPetBody, cannontc, cannondc);
         moveCannonWithPet(entity, pc);
-        if (!isPause && !isGameOver) {
+        if (!isPause.get() && !isGameOver.get()) {
             scPetBody.player.speed = FPS;
             scPetHead.player.speed = FPS;
             cannonsc.player.speed = FPS;

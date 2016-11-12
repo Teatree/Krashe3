@@ -11,6 +11,10 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import javax.swing.text.StyledEditorKit;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -25,9 +29,9 @@ public class AbstractDialog {
 
     protected ItemWrapper gameItem;
     protected Entity shadowE;
-    public static boolean isDialogOpen;
-    public static boolean isSecondDialogOpen;
-    public static boolean isSecondDialogClosed;
+    public static AtomicBoolean isDialogOpen = new AtomicBoolean(false);;
+    public static AtomicBoolean isSecondDialogOpen = new AtomicBoolean(false);
+    public static AtomicBoolean isSecondDialogClosed = new AtomicBoolean(false);
     public boolean isActive;
 
     protected void initShadow() {
@@ -65,18 +69,18 @@ public class AbstractDialog {
             ActionComponent ac2 = new ActionComponent();
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
-            if (isSecondDialogOpen) {
-                isSecondDialogClosed = true;
+            if (isSecondDialogOpen.get()) {
+                isSecondDialogClosed.set(true);
             } else {
-                isDialogOpen = false;
+                isDialogOpen.set(false);
             }
         }
     }
 
     public static void checkSecondaryDialog(){
-        if (isSecondDialogOpen && isSecondDialogClosed){
-            isSecondDialogOpen = false;
-            isSecondDialogClosed = false;
+        if (isSecondDialogOpen.get() && isSecondDialogClosed.get()){
+            isSecondDialogOpen.set(false);
+            isSecondDialogClosed.set(false);
         }
     }
 }

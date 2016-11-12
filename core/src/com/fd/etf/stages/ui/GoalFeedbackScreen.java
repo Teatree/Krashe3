@@ -97,7 +97,7 @@ public class GoalFeedbackScreen {
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
 
-        if (tiles == null || tiles.isEmpty() || !isPause) {
+        if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             int y = GOAL_INIT_POS_Y;
             tilesScs = new ArrayList<>();
             for (Goal g : gameScript.fpc.level.getGoals()) {
@@ -114,10 +114,10 @@ public class GoalFeedbackScreen {
         feedbackEntity.getComponent(TransformComponent.class).y = POS_Y;
         feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
 
-        if (prevLvlTiles != null || !prevLvlTiles.isEmpty() || !isPause) {
+        if (prevLvlTiles != null || !prevLvlTiles.isEmpty() || !isPause.get()) {
             addMoveInPrevTilesActions();
         }
-        if (tiles == null || tiles.isEmpty() || !isPause) {
+        if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             addMoveInTilesActions();
         }
 

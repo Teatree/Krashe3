@@ -102,8 +102,8 @@ public class GameStage extends Stage {
         backgroundMusicMgr.stop();
 
         GameScreenScript.isStarted = false;
-        GameScreenScript.isPause = false;
-        GameScreenScript.isGameOver = false;
+        GameScreenScript.isPause.set(false);
+        GameScreenScript.isGameOver.set(false);
         BugPool.getInstance();
     }
 
@@ -149,7 +149,7 @@ public class GameStage extends Stage {
             shopScript = new ShopScreenScript();
             root.addScript(shopScript);
         }
-        ShopScreenScript.isPreviewOn = false;
+        ShopScreenScript.isPreviewOn.set(false);
         ShopPoverUpTabListener.reset();
         GlobalConstants.CUR_SCREEN = SHOP;
     }
