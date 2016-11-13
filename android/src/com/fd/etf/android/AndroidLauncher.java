@@ -6,21 +6,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.GameHelper;
 import com.fd.etf.AllController;
 import com.fd.etf.Main;
 import com.fd.etf.android.util.EtfAdsHelper;
 import com.fd.etf.android.util.EtfIAPhelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 

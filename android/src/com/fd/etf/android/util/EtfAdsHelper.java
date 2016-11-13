@@ -1,10 +1,10 @@
 package com.fd.etf.android.util;
 
 import com.badlogic.gdx.Gdx;
+import com.fd.etf.android.AndroidLauncher;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.fd.etf.android.AndroidLauncher;
 
 /**
  * Created by ARudyk on 9/12/2016.

@@ -3,7 +3,6 @@ package com.fd.etf.system;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.fd.etf.entity.componets.BugComponent;
-import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.uwsoft.editor.renderer.components.TransformComponent;

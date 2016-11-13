@@ -12,9 +12,6 @@ import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
-import static com.fd.etf.entity.componets.LeafsComponent.State.IDLE;
-import static com.fd.etf.entity.componets.LeafsComponent.State.IDLE_BITE;
-import static com.fd.etf.entity.componets.LeafsComponent.state;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.FPS;
 

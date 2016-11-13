@@ -8,8 +8,8 @@ import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
-import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
+import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.stages.ui.Preview;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.DebugSystem;
@@ -25,7 +25,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
-import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 
@@ -99,7 +98,7 @@ public class ShopScreenScript implements IScript {
     private int currentPageIndex = 0;
 
     public static float firstBagTargetPos;
-    public static boolean canScroll;
+//    public static boolean canScroll;
 
     public ShopScreenScript() {
         getAllAllVanities();
@@ -148,7 +147,7 @@ public class ShopScreenScript implements IScript {
         bagPosIdY = 0;
         bagPageId = 0;
         currentPageIndex = 0;
-        canScroll = true;
+//        canScroll = true;
         isPreviewOn.set(false);
     }
 
@@ -158,6 +157,7 @@ public class ShopScreenScript implements IScript {
         btnClothing.getComponent(ButtonComponent.class).enable = false;
         btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = true;
         btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = false;
+        btnClothing.getComponent(ButtonComponent.class).clearListeners();
         btnClothing.getComponent(ButtonComponent.class).addListener(new ShopPoverUpTabListener(this));
 
         btnPowerUp = shopItem.getChild(TAB_BTN_UPG).getEntity();
@@ -165,6 +165,7 @@ public class ShopScreenScript implements IScript {
         btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = false;
         btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
         btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
+        btnPowerUp.getComponent(ButtonComponent.class).clearListeners();
         btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
     }
 
@@ -319,15 +320,15 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if (!canScroll && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
-            canScroll = true;
-        }
+//        if (!canScroll && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
+//            canScroll = true;
+//        }
         if (!isPreviewOn.get()) {
             transitionIn();
             transitionOut();
         }
         updateScrollButtonsState();
-        preview.checkAndClose();
+        preview.updatePreview();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
     }
@@ -421,6 +422,7 @@ public class ShopScreenScript implements IScript {
                 .addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
                     @Override
                     public void clicked() {
+                        if(!isPreviewOn.get())
                         scrollBagsOnePageLeft();
                     }
                 });
@@ -459,6 +461,7 @@ public class ShopScreenScript implements IScript {
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
             @Override
             public void clicked() {
+                if(!isPreviewOn.get())
                 scrollBagsOnePageRight();
             }
         });

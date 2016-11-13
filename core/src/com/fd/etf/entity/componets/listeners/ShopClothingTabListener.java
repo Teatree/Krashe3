@@ -9,9 +9,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
-import static com.fd.etf.utils.GlobalConstants.BTN_DEFAULT;
-import static com.fd.etf.utils.GlobalConstants.BTN_NORMAL;
-import static com.fd.etf.utils.GlobalConstants.BTN_PRESSED;
+import static com.fd.etf.utils.GlobalConstants.*;
 
 /**
  * Created by ARudyk on 8/1/2016.
@@ -28,7 +26,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -43,7 +41,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -59,7 +57,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     @Override
     public void clicked() {
 
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get()/* && ShopScreenScript.canScroll*/) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
@@ -86,7 +84,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     }
 
     private void switchScreenToUpgrds() {
-        ShopScreenScript.canScroll = false;
+//        ShopScreenScript.canScroll = false;
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
 

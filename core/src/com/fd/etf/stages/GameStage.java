@@ -3,7 +3,6 @@ package com.fd.etf.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.fd.etf.Main;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.BugPool;
@@ -15,7 +14,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashMap;
 
-import static com.fd.etf.Main.mainController;
 import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.fd.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.fd.etf.utils.GlobalConstants.BUTTON_TAG;

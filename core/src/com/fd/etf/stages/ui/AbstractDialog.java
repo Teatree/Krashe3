@@ -11,8 +11,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import javax.swing.text.StyledEditorKit;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;

@@ -9,9 +9,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
-import static com.fd.etf.utils.GlobalConstants.BTN_DEFAULT;
-import static com.fd.etf.utils.GlobalConstants.BTN_NORMAL;
-import static com.fd.etf.utils.GlobalConstants.BTN_PRESSED;
+import static com.fd.etf.utils.GlobalConstants.*;
 
 /**
  * Created by ARudyk on 8/1/2016.
@@ -26,7 +24,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
             LayerMapComponent lc = shopScreenScript.btnClothing.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -41,7 +39,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get()/* && ShopScreenScript.canScroll*/) {
             LayerMapComponent lc = shopScreenScript.btnClothing.getComponent(LayerMapComponent.class);
             if (lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -55,7 +53,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void clicked() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canScroll) {
+        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
             if (shopScreenScript.btnClothing.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 shiftHCsections();
@@ -88,7 +86,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
     }
 
     private static void shiftBags() {
-        ShopScreenScript.canScroll = false;
+//        ShopScreenScript.canScroll = false;
         float bagsShift = 73 - shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x;
         for (Entity bag : shopScreenScript.bags) {
             ActionComponent a = new ActionComponent();
