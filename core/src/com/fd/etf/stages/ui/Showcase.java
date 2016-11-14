@@ -300,7 +300,7 @@ public class Showcase {
                     if (GameStage.shopScript != null) {
                         GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
                     }
-                    showCaseVanity = null;
+//                    showCaseVanity = null;
                     isCelebrating = true;
                 }
             }

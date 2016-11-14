@@ -1,5 +1,6 @@
 package com.fd.etf.stages;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -9,14 +10,20 @@ import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.fd.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.fd.etf.utils.GlobalConstants.BUTTON_TAG;
+import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.SoundMgr.getSoundMgr;
 
 public class GameStage extends Stage {
@@ -149,6 +156,7 @@ public class GameStage extends Stage {
         }
         ShopScreenScript.isPreviewOn.set(false);
         ShopPoverUpTabListener.reset();
+        shopScript.checkIfChanged();
         GlobalConstants.CUR_SCREEN = SHOP;
     }
 
@@ -185,13 +193,22 @@ public class GameStage extends Stage {
 
     public static void resetAllProgress() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
-            if (vc.enabled) {
-                vc.disable();
+            Set<String> changedFiles = new HashSet<>();
+            if (vc.enabled){
+                for (Map.Entry<String,String> entry : vc.assetsToChange.entrySet()) {
+                    if (changedFiles.add(entry.getKey())) {
+                        vc.resetOneFileTodefault(entry);
+                    }
+                }
             }
+            shopScript.currentPageIndex = 0;
             vc.bought = false;
             vc.enabled = false;
             vc.advertised = false;
         }
+
+        ShopScreenScript.shouldReload = true;
+
         ResultScreenScript.showCaseVanity = null;
         gameScript.fpc.score = 0;
         gameScript.fpc.bestScore = 0;

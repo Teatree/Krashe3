@@ -133,14 +133,18 @@ public class VanityComponent extends ShopItem implements Component {
         }
     }
 
-    private void backToDefaultAnimation() {
+    public void backToDefaultAnimation() {
         for (Map.Entry entry : assetsToChange.entrySet()) {
-            if (!entry.getKey().equals(CLASS)) {
-                String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
-                Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX)
-                        .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
-                                + DEFAULT + TYPE_SUFFIX).readBytes(), false);
-            }
+            resetOneFileTodefault(entry);
+        }
+    }
+
+    public void resetOneFileTodefault(Map.Entry entry) {
+        if (!entry.getKey().equals(CLASS)) {
+            String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+            Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX)
+                    .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
+                            + DEFAULT + TYPE_SUFFIX).readBytes(), false);
         }
     }
 
