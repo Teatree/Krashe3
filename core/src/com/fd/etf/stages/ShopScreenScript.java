@@ -99,7 +99,7 @@ public class ShopScreenScript implements IScript {
     public int currentPageIndex = 0;
 
     public static float firstBagTargetPos;
-//    public static boolean canScroll;
+    public static boolean canChangeTabs;
 
     public ShopScreenScript() {
         getAllAllVanities();
@@ -150,7 +150,7 @@ public class ShopScreenScript implements IScript {
         bagPosIdY = 0;
         bagPageId = 0;
         currentPageIndex = 0;
-//        canScroll = true;
+        canChangeTabs = true;
         isPreviewOn.set(false);
     }
 
@@ -324,9 +324,9 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-//        if (!canScroll && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
-//            canScroll = true;
-//        }
+        if (!canChangeTabs && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
+            canChangeTabs = true;
+        }
         if (!isPreviewOn.get()) {
             transitionIn();
             transitionOut();
@@ -420,12 +420,13 @@ public class ShopScreenScript implements IScript {
                     public void clicked() {
                         if(!isPreviewOn.get())
                         scrollBagsOnePageLeft();
+                        updateScrollButtonsState();
                     }
                 });
     }
 
     private void scrollBagsOnePageLeft() {
-        if (bags.get(0).getComponent(TransformComponent.class).x < 100) {
+        if (canMoveBagsLeft()) {
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
                 Actions.checkInit();
@@ -459,12 +460,13 @@ public class ShopScreenScript implements IScript {
             public void clicked() {
                 if(!isPreviewOn.get())
                 scrollBagsOnePageRight();
+                updateScrollButtonsState();
             }
         });
     }
 
     private void scrollBagsOnePageRight() {
-        if (bags.get(bags.size() - 1).getComponent(TransformComponent.class).x > SCCREEN_WIDTH) {
+        if (canMoveBagsRight()) {
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
                 Actions.checkInit();
@@ -490,36 +492,37 @@ public class ShopScreenScript implements IScript {
     }
 
     private void updateScrollButtonsState(){
-        if (canMoveBagsRight()) {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
-        } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
-        }
         if (canMoveBagsLeft()) {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
-        } else {
-            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
+        } else {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+        }
+        if (canMoveBagsRight()) {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
+        } else {
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+            touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
         }
     }
 
     public boolean canMoveBagsLeft() {
-        return bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= CAN_MOVE_LEFT_BAG_X;
+        return bags.get(0).getComponent(TransformComponent.class).x <= 0;
     }
 
     public boolean canMoveBagsRight() {
-        return bags.get(0).getComponent(TransformComponent.class).x <= CAN_MOVE_RIGHT_BAG_X;
+        return !(bags.get(bags.size() - 1).getComponent(TransformComponent.class).x <= SCCREEN_WIDTH &&
+                bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= 0);
     }
 
     @Override
@@ -537,7 +540,7 @@ public class ShopScreenScript implements IScript {
 
     public void checkIfChanged() {
         if (shouldReload) {
-            for (Map.Entry<String, Entity> entry : ShopScreenScript.itemIcons.entrySet()) {
+            for (Map.Entry<String, Entity> entry : itemIcons.entrySet()) {
 
                 TransformComponent oldIconTC = new TransformComponent();
                 oldIconTC.x = entry.getValue().getComponent(TransformComponent.class).x;
@@ -546,12 +549,23 @@ public class ShopScreenScript implements IScript {
                 entry.getValue().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 GameStage.sceneLoader.engine.removeEntity(entry.getValue());
 
-                Entity newUnknownIcon = getIconFromLib(ShopScreenScript.ITEM_UNKNOWN_N);
+                Entity newUnknownIcon = getIconFromLib(ITEM_UNKNOWN_N);
                 newUnknownIcon.getComponent(TransformComponent.class).x = oldIconTC.x;
                 newUnknownIcon.getComponent(TransformComponent.class).y = oldIconTC.y;
                 newUnknownIcon.getComponent(ZIndexComponent.class).setZIndex(200);
+
+                entry.setValue(newUnknownIcon);
             }
             shouldReload = false;
         }
+    }
+
+    public void resetPages() {
+        setDotActive(0);
+        currentPageIndex = 0;
+        touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
+        touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
+                .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
     }
 }

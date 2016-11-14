@@ -201,7 +201,7 @@ public class GameStage extends Stage {
                     }
                 }
             }
-            shopScript.currentPageIndex = 0;
+            if (shopScript != null) shopScript.currentPageIndex = 0;
             vc.bought = false;
             vc.enabled = false;
             vc.advertised = false;

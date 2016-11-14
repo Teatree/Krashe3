@@ -76,9 +76,9 @@ public class AbstractDialog {
     }
 
     public static void checkSecondaryDialog(){
-        if (isSecondDialogOpen.get() && isSecondDialogClosed.get()){
+        if (isSecondDialogClosed.get()){
             isSecondDialogOpen.set(false);
-            isSecondDialogClosed.set(false);
+//            isSecondDialogClosed.set(false);
         }
     }
 }

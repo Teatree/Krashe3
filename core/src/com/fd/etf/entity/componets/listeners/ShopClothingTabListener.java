@@ -26,7 +26,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -41,7 +41,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn.get() /*&& ShopScreenScript.canScroll*/) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
             LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
             if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                 lc.getLayer(BTN_NORMAL).isVisible = true;
@@ -56,8 +56,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void clicked() {
-
-        if (!ShopScreenScript.isPreviewOn.get()/* && ShopScreenScript.canScroll*/) {
+        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
@@ -84,7 +83,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     }
 
     private void switchScreenToUpgrds() {
-//        ShopScreenScript.canScroll = false;
+        ShopScreenScript.canChangeTabs = false;
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
 
@@ -121,6 +120,6 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         acTouchZone.dataArray.add(
                 Actions.moveTo(0, shopScreenScript.touchZoneNButton.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
         shopScreenScript.touchZoneNButton.add(acTouchZone);
-        shopScreenScript.setDotActive(0);
+        shopScreenScript.resetPages();
     }
 }

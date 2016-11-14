@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.stages.MenuScreenScript;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -122,10 +123,12 @@ public class BasicDialog extends AbstractDialog {
             }
             case TYPE_RESET_RESULT: {
                 showResetProgressResult();
+                isSecondDialogClosed.set(false);
                 break;
             }
             case TYPE_RESTORE_PURCH_RESULT: {
                 showRestorePurchResult();
+                isSecondDialogClosed.set(false);
                 break;
             }
         }
@@ -176,6 +179,8 @@ public class BasicDialog extends AbstractDialog {
                         close(dialogE);
                         VanityComponent.disableAllVanitiesAssets();
                         GameStage.changedFlower = true;
+//                        AbstractDialog.isDialogOpen.set(false);
+//                        AbstractDialog.isSecondDialogOpen.set(false);
                         GameStage.initMenu();
                     }
                 });
