@@ -29,7 +29,6 @@ public class Settings extends AbstractDialog {
     public static final String BTN_RESTORE = "btn_restore";
     public static final String BTN_CLOSE_SETTINGS = "btn_close_settings";
     public static final String BTN_CLOSE_INFO = "btn_close_info";
-    public static final String BTN_FB_INFO = "btn_fb_info";
     public static final String BTN_NEXT_INFO = "btn_next_info";
     public static final String BTN_BACK_SETTINGS = "btn_back_settings";
     public static final String BTN_MUSIC = "btn_music";

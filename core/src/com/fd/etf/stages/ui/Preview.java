@@ -326,18 +326,32 @@ public class Preview extends AbstractDialog {
                         ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
                     }
                 }
-
-                private void putInPlaceNewIconPosition() {
-                    TransformComponent tc = changeBagIcon(vc);
-                    itemIcons.get(vc.shopIcon).add(tc);
-                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
-                            ShopScreenScript.bagsZindex + 10);
-                    sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
-                    itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
-                            shadowE.getComponent(ZIndexComponent.class).getZIndex() - 1);
-                }
             });
         }
+    }
+
+
+    private void putInPlaceNewIconPosition() {
+        TransformComponent tc = changeBagIcon(vc);
+        itemIcons.get(vc.shopIcon).add(tc);
+        itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                ShopScreenScript.bagsZindex + 10);
+        sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+        itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                shadowE.getComponent(ZIndexComponent.class).getZIndex() - 1);
+    }
+
+    public TransformComponent changeBagIcon(ShopItem vc) {
+        if (vc.currencyType.equals(SOFT)) {
+            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
+            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
+            sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+            itemIcons.put(vc.shopIcon, iconBagClone);
+            return oldTc;
+        }
+        return null;
     }
 
     public void initEnableButton(final ShopItem vc) {
@@ -521,19 +535,6 @@ public class Preview extends AbstractDialog {
             setShouldDeleteIconE();
             removeIconE();
         }
-    }
-
-    public TransformComponent changeBagIcon(ShopItem vc) {
-        if (vc.currencyType.equals(SOFT)) {
-            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
-            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
-            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
-            sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
-            itemIcons.put(vc.shopIcon, iconBagClone);
-            return oldTc;
-        }
-        return null;
     }
 
     private boolean animFinished() {
