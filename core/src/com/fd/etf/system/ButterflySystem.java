@@ -39,12 +39,6 @@ public class ButterflySystem extends IteratingSystem {
             sasc.player.speed = 0;
             entity.getComponent(ButterflyComponent.class).state = DEAD;
         }
-        GameStage.sceneLoader.renderer.drawDebugRect(entity.getComponent(ButterflyComponent.class).boundsRect.x,
-                entity.getComponent(ButterflyComponent.class).boundsRect.y,
-                entity.getComponent(ButterflyComponent.class).boundsRect.width,
-                entity.getComponent(ButterflyComponent.class).boundsRect.height,
-                entity.toString());
-
         if (!isPause.get() && !isGameOver.get() && isStarted &&
                 entity.getComponent(ButterflyComponent.class).state != DEAD) {
             sasc.player.speed = FPS;

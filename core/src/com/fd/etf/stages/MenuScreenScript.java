@@ -277,7 +277,9 @@ public class MenuScreenScript implements IScript {
                 new ImageButtonListener(btnPlayServices, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        movingFlaps = true;
+                        if (!isDialogOpen.get()) {
+                            movingFlaps = true;
+                        }
                     }
                 });
 
@@ -321,32 +323,7 @@ public class MenuScreenScript implements IScript {
 //        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
 
         //move da other buttons
-        if (movingFlaps) {
-            if (!playServiceFlapIsOut) {
-                if (achievements_C.getComponent(TransformComponent.class).y > 210) {
-                    achievements_C.getComponent(TransformComponent.class).y -= 4;
-                    if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f
-                            && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
-                        leaderboard_C.getComponent(TransformComponent.class).y -= 4;
-                        if (leaderboard_C.getComponent(TransformComponent.class).y <= 270.40f) {
-                            playServiceFlapIsOut = true;
-                            movingFlaps = false;
-                        }
-                    }
-                }
-            } else {
-                if (achievements_C.getComponent(TransformComponent.class).y < 331) {
-                    achievements_C.getComponent(TransformComponent.class).y += 4;
-                    if (achievements_C.getComponent(TransformComponent.class).y >= 331) {
-                        playServiceFlapIsOut = false;
-                        movingFlaps = false;
-                    }
-                }
-                if (leaderboard_C.getComponent(TransformComponent.class).y < 331) {
-                    leaderboard_C.getComponent(TransformComponent.class).y += 4;
-                }
-            }
-        }
+        moveDaFlaps();
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(camPosX, 0, 0);
@@ -380,6 +357,35 @@ public class MenuScreenScript implements IScript {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
                 startTransitionIn = false;
+            }
+        }
+    }
+
+    private void moveDaFlaps() {
+        if (movingFlaps) {
+            if (!playServiceFlapIsOut) {
+                if (achievements_C.getComponent(TransformComponent.class).y > 210) {
+                    achievements_C.getComponent(TransformComponent.class).y -= 4;
+                    if (achievements_C.getComponent(TransformComponent.class).y <= 275.5f
+                            && leaderboard_C.getComponent(TransformComponent.class).y > 263.40f) {
+                        leaderboard_C.getComponent(TransformComponent.class).y -= 4;
+                        if (leaderboard_C.getComponent(TransformComponent.class).y <= 270.40f) {
+                            playServiceFlapIsOut = true;
+                            movingFlaps = false;
+                        }
+                    }
+                }
+            } else {
+                if (achievements_C.getComponent(TransformComponent.class).y < 331) {
+                    achievements_C.getComponent(TransformComponent.class).y += 4;
+                    if (achievements_C.getComponent(TransformComponent.class).y >= 331) {
+                        playServiceFlapIsOut = false;
+                        movingFlaps = false;
+                    }
+                }
+                if (leaderboard_C.getComponent(TransformComponent.class).y < 331) {
+                    leaderboard_C.getComponent(TransformComponent.class).y += 4;
+                }
             }
         }
     }
