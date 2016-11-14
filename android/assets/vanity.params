@@ -5,7 +5,7 @@
 			head_top : head_top_baseball_cap
 		},
 		shopIcon : itembaseballcap,
-		name : Baseball \ n Cap,
+		name : Baseball \n Cap,
 		cost : 100,
 		description : Baseball is great!
 	}, {
@@ -17,7 +17,7 @@
 			leaf_right : leaf_right_lettuce
 		},
 		shopIcon : itemlettuce,
-		name : Lettuce \ n leaves,
+		name : Lettuce \n leaves,
 		cost : 140,
 		leaves : true
 	}, {
@@ -27,7 +27,7 @@
 			middle_leafs : middle_leafs_sunflower
 		},
 		shopIcon : itemsunflower,
-		name : Sunflower \ n leaves,
+		name : Sunflower \n leaves,
 		cost : 180,
 		bought : true
 	}, {
@@ -37,7 +37,7 @@
 			pot : pot_bricks
 		},
 		shopIcon : itembricks,
-		name : Red \ n brick pot,
+		name : Red \n brick pot,
 		cost : 240,
 		leaves : true
 	}, {
@@ -57,7 +57,7 @@
 			pot : pot_mason_jar
 		},
 		shopIcon : itemmasonjar,
-		name : Mason \ n jar,
+		name : Mason \n jar,
 		cost : 410,
 		description : Part of Hipster collection,
 		bought : true
@@ -70,9 +70,9 @@
 			leaf_right : leaf_right_default
 		},
 		shopIcon : itemcoffeecup,
-		name : Cup of \ n starbugs,
+		name : Cup of \n starbugs,
 		cost : 710,
-		description : Part of Hipster \ n collection,
+		description : Part of Hipster \n collection,
 		bought : true,
 		enabled : true,
 		leaves : true
@@ -83,7 +83,7 @@
 			head_top : head_top_partyhat_1
 		},
 		shopIcon : itempartyhat,
-		name : Party \ n hat,
+		name : Party \n hat,
 		cost : 920
 	}, {
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
@@ -120,8 +120,7 @@
 		name : Scarf,
 		cost : 3400,
 		bought : true
-	},
-	{
+	},	{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -129,10 +128,8 @@
 		},
 		shopIcon : itemstpatrickhat,
 		name : Cat ears!,
-		cost : 4600,
-		leaves : false
-	},
-	{
+		cost : 4600
+	},{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -143,8 +140,7 @@
 		name : St Patrick \n lucky clover leaf,
 		cost : 5000,
 		leaves : true
-	},
-	{
+	},{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -152,10 +148,8 @@
 		},
 		shopIcon : itemstpatrickclover,
 		name : St Patrick \n beard,
-		cost : 5500,
-		leaves : false
-	},
-	{
+		cost : 5500
+	},{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -165,8 +159,7 @@
 		name : St Patrick \n cauldron,
 		cost : 6000,
 		leaves : true
-	},
-	{
+	},{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -174,10 +167,8 @@
 		},
 		shopIcon : itemstpatrickhat,
 		name : St Patrick \n hat,
-		cost : 6500,
-		leaves : false
-	},
-	{
+		cost : 6500
+	},{
 		class : com.fd.etf.utils.SaveMngr$VanityJson,
 		assetsToChange : {
 			class : java.util.HashMap,
@@ -187,5 +178,5 @@
 		name : Tea cup,
 		cost : 7000,
 		leaves : true
-	},
+	}
 ]
