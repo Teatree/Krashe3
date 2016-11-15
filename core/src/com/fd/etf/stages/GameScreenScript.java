@@ -441,7 +441,6 @@ public class GameScreenScript implements IScript {
             if (gameOverDialog != null) {
                 gameOverDialog.update(delta);
             }
-
             if (pauseDialog != null) {
                 pauseDialog.update(delta);
             }
