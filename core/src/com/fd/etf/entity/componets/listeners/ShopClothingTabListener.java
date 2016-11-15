@@ -26,36 +26,46 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
-            LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-            if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            } else {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-                lc.getLayer(BTN_DEFAULT).isVisible = true;
+        if (!ShopScreenScript.isPreviewOn.get()) {
+            ButtonComponent.skipDefaultLayersChange = false;
+            if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+                LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
+                if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
+                    lc.getLayer(BTN_NORMAL).isVisible = true;
+                    lc.getLayer(BTN_PRESSED).isVisible = false;
+                } else {
+                    lc.getLayer(BTN_NORMAL).isVisible = false;
+                    lc.getLayer(BTN_PRESSED).isVisible = true;
+                    lc.getLayer(BTN_DEFAULT).isVisible = true;
+                }
             }
+        } else {
+            ButtonComponent.skipDefaultLayersChange = false;
         }
     }
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
-            LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-            if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
-                lc.getLayer(BTN_NORMAL).isVisible = true;
-                lc.getLayer(BTN_PRESSED).isVisible = false;
-            } else {
-                lc.getLayer(BTN_NORMAL).isVisible = false;
-                lc.getLayer(BTN_PRESSED).isVisible = true;
-                lc.getLayer(BTN_DEFAULT).isVisible = true;
+        if (!ShopScreenScript.isPreviewOn.get()) {
+            if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+                LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
+                if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
+                    lc.getLayer(BTN_NORMAL).isVisible = true;
+                    lc.getLayer(BTN_PRESSED).isVisible = false;
+                } else {
+                    lc.getLayer(BTN_NORMAL).isVisible = false;
+                    lc.getLayer(BTN_PRESSED).isVisible = true;
+                    lc.getLayer(BTN_DEFAULT).isVisible = true;
+                }
             }
+        } else {
+            ButtonComponent.skipDefaultLayersChange = true;
         }
     }
 
     @Override
     public void clicked() {
+        if (!ShopScreenScript.isPreviewOn.get())
         if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
