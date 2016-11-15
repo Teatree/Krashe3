@@ -192,7 +192,6 @@ public class GameScreenScript implements IScript {
         LabelComponent scoreLabelS = scoreLabelES.getComponent(LabelComponent.class);
         scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), "" + fpc.score);
 
-        System.out.println("set tap to start");
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
