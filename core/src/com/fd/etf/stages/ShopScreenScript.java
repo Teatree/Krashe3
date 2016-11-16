@@ -34,7 +34,7 @@ public class ShopScreenScript implements IScript {
     public static final String SCORE_LBL = "total_coins";
     public static final String SCORE_LBL_SH = "total_coins_sh";
     public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
-    public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
+//    public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
@@ -79,7 +79,7 @@ public class ShopScreenScript implements IScript {
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
-    public Entity touchZone;
+//    public Entity touchZone;
     public LabelComponent lc;
     public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
@@ -132,8 +132,8 @@ public class ShopScreenScript implements IScript {
         lcsh = scoreLblsh.getComponent(LabelComponent.class);
 
         touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
-        touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
-        touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
+//        touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
+//        touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
         for (Entity e: touchZoneNButton.getComponent(NodeComponent.class).children){
             if(e.getComponent(MainItemComponent.class).tags.contains(DOT_TAG)) {
@@ -528,7 +528,7 @@ public class ShopScreenScript implements IScript {
     @Override
     public void dispose() {
         scoreLbl = null;
-        touchZone = null;
+//        touchZone = null;
         lc = null;
         tempGdx = new Vector2();
         bags = null;
