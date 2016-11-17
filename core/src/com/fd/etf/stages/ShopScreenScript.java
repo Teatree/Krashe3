@@ -94,6 +94,8 @@ public class ShopScreenScript implements IScript {
     private int bagPosIdY;
     private int bagPageId;
 
+    private boolean isAllowedMoving;
+
     private List<Entity> pageDots = new ArrayList<>();
     public int currentPageIndex = 0;
 
@@ -240,7 +242,7 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(e, new AtomicBoolean[]{isPreviewOn}) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn.get()) {
+                            if (!isPreviewOn.get() && isAllowedMoving) {
                                 preview.showPreview(hc, true, false);
                             }
                         }
@@ -284,7 +286,7 @@ public class ShopScreenScript implements IScript {
                     new ImageButtonListener(bagEntity, new AtomicBoolean[]{isPreviewOn}) {
                         @Override
                         public void clicked() {
-                            if (!isPreviewOn.get()) {
+                            if (!isPreviewOn.get() && isAllowedMoving) {
                                 preview.showPreview(vc, true, false);
                             }
                         }
@@ -353,6 +355,15 @@ public class ShopScreenScript implements IScript {
         preview.updatePreview();
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
+
+        float bPos = bags.get(0).getComponent(TransformComponent.class).x;
+        if (bPos == firstBagTargetPos){
+            isAllowedMoving = true;
+//            System.out.println(" YOU CAN MOVE!" );
+        }else{
+            isAllowedMoving = false;
+//            System.out.println("CAN't MOVE!" );
+        }
     }
 
     private void transitionOut() {
@@ -448,7 +459,7 @@ public class ShopScreenScript implements IScript {
 
                     @Override
                     public void clicked() {
-                        if(!isPreviewOn.get())
+                        if(!isPreviewOn.get() && isAllowedMoving)
                         scrollBagsOnePageLeft();
                         updateScrollButtonsState();
                     }
@@ -500,7 +511,7 @@ public class ShopScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!isPreviewOn.get())
+                if(!isPreviewOn.get() && isAllowedMoving)
                 scrollBagsOnePageRight();
                 updateScrollButtonsState();
             }
