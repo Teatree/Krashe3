@@ -34,7 +34,6 @@ public class ShopScreenScript implements IScript {
     public static final String SCORE_LBL = "total_coins";
     public static final String SCORE_LBL_SH = "total_coins_sh";
     public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
-//    public static final String TOUCH_ZONE_SCROLL = "touchZone_scroll";
     public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
     public static final String BTN_BACK = "btn_back";
@@ -172,6 +171,16 @@ public class ShopScreenScript implements IScript {
         btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
     }
 
+    private void sortHCitemsAccordingUI(){
+        //raven, phoenix, dog, bj_double, cat
+        String[] names = new String[]{"raven", "phoenix", "dog", "bj_double", "cat"};
+        List <ShopItem> hcsi = new ArrayList<>();
+        for (String title : names){
+            hcsi.add(findCorrectHCitemByTitle(title));
+        }
+        allHCItems = hcsi;
+    }
+
     public void getAllAllVanities() {
         if (allShopItems.isEmpty()) {
             for (PetComponent pet : GameStage.gameScript.fpc.pets) {
@@ -180,6 +189,7 @@ public class ShopScreenScript implements IScript {
                 }
             }
             allHCItems.addAll(getAllUpgrades());
+            sortHCitemsAccordingUI();
             allShopItems.addAll(GameStage.gameScript.fpc.vanities);
         }
 
@@ -204,14 +214,21 @@ public class ShopScreenScript implements IScript {
         Collections.reverse(allShopItems);
     }
 
+    private ShopItem findCorrectHCitemByTitle (String title){
+        for (ShopItem si : allHCItems){
+            if (si.name.equals(title))
+                return si;
+        }
+        return null;
+    }
+
     private void createIconsForAllHCItems() {
         hcSectionE = shopItem.getChild(HC_SHOP_SEC).getEntity();
         NodeComponent nc = hcSectionE.getComponent(NodeComponent.class);
 
         int i = 0;
         for (Entity e : nc.children) {
-            final ShopItem hc = allHCItems.get(i);
-
+            final ShopItem hc = findCorrectHCitemByTitle(e.getComponent(MainItemComponent.class).itemIdentifier);
             // set item title
             Entity child = e.getComponent(NodeComponent.class).getChild(TITLE);
             child.getComponent(LabelComponent.class).text.replace(
@@ -418,6 +435,18 @@ public class ShopScreenScript implements IScript {
         scrollLeftBtn.getComponent(ButtonComponent.class)
                 .addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
                     @Override
+                    public void touchUp() {
+                        if (canMoveBagsLeft())
+                            super.touchUp();
+                    }
+
+                    @Override
+                    public void touchDown() {
+                        if (canMoveBagsLeft())
+                            super.touchDown();
+                    }
+
+                    @Override
                     public void clicked() {
                         if(!isPreviewOn.get())
                         scrollBagsOnePageLeft();
@@ -457,6 +486,18 @@ public class ShopScreenScript implements IScript {
         Entity scrollLeftBtn = touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT);
         scrollLeftBtn.add(new ButtonComponent());
         scrollLeftBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(scrollLeftBtn, new AtomicBoolean[]{isPreviewOn}) {
+            @Override
+            public void touchUp() {
+                if (canMoveBagsRight())
+                    super.touchUp();
+            }
+
+            @Override
+            public void touchDown() {
+                if (canMoveBagsRight())
+                    super.touchDown();
+            }
+
             @Override
             public void clicked() {
                 if(!isPreviewOn.get())
