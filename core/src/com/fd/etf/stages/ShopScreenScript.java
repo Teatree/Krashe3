@@ -246,7 +246,8 @@ public class ShopScreenScript implements IScript {
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
-            bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex() > bagsZindex ? bagEntity.getComponent(ZIndexComponent.class).getZIndex() : bagsZindex;
+            bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex() > bagsZindex ?
+                    bagEntity.getComponent(ZIndexComponent.class).getZIndex() : bagsZindex;
             previousTc = tc;
 
             shopItem.getChild(BTN_IMG_SHOP_ICON_LIB).addChild(itemIcon);

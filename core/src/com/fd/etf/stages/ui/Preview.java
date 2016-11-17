@@ -19,8 +19,10 @@ import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
 import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ShopScreenScript.*;
+import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
 import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class Preview extends AbstractDialog {
 
@@ -39,9 +41,14 @@ public class Preview extends AbstractDialog {
     public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
+
+    private static final int HIDE_INFO_TAG_RIGHT = 2500;
+    private static final int HIDE_INFO_TAG_LEFT = -1500;
+
     // Description
     public static final String LBL_DESC = "tag_lbl_desc";
     public static final String IMG_SEC_BUBBLE = "img_sec_bubble";
+    private static final float HIDE_INFO_TAG_DURATION = 0.4f;
     public Entity lbl_desc;
     public Entity lbl_price;
 
@@ -68,7 +75,7 @@ public class Preview extends AbstractDialog {
 
     private static boolean shouldDeleteIconE = true;
     public Entity previewE;
-    public Entity bg;
+//    public Entity bg;
     private Entity iconE;
     private Entity btnPrev;
     private Entity btnNext;
@@ -85,20 +92,16 @@ public class Preview extends AbstractDialog {
         GameStage.sceneLoader.getEngine().addEntity(previewE);
     }
 
-    public Preview() {
-    }
+    public Preview() {}
 
     public void init() {
         loadPreviewFromLib();
         infoTag = previewE.getComponent(NodeComponent.class).getChild(INFO);
-        lbl_desc = previewE.getComponent(NodeComponent.class).
-                getChild(INFO).getComponent(NodeComponent.class).getChild(LBL_DESC);
-        lbl_title = previewE.getComponent(NodeComponent.class).
-                getChild(INFO).getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
+        lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
+        lbl_title = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lbl_price = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         lbl_price_sh = previewE.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
-        bg = previewE.getComponent(NodeComponent.class).
-                getChild(INFO).getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
+//        bg = infoTag.getComponent(NodeComponent.class).getChild(IMG_BG_SHOW_CASE);
         lbl_not_enough = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         lbl_not_enough_sh = previewE.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);
         btnPrev = previewE.getComponent(NodeComponent.class).getChild(BTN_LEFT);
@@ -121,17 +124,9 @@ public class Preview extends AbstractDialog {
         btnClose.getComponent(ButtonComponent.class).
                 addListener(new ImageButtonListener(btnClose, new AtomicBoolean[]{isPreviewOn}) {
                     @Override
-                    public void touchUp() {
-//                        btn.getComponent(TransformComponent.class).scaleX += GlobalConstants.TENTH;
-//                        btn.getComponent(TransformComponent.class).scaleY += GlobalConstants.TENTH;
-                    }
-
+                    public void touchUp() {}
                     @Override
-                    public void touchDown() {
-//                        btn.getComponent(TransformComponent.class).scaleX -= GlobalConstants.TENTH;
-//                        btn.getComponent(TransformComponent.class).scaleY -= GlobalConstants.TENTH;
-                    }
-
+                    public void touchDown() {}
                     @Override
                     public void clicked() {
                         checkAndClose();
@@ -270,22 +265,28 @@ public class Preview extends AbstractDialog {
 
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
-            ac.dataArray.add(Actions.moveTo(100, infoTag.getComponent(TransformComponent.class).y, 0.7f));
+            ac.dataArray.add(Actions.moveTo(100, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
         }
 
 
         // Showing and not showing of Description/Collections section
         if (vc.description == null) {
-            previewE.getComponent(NodeComponent.class).getChild(INFO).getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            previewE.getComponent(NodeComponent.class).getChild(INFO).getComponent(NodeComponent.class).
-                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         } else {
-            previewE.getComponent(NodeComponent.class).getChild(INFO).getComponent(NodeComponent.class).
+            infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TransformComponent.class).x = 504;
-            previewE.getComponent(NodeComponent.class).getChild(INFO).getComponent(NodeComponent.class).
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(TransformComponent.class).y = 151;
+
+            infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 480;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = 41;
+
         }
         previewE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
@@ -356,7 +357,6 @@ public class Preview extends AbstractDialog {
                     });
         }
     }
-
 
     private void putInPlaceNewIconPosition() {
         TransformComponent tc = changeBagIcon(vc);
@@ -450,19 +450,29 @@ public class Preview extends AbstractDialog {
             btnPrev.add(new ButtonComponent());
         }
         btnPrev.getComponent(ButtonComponent.class).clearListeners();
+
+        LayerMapComponent lc = btnPrev.getComponent(LayerMapComponent.class);
+        if ((vc.currencyType.equals(HARD) && allHCItems.indexOf(vc) > 0) ||
+                (vc.currencyType.equals(SOFT) && allShopItems.indexOf(vc) > 0)){
+            lc.getLayer("Gray").isVisible = false;
+            lc.getLayer(DEFAULT_LAYER).isVisible = true;
+        } else {
+            lc.getLayer(DEFAULT_LAYER).isVisible = false;
+            lc.getLayer("Gray").isVisible = true;
+        }
+
         btnPrev.getComponent(ButtonComponent.class)
                 .addListener(new ImageButtonListener(btnPrev) {
 
                     @Override
                     public void clicked() {
-//                canClosePreview = false;
-                        if (animFinished()) {
+                        if (animFinished() && (vc.currencyType.equals(HARD) && allHCItems.indexOf(vc) > 0) ||
+                                (vc.currencyType.equals(SOFT) && allShopItems.indexOf(vc) > 0)) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
-                            ac.dataArray.add(Actions.moveTo(2500, infoTag.getComponent(TransformComponent.class).y, 0.7f));
+                            ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
-                            movedTo = 2500;
-//                            showPreviewAfterAniPrev();
+                            movedTo = HIDE_INFO_TAG_RIGHT;
                         }
                     }
                 });
@@ -496,20 +506,28 @@ public class Preview extends AbstractDialog {
         if (btnNext.getComponent(ButtonComponent.class) == null) {
             btnNext.add(new ButtonComponent());
         }
+
+        LayerMapComponent lc = btnNext.getComponent(LayerMapComponent.class);
+        if ((allHCItems.indexOf(vc) < allHCItems.size()-1 && vc.currencyType.equals(HARD))
+                || (vc.currencyType.equals(SOFT) && allShopItems.indexOf(vc) < allShopItems.size()-1)){
+            lc.getLayer("Gray").isVisible = false;
+            lc.getLayer(DEFAULT_LAYER).isVisible = true;
+        } else {
+            lc.getLayer(DEFAULT_LAYER).isVisible = false;
+            lc.getLayer("Gray").isVisible = true;
+        }
+
         btnNext.getComponent(ButtonComponent.class).clearListeners();
         btnNext.getComponent(ButtonComponent.class)
                 .addListener(new ImageButtonListener(btnNext) {
                     @Override
                     public void clicked() {
-//                canClosePreview = false;
-                        if (animFinished()) {
+                        if (animFinished() && allShopItems.indexOf(vc) < allShopItems.size()-1) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
-                            ac.dataArray.add(Actions.moveTo(-1000, infoTag.getComponent(TransformComponent.class).y, 0.4f));
+                            ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, 0.4f));
                             infoTag.add(ac);
-                            movedTo = -1000;
-
-//                            showPreviewAfterAniNext();
+                            movedTo = HIDE_INFO_TAG_LEFT;
                         }
                     }
                 });
@@ -573,17 +591,16 @@ public class Preview extends AbstractDialog {
     public void updatePreview() {
         if (movedTo != 0){
             if (infoTag.getComponent(TransformComponent.class).x == movedTo){
-                if (movedTo == 2500) {
-                    infoTag.getComponent(TransformComponent.class).x = -1000;
+                if (movedTo == HIDE_INFO_TAG_RIGHT) {
+                    infoTag.getComponent(TransformComponent.class).x = HIDE_INFO_TAG_LEFT;
                     showPreviewAfterAniPrev();
                 } else {
-                    infoTag.getComponent(TransformComponent.class).x = 2500;
+                    infoTag.getComponent(TransformComponent.class).x = HIDE_INFO_TAG_RIGHT;
                     showPreviewAfterAniNext();
                 }
                 movedTo = 0;
             }
         }
-
 
         if (iconE != null && vc.currencyType.equals(SOFT)) {
             iconE.getComponent(TransformComponent.class).x = previewE.getComponent(TransformComponent.class).x + ICON_X_RELATIVE;
