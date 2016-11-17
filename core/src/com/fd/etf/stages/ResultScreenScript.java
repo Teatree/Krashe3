@@ -10,6 +10,7 @@ import com.fd.etf.stages.ui.Showcase;
 import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.GlobalConstants;
+import com.sun.javafx.css.converters.ColorConverter;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -65,7 +66,7 @@ public class ResultScreenScript implements IScript {
     int i = 0;
     int j = 0;
     Entity backPlay;
-//    private GameStage stage;
+    //    private GameStage stage;
     private ItemWrapper resultScreenItem;
     private Entity adsBtn;
     private Showcase showcase;
@@ -204,12 +205,12 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if (timer !=null) {
+        if (timer != null) {
             timer.timer();
         }
-        if (timer.timerE!=null && showcase.showcaseE!=null) {
-            timer.timerE.getComponent(ZIndexComponent.class).setZIndex(showcase.showcaseE.getComponent(ZIndexComponent.class).getZIndex()-2);
-            timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerEsh.getComponent(ZIndexComponent.class).getZIndex()+1);
+        if (timer.timerE != null && showcase.showcaseE != null) {
+            timer.timerE.getComponent(ZIndexComponent.class).setZIndex(showcase.showcaseE.getComponent(ZIndexComponent.class).getZIndex() - 2);
+            timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerEsh.getComponent(ZIndexComponent.class).getZIndex() + 1);
         }
         if (offerPromo && active && !timer.ifShouldShowTimer()) {
             if (promoWindow == null) {
@@ -238,7 +239,7 @@ public class ResultScreenScript implements IScript {
             }
             showcase.showFading();
         }
-        if(showcase.showcaseE!=null){
+        if (showcase.showcaseE != null) {
             showcase.act(delta);
         }
 
@@ -280,16 +281,19 @@ public class ResultScreenScript implements IScript {
 
     private void setProgressBar() {
         if (showCaseVanity != null) {
+            progressBarE.getComponent(TintComponent.class).color.a = 1;
             DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
             long scoreDiff = (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
-            if (scoreDiff < 0) {
-                dcProgressBar.width = 0;
+            if (scoreDiff < 40) {
+                dcProgressBar.width = 40;
             } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
                 dcProgressBar.width = scoreDiff;
             } else {
                 dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
             }
         }
+        if (gameScript.fpc.totalScore == 0)
+            progressBarE.getComponent(TintComponent.class).color.a = 0;
     }
 
     private void updateScore() {
@@ -336,7 +340,7 @@ public class ResultScreenScript implements IScript {
                                         }
                                     });
                                 } else {
-                                    gameScript.fpc.score =(int)(showCaseVanity.cost - gameScript.fpc.totalScore);
+                                    gameScript.fpc.score = (int) (showCaseVanity.cost - gameScript.fpc.totalScore);
                                     gameScript.fpc.totalScore = showCaseVanity.cost;
 
                                     adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
