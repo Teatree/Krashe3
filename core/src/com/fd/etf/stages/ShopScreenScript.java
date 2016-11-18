@@ -78,7 +78,7 @@ public class ShopScreenScript implements IScript {
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
-//    public Entity touchZone;
+    //    public Entity touchZone;
     public LabelComponent lc;
     public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
@@ -136,8 +136,8 @@ public class ShopScreenScript implements IScript {
 //        touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
 //        touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
-        for (Entity e: touchZoneNButton.getComponent(NodeComponent.class).children){
-            if(e.getComponent(MainItemComponent.class).tags.contains(DOT_TAG)) {
+        for (Entity e : touchZoneNButton.getComponent(NodeComponent.class).children) {
+            if (e.getComponent(MainItemComponent.class).tags.contains(DOT_TAG)) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
@@ -173,11 +173,11 @@ public class ShopScreenScript implements IScript {
         btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
     }
 
-    private void sortHCitemsAccordingUI(){
+    private void sortHCitemsAccordingUI() {
         //raven, phoenix, dog, bj_double, cat
         String[] names = new String[]{"raven", "phoenix", "dog", "bj_double", "cat"};
-        List <ShopItem> hcsi = new ArrayList<>();
-        for (String title : names){
+        List<ShopItem> hcsi = new ArrayList<>();
+        for (String title : names) {
             hcsi.add(findCorrectHCitemByTitle(title));
         }
         allHCItems = hcsi;
@@ -216,8 +216,8 @@ public class ShopScreenScript implements IScript {
         Collections.reverse(allShopItems);
     }
 
-    private ShopItem findCorrectHCitemByTitle (String title){
-        for (ShopItem si : allHCItems){
+    private ShopItem findCorrectHCitemByTitle(String title) {
+        for (ShopItem si : allHCItems) {
             if (si.name.equals(title))
                 return si;
         }
@@ -344,7 +344,7 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-        if (!canChangeTabs && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos){
+        if (!canChangeTabs && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos) {
             canChangeTabs = true;
         }
         if (!isPreviewOn.get()) {
@@ -357,10 +357,10 @@ public class ShopScreenScript implements IScript {
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
 
         float bPos = bags.get(0).getComponent(TransformComponent.class).x;
-        if (bPos == firstBagTargetPos){
+        if (firstBagTargetPos == 0 || bPos == firstBagTargetPos) {
             isAllowedMoving = true;
 //            System.out.println(" YOU CAN MOVE!" );
-        }else{
+        } else {
             isAllowedMoving = false;
 //            System.out.println("CAN't MOVE!" );
         }
@@ -418,16 +418,16 @@ public class ShopScreenScript implements IScript {
         return tc;
     }
 
-    private void placeTheDot(int pageId){
-        int vV = pageId+1;
+    private void placeTheDot(int pageId) {
+        int vV = pageId + 1;
         Entity dotEntity = touchZoneNButton.getComponent(NodeComponent.class).getChild(DOTZ + vV);
         pageDots.add(dotEntity);
         dotEntity.getComponent(TintComponent.class).color.a = 1;
-        dotEntity.getComponent(TransformComponent.class).x = 550 + pageId*30;
+        dotEntity.getComponent(TransformComponent.class).x = 550 + pageId * 30;
         dotEntity.getComponent(TransformComponent.class).y = 10;
     }
 
-    public void setDotActive(int pagIndex){
+    public void setDotActive(int pagIndex) {
 
         for (int i = 0; i < pageDots.size(); i++) {
             if (i != pagIndex) {
@@ -459,8 +459,9 @@ public class ShopScreenScript implements IScript {
 
                     @Override
                     public void clicked() {
-                        if(!isPreviewOn.get() && isAllowedMoving)
-                        scrollBagsOnePageLeft();
+                        if (!isPreviewOn.get() && isAllowedMoving) {
+                            scrollBagsOnePageLeft();
+                        }
                         updateScrollButtonsState();
                     }
                 });
@@ -511,8 +512,8 @@ public class ShopScreenScript implements IScript {
 
             @Override
             public void clicked() {
-                if(!isPreviewOn.get() && isAllowedMoving)
-                scrollBagsOnePageRight();
+                if (!isPreviewOn.get() && isAllowedMoving)
+                    scrollBagsOnePageRight();
                 updateScrollButtonsState();
             }
         });
@@ -544,7 +545,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    private void updateScrollButtonsState(){
+    private void updateScrollButtonsState() {
         if (canMoveBagsLeft()) {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = true;
