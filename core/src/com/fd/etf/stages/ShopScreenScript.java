@@ -78,7 +78,6 @@ public class ShopScreenScript implements IScript {
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
-    //    public Entity touchZone;
     public LabelComponent lc;
     public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
@@ -133,8 +132,6 @@ public class ShopScreenScript implements IScript {
         lcsh = scoreLblsh.getComponent(LabelComponent.class);
 
         touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
-//        touchZone = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getChild(TOUCH_ZONE_SCROLL).getEntity();
-//        touchZoneBtn = touchZone.getComponent(ButtonComponent.class);
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
         for (Entity e : touchZoneNButton.getComponent(NodeComponent.class).children) {
             if (e.getComponent(MainItemComponent.class).tags.contains(DOT_TAG)) {
@@ -142,7 +139,7 @@ public class ShopScreenScript implements IScript {
             }
         }
 
-        createIconsForAllShopItems();
+        createIconsForAllSoftItems();
         createIconsForAllHCItems();
         initTabBtns();
         initScrollLeftBtn();
@@ -173,7 +170,6 @@ public class ShopScreenScript implements IScript {
     }
 
     private void sortHCitemsAccordingUI() {
-        //raven, phoenix, dog, bj_double, cat
         String[] names = new String[]{"raven", "phoenix", "dog", "bj_double", "cat"};
         List<ShopItem> hcsi = new ArrayList<>();
         for (String title : names) {
@@ -227,10 +223,8 @@ public class ShopScreenScript implements IScript {
         hcSectionE = shopItem.getChild(HC_SHOP_SEC).getEntity();
         NodeComponent nc = hcSectionE.getComponent(NodeComponent.class);
 
-        int i = 0;
         for (Entity e : nc.children) {
             final ShopItem hc = findCorrectHCitemByTitle(e.getComponent(MainItemComponent.class).itemIdentifier);
-            // set item title
             Entity child = e.getComponent(NodeComponent.class).getChild(TITLE);
             child.getComponent(LabelComponent.class).text.replace(
                     0, child.getComponent(LabelComponent.class).text.length,
@@ -246,11 +240,10 @@ public class ShopScreenScript implements IScript {
                             }
                         }
                     });
-            i++;
         }
     }
 
-    public void createIconsForAllShopItems() {
+    public void createIconsForAllSoftItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allSoftItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
@@ -260,7 +253,6 @@ public class ShopScreenScript implements IScript {
 
             Entity itemIcon = initSoftCurrencyShopItem(vc);
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(200);
-//                    bags.get(bags.size()-1).getComponent(ZIndexComponent.class).getZIndex()+20);
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
             bagEntity.add(tc);
@@ -294,24 +286,9 @@ public class ShopScreenScript implements IScript {
     }
 
     public List<Upgrade> getAllUpgrades() {
-//        List<Upgrade> upgrades = Upgrade.getAllUpgrades();
-//        if (!GameStage.gameScript.fpc.upgrades.isEmpty()) {
-//            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
-//                for (Upgrade u2 : upgrades) {
-//                    if (u.upgradeType.equals(u2.upgradeType)) {
-//                        u2.tryPeriod = u.tryPeriod;
-//                        u2.tryPeriodDuration = u.tryPeriodDuration;
-//                        u2.tryPeriodStart = u.tryPeriodStart;
-//                        u2.tryPeriodTimer = u.tryPeriodTimer;
-//                        u2.enabled = u.enabled;
-//                        u2.bought = u.bought;
-//                    }
-//                }
-//            }
-//        }
         List<Upgrade> upgrades = new ArrayList<Upgrade>(GameStage.gameScript.fpc.upgrades.values());
-        for (Upgrade u : Upgrade.getAllUpgrades()){
-            if (!upgrades.contains(u)){
+        for (Upgrade u : Upgrade.getAllUpgrades()) {
+            if (!upgrades.contains(u)) {
                 upgrades.add(u);
             }
         }
@@ -361,13 +338,14 @@ public class ShopScreenScript implements IScript {
         lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
         lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
 
-        float bPos = bags.get(0).getComponent(TransformComponent.class).x;
-        if (firstBagTargetPos == 0 || bPos == firstBagTargetPos) {
-            isAllowedMoving = true;
-//            System.out.println(" YOU CAN MOVE!" );
-        } else {
-            isAllowedMoving = false;
-//            System.out.println("CAN't MOVE!" );
+        if (firstBagTargetPos != 0) {
+            float bPos = bags.get(0).getComponent(TransformComponent.class).x;
+            if (firstBagTargetPos == 0 || bPos == firstBagTargetPos) {
+                isAllowedMoving = true;
+                firstBagTargetPos = 0;
+            } else {
+                isAllowedMoving = false;
+            }
         }
     }
 
@@ -587,7 +565,6 @@ public class ShopScreenScript implements IScript {
     @Override
     public void dispose() {
         scoreLbl = null;
-//        touchZone = null;
         lc = null;
         tempGdx = new Vector2();
         bags = null;

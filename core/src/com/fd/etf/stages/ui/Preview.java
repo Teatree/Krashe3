@@ -31,7 +31,6 @@ public class Preview extends AbstractDialog {
     public static final String BTN_RIGHT = "tag_right_btn";
     public static final String BTN_LEFT = "tag_left_btn";
     public static final String BTN_BUY = "tag_btn_buy";
-    // Disable/Enable buttons
     public static final String BTN_DISABLE = "tag_btn_disable";
     public static final String BTN_ENABLE = "tag_btn_enable";
 
@@ -45,7 +44,6 @@ public class Preview extends AbstractDialog {
     private static final int HIDE_INFO_TAG_RIGHT = 2000;
     private static final int HIDE_INFO_TAG_LEFT = -1000;
 
-    // Description
     public static final String LBL_DESC = "tag_lbl_desc";
     public static final String IMG_SEC_BUBBLE = "img_sec_bubble";
     private static final float HIDE_INFO_TAG_DURATION = 0.3f;
@@ -60,7 +58,6 @@ public class Preview extends AbstractDialog {
     public Entity lbl_price_sh;
     public Entity lbl_title;
 
-    // Not enough
     public static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
     public static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
     public Entity lbl_not_enough;
@@ -69,10 +66,8 @@ public class Preview extends AbstractDialog {
     public static final int ICON_X = 550;
     public static final int ICON_X_RELATIVE = 130;
     public static final int ICON_Y_RELATIVE = 150;
-//    public static final int PREVIEW_X = 260;
-//    public static final int PREVIEW_Y = 30;
 
-    public static final int INFO_TAG_X = 340;
+    public static final int INFO_TAG_X = 350;
     public static final int INFO_TAG_Y = 240;
 
     public static final int BTNZ_X = 308;
@@ -84,7 +79,6 @@ public class Preview extends AbstractDialog {
     private static final int UNKNOWN_ICON_Y_ON_JUMP = INFO_TAG_HIDE_Y;
 
     private static boolean shouldDeleteIconE = true;
-//    public Entity previewE;
     private Entity iconE;
     private Entity btnPrev;
     private Entity btnNext;
@@ -112,9 +106,6 @@ public class Preview extends AbstractDialog {
 
     public void init() {
         loadPreviewFromLib();
-//        infoTag = previewE.getComponent(NodeComponent.class).getChild(INFO);
-//        buttonz = previewE.getComponent(NodeComponent.class).getChild(TAG_BUTTONZ);
-
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lbl_title = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lbl_price = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
@@ -159,17 +150,13 @@ public class Preview extends AbstractDialog {
         sceneLoader.getEngine().addEntity(iconE);
 
         if (playAni) {
-//            if (vc.currencyType.equals(SOFT)) {
                 iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
                 iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
                 iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
-//            }
             playYellowStarsParticleEffect(544, 467);
         } else {
-//            if (vc.currencyType.equals(SOFT)) {
                 iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
                 iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
-//            }
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 200);
         }
     }
@@ -188,8 +175,6 @@ public class Preview extends AbstractDialog {
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
-//        lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(0);
-//        lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lbl_not_enough.getComponent(TintComponent.class).color.a = 0;
@@ -198,8 +183,6 @@ public class Preview extends AbstractDialog {
         } else {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-//            lbl_not_enough.getComponent(TransformComponent.class).x = 100;
-//            lbl_not_enough_sh.getComponent(TransformComponent.class).x = 100;
             lbl_not_enough.getComponent(TintComponent.class).color.a = 1;
             lbl_not_enough_sh.getComponent(TintComponent.class).color.a = 1;
             lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(99);
@@ -251,17 +234,7 @@ public class Preview extends AbstractDialog {
         initPrevButton(vc);
         initNextButton(vc);
 
-//        if (vc.currencyType.equals(SOFT)) {
-            initIcon(vc, jump, justBoughtAni);
-//        } else {
-//            initSoftIcon(vc, jump, false);
-//        }
-//        else {
-//            initUnknownPreviewIcon(jump);
-//            if (iconE != null) {
-//                iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            }
-//        }
+        initIcon(vc, jump, justBoughtAni);
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
@@ -290,7 +263,6 @@ public class Preview extends AbstractDialog {
     }
 
     private void setDescription(ShopItem vc) {
-        // Showing and not showing of Description/Collections section
         if (vc.description == null) {
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
@@ -347,7 +319,6 @@ public class Preview extends AbstractDialog {
             } else {
                 lbl_price_sh.getComponent(TransformComponent.class).x = base + 20 * wordCount;
                 lbl_price.getComponent(TransformComponent.class).x = base + 20 * wordCount;
-//                coinzE.getComponent(TransformComponent.class).x = base + 20 * wordCount;
             }
             lbl_price.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+10);
             lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+11);
@@ -362,7 +333,7 @@ public class Preview extends AbstractDialog {
                         public void clicked() {
                             if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
                                 if (vc.currencyType.equals(HARD)) {
-                                    vc.buyHard(); // TODO: http://cdn.collider.com/wp-content/uploads/die-hard-with-a-vengeance-bruce-willis.jpg // Oh Nastya
+                                    vc.buyHard();
                                 } else {
                                     vc.buyAndUse();
                                     putInPlaceNewIconPosition();
