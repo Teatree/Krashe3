@@ -40,7 +40,9 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(game, config);
         setupAds();
-        setupPlayServices();
+        if (isWifiConnected())
+            setupPlayServices();
+
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
@@ -49,7 +51,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     public void setupPlayServices() {
         gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
-        gameHelper.enableDebugLog(false);
+        gameHelper.enableDebugLog(true);
 
         final GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
             @Override
@@ -58,13 +60,6 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
             @Override
             public void onSignInSucceeded() {
-//                System.out.println("show A >>>" + showAchievements + " show L >>>" + showLeaders);
-//                if (showAchievements) {
-//                    getAchievements();
-//                }
-//                if (showLeaders) {
-//                    getLeaderboard();
-//                }
             }
         };
 
@@ -84,7 +79,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
-        gameHelper.onStart(this);
+        if (isWifiConnected())
+            gameHelper.onStart(this);
     }
 
     public void setupAds() {
@@ -187,15 +183,17 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void signIn() {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameHelper.beginUserInitiatedSignIn();
-                }
-            });
-        } catch (Exception e) {
-            Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
+        if(isWifiConnected()){
+            try {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameHelper.beginUserInitiatedSignIn();
+                    }
+                });
+            } catch (Exception e) {
+                Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
+            }
         }
     }
 
@@ -259,6 +257,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
                     getString(R.string.leaderboard_leaderboard)), requestCode);
         } else {
             signIn();
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
+                    getString(R.string.leaderboard_leaderboard)), requestCode);
         }
     }
 

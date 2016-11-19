@@ -10,6 +10,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import static com.fd.etf.utils.GlobalConstants.*;
+import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
 
 /**
  * Created by ARudyk on 8/1/2016.
@@ -26,11 +27,11 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchUp() {
-        if (!ShopScreenScript.isPreviewOn.get()) {
+        if (!isPreviewOn.get()) {
             ButtonComponent.skipDefaultLayersChange = false;
-            if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+            if (!isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
                 LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-                if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
+                if (isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                     lc.getLayer(BTN_NORMAL).isVisible = true;
                     lc.getLayer(BTN_PRESSED).isVisible = false;
                 } else {
@@ -46,10 +47,10 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void touchDown() {
-        if (!ShopScreenScript.isPreviewOn.get()) {
-            if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+        if (!isPreviewOn.get()) {
+            if (!isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
                 LayerMapComponent lc = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
-                if (ShopScreenScript.isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
+                if (isPreviewOn.get() && lc.getLayer(BTN_NORMAL).isVisible) {
                     lc.getLayer(BTN_NORMAL).isVisible = true;
                     lc.getLayer(BTN_PRESSED).isVisible = false;
                 } else {
@@ -65,12 +66,12 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     @Override
     public void clicked() {
-        if (!ShopScreenScript.isPreviewOn.get())
-        if (!ShopScreenScript.isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+        if (!isPreviewOn.get())
+        if (!isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
-            } else if (!ShopScreenScript.isPreviewOn.get()) {
+            } else if (!isPreviewOn.get()) {
                 LayerMapComponent lc1 = shopScreenScript.btnPowerUp.getComponent(LayerMapComponent.class);
                 lc1.getLayer(BTN_PRESSED).isVisible = true;
                 lc1.getLayer(BTN_DEFAULT).isVisible = true;
