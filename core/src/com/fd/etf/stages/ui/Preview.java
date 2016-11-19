@@ -37,9 +37,10 @@ public class Preview extends AbstractDialog {
 
     public static final String TAG_INFO_LIB = "tag_info_lib";
     public static final String BTN_CLOSE = "tag_btn_close";
-    public static final String IMG_BG_SHOW_CASE = "tag_img_bg_show_case";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
+    public static final String COINZ_ICON = "coinz_icon";
+    public static final String LBL_PRICE = "tag_lbl_price";
 
     private static final int HIDE_INFO_TAG_RIGHT = 2000;
     private static final int HIDE_INFO_TAG_LEFT = -1000;
@@ -51,10 +52,6 @@ public class Preview extends AbstractDialog {
     private static final String TAG_BUTTONZ_LIB = "tag_buttonz_lib";
     public Entity lbl_desc;
     public Entity lblPrice;
-
-
-    public static final String COINZ_ICON = "coinz_icon";
-    public static final String LBL_PRICE = "tag_lbl_price";
     public Entity lblPriceSh;
     public Entity lblTitle;
 
@@ -73,7 +70,6 @@ public class Preview extends AbstractDialog {
     public static final int BTNZ_X = 308;
     public static final int BTNZ_Y = 33;
 
-    public static final float PREVIEW_SCALE = 0.9f;
     private static final int UNKNOWN_ICON_Y = 350;
     private static final int INFO_TAG_HIDE_Y = 900;
     private static final int UNKNOWN_ICON_Y_ON_JUMP = INFO_TAG_HIDE_Y;
@@ -108,8 +104,8 @@ public class Preview extends AbstractDialog {
         loadPreviewFromLib();
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lblTitle = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
-        lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
-        lblPriceSh = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
+        lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
+        lblPriceSh = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         lblNotEnough = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         lblNotEnoughSh = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);
         btnPrev = buttonz.getComponent(NodeComponent.class).getChild(BTN_LEFT);
@@ -308,7 +304,7 @@ public class Preview extends AbstractDialog {
                 lblPriceSh.getComponent(LabelComponent.class).text.append("$");
             } else {
                 coinzE.getComponent(TintComponent.class).color.a = 1;
-                coinzE.getComponent(ZIndexComponent.class).setZIndex(lblPrice.getComponent(ZIndexComponent.class).getZIndex() + 1);
+                coinzE.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex() + 1);
             }
             // Finding the middle of the button to display price and coin icon
             // only works if width of text label is 1
@@ -329,8 +325,7 @@ public class Preview extends AbstractDialog {
                 btnBuy.add(new ButtonComponent());
             }
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
-            btnBuy.getComponent(ButtonComponent.class)
-                    .addListener(new ImageButtonListener(btnBuy) {
+            btnBuy.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnBuy) {
                         @Override
                         public void clicked() {
                             if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
@@ -529,7 +524,7 @@ public class Preview extends AbstractDialog {
 
                     @Override
                     public void clicked() {
-                        if (isNextBtnActive(vc)) {
+                        if (isNextBtnActive(vc) && animFinished()) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
@@ -626,6 +621,7 @@ public class Preview extends AbstractDialog {
     }
 
     private boolean animFinished() {
-        return infoTag.getComponent(TransformComponent.class).y <= INFO_TAG_Y + 30;
+        return infoTag.getComponent(TransformComponent.class).y <= INFO_TAG_Y + 30
+                && infoTag.getComponent(TransformComponent.class).x == INFO_TAG_X;
     }
 }
