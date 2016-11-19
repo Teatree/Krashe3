@@ -16,7 +16,7 @@ public abstract class ShopItem {
 
     public String transactionId;
     public String discountTransactionId;
-    public String logoName;
+//    public String logoName;
 
     public boolean tryPeriod;
     public long tryPeriodDuration;

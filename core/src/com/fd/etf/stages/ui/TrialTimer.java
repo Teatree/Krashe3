@@ -68,7 +68,7 @@ public class TrialTimer {
         boolean showTimer = false;
         if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
-            showTimer(timerE, timerEsh, gameScript.fpc.currentPet.logoName);
+            showTimer(timerE, timerEsh, gameScript.fpc.currentPet.shopIcon);
             PromoWindow.offer = gameScript.fpc.currentPet;
             PromoWindow.offerPromo = true;
         } else {
@@ -77,7 +77,7 @@ public class TrialTimer {
                     showTimer = true;
                     PromoWindow.offer = u;
                     PromoWindow.offerPromo = true;
-                    showTimer(timerE, timerEsh, u.logoName);
+                    showTimer(timerE, timerEsh, u.shopIcon);
                 }
             }
         }

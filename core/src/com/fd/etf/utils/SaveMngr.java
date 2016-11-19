@@ -756,7 +756,7 @@ public class SaveMngr {
             this.isHardCurr = petComponent.isHardCurr;
 
             this.tryPeriod = petComponent.tryPeriod;
-            this.logoName = petComponent.logoName;
+//            this.logoName = petComponent.logoName;
 
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.tryPeriodTimer = petComponent.tryPeriodTimer;

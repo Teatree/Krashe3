@@ -74,7 +74,7 @@ public class ShopScreenScript implements IScript {
     public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
     public static int bagsZindex;
 
-    public static List<ShopItem> allShopItems = new ArrayList<>();
+    public static List<ShopItem> allSoftItems = new ArrayList<>();
     public static List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
@@ -94,7 +94,7 @@ public class ShopScreenScript implements IScript {
     private int bagPosIdY;
     private int bagPageId;
 
-    private boolean isAllowedMoving;
+    public boolean isAllowedMoving;
 
     private List<Entity> pageDots = new ArrayList<>();
     public int currentPageIndex = 0;
@@ -156,7 +156,6 @@ public class ShopScreenScript implements IScript {
     }
 
     public void initTabBtns() {
-
         btnClothing = shopItem.getChild(TAB_BTN_SHOP).getEntity();
         btnClothing.getComponent(ButtonComponent.class).enable = false;
         btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = true;
@@ -184,7 +183,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public void getAllAllVanities() {
-        if (allShopItems.isEmpty()) {
+        if (allSoftItems.isEmpty()) {
             for (PetComponent pet : GameStage.gameScript.fpc.pets) {
                 if (pet.isHardCurr) {
                     allHCItems.add(pet);
@@ -192,10 +191,10 @@ public class ShopScreenScript implements IScript {
             }
             allHCItems.addAll(getAllUpgrades());
             sortHCitemsAccordingUI();
-            allShopItems.addAll(GameStage.gameScript.fpc.vanities);
+            allSoftItems.addAll(GameStage.gameScript.fpc.vanities);
         }
 
-        Collections.sort(allShopItems, new Comparator<ShopItem>() {
+        Collections.sort(allSoftItems, new Comparator<ShopItem>() {
             @Override
             public int compare(ShopItem o1, ShopItem o2) {
                 if (o1.currencyType.equals(o2.currencyType)) {
@@ -213,7 +212,7 @@ public class ShopScreenScript implements IScript {
                 }
             }
         });
-        Collections.reverse(allShopItems);
+        Collections.reverse(allSoftItems);
     }
 
     private ShopItem findCorrectHCitemByTitle(String title) {
@@ -253,7 +252,7 @@ public class ShopScreenScript implements IScript {
 
     public void createIconsForAllShopItems() {
         TransformComponent previousTc = null;
-        for (final ShopItem vc : allShopItems) {
+        for (final ShopItem vc : allSoftItems) {
             CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
             final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
@@ -295,19 +294,25 @@ public class ShopScreenScript implements IScript {
     }
 
     public List<Upgrade> getAllUpgrades() {
-        List<Upgrade> upgrades = Upgrade.getAllUpgrades();
-        if (!GameStage.gameScript.fpc.upgrades.isEmpty()) {
-            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
-                for (Upgrade u2 : upgrades) {
-                    if (u.upgradeType.equals(u2.upgradeType)) {
-                        u2.tryPeriod = u.tryPeriod;
-                        u2.tryPeriodDuration = u.tryPeriodDuration;
-                        u2.tryPeriodStart = u.tryPeriodStart;
-                        u2.tryPeriodTimer = u.tryPeriodTimer;
-                        u2.enabled = u.enabled;
-                        u2.bought = u.bought;
-                    }
-                }
+//        List<Upgrade> upgrades = Upgrade.getAllUpgrades();
+//        if (!GameStage.gameScript.fpc.upgrades.isEmpty()) {
+//            for (Upgrade u : GameStage.gameScript.fpc.upgrades.values()) {
+//                for (Upgrade u2 : upgrades) {
+//                    if (u.upgradeType.equals(u2.upgradeType)) {
+//                        u2.tryPeriod = u.tryPeriod;
+//                        u2.tryPeriodDuration = u.tryPeriodDuration;
+//                        u2.tryPeriodStart = u.tryPeriodStart;
+//                        u2.tryPeriodTimer = u.tryPeriodTimer;
+//                        u2.enabled = u.enabled;
+//                        u2.bought = u.bought;
+//                    }
+//                }
+//            }
+//        }
+        List<Upgrade> upgrades = new ArrayList<Upgrade>(GameStage.gameScript.fpc.upgrades.values());
+        for (Upgrade u : Upgrade.getAllUpgrades()){
+            if (!upgrades.contains(u)){
+                upgrades.add(u);
             }
         }
         return upgrades;

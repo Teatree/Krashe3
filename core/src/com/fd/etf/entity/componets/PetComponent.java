@@ -67,7 +67,7 @@ public class PetComponent extends ShopItem implements Component {
         this.transactionId = petJson.transactionId;
         this.petCannonName = petJson.petCannonName;
 //        this.petName = petJson.petName;
-        this.logoName = petJson.logoName;
+//        this.logoName = petJson.logoName;
         this.discountTransactionId = petJson.discountTransactionId;
         this.isHardCurr = petJson.isHardCurr;
 //        init();

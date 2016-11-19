@@ -45,6 +45,8 @@ public class Upgrade extends ShopItem{
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
+//        phoenix.logoName = "itemfedora";
+        phoenix.shopIcon = "itemfedora";
 //        phoenix.transactionId = Main.phoenix_trans_ID;
         return phoenix;
     }
@@ -58,6 +60,8 @@ public class Upgrade extends ShopItem{
         bjd.description = "more juice \\0/";
         bjd.enabled = false;
         bjd.currencyType = HARD;
+//        bjd.logoName = "itemwig";
+        bjd.shopIcon = "itemwig";
 //        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }

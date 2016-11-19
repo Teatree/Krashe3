@@ -32,7 +32,7 @@ import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.GameStage.sceneLoader;
-import static com.fd.etf.stages.ShopScreenScript.allShopItems;
+import static com.fd.etf.stages.ShopScreenScript.allSoftItems;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
@@ -136,9 +136,9 @@ public class GameScreenScript implements IScript {
                 gameScript.fpc.currentPet.tryPeriod = false;
                 gameScript.fpc.currentPet.disable();
 
-                if (allShopItems.indexOf(gameScript.fpc.currentPet) >= 0) {
-                    allShopItems.get(allShopItems.indexOf(gameScript.fpc.currentPet)).bought = false;
-                    allShopItems.get(allShopItems.indexOf(gameScript.fpc.currentPet)).enabled = false;
+                if (allSoftItems.indexOf(gameScript.fpc.currentPet) >= 0) {
+                    allSoftItems.get(allSoftItems.indexOf(gameScript.fpc.currentPet)).bought = false;
+                    allSoftItems.get(allSoftItems.indexOf(gameScript.fpc.currentPet)).enabled = false;
                 }
             }
         }
@@ -150,9 +150,9 @@ public class GameScreenScript implements IScript {
                     u.tryPeriod = false;
                     u.disable();
 
-                    if (allShopItems.indexOf(u) >= 0) {
-                        allShopItems.get(allShopItems.indexOf(u)).bought = false;
-                        allShopItems.get(allShopItems.indexOf(u)).enabled = false;
+                    if (allSoftItems.indexOf(u) >= 0) {
+                        allSoftItems.get(allSoftItems.indexOf(u)).bought = false;
+                        allSoftItems.get(allSoftItems.indexOf(u)).enabled = false;
                     }
                 }
             }

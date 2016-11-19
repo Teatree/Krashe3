@@ -13,7 +13,7 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
@@ -159,27 +159,19 @@ public class Preview extends AbstractDialog {
         sceneLoader.getEngine().addEntity(iconE);
 
         if (playAni) {
-            if (vc.currencyType.equals(SOFT)) {
+//            if (vc.currencyType.equals(SOFT)) {
                 iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
                 iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
                 iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
-            }
+//            }
             playYellowStarsParticleEffect(544, 467);
         } else {
-            if (vc.currencyType.equals(SOFT)) {
+//            if (vc.currencyType.equals(SOFT)) {
                 iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
                 iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
-            }
+//            }
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 200);
         }
-    }
-
-    public void setupPreviewWindow() {
-//        TransformComponent preview_tc = previewE.getComponent(TransformComponent.class);
-//        preview_tc.x = PREVIEW_X;
-//        preview_tc.y = PREVIEW_Y;
-//        preview_tc.scaleX = PREVIEW_SCALE;
-//        preview_tc.scaleY = PREVIEW_SCALE;
     }
 
     public void setLabelsValues() {
@@ -221,6 +213,7 @@ public class Preview extends AbstractDialog {
 
     public Entity initUnknownPreviewIcon(boolean jump) {
         removeIconE();
+
         CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN);
         iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
@@ -228,6 +221,7 @@ public class Preview extends AbstractDialog {
 
         lbl_not_enough.getComponent(ZIndexComponent.class).setZIndex(52);
         lbl_not_enough_sh.getComponent(ZIndexComponent.class).setZIndex(53);
+
         if (!jump) {
             iconE.getComponent(TransformComponent.class).x =
                     infoTag.getComponent(TransformComponent.class).x + 20;
@@ -256,16 +250,18 @@ public class Preview extends AbstractDialog {
         }
         initPrevButton(vc);
         initNextButton(vc);
-        setupPreviewWindow();
 
-        if (vc.currencyType.equals(SOFT)) {
-            initSoftIcon(vc, jump, justBoughtAni);
-        } else {
-            initUnknownPreviewIcon(jump);
-            if (iconE != null) {
-                iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            }
-        }
+//        if (vc.currencyType.equals(SOFT)) {
+            initIcon(vc, jump, justBoughtAni);
+//        } else {
+//            initSoftIcon(vc, jump, false);
+//        }
+//        else {
+//            initUnknownPreviewIcon(jump);
+//            if (iconE != null) {
+//                iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//            }
+//        }
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
@@ -287,7 +283,13 @@ public class Preview extends AbstractDialog {
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
         }
+        setDescription(vc);
 
+        infoTag.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+        buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+    }
+
+    private void setDescription(ShopItem vc) {
         // Showing and not showing of Description/Collections section
         if (vc.description == null) {
             infoTag.getComponent(NodeComponent.class).
@@ -296,21 +298,19 @@ public class Preview extends AbstractDialog {
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         } else {
             infoTag.getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).getComponent(TransformComponent.class).x = 484;
+                    getChild(LBL_DESC).getComponent(TransformComponent.class).x = 464;
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TransformComponent.class).y = 151;
 
             infoTag.getComponent(NodeComponent.class).
-                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 450;
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 430;
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = 41;
         }
-        infoTag.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
-        buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
 
-    private void initSoftIcon(ShopItem vc, boolean jump, boolean justBoughtAni) {
-        if (vc.bought) {
+    private void initIcon(ShopItem vc, boolean jump, boolean justBoughtAni) {
+        if (vc.bought || vc.currencyType.equals(HARD)) {
             initBoughtPreviewIcon(justBoughtAni);
         } else {
             initUnknownPreviewIcon(jump);
@@ -326,11 +326,8 @@ public class Preview extends AbstractDialog {
         buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TintComponent.class).color.a = 0;
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
-            btnBuy.getComponent(ZIndexComponent.class).setZIndex(101);
-//            btnBuy.getComponent(TransformComponent.class).x = 197;
+            btnBuy.getComponent(ZIndexComponent.class).setZIndex(61);
             btnBuy.getComponent(TransformComponent.class).y = 5;
-            lbl_price.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex() + 1);
-            lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(lbl_price.getComponent(ZIndexComponent.class).getZIndex() + 1);
             if (vc.currencyType.equals(HARD)) {
                 coinzE.getComponent(TintComponent.class).color.a = 0;
                 lbl_price.getComponent(LabelComponent.class).text.append("$");
@@ -353,7 +350,7 @@ public class Preview extends AbstractDialog {
 //                coinzE.getComponent(TransformComponent.class).x = base + 20 * wordCount;
             }
             lbl_price.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+10);
-            lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+10);
+            lbl_price_sh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+11);
 
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());
@@ -509,30 +506,22 @@ public class Preview extends AbstractDialog {
 
     private boolean isPrevBtnActive(ShopItem vc) {
         return (vc.currencyType.equals(HARD) && allHCItems.indexOf(vc) > 0) ||
-                (vc.currencyType.equals(SOFT) && allShopItems.indexOf(vc) > 0);
+                (vc.currencyType.equals(SOFT) && allSoftItems.indexOf(vc) > 0);
     }
 
     private void showPreviewAfterAniPrev() {
         if (vc.currencyType.equals(SOFT)) {
-            prevSoftItem();
+            prevItem(allSoftItems);
         } else {
-            prevHardItem();
+            prevItem(allHCItems);
         }
     }
 
-    private void prevSoftItem() {
-        int previousIndex = allShopItems.indexOf(vc) - 1;
+    private void prevItem(List<ShopItem> list) {
+        int previousIndex = list.indexOf(vc) - 1;
         if (previousIndex >= 0) {
             setShouldDeleteIconE();
-            showPreview(allShopItems.get(previousIndex), false, false);
-        }
-    }
-
-    private void prevHardItem() {
-        int previousIndex = allHCItems.indexOf(vc) - 1;
-        if (previousIndex >= 0) {
-            setShouldDeleteIconE();
-            showPreview(allHCItems.get(previousIndex), false, false);
+            showPreview(list.get(previousIndex), false, false);
         }
     }
 
@@ -580,30 +569,22 @@ public class Preview extends AbstractDialog {
 
     private boolean isNextBtnActive(ShopItem vc) {
         return (allHCItems.indexOf(vc) < allHCItems.size() - 1 && vc.currencyType.equals(HARD))
-                || (vc.currencyType.equals(SOFT) && allShopItems.indexOf(vc) < allShopItems.size() - 1);
+                || (vc.currencyType.equals(SOFT) && allSoftItems.indexOf(vc) < allSoftItems.size() - 1);
     }
 
     private void showPreviewAfterAniNext() {
         if (vc.currencyType.equals(SOFT)) {
-            nextSoftItem();
+            nextItem(allSoftItems);
         } else {
-            nextHardItem();
+            nextItem(allHCItems);
         }
     }
 
-    private void nextSoftItem() {
-        int nextIndex = allShopItems.indexOf(vc) + 1;
-        if (nextIndex < allShopItems.size()) {
+    private void nextItem(List<ShopItem> list) {
+        int nextIndex = list.indexOf(vc) + 1;
+        if (nextIndex < list.size()) {
             setShouldDeleteIconE();
-            showPreview(allShopItems.get(nextIndex), false, false);
-        }
-    }
-
-    private void nextHardItem() {
-        int nextIndex = allHCItems.indexOf(vc) + 1;
-        if (nextIndex < allHCItems.size()) {
-            setShouldDeleteIconE();
-            showPreview(allHCItems.get(nextIndex), false, false);
+            showPreview(list.get(nextIndex), false, false);
         }
     }
 
@@ -658,7 +639,7 @@ public class Preview extends AbstractDialog {
             }
         }
 
-        if (iconE != null && vc.currencyType.equals(SOFT)) {
+        if (iconE != null) {
             iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + ICON_X_RELATIVE;
             iconE.getComponent(TransformComponent.class).y = infoTag.getComponent(TransformComponent.class).y + ICON_Y_RELATIVE;
             iconE.getComponent(TransformComponent.class).scaleX = 1.5f;
