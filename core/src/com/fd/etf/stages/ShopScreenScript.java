@@ -150,6 +150,7 @@ public class ShopScreenScript implements IScript {
         currentPageIndex = 0;
         canChangeTabs = true;
         isPreviewOn.set(false);
+        isAllowedMoving = true;
     }
 
     public void initTabBtns() {

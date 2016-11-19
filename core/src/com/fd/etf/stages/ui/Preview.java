@@ -169,20 +169,22 @@ public class Preview extends AbstractDialog {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.collection);
         }
         lblTitle.getComponent(LabelComponent.class).text.replace(0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
-        lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
-        lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length, String.valueOf(vc.cost));
+        lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
+                String.valueOf(vc.cost));
+        lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
+                String.valueOf(vc.cost));
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
-        btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
         if (vc.canBuy()) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lblNotEnough.getComponent(TintComponent.class).color.a = 0;
             lblNotEnoughSh.getComponent(TintComponent.class).color.a = 0;
             return true;
         } else {
-            btn_buy.getComponent(ZIndexComponent.class).setZIndex(0);
             btn_buy.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            lblNotEnough.getComponent(TransformComponent.class).y = 36;
+            lblNotEnoughSh.getComponent(TransformComponent.class).y = 36;
             lblNotEnough.getComponent(TintComponent.class).color.a = 1;
             lblNotEnoughSh.getComponent(TintComponent.class).color.a = 1;
             lblNotEnough.getComponent(ZIndexComponent.class).setZIndex(99);
@@ -321,7 +323,7 @@ public class Preview extends AbstractDialog {
                 lblPrice.getComponent(TransformComponent.class).x = base + 20 * wordCount;
             }
             lblPrice.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+10);
-            lblPriceSh.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+11);
+            lblPriceSh.getComponent(ZIndexComponent.class).setZIndex(101);
 
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
                 btnBuy.add(new ButtonComponent());
@@ -376,8 +378,8 @@ public class Preview extends AbstractDialog {
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-            lblPriceSh.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-            lblPrice.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
             Entity enableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
@@ -408,8 +410,8 @@ public class Preview extends AbstractDialog {
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y= FAR_FAR_AWAY_X;
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-            lblPriceSh.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-            lblPrice.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
             Entity disableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
