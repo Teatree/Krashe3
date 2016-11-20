@@ -16,6 +16,7 @@ import com.fd.etf.AllController;
 import com.fd.etf.Main;
 import com.fd.etf.android.util.EtfAdsHelper;
 import com.fd.etf.android.util.EtfIAPhelper;
+import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.google.android.gms.games.Games;
@@ -25,10 +26,9 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     EtfIAPhelper iapHelper;
     EtfAdsHelper adsHelper;
+    EtfPlayServicesHelper psHelper;
 
     Main game;
-    //game play service
-    private GameHelper gameHelper;
     private final static int requestCode = 1;
 
     @Override
@@ -40,8 +40,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(game, config);
         setupAds();
-        if (isWifiConnected())
-            setupPlayServices();
+        if (isWifiConnected() ) {
+            psHelper = new EtfPlayServicesHelper(this);
+            psHelper.setupPlayServices();
+        }
 
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
@@ -49,21 +51,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         setContentView(layout);
     }
 
-    public void setupPlayServices() {
-        gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
-        gameHelper.enableDebugLog(true);
-
-        final GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
-            @Override
-            public void onSignInFailed() {
-            }
-
-            @Override
-            public void onSignInSucceeded() {
-            }
-        };
-
-        gameHelper.setup(gameHelperListener);
+    public void setupPlayServices (){
+        psHelper.setupPlayServices();
     }
 
     private void setupIAP() {
@@ -79,8 +68,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
-        if (isWifiConnected())
-            gameHelper.onStart(this);
+        psHelper.onStart();
     }
 
     public void setupAds() {
@@ -178,66 +166,37 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        gameHelper.onActivityResult(requestCode, resultCode, data);
+        psHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void signIn() {
-        if(isWifiConnected()){
-            try {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameHelper.beginUserInitiatedSignIn();
-                    }
-                });
-            } catch (Exception e) {
-                Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
-            }
-        }
+        psHelper.signIn();
     }
 
     @Override
     public void signOut() {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameHelper.signOut();
-                }
-            });
-        } catch (Exception e) {
-            Gdx.app.log("MainActivity", "Log out failed: " + e.getMessage() + ".");
-        }
+        psHelper.signOut();
     }
 
     @Override
     public void submitScore(int highScore) {
-        if (isSignedIn()) {
-            Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_leaderboard), highScore);
-        }
+        psHelper.submitScore(highScore);
     }
 
     @Override
     public void showScore() {
-        if (isSignedIn()) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_leaderboard)), requestCode);
-        } else {
-            signIn();
-        }
+        psHelper.showScore();
     }
 
     @Override
     public boolean isSignedIn() {
-        return gameHelper.isSignedIn();
+        return psHelper.isSignedIn();
     }
 
     @Override
     public void unlockAchievement(String achievementId) {
-        Games.Achievements.unlock(gameHelper.getApiClient(),
-                getString(R.string.achievement_queens_slayer));
+       psHelper.unlockAchievement(achievementId);
     }
 
     @Override
@@ -252,23 +211,12 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getLeaderboard() {
-        if (isSignedIn()) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_leaderboard)), requestCode);
-        } else {
-            signIn();
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_leaderboard)), requestCode);
-        }
+      psHelper.getLeaderboard();
     }
 
     @Override
     public void getAchievements() {
-        if (isSignedIn()) {
-            startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
-        } else {
-            signIn();
-        }
+      psHelper.getAchievements();
     }
 
     //TODO: ADD open in FB app
