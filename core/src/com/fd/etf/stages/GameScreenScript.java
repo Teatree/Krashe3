@@ -485,7 +485,9 @@ public class GameScreenScript implements IScript {
                     (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                 isGameOver.set(false);
                 gameScript.resetPauseDialog();
-                Main.mainController.submitScore(fpc.score);
+                if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
+                    Main.mainController.submitScore(fpc.score);
+                }
                 gameScript.stage.initResultWithAds();
             }
         }

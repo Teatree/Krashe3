@@ -1,6 +1,5 @@
 package com.fd.etf.stages;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -10,8 +9,6 @@ import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -23,7 +20,6 @@ import java.util.Set;
 import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.fd.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.fd.etf.utils.GlobalConstants.BUTTON_TAG;
-import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.SoundMgr.getSoundMgr;
 
 public class GameStage extends Stage {
@@ -85,15 +81,12 @@ public class GameStage extends Stage {
 
             root.addScript(gameScript);
             gameScript.initButtons();
-//            gameScript.reset();
         } else {
             sceneLoader.setScene(MAIN_SCENE, viewport);
             if (justCreated) {
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-
                 //TODO: only when debug needed!
 //                sceneLoader.engine.addSystem(sceneLoader.renderer);
-
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 root.addScript(gameScript);
                 gameScript.initButtons();
@@ -194,7 +187,7 @@ public class GameStage extends Stage {
     public static void resetAllProgress() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
             Set<String> changedFiles = new HashSet<>();
-            if (vc.enabled){
+            if (vc.enabled || vc.bought){
                 for (Map.Entry<String,String> entry : vc.assetsToChange.entrySet()) {
                     if (changedFiles.add(entry.getKey())) {
                         vc.resetOneFileTodefault(entry);
@@ -218,5 +211,9 @@ public class GameStage extends Stage {
 
         gameScript.fpc.currentPet = null;
         gameScript.fpc.upgrades = new HashMap<>();
+
+        gameScript.fpc.level.difficultyLevel = 0;
+        gameScript.fpc.level.resetNewInfo();
+        gameScript.fpc.level.goals = gameScript.fpc.level.goalGenerator.getGoals(gameScript.fpc);
     }
 }
