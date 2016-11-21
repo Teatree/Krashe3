@@ -23,16 +23,16 @@ import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.EffectUtils.fade;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
-import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class GameOverDialog extends AbstractDialog {
 
     public static final int GAME_OVER_PROBABILITY = 0;
 
     public static final int TAP_COOL = 30;
+    private static final int GAME_OVER_X = 300;
+    private static final int GAME_OVER_Y = 100;
     public final String GAME_OVER_DIALOG = "game_over_lib";
     public final String BTN_WATCH_VIDEO = "btn_watch_video";
-    public final String LBL_TURN_ON_WIFI = "lbl_turn_on_wifi";
     public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
 
     public static float gameOverTimer = 0;
@@ -52,9 +52,11 @@ public class GameOverDialog extends AbstractDialog {
         isGameOver.set(true);
         System.gc();
 
-        final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
-        dialogTc.x = 300;
-        dialogTc.y = 100;
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.moveTo(GAME_OVER_X, GAME_OVER_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
+        gameOverDialogE.add(ac);
+
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
 
         tapCoolDown = TAP_COOL;
@@ -76,17 +78,15 @@ public class GameOverDialog extends AbstractDialog {
         GameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
 
         final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
-        dialogTc.x = FAR_FAR_AWAY_X;
-        dialogTc.y = FAR_FAR_AWAY_Y;
+        dialogTc.x = GAME_OVER_X;
+        dialogTc.y = HIDE_Y;
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
         initReviveBtn(dialogTc);
     }
 
     private void initReviveBtn(final TransformComponent dialogTc) {
         final Entity reviveBtn = gameOverDialogE.getComponent(NodeComponent.class).getChild(BTN_WATCH_VIDEO);
-        final Entity turnOnWifi = gameOverDialogE.getComponent(NodeComponent.class).getChild(LBL_TURN_ON_WIFI);
 //        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
-        turnOnWifi.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         reviveBtn.getComponent(TransformComponent.class).x = 240;
         reviveBtn.getComponent(TransformComponent.class).y = 80;
         reviveBtn.add(new ButtonComponent());
@@ -96,11 +96,6 @@ public class GameOverDialog extends AbstractDialog {
                     public void clicked() {
                         if (Main.mainController.isWifiConnected()) {
                             playVideoAd(dialogTc);
-                        } else {
-                            turnOnWifi.getComponent(TransformComponent.class).x = 127;
-                            turnOnWifi.getComponent(TransformComponent.class).y = 45;
-                            continueGame(dialogTc);
-
                         }
                         close(gameOverDialogE);
                     }
@@ -109,7 +104,6 @@ public class GameOverDialog extends AbstractDialog {
 
     public void continueGame(TransformComponent dialogTc) {
         isGameOver.set(false);
-        dialogTc.x = -1000;
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isAngeredBeesMode = false;
@@ -122,7 +116,6 @@ public class GameOverDialog extends AbstractDialog {
             Main.mainController.showReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
-
                     continueGame(dialogTc);
                 }
             });

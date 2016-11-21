@@ -67,6 +67,7 @@ public class AbstractDialog {
             ActionComponent ac2 = new ActionComponent();
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
+
             if (isSecondDialogOpen.get()) {
                 isSecondDialogClosed.set(true);
             } else {

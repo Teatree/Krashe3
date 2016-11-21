@@ -30,7 +30,7 @@ import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
 public class GiftScreen {
     public final String GIFT_SCREEN = "lib_gift_screen";
-    public final String BTN_PINATA = "btn_pinata";
+    public final String BTN_PINATA = "btn_gift";
     public final int GIFT_SCREEN_X = -20;
     public final int GIFT_SCREEN_Y = -20;
 
