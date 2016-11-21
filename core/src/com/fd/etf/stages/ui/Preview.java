@@ -18,6 +18,7 @@ import java.util.List;
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
 import static com.fd.etf.stages.GameStage.sceneLoader;
+import static com.fd.etf.stages.GameStage.shopScript;
 import static com.fd.etf.stages.ShopScreenScript.*;
 import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
 import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
@@ -467,6 +468,10 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
+
+                            if ((shopScript.allSoftItems.indexOf(vc))%8 == 0){
+                                shopScript.scrollBagsOnePageLeft();
+                            }
                         }
                     }
                 });
@@ -530,6 +535,10 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
+
+                            if ((shopScript.allSoftItems.indexOf(vc)+1)%8 == 0){
+                                shopScript.scrollBagsOnePageRight();
+                            }
                         }
                     }
                 });

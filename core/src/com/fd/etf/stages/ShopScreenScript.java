@@ -450,7 +450,7 @@ public class ShopScreenScript implements IScript {
                 });
     }
 
-    private void scrollBagsOnePageLeft() {
+    public void scrollBagsOnePageLeft() {
         if (canMoveBagsLeft()) {
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
@@ -502,7 +502,7 @@ public class ShopScreenScript implements IScript {
         });
     }
 
-    private void scrollBagsOnePageRight() {
+    public void scrollBagsOnePageRight() {
         if (canMoveBagsRight()) {
             for (Entity bag : bags) {
                 ActionComponent a = new ActionComponent();
