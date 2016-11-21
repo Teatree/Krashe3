@@ -245,7 +245,7 @@ public class GameScreenScript implements IScript {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
         if (gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-            if (gameScript.fpc.havePhoenixDouble()) {
+            if (gameScript.fpc.havePhoenix()) {
                 tc.x = 117;
                 tc.y = 675;
             } else {
@@ -259,7 +259,7 @@ public class GameScreenScript implements IScript {
 
     private void initPhoenixIcon() {
         Entity bjIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
-        if (gameScript.fpc.havePhoenixDouble()) {
+        if (gameScript.fpc.havePhoenix()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
             tc.x = -24;
             tc.y = 637;

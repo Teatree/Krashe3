@@ -10,7 +10,6 @@ import com.fd.etf.stages.ui.Showcase;
 import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.GlobalConstants;
-import com.sun.javafx.css.converters.ColorConverter;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;

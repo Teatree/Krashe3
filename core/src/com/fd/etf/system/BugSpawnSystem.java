@@ -64,8 +64,6 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     public static boolean isBlewUp() {
-        if (isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION - 10)
-        System.out.println("is blew up");
         return isAngeredBeesMode & angeredBeesModeTimer == ANGERED_BEES_MODE_DURATION - 10;
     }
 
@@ -75,7 +73,7 @@ public class BugSpawnSystem extends EntitySystem {
         SPAWN_MAX_X = -200;
         SPAWN_MAX_Y = 650;
 
-        break_counter = rand.nextInt((int)curBreakFreqMax- (int)curBreakFreqMin)+ curBreakFreqMin;
+        break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
         currentMultiplier = mulipliers.get(0);
     }
 
@@ -116,15 +114,15 @@ public class BugSpawnSystem extends EntitySystem {
 //                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
             }
 
-                if(break_counter > 0) {
-                    spawner = curSpawnInterval;
-                }else{
-                    spawner = rand.nextInt((int)curBreakLengthMax-(int)curBreakLengthMin)+curBreakLengthMin;
-                    break_counter = rand.nextInt((int)curBreakFreqMax - (int)curBreakFreqMin)+ curBreakFreqMin;
-                }
+            if (break_counter > 0) {
+                spawner = curSpawnInterval;
             } else {
-                spawner -= delta;
+                spawner = rand.nextInt((int) curBreakLengthMax - (int) curBreakLengthMin) + curBreakLengthMin;
+                break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
             }
+        } else {
+            spawner -= delta;
+        }
 //        System.out.println("spanwer: " + spawner);
 //        System.out.println("break_counter: " + break_counter);
     }
@@ -132,7 +130,7 @@ public class BugSpawnSystem extends EntitySystem {
     private void createBug(String tempType, Multiplier currentMultiplier) {
         Entity bugEntity = BugPool.getInstance().get(tempType);
         BugComponent bc = new BugComponent(tempType, currentMultiplier);
-        if (bugEntity == null){
+        if (bugEntity == null) {
             System.out.println(tempType);
         }
         bugEntity.add(bc);
@@ -153,23 +151,23 @@ public class BugSpawnSystem extends EntitySystem {
         curBreakLengthMin = BREAK_LENGTH_BASE_MIN * currentMultiplier.breakLengthMin * GameStage.gameScript.fpc.level.breakLengthMin;
         curBreakLengthMax = BREAK_LENGTH_BASE_MAX * currentMultiplier.breakLengthMax * GameStage.gameScript.fpc.level.breakLengthMax;
 
-        curDrunkProb = (int)(DRUNK_SPAWN_PROB * currentMultiplier.drunkBugSpawnChance * GameStage.gameScript.fpc.level.drunkBugSpawnChance);
-        curSimpleProb = (int)(SIMPLE_SPAWN_PROB * currentMultiplier.simpleBugSpawnChance * GameStage.gameScript.fpc.level.simpleBugSpawnChance);
-        curChargerProb = (int)(CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * GameStage.gameScript.fpc.level.chargerBugSpawnChance);
-        curQueenBeeProb = (int)(QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * GameStage.gameScript.fpc.level.queenBeeSpawnChance);
-        curBeeProb = (int)(BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * GameStage.gameScript.fpc.level.beeSpawnChance);
+        curDrunkProb = (int) (DRUNK_SPAWN_PROB * currentMultiplier.drunkBugSpawnChance * GameStage.gameScript.fpc.level.drunkBugSpawnChance);
+        curSimpleProb = (int) (SIMPLE_SPAWN_PROB * currentMultiplier.simpleBugSpawnChance * GameStage.gameScript.fpc.level.simpleBugSpawnChance);
+        curChargerProb = (int) (CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * GameStage.gameScript.fpc.level.chargerBugSpawnChance);
+        curQueenBeeProb = (int) (QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * GameStage.gameScript.fpc.level.queenBeeSpawnChance);
+        curBeeProb = (int) (BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * GameStage.gameScript.fpc.level.beeSpawnChance);
 
         if (!isPause.get() && !isGameOver.get()) {
             if (isStarted) {
                 super.update(deltaTime);
-                if(bugsSpawned >= currentMultiplier.finishOn){
+                if (bugsSpawned >= currentMultiplier.finishOn) {
                     int index = mulipliers.indexOf(currentMultiplier);
-                    currentMultiplier = mulipliers.get(index < mulipliers.size()-1 ? index+1 : index);
+                    currentMultiplier = mulipliers.get(index < mulipliers.size() - 1 ? index + 1 : index);
 
                 }
-                if(bugsSpawned >= currentCocoonMultiplier.finishOn){
+                if (bugsSpawned >= currentCocoonMultiplier.finishOn) {
                     int indexC = cocoonMultipliers.indexOf(currentCocoonMultiplier);
-                    currentCocoonMultiplier = cocoonMultipliers.get(indexC < cocoonMultipliers.size()-1 ? indexC+1 : indexC);
+                    currentCocoonMultiplier = cocoonMultipliers.get(indexC < cocoonMultipliers.size() - 1 ? indexC + 1 : indexC);
                 }
 //                if(bugsSpawned >= currentDandelionMultiplier.finishOn){
 //                    int indexC = dandelionMultipliers.indexOf(currentDandelionMultiplier);
@@ -181,7 +179,7 @@ public class BugSpawnSystem extends EntitySystem {
         }
     }
 
-    public static class Multiplier{
+    public static class Multiplier {
         public int startOn = 0;
         public int finishOn = 20;
 

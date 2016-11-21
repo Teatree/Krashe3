@@ -49,14 +49,14 @@ public class FlowerPublicComponent implements Component {
                 upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE).enabled;
     }
 
-    public boolean havePhoenixDouble() {
+    public boolean havePhoenix() {
         return upgrades.get(Upgrade.UpgradeType.PHOENIX) != null &&
                 upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled;
     }
 
     public boolean canUsePhoenix() {
         Upgrade phoenix = upgrades.get(Upgrade.UpgradeType.PHOENIX);
-        return phoenix != null && phoenix.counter <= 0;
+        return phoenix != null && phoenix.enabled && phoenix.counter <= 0;
     }
 
     public void resetPhoenix() {
