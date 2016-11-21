@@ -9,6 +9,7 @@ import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -73,6 +74,7 @@ public class GiftScreen {
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+        giftScreen.getComponent(ZIndexComponent.class).setZIndex(100);
 
         pinataBtn = new ItemWrapper(giftScreen).getChild(BTN_PINATA).getEntity();
         pinataBtn.getComponent(TransformComponent.class).scaleX = 1.4f;
