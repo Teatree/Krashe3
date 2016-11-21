@@ -73,7 +73,7 @@ public class GameScreenScript implements IScript {
     public static float umbrellaSpawnCounter;
     public float cocoonSpawnCounter;
     public ItemWrapper gameItem;
-    private GameOverDialog gameOverDialog;
+    public GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
     public int gameOverReviveTimesLimit;
@@ -503,6 +503,7 @@ public class GameScreenScript implements IScript {
                 if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
                     Main.mainController.submitScore(fpc.score);
                 }
+                gameScript.gameOverDialog.hide();
                 gameScript.stage.initResultWithAds();
             }
         }

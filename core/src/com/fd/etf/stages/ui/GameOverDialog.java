@@ -49,8 +49,7 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void show() {
-        gameOverDialogE.getComponent(TransformComponent.class).x = GAME_OVER_X;
-        gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
+        hide();
         addShadow();
         isActive = true;
         isGameOver.set(true);
@@ -73,6 +72,11 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimerLbl.getComponent(ZIndexComponent.class).setZIndex(gameOverDialogE.getComponent(ZIndexComponent.class).getZIndex() + 1);
     }
 
+    public void hide() {
+        gameOverDialogE.getComponent(TransformComponent.class).x = GAME_OVER_X;
+        gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
+    }
+
     public void initGameOverDialog() {
         initShadow();
 
@@ -80,9 +84,7 @@ public class GameOverDialog extends AbstractDialog {
         gameOverDialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), gameOverDialogE, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
-
-        gameOverDialogE.getComponent(TransformComponent.class).x = GAME_OVER_X;
-        gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
+        hide();
 
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
         initReviveBtn(gameOverDialogE.getComponent(TransformComponent.class));
@@ -179,8 +181,9 @@ public class GameOverDialog extends AbstractDialog {
                         (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                     isGameOver.set(false);
                     gameScript.resetPauseDialog();
+                    hide();
                     gameScript.stage.initResultWithAds();
-                    close(gameOverDialogE);
+//                    close(gameOverDialogE);
                 }
             }
         }

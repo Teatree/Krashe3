@@ -91,7 +91,6 @@ public class ResultScreenScript implements IScript {
         txtNeedE = resultScreenItem.getChild(LBL_TO_UNLOCK).getEntity();
 
         initResultScreen();
-        showcase = new Showcase(resultScreenItem, this);
         if (timer == null) {
             timer = new TrialTimer(resultScreenItem, 918, 289);
         }
@@ -206,19 +205,20 @@ public class ResultScreenScript implements IScript {
     public void act(float delta) {
         if (timer != null) {
             timer.timer();
-        }
-        if (timer.timerE != null && showcase.showcaseE != null) {
-            timer.timerE.getComponent(ZIndexComponent.class).setZIndex(showcase.showcaseE.getComponent(ZIndexComponent.class).getZIndex() - 2);
-            timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerEsh.getComponent(ZIndexComponent.class).getZIndex() + 1);
-        }
-        if (offerPromo && active && !timer.ifShouldShowTimer()) {
-            if (promoWindow == null) {
-                promoWindow = new PromoWindow(resultScreenItem);
+            if (timer.timerE != null) {
+                timer.timerE.getComponent(ZIndexComponent.class).setZIndex(progressBarE.getComponent(ZIndexComponent.class).getZIndex()+1);
+                timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerE.getComponent(ZIndexComponent.class).getZIndex() + 1);
             }
-            promoWindow.init();
-            promoWindow.show();
-            offerPromo = false;
-            active = false;
+
+            if (offerPromo && active && !timer.ifShouldShowTimer()) {
+                if (promoWindow == null) {
+                    promoWindow = new PromoWindow(resultScreenItem);
+                }
+                promoWindow.init();
+                promoWindow.show();
+                offerPromo = false;
+                active = false;
+            }
         }
 
         if (active) {
@@ -236,9 +236,12 @@ public class ResultScreenScript implements IScript {
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
-            showcase.showFading();
+            if (showcase != null) {
+                showcase.showFading();
+            }
         }
-        if (showcase.showcaseE != null) {
+
+        if (showcase != null) {
             showcase.act(delta);
         }
 
@@ -309,6 +312,9 @@ public class ResultScreenScript implements IScript {
     private void initShowcase() {
         progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
         if (!show && gameScript.fpc.score > 0) {
+            if (showcase == null){
+                showcase = new Showcase(this);
+            }
             showcase.initShowCase();
             txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
         }
