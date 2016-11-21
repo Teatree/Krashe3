@@ -52,7 +52,6 @@ public class GiftScreen {
     static List<Integer> moneySums;
 
     public GiftScreen() {
-        /*this.gameItem = gameItem;*/
         moneySums = new ArrayList<>();
         moneySums.add(50);
         moneySums.add(100);

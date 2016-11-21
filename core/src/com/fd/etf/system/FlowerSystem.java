@@ -76,16 +76,20 @@ public class FlowerSystem extends IteratingSystem {
         }
 
         if (state.equals(State.LOSING)){
-            isPause.set(true);
-            setLoseAnimation(sc);
-            if (isAnimationFinished(sc)) {
-                state = State.DEAD;
-                if (gameScript.fpc.canUsePhoenix()) {
-                    gameScript.isPause.set(false);
-                    gameScript.usePhoenix();
-                } else {
-                    isGameOver.set(true);
-                    gameScript.endGame();
+            if (tc.y > FLOWER_Y_POS){
+                tc.y -= FLOWER_MOVE_SPEED * delta * FPS;
+            } else {
+                isPause.set(true);
+                setLoseAnimation(sc);
+                if (isAnimationFinished(sc)) {
+                    state = State.DEAD;
+                    if (gameScript.fpc.canUsePhoenix()) {
+                        gameScript.isPause.set(false);
+                        gameScript.usePhoenix();
+                    } else {
+                        isGameOver.set(true);
+                        gameScript.endGame();
+                    }
                 }
             }
         }

@@ -230,7 +230,7 @@ public class Showcase {
     }
 
     private void initShowCaseItem() {
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon).clone();
+        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
