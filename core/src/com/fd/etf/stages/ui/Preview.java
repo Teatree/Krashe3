@@ -147,13 +147,13 @@ public class Preview extends AbstractDialog {
         sceneLoader.getEngine().addEntity(iconE);
 
         if (playAni) {
-                iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
-                iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
-                iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
+            iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
+            iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
+            iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
             playYellowStarsParticleEffect(544, 467);
         } else {
-                iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
-                iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
+            iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
+            iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 200);
         }
     }
@@ -238,7 +238,7 @@ public class Preview extends AbstractDialog {
 
         if (jump) {
             addShadow();
-            infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y-10;
+            infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_Y, 1f, Interpolation.exp10Out));
@@ -319,7 +319,7 @@ public class Preview extends AbstractDialog {
                 lblPriceSh.getComponent(TransformComponent.class).x = base + 20 * wordCount;
                 lblPrice.getComponent(TransformComponent.class).x = base + 20 * wordCount;
             }
-            lblPrice.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex()+10);
+            lblPrice.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex() + 10);
             lblPriceSh.getComponent(ZIndexComponent.class).setZIndex(101);
 
             if (btnBuy.getComponent(ButtonComponent.class) == null) {
@@ -327,20 +327,20 @@ public class Preview extends AbstractDialog {
             }
             btnBuy.getComponent(ButtonComponent.class).clearListeners();
             btnBuy.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnBuy) {
-                        @Override
-                        public void clicked() {
-                            if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
-                                if (vc.currencyType.equals(HARD)) {
-                                    vc.buyHard();
-                                } else {
-                                    vc.buyAndUse();
-                                    putInPlaceNewIconPosition();
-                                }
-                                showPreview(vc, false, true);
-                                ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
-                            }
+                @Override
+                public void clicked() {
+                    if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
+                        if (vc.currencyType.equals(HARD)) {
+                            vc.buyHard();
+                        } else {
+                            vc.buyAndUse();
+                            putInPlaceNewIconPosition();
                         }
-                    });
+                        showPreview(vc, false, true);
+                        ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
+                    }
+                }
+            });
         }
     }
 
@@ -403,7 +403,7 @@ public class Preview extends AbstractDialog {
         if (vc.bought && vc.enabled) {
             buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-            buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y= FAR_FAR_AWAY_X;
+            buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_X;
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -468,8 +468,7 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
-
-                            if ((shopScript.allSoftItems.indexOf(vc))%8 == 0){
+                            if ((shopScript.allSoftItems.indexOf(vc)) % 8 == 0) {
                                 shopScript.scrollBagsOnePageLeft();
                             }
                         }
@@ -536,7 +535,7 @@ public class Preview extends AbstractDialog {
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
 
-                            if ((shopScript.allSoftItems.indexOf(vc)+1)%8 == 0){
+                            if ((shopScript.allSoftItems.indexOf(vc) + 1) % 8 == 0) {
                                 shopScript.scrollBagsOnePageRight();
                             }
                         }

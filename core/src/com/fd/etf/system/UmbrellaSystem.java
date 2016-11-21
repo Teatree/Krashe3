@@ -44,15 +44,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
         if (!isStarted) {
             hide(entity);
-//            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            entity.getComponent(UmbrellaComponent.class).state = DEAD;
-////            GameStage.sceneLoader.getEngine().removeEntity(entity);
         }
-
-//        if (entity.getComponent(UmbrellaComponent.class).state.equals(DEAD)) {
-//            entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//            entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-//        }
 
         if (!isPause.get() && !isGameOver.get() && isStarted &&
                 entity.getComponent(UmbrellaComponent.class).state != DEAD) {
@@ -118,7 +110,7 @@ public class UmbrellaSystem extends IteratingSystem {
             uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
 
             uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
-            uc.out = new Vector2(340, 200);
+//            uc.out = new Vector2(340, 200);
             uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
             uc.myCatmull.valueAt(uc.out, 5);
             uc.myCatmull.derivativeAt(uc.out, 5);
@@ -129,6 +121,7 @@ public class UmbrellaSystem extends IteratingSystem {
         }
         if (uc.myCatmull != null && !uc.state.equals(SPAWNING)) {
             uc.myCatmull.valueAt(uc.out, uc.current);
+            System.out.println("pos >>>" + tc.x + " " + tc.y);
             tc.x = uc.out.x;
             tc.y = uc.out.y;
             sasc.paused = false;
@@ -140,7 +133,7 @@ public class UmbrellaSystem extends IteratingSystem {
         if (uc.state.equals(PUSH)) {
             uc.dataSet = new Vector2[3];
             uc.dataSet[0] = new Vector2(tc.x, tc.y);
-            uc.dataSet[1] = new Vector2(-500, 400);
+            uc.dataSet[1] = new Vector2(1170, 400);
             uc.dataSet[2] = new Vector2(1470, 400);
 
             uc.myCatmull = new Bezier<>(uc.dataSet);

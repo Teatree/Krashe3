@@ -13,9 +13,9 @@ import java.util.List;
 public class UmbrellaComponent implements Component {
 
     public static float SPAWN_INTERVAL_BASE = 5;
-    public static float SPAWNING_TIME = 7;
+    public static float SPAWNING_TIME = 2;
 
-    public static float INIT_SPAWN_X = 1180;
+    public static float INIT_SPAWN_X = 1175;
     public static float INIT_SPAWN_Y = 600;
 
     public Rectangle boundsRect = new Rectangle();
