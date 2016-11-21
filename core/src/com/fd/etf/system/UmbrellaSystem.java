@@ -121,7 +121,6 @@ public class UmbrellaSystem extends IteratingSystem {
         }
         if (uc.myCatmull != null && !uc.state.equals(SPAWNING)) {
             uc.myCatmull.valueAt(uc.out, uc.current);
-            System.out.println("pos >>>" + tc.x + " " + tc.y);
             tc.x = uc.out.x;
             tc.y = uc.out.y;
             sasc.paused = false;
