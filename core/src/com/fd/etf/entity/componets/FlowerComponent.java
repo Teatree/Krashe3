@@ -24,7 +24,8 @@ public class FlowerComponent implements Component {
         IDLE_BITE,
         ATTACK_BITE,
         PHOENIX,
-        DEATH,
+        LOSING,
+        DEAD,
         REVIVE_ADS,
         NO_REVIVE
     }

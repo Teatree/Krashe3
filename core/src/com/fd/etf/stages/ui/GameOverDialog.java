@@ -6,6 +6,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
+import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
@@ -110,11 +111,13 @@ public class GameOverDialog extends AbstractDialog {
 
     public void continueGame(TransformComponent dialogTc) {
         isGameOver.set(false);
+        isPause.set(false);
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isAngeredBeesMode = false;
         BugSystem.blowUpAllBugs = true;
         BugSystem.blowUpCounter = 10;
+        FlowerComponent.state = FlowerComponent.State.IDLE;
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {

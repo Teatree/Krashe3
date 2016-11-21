@@ -12,13 +12,14 @@ import java.util.*;
 
 import static com.fd.etf.entity.componets.VanityComponent.vanityCollections;
 import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChangedAssets;
+import static com.fd.etf.entity.componets.Upgrade.*;
+import static com.fd.etf.entity.componets.Upgrade.UpgradeType.*;
 
 public class SaveMngr {
 
     public static final String DATA_FILE = "game.sav";
     public static final String VANITIES_FILE = "vanity.params";
     public static final String PETS_FILE = "pets.params";
-    public static final String UPGRADES_FILE = "upgrades.params";
     public static final String LEVELS_JSON = "levels.json";
     public static final String MULTIPLIERS_JSON = "BugMultipliersByDuration.json";
     public static final String COCOON_MULTIPLIERS_JSON = "CocoonSpawnMultipliersByDuration.json";
@@ -162,8 +163,12 @@ public class SaveMngr {
             fc.settings.shopAd_min = stats.shopAd_min;
 
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
-                fc.upgrades.put(Upgrade.UpgradeType.valueOf(e.getKey()), new Upgrade(e.getValue()));
+                Upgrade u = getUpgrade(UpgradeType.valueOf(e.getValue().upgradeType));
+                u.bought = e.getValue().bought;
+                u.enabled = e.getValue().enabled;
+                fc.upgrades.put(UpgradeType.valueOf(e.getKey()), u);
             }
+
             fc.pets = getAllPets();
             PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
             if (petComponent != null && petComponent.tryPeriod) {
@@ -666,6 +671,8 @@ public class SaveMngr {
         public long tryPeriodDuration;
         public long tryPeriodStart;
         public long tryPeriodTimer;
+        public boolean bought;
+        public boolean enabled;
 
         public UpgradeStats() {
         }
@@ -676,6 +683,8 @@ public class SaveMngr {
             this.tryPeriodDuration = us.tryPeriodDuration;
             this.tryPeriodTimer = us.tryPeriodTimer;
             this.tryPeriodStart = us.tryPeriodStart;
+            this.bought = us.bought;
+            this.enabled = us.enabled;
         }
     }
 

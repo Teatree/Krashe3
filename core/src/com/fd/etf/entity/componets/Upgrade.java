@@ -27,6 +27,8 @@ public class Upgrade extends ShopItem{
         this.tryPeriodDuration = us.tryPeriodDuration;
         this.tryPeriodTimer = us.tryPeriodTimer;
         this.tryPeriodStart = us.tryPeriodStart;
+        this.bought = us.bought;
+        this.enabled = us.enabled;
     }
 
     public static List<Upgrade> getAllUpgrades() {
@@ -34,6 +36,10 @@ public class Upgrade extends ShopItem{
         all.add(getPhoenix());
         all.add(getBJDouble());
         return all;
+    }
+
+    public static Upgrade getUpgrade (UpgradeType type){
+        return type.equals(UpgradeType.PHOENIX) ? getPhoenix() : getBJDouble();
     }
 
     public static Upgrade getPhoenix() {
@@ -85,6 +91,9 @@ public class Upgrade extends ShopItem{
 
     @Override
     public void buyHard() {
+        this.bought = true;
+        this.enabled = true;
+
         if (upgradeType.equals(UpgradeType.PHOENIX)){
             Main.mainController.getPhoenix(this);
         }
@@ -123,5 +132,15 @@ public class Upgrade extends ShopItem{
 
     public enum UpgradeType {
         PHOENIX, BJ_DOUBLE
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Upgrade) {
+            Upgrade newObj = (Upgrade) obj;
+            return newObj.upgradeType.equals(this.upgradeType);
+        } else {
+            return false;
+        }
     }
 }

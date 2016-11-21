@@ -17,6 +17,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.State.*;
 import static com.fd.etf.stages.GameStage.gameScript;
+import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FPS;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
@@ -53,7 +54,8 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
-        if (!GameScreenScript.isPause.get() && !GameScreenScript.isGameOver.get()) {
+
+        if (!isPause.get() && !isGameOver.get()) {
             sc.player.speed = FPS;
 
             idle(sc);
@@ -71,6 +73,21 @@ public class FlowerSystem extends IteratingSystem {
             usePhoenix(tc, sc);
         } else {
             sc.player.speed = 0;
+        }
+
+        if (state.equals(State.LOSING)){
+            isPause.set(true);
+            setLoseAnimation(sc);
+            if (isAnimationFinished(sc)) {
+                state = State.DEAD;
+                if (gameScript.fpc.canUsePhoenix()) {
+                    gameScript.isPause.set(false);
+                    gameScript.usePhoenix();
+                } else {
+                    isGameOver.set(true);
+                    gameScript.endGame();
+                }
+            }
         }
     }
 
@@ -244,6 +261,16 @@ public class FlowerSystem extends IteratingSystem {
     private void setBiteAttackAnimation(SpriterComponent sc) {
         sc.player.speed = FPS;
         sc.player.setAnimation(4);
+    }
+
+    private void setLoseAnimation(SpriterComponent sc) {
+        sc.player.speed = FPS;
+        sc.player.setAnimation(5);
+    }
+
+    private void setReviveAnimation(SpriterComponent sc) {
+        sc.player.speed = FPS;
+        sc.player.setAnimation(6);
     }
 
     public void move(TransformComponent tc, float delta) {

@@ -261,8 +261,6 @@ public class GameScreenScript implements IScript {
         Entity bjIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
         if (gameScript.fpc.havePhoenixDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-//            tc.scaleX = 0.6f;
-//            tc.scaleY = 0.6f;
             tc.x = -24;
             tc.y = 637;
         } else {
@@ -286,9 +284,6 @@ public class GameScreenScript implements IScript {
 
     private void initBackButton() {
         Entity backMenuBtn = gameItem.getChild(BTN_BACK).getEntity();
-
-//        backBtn.getComponent(TransformComponent.class).x = 10;
-//        backBtn.getComponent(TransformComponent.class).y = 640;
 
         backMenuBtn.getComponent(ButtonComponent.class)
                 .addListener(new ImageButtonListener(backMenuBtn, new AtomicBoolean[]{isGameOver, isPause}) {
@@ -432,7 +427,6 @@ public class GameScreenScript implements IScript {
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
-//                cameraShaker.blink();
             }
 
             if (!isStarted && Gdx.input.justTouched()) {
@@ -452,7 +446,6 @@ public class GameScreenScript implements IScript {
                 if (umbrellaSpawnCounter <= 0) {
                     spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
                 }
-                //spawn Cocoon
                 if (cocoonSpawnCounter <= 0) {
                     spawnCocoon();
                 }
@@ -481,14 +474,16 @@ public class GameScreenScript implements IScript {
     }
 
     public void onBugOutOfBounds() {
-        if (fpc.canUsePhoenix()) {
-            usePhoenix();
-        } else {
-            endGame();
-        }
+//        if (fpc.canUsePhoenix()) {
+//            usePhoenix();
+//        }
+//        else {
+            FlowerComponent.state = FlowerComponent.State.LOSING;
+//            endGame();
+//        }
     }
 
-    private void endGame() {
+    public void endGame() {
         gameOverReviveTimesLimit--;
         shouldShowGameOverDialog = gameOverReviveTimesLimit > 0;
 
@@ -538,7 +533,6 @@ public class GameScreenScript implements IScript {
     }
 
     private void initCocoon() {
-//        ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
 
         if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
