@@ -55,7 +55,8 @@ public class GameScreenScript implements IScript {
     public final String BTN_BACK = "btn_back";
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
-    public static AtomicBoolean isPause  = new AtomicBoolean(false);;
+    public static AtomicBoolean isPause = new AtomicBoolean(false);
+    ;
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
     public static boolean isStarted;
 
@@ -79,6 +80,7 @@ public class GameScreenScript implements IScript {
 
     //bee mode
     public static Entity beesModeAni;
+    public static Entity beesModeEndAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     public static boolean shouldShowGameOverDialog;
@@ -114,11 +116,22 @@ public class GameScreenScript implements IScript {
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
 //                cameraShaker.initBlinking(40, 3);
-                angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
 
+                GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
+                beesModeEndAni.getComponent(TransformComponent.class).y = 394;
+                beesModeEndAni.getComponent(SpriterComponent.class).player.setAnimation(0);
+                beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 26;
+                beesModeEndAni.getComponent(SpriterComponent.class).player.setTime(0);
+                angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
                 checkAngeredBeesGoal();
             }
         }
+        if (beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
+                beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() %
+                        beesModeEndAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
+            beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
+        }
+
     }
 
     private void checkAngeredBeesGoal() {
@@ -176,6 +189,11 @@ public class GameScreenScript implements IScript {
         beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
         beesModeAni.getComponent(TransformComponent.class).y = 1800;
+
+        beesModeEndAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
+        beesModeEndAni.getComponent(SpriterComponent.class).scale = 0.7f;
+        beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
+        beesModeEndAni.getComponent(TransformComponent.class).y = 1800;
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();

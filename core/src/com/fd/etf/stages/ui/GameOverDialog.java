@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
@@ -47,6 +48,8 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void show() {
+        gameOverDialogE.getComponent(TransformComponent.class).x = GAME_OVER_X;
+        gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
         addShadow();
         isActive = true;
         isGameOver.set(true);
@@ -77,11 +80,11 @@ public class GameOverDialog extends AbstractDialog {
         GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), gameOverDialogE, tempItemC.composite);
         GameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
 
-        final TransformComponent dialogTc = gameOverDialogE.getComponent(TransformComponent.class);
-        dialogTc.x = GAME_OVER_X;
-        dialogTc.y = HIDE_Y;
+        gameOverDialogE.getComponent(TransformComponent.class).x = GAME_OVER_X;
+        gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
+
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
-        initReviveBtn(dialogTc);
+        initReviveBtn(gameOverDialogE.getComponent(TransformComponent.class));
     }
 
     private void initReviveBtn(final TransformComponent dialogTc) {
@@ -96,6 +99,9 @@ public class GameOverDialog extends AbstractDialog {
                     public void clicked() {
                         if (Main.mainController.isWifiConnected()) {
                             playVideoAd(dialogTc);
+                        }
+                        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
+                            continueGame(dialogTc);
                         }
                         close(gameOverDialogE);
                     }
