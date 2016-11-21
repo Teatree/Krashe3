@@ -19,17 +19,13 @@ import com.fd.etf.android.util.EtfIAPhelper;
 import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
-import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.GameHelper;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
     EtfIAPhelper iapHelper;
     EtfAdsHelper adsHelper;
     EtfPlayServicesHelper psHelper;
-
     Main game;
-    private final static int requestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

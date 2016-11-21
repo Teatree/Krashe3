@@ -214,6 +214,8 @@ public class GameScreenScript implements IScript {
 
     public void initButtons() {
         initPauseBtn();
+        pauseDialog = null;
+        gameOverDialog = null;
         initBackButton();
     }
 

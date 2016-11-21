@@ -376,7 +376,6 @@ public class ShopScreenScript implements IScript {
         if (previous == null) {
             tc.x = FIRST_BAG_X;
             tc.y = FIRST_BAG_Y;
-            placeTheDot(bagPageId);
         } else {
             if (bagPosIdX % 4 == 0) {
                 tc.x = FIRST_BAG_X + bagPageId * (PAGE_SIZE + 180);

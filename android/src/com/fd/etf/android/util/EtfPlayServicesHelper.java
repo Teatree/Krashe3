@@ -4,7 +4,9 @@ import android.content.Intent;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.android.AndroidLauncher;
 import com.fd.etf.android.R;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.example.games.basegameutils.GameHelper;
 
 public class EtfPlayServicesHelper {
@@ -25,7 +27,9 @@ public class EtfPlayServicesHelper {
         final GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
             @Override
             public void onSignInFailed() {
+                gameHelper.showFailureDialog();
             }
+
 
             @Override
             public void onSignInSucceeded() {
@@ -103,8 +107,6 @@ public class EtfPlayServicesHelper {
                     app.getString(R.string.leaderboard_leaderboard)), requestCode);
         } else {
             signIn();
-            app.startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    app.getString(R.string.leaderboard_leaderboard)), requestCode);
         }
     }
 
@@ -115,4 +117,9 @@ public class EtfPlayServicesHelper {
             signIn();
         }
     }
+
+//    private boolean checkPlayServices() {
+//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(app);
+//        //...
+//    }
 }
