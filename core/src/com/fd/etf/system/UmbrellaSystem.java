@@ -82,7 +82,7 @@ public class UmbrellaSystem extends IteratingSystem {
     private void spawn(Entity entity, float deltaTime, UmbrellaComponent uc, SpriteAnimationStateComponent sasc, TransformComponent tc) {
         if (uc.state.equals(SPAWNING)) {
             sasc.paused = true;
-            tc.x = 1180;
+            tc.x = UmbrellaComponent.INIT_SPAWN_X;
             tc.y = 400;
             uc.blinkCounter--;
             if (uc.blinkCounter == 0){
@@ -134,7 +134,7 @@ public class UmbrellaSystem extends IteratingSystem {
             uc.dataSet = new Vector2[3];
             uc.dataSet[0] = new Vector2(tc.x, tc.y);
             uc.dataSet[1] = new Vector2(1170, 400);
-            uc.dataSet[2] = new Vector2(1470, 400);
+            uc.dataSet[2] = new Vector2(1170, 400);
 
             uc.myCatmull = new Bezier<>(uc.dataSet);
 //                uc.out = new Vector2(340, 200);
