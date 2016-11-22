@@ -9,6 +9,7 @@ import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -30,16 +31,19 @@ import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.utils.EffectUtils.fade;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
+import static com.fd.etf.utils.GlobalConstants.FPS;
 import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
 public class GiftScreen {
     public final String GIFT_SCREEN = "lib_gift_screen";
     public final String BTN_PINATA = "btn_gift";
     public final String BOX_ANI = "box_ani";
+    public final String SHINE_IMG = "shine_img";
     public final int GIFT_SCREEN_X = -20;
     public final int GIFT_SCREEN_Y = -20;
 
     public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
+    public final String LBL_GIFT_SCREEN_SH = "lbl_gift_screen_sh";
     public final int PINATA_X = 363;
     public final int PINATA_Y = 275;
     public final int HIT_COUNTER_MAX = 10;
@@ -49,16 +53,21 @@ public class GiftScreen {
     private Entity giftScreen;
     private Entity pinataBtn;
     private Entity boxAniE;
+    private Entity imgShine;
+    private Entity lbl;
+    private Entity lbl_sh;
     private SpriteAnimationComponent saBox;
     private SpriteAnimationStateComponent sasBox;
-    private float stateTime;
     //shitty boolean
     private boolean canClick = false;
     private Gift gift;
 
     private int openGiftCooldown = 30;
+    private int helpTimer = 0;
+    private float idleCounter = 0;
     private boolean showNewLevelAnim;
     private boolean openedGift;
+    private boolean canPlayAnimation;
 
     static List<Integer> moneySums;
 
@@ -77,10 +86,17 @@ public class GiftScreen {
         openedGift = false;
         openGiftCooldown = 30;
 
+        idleCounter = 0;
+
         final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
         giftScreen = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), giftScreen, tempC.composite);
         sceneLoader.getEngine().addEntity(giftScreen);
+
+        lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
+        lbl.getComponent(TintComponent.class).color.a = 0;
+        lbl_sh = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN_SH).getEntity();
+        lbl_sh.getComponent(TintComponent.class).color.a = 0;
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
@@ -88,8 +104,10 @@ public class GiftScreen {
 
         boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
         saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
-        saBox.playMode = Animation.PlayMode.NORMAL;
         sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
+
+        imgShine = new ItemWrapper(giftScreen).getChild(SHINE_IMG).getEntity();
+        imgShine.getComponent(TintComponent.class).color.a = 0;
 
         pinataBtn = new ItemWrapper(giftScreen).getChild(BTN_PINATA).getEntity();
         pinataBtn.getComponent(TransformComponent.class).scaleX = 1.4f;
@@ -124,7 +142,7 @@ public class GiftScreen {
                     System.out.println("clicked!");
                     if (!openedGift) {
                         openedGift = true;
-                        openGiftCooldown = 100;
+                        openGiftCooldown = 70;
                     }
                 }else{
                     canClick = true;
@@ -135,6 +153,8 @@ public class GiftScreen {
 
     public void show() {
         gift = Gift.getRandomGift();
+        canPlayAnimation = true;
+        setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
 
         final TransformComponent screenTc = giftScreen.getComponent(TransformComponent.class);
         screenTc.x = GIFT_SCREEN_X;
@@ -154,11 +174,15 @@ public class GiftScreen {
     }
 
     public void update() {
-        if(!openedGift){
-            sasBox.set(saBox.frameRangeMap.get("idle"), 24, Animation.PlayMode.LOOP);
+        if(!openedGift && idleCounter < 0 && idleCounter > -1){
+            canPlayAnimation = true;
+            setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
+            idleCounter = 2 + new Random().nextInt(8);
+        }else{
+            idleCounter -= Gdx.graphics.getDeltaTime();
+            System.out.println("idleCounter: " + idleCounter);
         }
 
-        stateTime += Gdx.graphics.getDeltaTime();
         if (Gdx.input.justTouched() && isGameOver.get() && showNewLevelAnim) {
             showNewLevelScreen();
             showNewLevelAnim = false;
@@ -166,12 +190,22 @@ public class GiftScreen {
         if (openedGift && openGiftCooldown == 0) {
             showGift();
             openedGift = false;
+            idleCounter = -2;
             showNewLevelAnim = true;
         } else if (openGiftCooldown > 0) {
             openGiftCooldown--;
         }
-        if (openGiftCooldown <= 50){
-            sasBox.set(saBox.frameRangeMap.get("open"), 24, Animation.PlayMode.NORMAL);
+        if (openGiftCooldown <= 50 && openGiftCooldown > 45){
+            canPlayAnimation = true;
+            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+        }
+
+        helpTimer++;
+        if(helpTimer < 200){
+            if(lbl.getComponent(TintComponent.class).color.a < 1){
+                lbl.getComponent(TintComponent.class).color.a++;
+                lbl_sh.getComponent(TintComponent.class).color.a++;
+            }
         }
 
         fade(giftScreen, true);
@@ -186,10 +220,14 @@ public class GiftScreen {
 
     private void showGift() {
         pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        Entity lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
+        lbl.getComponent(TintComponent.class).color.a = 1;
+        lbl_sh.getComponent(TintComponent.class).color.a = 1;
 
         lbl.getComponent(LabelComponent.class).text.replace(0,
                 lbl.getComponent(LabelComponent.class).text.capacity(),
+                "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        lbl_sh.getComponent(LabelComponent.class).text.replace(0,
+                lbl_sh.getComponent(LabelComponent.class).text.capacity(),
                 "YOU GOT " + gift.money + " " + gift.type + " !!!");
     }
 
@@ -356,6 +394,12 @@ public class GiftScreen {
                 }
             }
             fpc.level.updateLevel(GameStage.gameScript.fpc);
+        }
+    }
+    public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {
+        if (canPlayAnimation) {
+            sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
+            canPlayAnimation = false;
         }
     }
 }
