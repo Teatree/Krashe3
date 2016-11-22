@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.PetComponent;
@@ -12,6 +13,9 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -31,6 +35,7 @@ import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 public class GiftScreen {
     public final String GIFT_SCREEN = "lib_gift_screen";
     public final String BTN_PINATA = "btn_gift";
+    public final String BOX_ANI = "box_ani";
     public final int GIFT_SCREEN_X = -20;
     public final int GIFT_SCREEN_Y = -20;
 
@@ -43,6 +48,12 @@ public class GiftScreen {
 
     private Entity giftScreen;
     private Entity pinataBtn;
+    private Entity boxAniE;
+    private SpriteAnimationComponent saBox;
+    private SpriteAnimationStateComponent sasBox;
+    private float stateTime;
+    //shitty boolean
+    private boolean canClick = false;
     private Gift gift;
 
     private int openGiftCooldown = 30;
@@ -75,6 +86,11 @@ public class GiftScreen {
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         giftScreen.getComponent(ZIndexComponent.class).setZIndex(100);
 
+        boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
+        saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
+        saBox.playMode = Animation.PlayMode.NORMAL;
+        sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
+
         pinataBtn = new ItemWrapper(giftScreen).getChild(BTN_PINATA).getEntity();
         pinataBtn.getComponent(TransformComponent.class).scaleX = 1.4f;
         pinataBtn.getComponent(TransformComponent.class).scaleY = 1.4f;
@@ -104,8 +120,15 @@ public class GiftScreen {
 
             @Override
             public void clicked() {
-                openedGift = true;
-                openGiftCooldown = 30;
+                if(canClick) {
+                    System.out.println("clicked!");
+                    if (!openedGift) {
+                        openedGift = true;
+                        openGiftCooldown = 100;
+                    }
+                }else{
+                    canClick = true;
+                }
             }
         });
     }
@@ -131,6 +154,11 @@ public class GiftScreen {
     }
 
     public void update() {
+        if(!openedGift){
+            sasBox.set(saBox.frameRangeMap.get("idle"), 24, Animation.PlayMode.LOOP);
+        }
+
+        stateTime += Gdx.graphics.getDeltaTime();
         if (Gdx.input.justTouched() && isGameOver.get() && showNewLevelAnim) {
             showNewLevelScreen();
             showNewLevelAnim = false;
@@ -141,6 +169,9 @@ public class GiftScreen {
             showNewLevelAnim = true;
         } else if (openGiftCooldown > 0) {
             openGiftCooldown--;
+        }
+        if (openGiftCooldown <= 50){
+            sasBox.set(saBox.frameRangeMap.get("open"), 24, Animation.PlayMode.NORMAL);
         }
 
         fade(giftScreen, true);

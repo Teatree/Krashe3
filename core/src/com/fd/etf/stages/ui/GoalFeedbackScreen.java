@@ -85,6 +85,8 @@ public class GoalFeedbackScreen {
 
         feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+
+
     }
 
     public void show() {
