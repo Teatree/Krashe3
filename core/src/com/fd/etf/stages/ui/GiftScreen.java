@@ -8,10 +8,7 @@ import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -94,9 +91,9 @@ public class GiftScreen {
         sceneLoader.getEngine().addEntity(giftScreen);
 
         lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
-        lbl.getComponent(TintComponent.class).color.a = 0;
         lbl_sh = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN_SH).getEntity();
         lbl_sh.getComponent(TintComponent.class).color.a = 0;
+        lbl.getComponent(TintComponent.class).color.a = 0;
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
@@ -177,7 +174,7 @@ public class GiftScreen {
         if(!openedGift && idleCounter < 0 && idleCounter > -1){
             canPlayAnimation = true;
             setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
-            idleCounter = 2 + new Random().nextInt(8);
+            idleCounter = 6 + new Random().nextInt(12);
         }else{
             idleCounter -= Gdx.graphics.getDeltaTime();
             System.out.println("idleCounter: " + idleCounter);
@@ -201,10 +198,10 @@ public class GiftScreen {
         }
 
         helpTimer++;
-        if(helpTimer < 200){
+        if(helpTimer > 200){
             if(lbl.getComponent(TintComponent.class).color.a < 1){
-                lbl.getComponent(TintComponent.class).color.a++;
-                lbl_sh.getComponent(TintComponent.class).color.a++;
+                lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
+                lbl_sh.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
             }
         }
 
@@ -220,8 +217,8 @@ public class GiftScreen {
 
     private void showGift() {
         pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        lbl.getComponent(TintComponent.class).color.a = 1;
         lbl_sh.getComponent(TintComponent.class).color.a = 1;
+        lbl.getComponent(TintComponent.class).color.a = 1;
 
         lbl.getComponent(LabelComponent.class).text.replace(0,
                 lbl.getComponent(LabelComponent.class).text.capacity(),
