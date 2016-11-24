@@ -62,6 +62,7 @@ public class GiftScreen {
     private int openGiftCooldown = 30;
     private int helpTimer = 0;
     private float idleCounter = 0;
+    private boolean isShine;
     private boolean showNewLevelAnim;
     private boolean openedGift;
     private boolean canPlayAnimation;
@@ -189,12 +190,21 @@ public class GiftScreen {
             openedGift = false;
             idleCounter = -2;
             showNewLevelAnim = true;
+            isShine = true;
         } else if (openGiftCooldown > 0) {
             openGiftCooldown--;
         }
         if (openGiftCooldown <= 50 && openGiftCooldown > 45){
             canPlayAnimation = true;
             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+        }
+
+        if (isShine){
+            if(imgShine.getComponent(TintComponent.class).color.a < 1){
+                imgShine.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
+            }else{
+                isShine = false;
+            }
         }
 
         helpTimer++;
