@@ -11,6 +11,13 @@ achievedgoal
   orig: 300, 65
   offset: 0, 0
   index: -1
+progressbaremptyimage
+  rotate: false
+  xy: 1404, 1248
+  size: 300, 65
+  orig: 300, 65
+  offset: 0, 0
+  index: -1
 background
   rotate: false
   xy: 2, 1261

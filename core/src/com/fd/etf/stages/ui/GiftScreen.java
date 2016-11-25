@@ -33,6 +33,7 @@ import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
 public class GiftScreen {
     public final String GIFT_SCREEN = "lib_gift_screen";
+    public final String ITEM_MONEY_GIFT = "itemMoneyGift";
     public final String BTN_PINATA = "btn_gift";
     public final String BOX_ANI = "box_ani";
     public final String SHINE_IMG = "shine_img";
@@ -40,7 +41,6 @@ public class GiftScreen {
     public final int GIFT_SCREEN_Y = -20;
 
     public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
-    public final String LBL_GIFT_SCREEN_SH = "lbl_gift_screen_sh";
     public final int PINATA_X = 363;
     public final int PINATA_Y = 275;
     public final int HIT_COUNTER_MAX = 10;
@@ -52,7 +52,6 @@ public class GiftScreen {
     private Entity boxAniE;
     private Entity imgShine;
     private Entity lbl;
-    private Entity lbl_sh;
     private SpriteAnimationComponent saBox;
     private SpriteAnimationStateComponent sasBox;
     //shitty boolean
@@ -92,8 +91,6 @@ public class GiftScreen {
         sceneLoader.getEngine().addEntity(giftScreen);
 
         lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
-        lbl_sh = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN_SH).getEntity();
-        lbl_sh.getComponent(TintComponent.class).color.a = 0;
         lbl.getComponent(TintComponent.class).color.a = 0;
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -211,7 +208,6 @@ public class GiftScreen {
         if(helpTimer > 200){
             if(lbl.getComponent(TintComponent.class).color.a < 1){
                 lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
-                lbl_sh.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
             }
         }
 
@@ -227,15 +223,20 @@ public class GiftScreen {
 
     private void showGift() {
         pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        lbl_sh.getComponent(TintComponent.class).color.a = 1;
         lbl.getComponent(TintComponent.class).color.a = 1;
 
-        lbl.getComponent(LabelComponent.class).text.replace(0,
-                lbl.getComponent(LabelComponent.class).text.capacity(),
-                "YOU GOT " + gift.money + " " + gift.type + " !!!");
-        lbl_sh.getComponent(LabelComponent.class).text.replace(0,
-                lbl_sh.getComponent(LabelComponent.class).text.capacity(),
-                "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        if (gift.pet != null || gift.upgrade != null) {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT A " + gift.type + " !!!");
+        }else {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        }
+
+        showGiftIcon();
+
     }
 
     public static class Gift {
@@ -253,6 +254,7 @@ public class GiftScreen {
 
         public static Gift getRandomGift() {
             Gift gift = new Gift();
+//            gift = getRandomMoneyGift();
             int i = random.nextInt(100);
             if (i > 0 && i <= gameScript.fpc.level.rewardChanceGroups.get(PET)) {
                 gift = getPetGift();
@@ -313,7 +315,7 @@ public class GiftScreen {
 
         public static Gift getPet2Gift() {
             Gift gift = new Gift();
-            PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+            PetComponent pet = GameStage.gameScript.fpc.pets.get(1);
             if (!pet.bought) {
                 gift.pet = pet;
                 gift.pet.tryPeriod = true;
@@ -327,7 +329,7 @@ public class GiftScreen {
 
         public static Gift getPet3Gift() {
             Gift gift = new Gift();
-            PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+            PetComponent pet = GameStage.gameScript.fpc.pets.get(2);
             if (!pet.bought) {
                 gift.pet = pet;
                 gift.pet.tryPeriod = true;
@@ -407,6 +409,34 @@ public class GiftScreen {
         if (canPlayAnimation) {
             sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
+        }
+    }
+    private void showGiftIcon(){
+        Entity giftE;
+        if (gift.pet != null) {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.pet.shopIcon);
+            giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftE);
+            giftE.getComponent(ZIndexComponent.class).setZIndex(100);
+            giftE.getComponent(TransformComponent.class).x = 535;
+            giftE.getComponent(TransformComponent.class).y = 439;
+        }else if(gift.upgrade != null){
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.upgrade.shopIcon);
+            giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftE);
+            giftE.getComponent(ZIndexComponent.class).setZIndex(100);
+            giftE.getComponent(TransformComponent.class).x = 535;
+            giftE.getComponent(TransformComponent.class).y = 439;
+        }else{
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_MONEY_GIFT);
+            giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftE);
+            giftE.getComponent(ZIndexComponent.class).setZIndex(100);
+            giftE.getComponent(TransformComponent.class).x = 535;
+            giftE.getComponent(TransformComponent.class).y = 439;
         }
     }
 }

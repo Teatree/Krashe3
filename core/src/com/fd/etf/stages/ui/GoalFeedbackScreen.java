@@ -30,6 +30,7 @@ public class GoalFeedbackScreen {
 
     public static final String GOALFEEDBACK = "lib_gift_feedbacker";
     public static final String LBL_DIALOG = "lbl_level";
+    public static final String LBL_DIALOG_SH = "lbl_level_sh";
     public static final String GOAL_LIB = "goalTile";
     public static final String GOAL_PROGRESS = "goal_progress";
     public static final String GOAL_LBL = "goal_lbl";
@@ -96,8 +97,12 @@ public class GoalFeedbackScreen {
         feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
 
         final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
+        final Entity goalLabelsh = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG_SH).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+        LabelComponent goalsLabelCompSh = goalLabelsh.getComponent(LabelComponent.class);
+
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
+        goalsLabelCompSh.text.replace(0, goalsLabelCompSh.text.capacity(), " \n     " + gameScript.fpc.level.name + " \n ");
 
         if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             int y = GOAL_INIT_POS_Y;
@@ -290,12 +295,15 @@ public class GoalFeedbackScreen {
         if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
                 -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
             final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
+            final Entity goalLabelsh = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG_SH).getEntity();
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+            LabelComponent goalsLabelCompsh = goalLabelsh.getComponent(LabelComponent.class);
             if (!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
                 EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
                         goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
+                goalsLabelCompsh.text.replace(0, goalsLabelCompsh.text.capacity(), gameScript.fpc.level.name);
             }
         }
 
