@@ -78,6 +78,7 @@ public class FlowerSystem extends IteratingSystem {
         if (state.equals(State.LOSING)){
             if (tc.y > FLOWER_Y_POS){
                 tc.y -= FLOWER_MOVE_SPEED * delta * FPS;
+                isPause.set(true);
             } else {
                 isPause.set(true);
                 setLoseAnimation(sc);
