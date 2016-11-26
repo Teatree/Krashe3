@@ -30,7 +30,6 @@ public class ResultScreenScript implements IScript {
     public static final String IMG_PROGRESS_BAR = "img_progress_bar";
     public static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
     public static final String YOU_EARNED = "+";
-    public static final String TOTAL = "TOTAL: ";
     public static final String YOUR_BEST = "BEST: ";
     public static final String YOU_NEED = "YOU NEED ";
     public static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
@@ -107,8 +106,8 @@ public class ResultScreenScript implements IScript {
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
-        totalLabel.text.replace(0, totalLabel.text.capacity(), TOTAL + String.valueOf(gameScript.fpc.totalScore));
-        totalLabels.text.replace(0, totalLabels.text.capacity(), TOTAL + String.valueOf(gameScript.fpc.totalScore));
+        totalLabel.text.replace(0, totalLabel.text.capacity(), String.valueOf(gameScript.fpc.totalScore));
+        totalLabels.text.replace(0, totalLabels.text.capacity(), String.valueOf(gameScript.fpc.totalScore));
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
         earnedLabels = txtEarnedsE.getComponent(LabelComponent.class);
