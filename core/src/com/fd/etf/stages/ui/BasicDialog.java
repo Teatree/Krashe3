@@ -226,7 +226,7 @@ public class BasicDialog extends AbstractDialog {
     public void close(Entity e) {
         parent.isActive = true;
 //        AbstractDialog.isDialogOpen.set(false);
-        AbstractDialog.isSecondDialogOpen.set(false);
+//        AbstractDialog.isSecondDialogOpen.set(false);
         super.close(e);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class UmbrellaComponent implements Component {
 
     public static float SPAWN_INTERVAL_BASE = 5;
-    public static float SPAWNING_TIME = 2;
+    public static float SPAWNING_TIME = 0.2f;
 
     public static float INIT_SPAWN_X = 1165;
     public static float INIT_SPAWN_Y = 600;
