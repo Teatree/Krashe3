@@ -257,6 +257,10 @@ public class Preview extends AbstractDialog {
         }
         setDescription(vc);
 
+        for (Entity e: ShopScreenScript.itemIcons.values()){
+            e.getComponent(ZIndexComponent.class).
+                    setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()-2);
+        }
         infoTag.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
         buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
@@ -305,7 +309,8 @@ public class Preview extends AbstractDialog {
                 lblPriceSh.getComponent(LabelComponent.class).text.append("$");
             } else {
                 coinzE.getComponent(TintComponent.class).color.a = 1;
-                coinzE.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex() + 1);
+                coinzE.getComponent(TransformComponent.class).y = 27;
+                coinzE.getComponent(ZIndexComponent.class).setZIndex(btnBuy.getComponent(ZIndexComponent.class).getZIndex() + 10);
             }
             // Finding the middle of the button to display price and coin icon
             // only works if width of text label is 1
