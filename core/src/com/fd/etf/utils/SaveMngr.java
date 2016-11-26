@@ -707,6 +707,7 @@ public class SaveMngr {
         public PetJson pet;
         public boolean leaves;
         public String collection;
+        public String title;
 
         public VanityJson() {
         }
