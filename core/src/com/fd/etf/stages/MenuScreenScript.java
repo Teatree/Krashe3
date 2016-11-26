@@ -12,6 +12,7 @@ import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
@@ -38,6 +39,7 @@ public class MenuScreenScript implements IScript {
     public static final String BTN_ACHIEVEMENTS = "btn_achievements";
     public static final String ACHIEVEMENTS_C = "achievements_composite";
     public static final String BTN_PLAY_SERVICES = "btn_playServices";
+    public static final String MM_FLOWER = "MM_flower";
 
     public static final int TIMER_X = 945;
     public static final int TIMER_Y = 441;
@@ -58,6 +60,7 @@ public class MenuScreenScript implements IScript {
     boolean startShopTransition;
     boolean startTransitionIn;
     public static boolean showGoalNotification;
+    public int currentFlowerFrame;
 
     private static TrialTimer timer;
     private static PauseDialog pauseDialog;
@@ -439,7 +442,9 @@ public class MenuScreenScript implements IScript {
         if (GameStage.viewport.getWorldWidth() >= 1195) {
             startGameTransition = false;
             GameStage.viewport.getCamera().translate(0, 0, 0);
-            GameStage.initGame();
+            currentFlowerFrame = menuItem.getChild(MM_FLOWER).getEntity().getComponent(NodeComponent.class).getChild("flw_ani").getComponent(SpriterComponent.class).player.getTime();
+            System.out.println("currentFlowerFrame: " + currentFlowerFrame);
+            GameStage.initGame(currentFlowerFrame);
         }
     }
 

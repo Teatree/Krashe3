@@ -68,7 +68,8 @@ public class GameStage extends Stage {
 
     }
 
-    public static void initGame() {
+    public static void initGame(int currentFlowerFrame) {
+        GameScreenScript.currentFlowerFrame = currentFlowerFrame;
         if (changedFlower || changedFlower2) {
             changedFlower = false;
             sceneLoader.loadScene(MAIN_SCENE, viewport);
@@ -103,6 +104,7 @@ public class GameStage extends Stage {
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance();
+
     }
 
     public static void initMenu() {

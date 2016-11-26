@@ -195,7 +195,7 @@
                     <object folder="0" file="0" x="0.001094" y="-0.001782" pivot_x="0.498906" pivot_y="0.501782" angle="0"/>
                 </key>
                 <key id="28" time="1698" spin="0">
-                    <object folder="0" file="0" x="0.231541" y="12.682369" pivot_x="0.498906" pivot_y="0.501782" angle="0" scale_x="0.943399" scale_y="1.169002"/>
+                    <object folder="0" file="0" x="0.231405" y="12.682507" pivot_x="0.498906" pivot_y="0.501782" angle="0" scale_x="0.943399" scale_y="1.169002"/>
                 </key>
                 <key id="29" time="1698" spin="0">
                     <object folder="0" file="0" x="4.072548" y="-60.938702" pivot_x="0.509085" pivot_y="0.214212" angle="0" scale_x="0.943399" scale_y="1.169002"/>
@@ -215,7 +215,7 @@
             </timeline>
             <timeline id="1" name="box_open">
                 <key id="0" spin="0">
-                    <object folder="0" file="1" x="-1.426685" y="-0.042201" pivot_x="0.487836" pivot_y="0.542201" angle="0" a="0.00001"/>
+                    <object folder="0" file="1" x="-1.426685" y="-0.042201" pivot_x="0.487836" pivot_y="0.542201" angle="0" a="0"/>
                 </key>
                 <key id="1" time="742" spin="0">
                     <object folder="0" file="1" x="-1.426685" y="-0.042201" pivot_x="0.487836" pivot_y="0.542201" angle="0" a="0"/>

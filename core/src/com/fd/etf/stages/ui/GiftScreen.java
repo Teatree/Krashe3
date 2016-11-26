@@ -134,7 +134,6 @@ public class GiftScreen {
             @Override
             public void clicked() {
                 if(canClick) {
-                    System.out.println("clicked!");
                     if (!openedGift) {
                         openedGift = true;
                         openGiftCooldown = 70;
@@ -175,7 +174,6 @@ public class GiftScreen {
             idleCounter = 6 + new Random().nextInt(12);
         }else{
             idleCounter -= Gdx.graphics.getDeltaTime();
-            System.out.println("idleCounter: " + idleCounter);
         }
 
         if (Gdx.input.justTouched() && isGameOver.get() && showNewLevelAnim) {

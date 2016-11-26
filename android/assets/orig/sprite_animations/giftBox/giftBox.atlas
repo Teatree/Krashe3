@@ -6,79 +6,205 @@ filter: Nearest,Nearest
 repeat: none
 giftBox01
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox38
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox39
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox40
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox41
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox42
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox02
   rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 702
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox03
   rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox04
   rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 562
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox05
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 702
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox06
   rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 842
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox07
+  rotate: false
+  xy: 2, 422
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox08
+  rotate: false
+  xy: 239, 562
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox09
+  rotate: false
+  xy: 476, 702
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox10
+  rotate: false
+  xy: 713, 842
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox11
+  rotate: false
+  xy: 2, 282
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox12
+  rotate: false
+  xy: 239, 422
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox13
+  rotate: false
+  xy: 476, 562
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox14
+  rotate: false
+  xy: 713, 702
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox15
+  rotate: false
+  xy: 2, 142
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox16
+  rotate: false
+  xy: 239, 282
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox17
+  rotate: false
+  xy: 476, 422
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox18
+  rotate: false
+  xy: 713, 562
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox19
+  rotate: false
+  xy: 2, 2
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox20
+  rotate: false
+  xy: 239, 142
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox21
+  rotate: false
+  xy: 476, 282
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox22
+  rotate: false
+  xy: 713, 422
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox23
+  rotate: false
+  xy: 239, 2
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox24
+  rotate: false
+  xy: 476, 142
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox25
+  rotate: false
+  xy: 713, 282
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox26
+  rotate: false
+  xy: 476, 2
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox27
+  rotate: false
+  xy: 713, 142
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox28
+  rotate: false
+  xy: 713, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 
@@ -87,388 +213,220 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-giftBox07
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox08
-  rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox09
-  rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox10
-  rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox11
-  rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox12
-  rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-
-giftBox3.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-giftBox13
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox14
-  rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox15
-  rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox16
-  rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox17
-  rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox18
-  rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-
-giftBox4.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-giftBox19
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox20
-  rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox21
-  rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox22
-  rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox23
-  rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox24
-  rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-
-giftBox5.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-giftBox25
-  rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox26
-  rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox27
-  rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
-giftBox28
-  rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
-  offset: 0, 0
-  index: -1
 giftBox29
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox30
   rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 702
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
-
-giftBox6.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 giftBox31
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox32
   rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 562
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox33
   rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 702
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox34
   rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox35
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 422
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox36
   rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 562
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
-
-giftBox7.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 giftBox37
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 702
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox39
+  rotate: false
+  xy: 713, 842
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox40
+  rotate: false
+  xy: 713, 842
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox41
+  rotate: false
+  xy: 713, 842
+  size: 235, 138
+  orig: 235, 138
+  offset: 0, 0
+  index: -1
+giftBox42
+  rotate: false
+  xy: 713, 842
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox43
   rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 282
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox44
   rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 422
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox45
   rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 562
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox46
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 713, 702
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox47
   rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 142
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
-
-giftBox8.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 giftBox48
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 282
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox49
   rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 422
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox50
   rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 713, 562
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox51
   rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 2, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox52
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 142
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox53
   rotate: false
-  xy: 457, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 282
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
-
-giftBox9.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 giftBox54
   rotate: false
-  xy: 2, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 713, 422
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox55
   rotate: false
-  xy: 2, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 239, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox56
   rotate: false
-  xy: 457, 636
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 142
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox57
   rotate: false
-  xy: 2, 84
-  size: 453, 274
-  orig: 453, 274
+  xy: 713, 282
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox58
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox59
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1
 giftBox60
   rotate: false
-  xy: 457, 360
-  size: 453, 274
-  orig: 453, 274
+  xy: 476, 2
+  size: 235, 138
+  orig: 235, 138
   offset: 0, 0
   index: -1

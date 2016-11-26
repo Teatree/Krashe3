@@ -179,7 +179,7 @@ public class ResultScreenScript implements IScript {
                     }
 
                     private void backToGame() {
-                        GameStage.initGame();
+                        GameStage.initGame(0);
                         isWasShowcase = false;
                     }
                 });
