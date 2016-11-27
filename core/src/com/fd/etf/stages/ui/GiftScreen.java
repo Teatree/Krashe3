@@ -50,6 +50,7 @@ public class GiftScreen {
     private Entity giftScreen;
     private Entity pinataBtn;
     private Entity boxAniE;
+    private Entity giftE;
     private Entity imgShine;
     private Entity lbl;
     private SpriteAnimationComponent saBox;
@@ -215,6 +216,7 @@ public class GiftScreen {
     private void showNewLevelScreen() {
         gift.takeGift(GameStage.gameScript.fpc);
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        sceneLoader.getEngine().removeEntity(giftE);
         GameStage.gameScript.goalFeedbackScreen.init(true);
         GameStage.gameScript.goalFeedbackScreen.showNewLevel();
     }
@@ -410,7 +412,6 @@ public class GiftScreen {
         }
     }
     private void showGiftIcon(){
-        Entity giftE;
         if (gift.pet != null) {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.pet.shopIcon);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
@@ -437,4 +438,5 @@ public class GiftScreen {
             giftE.getComponent(TransformComponent.class).y = 439;
         }
     }
+
 }
