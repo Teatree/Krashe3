@@ -12,19 +12,19 @@ buildscript {
 
 dependencies {
     // Set defaults so that BaseGameUtils can be used outside of BasicSamples
-//    if (!project.hasProperty('appcompat_library_version')) {
-//        ext.appcompat_library_version = '24.0.+'
-//    }
-//    if (!project.hasProperty('support_library_version')) {
-//        ext.support_library_version = '24.0.+'
-//    }
-//    if (!project.hasProperty('gms_library_version')) {
-//        ext.gms_library_version = '8.1.0'
-//    }
-    compile "com.android.support:appcompat-v7:24.2.0"
-    compile "com.android.support:support-v4:24.0.0"
-    compile "com.google.android.gms:play-services-games:9.4.0"
-    compile "com.google.android.gms:play-services-plus:9.4.0"
+    //    if (!project.hasProperty('appcompat_library_version')) {
+    //        ext.appcompat_library_version = '24.0.+'
+    //    }
+    //    if (!project.hasProperty('support_library_version')) {
+    //        ext.support_library_version = '24.0.+'
+    //    }
+    //    if (!project.hasProperty('gms_library_version')) {
+    //        ext.gms_library_version = '8.1.0'
+    //    }
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.google.android.gms:play-services-games:9.4.0'
+    compile 'com.google.android.gms:play-services-plus:9.4.0'
 }
 
 android {
@@ -36,7 +36,7 @@ android {
         ext.android_version = '24.0.1'
     }
 
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion '23.0.2'
 
 //    defaultConfig {

@@ -36,10 +36,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         View gameView = initializeForView(game, config);
         setupAds();
-        if (isWifiConnected() ) {
-            psHelper = new EtfPlayServicesHelper(this);
-            psHelper.setupPlayServices();
-        }
+        psHelper = new EtfPlayServicesHelper(this);
+        psHelper.setupPlayServices();
 
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
@@ -47,7 +45,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         setContentView(layout);
     }
 
-    public void setupPlayServices (){
+    public void setupPlayServices() {
         psHelper.setupPlayServices();
     }
 
@@ -75,9 +73,21 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public boolean isWifiConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        return (ni != null && ni.isConnected());
+        NetworkInfo i = cm.getActiveNetworkInfo();
+        if (i == null) {
+            return false;
+        }
+        if (!i.isConnected()) {
+            return false;
+        }
+        if (!i.isAvailable()) {
+            return false;
+        }
+        return true;
+//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        NetworkInfo mobileInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//
+//        return (wifiInfo != null && wifiInfo.isConnected());
     }
 
     @Override
@@ -192,7 +202,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void unlockAchievement(String achievementId) {
-       psHelper.unlockAchievement(achievementId);
+        psHelper.unlockAchievement(achievementId);
     }
 
     @Override
@@ -207,12 +217,12 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getLeaderboard() {
-      psHelper.getLeaderboard();
+        psHelper.getLeaderboard();
     }
 
     @Override
     public void getAchievements() {
-      psHelper.getAchievements();
+        psHelper.getAchievements();
     }
 
     //TODO: ADD open in FB app
