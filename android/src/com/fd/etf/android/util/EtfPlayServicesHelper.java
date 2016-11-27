@@ -1,6 +1,7 @@
 package com.fd.etf.android.util;
 
 import android.content.Intent;
+import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.android.AndroidLauncher;
 import com.fd.etf.android.R;
@@ -19,7 +20,7 @@ public class EtfPlayServicesHelper {
     public EtfPlayServicesHelper(AndroidLauncher app) {
         this.app = app;
     }
-    
+
     public void setupPlayServices() {
         gameHelper = new GameHelper(app, GameHelper.CLIENT_GAMES);
         gameHelper.enableDebugLog(true);
@@ -27,12 +28,14 @@ public class EtfPlayServicesHelper {
         final GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
             @Override
             public void onSignInFailed() {
+                Log.e("PS", "onSignInFailed");
                 gameHelper.showFailureDialog();
             }
 
 
             @Override
             public void onSignInSucceeded() {
+                Log.e("PS", "onSignInSucceeded");
             }
         };
 
@@ -40,8 +43,8 @@ public class EtfPlayServicesHelper {
     }
 
     public void onStart() {
-        if (app.isWifiConnected())
-            gameHelper.onStart(app);
+        Log.e("PS", "onStart");
+        gameHelper.onStart(app);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -49,17 +52,17 @@ public class EtfPlayServicesHelper {
     }
 
     public void signIn() {
-        if(app.isWifiConnected()){
-            try {
-                app.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameHelper.beginUserInitiatedSignIn();
-                    }
-                });
-            } catch (Exception e) {
-                Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
-            }
+        Log.e("PS", "signIn");
+        try {
+            app.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameHelper.beginUserInitiatedSignIn();
+                    Log.e("PS", "gameHelper.beginUserInitiatedSignIn");
+                }
+            });
+        } catch (Exception e) {
+            Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
         }
     }
 
