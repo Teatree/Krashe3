@@ -13,7 +13,8 @@
         <file id="9" name="head_bottom_default.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
         <file id="10" name="head_top_default.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
         <file id="11" name="head_top_baseball_cap.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="12" name="middle_leafs_boa.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="12" name="head_bottom_beard.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="13" name="head_top_sheep_horns.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <obj_info name="bone_peducle_bottom" type="bone" w="60.0083" h="10"/>
@@ -100,12 +101,12 @@
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="225.646023" y="-58.076435" angle="192.351559"/>
+                    <object folder="0" file="13" x="225.646023" y="-58.076435" angle="192.351559"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="12" x="210.087671" y="-123.408596" angle="189.806093"/>
+                    <object folder="0" file="2" x="210.087671" y="-123.408596" angle="189.806093"/>
                 </key>
             </timeline>
             <timeline id="3" name="middle_leafs_back">
@@ -205,7 +206,7 @@
             </timeline>
             <timeline id="13" obj="5" name="bone_head_top" object_type="bone">
                 <key id="0">
-                    <bone x="-12.52939" y="-56.681487" angle="357.454534"/>
+                    <bone x="-12.651918" y="-55.972573" angle="357.454534"/>
                 </key>
                 <key id="1" time="1194" spin="0">
                     <bone x="-12.651918" y="-55.972573" angle="358.810893"/>
