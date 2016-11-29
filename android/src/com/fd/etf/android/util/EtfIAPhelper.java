@@ -35,7 +35,7 @@ public class EtfIAPhelper {
     }
 
     public void setupIAP() {
-        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkG5yyQ0/X40mDtDgG/YnL5qZnrdsWfezQgPPUklXRyOZcsXzapMIxuQjkKefvmk+XOP3hUvco9lWZ2G07dW3S8qHepvdEFZFXpscdFICUP9dz3lPMvw4LDsuEoBgB6ioZB0XYlU751qEsBygvDWPjXLSgtY4vmfOJc55rYrbVaHxhnBW3dxAfOLO1Eh/3OPIHiVQXoRcvrSSfJ/Ct7znTHknHZtGtuuWmIOBC69WqXygyof8BSCvPP+D3KT4+lRwKyzJqSQCsCTGVAMQsRtO4CcTC18G13GsLXWaVoiv8Bv0Vzh0tGsyk93GqqHlnhZCads196ePX+QFyfuz4dKDOwIDAQAB";
+        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgTFXb9o0MvDZ4/JWX1+r/9G9oSxd3tvATOZlkbG1WNerm1orK8OIWTmSQAXdonweM3nMgorvaP+vleRNDQUpDH7tee/OInuAiYBWJCi9f3NPkmGd1FKnH/9tT/xleIiay+fNZ8I2f6vXwkKlFFshhhXWfaL3dJWTG+cuvTU0Y2fGJSy44rvhSACQ/fyFlpOO+TsDGdH5jpAxME415sgAa5HihimUCh0cg6LrsnLk18LMFuPh/f4Oas+2XgJoYmJLFng28gIqix5/Df0fEZrX+mYgNifbswONRilRq3bg8B2A77exMecQ1eN/3RGWYcNMVp+YxU2txLILIeglTJprZwIDAQAB";
 
         mHelper = new IabHelper(app, base64EncodedPublicKey);
 
