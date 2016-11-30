@@ -85,8 +85,8 @@ public class FlowerSystem extends IteratingSystem {
                 if (isAnimationFinished(sc)) {
                     state = State.DEAD;
                     if (gameScript.fpc.canUsePhoenix()) {
-                        gameScript.isPause.set(false);
-                        gameScript.usePhoenix();
+                        isPause.set(false);
+                        GameScreenScript.usePhoenix();
                     } else {
                         isGameOver.set(true);
                         gameScript.endGame();

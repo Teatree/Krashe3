@@ -56,7 +56,6 @@ public class GameScreenScript implements IScript {
     public static final String BEES_MODE_ANI = "bees_mode_ani";
 
     public static AtomicBoolean isPause = new AtomicBoolean(false);
-    ;
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
     public static boolean isStarted;
 

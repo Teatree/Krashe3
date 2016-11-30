@@ -80,11 +80,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         if (!i.isConnected()) {
             return false;
         }
-        if (!i.isAvailable()) {
-            return false;
-        }
-        return true;
-//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return i.isAvailable();
+        //        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //        NetworkInfo mobileInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 //
 //        return (wifiInfo != null && wifiInfo.isConnected());

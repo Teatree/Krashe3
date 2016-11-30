@@ -27,7 +27,7 @@ public class AbstractDialog {
 
     protected ItemWrapper gameItem;
     protected Entity shadowE;
-    public static AtomicBoolean isDialogOpen = new AtomicBoolean(false);;
+    public static AtomicBoolean isDialogOpen = new AtomicBoolean(false);
     public static AtomicBoolean isSecondDialogOpen = new AtomicBoolean(false);
     public static AtomicBoolean isSecondDialogClosed = new AtomicBoolean(false);
     public boolean isActive;
