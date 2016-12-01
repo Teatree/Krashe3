@@ -36,7 +36,6 @@ public class GiftScreen {
     public final String ITEM_MONEY_GIFT = "itemMoneyGift";
     public final String BTN_PINATA = "btn_gift";
     public final String BOX_ANI = "box_ani";
-    public final String SHINE_IMG = "shine_img";
     public final int GIFT_SCREEN_X = -20;
     public final int GIFT_SCREEN_Y = -20;
 
@@ -51,7 +50,6 @@ public class GiftScreen {
     private Entity pinataBtn;
     private Entity boxAniE;
     private Entity giftE;
-    private Entity imgShine;
     private Entity lbl;
     private SpriteAnimationComponent saBox;
     private SpriteAnimationStateComponent sasBox;
@@ -101,9 +99,6 @@ public class GiftScreen {
         boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
         saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
         sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
-
-        imgShine = new ItemWrapper(giftScreen).getChild(SHINE_IMG).getEntity();
-        imgShine.getComponent(TintComponent.class).color.a = 0;
 
         pinataBtn = new ItemWrapper(giftScreen).getChild(BTN_PINATA).getEntity();
         pinataBtn.getComponent(TransformComponent.class).scaleX = 1.4f;
@@ -178,8 +173,9 @@ public class GiftScreen {
         }
 
         if (Gdx.input.justTouched() && isGameOver.get() && showNewLevelAnim) {
-            showNewLevelScreen();
-            showNewLevelAnim = false;
+//            showNewLevelScreen();
+//            showNewLevelAnim = false;
+            System.out.println("quit tapping me!");
         }
         if (openedGift && openGiftCooldown == 0) {
             showGift();
@@ -193,14 +189,6 @@ public class GiftScreen {
         if (openGiftCooldown <= 50 && openGiftCooldown > 45){
             canPlayAnimation = true;
             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
-        }
-
-        if (isShine){
-            if(imgShine.getComponent(TintComponent.class).color.a < 1){
-                imgShine.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
-            }else{
-                isShine = false;
-            }
         }
 
         helpTimer++;
