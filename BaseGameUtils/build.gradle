@@ -36,7 +36,7 @@ android {
         ext.android_version = '24.0.1'
     }
 
-    compileSdkVersion 25
+    compileSdkVersion 23
     buildToolsVersion '23.0.2'
 
 //    defaultConfig {
