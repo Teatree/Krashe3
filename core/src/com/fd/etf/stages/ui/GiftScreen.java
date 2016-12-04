@@ -34,6 +34,7 @@ import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 public class GiftScreen {
     public final String GIFT_SCREEN = "lib_gift_screen";
     public final String ITEM_MONEY_GIFT = "itemMoneyGift";
+    public final String SHADE = "shade";
     public final String BTN_PINATA = "btn_gift";
     public final String BOX_ANI = "box_ani";
     public final int GIFT_SCREEN_X = -20;
@@ -45,6 +46,7 @@ public class GiftScreen {
     public final int HIT_COUNTER_MAX = 10;
     public final int HIT_COUNTER_MIN = 5;
     public boolean isGiftScreenOpen = false;
+    public boolean playGiftAni = false;
 
     private Entity giftScreen;
     private Entity pinataBtn;
@@ -94,7 +96,7 @@ public class GiftScreen {
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        giftScreen.getComponent(ZIndexComponent.class).setZIndex(100);
+        giftScreen.getComponent(ZIndexComponent.class).setZIndex(120);
 
         boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
         saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
@@ -196,6 +198,23 @@ public class GiftScreen {
             if(lbl.getComponent(TintComponent.class).color.a < 1){
                 lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
             }
+        }
+
+        if(playGiftAni && giftE != null){
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.moveTo(535, 439, 2f, Interpolation.exp5));
+            giftE.add(ac);
+            if (giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a < 0.7){
+                giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a += 0.1f;
+                System.out.println("CAHNGING TINT");
+            }
+            if (giftE.getComponent(TransformComponent.class).x < 530){
+                playGiftAni = false;
+            }
+        }
+        if(!playGiftAni && giftE != null && Gdx.input.justTouched()){
+            gameScript.stage.initResultWithAds();
         }
 
         fade(giftScreen, true);
@@ -406,25 +425,27 @@ public class GiftScreen {
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(giftE);
             giftE.getComponent(ZIndexComponent.class).setZIndex(100);
-            giftE.getComponent(TransformComponent.class).x = 535;
-            giftE.getComponent(TransformComponent.class).y = 439;
+            giftE.getComponent(TransformComponent.class).x = 100;
+            giftE.getComponent(TransformComponent.class).y = 329;
         }else if(gift.upgrade != null){
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.upgrade.shopIcon);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(giftE);
             giftE.getComponent(ZIndexComponent.class).setZIndex(100);
-            giftE.getComponent(TransformComponent.class).x = 535;
-            giftE.getComponent(TransformComponent.class).y = 439;
+            giftE.getComponent(TransformComponent.class).x = 100;
+            giftE.getComponent(TransformComponent.class).y = 329;
         }else{
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_MONEY_GIFT);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(giftE);
             giftE.getComponent(ZIndexComponent.class).setZIndex(100);
-            giftE.getComponent(TransformComponent.class).x = 535;
-            giftE.getComponent(TransformComponent.class).y = 439;
+            giftE.getComponent(TransformComponent.class).x = 100;
+            giftE.getComponent(TransformComponent.class).y = 329;
         }
+
+        playGiftAni = true;
     }
 
 }

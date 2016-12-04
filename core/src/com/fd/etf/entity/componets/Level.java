@@ -127,6 +127,8 @@ public class Level {
         return allAchieved;
     }
 
+
+
     public List<Goal> getGoals() {
         return new ArrayList<>(goals.values());
     }
