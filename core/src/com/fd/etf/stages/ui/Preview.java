@@ -473,7 +473,7 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
-                            if (vc.currencyType.equals(SOFT) && (shopScript.allSoftItems.indexOf(vc)) % 8 == 0) {
+                            if (vc.currencyType.equals(SOFT) && (allSoftItems.indexOf(vc)) % 8 == 0) {
                                 shopScript.scrollBagsOnePageLeft();
                             }
                         }
@@ -540,7 +540,7 @@ public class Preview extends AbstractDialog {
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
 
-                            if (vc.currencyType.equals(SOFT) && (shopScript.allSoftItems.indexOf(vc) + 1) % 8 == 0) {
+                            if (vc.currencyType.equals(SOFT) && (allSoftItems.indexOf(vc) + 1) % 8 == 0) {
                                 shopScript.scrollBagsOnePageRight();
                             }
                         }

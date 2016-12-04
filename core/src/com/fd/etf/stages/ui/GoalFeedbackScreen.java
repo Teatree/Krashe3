@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.Goal;
-import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
@@ -15,6 +14,7 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.action.data.ActionData;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ import java.util.List;
 import static com.fd.etf.stages.GameScreenScript.isPause;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.GameStage.sceneLoader;
-import static com.fd.etf.stages.ui.AbstractDialog.isSecondDialogOpen;
 import static com.fd.etf.stages.ui.PauseDialog.PROGRESS;
 import static com.fd.etf.stages.ui.PauseDialog.SLASH;
 import static com.fd.etf.utils.EffectUtils.fade;
@@ -54,6 +53,7 @@ public class GoalFeedbackScreen {
     private List<Entity> prevLvlTiles;
     public boolean isAniPlaying;
     public boolean isNewLevel;
+    public int aniPlayingIndex;
     public boolean isGoalFeedbackOpen;
     public List<SpriteAnimationStateComponent> tilesScs = new ArrayList<>();
     public List<SpriteAnimationStateComponent> tilesScs2 = new ArrayList<>();
@@ -61,6 +61,7 @@ public class GoalFeedbackScreen {
     private float stateTime;
 
     public void init(boolean isNewLevel) {
+        aniPlayingIndex = -1;
         this.isNewLevel = isNewLevel;
         if (!isNewLevel) {
             if (tiles != null) {
@@ -266,17 +267,6 @@ public class GoalFeedbackScreen {
         return bugE;
     }
 
-    public boolean checkHasAnimationsToPlay() {
-        boolean allAchieved = true;
-        Integer i = 0;
-        for (Goal goal : gameScript.fpc.level.getGoals()) {
-            allAchieved = allAchieved && goal.justAchieved;
-            allAchieved = allAchieved && !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
-            i++;
-        }
-        return allAchieved;
-    }
-
     public void update() {
         stateTime += Gdx.graphics.getDeltaTime();
         fade(feedbackEntity, isGoalFeedbackOpen);
@@ -285,18 +275,22 @@ public class GoalFeedbackScreen {
             fade(tiles.get(i), isGoalFeedbackOpen);
             if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
                 if (!isAniPlaying) {
-                    tilesScs.get(i).paused = false;
-                    tilesScs.get(i).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-                    isAniPlaying = true;
-                    gameScript.fpc.level.getGoals().get(i).justAchieved = false;
 
-                    break;
+                    tiles.get(i).getComponent(ActionComponent.class).dataArray.add(Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            tilesScs.get(0).paused = false;
+                            tilesScs.get(0).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+                            isAniPlaying = true;
+                            aniPlayingIndex =0;
+                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+                            tiles.get(0).getComponent(SpriteAnimationStateComponent.class).currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
+                        }
+                    }));
                 } else {
                     isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
                 }
-            }/*else if(tilesScs.get(tiles.size()-1).currentAnimation.isAnimationFinished(stateTime)){
-                isAniPlaying = false;
-            }*/
+            }
             i++;
         }
 
@@ -313,11 +307,7 @@ public class GoalFeedbackScreen {
             }
         }
 
-        System.out.println("gameScript.fpc.level.checkAllGoals() " + gameScript.fpc.level.checkAllGoals());
-        System.out.println("!checkHasAnimationsToPlay() " + !checkHasAnimationsToPlay());
-        System.out.println("!isAniPlaying " + !isAniPlaying);
-        System.out.println(" = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ");
-        if (gameScript.fpc.level.checkAllGoals() && !isAniPlaying && !checkHasAnimationsToPlay()) {
+        if (gameScript.fpc.level.checkAllGoals() && !isAniPlaying) {
             // Temp2
             GameStage.gameScript.fpc.level.updateLevel(GameStage.gameScript.fpc);
             isNewLevel = true;
@@ -384,5 +374,4 @@ public class GoalFeedbackScreen {
         gameScript.giftScreen.show();
 //        isGoalFeedbackOpen = false;
     }
-
 }
