@@ -14,6 +14,7 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.action.data.ActionData;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
@@ -274,12 +275,18 @@ public class GoalFeedbackScreen {
             fade(tiles.get(i), isGoalFeedbackOpen);
             if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
                 if (!isAniPlaying) {
-                    tilesScs.get(i).paused = false;
-                    tilesScs.get(i).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-                    isAniPlaying = true;
-                    aniPlayingIndex = i;
-                    gameScript.fpc.level.getGoals().get(i).justAchieved = false;
 
+                    tiles.get(i).getComponent(ActionComponent.class).dataArray.add(Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            tilesScs.get(0).paused = false;
+                            tilesScs.get(0).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+                            isAniPlaying = true;
+                            aniPlayingIndex =0;
+                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+                            tiles.get(0).getComponent(SpriteAnimationStateComponent.class).currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
+                        }
+                    }));
                 } else {
                     isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
                 }
