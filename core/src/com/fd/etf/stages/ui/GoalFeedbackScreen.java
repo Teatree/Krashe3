@@ -12,6 +12,7 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.systems.action.data.ActionData;
@@ -32,6 +33,7 @@ public class GoalFeedbackScreen {
     public static final String GOALFEEDBACK = "lib_gift_feedbacker";
     public static final String LBL_DIALOG = "lbl_level";
     public static final String GOAL_LIB = "goalTile";
+    public static final String GOAL_ANI = "goalAni";
     public static final String GOAL_PROGRESS = "goal_progress";
     public static final String GOAL_LBL = "goal_lbl";
     public static final int POS_X = -22;
@@ -59,6 +61,7 @@ public class GoalFeedbackScreen {
     public List<SpriteAnimationStateComponent> tilesScs2 = new ArrayList<>();
     private Entity feedbackEntity;
     private float stateTime;
+    private int iNastya2;
 
     public void init(boolean isNewLevel) {
         aniPlayingIndex = -1;
@@ -90,6 +93,7 @@ public class GoalFeedbackScreen {
 
     public void show() {
         shouldShow = false;
+        iNastya2 = 0;
         feedbackEntity.getComponent(TransformComponent.class).x = POS_X;
         feedbackEntity.getComponent(TransformComponent.class).y = POS_Y;
         feedbackEntity.getComponent(ZIndexComponent.class).setZIndex(190);
@@ -137,7 +141,7 @@ public class GoalFeedbackScreen {
         for (Goal g : gameScript.fpc.level.getGoals()) {
             Entity newTile = createGoalTile(g, y);
 
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = newTile.getComponent(ActionComponent.class);
             Actions.checkInit();
 
             if (i == 1) {
@@ -168,7 +172,7 @@ public class GoalFeedbackScreen {
             e.getComponent(TransformComponent.class).y = y;
             e.getComponent(TintComponent.class).color.a = 1;
 
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = e.getComponent(ActionComponent.class);
             Actions.checkInit();
 
             if (i == 1) {
@@ -206,6 +210,10 @@ public class GoalFeedbackScreen {
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
         sceneLoader.getEngine().addEntity(tile);
 
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        tile.add(ac);
+
         if (isNewLevel) {
             tile.getComponent(TransformComponent.class).x = Gdx.graphics.getWidth() + 1000;
         } else {
@@ -216,8 +224,9 @@ public class GoalFeedbackScreen {
 
         String goalProgressValue = String.valueOf(goal.getCounter());
         NodeComponent nc = tile.getComponent(NodeComponent.class);
-        for (Entity e : nc.children) {
-
+        int iNastya = 0;
+        while (iNastya < nc.children.size) {
+            Entity e = nc.children.get(iNastya);
             //set progress label
             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(GOAL_PROGRESS)) {
                 if (goal.getCounter() >= goal.getN()) {
@@ -235,16 +244,31 @@ public class GoalFeedbackScreen {
                         goal.getDescription());
             }
 
-            SpriteAnimationStateComponent sc = e.getComponent(SpriteAnimationStateComponent.class);
+            final SpriteAnimationStateComponent sc = tile.getComponent(NodeComponent.class).getChild(GOAL_ANI).getComponent(SpriteAnimationStateComponent.class);
             SpriteAnimationComponent s = e.getComponent(SpriteAnimationComponent.class);
-            if (sc != null) {
-                if (goal.achieved) {
+//            if (sc != null) {
+            sc.paused = true;
+            if (goal.achieved) {
                     if (goal.justAchieved) {
-                        ActionComponent ac = new ActionComponent();
-                        Actions.checkInit();
-                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
-                        tile.add(ac);
-                        sc.paused = true;
+//                        ActionComponent ac = new ActionComponent();
+//                        Actions.checkInit();
+//                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
+//                        tile.add(ac);
+//                        sc.paused = true;
+
+                        tile.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.delay(INITIAL_DELAY*iNastya2/4), Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                sc.paused = false;
+                                sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+//                                tile.getComponent(TransformComponent.class).scaleX = 0.2f;
+//                                isAniPlaying = true;
+//                                aniPlayingIndex =0;
+                                gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+                            }
+                        })));
+                        iNastya2++;
+
                     } else {
                         sc.set(s.frameRangeMap.get(DEFAULT), 0, Animation.PlayMode.REVERSED);
                         sc.paused = true;
@@ -253,7 +277,8 @@ public class GoalFeedbackScreen {
                     sc.paused = true;
                 }
                 tilesScs.add(sc);
-            }
+//            }
+            iNastya++;
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
@@ -271,28 +296,28 @@ public class GoalFeedbackScreen {
         stateTime += Gdx.graphics.getDeltaTime();
         fade(feedbackEntity, isGoalFeedbackOpen);
         int i = 0;
-        while (i < tiles.size()) {
-            fade(tiles.get(i), isGoalFeedbackOpen);
-            if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
-                if (!isAniPlaying) {
-
-                    tiles.get(i).getComponent(ActionComponent.class).dataArray.add(Actions.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            tilesScs.get(0).paused = false;
-                            tilesScs.get(0).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-                            isAniPlaying = true;
-                            aniPlayingIndex =0;
-                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
-                            tiles.get(0).getComponent(SpriteAnimationStateComponent.class).currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
-                        }
-                    }));
-                } else {
-                    isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
-                }
-            }
-            i++;
-        }
+//        while (i < tiles.size()) {
+//            fade(tiles.get(i), isGoalFeedbackOpen);
+//            if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
+//                if (!isAniPlaying) {
+//
+//                    tiles.get(i).getComponent(ActionComponent.class).dataArray.add(Actions.run(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tilesScs.get(0).paused = false;
+//                            tilesScs.get(0).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+//                            isAniPlaying = true;
+//                            aniPlayingIndex =0;
+//                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+//                            tiles.get(0).getComponent(SpriteAnimationStateComponent.class).currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
+//                        }
+//                    }));
+//                } else {
+//                    isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
+//                }
+//            }
+//            i++;
+//        }
 
         if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
                 -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
