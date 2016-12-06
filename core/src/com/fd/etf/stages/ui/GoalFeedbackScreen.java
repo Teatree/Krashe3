@@ -45,27 +45,20 @@ public class GoalFeedbackScreen {
     public static final int GOAL_INIT_POS_Y = 500;
     public static final float GOAL_SCALE = 1f;
 
-    public static final int DELAY_ON_ANIMATION = 5000;
     public static final float INITIAL_DELAY = 1.2f;
     public static final float MOVE_TILES_DELAY = 0.3f;
     public static final String DEFAULT = "Default";
     private static final float INITIAL_DELAY_ANI = 0.3f;
     public static boolean shouldShow;
 
-    private List<Entity> tiles;
-    private List<Entity> prevLvlTiles;
-    public boolean isAniPlaying;
+    private static List<Entity> tiles;
+    private static List<Entity> prevLvlTiles;
     public boolean isNewLevel;
-    public int aniPlayingIndex;
-    public boolean isGoalFeedbackOpen;
-    public List<SpriteAnimationStateComponent> tilesScs = new ArrayList<>();
-    public List<SpriteAnimationStateComponent> tilesScs2 = new ArrayList<>();
-    private Entity feedbackEntity;
-    private float stateTime;
+    public static boolean isGoalFeedbackOpen;
+    private static Entity feedbackEntity;
     private int iNastya2;
 
     public void init(boolean isNewLevel) {
-        aniPlayingIndex = -1;
         this.isNewLevel = isNewLevel;
         if (!isNewLevel) {
             if (tiles != null) {
@@ -106,7 +99,6 @@ public class GoalFeedbackScreen {
 
         if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             int y = GOAL_INIT_POS_Y;
-            tilesScs = new ArrayList<>();
             for (Goal g : gameScript.fpc.level.getGoals()) {
                 tiles.add(createGoalTile(g, y));
                 y -= GOAL_STEP_Y;
@@ -135,8 +127,6 @@ public class GoalFeedbackScreen {
 
     private void addMoveInTilesActions() {
         int y = GOAL_INIT_POS_Y;
-        tilesScs = new ArrayList<>();
-
         int i = 1;
         float delay = INITIAL_DELAY + prevLvlTiles.size() * (MOVE_TILES_DELAY + INITIAL_DELAY_ANI) + 2;
         for (Goal g : gameScript.fpc.level.getGoals()) {
@@ -161,9 +151,6 @@ public class GoalFeedbackScreen {
     }
 
     private void addMoveInPrevTilesActions() {
-        for (SpriteAnimationStateComponent s : tilesScs) {
-            tilesScs2.add(s);
-        }
         int y = GOAL_INIT_POS_Y;
         int i = 1;
 
@@ -267,7 +254,6 @@ public class GoalFeedbackScreen {
             } else {
                 sc.paused = true;
             }
-            tilesScs.add(sc);
             iNastya++;
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
@@ -275,23 +261,11 @@ public class GoalFeedbackScreen {
     }
 
     public void update() {
-        stateTime += Gdx.graphics.getDeltaTime();
         fade(feedbackEntity, isGoalFeedbackOpen);
 
-        if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
-                -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
-            final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
+        updateLevelLabel();
 
-            LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
-            if (!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
-                System.out.println("SHOULD PLAY ANI!");
-                EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
-                        goalLabel.getComponent(TransformComponent.class).y);
-                goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
-            }
-        }
-
-        if (gameScript.fpc.level.checkAllGoals() && !isAniPlaying) {
+        if (gameScript.fpc.level.checkAllGoals() /*&& !isAniPlaying*/) {
             // Temp2
             GameStage.gameScript.fpc.level.updateLevel(GameStage.gameScript.fpc);
             isNewLevel = true;
@@ -307,9 +281,6 @@ public class GoalFeedbackScreen {
         }
 
         if (Gdx.input.justTouched() && isGoalFeedbackOpen && gameScript.giftScreen == null) {
-//            if(isNewLevel && tiles.get(1).getComponent(TransformComponent.class).x < 700){
-//                showGiftScreen();
-//            }
 
             if (gameScript.fpc.level.checkAllGoals()) {
 //                // Temp
@@ -332,20 +303,40 @@ public class GoalFeedbackScreen {
                 if (gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen) {
                     gameScript.giftScreen.isGiftScreenOpen = false;
                     gameScript.giftScreen.hide();
-                } else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 20) {
-//                    isGoalFeedbackOpen = false;
-
-//                    feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//                    feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
-//                    sceneLoader.getEngine().removeEntity(feedbackEntity);
-//                    prevLvlTiles = null;
-//                    for (Entity tile : tiles) {
-//                        tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-//                    }
-//                    gameScript.stage.initResultWithAds();
+                } else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 100) {
+//                    hideGoalFeedback();
 
                     showGiftScreen();
                 }
+            }
+        }
+    }
+
+    public static void hideGoalFeedback() {
+        isGoalFeedbackOpen = false;
+
+        feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+        sceneLoader.getEngine().removeEntity(feedbackEntity);
+        prevLvlTiles = null;
+        for (Entity tile : tiles) {
+            tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        }
+        gameScript.stage.initResultWithAds();
+    }
+
+    private void updateLevelLabel() {
+        if (prevLvlTiles != null &&
+                prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
+                -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
+            final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
+
+            LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+            if (!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
+                System.out.println("SHOULD PLAY ANI!");
+                EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
+                        goalLabel.getComponent(TransformComponent.class).y);
+                goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
             }
         }
     }
@@ -356,6 +347,5 @@ public class GoalFeedbackScreen {
         }
         gameScript.giftScreen.init();
         gameScript.giftScreen.show();
-//        isGoalFeedbackOpen = false;
     }
 }

@@ -39,6 +39,10 @@ public class AbstractDialog {
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
             GameStage.sceneLoader.getEngine().addEntity(shadowE);
         }
+        hideShadow();
+    }
+
+    protected void hideShadow() {
         shadowE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         shadowE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }

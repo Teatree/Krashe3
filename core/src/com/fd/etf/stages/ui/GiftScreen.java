@@ -31,7 +31,7 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 import static com.fd.etf.utils.GlobalConstants.FPS;
 import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
-public class GiftScreen {
+public class GiftScreen extends AbstractDialog {
     public final String GIFT_SCREEN = "lib_gift_screen";
     public final String ITEM_MONEY_GIFT = "itemMoneyGift";
     public final String SHADE = "shade";
@@ -83,6 +83,7 @@ public class GiftScreen {
 //        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
         openedGift = false;
         openGiftCooldown = 30;
+        initShadow();
 
         idleCounter = 0;
 
@@ -214,21 +215,20 @@ public class GiftScreen {
             }
         }
         if(!playGiftAni && giftE != null && Gdx.input.justTouched()){
+            close(giftScreen);
+            hideShadow();
+            hide();
+            isGiftScreenOpen = false;
+            giftE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            GoalFeedbackScreen.hideGoalFeedback();
             gameScript.stage.initResultWithAds();
         }
 
         fade(giftScreen, true);
     }
 
-    private void showNewLevelScreen() {
-        gift.takeGift(GameStage.gameScript.fpc);
-        giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-        sceneLoader.getEngine().removeEntity(giftE);
-        GameStage.gameScript.goalFeedbackScreen.init(true);
-        GameStage.gameScript.goalFeedbackScreen.showNewLevel();
-    }
-
     private void showGift() {
+        addShadow();
         pinataBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         lbl.getComponent(TintComponent.class).color.a = 1;
 

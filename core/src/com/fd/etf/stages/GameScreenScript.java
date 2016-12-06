@@ -353,9 +353,9 @@ public class GameScreenScript implements IScript {
 
         FlowerComponent fc = new FlowerComponent();
 
-        System.out.println("currentFlowerFrame: " + currentFlowerFrame);
+//        System.out.println("currentFlowerFrame: " + currentFlowerFrame);
         flowerEntity.getComponent(SpriterComponent.class).player.setTime(currentFlowerFrame);
-        System.out.println("flowerEntity.getComponent(SpriterComponent.class).player: " + flowerEntity.getComponent(SpriterComponent.class).player.getTime());
+//        System.out.println("flowerEntity.getComponent(SpriterComponent.class).player: " + flowerEntity.getComponent(SpriterComponent.class).player.getTime());
 
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0.7f;
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TransformComponent.class).x = 975;
