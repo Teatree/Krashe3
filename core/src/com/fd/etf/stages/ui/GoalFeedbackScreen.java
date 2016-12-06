@@ -49,6 +49,7 @@ public class GoalFeedbackScreen {
     public static final float INITIAL_DELAY = 1.2f;
     public static final float MOVE_TILES_DELAY = 0.3f;
     public static final String DEFAULT = "Default";
+    private static final float INITIAL_DELAY_ANI = 0.3f;
     public static boolean shouldShow;
 
     private List<Entity> tiles;
@@ -137,7 +138,7 @@ public class GoalFeedbackScreen {
         tilesScs = new ArrayList<>();
 
         int i = 1;
-        float delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
+        float delay = INITIAL_DELAY + prevLvlTiles.size() * (MOVE_TILES_DELAY + INITIAL_DELAY_ANI) + 2;
         for (Goal g : gameScript.fpc.level.getGoals()) {
             Entity newTile = createGoalTile(g, y);
 
@@ -145,7 +146,7 @@ public class GoalFeedbackScreen {
             Actions.checkInit();
 
             if (i == 1) {
-                delay = INITIAL_DELAY + prevLvlTiles.size() * MOVE_TILES_DELAY + 2;
+                delay = INITIAL_DELAY + prevLvlTiles.size() * (MOVE_TILES_DELAY + INITIAL_DELAY_ANI) + 2;
             } else {
                 delay += GlobalConstants.TENTH;
             }
@@ -176,7 +177,7 @@ public class GoalFeedbackScreen {
             Actions.checkInit();
 
             if (i == 1) {
-                delay = INITIAL_DELAY;
+                delay = INITIAL_DELAY * prevLvlTiles.size();
             } else {
                 delay += MOVE_TILES_DELAY;
             }
@@ -222,7 +223,7 @@ public class GoalFeedbackScreen {
         tile.getComponent(TransformComponent.class).y = y;
         tile.getComponent(TransformComponent.class).scaleY = GOAL_SCALE;
 
-        String goalProgressValue = String.valueOf(goal.getCounter());
+        String goalProgressValue;
         NodeComponent nc = tile.getComponent(NodeComponent.class);
         int iNastya = 0;
         while (iNastya < nc.children.size) {
@@ -245,79 +246,37 @@ public class GoalFeedbackScreen {
             }
 
             final SpriteAnimationStateComponent sc = tile.getComponent(NodeComponent.class).getChild(GOAL_ANI).getComponent(SpriteAnimationStateComponent.class);
-            SpriteAnimationComponent s = e.getComponent(SpriteAnimationComponent.class);
-//            if (sc != null) {
+            SpriteAnimationComponent s = tile.getComponent(NodeComponent.class).getChild(GOAL_ANI).getComponent(SpriteAnimationComponent.class);
             sc.paused = true;
             if (goal.achieved) {
-                    if (goal.justAchieved) {
-//                        ActionComponent ac = new ActionComponent();
-//                        Actions.checkInit();
-//                        ac.dataArray.add(Actions.delay(DELAY_ON_ANIMATION));
-//                        tile.add(ac);
-//                        sc.paused = true;
+                if (goal.justAchieved) {
+                    tile.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.delay(INITIAL_DELAY_ANI * iNastya2), Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            sc.paused = false;
+                            sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+                        }
+                    })));
+                    iNastya2++;
 
-                        tile.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.delay(INITIAL_DELAY*iNastya2/4), Actions.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                sc.paused = false;
-                                sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-//                                tile.getComponent(TransformComponent.class).scaleX = 0.2f;
-//                                isAniPlaying = true;
-//                                aniPlayingIndex =0;
-                                gameScript.fpc.level.getGoals().get(0).justAchieved = false;
-                            }
-                        })));
-                        iNastya2++;
-
-                    } else {
-                        sc.set(s.frameRangeMap.get(DEFAULT), 0, Animation.PlayMode.REVERSED);
-                        sc.paused = true;
-                    }
                 } else {
+                    sc.set(s.frameRangeMap.get(DEFAULT), 0, Animation.PlayMode.REVERSED);
                     sc.paused = true;
                 }
-                tilesScs.add(sc);
-//            }
+            } else {
+                sc.paused = true;
+            }
+            tilesScs.add(sc);
             iNastya++;
         }
         tile.getComponent(ZIndexComponent.class).setZIndex(200);
         return tile;
     }
 
-    private Entity loadGoalFromLib(String goalLib) {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(goalLib);
-        sceneLoader.rm.addSPRITEtoLoad(goalLib);
-        Entity bugE = GameStage.sceneLoader.entityFactory.createSPRITEentity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.getEngine().addEntity(bugE);
-        return bugE;
-    }
-
     public void update() {
         stateTime += Gdx.graphics.getDeltaTime();
         fade(feedbackEntity, isGoalFeedbackOpen);
-        int i = 0;
-//        while (i < tiles.size()) {
-//            fade(tiles.get(i), isGoalFeedbackOpen);
-//            if (gameScript.fpc.level.getGoals().get(i).justAchieved) {
-//                if (!isAniPlaying) {
-//
-//                    tiles.get(i).getComponent(ActionComponent.class).dataArray.add(Actions.run(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            tilesScs.get(0).paused = false;
-//                            tilesScs.get(0).currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-//                            isAniPlaying = true;
-//                            aniPlayingIndex =0;
-//                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
-//                            tiles.get(0).getComponent(SpriteAnimationStateComponent.class).currentAnimation.setPlayMode(Animation.PlayMode.LOOP);
-//                        }
-//                    }));
-//                } else {
-//                    isAniPlaying = !tilesScs.get(i).currentAnimation.isAnimationFinished(stateTime);
-//                }
-//            }
-//            i++;
-//        }
 
         if (prevLvlTiles != null && prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
                 -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
