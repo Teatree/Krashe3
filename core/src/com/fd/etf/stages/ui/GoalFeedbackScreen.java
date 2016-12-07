@@ -148,6 +148,7 @@ public class GoalFeedbackScreen {
             tiles.add(newTile);
             y -= GOAL_STEP_Y;
         }
+        showGiftScreen();
     }
 
     private void addMoveInPrevTilesActions() {
@@ -282,7 +283,7 @@ public class GoalFeedbackScreen {
 
         if (Gdx.input.justTouched() && isGoalFeedbackOpen && gameScript.giftScreen == null) {
 
-            if (gameScript.fpc.level.checkAllGoals()) {
+//            if (gameScript.fpc.level.checkAllGoals()) {
 //                // Temp
 //
 //                GameStage.gameScript.fpc.level.updateLevel(GameStage.gameScript.fpc);
@@ -299,16 +300,17 @@ public class GoalFeedbackScreen {
 
 
 //                showGiftScreen();
-            } else {
-                if (gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen) {
-                    gameScript.giftScreen.isGiftScreenOpen = false;
-                    gameScript.giftScreen.hide();
-                } else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 100) {
-//                    hideGoalFeedback();
-
-                    showGiftScreen();
-                }
+//            } else {
+            if (!gameScript.fpc.level.checkAllGoals() && gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen) {
+                gameScript.giftScreen.isGiftScreenOpen = false;
+                gameScript.giftScreen.hide();
             }
+//                else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 100) {
+////                    hideGoalFeedback();
+//
+//                    showGiftScreen();
+//                }
+//            }
         }
     }
 
@@ -328,7 +330,7 @@ public class GoalFeedbackScreen {
     private void updateLevelLabel() {
         if (prevLvlTiles != null &&
                 prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(TransformComponent.class).x <=
-                -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
+                        -prevLvlTiles.get(prevLvlTiles.size() - 1).getComponent(DimensionsComponent.class).width) {
             final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);

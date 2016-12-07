@@ -100,6 +100,7 @@ public class GiftScreen extends AbstractDialog {
         giftScreen.getComponent(ZIndexComponent.class).setZIndex(120);
 
         boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
+        boxAniE.getComponent(ZIndexComponent.class).setZIndex(220);
         saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
         sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
 
