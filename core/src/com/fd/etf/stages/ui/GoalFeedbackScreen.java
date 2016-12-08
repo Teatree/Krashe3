@@ -12,10 +12,8 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.systems.action.data.ActionData;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
@@ -115,7 +113,6 @@ public class GoalFeedbackScreen {
 
         if (prevLvlTiles != null || !prevLvlTiles.isEmpty() || !isPause.get()) {
             addMoveInPrevTilesActions();
-            System.out.println("MovingTiles");
         }
         if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             addMoveInTilesActions();
@@ -148,7 +145,7 @@ public class GoalFeedbackScreen {
             tiles.add(newTile);
             y -= GOAL_STEP_Y;
         }
-        showGiftScreen();
+        showGiftScreen(delay);
     }
 
     private void addMoveInPrevTilesActions() {
@@ -262,11 +259,22 @@ public class GoalFeedbackScreen {
     }
 
     public void update() {
-        fade(feedbackEntity, isGoalFeedbackOpen);
+        if (isGoalFeedbackOpen) {
+            fade(feedbackEntity, isGoalFeedbackOpen);
+            updateLevelLabel();
+            doWhenAllGoalsAchieved();
 
-        updateLevelLabel();
+            if (Gdx.input.justTouched() && isGoalFeedbackOpen && gameScript.giftScreen == null) {
+                if (!gameScript.fpc.level.checkAllGoals() && !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)) {
+                    hideGoalFeedback();
+                    gameScript.stage.initResultWithAds();
+                }
+            }
+        }
+    }
 
-        if (gameScript.fpc.level.checkAllGoals() /*&& !isAniPlaying*/) {
+    private void doWhenAllGoalsAchieved() {
+        if (gameScript.fpc.level.checkAllGoals()) {
             // Temp2
             GameStage.gameScript.fpc.level.updateLevel(GameStage.gameScript.fpc);
             isNewLevel = true;
@@ -277,40 +285,7 @@ public class GoalFeedbackScreen {
             }
 
             tiles = new ArrayList<>();
-
             showNewLevel();
-        }
-
-        if (Gdx.input.justTouched() && isGoalFeedbackOpen && gameScript.giftScreen == null) {
-
-//            if (gameScript.fpc.level.checkAllGoals()) {
-//                // Temp
-//
-//                GameStage.gameScript.fpc.level.updateLevel(GameStage.gameScript.fpc);
-//                isNewLevel = true;
-//                prevLvlTiles = new ArrayList<>();
-//
-//                for (Entity tile : tiles) {
-//                    prevLvlTiles.add(tile);
-//                }
-//
-//                tiles = new ArrayList<>();
-//
-//                showNewLevel();
-
-
-//                showGiftScreen();
-//            } else {
-            if (!gameScript.fpc.level.checkAllGoals() && gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen) {
-                gameScript.giftScreen.isGiftScreenOpen = false;
-                gameScript.giftScreen.hide();
-            }
-//                else if (tiles.get(tiles.size() - 1).getComponent(TransformComponent.class).x <= GOAL_INIT_POS_X + 100) {
-////                    hideGoalFeedback();
-//
-//                    showGiftScreen();
-//                }
-//            }
         }
     }
 
@@ -335,7 +310,6 @@ public class GoalFeedbackScreen {
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
             if (!goalsLabelComp.text.toString().equals(gameScript.fpc.level.name)) {
-                System.out.println("SHOULD PLAY ANI!");
                 EffectUtils.playYellowStarsParticleEffect(goalLabel.getComponent(TransformComponent.class).x,
                         goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameScript.fpc.level.name);
@@ -343,11 +317,12 @@ public class GoalFeedbackScreen {
         }
     }
 
-    private void showGiftScreen() {
+    private void showGiftScreen(float delay) {
         if (gameScript.giftScreen == null) {
             gameScript.giftScreen = new GiftScreen();
         }
         gameScript.giftScreen.init();
+
         gameScript.giftScreen.show();
     }
 }

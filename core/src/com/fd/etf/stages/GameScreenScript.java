@@ -497,11 +497,11 @@ public class GameScreenScript implements IScript {
         } else {
             isGameOver.set(false);
             if (GoalFeedbackScreen.shouldShow &&
-                    (gameScript.giftScreen == null || !gameScript.goalFeedbackScreen.isGoalFeedbackOpen)) {
+                    (gameScript.giftScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
                 showGoalFeedback();
                 isGameOver.set(true);
             } else if ((gameScript.goalFeedbackScreen == null ||
-                    !gameScript.goalFeedbackScreen.isGoalFeedbackOpen) &&
+                    !GoalFeedbackScreen.isGoalFeedbackOpen) &&
                     (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
                 isGameOver.set(false);
                 gameScript.resetPauseDialog();

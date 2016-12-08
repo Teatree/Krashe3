@@ -13,7 +13,6 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -97,7 +96,6 @@ public class GiftScreen extends AbstractDialog {
 
         giftScreen.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         giftScreen.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        giftScreen.getComponent(ZIndexComponent.class).setZIndex(120);
 
         boxAniE = new ItemWrapper(giftScreen).getChild(BOX_ANI).getEntity();
         boxAniE.getComponent(ZIndexComponent.class).setZIndex(220);
@@ -160,6 +158,8 @@ public class GiftScreen extends AbstractDialog {
 
         isGiftScreenOpen = true;
         openedGift = false;
+
+        giftScreen.getComponent(ZIndexComponent.class).setZIndex(320);
     }
 
     public void hide() {
@@ -209,7 +209,6 @@ public class GiftScreen extends AbstractDialog {
             giftE.add(ac);
             if (giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a < 0.7){
                 giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a += 0.1f;
-                System.out.println("CAHNGING TINT");
             }
             if (giftE.getComponent(TransformComponent.class).x < 530){
                 playGiftAni = false;
@@ -219,6 +218,7 @@ public class GiftScreen extends AbstractDialog {
             close(giftScreen);
             hideShadow();
             hide();
+            isGiftScreenOpen = false;
             isGiftScreenOpen = false;
             giftE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             GoalFeedbackScreen.hideGoalFeedback();
@@ -425,8 +425,8 @@ public class GiftScreen extends AbstractDialog {
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(giftE);
-            giftE.getComponent(ZIndexComponent.class).setZIndex(100);
-            giftE.getComponent(TransformComponent.class).x = 100;
+            giftE.getComponent(ZIndexComponent.class).setZIndex(200);
+            giftE.getComponent(TransformComponent.class).x = 200;
             giftE.getComponent(TransformComponent.class).y = 329;
         }else if(gift.upgrade != null){
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.upgrade.shopIcon);
@@ -441,7 +441,7 @@ public class GiftScreen extends AbstractDialog {
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
             GameStage.sceneLoader.getEngine().addEntity(giftE);
-            giftE.getComponent(ZIndexComponent.class).setZIndex(100);
+            giftE.getComponent(ZIndexComponent.class).setZIndex(200);
             giftE.getComponent(TransformComponent.class).x = 100;
             giftE.getComponent(TransformComponent.class).y = 329;
         }
