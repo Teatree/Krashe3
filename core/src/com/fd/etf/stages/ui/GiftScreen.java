@@ -58,10 +58,9 @@ public class GiftScreen extends AbstractDialog {
     private boolean canClick = false;
     private Gift gift;
 
-    private int openGiftCooldown = 30;
+    //    private int openGiftCooldown = 30;
     private int helpTimer = 0;
     private float idleCounter = 0;
-    private boolean isShine;
     private boolean showNewLevelAnim;
     private boolean openedGift;
     private boolean canPlayAnimation;
@@ -81,7 +80,7 @@ public class GiftScreen extends AbstractDialog {
     public void init() {
 //        giftScreen = gameItem.getChild(GIFT_SCREEN).getEntity();
         openedGift = false;
-        openGiftCooldown = 30;
+//        openGiftCooldown = 30;
         initShadow();
 
         idleCounter = 0;
@@ -131,12 +130,27 @@ public class GiftScreen extends AbstractDialog {
 
             @Override
             public void clicked() {
-                if(canClick) {
+                if (canClick) {
                     if (!openedGift) {
                         openedGift = true;
-                        openGiftCooldown = 70;
+                        ActionComponent ac = new ActionComponent();
+                        Actions.checkInit();
+                        ac.dataArray.add(Actions.sequence(Actions.delay(3),
+                                Actions.run(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        canClick = false;
+                                        canPlayAnimation = true;
+                                        showGift();
+                                        openedGift = false;
+                                        idleCounter = -2;
+                                        showNewLevelAnim = true;
+                                        setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+                                    }
+                                })));
+//                        openGiftCooldown = 70;
                     }
-                }else{
+                } else {
                     canClick = true;
                 }
             }
@@ -145,16 +159,32 @@ public class GiftScreen extends AbstractDialog {
 
     public void show() {
         gift = Gift.getRandomGift();
-        canPlayAnimation = true;
-        setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
 
         final TransformComponent screenTc = giftScreen.getComponent(TransformComponent.class);
-        screenTc.x = GIFT_SCREEN_X;
-        screenTc.y = GIFT_SCREEN_Y;
+        screenTc.x = FAR_FAR_AWAY_X;
+        screenTc.y = FAR_FAR_AWAY_X;
 
         final TransformComponent pinataTc = pinataBtn.getComponent(TransformComponent.class);
-        pinataTc.x = PINATA_X;
-        pinataTc.y = PINATA_Y;
+
+
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.sequence(
+                Actions.delay(10f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        canPlayAnimation = true;
+                        pinataTc.x = PINATA_X;
+                        pinataTc.y = PINATA_Y;
+                        screenTc.x = GIFT_SCREEN_X;
+                        screenTc.y = GIFT_SCREEN_Y;
+                        setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
+                    }
+                }),
+                Actions.fadeOut(0.3f)
+        ));
+        pinataBtn.add(ac);
 
         isGiftScreenOpen = true;
         openedGift = false;
@@ -168,11 +198,11 @@ public class GiftScreen extends AbstractDialog {
     }
 
     public void update() {
-        if(!openedGift && idleCounter < 0 && idleCounter > -1){
+        if (!openedGift && idleCounter < 0 && idleCounter > -1) {
             canPlayAnimation = true;
             setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
             idleCounter = 6 + new Random().nextInt(12);
-        }else{
+        } else {
             idleCounter -= Gdx.graphics.getDeltaTime();
         }
 
@@ -181,40 +211,39 @@ public class GiftScreen extends AbstractDialog {
 //            showNewLevelAnim = false;
             System.out.println("quit tapping me!");
         }
-        if (openedGift && openGiftCooldown == 0) {
-            showGift();
-            openedGift = false;
-            idleCounter = -2;
-            showNewLevelAnim = true;
-            isShine = true;
-        } else if (openGiftCooldown > 0) {
+//        if (openedGift /*&& openGiftCooldown == 0*/) {
+//            showGift();
+//            openedGift = false;
+//            idleCounter = -2;
+//            showNewLevelAnim = true;
+        /* } else if (openGiftCooldown > 0) {
             openGiftCooldown--;
-        }
-        if (openGiftCooldown <= 50 && openGiftCooldown > 45){
-            canPlayAnimation = true;
-            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
-        }
+        }*/
+//        if (openGiftCooldown <= 50 && openGiftCooldown > 45){
+//            canPlayAnimation = true;
+//            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+//        }
 
         helpTimer++;
-        if(helpTimer > 200){
-            if(lbl.getComponent(TintComponent.class).color.a < 1){
+        if (helpTimer > 200) {
+            if (lbl.getComponent(TintComponent.class).color.a < 1) {
                 lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
             }
         }
 
-        if(playGiftAni && giftE != null){
+        if (playGiftAni && giftE != null) {
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(535, 439, 2f, Interpolation.exp5));
             giftE.add(ac);
-            if (giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a < 0.7){
+            if (giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a < 0.7) {
                 giftScreen.getComponent(NodeComponent.class).getChild(SHADE).getComponent(TintComponent.class).color.a += 0.1f;
             }
-            if (giftE.getComponent(TransformComponent.class).x < 530){
+            if (giftE.getComponent(TransformComponent.class).x < 530) {
                 playGiftAni = false;
             }
         }
-        if(!playGiftAni && giftE != null && Gdx.input.justTouched()){
+        if (!playGiftAni && giftE != null && Gdx.input.justTouched()) {
             close(giftScreen);
             hideShadow();
             hide();
@@ -237,12 +266,11 @@ public class GiftScreen extends AbstractDialog {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT A " + gift.type + " !!!");
-        }else {
+        } else {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT " + gift.money + " " + gift.type + " !!!");
         }
-
         showGiftIcon();
 
     }
@@ -281,7 +309,7 @@ public class GiftScreen extends AbstractDialog {
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_50)) {
                 gift = getRandomMoneyGift();
-            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_50) &&
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_50) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_100)) {
                 gift = getRandomMoneyGift();
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_100) &&
@@ -293,7 +321,7 @@ public class GiftScreen extends AbstractDialog {
             } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_200) &&
                     i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
                 gift = getRandomMoneyGift();
-            }else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
+            } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
                 gift = getRandomMoneyGift();
             }
             return gift;
@@ -413,13 +441,15 @@ public class GiftScreen extends AbstractDialog {
             fpc.level.updateLevel(GameStage.gameScript.fpc);
         }
     }
+
     public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {
         if (canPlayAnimation) {
             sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
             canPlayAnimation = false;
         }
     }
-    private void showGiftIcon(){
+
+    private void showGiftIcon() {
         if (gift.pet != null) {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.pet.shopIcon);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
@@ -428,7 +458,7 @@ public class GiftScreen extends AbstractDialog {
             giftE.getComponent(ZIndexComponent.class).setZIndex(200);
             giftE.getComponent(TransformComponent.class).x = 200;
             giftE.getComponent(TransformComponent.class).y = 329;
-        }else if(gift.upgrade != null){
+        } else if (gift.upgrade != null) {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.upgrade.shopIcon);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);
@@ -436,7 +466,7 @@ public class GiftScreen extends AbstractDialog {
             giftE.getComponent(ZIndexComponent.class).setZIndex(100);
             giftE.getComponent(TransformComponent.class).x = 100;
             giftE.getComponent(TransformComponent.class).y = 329;
-        }else{
+        } else {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_MONEY_GIFT);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
             GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftE, tempItemC.composite);

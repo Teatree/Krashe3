@@ -322,7 +322,6 @@ public class GoalFeedbackScreen {
             gameScript.giftScreen = new GiftScreen();
         }
         gameScript.giftScreen.init();
-
         gameScript.giftScreen.show();
     }
 }
