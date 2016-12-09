@@ -2,7 +2,6 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.utils.Align;
 
 public class BugJuiceBubbleComponent implements Component {
     public float startX, startY;

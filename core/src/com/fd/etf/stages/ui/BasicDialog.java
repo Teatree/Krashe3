@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
-import com.fd.etf.stages.MenuScreenScript;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;

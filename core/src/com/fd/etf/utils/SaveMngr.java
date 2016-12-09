@@ -10,10 +10,10 @@ import com.fd.etf.system.BugSpawnSystem;
 
 import java.util.*;
 
+import static com.fd.etf.entity.componets.Upgrade.UpgradeType;
+import static com.fd.etf.entity.componets.Upgrade.getUpgrade;
 import static com.fd.etf.entity.componets.VanityComponent.vanityCollections;
 import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChangedAssets;
-import static com.fd.etf.entity.componets.Upgrade.*;
-import static com.fd.etf.entity.componets.Upgrade.UpgradeType.*;
 
 public class SaveMngr {
 

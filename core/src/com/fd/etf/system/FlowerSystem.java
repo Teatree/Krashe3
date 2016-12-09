@@ -16,9 +16,9 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.State.*;
+import static com.fd.etf.stages.GameScreenScript.isGameOver;
+import static com.fd.etf.stages.GameScreenScript.isPause;
 import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FPS;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
 

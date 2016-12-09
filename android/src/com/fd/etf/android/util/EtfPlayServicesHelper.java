@@ -5,9 +5,7 @@ import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.android.AndroidLauncher;
 import com.fd.etf.android.R;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.BaseGameUtils;
 import com.google.example.games.basegameutils.GameHelper;
 
 public class EtfPlayServicesHelper {

@@ -9,8 +9,8 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
-import static com.fd.etf.utils.GlobalConstants.*;
 import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
+import static com.fd.etf.utils.GlobalConstants.*;
 
 /**
  * Created by ARudyk on 8/1/2016.
