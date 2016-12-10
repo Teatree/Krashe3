@@ -46,7 +46,7 @@ public class GoalFeedbackScreen {
     public static final float INITIAL_DELAY = 1.2f;
     public static final float MOVE_TILES_DELAY = 0.3f;
     public static final String DEFAULT = "Default";
-    private static final float INITIAL_DELAY_ANI = 0.3f;
+    private static final float INITIAL_DELAY_ANI = 0.2f;
     public static boolean shouldShow;
 
     private static List<Entity> tiles;
@@ -235,14 +235,17 @@ public class GoalFeedbackScreen {
             sc.paused = true;
             if (goal.achieved) {
                 if (goal.justAchieved) {
-                    tile.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.delay(INITIAL_DELAY_ANI * iNastya2), Actions.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            sc.paused = false;
-                            sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
-                        }
-                    })));
+                    tile.getComponent(ActionComponent.class).dataArray.add(
+                            Actions.sequence(
+                                    Actions.delay(INITIAL_DELAY_ANI * iNastya2),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sc.paused = false;
+                                            sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+                                            gameScript.fpc.level.getGoals().get(0).justAchieved = false;
+                                        }
+                                    })));
                     iNastya2++;
 
                 } else {

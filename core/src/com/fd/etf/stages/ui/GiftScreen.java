@@ -45,7 +45,6 @@ public class GiftScreen extends AbstractDialog {
 
     private int helpTimer = 0;
     private float idleCounter = 0;
-    private boolean showNewLevelAnim;
     private boolean openedGift;
     private boolean canPlayAnimation;
     private boolean canOpenGift;
@@ -78,7 +77,6 @@ public class GiftScreen extends AbstractDialog {
 
     private void openGift() {
         if (!openedGift) {
-            openedGift = true;
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.sequence(
@@ -90,7 +88,6 @@ public class GiftScreen extends AbstractDialog {
                             showGift();
                             openedGift = false;
                             idleCounter = -2;
-                            showNewLevelAnim = true;
                             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
                         }
                     })
@@ -189,21 +186,23 @@ public class GiftScreen extends AbstractDialog {
     }
 
     private void showGift() {
-        addShadow();
-        playGiftAni = true;
-        lbl.getComponent(TintComponent.class).color.a = 1;
+        if (!openedGift) {
+            addShadow();
+            openedGift = true;
+            playGiftAni = true;
+            lbl.getComponent(TintComponent.class).color.a = 1;
 
-        if (gift.pet != null || gift.upgrade != null) {
-            lbl.getComponent(LabelComponent.class).text.replace(0,
-                    lbl.getComponent(LabelComponent.class).text.capacity(),
-                    "YOU GOT A " + gift.type + " !!!");
-        } else {
-            lbl.getComponent(LabelComponent.class).text.replace(0,
-                    lbl.getComponent(LabelComponent.class).text.capacity(),
-                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
+            if (gift.pet != null || gift.upgrade != null) {
+                lbl.getComponent(LabelComponent.class).text.replace(0,
+                        lbl.getComponent(LabelComponent.class).text.capacity(),
+                        "YOU GOT A " + gift.type + " !!!");
+            } else {
+                lbl.getComponent(LabelComponent.class).text.replace(0,
+                        lbl.getComponent(LabelComponent.class).text.capacity(),
+                        "YOU GOT " + gift.money + " " + gift.type + " !!!");
+            }
+            showGiftIcon();
         }
-        showGiftIcon();
-
     }
 
     public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {
