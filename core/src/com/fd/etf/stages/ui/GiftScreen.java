@@ -176,7 +176,7 @@ public class GiftScreen extends AbstractDialog {
             hideShadow();
             hide();
             isGiftScreenOpen = false;
-            isGiftScreenOpen = false;
+            playGiftAni = false;
             giftE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             GoalFeedbackScreen.hideGoalFeedback();
             gameScript.stage.initResultWithAds();
