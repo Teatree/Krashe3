@@ -1,1 +1,35 @@
-[{class:com.fd.etf.utils.SaveMngr$LevelInfo,name:Novice,difficultyLevel:1},{class:com.fd.etf.utils.SaveMngr$LevelInfo,name:Pro,difficultyLevel:2},{class:com.fd.etf.utils.SaveMngr$LevelInfo,name:Prorer Pro,difficultyLevel:3},{class:com.fd.etf.utils.SaveMngr$LevelInfo,name:Prorest Pro,difficultyLevel:4}]
+[{
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Novice,
+		difficultyLevel : 1
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Pro,
+		difficultyLevel : 2
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Prorer Pro,
+		difficultyLevel : 3
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Prorest Pro of the Pros,
+		difficultyLevel : 4
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Wonderwall,
+		difficultyLevel : 5
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Majestic creature,
+		difficultyLevel : 6
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : Gadsby,
+		difficultyLevel : 7
+	}, {
+		class : com.fd.etf.utils.SaveMngr$LevelInfo,
+		name : The Great Nastya,
+		difficultyLevel : 8
+	}
+	
+]
