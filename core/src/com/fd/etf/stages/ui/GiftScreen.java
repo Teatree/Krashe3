@@ -171,7 +171,7 @@ public class GiftScreen extends AbstractDialog {
                 playGiftAni = false;
             }
         }
-        if (!playGiftAni && giftE != null && Gdx.input.justTouched()) {
+        if (!playGiftAni && giftE != null && Gdx.input.justTouched() && isGiftScreenOpen) {
             close(giftScreen);
             hideShadow();
             hide();
@@ -186,7 +186,7 @@ public class GiftScreen extends AbstractDialog {
     }
 
     private void showGift() {
-        if (!openedGift) {
+        if (!openedGift && isGiftScreenOpen && canOpenGift) {
             addShadow();
             openedGift = true;
             playGiftAni = true;
