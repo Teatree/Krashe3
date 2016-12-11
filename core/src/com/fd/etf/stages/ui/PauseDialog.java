@@ -53,7 +53,6 @@ public class PauseDialog extends AbstractDialog {
     public static final String GOALS_POPUP = "goal_popup_lib";
     public static final String ACHIEVED = "achieved";
     public static final String NOTACHIEVED = "notachieved";
-    public static final String ENTER = " \n ";
     public static final int PAUSE_Y_UP = 460;
     private static final String PAUSE_TEXT = "Pause";
     private static final String CHALLENGES = "Challenges";
@@ -158,11 +157,11 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity levelLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR_S);
         LabelComponent levelLabelComps = levelLabels.getComponent(LabelComponent.class);
-        levelLabelComps.text.replace(0, levelLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
+        levelLabelComps.text.replace(0, levelLabelComps.text.capacity(), gameScript.fpc.level.name);
 
         final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
         LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
-        levelLabelsComp.text.replace(0, levelLabelComps.text.capacity(), "Level: " + gameScript.fpc.level.name + ENTER);
+        levelLabelsComp.text.replace(0, levelLabelComps.text.capacity(), gameScript.fpc.level.name);
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {

@@ -32,6 +32,7 @@ public class GiftScreen extends AbstractDialog {
     public final int GIFT_SCREEN_Y = -20;
 
     public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
+    public final String LBL_TAP_TO_OPEN = "lbl_tap_to_open";
     public boolean isGiftScreenOpen = false;
     public boolean playGiftAni = false;
 
@@ -39,11 +40,13 @@ public class GiftScreen extends AbstractDialog {
     private Entity boxAniE;
     private Entity giftE;
     private Entity lbl;
+    private Entity lblTapToOpen;
     private SpriteAnimationComponent saBox;
     private SpriteAnimationStateComponent sasBox;
     private Gift gift;
+    private float stateTime;
 
-    private int helpTimer = 0;
+    private float helpTimer = 0;
     private float idleCounter = 0;
     private boolean openedGift;
     private boolean canPlayAnimation;
@@ -63,6 +66,8 @@ public class GiftScreen extends AbstractDialog {
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), giftScreen, tempC.composite);
         sceneLoader.getEngine().addEntity(giftScreen);
 
+        lblTapToOpen = new ItemWrapper(giftScreen).getChild(LBL_TAP_TO_OPEN).getEntity();
+        lblTapToOpen.getComponent(TintComponent.class).color.a = 0;
         lbl = new ItemWrapper(giftScreen).getChild(LBL_GIFT_SCREEN).getEntity();
         lbl.getComponent(TintComponent.class).color.a = 0;
 
@@ -77,22 +82,9 @@ public class GiftScreen extends AbstractDialog {
 
     private void openGift() {
         if (!openedGift) {
-            ActionComponent ac = new ActionComponent();
-            Actions.checkInit();
-            ac.dataArray.add(Actions.sequence(
-                    Actions.delay(3),
-                    Actions.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            canPlayAnimation = true;
-                            showGift();
-                            openedGift = false;
-                            idleCounter = -2;
-                            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
-                        }
-                    })
-            ));
-            boxAniE.add(ac);
+            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+            canPlayAnimation = true;
+            openedGift = true;
         }
     }
 
@@ -152,10 +144,10 @@ public class GiftScreen extends AbstractDialog {
             openGift();
         }
 
-        helpTimer++;
-        if (helpTimer > 200) {
-            if (lbl.getComponent(TintComponent.class).color.a < 1) {
-                lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
+        helpTimer += Gdx.graphics.getDeltaTime();
+        if (helpTimer > 15) {
+            if (lblTapToOpen.getComponent(TintComponent.class).color.a < 1) {
+                lblTapToOpen.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
             }
         }
 
@@ -176,10 +168,22 @@ public class GiftScreen extends AbstractDialog {
             hideShadow();
             hide();
             isGiftScreenOpen = false;
-            isGiftScreenOpen = false;
             giftE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             GoalFeedbackScreen.hideGoalFeedback();
             gameScript.stage.initResultWithAds();
+        }
+
+        if(giftE != null && giftE.getComponent(TransformComponent.class).x >= 300 && lbl.getComponent(TintComponent.class).color.a < 0.9f) {
+            lbl.getComponent(TintComponent.class).color.a += Gdx.graphics.getDeltaTime();
+            lbl.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()+1);
+        }
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        if(openedGift && sasBox.get().isAnimationFinished(stateTime)){
+            System.out.println("finished ani");
+            openedGift = false;
+            showGift();
+            idleCounter = -2;
         }
 
         fade(giftScreen, true);
@@ -190,17 +194,7 @@ public class GiftScreen extends AbstractDialog {
             addShadow();
             openedGift = true;
             playGiftAni = true;
-            lbl.getComponent(TintComponent.class).color.a = 1;
 
-            if (gift.pet != null || gift.upgrade != null) {
-                lbl.getComponent(LabelComponent.class).text.replace(0,
-                        lbl.getComponent(LabelComponent.class).text.capacity(),
-                        "YOU GOT A " + gift.type + " !!!");
-            } else {
-                lbl.getComponent(LabelComponent.class).text.replace(0,
-                        lbl.getComponent(LabelComponent.class).text.capacity(),
-                        "YOU GOT " + gift.money + " " + gift.type + " !!!");
-            }
             showGiftIcon();
         }
     }
@@ -213,6 +207,16 @@ public class GiftScreen extends AbstractDialog {
     }
 
     private void showGiftIcon() {
+        if (gift.pet != null || gift.upgrade != null) {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT A " + gift.type + " !!!");
+        } else {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        }
+
         if (gift.pet != null) {
             CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.pet.shopIcon);
             giftE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
@@ -242,4 +246,15 @@ public class GiftScreen extends AbstractDialog {
         playGiftAni = true;
     }
 
+    protected void addShadow() {
+        shadowE.getComponent(TransformComponent.class).x = 0;
+        shadowE.getComponent(TransformComponent.class).y = 0;
+        shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
+        shadowE.getComponent(TintComponent.class).color.a = 0;
+
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.fadeIn(2f, Interpolation.exp5));
+        shadowE.add(ac);
+    }
 }

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.entity.componets.Gift;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
@@ -25,15 +26,21 @@ import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ui.PauseDialog.PROGRESS;
 import static com.fd.etf.stages.ui.PauseDialog.SLASH;
 import static com.fd.etf.utils.EffectUtils.fade;
+import static com.fd.etf.utils.GlobalConstants.FPS;
 
 public class GoalFeedbackScreen {
 
     public static final String GOALFEEDBACK = "lib_gift_feedbacker";
+    private static final String ITEM_MONEY_GIFT = "itemMoneyGift";
+    public final String GIFT_SCREEN = "lib_gift_screen";
     public static final String LBL_DIALOG = "lbl_level";
     public static final String GOAL_LIB = "goalTile";
     public static final String GOAL_ANI = "goalAni";
     public static final String GOAL_PROGRESS = "goal_progress";
     public static final String GOAL_LBL = "goal_lbl";
+    public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
+    public final String LBL_TAP_TO_OPEN = "lbl_tap_to_open";
+    public final String BOX_ANI = "box_ani";
     public static final int POS_X = -22;
     public static final int POS_Y = -19;
 
@@ -55,6 +62,21 @@ public class GoalFeedbackScreen {
     public static boolean isGoalFeedbackOpen;
     private static Entity feedbackEntity;
     private int iNastya2;
+
+    // Gift
+    private boolean canPlayAnimation = true;
+    SpriteAnimationComponent saBox;
+    SpriteAnimationStateComponent sasBox;
+    private float stateTime;
+    private boolean isGiftShown;
+    private boolean isOpeningBox;
+    private boolean isAbleToProceedToResult;
+    private Gift gift;
+    private Entity lblTapToOpen;
+    private Entity lbl;
+    private Entity giftE;
+    private Entity giftIconE;
+    private boolean canTap;
 
     public void init(boolean isNewLevel) {
         this.isNewLevel = isNewLevel;
@@ -145,7 +167,6 @@ public class GoalFeedbackScreen {
             tiles.add(newTile);
             y -= GOAL_STEP_Y;
         }
-        showGiftScreen(delay);
     }
 
     private void addMoveInPrevTilesActions() {
@@ -269,11 +290,15 @@ public class GoalFeedbackScreen {
             updateLevelLabel();
             doWhenAllGoalsAchieved();
 
-            if (Gdx.input.justTouched() && isGoalFeedbackOpen && gameScript.giftScreen == null) {
-                if (!gameScript.fpc.level.checkAllGoals() && !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)) {
+            if (Gdx.input.justTouched() && isGoalFeedbackOpen && !isGiftShown) {
+                if (!gameScript.fpc.level.checkAllGoals() /*&& !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)*/) {
                     hideGoalFeedback();
                     gameScript.stage.initResultWithAds();
                 }
+            }
+
+            if(prevLvlTiles != null && prevLvlTiles.get(0).getComponent(TransformComponent.class).y < -100){
+                showGift();
             }
         }
     }
@@ -322,11 +347,110 @@ public class GoalFeedbackScreen {
         }
     }
 
-    private void showGiftScreen(float delay) {
-        if (gameScript.giftScreen == null) {
-            gameScript.giftScreen = new GiftScreen();
+    private void showGift() {
+        //init
+        if(!isGiftShown){
+            isGiftShown = true;
+            canTap = true;
+            gift = Gift.getRandomGift();
+
+            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
+            giftE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
+            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), giftE, tempC.composite);
+            sceneLoader.getEngine().addEntity(giftE);
+            giftE.getComponent(TransformComponent.class).x = -20;
+            giftE.getComponent(TransformComponent.class).y = -20;
+
+            lblTapToOpen = new ItemWrapper(giftE).getChild(LBL_TAP_TO_OPEN).getEntity();
+            lblTapToOpen.getComponent(TintComponent.class).color.a = 0;
+            lbl = new ItemWrapper(giftE).getChild(LBL_GIFT_SCREEN).getEntity();
+            lbl.getComponent(TintComponent.class).color.a = 0;
+
+            Entity boxAniE = new ItemWrapper(giftE).getChild(BOX_ANI).getEntity();
+            boxAniE.getComponent(ZIndexComponent.class).setZIndex(220);
+            saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
+            sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
         }
-        gameScript.giftScreen.init();
-        gameScript.giftScreen.show();
+
+        if(Gdx.input.justTouched() && canTap){
+            System.out.println("touched!");
+            setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
+            isOpeningBox = true;
+            canTap = false;
+        }
+
+        if(saBox.currentAnimation == "open") {
+            stateTime += Gdx.graphics.getDeltaTime();
+            if (sasBox.get().isAnimationFinished(stateTime) && isOpeningBox) {
+
+                isOpeningBox = false;
+                showGiftIcon(gift);
+            }
+        }
+
+        if(giftIconE != null && giftIconE.getComponent(TransformComponent.class).x > 520){
+            isAbleToProceedToResult = true;
+        }
+
+        if(isAbleToProceedToResult && Gdx.input.justTouched()){
+            gameScript.stage.initResultWithAds();
+        }
+
+//        if (gameScript.giftScreen == null) {
+//            gameScript.giftScreen = new GiftScreen();
+//        }
+//        gameScript.giftScreen.init();
+//        gameScript.giftScreen.show();
+    }
+
+    public void setAnimation(String animationName, Animation.PlayMode mode, SpriteAnimationStateComponent sasComponent, SpriteAnimationComponent saComponent) {
+        if (canPlayAnimation) {
+            sasComponent.set(saComponent.frameRangeMap.get(animationName), FPS, mode);
+            saComponent.currentAnimation = animationName;
+            canPlayAnimation = false;
+        }
+    }
+
+    private void showGiftIcon(Gift gift) {
+        if (gift.pet != null || gift.upgrade != null) {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT A " + gift.type + " !!!");
+        } else {
+            lbl.getComponent(LabelComponent.class).text.replace(0,
+                    lbl.getComponent(LabelComponent.class).text.capacity(),
+                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
+        }
+
+        if (gift.pet != null) {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.pet.shopIcon);
+            giftIconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftIconE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftIconE);
+            giftIconE.getComponent(ZIndexComponent.class).setZIndex(200);
+            giftIconE.getComponent(TransformComponent.class).x = 200;
+            giftIconE.getComponent(TransformComponent.class).y = 329;
+        } else if (gift.upgrade != null) {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(gift.upgrade.shopIcon);
+            giftIconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftIconE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftIconE);
+            giftIconE.getComponent(ZIndexComponent.class).setZIndex(100);
+            giftIconE.getComponent(TransformComponent.class).x = 100;
+            giftIconE.getComponent(TransformComponent.class).y = 329;
+        } else {
+            CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(ITEM_MONEY_GIFT);
+            giftIconE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
+            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), giftIconE, tempItemC.composite);
+            GameStage.sceneLoader.getEngine().addEntity(giftIconE);
+            giftIconE.getComponent(ZIndexComponent.class).setZIndex(200);
+            giftIconE.getComponent(TransformComponent.class).x = 100;
+            giftIconE.getComponent(TransformComponent.class).y = 329;
+        }
+
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.moveTo(535, 439, 2f, Interpolation.exp5));
+        giftIconE.add(ac);
     }
 }
