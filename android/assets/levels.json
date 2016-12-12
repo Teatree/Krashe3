@@ -1,34 +1,34 @@
 [{
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Novice,
+		name : Level: 1\n"Sapling",
 		difficultyLevel : 1
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Pro,
+		name : Level: 2\n"Novice dude",
 		difficultyLevel : 2
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Prorer Pro,
+		name : Level: 3\n"Pro Novice",
 		difficultyLevel : 3
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Prorest Pro of the Pros,
+		name : Level: 4\n"Prorer Pro",
 		difficultyLevel : 4
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Wonderwall,
+		name : Level: 5\n"Wonderwall man",
 		difficultyLevel : 5
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Majestic creature,
+		name : Level: 6\n"Majestic creature",
 		difficultyLevel : 6
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : Gadsby,
+		name : Level: 7\n"Great Gadsby",
 		difficultyLevel : 7
 	}, {
 		class : com.fd.etf.utils.SaveMngr$LevelInfo,
-		name : The Great Nastya,
+		name : Level: 8\n"Great Nastya",
 		difficultyLevel : 8
 	}
 	
