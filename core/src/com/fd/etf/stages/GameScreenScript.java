@@ -92,6 +92,7 @@ public class GameScreenScript implements IScript {
 
     public static void angerBees() {
         isAngeredBeesMode = true;
+        BugSpawnSystem.break_counter = 1;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
 
@@ -227,7 +228,8 @@ public class GameScreenScript implements IScript {
 
         gameScript.fpc.settings.totalPlayedGames++;
         gameScript.fpc.settings.playedGames++;
-        isAngeredBeesMode = false;
+//        isAngeredBeesMode = false;
+        isAngeredBeesMode = true;
     }
 
     public void initButtons() {
