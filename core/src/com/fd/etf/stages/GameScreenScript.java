@@ -228,8 +228,8 @@ public class GameScreenScript implements IScript {
 
         gameScript.fpc.settings.totalPlayedGames++;
         gameScript.fpc.settings.playedGames++;
-//        isAngeredBeesMode = false;
-        isAngeredBeesMode = true;
+        isAngeredBeesMode = false;
+//        isAngeredBeesMode = true;
     }
 
     public void initButtons() {
