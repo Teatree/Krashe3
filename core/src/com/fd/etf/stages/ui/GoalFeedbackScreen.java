@@ -306,19 +306,16 @@ public class GoalFeedbackScreen {
             fade(feedbackEntity, isGoalFeedbackOpen);
             updateLevelLabel();
             doWhenAllGoalsAchieved();
-            System.out.println("isGiftShouldShow: " + isGiftShouldShow);
 
             if (Gdx.input.justTouched() && isGoalFeedbackOpen && !isGiftShown && !isGiftShouldShow) {
-                if (!gameScript.fpc.level.checkAllGoals() /*&& !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)*/) {
-                    hideGoalFeedback();
-                    gameScript.stage.initResultWithAds();
-                    System.out.println("INIT RESULT WITH ADS BECAUSE FUCK YOU!");
-                }
+                    if (!gameScript.fpc.level.checkAllGoals() /*&& !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)*/) {
+                        hideGoalFeedback();
+                        gameScript.stage.initResultWithAds();
+                    }
             }
 
             if(isGiftShouldShow && prevLvlTiles != null && prevLvlTiles.get(0).getComponent(TransformComponent.class).y < -100){
                 showGift();
-                System.out.println("showing Gift");
             }
         }
     }
@@ -375,12 +372,8 @@ public class GoalFeedbackScreen {
     }
 
     private void showGift() {
-        //init
-
         if(!isGiftShown){
-            System.out.println("ENTER GIFT SIDE");
             isGiftShown = true;
-            canTap = true;
             gift = Gift.getRandomGift();
 
             helpTimer = 0;
@@ -415,10 +408,14 @@ public class GoalFeedbackScreen {
 
         if (saBox.currentAnimation != "open" && spinnyShineE.getComponent(TintComponent.class).color.a < 0.96f){
             spinnyShineE.getComponent(TintComponent.class).color.a += 0.03f;
+            if (spinnyShineE.getComponent(TintComponent.class).color.a < 0.76f){
+                canTap = true;
+                System.out.println("canTap: " + canTap + ", isOpeningBox: " + isOpeningBox);
+            }
         }
-
         if(Gdx.input.justTouched() && canTap){
-            System.out.println("touched!");
+            System.out.println("tapped successfully!");
+            canPlayAnimation = true;
             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
             isOpeningBox = true;
             canTap = false;
@@ -517,10 +514,10 @@ public class GoalFeedbackScreen {
         giftE.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         giftE.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
         isGiftShown = false;
-        giftIconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        giftIconE.getComponent(TransformComponent.class).x = -FAR_FAR_AWAY_X;
         isGameOver.set(false);
+        stateTime = 0;
         isGoalFeedbackOpen = false;
         hideGoalFeedback();
-        gameScript.stage.initResultWithAds();
     }
 }
