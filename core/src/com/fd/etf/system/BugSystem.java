@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fd.etf.entity.componets.BugComponent;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
@@ -136,27 +137,31 @@ public class BugSystem extends IteratingSystem {
                             SpriteAnimationStateComponent sasc,
                             SpriteAnimationComponent sac) {
 
-        switch (bugComponent.type) {
-            case SIMPLE:
-                bugComponent.boundsRect.setHeight(70);
-                bugComponent.boundsRect.setY(transformComponent.y + 90);
-                moveSimple(deltaTime, transformComponent, bugComponent);
-                break;
-            case DRUNK:
-                moveSimple(deltaTime, transformComponent, bugComponent);
-                break;
-            case CHARGER:
-                moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
-                break;
-            case BEE:
-                bugComponent.boundsRect.setHeight(70);
-                moveSimple(deltaTime, transformComponent, bugComponent);
-                break;
-            case QUEENBEE:
-                moveSimple(deltaTime, transformComponent, bugComponent);
-                break;
-            default:
-                break;
+        if (GameScreenScript.isAngeredBeesMode){
+            moveAngryBee(transformComponent);
+        } else {
+            switch (bugComponent.type) {
+                case SIMPLE:
+                    bugComponent.boundsRect.setHeight(70);
+                    bugComponent.boundsRect.setY(transformComponent.y + 90);
+                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    break;
+                case DRUNK:
+                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    break;
+                case CHARGER:
+                    moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
+                    break;
+                case BEE:
+                    bugComponent.boundsRect.setHeight(70);
+                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    break;
+                case QUEENBEE:
+                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -277,6 +282,10 @@ public class BugSystem extends IteratingSystem {
     public void setPosition(TransformComponent tc, float x, float y) {
         tc.x = x;
         tc.y = y;
+    }
+
+    public void moveAngryBee(TransformComponent tc){
+        tc.x += 2.3f;
     }
 
     private void checkGoals(BugComponent bc) {
