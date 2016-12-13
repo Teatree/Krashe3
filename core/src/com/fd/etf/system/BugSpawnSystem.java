@@ -34,13 +34,13 @@ public class BugSpawnSystem extends EntitySystem {
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean queenBeeOnStage = false;
 
-    private int SPAWN_MAX_X = -400;
-    private int SPAWN_MIN_X = 300;
+    private int SPAWN_MAX_X = -200;
+    private int SPAWN_MIN_X = -300;
     private int SPAWN_MIN_Y = 100;
     private int SPAWN_MAX_Y = 460;
 
     private float spawner = 0;
-    private float break_counter = 0;
+    public static float break_counter = 0;
     private float SPAWN_INTERVAL_BASE = 1.5f;
     private float BREAK_FREQ_BASE_MIN = 10;
     private float BREAK_FREQ_BASE_MAX = 15;
@@ -58,6 +58,8 @@ public class BugSpawnSystem extends EntitySystem {
     public int bugsSpawned;
 
     private Random rand = new Random();
+    private float angryBeeLinePosY = 150;
+    private float angryBeeLinePosX = SPAWN_MAX_X;
 
     public BugSpawnSystem() {
         init();
@@ -91,7 +93,9 @@ public class BugSpawnSystem extends EntitySystem {
         break_counter -= delta;
         if (spawner <= 0) {
             if (isAngeredBeesMode) {
-                createBug(BEE, currentMultiplier);
+                curSpawnInterval = 0.8f;
+//                createBug(BEE, currentMultiplier);
+                createAngryBee(currentMultiplier);
             } else {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue <= curDrunkProb) {
@@ -119,6 +123,9 @@ public class BugSpawnSystem extends EntitySystem {
             } else {
                 spawner = rand.nextInt((int) curBreakLengthMax - (int) curBreakLengthMin) + curBreakLengthMin;
                 break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
+
+                //new angry bee row
+                angryBeeLinePosY = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
             }
         } else {
             spawner -= delta;
@@ -141,6 +148,21 @@ public class BugSpawnSystem extends EntitySystem {
         bugEntity.getComponent(TransformComponent.class).y = tc.y;
 
 //        bugEntity.add(new DebugComponent(bugEntity.getComponent(BugComponent.class).boundsRect));
+    }
+
+    private void createAngryBee(Multiplier currentMultiplier) {
+        Entity bugEntity = BugPool.getInstance().get(BEE);
+        BugComponent bc = new BugComponent(BEE, currentMultiplier);
+        bugEntity.add(bc);
+
+        TransformComponent tc = bugEntity.getComponent(TransformComponent.class);
+        tc.x = angryBeeLinePosX;
+        tc.y = angryBeeLinePosY;
+
+        bc.endX = 1450;
+        bc.endY = tc.y;
+
+        bc.startYPosition = tc.y;
     }
 
     @Override
