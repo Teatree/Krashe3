@@ -7,7 +7,6 @@ import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.GameOverDialog;
-import com.fd.etf.stages.ui.GiftScreen;
 import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
@@ -66,7 +65,6 @@ public class GameScreenScript implements IScript {
     public Entity scoreLabelES;
     public LabelComponent startLabelComponent;
     public Entity background;
-    public GiftScreen giftScreen;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
 
@@ -464,9 +462,6 @@ public class GameScreenScript implements IScript {
             if (pauseDialog != null) {
                 pauseDialog.update(delta);
             }
-            if (giftScreen != null) {
-                giftScreen.update();
-            }
             if (goalFeedbackScreen != null) {
                 goalFeedbackScreen.update();
             }
@@ -499,12 +494,11 @@ public class GameScreenScript implements IScript {
         } else {
             isGameOver.set(false);
             if (GoalFeedbackScreen.shouldShow &&
-                    (gameScript.giftScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
+                    !GoalFeedbackScreen.isGoalFeedbackOpen) {
                 showGoalFeedback();
                 isGameOver.set(true);
             } else if ((gameScript.goalFeedbackScreen == null ||
-                    !GoalFeedbackScreen.isGoalFeedbackOpen) &&
-                    (gameScript.giftScreen == null || !gameScript.giftScreen.isGiftScreenOpen)) {
+                    !GoalFeedbackScreen.isGoalFeedbackOpen)) {
                 isGameOver.set(false);
                 gameScript.resetPauseDialog();
                 if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
