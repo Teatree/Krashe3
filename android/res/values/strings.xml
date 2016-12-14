@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Eat the fly!</string>
+    <string name="app_name">Eat The Fly!</string>
     <string name="app_id">510295484890</string>
     <string name="package_name">com.fd.etf.android</string>
     <string name="achievement_queens_slayer">CgkI2tPs_-wOEAIQAQ</string>
