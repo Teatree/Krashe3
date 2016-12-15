@@ -62,6 +62,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onStart() {
         super.onStart();
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+        config.useGLSurfaceView20API18 = true;
         psHelper.onStart();
     }
 

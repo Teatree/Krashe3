@@ -1,0 +1,146 @@
+
+drunkBugAni.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+drunkBugAni01
+  rotate: false
+  xy: 2, 682
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni02
+  rotate: false
+  xy: 2, 546
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni03
+  rotate: false
+  xy: 122, 682
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni04
+  rotate: false
+  xy: 2, 410
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni05
+  rotate: false
+  xy: 122, 546
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni06
+  rotate: false
+  xy: 242, 682
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni07
+  rotate: false
+  xy: 2, 274
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni08
+  rotate: false
+  xy: 122, 410
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni09
+  rotate: false
+  xy: 242, 546
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni10
+  rotate: false
+  xy: 362, 682
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni11
+  rotate: false
+  xy: 2, 138
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni12
+  rotate: false
+  xy: 122, 274
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni13
+  rotate: false
+  xy: 242, 410
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni14
+  rotate: false
+  xy: 362, 546
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni15
+  rotate: false
+  xy: 482, 682
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni16
+  rotate: false
+  xy: 2, 2
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni17
+  rotate: false
+  xy: 122, 138
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni18
+  rotate: false
+  xy: 242, 274
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni19
+  rotate: false
+  xy: 362, 410
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
+drunkBugAni20
+  rotate: false
+  xy: 482, 546
+  size: 118, 134
+  orig: 118, 134
+  offset: 0, 0
+  index: -1
