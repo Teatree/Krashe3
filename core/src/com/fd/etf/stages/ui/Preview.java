@@ -35,7 +35,6 @@ public class Preview extends AbstractDialog {
     public static final String BTN_DISABLE = "tag_btn_disable";
     public static final String BTN_ENABLE = "tag_btn_enable";
 
-
     public static final String TAG_INFO_LIB = "tag_info_lib";
     public static final String BTN_CLOSE = "tag_btn_close";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
