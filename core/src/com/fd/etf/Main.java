@@ -20,7 +20,7 @@ public class Main extends Game {
     public static int viewportHeight = 786;
 
     public static GameStage gameStage;
-    public Stage loadingStage;
+//    public Stage loadingStage;
     SpriteBatch batch;
     Sprite tex;
     Viewport oneViewport;
@@ -40,11 +40,15 @@ public class Main extends Game {
     @Override
     public void create() {
         oneViewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        loadingStage = new Stage(oneViewport);
-        Gdx.input.setInputProcessor(loadingStage);
+//        loadingStage = new Stage(oneViewport);
+//        Gdx.input.setInputProcessor(loadingStage);
 
-        batch = new SpriteBatch();
-        tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
+        async();
+//        batch = new SpriteBatch();
+//        tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
+
+
+
 //        mainController.setupPlayServices();
 //        mainController.signIn();
     }
@@ -64,30 +68,42 @@ public class Main extends Game {
 
     @Override
     public void render() {
-
+//        if (gameStage == null) {
+//            async();
+//        }
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
-        batch.begin();
-        tex.setSize(viewportWidth, viewportHeight);
-        tex.draw(batch);
-        batch.end();
+//        loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
+        gameStage.update();
+        gameStage.act();
+        gameStage.getViewport().update(viewportWidth, viewportHeight, true);
+        GameStage.viewport.update(viewportWidth, viewportHeight, true);
+        gameStage.draw();
 
-        if (gameStage != null) {
-            gameStage.update();
-            gameStage.act();
-            gameStage.getViewport().update(viewportWidth, viewportHeight, true);
-            GameStage.viewport.update(viewportWidth, viewportHeight, true);
-            gameStage.draw();
-        } else {
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    async();
-                }
-            });
-            return;
-        }
+        //old
+//        Gdx.gl.glClearColor(0, 0, 1, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        loadingStage.getViewport().update(viewportWidth, viewportHeight, true);
+//        batch.begin();
+//        tex.setSize(viewportWidth, viewportHeight);
+//        tex.draw(batch);
+//        batch.end();
+//
+//        if (gameStage != null) {
+//            gameStage.update();
+//            gameStage.act();
+//            gameStage.getViewport().update(viewportWidth, viewportHeight, true);
+//            GameStage.viewport.update(viewportWidth, viewportHeight, true);
+//            gameStage.draw();
+//        } else {
+//            Gdx.app.postRunnable(new Runnable() {
+//                @Override
+//                public void run() {
+//                    async();
+//                }
+//            });
+//            return;
+//        }
     }
 
     public void resize(int width, int height) {
@@ -97,8 +113,8 @@ public class Main extends Game {
         if (gameStage != null) {
             gameStage.getViewport().update(width, height, true);
             GameStage.viewport.update(width, height, true);
-        } else {
-            loadingStage.getViewport().update(width, height, true);
+//        } else {
+//            loadingStage.getViewport().update(width, height, true);
         }
     }
 

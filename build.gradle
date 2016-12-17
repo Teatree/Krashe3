@@ -47,10 +47,9 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:1.7.1"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.3"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
@@ -68,6 +67,7 @@ project(":android") {
 //        compile "com.google.android.gms:play-services-games:9.4.0"
 //        compile "com.google.android.gms:play-services-plus:9.4.0"
         compile "com.google.android.gms:play-services-ads:9.4.0"
+        compile "com.google.android.gms:play-services-gcm:9.4.0"
 
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
