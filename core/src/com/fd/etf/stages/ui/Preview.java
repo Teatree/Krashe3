@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.brashmonkey.spriter.Dimension;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -34,11 +35,12 @@ public class Preview extends AbstractDialog {
     public static final String BTN_BUY = "tag_btn_buy";
     public static final String BTN_DISABLE = "tag_btn_disable";
     public static final String BTN_ENABLE = "tag_btn_enable";
-
     public static final String TAG_INFO_LIB = "tag_info_lib";
+
     public static final String BTN_CLOSE = "tag_btn_close";
     public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
+    public static final String LBL_PAPER_PIECE = "paper_piece_img";
     public static final String COINZ_ICON = "coinz_icon";
     public static final String LBL_PRICE = "tag_lbl_price";
 
@@ -118,6 +120,16 @@ public class Preview extends AbstractDialog {
         buttonz.getComponent(TransformComponent.class).y = -500;
         infoTag.getComponent(TransformComponent.class).x = INFO_TAG_X;
         infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y;
+
+        infoTag.getComponent(NodeComponent.class).
+                getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class).setZIndex(20);
+        ZIndexComponent z1 = infoTag.getComponent(NodeComponent.class).
+                getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class);
+        infoTag.getComponent(NodeComponent.class).
+                getChild(BTN_CLOSE).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+1);
+        infoTag.getComponent(NodeComponent.class).
+                getChild(LBL_ITEM_NAME).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+1);
+
         initShadow();
     }
 
@@ -254,7 +266,8 @@ public class Preview extends AbstractDialog {
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
         }
-        setDescription(vc);
+
+        setDescription(vc, jump, justBoughtAni);
 
         for (Entity e: ShopScreenScript.itemIcons.values()){
             e.getComponent(ZIndexComponent.class).
@@ -264,22 +277,51 @@ public class Preview extends AbstractDialog {
         buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
 
-    private void setDescription(ShopItem vc) {
+    private void setDescription(ShopItem vc, boolean jump, boolean justBoughtAni) {
         if (vc.description == null) {
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        } else {
-            infoTag.getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).getComponent(TransformComponent.class).x = 464;
-            infoTag.getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).getComponent(TransformComponent.class).y = 151;
+        } else if (vc.description != null && (jump || !justBoughtAni) &&
+                ((buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
+                        && buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y)
+                || (!justBoughtAni && vc.bought && (buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y != FAR_FAR_AWAY_Y
+                || (buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y != FAR_FAR_AWAY_Y))))) {
 
             infoTag.getComponent(NodeComponent.class).
-                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 430;
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 100;
             infoTag.getComponent(NodeComponent.class).
-                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = 41;
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = 51;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).scaleX = 0.5f;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).scaleY = 0.5f;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(TintComponent.class).color.a = 0;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class).getZIndex()-2);
+
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(TransformComponent.class).x = 100;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(TransformComponent.class).y = 51;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(TintComponent.class).color.a = 0;
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
+
+            ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
+            ac.dataArray.add(Actions.sequence(Actions.delay(0.5f),
+                    Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveTo(434, 51, 1, Interpolation.exp5),
+                            Actions.scaleTo(1, 1, 1f, Interpolation.exp5))));
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).add(ac);
+            infoTag.getComponent(NodeComponent.class).
+                    getChild(LBL_DESC).add(ac);
         }
     }
 
