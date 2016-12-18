@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r7">
     <folder id="0">
-        <file id="0" name="head_bottom.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="1" name="head_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="2" name="leaf_left.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="3" name="leaf_right.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="4" name="middle_leafs.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="5" name="middle_leafs_back.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="6" name="peducle_bottom.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="7" name="peducle_middle.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="8" name="peducle_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="9" name="item_back_shine.png" width="154" height="130" pivot_x="0" pivot_y="1"/>
-        <file id="10" name="pot.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="0" name="leaf_left.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="leaf_right.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="pot.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <obj_info name="bone_leaf_left" type="bone" w="103.942" h="10"/>
@@ -42,24 +34,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="211.809838" y="-146.716027" angle="210.018367"/>
+                    <object folder="0" file="0" x="211.809838" y="-146.716027" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="213.763627" y="-153.079447" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="213.763627" y="-153.079447" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="212.821083" y="-151.440338" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="212.821083" y="-151.440338" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="-48.06662" y="263.733957" angle="341.565051"/>
+                    <object folder="0" file="1" x="-48.06662" y="263.733957" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-42.001907" y="269.589808" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-42.001907" y="269.589808" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-40.336131" y="264.487841" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-40.336131" y="264.487841" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -80,13 +72,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="185.000001" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="185.000001" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="184.999996" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="184.999996" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="185.000005" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="185.000005" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -116,24 +108,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="230.974317" y="-211.867563" angle="210.018367"/>
+                    <object folder="0" file="0" x="230.974317" y="-211.867563" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="-62.29687" y="221.043208" angle="341.565051"/>
+                    <object folder="0" file="1" x="-62.29687" y="221.043208" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -148,13 +140,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -184,24 +176,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="189.297346" y="-107.752098" angle="210.018367"/>
+                    <object folder="0" file="0" x="189.297346" y="-107.752098" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="-23.084627" y="338.679937" angle="341.565051"/>
+                    <object folder="0" file="1" x="-23.084627" y="338.679937" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -216,13 +208,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -252,24 +244,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="424.889613" y="12.199075" angle="210.018367"/>
+                    <object folder="0" file="0" x="424.889613" y="12.199075" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="249.819935" y="161.276159" angle="341.565051"/>
+                    <object folder="0" file="1" x="249.819935" y="161.276159" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -284,13 +276,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -320,24 +312,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="162.647945" y="96.284196" angle="210.018367"/>
+                    <object folder="0" file="0" x="162.647945" y="96.284196" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="-110.679719" y="9.486833" angle="341.565051"/>
+                    <object folder="0" file="1" x="-110.679719" y="9.486833" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -352,13 +344,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -388,24 +380,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="346.923272" y="-76.734888" angle="210.018367"/>
+                    <object folder="0" file="0" x="346.923272" y="-76.734888" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="133.526797" y="-441.970521" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="133.526797" y="-441.970521" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="134.3968" y="184.993242" angle="341.565051"/>
+                    <object folder="0" file="1" x="134.3968" y="184.993242" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-154.17615" y="533.620865" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-154.17615" y="533.620865" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -420,13 +412,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>
@@ -456,24 +448,24 @@
             </mainline>
             <timeline id="0" name="leaf_left">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="189.297346" y="-107.752098" angle="210.018367"/>
+                    <object folder="0" file="0" x="189.297346" y="-107.752098" angle="210.018367"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="2" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
+                    <object folder="0" file="0" x="191.251138" y="-114.115522" angle="210.018367" scale_x="0.983516" scale_y="1.025391"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="2" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
+                    <object folder="0" file="0" x="190.308589" y="-112.476405" angle="210.018367" scale_x="0.97573" scale_y="1.01799"/>
                 </key>
             </timeline>
             <timeline id="1" name="leaf_right">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="304.211111" y="270.690966" angle="341.565051"/>
+                    <object folder="0" file="1" x="304.211111" y="270.690966" angle="341.565051"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="3" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
+                    <object folder="0" file="1" x="-57.094227" y="227.196159" angle="341.565051" scale_x="0.979853" scale_y="1.035156"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="3" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
+                    <object folder="0" file="1" x="-55.177818" y="222.005789" angle="341.565051" scale_x="0.959819" scale_y="1.018256"/>
                 </key>
             </timeline>
             <timeline id="2" obj="0" name="bone_leaf_left" object_type="bone">
@@ -488,13 +480,13 @@
             </timeline>
             <timeline id="4" name="pot">
                 <key id="0" spin="0">
-                    <object folder="0" file="10" x="-328" y="295" angle="0"/>
+                    <object folder="0" file="2" x="-328" y="295" angle="0"/>
                 </key>
                 <key id="1" time="1185" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
                 <key id="2" time="1714" spin="0">
-                    <object folder="0" file="10" x="-137" y="140" angle="0"/>
+                    <object folder="0" file="2" x="-137" y="140" angle="0"/>
                 </key>
             </timeline>
         </animation>

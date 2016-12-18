@@ -223,7 +223,7 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     private void hideTutorialLine() {
-        if (gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.6f) {
+        if (gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0f) {
             gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.1f;
         }
     }

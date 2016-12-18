@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r4.1">
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r7">
     <folder id="0">
-        <file id="0" name="pot.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="1" name="peducle_top_under_christmas.png" width="402" height="456" pivot_x="0" pivot_y="1"/>
-        <file id="2" name="head_bottom.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="3" name="head_top.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="4" name="middle_leafs.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="5" name="peducle_top.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="6" name="peducle_middle.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="7" name="peducle_bottom.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
-        <file id="8" name="middle_leafs_back.png" width="272" height="255" pivot_x="0" pivot_y="1"/>
+        <file id="0" name="head_bottom.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="head_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="middle_leafs.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="peducle_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="peducle_middle.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="5" name="peducle_bottom.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="6" name="middle_leafs_back.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <obj_info name="bone_peduncle_bottom" type="bone" w="63.561" h="10"/>
@@ -43,37 +41,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -83,7 +81,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -103,7 +101,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -133,37 +131,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -173,7 +171,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -193,7 +191,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -223,37 +221,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -263,7 +261,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -283,7 +281,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -313,37 +311,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -353,7 +351,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -373,7 +371,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -403,37 +401,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -443,7 +441,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -463,7 +461,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -493,37 +491,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -533,7 +531,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -553,7 +551,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
@@ -583,37 +581,37 @@
             </mainline>
             <timeline id="0" name="head_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="2" x="210.463164" y="-80.224413" angle="177.31023" scale_x="1"/>
+                    <object folder="0" file="0" x="210.463164" y="-80.224413" angle="177.31023"/>
                 </key>
             </timeline>
             <timeline id="1" name="head_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="3" x="218.435657" y="-11.701548" angle="193.196463" scale_x="1"/>
+                    <object folder="0" file="1" x="218.435657" y="-11.701548" angle="193.196463"/>
                 </key>
             </timeline>
             <timeline id="2" name="middle_leafs">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="199.743314" y="-85.914858" angle="188.426969" scale_x="1"/>
+                    <object folder="0" file="2" x="199.743314" y="-85.914858" angle="188.426969"/>
                 </key>
             </timeline>
             <timeline id="3" name="peducle_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="155.114074" y="179.088097" angle="268.15239" scale_x="1"/>
+                    <object folder="0" file="3" x="155.114074" y="179.088097" angle="268.15239"/>
                 </key>
             </timeline>
             <timeline id="4" name="peducle_middle">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="-148.658362" y="97.74101" angle="14.697319" scale_x="1"/>
+                    <object folder="0" file="4" x="-148.658362" y="97.74101" angle="14.697319"/>
                 </key>
             </timeline>
             <timeline id="5" name="peducle_bottom">
                 <key id="0" spin="0">
-                    <object folder="0" file="7" x="234.026279" y="49.60633" angle="245.854458"/>
+                    <object folder="0" file="5" x="234.026279" y="49.60633" angle="245.854458"/>
                 </key>
             </timeline>
             <timeline id="6" name="middle_leafs_back">
                 <key id="0" spin="0">
-                    <object folder="0" file="8" x="-185.419614" y="134.455328" angle="341.916555"/>
+                    <object folder="0" file="6" x="-185.419614" y="134.455328" angle="341.916555"/>
                 </key>
             </timeline>
             <timeline id="7" obj="0" name="bone_peduncle_bottom" object_type="bone">
@@ -623,7 +621,7 @@
             </timeline>
             <timeline id="8" obj="1" name="bone_peduncle_middle" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="64.662299" y="-4.877205" angle="231.157139" scale_x="1"/>
+                    <bone x="64.662299" y="-4.877205" angle="231.157139"/>
                 </key>
             </timeline>
             <timeline id="9" obj="2" name="bone_peduncle_top" object_type="bone">
@@ -643,7 +641,7 @@
             </timeline>
             <timeline id="12" obj="8" name="bone_middle_leafs_back_000" object_type="bone">
                 <key id="0" spin="0">
-                    <bone x="-26.195573" y="-48.361058" angle="206.510414" scale_x="1"/>
+                    <bone x="-26.195573" y="-48.361058" angle="206.510414"/>
                 </key>
             </timeline>
             <timeline id="13" obj="9" name="bone_head" object_type="bone">
