@@ -86,6 +86,7 @@ public class Preview extends AbstractDialog {
 
     private ShopItem vc;
     private int movedTo;
+    public boolean canPlayDescAni;
 
     private void loadPreviewFromLib() {
         CompositeItemVO infoTempItemC = GameStage.sceneLoader.loadVoFromLibrary(TAG_INFO_LIB).clone();
@@ -283,12 +284,7 @@ public class Preview extends AbstractDialog {
                     getChild(LBL_DESC).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        } else if (vc.description != null && (jump || !justBoughtAni) &&
-                ((buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
-                        && buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y)
-                || (!justBoughtAni && vc.bought && (buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y != FAR_FAR_AWAY_Y
-                || (buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y != FAR_FAR_AWAY_Y))))) {
-
+        } else if (vc.description != null && canPlayDescAni){
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 100;
             infoTag.getComponent(NodeComponent.class).
@@ -322,6 +318,7 @@ public class Preview extends AbstractDialog {
                     getChild(IMG_SEC_BUBBLE).add(ac);
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).add(ac);
+            canPlayDescAni = false;
         }
     }
 
@@ -539,6 +536,7 @@ public class Preview extends AbstractDialog {
         int previousIndex = list.indexOf(vc) - 1;
         if (previousIndex >= 0) {
             setShouldDeleteIconE();
+            canPlayDescAni = true;
             showPreview(list.get(previousIndex), false, false);
         }
     }
@@ -606,6 +604,7 @@ public class Preview extends AbstractDialog {
         int nextIndex = list.indexOf(vc) + 1;
         if (nextIndex < list.size()) {
             setShouldDeleteIconE();
+            canPlayDescAni = true;
             showPreview(list.get(nextIndex), false, false);
         }
     }

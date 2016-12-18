@@ -237,6 +237,7 @@ public class ShopScreenScript implements IScript {
                         @Override
                         public void clicked() {
                             if (!isPreviewOn.get() && isAllowedMoving) {
+                                preview.canPlayDescAni = true;
                                 preview.showPreview(hc, true, false);
                             }
                         }
@@ -279,6 +280,7 @@ public class ShopScreenScript implements IScript {
                         @Override
                         public void clicked() {
                             if (!isPreviewOn.get() && isAllowedMoving) {
+                                preview.canPlayDescAni = true;
                                 preview.showPreview(vc, true, false);
                             }
                         }
