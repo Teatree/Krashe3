@@ -2,12 +2,9 @@
 <spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r7">
     <folder id="0">
         <file id="0" name="body.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="1" name="head.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="2" name="mouth_lower.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="3" name="mouth_upper.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="4" name="wing_low.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="5" name="wing_mid.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
-        <file id="6" name="wing_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="wing_low.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="wing_mid.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="wing_top.png" width="300" height="300" pivot_x="0" pivot_y="1"/>
     </folder>
     <entity id="0" name="entity_000">
         <obj_info name="bone_body_000" type="bone" w="80.6689" h="10"/>
@@ -52,17 +49,17 @@
             </timeline>
             <timeline id="1" name="wing_low">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="wing_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
             </timeline>
             <timeline id="3" name="wing_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" obj="0" name="bone_body_000" object_type="bone">
@@ -194,74 +191,74 @@
             </timeline>
             <timeline id="1" name="wing_low">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="1" time="137" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="2" time="288" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="3" time="365" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="4" time="475" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="5" time="542" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
                 </key>
                 <key id="6" time="665" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
                 </key>
             </timeline>
             <timeline id="2" name="wing_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0.75"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0.75"/>
                 </key>
                 <key id="1" time="80" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0.79"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0.79"/>
                 </key>
                 <key id="2" time="137" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="3" time="288" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="4" time="365" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0.79"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0.79"/>
                 </key>
                 <key id="5" time="475" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0.79401"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0.79401"/>
                 </key>
                 <key id="6" time="542" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="7" time="665" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="3" name="wing_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="1" time="80" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="2" time="137" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
                 <key id="3" time="288" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0.99"/>
                 </key>
                 <key id="4" time="365" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="5" time="475" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0.01"/>
                 </key>
                 <key id="6" time="665" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" obj="0" name="bone_body_000" object_type="bone">
@@ -325,17 +322,17 @@
             </timeline>
             <timeline id="1" name="wing_low">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="wing_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
             </timeline>
             <timeline id="3" name="wing_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" obj="0" name="bone_body_000" object_type="bone">
@@ -420,17 +417,17 @@
             </timeline>
             <timeline id="1" name="wing_low">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="wing_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
             </timeline>
             <timeline id="3" name="wing_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" obj="0" name="bone_body_000" object_type="bone">
@@ -511,26 +508,26 @@
             </timeline>
             <timeline id="1" name="wing_low">
                 <key id="0" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="1" time="1000" spin="0">
-                    <object folder="0" file="4" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="1" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="2" name="wing_mid">
                 <key id="0" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
                 <key id="1" time="1000" spin="0">
-                    <object folder="0" file="5" x="200.798665" y="-153.748218" angle="183.17983"/>
+                    <object folder="0" file="2" x="200.798665" y="-153.748218" angle="183.17983"/>
                 </key>
             </timeline>
             <timeline id="3" name="wing_top">
                 <key id="0" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
                 <key id="1" time="1000" spin="0">
-                    <object folder="0" file="6" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
+                    <object folder="0" file="3" x="200.798665" y="-153.748218" angle="183.17983" a="0"/>
                 </key>
             </timeline>
             <timeline id="4" obj="0" name="bone_body_000" object_type="bone">
