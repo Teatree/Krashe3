@@ -50,7 +50,6 @@ public class ETFSceneLoader extends SceneLoader {
     public SceneVO sceneVO;
     public Engine engine = null;
 
-    public RayHandler rayHandler;
     public World world;
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
@@ -230,7 +229,7 @@ public class ETFSceneLoader extends SceneLoader {
         PhysicsBodyLoader.getInstance().setScaleFromPPWU(pixelsPerWU);
 
         ParticleSystem particleSystem = new ParticleSystem();
-        LightSystem lightSystem = new LightSystem();
+//        LightSystem lightSystem = new LightSystem();
         SpriteAnimationSystem animationSystem = new SpriteAnimationSystem();
         LayerSystem layerSystem = new LayerSystem();
 //        PhysicsSystem physicsSystem = new PhysicsSystem(world);
@@ -245,7 +244,7 @@ public class ETFSceneLoader extends SceneLoader {
 
         engine.addSystem(animationSystem);
         engine.addSystem(particleSystem);
-        engine.addSystem(lightSystem);
+//        engine.addSystem(lightSystem);
         engine.addSystem(layerSystem);
 //        engine.addSystem(physicsSystem);
         engine.addSystem(compositeSystem);
