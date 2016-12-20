@@ -24,24 +24,24 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ResultScreenScript implements IScript {
 
-    public static final int MAX_PROGRESS_BAR_WIDTH = 670;
-    public static final double PERCENTS_TO_OFFER_AD = 0.99;
-    public static final int PROGRESS_BAR_STEP = 12;
-    public static final String IMG_PROGRESS_BAR = "img_progress_bar";
-    public static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
-    public static final String YOU_EARNED = "+";
-    public static final String YOUR_BEST = "BEST: ";
-    public static final String YOU_NEED = "YOU NEED ";
-    public static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
-    public static final String BTN_BACK = "btn_back";
-    public static final String BTN_PLAY = "btn_play";
-    public static final String BTN_SHOP = "btn_shop";
-    public static final String LBL_TOTAL = "lbl_TOTAL";
-    public static final String LBL_TOTAL_S = "lbl_TOTAL_s";
-    public static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
-    public static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
-    public static final String LBL_BET_SCORE = "lbl_BET_SCORE";
-    public static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
+     private static final int MAX_PROGRESS_BAR_WIDTH = 670;
+     public static final double PERCENTS_TO_OFFER_AD = 0.99;
+     private static final int PROGRESS_BAR_STEP = 12;
+     private static final String IMG_PROGRESS_BAR = "img_progress_bar";
+     private static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
+     private static final String YOU_EARNED = "+";
+     private static final String YOUR_BEST = "BEST: ";
+     private static final String YOU_NEED = "YOU NEED ";
+     private static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
+     private static final String BTN_BACK = "btn_back";
+     private static final String BTN_PLAY = "btn_play";
+     private static final String BTN_SHOP = "btn_shop";
+     private static final String LBL_TOTAL = "lbl_TOTAL";
+     private static final String LBL_TOTAL_S = "lbl_TOTAL_s";
+     private static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
+     private static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
+     private static final String LBL_BET_SCORE = "lbl_BET_SCORE";
+     private static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
 //    private static final String TRIAL_TIMER = "timer_lbl";
 
     public static VanityComponent showCaseVanity;

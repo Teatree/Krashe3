@@ -10,8 +10,8 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.fd.etf.stages.GameStage.*;
-import static com.fd.etf.utils.GlobalConstants.CUR_SCREEN;
+import static com.fd.etf.stages.GameStage.gameScript;
+import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 /**
@@ -19,8 +19,8 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
  */
 public class TrialTimer {
 
-    public static final String TRIAL_TIMER = "timer_lbl";
-    public static final String TRIAL_TIMER_SH = "timer_lbl_sh";
+    private static final String TRIAL_TIMER = "timer_lbl";
+    private static final String TRIAL_TIMER_SH = "timer_lbl_sh";
     public static final String TIMER_LBL_TIME_UP = "TIME'S UP";
 
     public Entity timerLogo;
@@ -40,9 +40,7 @@ public class TrialTimer {
     }
 
     public void timer() {
-        if (!CUR_SCREEN.equals(GAME)) {
-            GameScreenScript.checkTryPeriod();
-        }
+        GameScreenScript.checkTryPeriod();
         timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
         timerEsh = mainItem.getChild(TRIAL_TIMER_SH).getEntity();
         if (!ifShouldShowTimer()) {

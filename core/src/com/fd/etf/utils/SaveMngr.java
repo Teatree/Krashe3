@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Json;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
+import com.fd.etf.system.CocoonSystem;
 
 import java.util.*;
 
@@ -782,8 +783,8 @@ public class SaveMngr {
     public static void initCocoonMultipliers() {
         String file = readFile(COCOON_MULTIPLIERS_JSON);
         List<CocoonComponent.CocoonMultiplier> multipliers = new Json().fromJson(List.class, file);
-        CocoonComponent.cocoonMultipliers = multipliers;
-        CocoonComponent.currentCocoonMultiplier = multipliers.get(0);
+        CocoonSystem.cocoonMultipliers = multipliers;
+        CocoonSystem.currentCocoonMultiplier = multipliers.get(0);
     }
 
     public static void initDandelionMultipliers() {

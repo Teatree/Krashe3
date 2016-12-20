@@ -22,17 +22,15 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     protected void processEntity(Entity entity, float deltaTime) {
-        TintComponent tic = entity.getComponent(TintComponent.class);
-        TransformComponent tc = entity.getComponent(TransformComponent.class);
         BugJuiceBubbleComponent bjc = mapper.get(entity);
 
         if (GameScreenScript.isGameOver.get() || !GameScreenScript.isStarted) {
-            tc.x = GlobalConstants.FAR_FAR_AWAY_X;
+            entity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
             bjc.complete = true;
             end(entity);
         } else {
             if (!bjc.began) {
-                begin(bjc, tc);
+                begin(bjc, entity.getComponent(TransformComponent.class));
                 bjc.began = true;
             }
             bjc.time += deltaTime;
@@ -44,15 +42,15 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
                 percent = bjc.time / bjc.duration;
                 if (bjc.interpolation != null) percent = bjc.interpolation.apply(percent);
             }
-            update(bjc, tc, bjc.reverse ? 1 - percent : percent);
+            update(bjc, entity.getComponent(TransformComponent.class), bjc.reverse ? 1 - percent : percent);
             if (bjc.complete) end(entity);
 
             if (bjc.time <= (bjc.duration / 5)) {
-                tic.color.a = 0;
-            } else if (bjc.time > (bjc.duration / 5) && bjc.time < (4 * bjc.duration / 5) && tic.color.a <= 0.7f) {
-                tic.color.a += 0.1f;
+                entity.getComponent(TintComponent.class).color.a = 0;
+            } else if (bjc.time > (bjc.duration / 5) && bjc.time < (4 * bjc.duration / 5) && entity.getComponent(TintComponent.class).color.a <= 0.7f) {
+                entity.getComponent(TintComponent.class).color.a += 0.1f;
             } else if (bjc.time >= (4 * bjc.duration / 5)) {
-                tic.color.a -= 0.05f;
+                entity.getComponent(TintComponent.class).color.a -= 0.05f;
             }
         }
     }

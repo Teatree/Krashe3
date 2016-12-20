@@ -32,33 +32,33 @@ import static com.fd.etf.utils.GlobalConstants.FPS;
 
 public class GoalFeedbackScreen {
 
-    public static final String GOALFEEDBACK = "lib_gift_feedbacker";
+   private static final String GOALFEEDBACK = "lib_gift_feedbacker";
     private static final String ITEM_MONEY_GIFT = "itemMoneyGift";
     private static final String LBL_AMOUNT = "lbl_amount";
     public final String GIFT_SCREEN = "lib_gift_screen";
     public final String SPINNY_SHINE = "spinny_shine";
     public final String GREEN_SHADE = "green_shade";
-    public static final String LBL_DIALOG = "lbl_level";
-    public static final String LBL_DIALOG_SH = "lbl_level_sh";
-    public static final String GOAL_LIB = "goalTile";
-    public static final String GOAL_ANI = "goalAni";
-    public static final String GOAL_PROGRESS = "goal_progress";
-    public static final String GOAL_LBL = "goal_lbl";
+   private static final String LBL_DIALOG = "lbl_level";
+   private static final String LBL_DIALOG_SH = "lbl_level_sh";
+   private static final String GOAL_LIB = "goalTile";
+   private static final String GOAL_ANI = "goalAni";
+   private static final String GOAL_PROGRESS = "goal_progress";
+   private static final String GOAL_LBL = "goal_lbl";
     public final String LBL_GIFT_SCREEN = "lbl_gift_screen";
     public final String LBL_TAP_TO_OPEN = "lbl_tap_to_open";
     public final String BOX_ANI = "box_ani";
-    public static final int POS_X = -22;
-    public static final int POS_Y = -19;
+   private static final int POS_X = -22;
+   private static final int POS_Y = -19;
 
-    public static final int GOAL_STEP_Y = 110;
+   private static final int GOAL_STEP_Y = 110;
 
-    public static final int GOAL_INIT_POS_X = 501;
-    public static final int GOAL_INIT_POS_Y = 570;
-    public static final float GOAL_SCALE = 1f;
+   private static final int GOAL_INIT_POS_X = 501;
+   private static final int GOAL_INIT_POS_Y = 570;
+   private static final float GOAL_SCALE = 1f;
 
-    public static final float INITIAL_DELAY = 0.7f;
-    public static final float MOVE_TILES_DELAY = 0.3f;
-    public static final String DEFAULT = "Default";
+   private static final float INITIAL_DELAY = 0.7f;
+   private static final float MOVE_TILES_DELAY = 0.3f;
+   private static final String DEFAULT = "Default";
     private static final float INITIAL_DELAY_ANI = 0.15f;
     public static boolean shouldShow;
 

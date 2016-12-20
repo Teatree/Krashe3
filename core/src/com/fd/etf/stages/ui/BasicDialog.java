@@ -20,30 +20,30 @@ import static com.fd.etf.stages.ui.Settings.SETTINGS_SCALE;
 
 public class BasicDialog extends AbstractDialog {
 
-    public static final String RESET_ALL_PROGRESS = "RESET ALL PROGRESS. ARE YOU SURE?";
-    public static final String RESTORE_ALL_PURCHASES = "RESTORE ALL PURCHASES. ARE YOU SURE?";
-    public static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE RESTORED";
+    private static final String RESET_ALL_PROGRESS = "RESET ALL PROGRESS. ARE YOU SURE?";
+    private static final String RESTORE_ALL_PURCHASES = "RESTORE ALL PURCHASES. ARE YOU SURE?";
+    private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE RESTORED";
     public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS ERASED";
     public static final String ERROR = "WE HAD ERROR :(";
 
-    public static final String BASIC_DIALOG = "popup_basic_lib";
-    public static final String DIALOG_TEXT = "dialog_text";
-    public static final String BTN_OK = "btn_ok";
-    public static final String BTN_CANCEL = "btn_cancel";
+    private static final String BASIC_DIALOG = "popup_basic_lib";
+    private static final String DIALOG_TEXT = "dialog_text";
+    private static final String BTN_OK = "btn_ok";
+    private static final String BTN_CANCEL = "btn_cancel";
 
 
     //different dialog types
-    public static final String TYPE_RESTORE_PURCH = "restore_purchases";
+    private static final String TYPE_RESTORE_PURCH = "restore_purchases";
     public static final String TYPE_RESET = "reset_progress";
     public static final String TYPE_RESET_RESULT = "reset_progress_res";
     public static final String TYPE_RESTORE_PURCH_RESULT = "restore_purchases_res";
 
-    public static final int DIALOG_Y = 130;
-    public static final int DIALOG_X = 630;
-    public static final int OK_BTN_X = 110;
-    public static final int BTN_Y = 60;
-    public static final int CANCEL_BTN_X = 465;
-    public static final int OK_CENTER = 300;
+    private static final int DIALOG_Y = 130;
+    private static final int DIALOG_X = 630;
+    private static final int OK_BTN_X = 110;
+    private static final int BTN_Y = 60;
+    private static final int CANCEL_BTN_X = 465;
+    private static final int OK_CENTER = 300;
 
     private Entity dialogE;
     private Entity text;

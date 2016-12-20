@@ -21,15 +21,15 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class Showcase {
 
-    public static final String SHOWCASE = "showcase_lib";
-    public static final String LBL_ITEM_NAME = "lbl_item_name";
-    public static final String LBL_ITEM_DESC = "lbl_item_desc2";
-    public static final String SPOTLIGHT = "spotLight";
-    public static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
-    public static final String LBL_ITEM_PRICE = "lbl_item_price";
-    public static final String BTN_NO = "btn_no";
-    public static final String BTN_BUY = "btn_buy";
-    public static final String COIN = "coin";
+    private static final String SHOWCASE = "showcase_lib";
+    private static final String LBL_ITEM_NAME = "lbl_item_name";
+    private static final String LBL_ITEM_DESC = "lbl_item_desc2";
+    private static final String SPOTLIGHT = "spotLight";
+    private static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
+    private static final String LBL_ITEM_PRICE = "lbl_item_price";
+    private static final String BTN_NO = "btn_no";
+    private static final String BTN_BUY = "btn_buy";
+    private static final String COIN = "coin";
     public TransformComponent tcShowCase;
     private ResultScreenScript resultScreen;
     public Entity showcaseE;

@@ -22,23 +22,23 @@ import static com.fd.etf.utils.GlobalConstants.*;
  */
 public class Settings extends AbstractDialog {
 
-    public static final String SETTINGS = "settings_lib";
-    public static final String INFO = "info_lib";
+    private static final String SETTINGS = "settings_lib";
+    private static final String INFO = "info_lib";
 
-    public static final String BTN_RESET = "btn_reset";
-    public static final String BTN_RESTORE = "btn_restore";
-    public static final String BTN_CLOSE_SETTINGS = "btn_close_settings";
-    public static final String BTN_CLOSE_INFO = "btn_close_info";
-    public static final String BTN_NEXT_INFO = "btn_next_info";
-    public static final String BTN_BACK_SETTINGS = "btn_back_settings";
-    public static final String BTN_MUSIC = "btn_music";
-    public static final String BTN_SOUND = "btn_sound";
-    public static final String BTN_NO_ADS = "btn_noAds";
+    private static final String BTN_RESET = "btn_reset";
+    private static final String BTN_RESTORE = "btn_restore";
+    private static final String BTN_CLOSE_SETTINGS = "btn_close_settings";
+    private static final String BTN_CLOSE_INFO = "btn_close_info";
+    private static final String BTN_NEXT_INFO = "btn_next_info";
+    private static final String BTN_BACK_SETTINGS = "btn_back_settings";
+    private static final String BTN_MUSIC = "btn_music";
+    private static final String BTN_SOUND = "btn_sound";
+    private static final String BTN_NO_ADS = "btn_noAds";
 
-    public static final int SETTINGS_Y = 50;
-    public static final int SETTINGS_X = 560;
-    public static final int INFO_HIDDEN_X = 1600;
-    public static final int SETTINGS_HIDDEN_X = -1000;
+    private static final int SETTINGS_Y = 50;
+    private static final int SETTINGS_X = 560;
+    private static final int INFO_HIDDEN_X = 1600;
+    private static final int SETTINGS_HIDDEN_X = -1000;
     public static final float SETTINGS_SCALE = 0.65f;
 
     public Entity settingsE;
@@ -103,13 +103,15 @@ public class Settings extends AbstractDialog {
 
                             ActionComponent acSettings = new ActionComponent();
                             Actions.checkInit();
-                            acSettings.dataArray.add(Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
+                            acSettings.dataArray.add(
+                                    Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                             settingsE.add(acSettings);
 
                             ActionComponent acInfo = new ActionComponent();
                             Actions.checkInit();
                             acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
-                            infoE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+                            infoE.getComponent(ZIndexComponent.class).setZIndex(
+                                    shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
                             infoE.add(acInfo);
                         }
 

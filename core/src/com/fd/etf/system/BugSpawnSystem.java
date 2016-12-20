@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
-import static com.fd.etf.entity.componets.CocoonComponent.cocoonMultipliers;
-import static com.fd.etf.entity.componets.CocoonComponent.currentCocoonMultiplier;
+import static com.fd.etf.system.CocoonSystem.cocoonMultipliers;
+import static com.fd.etf.system.CocoonSystem.currentCocoonMultiplier;
 import static com.fd.etf.stages.GameScreenScript.*;
 
 public class BugSpawnSystem extends EntitySystem {
