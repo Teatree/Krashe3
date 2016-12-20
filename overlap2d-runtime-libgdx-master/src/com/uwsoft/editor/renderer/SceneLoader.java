@@ -151,10 +151,10 @@ public class SceneLoader {
         PhysicsBodyLoader.getInstance().setScaleFromPPWU(pixelsPerWU);
 
 		ParticleSystem particleSystem = new ParticleSystem();
-		LightSystem lightSystem = new LightSystem();
+//		LightSystem lightSystem = new LightSystem();
 		SpriteAnimationSystem animationSystem = new SpriteAnimationSystem();
 		LayerSystem layerSystem = new LayerSystem();
-		PhysicsSystem physicsSystem = new PhysicsSystem(world);
+//		PhysicsSystem physicsSystem = new PhysicsSystem(world);
 		CompositeSystem compositeSystem = new CompositeSystem();
 		LabelSystem labelSystem = new LabelSystem();
         ScriptSystem scriptSystem = new ScriptSystem();

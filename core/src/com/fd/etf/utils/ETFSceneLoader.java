@@ -233,7 +233,7 @@ public class ETFSceneLoader extends SceneLoader {
         LightSystem lightSystem = new LightSystem();
         SpriteAnimationSystem animationSystem = new SpriteAnimationSystem();
         LayerSystem layerSystem = new LayerSystem();
-        PhysicsSystem physicsSystem = new PhysicsSystem(world);
+//        PhysicsSystem physicsSystem = new PhysicsSystem(world);
         CompositeSystem compositeSystem = new CompositeSystem();
         LabelSystem labelSystem = new LabelSystem();
         ScriptSystem scriptSystem = new ScriptSystem();
@@ -247,7 +247,7 @@ public class ETFSceneLoader extends SceneLoader {
         engine.addSystem(particleSystem);
         engine.addSystem(lightSystem);
         engine.addSystem(layerSystem);
-        engine.addSystem(physicsSystem);
+//        engine.addSystem(physicsSystem);
         engine.addSystem(compositeSystem);
         engine.addSystem(labelSystem);
         engine.addSystem(scriptSystem);
