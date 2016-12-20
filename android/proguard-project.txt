@@ -26,10 +26,16 @@
 -keep class com.nokia.payment.iap.aidl.**
 
 -keep class com.google.android.gms.**
--keep class com.brashmonkey.*
 -keep class com.uwsoft.editor.renderer.data.**
--keep class com.uwsoft.*
 -keep class java.lang.reflect.**
+
+-keep class com.uwsoft.** {
+   public protected private *;
+}
+
+-keep class com.brashmonkey.**{
+   public protected private *;
+}
 
 -dontwarn org.onepf.oms.appstore.FortumoBillingService
 
