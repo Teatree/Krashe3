@@ -18,10 +18,8 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.brashmonkey.spriter.Player;
 import com.brashmonkey.spriter.Rectangle;
 import com.brashmonkey.spriter.SCMLReader;
@@ -41,8 +39,8 @@ import com.uwsoft.editor.renderer.utils.LibGdxLoader;
  */
 public class SpriterComponentFactory extends ComponentFactory {
 
-    public SpriterComponentFactory(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
-        super(/*rayHandler,*/ world, rm);
+    public SpriterComponentFactory( IResourceRetriever rm) {
+        super( rm);
     }
 
     @Override

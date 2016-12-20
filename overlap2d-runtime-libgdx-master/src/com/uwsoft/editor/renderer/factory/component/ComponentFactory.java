@@ -18,10 +18,8 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.MainItemVO;
@@ -38,7 +36,7 @@ public abstract class ComponentFactory {
 
     protected IResourceRetriever rm;
 //    protected RayHandler rayHandler;
-    protected World world;
+//    protected World world;
 
     protected ComponentMapper<NodeComponent> nodeComponentMapper;
 
@@ -46,14 +44,14 @@ public abstract class ComponentFactory {
         nodeComponentMapper = ComponentMapper.getFor(NodeComponent.class);
     }
 
-    public ComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+    public ComponentFactory( IResourceRetriever rm) {
         this();
-        injectDependencies(/*rayHandler, */world, rm);
+        injectDependencies( rm);
     }
 
-    public void injectDependencies(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
+    public void injectDependencies( IResourceRetriever rm) {
 //        this.rayHandler = rayHandler;
-        this.world = world;
+//        this.world = world;
         this.rm = rm;
     }
 

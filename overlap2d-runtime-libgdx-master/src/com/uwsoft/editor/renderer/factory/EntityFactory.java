@@ -1,11 +1,9 @@
 package com.uwsoft.editor.renderer.factory;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.commons.IExternalItemType;
 import com.uwsoft.editor.renderer.components.CompositeTransformComponent;
@@ -34,7 +32,7 @@ public class EntityFactory {
 	public static final int COLOR_PRIMITIVE = 10;
 	
 //	public RayHandler rayHandler;
-	public World world;
+//	public World world;
 	public IResourceRetriever rm = null;
 
 	private ComponentFactory compositeComponentFactory, lightComponentFactory, particleEffectComponentFactory,
@@ -52,21 +50,21 @@ public class EntityFactory {
         return (SpriteComponentFactory) spriteComponentFactory;
     }
 
-	public EntityFactory( /*RayHandler rayHandler,*/ World world, IResourceRetriever rm ) {
+	public EntityFactory( /*RayHandler rayHandler,World world, */ IResourceRetriever rm ) {
 	
 //		this.rayHandler = rayHandler;
-		this.world = world;
+//		this.world = world;
 		this.rm = rm;
 
-		compositeComponentFactory = new CompositeComponentFactory(/*rayHandler,*/ world, rm);
+		compositeComponentFactory = new CompositeComponentFactory( rm);
 //		lightComponentFactory = new LightComponentFactory(rayHandler, world, rm);
-		particleEffectComponentFactory = new ParticleEffectComponentFactory(/*rayHandler,*/ world, rm);
-		simpleImageComponentFactory = new SimpleImageComponentFactory(/*rayHandler,*/ world, rm);
-		spriteComponentFactory = new SpriteComponentFactory(/*rayHandler,*/ world, rm);
-		spriterComponentFactory = new SpriterComponentFactory(/*rayHandler,*/ world, rm);
-		labelComponentFactory = new LabelComponentFactory(/*rayHandler,*/ world, rm);
-		ninePatchComponentFactory = new NinePatchComponentFactory(/*rayHandler,*/ world, rm);
-		colorPrimitiveFactory = new ColorPrimitiveComponentFactory(/*rayHandler,*/ world, rm);
+		particleEffectComponentFactory = new ParticleEffectComponentFactory( rm);
+		simpleImageComponentFactory = new SimpleImageComponentFactory( rm);
+		spriteComponentFactory = new SpriteComponentFactory( rm);
+		spriterComponentFactory = new SpriterComponentFactory( rm);
+		labelComponentFactory = new LabelComponentFactory( rm);
+		ninePatchComponentFactory = new NinePatchComponentFactory( rm);
+		colorPrimitiveFactory = new ColorPrimitiveComponentFactory( rm);
 		
 	}
 

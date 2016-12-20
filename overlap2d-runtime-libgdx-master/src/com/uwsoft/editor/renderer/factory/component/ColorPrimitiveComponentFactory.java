@@ -18,13 +18,11 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.PolygonComponent;
 import com.uwsoft.editor.renderer.components.TextureRegionComponent;
@@ -38,8 +36,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
  */
 public class ColorPrimitiveComponentFactory extends ComponentFactory {
 
-    public ColorPrimitiveComponentFactory(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
-        super(/*rayHandler, */world, rm);
+    public ColorPrimitiveComponentFactory( IResourceRetriever rm) {
+        super( rm);
     }
 
     @Override

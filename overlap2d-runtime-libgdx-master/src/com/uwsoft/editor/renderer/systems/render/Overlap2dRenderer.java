@@ -34,8 +34,8 @@ public class Overlap2dRenderer extends IteratingSystem {
 
     private DrawableLogicMapper drawableLogicMapper;
     private RayHandler rayHandler;
-    private World world;
-    private boolean isPhysicsOn = true;
+//    private World world;
+//    private boolean isPhysicsOn = true;
 
     private float accumulator = 0;
     //private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -100,7 +100,7 @@ public class Overlap2dRenderer extends IteratingSystem {
         float frameTime = Math.min(deltaTime, 0.25f);
         accumulator += frameTime;
         while (accumulator >= TIME_STEP) {
-            world.step(TIME_STEP, 6, 2);
+//            world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
     }
@@ -278,11 +278,11 @@ public class Overlap2dRenderer extends IteratingSystem {
     }
 
     public void setBox2dWorld(World world) {
-        this.world = world;
+//        this.world = world;
     }
 
     public void setPhysicsOn(boolean isPhysicsOn) {
-        this.isPhysicsOn = isPhysicsOn;
+//        this.isPhysicsOn = isPhysicsOn;
     }
 
     public Batch getBatch() {

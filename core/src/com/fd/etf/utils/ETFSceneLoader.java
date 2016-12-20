@@ -6,13 +6,10 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -24,7 +21,6 @@ import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
 import com.uwsoft.editor.renderer.components.ScriptComponent;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.CompositeVO;
 import com.uwsoft.editor.renderer.data.ProjectInfoVO;
@@ -49,7 +45,7 @@ public class ETFSceneLoader extends SceneLoader {
     public SceneVO sceneVO;
     public Engine engine = null;
 
-    public World world;
+//    public World world;
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
     private String curResolution = "orig";
@@ -145,19 +141,8 @@ public class ETFSceneLoader extends SceneLoader {
      * this method is called when rm has loaded all data
      */
     public void initSceneLoader() {
-        RayHandler.setGammaCorrection(true);
-        RayHandler.useDiffuseLight(true);
-        world = new World(new Vector2(0, -10), true);
-//        rayHandler = new RayHandler(world);
-//        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-//        rayHandler.setCulling(true);
-//        rayHandler.setBlur(true);
-//        rayHandler.setBlurNum(3);
-//        rayHandler.setShadows(true);
-
         addSystems();
-
-        entityFactory = new EntityFactory(/*rayHandler, */world, rm);
+        entityFactory = new EntityFactory( rm);
     }
 
     public SceneVO getSceneVO() {
@@ -217,7 +202,7 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     public void injectExternalItemType(IExternalItemType itemType) {
-        itemType.injectDependencies(/*rayHandler,*/ world, rm);
+        itemType.injectDependencies(/*rayHandler,world,*/ rm);
         itemType.injectMappers();
         entityFactory.addExternalFactory(itemType);
         engine.addSystem(itemType.getSystem());
@@ -225,7 +210,7 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     private void addSystems() {
-        PhysicsBodyLoader.getInstance().setScaleFromPPWU(pixelsPerWU);
+//        PhysicsBodyLoader.getInstance().setScaleFromPPWU(pixelsPerWU);
 
         ParticleSystem particleSystem = new ParticleSystem();
 //        LightSystem lightSystem = new LightSystem();
@@ -239,7 +224,7 @@ public class ETFSceneLoader extends SceneLoader {
 //        renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
         renderer = new Overlap2dRenderer(new SpriteBatch());
 //        renderer.setRayHandler(rayHandler);
-        renderer.setBox2dWorld(world);
+//        renderer.setBox2dWorld(world);
 
         engine.addSystem(animationSystem);
         engine.addSystem(particleSystem);
@@ -305,10 +290,10 @@ public class ETFSceneLoader extends SceneLoader {
                 }
 
                 //check for physics
-                PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-                if (physicsBodyComponent != null && physicsBodyComponent.body != null) {
-                    world.destroyBody(physicsBodyComponent.body);
-                }
+//                PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+//                if (physicsBodyComponent != null && physicsBodyComponent.body != null) {
+//                    world.destroyBody(physicsBodyComponent.body);
+//                }
 
                 // check if it is light
 //                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
