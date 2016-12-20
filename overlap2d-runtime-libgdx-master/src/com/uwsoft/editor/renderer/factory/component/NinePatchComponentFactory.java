@@ -19,8 +19,8 @@ public class NinePatchComponentFactory extends ComponentFactory {
 
 	NinePatchComponent ninePatchComponent;
 
-	public NinePatchComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-		super(rayHandler, world, rm);
+	public NinePatchComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+		super(/*rayHandler, */world, rm);
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
 import com.uwsoft.editor.renderer.components.ScriptComponent;
-import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.CompositeVO;
@@ -149,16 +148,16 @@ public class ETFSceneLoader extends SceneLoader {
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         world = new World(new Vector2(0, -10), true);
-        rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-        rayHandler.setCulling(true);
-        rayHandler.setBlur(true);
-        rayHandler.setBlurNum(3);
-        rayHandler.setShadows(true);
+//        rayHandler = new RayHandler(world);
+//        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
+//        rayHandler.setCulling(true);
+//        rayHandler.setBlur(true);
+//        rayHandler.setBlurNum(3);
+//        rayHandler.setShadows(true);
 
         addSystems();
 
-        entityFactory = new EntityFactory(rayHandler, world, rm);
+        entityFactory = new EntityFactory(/*rayHandler, */world, rm);
     }
 
     public SceneVO getSceneVO() {
@@ -193,7 +192,7 @@ public class ETFSceneLoader extends SceneLoader {
         System.out.println();
 
         setAmbienceInfo(sceneVO);
-        rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+//        rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
 
         return sceneVO;
     }
@@ -218,7 +217,7 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     public void injectExternalItemType(IExternalItemType itemType) {
-        itemType.injectDependencies(rayHandler, world, rm);
+        itemType.injectDependencies(/*rayHandler,*/ world, rm);
         itemType.injectMappers();
         entityFactory.addExternalFactory(itemType);
         engine.addSystem(itemType.getSystem());
@@ -239,7 +238,7 @@ public class ETFSceneLoader extends SceneLoader {
         ActionSystem actionSystem = new ActionSystem();
 //        renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
         renderer = new Overlap2dRenderer(new SpriteBatch());
-        renderer.setRayHandler(rayHandler);
+//        renderer.setRayHandler(rayHandler);
         renderer.setBox2dWorld(world);
 
         engine.addSystem(animationSystem);
@@ -312,10 +311,10 @@ public class ETFSceneLoader extends SceneLoader {
                 }
 
                 // check if it is light
-                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
-                if (lightObjectComponent != null) {
-                    lightObjectComponent.lightObject.remove(true);
-                }
+//                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
+//                if (lightObjectComponent != null) {
+//                    lightObjectComponent.lightObject.remove(true);
+//                }
             }
         });
     }
@@ -359,15 +358,15 @@ public class ETFSceneLoader extends SceneLoader {
      * @param vo - Scene data file to invalidate
      */
     public void setAmbienceInfo(SceneVO vo) {
-        if (!vo.lightSystemEnabled) {
-            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-            return;
-        }
-        if (vo.ambientColor != null) {
-            Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
-                    vo.ambientColor[2], vo.ambientColor[3]);
-            rayHandler.setAmbientLight(clr);
-        }
+//        if (!vo.lightSystemEnabled) {
+//            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
+//            return;
+//        }
+//        if (vo.ambientColor != null) {
+//            Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
+//                    vo.ambientColor[2], vo.ambientColor[3]);
+//            rayHandler.setAmbientLight(clr);
+//        }
     }
 
     public EntityFactory getEntityFactory() {

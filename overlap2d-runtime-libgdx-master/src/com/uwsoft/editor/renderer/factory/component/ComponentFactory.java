@@ -37,7 +37,7 @@ import java.util.HashSet;
 public abstract class ComponentFactory {
 
     protected IResourceRetriever rm;
-    protected RayHandler rayHandler;
+//    protected RayHandler rayHandler;
     protected World world;
 
     protected ComponentMapper<NodeComponent> nodeComponentMapper;
@@ -46,13 +46,13 @@ public abstract class ComponentFactory {
         nodeComponentMapper = ComponentMapper.getFor(NodeComponent.class);
     }
 
-    public ComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
+    public ComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
         this();
-        injectDependencies(rayHandler, world, rm);
+        injectDependencies(/*rayHandler, */world, rm);
     }
 
-    public void injectDependencies(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        this.rayHandler = rayHandler;
+    public void injectDependencies(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
+//        this.rayHandler = rayHandler;
         this.world = world;
         this.rm = rm;
     }

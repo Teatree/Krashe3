@@ -37,8 +37,8 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 public class ParticleEffectComponentFactory extends ComponentFactory {
 
 
-    public ParticleEffectComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public ParticleEffectComponentFactory(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
+        super(/*rayHandler,*/ world, rm);
     }
 
     @Override

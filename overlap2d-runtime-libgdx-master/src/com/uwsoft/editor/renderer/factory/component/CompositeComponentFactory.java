@@ -37,8 +37,8 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
  */
 public class CompositeComponentFactory extends ComponentFactory {
 
-    public CompositeComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public CompositeComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+        super(/*rayHandler, */world, rm);
     }
 
     @Override

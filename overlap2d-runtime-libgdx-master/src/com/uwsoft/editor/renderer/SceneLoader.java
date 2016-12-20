@@ -23,7 +23,7 @@ import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
 import com.uwsoft.editor.renderer.components.ScriptComponent;
-import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
+//import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
@@ -49,7 +49,7 @@ public class SceneLoader {
 	private IResourceRetriever rm = null;
 
     public Engine engine = null;
-    public RayHandler rayHandler;
+//    public RayHandler rayHandler;
     public World world;
     public Entity rootEntity;
 
@@ -83,16 +83,16 @@ public class SceneLoader {
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         world = new World(new Vector2(0,-10), true);
-        rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-        rayHandler.setCulling(true);
-        rayHandler.setBlur(true);
-        rayHandler.setBlurNum(3);
-        rayHandler.setShadows(true);
+//        rayHandler = new RayHandler(world);
+//        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
+//        rayHandler.setCulling(true);
+//        rayHandler.setBlur(true);
+//        rayHandler.setBlurNum(3);
+//        rayHandler.setShadows(true);
 
         addSystems();
 
-        entityFactory = new EntityFactory(rayHandler, world, rm);
+        entityFactory = new EntityFactory(/*rayHandler, */world, rm);
     }
 
 	public void setResolution(String resolutionName) {
@@ -128,7 +128,7 @@ public class SceneLoader {
 		}
 
 		setAmbienceInfo(sceneVO);
-		rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+//		rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
 
 		return sceneVO;
 	}
@@ -140,7 +140,7 @@ public class SceneLoader {
 	}
 
 	public void injectExternalItemType(IExternalItemType itemType) {
-		itemType.injectDependencies(rayHandler, world, rm);
+		itemType.injectDependencies(/*rayHandler, */world, rm);
 		itemType.injectMappers();
 		entityFactory.addExternalFactory(itemType);
 		engine.addSystem(itemType.getSystem());
@@ -160,7 +160,7 @@ public class SceneLoader {
         ScriptSystem scriptSystem = new ScriptSystem();
         ActionSystem actionSystem = new ActionSystem();
 		renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
-		renderer.setRayHandler(rayHandler);
+//		renderer.setRayHandler(rayHandler);
 		renderer.setBox2dWorld(world);
 
 		engine.addSystem(animationSystem);
@@ -233,10 +233,10 @@ public class SceneLoader {
 				}
 
                 // check if it is light
-                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
-                if(lightObjectComponent != null) {
-                    lightObjectComponent.lightObject.remove(true);
-                }
+//                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
+//                if(lightObjectComponent != null) {
+//                    lightObjectComponent.lightObject.remove(true);
+//                }
 			}
 		});
 	}
@@ -281,15 +281,15 @@ public class SceneLoader {
 	 *            - Scene data file to invalidate
 	 */
 	public void setAmbienceInfo(SceneVO vo) {
-        if(!vo.lightSystemEnabled) {
-            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-            return;
-        }
-		if (vo.ambientColor != null) {
-			Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
-					vo.ambientColor[2], vo.ambientColor[3]);
-			rayHandler.setAmbientLight(clr);
-		}
+//        if(!vo.lightSystemEnabled) {
+//            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
+//            return;
+//        }
+//		if (vo.ambientColor != null) {
+//			Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
+//					vo.ambientColor[2], vo.ambientColor[3]);
+//			rayHandler.setAmbientLight(clr);
+//		}
 	}
 
 

@@ -40,8 +40,8 @@ import java.util.HashMap;
  */
 public class SpriteComponentFactory extends ComponentFactory {
 
-    public SpriteComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public SpriteComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+        super(/*rayHandler,*/ world, rm);
     }
 
     @Override

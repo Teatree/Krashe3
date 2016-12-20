@@ -39,8 +39,8 @@ public class SimpleImageComponentFactory extends ComponentFactory {
 
     private TextureRegionComponent textureRegionComponent;
 
-    public SimpleImageComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public SimpleImageComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+        super(/*rayHandler,*/ world, rm);
     }
 
     public void createComponents(Entity root, Entity entity, MainItemVO vo) {

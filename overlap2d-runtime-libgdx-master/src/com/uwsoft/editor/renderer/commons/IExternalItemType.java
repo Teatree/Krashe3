@@ -18,7 +18,7 @@
 
 package com.uwsoft.editor.renderer.commons;
 
-import box2dLight.RayHandler;
+//import box2dLight.RayHandler;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.factory.component.ComponentFactory;
@@ -35,5 +35,5 @@ public interface IExternalItemType {
     IteratingSystem getSystem();
     ComponentFactory getComponentFactory();
     void injectMappers();
-    void injectDependencies(RayHandler rayHandler, World world, IResourceRetriever rm);
+    void injectDependencies(World world, IResourceRetriever rm);
 }

@@ -33,7 +33,7 @@ public class EntityFactory {
 	public static final int NINE_PATCH 		= 9;
 	public static final int COLOR_PRIMITIVE = 10;
 	
-	public RayHandler rayHandler;
+//	public RayHandler rayHandler;
 	public World world;
 	public IResourceRetriever rm = null;
 
@@ -52,21 +52,21 @@ public class EntityFactory {
         return (SpriteComponentFactory) spriteComponentFactory;
     }
 
-	public EntityFactory( RayHandler rayHandler, World world, IResourceRetriever rm ) {
+	public EntityFactory( /*RayHandler rayHandler,*/ World world, IResourceRetriever rm ) {
 	
-		this.rayHandler = rayHandler;
+//		this.rayHandler = rayHandler;
 		this.world = world;
 		this.rm = rm;
 
-		compositeComponentFactory = new CompositeComponentFactory(rayHandler, world, rm);
-		lightComponentFactory = new LightComponentFactory(rayHandler, world, rm);
-		particleEffectComponentFactory = new ParticleEffectComponentFactory(rayHandler, world, rm);
-		simpleImageComponentFactory = new SimpleImageComponentFactory(rayHandler, world, rm);
-		spriteComponentFactory = new SpriteComponentFactory(rayHandler, world, rm);
-		spriterComponentFactory = new SpriterComponentFactory(rayHandler, world, rm);
-		labelComponentFactory = new LabelComponentFactory(rayHandler, world, rm);
-		ninePatchComponentFactory = new NinePatchComponentFactory(rayHandler, world, rm);
-		colorPrimitiveFactory = new ColorPrimitiveComponentFactory(rayHandler, world, rm);
+		compositeComponentFactory = new CompositeComponentFactory(/*rayHandler,*/ world, rm);
+//		lightComponentFactory = new LightComponentFactory(rayHandler, world, rm);
+		particleEffectComponentFactory = new ParticleEffectComponentFactory(/*rayHandler,*/ world, rm);
+		simpleImageComponentFactory = new SimpleImageComponentFactory(/*rayHandler,*/ world, rm);
+		spriteComponentFactory = new SpriteComponentFactory(/*rayHandler,*/ world, rm);
+		spriterComponentFactory = new SpriterComponentFactory(/*rayHandler,*/ world, rm);
+		labelComponentFactory = new LabelComponentFactory(/*rayHandler,*/ world, rm);
+		ninePatchComponentFactory = new NinePatchComponentFactory(/*rayHandler,*/ world, rm);
+		colorPrimitiveFactory = new ColorPrimitiveComponentFactory(/*rayHandler,*/ world, rm);
 		
 	}
 
@@ -126,16 +126,16 @@ public class EntityFactory {
 		return entity;
 	}
 	
-	public Entity createEntity(Entity root, LightVO vo){
-
-		Entity entity = new Entity();
-
-		lightComponentFactory.createComponents(root, entity, vo);
-
-		postProcessEntity(entity);
-		
-		return entity;
-	}
+//	public Entity createEntity(Entity root, LightVO vo){
+//
+//		Entity entity = new Entity();
+//
+//		lightComponentFactory.createComponents(root, entity, vo);
+//
+//		postProcessEntity(entity);
+//
+//		return entity;
+//	}
 	
 	public Entity createEntity(Entity root, SpineVO vo){
 
@@ -286,10 +286,10 @@ public class EntityFactory {
 			engine.addEntity(child);
 		}
 
-		for (int i = 0; i < vo.sLights.size(); i++) {
-			Entity child = createEntity(entity, vo.sLights.get(i));
-			engine.addEntity(child);
-		}
+//		for (int i = 0; i < vo.sLights.size(); i++) {
+//			Entity child = createEntity(entity, vo.sLights.get(i));
+//			engine.addEntity(child);
+//		}
 
 		for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
 			Entity child = createEntity(entity, vo.sSpineAnimations.get(i));

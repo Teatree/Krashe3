@@ -17,9 +17,8 @@ public class LabelComponentFactory extends ComponentFactory{
 	
 	private static int labelDefaultSize = 12;
 
-	public LabelComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-		super(rayHandler, world, rm);
-		// TODO Auto-generated constructor stub
+	public LabelComponentFactory(/*RayHandler rayHandler,*/ World world, IResourceRetriever rm) {
+		super(/*rayHandler,*/ world, rm);
 	}
 
 	@Override

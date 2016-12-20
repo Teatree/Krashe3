@@ -41,8 +41,8 @@ import com.uwsoft.editor.renderer.utils.LibGdxLoader;
  */
 public class SpriterComponentFactory extends ComponentFactory {
 
-    public SpriterComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public SpriterComponentFactory(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
+        super(/*rayHandler,*/ world, rm);
     }
 
     @Override

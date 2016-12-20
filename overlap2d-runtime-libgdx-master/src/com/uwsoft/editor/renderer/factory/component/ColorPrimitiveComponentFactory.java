@@ -38,8 +38,8 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
  */
 public class ColorPrimitiveComponentFactory extends ComponentFactory {
 
-    public ColorPrimitiveComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public ColorPrimitiveComponentFactory(/*RayHandler rayHandler, */World world, IResourceRetriever rm) {
+        super(/*rayHandler, */world, rm);
     }
 
     @Override
