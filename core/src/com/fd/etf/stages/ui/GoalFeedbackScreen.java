@@ -392,6 +392,7 @@ public class GoalFeedbackScreen {
 
             lblTapToOpen = new ItemWrapper(giftE).getChild(LBL_TAP_TO_OPEN).getEntity();
             lblTapToOpen.getComponent(TintComponent.class).color.a = 0;
+            lblTapToOpen.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex()-1);
             lbl = new ItemWrapper(giftE).getChild(LBL_GIFT_SCREEN).getEntity();
             lbl.getComponent(TintComponent.class).color.a = 0;
             ActionComponent ac = new ActionComponent();
@@ -410,11 +411,9 @@ public class GoalFeedbackScreen {
             spinnyShineE.getComponent(TintComponent.class).color.a += 0.03f;
             if (spinnyShineE.getComponent(TintComponent.class).color.a < 0.76f){
                 canTap = true;
-                System.out.println("canTap: " + canTap + ", isOpeningBox: " + isOpeningBox);
             }
         }
         if(Gdx.input.justTouched() && canTap){
-            System.out.println("tapped successfully!");
             canPlayAnimation = true;
             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
             isOpeningBox = true;
@@ -440,8 +439,10 @@ public class GoalFeedbackScreen {
 
         if(helpTimer>250 && saBox.currentAnimation != "open"){
             lblTapToOpen.getComponent(TintComponent.class).color.a += 0.05f;
+            System.out.println("showing tap to open");
         }else if(saBox.currentAnimation == "open"){
 //            helpTimer = 0;
+            System.out.println("NOT showing tap to open");
             lblTapToOpen.getComponent(TintComponent.class).color.a -= 0.05f;
         }
 
