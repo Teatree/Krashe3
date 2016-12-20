@@ -21,7 +21,6 @@ package com.uwsoft.editor.renderer.factory.component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.*;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.MainItemVO;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -35,8 +34,6 @@ import java.util.HashSet;
 public abstract class ComponentFactory {
 
     protected IResourceRetriever rm;
-//    protected RayHandler rayHandler;
-//    protected World world;
 
     protected ComponentMapper<NodeComponent> nodeComponentMapper;
 
@@ -50,8 +47,6 @@ public abstract class ComponentFactory {
     }
 
     public void injectDependencies( IResourceRetriever rm) {
-//        this.rayHandler = rayHandler;
-//        this.world = world;
         this.rm = rm;
     }
 
@@ -65,7 +60,6 @@ public abstract class ComponentFactory {
         createZIndexComponent(entity, vo);
         createScriptComponent(entity, vo);
         createMeshComponent(entity, vo);
-        createPhysicsComponents(entity, vo);
         createShaderComponent(entity, vo);
     }
 
@@ -163,35 +157,6 @@ public abstract class ComponentFactory {
         NodeComponent component = nodeComponentMapper.get(root);
 //        component.children.add(entity);
         component.addChild(entity);
-    }
-
-    protected void createPhysicsComponents(Entity entity, MainItemVO vo) {
-        if(vo.physics == null){
-            return;
-        }
-
-        createPhysicsBodyPropertiesComponent(entity, vo);
-    }
-
-    protected PhysicsBodyComponent createPhysicsBodyPropertiesComponent(Entity entity, MainItemVO vo) {
-        PhysicsBodyComponent component = new PhysicsBodyComponent();
-        component.allowSleep = vo.physics.allowSleep;
-        component.sensor = vo.physics.sensor;
-        component.awake = vo.physics.awake;
-        component.bodyType = vo.physics.bodyType;
-        component.bullet = vo.physics.bullet;
-        component.centerOfMass = vo.physics.centerOfMass;
-        component.damping = vo.physics.damping;
-        component.density = vo.physics.density;
-        component.friction = vo.physics.friction;
-        component.gravityScale = vo.physics.gravityScale;
-        component.mass = vo.physics.mass;
-        component.restitution = vo.physics.restitution;
-        component.rotationalInertia = vo.physics.rotationalInertia;
-
-        entity.add(component);
-
-        return component;
     }
 
     protected PolygonComponent createMeshComponent(Entity entity, MainItemVO vo) {

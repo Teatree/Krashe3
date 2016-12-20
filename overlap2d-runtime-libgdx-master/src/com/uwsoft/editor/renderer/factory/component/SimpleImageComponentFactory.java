@@ -35,14 +35,14 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
  */
 public class SimpleImageComponentFactory extends ComponentFactory {
 
-//    private TextureRegionComponent textureRegionComponent;
+    private TextureRegionComponent textureRegionComponent;
 
     public SimpleImageComponentFactory( IResourceRetriever rm) {
         super( rm);
     }
 
     public void createComponents(Entity root, Entity entity, MainItemVO vo) {
-//        textureRegionComponent = createTextureRegionComponent(entity, (SimpleImageVO) vo);
+        textureRegionComponent = createTextureRegionComponent(entity, (SimpleImageVO) vo);
         createCommonComponents(entity, vo, EntityFactory.IMAGE_TYPE);
         createParentNodeComponent(root, entity);
         createNodeComponent(root, entity);

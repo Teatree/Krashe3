@@ -2,7 +2,6 @@ package com.uwsoft.editor.renderer.data;
 
 import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.*;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 
 import java.util.Arrays;
 
@@ -27,8 +26,7 @@ public class MainItemVO {
 	public String shaderName = "";
 
 	public ShapeVO shape = null;
-	public PhysicsBodyDataVO physics = null;
-	
+
 	public MainItemVO() {
 		
 	}
@@ -52,10 +50,6 @@ public class MainItemVO {
 
 		if(vo.shape != null) {
 			shape = vo.shape.clone();
-		}
-
-		if(vo.physics != null){
-            physics = new PhysicsBodyDataVO(vo.physics);
 		}
     }
 
@@ -98,11 +92,6 @@ public class MainItemVO {
 			shape = new ShapeVO();
 			shape.polygons = polygonComponent.vertices;
 		}
-        PhysicsBodyComponent physicsComponent = entity.getComponent(PhysicsBodyComponent.class);
-        if(physicsComponent != null) {
-            physics = new PhysicsBodyDataVO();
-            physics.loadFromComponent(physicsComponent);
-        }
 
 		ShaderComponent shaderComponent = entity.getComponent(ShaderComponent.class);
 		if(shaderComponent != null && shaderComponent.shaderName != null) {

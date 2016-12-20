@@ -1,6 +1,5 @@
 package com.uwsoft.editor.renderer.systems.render;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.commons.IExternalItemType;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
@@ -33,7 +31,7 @@ public class Overlap2dRenderer extends IteratingSystem {
     private ComponentMapper<MainItemComponent> mainItemComponentMapper = ComponentMapper.getFor(MainItemComponent.class);
 
     private DrawableLogicMapper drawableLogicMapper;
-    private RayHandler rayHandler;
+//    private RayHandler rayHandler;
 //    private World world;
 //    private boolean isPhysicsOn = true;
 
@@ -79,13 +77,13 @@ public class Overlap2dRenderer extends IteratingSystem {
         batch.end();
 
         //TODO kinda not cool (this should be done in separate lights renderer maybe?
-        if (rayHandler != null) {
-            rayHandler.setCulling(false);
-            OrthographicCamera orthoCamera = (OrthographicCamera) camera;
-            camera.combined.scl(1f / PhysicsBodyLoader.getScale());
-            rayHandler.setCombinedMatrix(orthoCamera);
-            rayHandler.updateAndRender();
-        }
+//        if (rayHandler != null) {
+//            rayHandler.setCulling(false);
+//            OrthographicCamera orthoCamera = (OrthographicCamera) camera;
+//            camera.combined.scl(1f / PhysicsBodyLoader.getScale());
+//            rayHandler.setCombinedMatrix(orthoCamera);
+//            rayHandler.updateAndRender();
+//        }
 
 //        if (world != null && isPhysicsOn) {
 //            doPhysicsStep(deltaTime);
@@ -273,13 +271,13 @@ public class Overlap2dRenderer extends IteratingSystem {
         batch.setTransformMatrix(curCompositeTransformComponent.oldTransform);
     }
 
-    public void setRayHandler(RayHandler rayHandler) {
-        this.rayHandler = rayHandler;
-    }
-
-    public void setBox2dWorld(World world) {
-//        this.world = world;
-    }
+//    public void setRayHandler(RayHandler rayHandler) {
+//        this.rayHandler = rayHandler;
+//    }
+//
+//    public void setBox2dWorld(World world) {
+////        this.world = world;
+//    }
 
     public void setPhysicsOn(boolean isPhysicsOn) {
 //        this.isPhysicsOn = isPhysicsOn;

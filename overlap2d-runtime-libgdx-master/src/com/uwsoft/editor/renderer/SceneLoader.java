@@ -1,6 +1,5 @@
 package com.uwsoft.editor.renderer;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -46,8 +45,6 @@ public class SceneLoader {
 	private IResourceRetriever rm = null;
 
     public Engine engine = null;
-//    public RayHandler rayHandler;
-//    public World world;
     public Entity rootEntity;
 
     public EntityFactory entityFactory;
@@ -77,18 +74,7 @@ public class SceneLoader {
 	 * this method is called when rm has loaded all data
 	 */
     private void initSceneLoader() {
-        RayHandler.setGammaCorrection(true);
-        RayHandler.useDiffuseLight(true);
-//        world = new World(new Vector2(0,-10), true);
-//        rayHandler = new RayHandler(world);
-//        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-//        rayHandler.setCulling(true);
-//        rayHandler.setBlur(true);
-//        rayHandler.setBlurNum(3);
-//        rayHandler.setShadows(true);
-
         addSystems();
-
         entityFactory = new EntityFactory( rm);
     }
 

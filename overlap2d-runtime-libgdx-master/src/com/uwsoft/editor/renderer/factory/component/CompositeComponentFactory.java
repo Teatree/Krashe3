@@ -35,7 +35,7 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
  */
 public class CompositeComponentFactory extends ComponentFactory {
 
-    public CompositeComponentFactory(/*RayHandler rayHandler,World world,*/  IResourceRetriever rm) {
+    public CompositeComponentFactory(IResourceRetriever rm) {
         super( rm);
     }
 
@@ -46,7 +46,6 @@ public class CompositeComponentFactory extends ComponentFactory {
             createParentNodeComponent(root, entity);
         }
         createNodeComponent(root, entity);
-        createPhysicsComponents(entity, vo);
         createCompositeComponents(entity, (CompositeItemVO) vo);
     }
 

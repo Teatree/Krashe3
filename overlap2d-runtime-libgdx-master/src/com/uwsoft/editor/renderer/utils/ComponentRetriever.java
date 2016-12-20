@@ -24,7 +24,6 @@ import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
@@ -77,8 +76,8 @@ public class ComponentRetriever {
         mappers.put(LabelComponent.class, ComponentMapper.getFor(LabelComponent.class));
 
     	mappers.put(PolygonComponent.class, ComponentMapper.getFor(PolygonComponent.class));
-    	mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
-        mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
+//    	mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
+//        mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
 
         mappers.put(AnimationComponent.class, ComponentMapper.getFor(AnimationComponent.class));
         mappers.put(SpriteAnimationComponent.class, ComponentMapper.getFor(SpriteAnimationComponent.class));
