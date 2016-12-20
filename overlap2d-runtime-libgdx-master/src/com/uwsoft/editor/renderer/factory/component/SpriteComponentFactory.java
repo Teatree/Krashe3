@@ -18,11 +18,9 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TextureRegionComponent;
@@ -40,8 +38,8 @@ import java.util.HashMap;
  */
 public class SpriteComponentFactory extends ComponentFactory {
 
-    public SpriteComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public SpriteComponentFactory( IResourceRetriever rm) {
+        super( rm);
     }
 
     @Override

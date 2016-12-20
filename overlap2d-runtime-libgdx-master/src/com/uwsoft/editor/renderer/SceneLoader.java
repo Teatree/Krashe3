@@ -1,18 +1,14 @@
 package com.uwsoft.editor.renderer;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -23,8 +19,6 @@ import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
 import com.uwsoft.editor.renderer.components.ScriptComponent;
-import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
 import com.uwsoft.editor.renderer.physics.PhysicsBodyLoader;
@@ -35,6 +29,8 @@ import com.uwsoft.editor.renderer.systems.*;
 import com.uwsoft.editor.renderer.systems.action.ActionSystem;
 import com.uwsoft.editor.renderer.systems.render.Overlap2dRenderer;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+
+//import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 
 /**
  * SceneLoader is important part of runtime that utilizes provided
@@ -49,8 +45,6 @@ public class SceneLoader {
 	private IResourceRetriever rm = null;
 
     public Engine engine = null;
-    public RayHandler rayHandler;
-    public World world;
     public Entity rootEntity;
 
     public EntityFactory entityFactory;
@@ -80,19 +74,8 @@ public class SceneLoader {
 	 * this method is called when rm has loaded all data
 	 */
     private void initSceneLoader() {
-        RayHandler.setGammaCorrection(true);
-        RayHandler.useDiffuseLight(true);
-        world = new World(new Vector2(0,-10), true);
-        rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-        rayHandler.setCulling(true);
-        rayHandler.setBlur(true);
-        rayHandler.setBlurNum(3);
-        rayHandler.setShadows(true);
-
         addSystems();
-
-        entityFactory = new EntityFactory(rayHandler, world, rm);
+        entityFactory = new EntityFactory( rm);
     }
 
 	public void setResolution(String resolutionName) {
@@ -116,7 +99,7 @@ public class SceneLoader {
 		pixelsPerWU = rm.getProjectVO().pixelToWorld;
 
 		sceneVO = rm.getSceneVO(sceneName);
-		world.setGravity(new Vector2(sceneVO.physicsPropertiesVO.gravityX, sceneVO.physicsPropertiesVO.gravityY));
+//		world.setGravity(new Vector2(sceneVO.physicsPropertiesVO.gravityX, sceneVO.physicsPropertiesVO.gravityY));
 		if(sceneVO.composite == null) {
 			sceneVO.composite = new CompositeVO();
 		}
@@ -128,7 +111,7 @@ public class SceneLoader {
 		}
 
 		setAmbienceInfo(sceneVO);
-		rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+//		rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
 
 		return sceneVO;
 	}
@@ -140,7 +123,7 @@ public class SceneLoader {
 	}
 
 	public void injectExternalItemType(IExternalItemType itemType) {
-		itemType.injectDependencies(rayHandler, world, rm);
+		itemType.injectDependencies( rm);
 		itemType.injectMappers();
 		entityFactory.addExternalFactory(itemType);
 		engine.addSystem(itemType.getSystem());
@@ -151,17 +134,17 @@ public class SceneLoader {
         PhysicsBodyLoader.getInstance().setScaleFromPPWU(pixelsPerWU);
 
 		ParticleSystem particleSystem = new ParticleSystem();
-		LightSystem lightSystem = new LightSystem();
+//		LightSystem lightSystem = new LightSystem();
 		SpriteAnimationSystem animationSystem = new SpriteAnimationSystem();
 		LayerSystem layerSystem = new LayerSystem();
-		PhysicsSystem physicsSystem = new PhysicsSystem(world);
+//		PhysicsSystem physicsSystem = new PhysicsSystem(world);
 		CompositeSystem compositeSystem = new CompositeSystem();
 		LabelSystem labelSystem = new LabelSystem();
         ScriptSystem scriptSystem = new ScriptSystem();
         ActionSystem actionSystem = new ActionSystem();
 		renderer = new Overlap2dRenderer(new PolygonSpriteBatch(2000, createDefaultShader()));
-		renderer.setRayHandler(rayHandler);
-		renderer.setBox2dWorld(world);
+//		renderer.setRayHandler(rayHandler);
+//		renderer.setBox2dWorld(world);
 
 		engine.addSystem(animationSystem);
 		engine.addSystem(particleSystem);
@@ -227,16 +210,16 @@ public class SceneLoader {
 				}
 
 				//check for physics
-				PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-				if (physicsBodyComponent != null && physicsBodyComponent.body != null) {
-					world.destroyBody(physicsBodyComponent.body);
-				}
+//				PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
+//				if (physicsBodyComponent != null && physicsBodyComponent.body != null) {
+//					world.destroyBody(physicsBodyComponent.body);
+//				}
 
                 // check if it is light
-                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
-                if(lightObjectComponent != null) {
-                    lightObjectComponent.lightObject.remove(true);
-                }
+//                LightObjectComponent lightObjectComponent = ComponentRetriever.get(entity, LightObjectComponent.class);
+//                if(lightObjectComponent != null) {
+//                    lightObjectComponent.lightObject.remove(true);
+//                }
 			}
 		});
 	}
@@ -281,15 +264,15 @@ public class SceneLoader {
 	 *            - Scene data file to invalidate
 	 */
 	public void setAmbienceInfo(SceneVO vo) {
-        if(!vo.lightSystemEnabled) {
-            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
-            return;
-        }
-		if (vo.ambientColor != null) {
-			Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
-					vo.ambientColor[2], vo.ambientColor[3]);
-			rayHandler.setAmbientLight(clr);
-		}
+//        if(!vo.lightSystemEnabled) {
+//            rayHandler.setAmbientLight(1f, 1f, 1f, 1f);
+//            return;
+//        }
+//		if (vo.ambientColor != null) {
+//			Color clr = new Color(vo.ambientColor[0], vo.ambientColor[1],
+//					vo.ambientColor[2], vo.ambientColor[3]);
+//			rayHandler.setAmbientLight(clr);
+//		}
 	}
 
 

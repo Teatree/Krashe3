@@ -18,10 +18,8 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.CompositeTransformComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -37,8 +35,8 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
  */
 public class CompositeComponentFactory extends ComponentFactory {
 
-    public CompositeComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public CompositeComponentFactory(IResourceRetriever rm) {
+        super( rm);
     }
 
     @Override
@@ -48,7 +46,6 @@ public class CompositeComponentFactory extends ComponentFactory {
             createParentNodeComponent(root, entity);
         }
         createNodeComponent(root, entity);
-        createPhysicsComponents(entity, vo);
         createCompositeComponents(entity, (CompositeItemVO) vo);
     }
 

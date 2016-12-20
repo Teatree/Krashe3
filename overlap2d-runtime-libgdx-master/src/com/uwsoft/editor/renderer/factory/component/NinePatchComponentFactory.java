@@ -1,11 +1,9 @@
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.NinePatchComponent;
 import com.uwsoft.editor.renderer.data.Image9patchVO;
@@ -19,8 +17,8 @@ public class NinePatchComponentFactory extends ComponentFactory {
 
 	NinePatchComponent ninePatchComponent;
 
-	public NinePatchComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-		super(rayHandler, world, rm);
+	public NinePatchComponentFactory( IResourceRetriever rm) {
+		super( rm);
 	}
 
 	@Override

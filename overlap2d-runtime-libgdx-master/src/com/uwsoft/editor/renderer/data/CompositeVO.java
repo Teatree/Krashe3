@@ -21,7 +21,7 @@ public class CompositeVO {
     public ArrayList<CompositeItemVO> sComposites = new ArrayList<CompositeItemVO>(1);
     public ArrayList<SelectBoxVO> sSelectBoxes = new ArrayList<SelectBoxVO>(1);
     public ArrayList<ParticleEffectVO> sParticleEffects = new ArrayList<ParticleEffectVO>(1);
-    public ArrayList<LightVO> sLights = new ArrayList<LightVO>(1);
+//    public ArrayList<LightVO> sLights = new ArrayList<LightVO>(1);
     public ArrayList<SpineVO> sSpineAnimations = new ArrayList<SpineVO>(1);
     public ArrayList<SpriteAnimationVO> sSpriteAnimations = new ArrayList<SpriteAnimationVO>(1);
     public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<SpriterVO>(1);
@@ -64,10 +64,10 @@ public class CompositeVO {
         for (int i = 0; i < vo.sParticleEffects.size(); i++) {
             sParticleEffects.add(new ParticleEffectVO(vo.sParticleEffects.get(i)));
         }
-
-        for (int i = 0; i < vo.sLights.size(); i++) {
-            sLights.add(new LightVO(vo.sLights.get(i)));
-        }
+//
+//        for (int i = 0; i < vo.sLights.size(); i++) {
+//            sLights.add(new LightVO(vo.sLights.get(i)));
+//        }
 
         for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
             sSpineAnimations.add(new SpineVO(vo.sSpineAnimations.get(i)));
@@ -116,9 +116,9 @@ public class CompositeVO {
         if (className.equals("ParticleEffectVO")) {
             sParticleEffects.add((ParticleEffectVO) vo);
         }
-        if (className.equals("LightVO")) {
-            sLights.add((LightVO) vo);
-        }
+//        if (className.equals("LightVO")) {
+//            sLights.add((LightVO) vo);
+//        }
         if (className.equals("SpineVO")) {
             sSpineAnimations.add((SpineVO) vo);
         }
@@ -156,9 +156,9 @@ public class CompositeVO {
         if (className.equals("ParticleEffectVO")) {
             sParticleEffects.remove(vo);
         }
-        if (className.equals("LightVO")) {
-            sLights.remove(vo);
-        }
+//        if (className.equals("LightVO")) {
+//            sLights.remove(vo);
+//        }
         if (className.equals("SpineVO")) {
             sSpineAnimations.remove(vo);
         }
@@ -180,7 +180,7 @@ public class CompositeVO {
         sComposites.clear();
         sSelectBoxes.clear();
         sParticleEffects.clear();
-        sLights.clear();
+//        sLights.clear();
         sSpineAnimations.clear();
         sSpriteAnimations.clear();
         sSpriterAnimations.clear();
@@ -193,7 +193,7 @@ public class CompositeVO {
                 sImages.size() == 0 &&
                 sSpriteAnimations.size() == 0 &&
                 sLabels.size() == 0 &&
-                sLights.size() == 0 &&
+//                sLights.size() == 0 &&
                 sParticleEffects.size() == 0 &&
                 sSpriteAnimations.size() == 0 &&
                 sSpriterAnimations.size() == 0 &&
@@ -307,9 +307,9 @@ public class CompositeVO {
         for(MainItemVO vo: compositeVo.sLabels) {
             itemsList.add(vo);
         }
-        for(MainItemVO vo: compositeVo.sLights) {
-            itemsList.add(vo);
-        }
+//        for(MainItemVO vo: compositeVo.sLights) {
+//            itemsList.add(vo);
+//        }
         for(MainItemVO vo: compositeVo.sParticleEffects) {
             itemsList.add(vo);
         }
@@ -388,11 +388,11 @@ public class CompositeVO {
                 vo.loadFromEntity(entity);
                 sSpineAnimations.add(vo);
             }
-            if(entityType == EntityFactory.LIGHT_TYPE) {
-                LightVO vo = new LightVO();
-                vo.loadFromEntity(entity);
-                sLights.add(vo);
-            }
+//            if(entityType == EntityFactory.LIGHT_TYPE) {
+//                LightVO vo = new LightVO();
+//                vo.loadFromEntity(entity);
+//                sLights.add(vo);
+//            }
             if(entityType == EntityFactory.COLOR_PRIMITIVE) {
                 ColorPrimitiveVO vo = new ColorPrimitiveVO();
                 vo.loadFromEntity(entity);

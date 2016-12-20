@@ -23,9 +23,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
-import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
-import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.components.sprite.AnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
@@ -36,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+//import com.uwsoft.editor.renderer.components.light.LightObjectComponent;
 
 
 /**
@@ -69,15 +69,15 @@ public class ComponentRetriever {
      * it might be a good idea to use Reflections library later to create this list from all classes in components package of runtime, all in favour?
      */
     private void init() {
-    	mappers.put(LightObjectComponent.class, ComponentMapper.getFor(LightObjectComponent.class));
+//    	mappers.put(LightObjectComponent.class, ComponentMapper.getFor(LightObjectComponent.class));
     	
     	mappers.put(ParticleComponent.class, ComponentMapper.getFor(ParticleComponent.class));
 
         mappers.put(LabelComponent.class, ComponentMapper.getFor(LabelComponent.class));
 
     	mappers.put(PolygonComponent.class, ComponentMapper.getFor(PolygonComponent.class));
-    	mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
-        mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
+//    	mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
+//        mappers.put(PhysicsBodyComponent.class, ComponentMapper.getFor(PhysicsBodyComponent.class));
 
         mappers.put(AnimationComponent.class, ComponentMapper.getFor(AnimationComponent.class));
         mappers.put(SpriteAnimationComponent.class, ComponentMapper.getFor(SpriteAnimationComponent.class));

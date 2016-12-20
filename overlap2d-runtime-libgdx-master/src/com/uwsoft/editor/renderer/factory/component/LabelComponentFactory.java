@@ -1,8 +1,6 @@
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -17,9 +15,8 @@ public class LabelComponentFactory extends ComponentFactory{
 	
 	private static int labelDefaultSize = 12;
 
-	public LabelComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-		super(rayHandler, world, rm);
-		// TODO Auto-generated constructor stub
+	public LabelComponentFactory( IResourceRetriever rm) {
+        super( rm);
 	}
 
 	@Override

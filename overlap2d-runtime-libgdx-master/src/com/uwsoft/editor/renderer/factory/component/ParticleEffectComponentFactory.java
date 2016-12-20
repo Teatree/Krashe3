@@ -18,11 +18,9 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.MainItemVO;
@@ -37,8 +35,8 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 public class ParticleEffectComponentFactory extends ComponentFactory {
 
 
-    public ParticleEffectComponentFactory(RayHandler rayHandler, World world, IResourceRetriever rm) {
-        super(rayHandler, world, rm);
+    public ParticleEffectComponentFactory(IResourceRetriever rm) {
+        super( rm);
     }
 
     @Override

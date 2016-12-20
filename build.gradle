@@ -1,11 +1,6 @@
 buildscript {
     repositories {
         mavenCentral()
-//        mavenLocal()
-//        jcenter()
-//        maven {
-//            url "https://plugins.gradle.org/m2/"
-//        }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -14,17 +9,12 @@ buildscript {
         classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'org.robovm:robovm-gradle-plugin:1.2.0'
         classpath 'com.badlogicgames.ashley:ashley:1.7.0'
-//        classpath "com.netflix.nebula:gradle-lint-plugin:5.1.0"
-//        classpath 'ca.cutterslade.gradle:gradle-dependency-analyze:1.1.0'
-//        classpath 'org.lund.gradle:DependencyAnalysisPlugin:1.0.3'
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-//    apply plugin: 'ca.cutterslade.analyze'
-//    apply plugin: 'dependencyAnalysis'
 
     version = '1.1'
     ext {
@@ -32,7 +22,7 @@ allprojects {
         gdxVersion = '' +
                 '1.9.3'
         roboVMVersion = '1.2.0'
-        box2DLightsVersion = '1.3'
+//        box2DLightsVersion = '1.3'
         ashleyVersion = '1.4.0'
         aiVersion = '1.5.0'
     }
@@ -51,7 +41,7 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.3"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+//        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         }
@@ -75,11 +65,11 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
 
 //        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
+//        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
 
-//        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
@@ -88,22 +78,22 @@ project(":android") {
     }
 }
 
-project(":ios") {
-    apply plugin: "java"
-    apply plugin: "robovm"
+//project(":ios") {
+//    apply plugin: "java"
+//    apply plugin: "robovm"
 
 
-    dependencies {
-        compile project(":core")
-        compile "org.robovm:robovm-rt:$roboVMVersion"
-        compile "org.robovm:robovm-cocoatouch:$roboVMVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
-
-        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
-    }
-}
+//    dependencies {
+//        compile project(":core")
+//        compile "org.robovm:robovm-rt:$roboVMVersion"
+//        compile "org.robovm:robovm-cocoatouch:$roboVMVersion"
+//        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+//        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+///        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
+//
+//        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
+//    }
+//}
 
 project(":core") {
     apply plugin: "java"
@@ -112,7 +102,7 @@ project(":core") {
     dependencies {
         compile fileTree(include: ['*.jar'], dir: 'libs')
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+//        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:1.7.0"
         compile project(":Overlap2dRuntime")
