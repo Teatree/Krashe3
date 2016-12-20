@@ -14,16 +14,16 @@ import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
 
 public class Main extends Game {
-    public static final int WORLD_WIDTH = 1200;
-    public static final int WORLD_HEIGHT = 786;
-    public static int viewportWidth = 1200;
-    public static int viewportHeight = 786;
+    private static final int WORLD_WIDTH = 1200;
+    private static final int WORLD_HEIGHT = 786;
+    private static int viewportWidth = 1200;
+    private static int viewportHeight = 786;
 
     public static GameStage gameStage;
-    public Stage loadingStage;
-    SpriteBatch batch;
-    Sprite tex;
-    Viewport oneViewport;
+    private Stage loadingStage;
+    private SpriteBatch batch;
+    private Sprite tex;
+    private Viewport oneViewport;
 
     public static AllController mainController;
     public static PlayServices playServices;

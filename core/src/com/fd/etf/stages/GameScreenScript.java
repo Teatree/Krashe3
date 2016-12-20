@@ -11,7 +11,6 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
-import com.fd.etf.utils.DebugSystem;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -39,20 +38,20 @@ import static com.fd.etf.utils.GlobalConstants.*;
 public class GameScreenScript implements IScript {
 
     public static final CameraShaker cameraShaker = new CameraShaker();
-    public static final String TUTORIAL_LINE = "tutorial_line";
-    public static final String UMBRELLA_ANI = "umbrellaAni";
-    public final String START_MESSAGE = "TAP TO START";
-    public final String DOUBLE_BJ_ICON = "double_bj_badge";
-    public final String PHOENIX_ICON = "extra_life_badge";
-    public final String LBL_SCORE = "lbl_score";
-    public final String LBL_SCORE_S = "lbl_score_s";
-    public final String LBL_TAP_2_START = "lbl_tap2start";
-    public final String BTN_PAUSE = "btn_pause";
-    public final String MEGA_FLOWER = "mega_flower";
-    public final String MEGA_LEAFS = "mega_leafs";
-    public final String COCOON = "coccoon";
-    public final String BTN_BACK = "btn_back";
-    public static final String BEES_MODE_ANI = "bees_mode_ani";
+    private static final String TUTORIAL_LINE = "tutorial_line";
+    private static final String UMBRELLA_ANI = "umbrellaAni";
+    private static final String START_MESSAGE = "TAP TO START";
+    private static final String DOUBLE_BJ_ICON = "double_bj_badge";
+    private static final String PHOENIX_ICON = "extra_life_badge";
+    private static final String LBL_SCORE = "lbl_score";
+    private static final String LBL_SCORE_S = "lbl_score_s";
+    private static final String LBL_TAP_2_START = "lbl_tap2start";
+    private static final String BTN_PAUSE = "btn_pause";
+    private static final String MEGA_FLOWER = "mega_flower";
+    private static final String MEGA_LEAFS = "mega_leafs";
+    private static final String COCOON = "coccoon";
+    private static final String BTN_BACK = "btn_back";
+    private static final String BEES_MODE_ANI = "bees_mode_ani";
 
     public static AtomicBoolean isPause = new AtomicBoolean(false);
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
@@ -77,11 +76,11 @@ public class GameScreenScript implements IScript {
     public int gameOverReviveTimesLimit;
 
     //bee mode
-    public static Entity beesModeAni;
-    public static Entity beesModeEndAni;
+    private static Entity beesModeAni;
+    private static Entity beesModeEndAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
-    public static boolean shouldShowGameOverDialog;
+    private static boolean shouldShowGameOverDialog;
     private Entity petE;
 
     public GameScreenScript(GameStage gamestage) {
@@ -269,7 +268,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-        sceneLoader.getEngine().addSystem(new DebugSystem());
+//        sceneLoader.getEngine().addSystem(new DebugSystem());
         sceneLoader.getEngine().addSystem(new UmbrellaSystem());
         sceneLoader.getEngine().addSystem(new LeafsSystem());
         sceneLoader.getEngine().addSystem(new ButterflySystem());

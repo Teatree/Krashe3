@@ -27,27 +27,27 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class Preview extends AbstractDialog {
 
-    public static final String PREVIEW = "tag_lib";
-    public static final String ITEM_UNKNOWN = "item_unknown_n";
-    public static final String BTN_RIGHT = "tag_right_btn";
-    public static final String BTN_LEFT = "tag_left_btn";
-    public static final String BTN_BUY = "tag_btn_buy";
-    public static final String BTN_DISABLE = "tag_btn_disable";
-    public static final String BTN_ENABLE = "tag_btn_enable";
-    public static final String TAG_INFO_LIB = "tag_info_lib";
+    private static final String PREVIEW = "tag_lib";
+    private static final String ITEM_UNKNOWN = "item_unknown_n";
+    private static final String BTN_RIGHT = "tag_right_btn";
+    private static final String BTN_LEFT = "tag_left_btn";
+    private static final String BTN_BUY = "tag_btn_buy";
+    private static final String BTN_DISABLE = "tag_btn_disable";
+    private static final String BTN_ENABLE = "tag_btn_enable";
+    private static final String TAG_INFO_LIB = "tag_info_lib";
 
-    public static final String BTN_CLOSE = "tag_btn_close";
-    public static final String LBL_ITEM_NAME = "tag_lbl_item_name";
-    public static final String LBL_PRICE_SH = "tag_lbl_price_sh";
-    public static final String LBL_PAPER_PIECE = "paper_piece_img";
-    public static final String COINZ_ICON = "coinz_icon";
-    public static final String LBL_PRICE = "tag_lbl_price";
+    private static final String BTN_CLOSE = "tag_btn_close";
+    private static final String LBL_ITEM_NAME = "tag_lbl_item_name";
+    private static final String LBL_PRICE_SH = "tag_lbl_price_sh";
+    private static final String LBL_PAPER_PIECE = "paper_piece_img";
+    private static final String COINZ_ICON = "coinz_icon";
+    private static final String LBL_PRICE = "tag_lbl_price";
 
     private static final int HIDE_INFO_TAG_RIGHT = 2000;
     private static final int HIDE_INFO_TAG_LEFT = -1000;
 
-    public static final String LBL_DESC = "tag_lbl_desc";
-    public static final String IMG_SEC_BUBBLE = "img_sec_bubble";
+    private static final String LBL_DESC = "tag_lbl_desc";
+    private static final String IMG_SEC_BUBBLE = "img_sec_bubble";
     private static final float HIDE_INFO_TAG_DURATION = 0.3f;
     private static final String BTN_INACTIVE = "Gray";
     private static final String TAG_BUTTONZ_LIB = "tag_buttonz_lib";
@@ -56,20 +56,20 @@ public class Preview extends AbstractDialog {
     public Entity lblPriceSh;
     public Entity lblTitle;
 
-    public static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
-    public static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
+    private static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
+    private static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
     public Entity lblNotEnough;
     public Entity lblNotEnoughSh;
 
-    public static final int ICON_X = 550;
-    public static final int ICON_X_RELATIVE = 130;
-    public static final int ICON_Y_RELATIVE = 150;
+    private static final int ICON_X = 550;
+    private static final int ICON_X_RELATIVE = 130;
+    private static final int ICON_Y_RELATIVE = 150;
 
-    public static final int INFO_TAG_X = 350;
-    public static final int INFO_TAG_Y = 240;
+    private static final int INFO_TAG_X = 350;
+    private static final int INFO_TAG_Y = 240;
 
-    public static final int BTNZ_X = 308;
-    public static final int BTNZ_Y = 33;
+    private static final int BTNZ_X = 308;
+    private static final int BTNZ_Y = 33;
 
     private static final int UNKNOWN_ICON_Y = 350;
     private static final int INFO_TAG_HIDE_Y = 900;

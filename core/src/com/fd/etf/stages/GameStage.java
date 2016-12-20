@@ -7,7 +7,6 @@ import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
-import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -24,15 +23,10 @@ import static com.fd.etf.utils.SoundMgr.getSoundMgr;
 
 public class GameStage extends Stage {
 
-    public static final String SHOP_SCENE = "ShopScene";
-    public static final String RESULT_SCENE = "ResultScene";
-    public static final String MAIN_SCENE = "MainScene";
-    public static final String MENU_SCENE = "MenuScene";
-
-    public static final String MENU = "MENU";
-    public static final String SHOP = "SHOP";
-    public static final String RESULT = "RESULT";
-    public static final String GAME = "GAME";
+    private  static final String SHOP_SCENE = "ShopScene";
+    private  static final String RESULT_SCENE = "ResultScene";
+    private  static final String MAIN_SCENE = "MainScene";
+    private  static final String MENU_SCENE = "MenuScene";
 
     public static Viewport viewport;
     public static ETFSceneLoader sceneLoader;
@@ -43,7 +37,7 @@ public class GameStage extends Stage {
 
     public static GameScreenScript gameScript;
 
-    private ResultScreenScript resultScript;
+    private static ResultScreenScript resultScript;
     public static ShopScreenScript shopScript;
     private static MenuScreenScript menuScript;
 
@@ -97,7 +91,6 @@ public class GameStage extends Stage {
             }
         }
 
-        GlobalConstants.CUR_SCREEN = GAME;
         backgroundMusicMgr.stop();
 
         GameScreenScript.isStarted = false;
@@ -123,7 +116,6 @@ public class GameStage extends Stage {
             menuScript.init(menuScript.menuItem.getEntity());
             menuScript.setupMenuScreenWorld();
         }
-        GlobalConstants.CUR_SCREEN = MENU;
     }
 
     public void initResult() {
@@ -136,7 +128,6 @@ public class GameStage extends Stage {
         } else {
             resultScript.initResultScreen();
         }
-        GlobalConstants.CUR_SCREEN = RESULT;
     }
 
     public static void initShop() {
@@ -152,7 +143,6 @@ public class GameStage extends Stage {
         ShopScreenScript.isPreviewOn.set(false);
         ShopPoverUpTabListener.reset();
         shopScript.checkIfChanged();
-        GlobalConstants.CUR_SCREEN = SHOP;
     }
 
     public static void initShopWithAds() {

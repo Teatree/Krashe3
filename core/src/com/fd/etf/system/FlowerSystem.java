@@ -12,7 +12,6 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.State.*;
@@ -24,7 +23,10 @@ import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class FlowerSystem extends IteratingSystem {
 
-    public static final String TUTORIAL_LINE = "tutorial_line";
+    private static final float FLOWER_MOVE_SPEED = 47.5f;
+    private static final int FLOWER_MAX_Y_POS = 640;
+
+    private static final String TUTORIAL_LINE = "tutorial_line";
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -32,13 +34,10 @@ public class FlowerSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        SpriterComponent spriterComponentFlower = ComponentRetriever.get(entity, SpriterComponent.class);
-        spriterComponentFlower.scale = FLOWER_SCALE;
+        entity.getComponent(SpriterComponent.class).scale = FLOWER_SCALE;
 
-        updateRect(transformComponent);
-        act(transformComponent, spriterComponentFlower, deltaTime);
-//        sceneLoader.renderer.drawDebugRect(gameScript.fpc.boundsRect.x, gameScript.fpc.boundsRect.y, gameScript.fpc.boundsRect.width, gameScript.fpc.boundsRect.height, entity.toString());
+        updateRect(entity.getComponent(TransformComponent.class));
+        act(entity.getComponent(TransformComponent.class), entity.getComponent(SpriterComponent.class), deltaTime);
     }
 
     public void updateRect(TransformComponent tc) {
@@ -50,7 +49,6 @@ public class FlowerSystem extends IteratingSystem {
             gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
             gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
         }
-//        GameStage.sceneLoader.drawDebugRect(gameScript.fpc.boundsRect.x,gameScript.fpc.boundsRect.y,gameScript.fpc.boundsRect.width,gameScript.fpc.boundsRect.height);
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {

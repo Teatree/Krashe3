@@ -14,7 +14,6 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.*;
@@ -24,9 +23,9 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class BugSystem extends IteratingSystem {
 
-    public static final String CHARGING_ANI = "CHARGING";
-    public static final String IDLE_ANI = "IDLE";
-    public static final String PREPARING_ANI = "PREPARING";
+    private static final String CHARGING_ANI = "CHARGING";
+    private static final String IDLE_ANI = "IDLE";
+    private static final String PREPARING_ANI = "PREPARING";
 
     public static boolean blowUpAllBugs;
     public static int blowUpCounter;
@@ -43,13 +42,11 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
 
-        DimensionsComponent dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        transformComponent.scaleX = BUG_SCALE;
-        transformComponent.scaleY = BUG_SCALE;
+        entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
+        entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
 
          if (blowUpAllBugs) {
-            destroyBug(entity, transformComponent);
+            destroyBug(entity, entity.getComponent(TransformComponent.class));
             if(blowUpCounter<=0 && blowUpAllBugs){
                 blowUpAllBugs = false;
             }
@@ -60,11 +57,11 @@ public class BugSystem extends IteratingSystem {
             BugComponent bc = mapper.get(entity);
 
              if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
-                updateRect(bc, transformComponent, dimensionsComponent);
-                updateRectScary(bc, transformComponent, dimensionsComponent);
-                moveEntity(deltaTime, transformComponent, bc, sasc, sac);
+                updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
+                updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
+                moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
                 if (gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
-                    transformComponent.scaleX += 0.5f;
+                    entity.getComponent(TransformComponent.class).scaleX += 0.5f;
 //                    gameScript.fpc.state = ATTACK_BITE;
                     gameScript.fpc.isScary = true;
                 }

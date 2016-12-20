@@ -24,12 +24,12 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
  */
 public class PromoWindow extends AbstractDialog {
     
-    public static final String PROMO_WINDOW = "promo_lib";
-    public static final String BUY_DISC_BTN = "buy_disc_btn";
-    public static final String DISC_TEXT_LBL = "disc_text_lbl";
-    public static final String CLOSE_DISC_BTN = "close_disc_btn";
-    public static final int DISCOUNT_Y = 30;
-    public static final int DISCOUNT_X = 260;
+    private static final String PROMO_WINDOW = "promo_lib";
+    private static final String BUY_DISC_BTN = "buy_disc_btn";
+    private static final String DISC_TEXT_LBL = "disc_text_lbl";
+    private static final String CLOSE_DISC_BTN = "close_disc_btn";
+    private static final int DISCOUNT_Y = 30;
+    private static final int DISCOUNT_X = 260;
 
     public static boolean offerPromo;
     public static ShopItem offer;

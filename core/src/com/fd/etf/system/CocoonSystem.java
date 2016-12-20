@@ -8,16 +8,16 @@ import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.entity.componets.CocoonComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
-import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.List;
 import java.util.Random;
 
-import static com.fd.etf.entity.componets.CocoonComponent.*;
+import static com.fd.etf.entity.componets.CocoonComponent.CocoonMultiplier;
 import static com.fd.etf.entity.componets.CocoonComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.fd.etf.stages.GameScreenScript.*;
@@ -26,12 +26,17 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
 
+    private static float SPAWN_INTERVAL_BASE = 10;
+    private static final int COCOON_HIT_AMOUNT = 3;
+
+    public static List<CocoonMultiplier> cocoonMultipliers;
+    public static CocoonMultiplier currentCocoonMultiplier;
+
     public static final String BUTTERFLY_ANI = "butterfly";
 
     ItemWrapper gameItem;
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
-    private SpriterComponent sc = new SpriterComponent();
 
     public CocoonSystem(GameScreenScript gameScript) {
         super(Family.all(CocoonComponent.class).get());
@@ -40,71 +45,62 @@ public class CocoonSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        sc = entity.getComponent(SpriterComponent.class);
         if (!isStarted) {
             entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         }
 
         if (!isPause.get() && !isGameOver.get() && isStarted) {
-            CocoonComponent cc = mapper.get(entity);
-            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
             TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
 
-            updateRect(cc, tc, dc);
-            act(cc, entity, deltaTime);
+            updateRect(entity.getComponent(CocoonComponent.class), tc, entity.getComponent(DimensionsComponent.class));
+            act(entity.getComponent(CocoonComponent.class), entity, deltaTime);
 
-            if (checkCollision(cc) && !cc.canHit) {
-                hit(cc);
+            if (checkCollision(entity.getComponent(CocoonComponent.class)) && !entity.getComponent(CocoonComponent.class).canHit) {
+                hit(entity.getComponent(CocoonComponent.class), entity);
             }
-
         } else {
-            sc.player.speed = 0;
+            entity.getComponent(SpriterComponent.class).player.speed = 0;
         }
     }
 
     public void act(CocoonComponent cc, Entity entity, float delta) {
+        if (cc.state.equals(SPAWNING)) {
+            if (isAnimationFinished(entity)) {
+                cc.state = IDLE;
+                entity.getComponent(SpriterComponent.class).player.setAnimation(1);
+                entity.getComponent(SpriterComponent.class).player.speed = 0;
+            }
+        }
 
-        if ("GAME".equals(GlobalConstants.CUR_SCREEN)) {
-
-            if (cc.state.equals(SPAWNING)) {
-
-                if (isAnimationFinished()) {
+        if (cc.state.equals(HIT)) {
+            if (isAnimationFinished(entity)) {
+                if (cc.hitCounter >= COCOON_HIT_AMOUNT) {
+                    cc.state = DEAD;
+                    spawnButterfly();
+                    checkCocoonGoal();
+                } else {
                     cc.state = IDLE;
-                    sc.player.setAnimation(1);
-                    sc.player.speed = 0;
-                }
-            }
-
-            if (cc.state.equals(HIT)) {
-                if (isAnimationFinished()) {
-                    if (cc.hitCounter >= CocoonComponent.COCOON_HIT_AMOUNT) {
-                        cc.state = DEAD;
-                        spawnButterfly();
-                        checkCocoonGoal();
-                    } else {
-                        cc.state = IDLE;
-                        if (cc.hitCounter + 1 < 4) {
-                            sc.player.setAnimation(cc.hitCounter + 1);
-                        }
-                        sc.player.speed = 0;
+                    if (cc.hitCounter + 1 < 4) {
+                        entity.getComponent(SpriterComponent.class).player.setAnimation(cc.hitCounter + 1);
                     }
+                    entity.getComponent(SpriterComponent.class).player.speed = 0;
                 }
             }
+        }
 
-            if (cc.state.equals(DEAD)) {
-                sc.player.setAnimation(3);
-                if (isAnimationFinished()) {
-                    entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-                }
+        if (cc.state.equals(DEAD)) {
+            entity.getComponent(SpriterComponent.class).player.setAnimation(3);
+            if (isAnimationFinished(entity)) {
+                entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             }
         }
     }
 
-    public boolean isAnimationFinished() {
-        return sc.player.getTime() >= sc.player.getAnimation().length - 20;
+    public boolean isAnimationFinished(Entity entity) {
+        return entity.getComponent(SpriterComponent.class).player.getTime() >= entity.getComponent(SpriterComponent.class).player.getAnimation().length - 20;
     }
 
-    public void hit(CocoonComponent cc) {
+    public void hit(CocoonComponent cc, Entity entity) {
 
         cc.canHit = true;
         if (!cc.state.equals(DEAD)) {
@@ -112,10 +108,10 @@ public class CocoonSystem extends IteratingSystem {
 //            cc.hitCounter+=1;
             cc.canHit = true;
             if (!isPause.get() && !isGameOver.get()) {
-                sc.player.speed = 24;
+                entity.getComponent(SpriterComponent.class).player.speed = 24;
             }
             if (cc.hitCounter <= 3) {
-                sc.player.setAnimation(cc.hitCounter++);
+                entity.getComponent(SpriterComponent.class).player.setAnimation(cc.hitCounter++);
             }
         }
     }

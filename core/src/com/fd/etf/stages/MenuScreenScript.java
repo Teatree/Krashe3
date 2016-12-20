@@ -24,25 +24,25 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class MenuScreenScript implements IScript {
 
-    public static final String BTN_PLAY = "btn_play";
-    public static final String BTN_SHOP = "btn_shop";
-    public static final String BTN_SETTINGS = "btn_settings";
-    public static final String BTN_RATE = "btn_rate";
-    public static final String BTN_GOALS = "btn_goals";
-    public static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
-    public static final String LBL_GOALS_NOTIFICATION_SH = "label_goal_notification_sh";
-    public static final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
-    public static final String CURTAIN = "curtain_mm";
-    public static final String BTN_FB = "btn_fb";
-    public static final String BTN_LEADERBOARD = "btn_leaderboard";
-    public static final String LEADERBOARD_C = "lederboard_composite";
-    public static final String BTN_ACHIEVEMENTS = "btn_achievements";
-    public static final String ACHIEVEMENTS_C = "achievements_composite";
-    public static final String BTN_PLAY_SERVICES = "btn_playServices";
-    public static final String MM_FLOWER = "MM_flower";
+     private static  final String BTN_PLAY = "btn_play";
+     private static  final String BTN_SHOP = "btn_shop";
+     private static  final String BTN_SETTINGS = "btn_settings";
+     private static  final String BTN_RATE = "btn_rate";
+     private static  final String BTN_GOALS = "btn_goals";
+     private static  final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
+     private static  final String LBL_GOALS_NOTIFICATION_SH = "label_goal_notification_sh";
+     private static  final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
+     private static  final String CURTAIN = "curtain_mm";
+     private static  final String BTN_FB = "btn_fb";
+     private static  final String BTN_LEADERBOARD = "btn_leaderboard";
+     private static  final String LEADERBOARD_C = "lederboard_composite";
+     private static  final String BTN_ACHIEVEMENTS = "btn_achievements";
+     private static  final String ACHIEVEMENTS_C = "achievements_composite";
+     private static  final String BTN_PLAY_SERVICES = "btn_playServices";
+     private static  final String MM_FLOWER = "MM_flower";
 
-    public static final int TIMER_X = 945;
-    public static final int TIMER_Y = 441;
+     private static  final int TIMER_X = 945;
+     private static  final int TIMER_Y = 441;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";

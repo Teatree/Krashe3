@@ -12,7 +12,6 @@ import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.entity.componets.ButterflyComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
@@ -30,73 +29,68 @@ public class ButterflySystem extends IteratingSystem {
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        SpriterComponent sasc = ComponentRetriever.get(entity, SpriterComponent.class);
+    protected void processEntity(Entity e, float deltaTime) {
 
         if (!isStarted || isGameOver.get()) {
-            entity.getComponent(TransformComponent.class).x = -900;
-            entity.getComponent(TransformComponent.class).y = -900;
-            sasc.player.speed = 0;
-            entity.getComponent(ButterflyComponent.class).state = DEAD;
+            e.getComponent(TransformComponent.class).x = -900;
+            e.getComponent(TransformComponent.class).y = -900;
+            e.getComponent(SpriterComponent.class).player.speed = 0;
+            e.getComponent(ButterflyComponent.class).state = DEAD;
         }
         if (!isPause.get() && !isGameOver.get() && isStarted &&
-                entity.getComponent(ButterflyComponent.class).state != DEAD) {
-            sasc.player.speed = FPS;
+                e.getComponent(ButterflyComponent.class).state != DEAD) {
+            e.getComponent(SpriterComponent.class).player.speed = FPS;
 
-            ButterflyComponent bc = mapper.get(entity);
-            TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
-            sasc.scale = 1f;
-            dc.height = 147;
-            dc.width = 138;
+            e.getComponent(SpriterComponent.class).scale = 1f;
+            e.getComponent(DimensionsComponent.class).height = 147;
+            e.getComponent(DimensionsComponent.class).width = 138;
 
-            if (bc.state.equals(SPAWN)) {
-                bc.dataSet = new Vector2[3];
-                bc.dataSet[0] = new Vector2(tc.x, tc.y);
-                bc.dataSet[1] = new Vector2(-500, 400);
-                bc.dataSet[2] = new Vector2(1170, 400);
+            if (e.getComponent(ButterflyComponent.class).state.equals(SPAWN)) {
+                e.getComponent(ButterflyComponent.class).dataSet = new Vector2[3];
+                e.getComponent(ButterflyComponent.class).dataSet[0] = new Vector2(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y);
+                e.getComponent(ButterflyComponent.class).dataSet[1] = new Vector2(-500, 400);
+                e.getComponent(ButterflyComponent.class).dataSet[2] = new Vector2(1170, 400);
 
-                bc.myCatmull = new Bezier<>(bc.dataSet);
-                bc.out = new Vector2(340, 200);
-                bc.myCatmull.valueAt(bc.out, 5);
-                bc.myCatmull.derivativeAt(bc.out, 5);
+                e.getComponent(ButterflyComponent.class).myCatmull = new Bezier<>(e.getComponent(ButterflyComponent.class).dataSet);
+                e.getComponent(ButterflyComponent.class).out = new Vector2(340, 200);
+                e.getComponent(ButterflyComponent.class).myCatmull.valueAt(e.getComponent(ButterflyComponent.class).out, 5);
+                e.getComponent(ButterflyComponent.class).myCatmull.derivativeAt(e.getComponent(ButterflyComponent.class).out, 5);
 
-                bc.state = FLY;
+                e.getComponent(ButterflyComponent.class).state = FLY;
             }
 
-            bc.current += Gdx.graphics.getDeltaTime() * bc.speed;
-            bc.myCatmull.valueAt(bc.out, bc.current);
-            tc.x = bc.out.x;
-            tc.y = bc.out.y;
+            e.getComponent(ButterflyComponent.class).current += Gdx.graphics.getDeltaTime() * e.getComponent(ButterflyComponent.class).speed;
+            e.getComponent(ButterflyComponent.class).myCatmull.valueAt(e.getComponent(ButterflyComponent.class).out, e.getComponent(ButterflyComponent.class).current);
+            e.getComponent(TransformComponent.class).x = e.getComponent(ButterflyComponent.class).out.x;
+            e.getComponent(TransformComponent.class).y = e.getComponent(ButterflyComponent.class).out.y;
 
-            if (bc.current > 0.4f) {
-                sasc.player.setAnimation(0);
+            if (e.getComponent(ButterflyComponent.class).current > 0.4f) {
+                e.getComponent(SpriterComponent.class).player.setAnimation(0);
             } else {
-                sasc.player.setAnimation(1);
+                e.getComponent(SpriterComponent.class).player.setAnimation(1);
             }
 
-            if (bc.current >= 1 && bc.state.equals(FLY) || isOutOfBounds(bc)) {
-                die(bc, tc);
+            if (e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY) || isOutOfBounds(e.getComponent(ButterflyComponent.class))) {
+                die(e.getComponent(ButterflyComponent.class), e.getComponent(TransformComponent.class));
             }
 
-            updateRectangle(bc, tc, dc);
-            if (checkCollision(bc)) {
+            updateRectangle(e.getComponent(ButterflyComponent.class), e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class));
+            if (checkCollision(e.getComponent(ButterflyComponent.class))) {
                 gameScript.fpc.isCollision = true;
-                tc.x = FAR_FAR_AWAY_X;
-                tc.y = FAR_FAR_AWAY_Y;
-                entity.getComponent(ButterflyComponent.class).state = DEAD;
-//                entity.remove(ButterflyComponent.class);
+                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                e.getComponent(ButterflyComponent.class).state = DEAD;
 
-                gameScript.fpc.addScore(bc.points);
+                gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
                 GameStage.gameScript.reloadScoreLabel(GameStage.gameScript.fpc);
             }
 
-            if (entity.getComponent(ButterflyComponent.class).state == DEAD) {
-                entity.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            if (e.getComponent(ButterflyComponent.class).state == DEAD) {
+                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             }
         } else {
-            sasc.player.speed = 0;
+            e.getComponent(SpriterComponent.class).player.speed = 0;
         }
 
     }
@@ -120,9 +114,9 @@ public class ButterflySystem extends IteratingSystem {
 
     private boolean checkCollision(ButterflyComponent bc) {
         checkGoal(bc);
-//        System.out.print("bounds >> " + bc.boundsRect);
+//        System.out.print("bounds >> " + entity.getComponent(ButterflyComponent.class).boundsRect);
 //        System.out.print(" || flower >> " + gameScript.fpc.boundsRect);
-//        System.out.println(" || overlap >>> " + gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect) );
+//        System.out.println(" || overlap >>> " + gameScript.fpc.petAndFlowerCollisionCheck(entity.getComponent(ButterflyComponent.class).boundsRect) );
         return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 

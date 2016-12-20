@@ -26,34 +26,34 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class PauseDialog extends AbstractDialog {
 
-    public static final String PAUSE_DIALOG = "dialog";
-    public static final String LBL_DIALOG = "lbl_dialog";
-    public static final String LBL_DIALOG_S = "lbl_dialog_2";
-    public static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
-    public static final String LBL_LEVEL_INDICATOR_S = "lbl_level_indicator_s";
-    public static final String LBL_GOAL_PROGRESS = "goal_progress";
-    public static final String BTN_CLOSE = "btn_close";
+    private static final String PAUSE_DIALOG = "dialog";
+    private static final String LBL_DIALOG = "lbl_dialog";
+    private static final String LBL_DIALOG_S = "lbl_dialog_2";
+    private static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
+    private static final String LBL_LEVEL_INDICATOR_S = "lbl_level_indicator_s";
+    private static final String LBL_GOAL_PROGRESS = "goal_progress";
+    private static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
-    public static final String TILE_TAG = "tile";
+    private static final String TILE_TAG = "tile";
     public static final String COMPLETED = "Completed";
     public static final String PROGRESS = "Progress: ";
     public static final String SLASH = "/";
-    public static final String GOAL_PROGRESS_LBL = "goal_progress_lbl";
-    public static final String GOAL_LBL = "goal_lbl";
+    private static final String GOAL_PROGRESS_LBL = "goal_progress_lbl";
+    private static final String GOAL_LBL = "goal_lbl";
 
-    public static final int PAUSE_Y = 50;
-    public static final int PAUSE_X = 260;
-    public static final int GOALS_X = 630;
-    public static final int GOAL_TILE_START_Y = 400;
-    public static final int GOAL_TILE_SPACE_X = 170;
-    public static final float GOAL_TILE_SCALE = 2f;
-    public static final int GOAL_TILE_STEP_Y = 110;
-    public static final int TAP_COOLDOWN = 30;
-    public static final int PAUSE_COUNT = 3;
-    public static final String GOALS_POPUP = "goal_popup_lib";
-    public static final String ACHIEVED = "achieved";
-    public static final String NOTACHIEVED = "notachieved";
-    public static final int PAUSE_Y_UP = 460;
+    private static final int PAUSE_Y = 50;
+    private static final int PAUSE_X = 260;
+    private static final int GOALS_X = 630;
+    private static final int GOAL_TILE_START_Y = 400;
+    private static final int GOAL_TILE_SPACE_X = 170;
+    private static final float GOAL_TILE_SCALE = 2f;
+    private static final int GOAL_TILE_STEP_Y = 110;
+    private static final int TAP_COOLDOWN = 30;
+    private static final int PAUSE_COUNT = 3;
+    private static final String GOALS_POPUP = "goal_popup_lib";
+    private static final String ACHIEVED = "achieved";
+    private static final String NOTACHIEVED = "notachieved";
+    private static final int PAUSE_Y_UP = 460;
     private static final String PAUSE_TEXT = "Pause";
     private static final String CHALLENGES = "Challenges";
 

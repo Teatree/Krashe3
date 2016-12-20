@@ -12,7 +12,6 @@ import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.stages.ui.Preview;
 import com.fd.etf.system.ParticleLifespanSystem;
-import com.fd.etf.utils.DebugSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -32,28 +31,26 @@ public class ShopScreenScript implements IScript {
 
     public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final String SCORE_LBL = "total_coins";
-    public static final String SCORE_LBL_SH = "total_coins_sh";
-    public static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
-    public static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
+    private static final String SCORE_LBL_SH = "total_coins_sh";
+    private static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
+    private static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
-    public static final String BTN_BACK = "btn_back";
-    public static final String HC_SHOP_SEC = "HC_shop_sec";
-    public static final String TAB_BTN_SHOP = "tab_btn_shop";
-    public static final String TAB_BTN_UPG = "tab_btn_upg";
-    public static final String CURTAIN_SHOP = "curtain_shop";
+    private static final String BTN_BACK = "btn_back";
+    private static final String HC_SHOP_SEC = "HC_shop_sec";
+    private static final String TAB_BTN_SHOP = "tab_btn_shop";
+    private static final String TAB_BTN_UPG = "tab_btn_upg";
+    private static final String CURTAIN_SHOP = "curtain_shop";
 
     public static final int INIT_HC_ITEMS_X = 146;
 
-    public static final int FIRST_BAG_X = 1950;
-    public static final int FIRST_BAG_Y = 440;
-    public static final int X_ICON_ON_BAG = 55;
-    public static final int Y_ICON_ON_BAG = 55;
+    private static final int FIRST_BAG_X = 1950;
+    private static final int FIRST_BAG_Y = 440;
+    private static final int X_ICON_ON_BAG = 55;
+    private static final int Y_ICON_ON_BAG = 55;
     private static final int SPACE_BETWEEN_BAGS_X = 20;
     private static final int SPACE_BETWEEN_BAGS_Y = 0;
 
     private static final int PAGE_SIZE = 1050;
-    public static final int CAN_MOVE_LEFT_BAG_X = 990;
-    public static final int CAN_MOVE_RIGHT_BAG_X = 10;
 
     private static final String TITLE = "title";
     private static final String TITLE_2 = "title_2";
@@ -71,8 +68,8 @@ public class ShopScreenScript implements IScript {
     boolean startTransitionIn;
     boolean startTransitionOut;
 
-    public static Entity scoreLbl;
-    public static Entity scoreLblsh;
+    private static Entity scoreLbl;
+    private static Entity scoreLblsh;
     public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
     public static int bagsZindex;
 
@@ -118,7 +115,7 @@ public class ShopScreenScript implements IScript {
         shopItem = new ItemWrapper(item);
         preview = new Preview();
         GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
-        GameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
+//        GameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
 
         // Dima's fun house
         curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();

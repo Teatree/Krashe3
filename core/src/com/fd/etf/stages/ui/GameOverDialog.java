@@ -28,14 +28,12 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class GameOverDialog extends AbstractDialog {
 
-    public static final int GAME_OVER_PROBABILITY = 0;
-
     public static final int TAP_COOL = 30;
     private static final int GAME_OVER_X = 300;
     private static final int GAME_OVER_Y = 100;
-    public final String GAME_OVER_DIALOG = "game_over_lib";
-    public final String BTN_WATCH_VIDEO = "btn_watch_video";
-    public final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
+    private static final String GAME_OVER_DIALOG = "game_over_lib";
+    private static final String BTN_WATCH_VIDEO = "btn_watch_video";
+    private static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
 
     public static float gameOverTimer = 0;
     public static final int GAME_OVER_COUNT = 5;

@@ -17,10 +17,9 @@ public class ParticleLifespanSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        ParticleLifespanComponent component = mapper.get(entity);
-        component.duration -= deltaTime;
+        mapper.get(entity).duration -= deltaTime;
 
-        if (component.duration <= 0) {
+        if (mapper.get(entity).duration <= 0) {
             getEngine().removeEntity(entity);
             ParticleComponent pc = entity.getComponent(ParticleComponent.class);
             pc.particleEffect.dispose();

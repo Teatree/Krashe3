@@ -13,7 +13,6 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import java.util.Random;
 
@@ -28,10 +27,10 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class UmbrellaSystem extends IteratingSystem {
 
-    public static final float UMBRELLA_SCALE = 2f;
+    private static final float UMBRELLA_SCALE = 2f;
     public static float umbrellaSpawnStateCounter;
 
-    public Random random = new Random();
+    private static Random random = new Random();
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
 
     public UmbrellaSystem() {
@@ -40,8 +39,6 @@ public class UmbrellaSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        SpriteAnimationStateComponent sasc = ComponentRetriever.get(entity, SpriteAnimationStateComponent.class);
-
         if (!isStarted) {
             hide(entity);
         }
@@ -50,18 +47,19 @@ public class UmbrellaSystem extends IteratingSystem {
                 entity.getComponent(UmbrellaComponent.class).state != DEAD) {
 
             UmbrellaComponent uc = mapper.get(entity);
-            DimensionsComponent dc = ComponentRetriever.get(entity, DimensionsComponent.class);
-            TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-            tc.scaleX = UMBRELLA_SCALE;
-            tc.scaleY = UMBRELLA_SCALE;
+            entity.getComponent(TransformComponent.class).scaleX = UMBRELLA_SCALE;
+            entity.getComponent(TransformComponent.class).scaleY = UMBRELLA_SCALE;
 
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
 
-            spawn(entity, deltaTime, uc, sasc, tc);
+            spawn(entity, deltaTime);
 
-            push(uc, tc);
+            push(uc, entity.getComponent(TransformComponent.class));
 
-            fly(sasc, uc, dc, tc);
+            fly(entity.getComponent(SpriteAnimationStateComponent.class),
+                    uc,
+                    entity.getComponent(DimensionsComponent.class),
+                    entity.getComponent(TransformComponent.class));
 
             if (checkCollision(uc)) {
                 gameScript.fpc.isCollision = true;
@@ -75,42 +73,45 @@ public class UmbrellaSystem extends IteratingSystem {
                 checkEatGoal(uc);
             }
         } else {
-            sasc.paused = true;
+            entity.getComponent(SpriteAnimationStateComponent.class).paused = true;
         }
     }
 
-    private void spawn(Entity entity, float deltaTime, UmbrellaComponent uc, SpriteAnimationStateComponent sasc, TransformComponent tc) {
-        if (uc.state.equals(SPAWNING)) {
-            sasc.paused = true;
-            tc.x = UmbrellaComponent.INIT_SPAWN_X;
-            tc.y = 400;
-            uc.blinkCounter--;
-            if (uc.blinkCounter == 0){
-                if (entity.getComponent(TintComponent.class).color.a > 0.95f) {
-                    entity.getComponent(TintComponent.class).color.a -= 0.1f;
+    private void spawn(Entity e, float deltaTime) {
+        if (e.getComponent(UmbrellaComponent.class).state.equals(SPAWNING)) {
+            e.getComponent(SpriteAnimationStateComponent.class).paused = true;
+            e.getComponent(TransformComponent.class).x = UmbrellaComponent.INIT_SPAWN_X;
+            e.getComponent(TransformComponent.class).y = 400;
+            e.getComponent(UmbrellaComponent.class).blinkCounter--;
+            if (e.getComponent(UmbrellaComponent.class).blinkCounter == 0){
+                if (e.getComponent(TintComponent.class).color.a > 0.95f) {
+                    e.getComponent(TintComponent.class).color.a -= 0.1f;
                 } else {
-                    entity.getComponent(TintComponent.class).color.a += 0.2f;
+                    e.getComponent(TintComponent.class).color.a += 0.2f;
                 }
-                uc.blinkCounter = 10;
+                e.getComponent(UmbrellaComponent.class).blinkCounter = 10;
             }
 
             umbrellaSpawnStateCounter += deltaTime;
             if (umbrellaSpawnStateCounter >= SPAWNING_TIME) {
-                uc.state = PUSH;
-                entity.getComponent(TintComponent.class).color.a = 1;
+                e.getComponent(UmbrellaComponent.class).state = PUSH;
+                e.getComponent(TintComponent.class).color.a = 1;
                 umbrellaSpawnStateCounter = 0;
             }
         }
     }
 
-    private void fly(SpriteAnimationStateComponent sasc, UmbrellaComponent uc, DimensionsComponent dc, TransformComponent tc) {
+    private void fly(SpriteAnimationStateComponent sasc,
+                     UmbrellaComponent uc,
+                     DimensionsComponent dc,
+                     TransformComponent tc) {
+
         if (uc.current >= 1 && uc.state.equals(FLY)) {
             uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
             uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
             uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);
 
             uc.myCatmull = new Bezier<Vector2>(uc.dataSet);
-//            uc.out = new Vector2(340, 200);
             uc.out = new Vector2(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
             uc.myCatmull.valueAt(uc.out, 5);
             uc.myCatmull.derivativeAt(uc.out, 5);
@@ -151,17 +152,17 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public static void hide(Entity entity) {
         umbrellaSpawnCounter = getNextSpawnInterval();
-        UmbrellaComponent uc = new UmbrellaComponent();
-        entity.add(uc);
+        if (entity.getComponent(UmbrellaComponent.class) == null){
+            entity.add(new UmbrellaComponent());
+        }
         entity.getComponent(UmbrellaComponent.class).state = DEAD;
         entity.getComponent(TransformComponent.class).x = -500;
         entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }
 
     public static float getNextSpawnInterval() {
-        Random r = new Random();
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
-                r.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
+                random.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
         return UmbrellaComponent.SPAWN_INTERVAL_BASE*randCoefficient;
     }
 
