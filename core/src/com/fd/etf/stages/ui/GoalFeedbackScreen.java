@@ -89,6 +89,7 @@ public class GoalFeedbackScreen {
     private boolean canTap;
     private boolean isShading;
     private int helpTimer;
+    private int boxIdleTimer;
 
     public void init(boolean isNewLevel) {
         this.isNewLevel = isNewLevel;
@@ -377,6 +378,7 @@ public class GoalFeedbackScreen {
             gift = Gift.getRandomGift();
 
             helpTimer = 0;
+            boxIdleTimer = 0;
             isAbleToProceedToResult = false;
             final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(GIFT_SCREEN);
             giftE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
@@ -406,6 +408,9 @@ public class GoalFeedbackScreen {
             sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
         }
         helpTimer++;
+        if(saBox.currentAnimation != "open") {
+            boxIdleTimer++;
+        }
 
         if (saBox.currentAnimation != "open" && spinnyShineE.getComponent(TintComponent.class).color.a < 0.96f){
             spinnyShineE.getComponent(TintComponent.class).color.a += 0.03f;
@@ -444,6 +449,12 @@ public class GoalFeedbackScreen {
 //            helpTimer = 0;
             System.out.println("NOT showing tap to open");
             lblTapToOpen.getComponent(TintComponent.class).color.a -= 0.05f;
+        }
+
+        if(boxIdleTimer > 270 && saBox.currentAnimation != "open"){
+            canPlayAnimation = true;
+            setAnimation("idle", Animation.PlayMode.NORMAL, sasBox, saBox);
+            boxIdleTimer = 0;
         }
 
         if(isAbleToProceedToResult && Gdx.input.justTouched()){
