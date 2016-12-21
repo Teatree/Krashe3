@@ -21,7 +21,7 @@ public class TrialTimer {
 
     private static final String TRIAL_TIMER = "timer_lbl";
     private static final String TRIAL_TIMER_SH = "timer_lbl_sh";
-    public static final String TIMER_LBL_TIME_UP = "TIME'S UP";
+    public static final String TIMER_LBL_TIME_UP = "TIME'NEW_LINE_SIGN UP";
 
     public Entity timerLogo;
     public Entity timerE;

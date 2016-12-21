@@ -30,6 +30,7 @@ public class Showcase {
     private static final String BTN_NO = "btn_no";
     private static final String BTN_BUY = "btn_buy";
     private static final String COIN = "coin";
+    public static final String NEW_LINE_SIGN = "~";
     public TransformComponent tcShowCase;
     private ResultScreenScript resultScreen;
     public Entity showcaseE;
@@ -81,6 +82,7 @@ public class Showcase {
                         && !isCelebrating) {
                     backBtn.getComponent(TintComponent.class).color.a += 0.05f;
                     buyBtn.getComponent(TintComponent.class).color.a += 0.05f;
+                    lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_descE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
@@ -171,12 +173,19 @@ public class Showcase {
         lbl_nameE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         showcaseE.getComponent(ZIndexComponent.class).setZIndex(200);
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
+        lbl_nameE.getComponent(TintComponent.class).color.a = 0;
 
-        lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
+        if(showCaseVanity.name.contains(NEW_LINE_SIGN)) {
+            String name = showCaseVanity.name.replace(NEW_LINE_SIGN, " ");
+            lc.text.replace(0, lc.text.capacity(), name);
+        }else{
+            lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
+        }
 
         spotLightE = showcaseE.getComponent(NodeComponent.class).getChild(SPOTLIGHT);
 
         lbl_descE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_DESC);
+        lbl_descE.getComponent(TintComponent.class).color.a = 0;
         LabelComponent lc2 = lbl_descE.getComponent(LabelComponent.class);
         if (showCaseVanity.description != null) {
             lc2.text.replace(0, lc2.text.capacity(), showCaseVanity.description);
@@ -195,6 +204,9 @@ public class Showcase {
         lbl_priceE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE);
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
+        lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+        coin.getComponent(TintComponent.class).color.a = 0;
+        spotLightE.getComponent(TintComponent.class).color.a = 0;
 
         initShowCaseItem();
 
