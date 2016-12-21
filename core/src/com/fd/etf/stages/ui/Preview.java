@@ -27,7 +27,6 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class Preview extends AbstractDialog {
 
-    private static final String PREVIEW = "tag_lib";
     private static final String ITEM_UNKNOWN = "item_unknown_n";
     private static final String BTN_RIGHT = "tag_right_btn";
     private static final String BTN_LEFT = "tag_left_btn";
@@ -38,6 +37,7 @@ public class Preview extends AbstractDialog {
 
     private static final String BTN_CLOSE = "tag_btn_close";
     private static final String LBL_ITEM_NAME = "tag_lbl_item_name";
+    private static final String LBL_ITEM_NAME_2 = "tag_lbl_item_name_2";
     private static final String LBL_PRICE_SH = "tag_lbl_price_sh";
     private static final String LBL_PAPER_PIECE = "paper_piece_img";
     private static final String COINZ_ICON = "coinz_icon";
@@ -51,10 +51,12 @@ public class Preview extends AbstractDialog {
     private static final float HIDE_INFO_TAG_DURATION = 0.3f;
     private static final String BTN_INACTIVE = "Gray";
     private static final String TAG_BUTTONZ_LIB = "tag_buttonz_lib";
+    public static final String NEW_LINE_SIGN = "~";
     public Entity lbl_desc;
     public Entity lblPrice;
     public Entity lblPriceSh;
     public Entity lblTitle;
+    public Entity lblTitle2;
 
     private static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
     private static final String TAG_NOT_NUFF_SH = "tag_lbl_not_enough_sh";
@@ -106,6 +108,7 @@ public class Preview extends AbstractDialog {
         loadPreviewFromLib();
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lblTitle = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
+        lblTitle2 = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME_2);
         lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
         lblPriceSh = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         lblNotEnough = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
@@ -176,7 +179,24 @@ public class Preview extends AbstractDialog {
         if (vc.collection != null) {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.collection);
         }
-        lblTitle.getComponent(LabelComponent.class).text.replace(0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
+
+//        lblTitle.getComponent(LabelComponent.class).text.replace(0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
+
+        if (vc.name.contains(NEW_LINE_SIGN)){
+            String[] lines = vc.name.split(NEW_LINE_SIGN);
+            lblTitle2.getComponent(TintComponent.class).color.a = 1;
+            lblTitle2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitle.getComponent(LabelComponent.class).text.replace(
+                    0, lblTitle.getComponent(LabelComponent.class).text.length, lines[0]);
+            lblTitle2.getComponent(LabelComponent.class).text.replace(
+                    0, lblTitle2.getComponent(LabelComponent.class).text.length, lines[1]);
+        }else {
+            lblTitle2.getComponent(TintComponent.class).color.a = 0;
+            lblTitle2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitle.getComponent(LabelComponent.class).text.replace(
+                    0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
+        }
+
         lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
                 String.valueOf(vc.cost));
         lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,

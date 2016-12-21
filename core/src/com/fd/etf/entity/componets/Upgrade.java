@@ -46,7 +46,7 @@ public class Upgrade extends ShopItem{
         Upgrade phoenix = new Upgrade();
         phoenix.upgradeType = UpgradeType.PHOENIX;
         phoenix.cost = 13;
-        phoenix.name = "phoenix";
+        phoenix.name = "PHOENIX";
         phoenix.bought = false;
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
@@ -61,7 +61,7 @@ public class Upgrade extends ShopItem{
         Upgrade bjd = new Upgrade();
         bjd.upgradeType = UpgradeType.BJ_DOUBLE;
         bjd.cost = 13;
-        bjd.name = "bj_double";
+        bjd.name = "DOUBLE~BUG JUICE";
         bjd.bought = false;
         bjd.description = "more juice \\0/";
         bjd.enabled = false;

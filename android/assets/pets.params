@@ -1,1 +1,67 @@
-[{class:com.fd.etf.utils.SaveMngr$PetJson,name:raven,cost:42,tryPeriod:true,tryPeriodDuration:-31879601,amountBugsBeforeCharging:3,totalEatenBugs:99,shopIcon:itemravenPET,tryPeriodTimer:51,tryPeriodStart:1480025617172,petCannonName:pet_cannon,isHardCurr:true},{class:com.fd.etf.utils.SaveMngr$PetJson,name:dog,cost:42,tryPeriodDuration:-3588335659,amountBugsBeforeCharging:3,totalEatenBugs:49,shopIcon:itemdogPET,tryPeriodTimer:25,tryPeriodStart:1475228494742,petCannonName:pet_cannon,isHardCurr:true},{class:com.fd.etf.utils.SaveMngr$PetJson,name:cat,bought:true,activated:true,cost:42,tryPeriodDuration:-3588335659,amountBugsBeforeCharging:3,totalEatenBugs:52,shopIcon:itemcatPET,tryPeriodTimer:25,tryPeriodStart:1475228494742,petCannonName:pet_cannon,isHardCurr:true},{class:com.fd.etf.utils.SaveMngr$PetJson,name:simple_bird,cost:42,tryPeriod:true,tryPeriodDuration:-3571222437,amountBugsBeforeCharging:3,totalEatenBugs:48,shopIcon:itembirdPET,tryPeriodTimer:25,tryPeriodStart:1475228494742,petCannonName:pet_cannon},{class:com.fd.etf.utils.SaveMngr$PetJson,name:dragon,cost:42,tryPeriodDuration:-3588335659,amountBugsBeforeCharging:3,totalEatenBugs:48,shopIcon:itemdragonPET,tryPeriodTimer:25,tryPeriodStart:1475228494742,petCannonName:pet_cannon}]
+[{
+	class: com.fd.etf.utils.SaveMngr$PetJson,
+	name: RAVEN,
+	cost: 42,
+	tryPeriod: true,
+	tryPeriodDuration: -34172900,
+	amountBugsBeforeCharging: 3,
+	totalEatenBugs: 99,
+	shopIcon: itemravenPET,
+	tryPeriodTimer: 51,
+	tryPeriodStart: 1480025617172,
+	petCannonName: pet_cannon,
+	isHardCurr: true
+},
+{
+	class: com.fd.etf.utils.SaveMngr$PetJson,
+	name: DOG,
+	cost: 42,
+	tryPeriodDuration: -3595426080,
+	amountBugsBeforeCharging: 3,
+	totalEatenBugs: 49,
+	shopIcon: itemdogPET,
+	tryPeriodTimer: 25,
+	tryPeriodStart: 1475228494742,
+	petCannonName: pet_cannon,
+	isHardCurr: true
+},
+{
+	class: com.fd.etf.utils.SaveMngr$PetJson,
+	name: CAT,
+	bought: true,
+	activated: true,
+	cost: 42,
+	tryPeriodDuration: -3595426080,
+	amountBugsBeforeCharging: 3,
+	totalEatenBugs: 52,
+	shopIcon: itemcatPET,
+	tryPeriodTimer: 25,
+	tryPeriodStart: 1475228494742,
+	petCannonName: pet_cannon,
+	isHardCurr: true
+},
+{
+	class: com.fd.etf.utils.SaveMngr$PetJson,
+	name: SIMPLE BIRD,
+	cost: 42,
+	tryPeriod: true,
+	tryPeriodDuration: -3578312858,
+	amountBugsBeforeCharging: 3,
+	totalEatenBugs: 48,
+	shopIcon: itembirdPET,
+	tryPeriodTimer: 25,
+	tryPeriodStart: 1475228494742,
+	petCannonName: pet_cannon
+},
+{
+	class: com.fd.etf.utils.SaveMngr$PetJson,
+	name: DRAGON,
+	cost: 42,
+	tryPeriodDuration: -3595426080,
+	amountBugsBeforeCharging: 3,
+	totalEatenBugs: 48,
+	shopIcon: itemdragonPET,
+	tryPeriodTimer: 25,
+	tryPeriodStart: 1475228494742,
+	petCannonName: pet_cannon
+}]
