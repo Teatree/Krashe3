@@ -170,7 +170,7 @@ public class ShopScreenScript implements IScript {
     }
 
     private void sortHCitemsAccordingUI() {
-        String[] names = new String[]{"RAVEN", "PHOENIX", "DOG", "DOUBLE~BUG JUICE", "CAT"};
+        String[] names = new String[]{"RAVEN", "CAT", "DOG", "DOUBLE~BUG JUICE", "PHOENIX"};
         List<ShopItem> hcsi = new ArrayList<>();
         for (String title : names) {
             hcsi.add(findCorrectHCitemByTitle(title));
