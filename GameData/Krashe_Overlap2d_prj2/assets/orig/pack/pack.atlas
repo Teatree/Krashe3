@@ -63,49 +63,49 @@ betaptoplay
   index: -1
 btnachievements
   rotate: false
-  xy: 1035, 18
+  xy: 1268, 747
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnads
   rotate: false
-  xy: 1106, 18
+  xy: 1268, 674
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnarrowleft
   rotate: false
-  xy: 653, 15
+  xy: 1593, 826
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrownoleft
   rotate: false
-  xy: 747, 25
+  xy: 1643, 826
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrownoright
   rotate: false
-  xy: 1701, 879
+  xy: 653, 15
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrowright
   rotate: false
-  xy: 1751, 879
+  xy: 1667, 870
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnback
   rotate: false
-  xy: 1177, 18
+  xy: 1339, 751
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -119,70 +119,70 @@ btnbuy
   index: -1
 btnfb
   rotate: false
-  xy: 1248, 18
+  xy: 1339, 678
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btngoals
   rotate: false
-  xy: 1319, 18
+  xy: 1410, 751
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnleadrboard
   rotate: false
-  xy: 653, 57
+  xy: 1410, 678
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusic
   rotate: false
-  xy: 724, 67
+  xy: 1481, 753
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnmusicno
   rotate: false
-  xy: 1268, 789
+  xy: 1481, 680
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnnext
   rotate: false
-  xy: 1268, 716
+  xy: 1035, 18
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1268, 643
+  xy: 1106, 18
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 1292, 570
+  xy: 1177, 18
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplay
   rotate: false
-  xy: 1292, 497
+  xy: 1248, 18
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplayservices
   rotate: false
-  xy: 1292, 424
+  xy: 1552, 753
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -203,28 +203,28 @@ btnpreviewon
   index: -1
 btnsettings
   rotate: false
-  xy: 1275, 877
+  xy: 1552, 680
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1346, 883
+  xy: 1319, 18
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1417, 883
+  xy: 653, 57
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1488, 883
+  xy: 724, 67
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -280,14 +280,14 @@ btntextofff
   index: -1
 btnup
   rotate: false
-  xy: 1559, 883
+  xy: 1623, 753
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1630, 883
+  xy: 1623, 680
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -324,7 +324,7 @@ buttonbackoff
   index: -1
 coin
   rotate: false
-  xy: 1292, 363
+  xy: 1783, 858
   size: 58, 59
   orig: 58, 59
   offset: 0, 0
@@ -366,7 +366,7 @@ dotOn
   index: -1
 emptyStar
   rotate: false
-  xy: 1725, 921
+  xy: 1201, 820
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -415,7 +415,7 @@ iconpowerupsd
   index: -1
 iconshop
   rotate: false
-  xy: 1801, 884
+  xy: 1843, 882
   size: 42, 35
   orig: 42, 35
   offset: 0, 0
@@ -518,149 +518,170 @@ itemfez
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhandkerchief
+itemflagireland
   rotate: false
   xy: 1725, 1051
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhelm
+itemhandkerchief
   rotate: false
   xy: 1857, 1183
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhoneyjar
+itemhelm
   rotate: false
   xy: 1857, 1051
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemiceycrown
+itemhoneyjar
   rotate: false
   xy: 699, 272
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemknife
+itemiceycrown
   rotate: false
   xy: 554, 130
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemmasonjar
+itemknife
   rotate: false
   xy: 896, 574
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemmonknecklace
+itemmasonjar
   rotate: false
   xy: 896, 442
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itempartyhat
+itemmonknecklace
   rotate: false
   xy: 1028, 487
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemqueenbeecrown
+itempartyhat
   rotate: false
   xy: 1028, 355
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemqueenbeeneck
+itemqueenbeecrown
   rotate: false
   xy: 1160, 487
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemscarf
+itemqueenbeeneck
   rotate: false
   xy: 1160, 355
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemshoe
+itemscarf
   rotate: false
   xy: 831, 310
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickclover
+itemshoe
   rotate: false
   xy: 831, 178
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgingerbeard
+itemshowel
   rotate: false
   xy: 699, 140
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgoldcouldren
+itemstpatrickclover
   rotate: false
   xy: 963, 223
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickhat
+itemstpatrickgingerbeard
   rotate: false
   xy: 1095, 223
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemsunflower
+itemstpatrickgoldcouldren
   rotate: false
   xy: 1227, 223
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemteacup
+itemstpatrickhat
   rotate: false
   xy: 963, 91
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemunknown
+itemsunflower
   rotate: false
   xy: 1095, 91
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemweat
+itemteacup
   rotate: false
   xy: 1227, 91
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemwig
+itemunicorn
   rotate: false
   xy: 831, 46
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemunknown
+  rotate: false
+  xy: 1725, 919
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemweat
+  rotate: false
+  xy: 1857, 919
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemwig
+  rotate: false
+  xy: 1331, 824
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
@@ -796,7 +817,7 @@ showcasespotlight
   index: -1
 sludge
   rotate: false
-  xy: 703, 2
+  xy: 1667, 912
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
@@ -810,14 +831,14 @@ standardpopup
   index: -1
 star
   rotate: false
-  xy: 1855, 921
+  xy: 1463, 826
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 starY
   rotate: false
-  xy: 1194, 620
+  xy: 1717, 853
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -838,21 +859,21 @@ tutorialline
   index: -1
 uibtnback1
   rotate: false
-  xy: 1201, 862
+  xy: 1593, 868
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 uibtnback2
   rotate: false
-  xy: 1194, 774
+  xy: 1194, 732
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
   index: -1
 uibtnback3
   rotate: false
-  xy: 1194, 686
+  xy: 1194, 644
   size: 72, 86
   orig: 72, 86
   offset: 0, 0
