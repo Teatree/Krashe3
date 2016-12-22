@@ -91,14 +91,14 @@ btnarrownoleft
   index: -1
 btnarrownoright
   rotate: false
-  xy: 726, 322
+  xy: 726, 390
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
   index: -1
 btnarrowright
   rotate: false
-  xy: 726, 280
+  xy: 726, 348
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
@@ -285,9 +285,16 @@ btnup
   orig: 69, 71
   offset: 0, 0
   index: -1
-btnyes
+btnwatchads
   rotate: false
   xy: 360, 2
+  size: 69, 71
+  orig: 69, 71
+  offset: 0, 0
+  index: -1
+btnyes
+  rotate: false
+  xy: 799, 490
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -394,7 +401,7 @@ iconclothing
   index: -1
 iconclothingd
   rotate: false
-  xy: 726, 242
+  xy: 726, 310
   size: 49, 36
   orig: 49, 36
   offset: 0, 0
@@ -415,7 +422,7 @@ iconpowerupsd
   index: -1
 iconshop
   rotate: false
-  xy: 726, 161
+  xy: 726, 273
   size: 42, 35
   orig: 42, 35
   offset: 0, 0
@@ -739,7 +746,7 @@ pop-up_back
   index: -1
 progressbarfiller
   rotate: false
-  xy: 726, 364
+  xy: 870, 495
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0
@@ -817,7 +824,7 @@ showcasespotlight
   index: -1
 sludge
   rotate: false
-  xy: 726, 198
+  xy: 896, 849
   size: 42, 42
   orig: 42, 42
   offset: 0, 0

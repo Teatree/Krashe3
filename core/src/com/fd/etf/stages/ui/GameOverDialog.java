@@ -34,10 +34,12 @@ public class GameOverDialog extends AbstractDialog {
     private static final String GAME_OVER_DIALOG = "game_over_lib";
     private static final String BTN_WATCH_VIDEO = "btn_watch_video";
     private static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
+    private static final String LABEL_TIMER_GAMEOVER_SH = "label_timer_gameover_sh";
+    private static final String TIMER = "timer_composite";
 
     public static float gameOverTimer = 0;
     public static final int GAME_OVER_COUNT = 5;
-    public static int gameOverCounter = GAME_OVER_COUNT;
+    public static int gameOverCounter;
     private int tapCoolDown = TAP_COOL;
 
     public static Entity gameOverDialogE;
@@ -64,10 +66,15 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
 
-        Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
+        Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
         gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), Integer.toString(GAME_OVER_COUNT));
         gameOverTimerLbl.getComponent(ZIndexComponent.class).setZIndex(gameOverDialogE.getComponent(ZIndexComponent.class).getZIndex() + 1);
+
+        Entity gameOverTimerLblsh = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER_SH);
+        LabelComponent gameOverLblCsh = gameOverTimerLblsh.getComponent(LabelComponent.class);
+        gameOverLblCsh.text.replace(0, gameOverLblCsh.text.capacity(), Integer.toString(GAME_OVER_COUNT));
+        gameOverTimerLblsh.getComponent(ZIndexComponent.class).setZIndex(gameOverDialogE.getComponent(ZIndexComponent.class).getZIndex() + 2);
     }
 
     public void hide() {
@@ -91,8 +98,8 @@ public class GameOverDialog extends AbstractDialog {
     private void initReviveBtn(final TransformComponent dialogTc) {
         final Entity reviveBtn = gameOverDialogE.getComponent(NodeComponent.class).getChild(BTN_WATCH_VIDEO);
 //        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
-        reviveBtn.getComponent(TransformComponent.class).x = 240;
-        reviveBtn.getComponent(TransformComponent.class).y = 80;
+//        reviveBtn.getComponent(TransformComponent.class).x = 240;
+//        reviveBtn.getComponent(TransformComponent.class).y = 80;
         reviveBtn.add(new ButtonComponent());
         reviveBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(reviveBtn) {
@@ -137,13 +144,16 @@ public class GameOverDialog extends AbstractDialog {
 
         fade(gameOverDialogE, isGameOver.get());
         if (isGameOver.get()) {
-            final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
+            final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
+            final Entity gameOverTimerLblsh = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER_SH);
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
+            final LabelComponent gameOverLblCsh = gameOverTimerLblsh.getComponent(LabelComponent.class);
 
             final ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
             gameOverTimerLbl.add(ac);
+            gameOverTimerLblsh.add(ac);
 
 
             if (Gdx.input.justTouched() && tapCoolDown <= 0) {
@@ -156,6 +166,7 @@ public class GameOverDialog extends AbstractDialog {
             if (gameOverTimer >= 1) {
                 gameOverTimer = 0;
                 gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), String.valueOf(gameOverCounter--));
+                gameOverLblCsh.text.replace(0, gameOverLblCsh.text.capacity(), gameOverLblC.getText().toString());
             }
             finishGame();
         } else {
