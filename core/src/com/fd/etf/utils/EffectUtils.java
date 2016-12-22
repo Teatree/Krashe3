@@ -17,6 +17,7 @@ import static com.fd.etf.stages.GameStage.sceneLoader;
 public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
+    public static final String SHINE_BURST = "shine.party";
     public static final String GREEN_SPLATTER = "splatter.party";
     public static final String DEFAULT_LAYER = "Default";
     public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
@@ -78,7 +79,11 @@ public class EffectUtils {
     }
 
     public static void playYellowStarsParticleEffect(float x, float y){
-        playParticleEffect(x, y, STARS_YELLOW_BURST, 0.8f);
+        playParticleEffect(x, y, STARS_YELLOW_BURST, 1.2f);
+    }
+
+    public static void playShineParticleEffect(float x, float y){
+        playParticleEffect(x, y, SHINE_BURST, 0.8f);
     }
 
     public static void playSplatterParticleEffect(float x, float y){

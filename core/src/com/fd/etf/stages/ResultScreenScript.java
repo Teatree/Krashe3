@@ -24,7 +24,7 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ResultScreenScript implements IScript {
 
-     private static final int MAX_PROGRESS_BAR_WIDTH = 670;
+     private static final int MAX_PROGRESS_BAR_WIDTH = 655;
      public static final double PERCENTS_TO_OFFER_AD = 0.99;
      private static final int PROGRESS_BAR_STEP = 12;
      private static final String IMG_PROGRESS_BAR = "img_progress_bar";
@@ -65,7 +65,7 @@ public class ResultScreenScript implements IScript {
     int j = 0;
     Entity backPlay;
     //    private GameStage stage;
-    private ItemWrapper resultScreenItem;
+    public ItemWrapper resultScreenItem;
     private Entity adsBtn;
     private Showcase showcase;
     private TrialTimer timer;
@@ -254,6 +254,7 @@ public class ResultScreenScript implements IScript {
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
             if (!show && showCaseVanity != null && showCaseVanity.cost <= gameScript.fpc.totalScore) {
+                System.out.println("INITING SHOWCASE!!");
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
             }
