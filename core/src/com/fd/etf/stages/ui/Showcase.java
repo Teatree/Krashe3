@@ -217,9 +217,12 @@ public class Showcase {
     }
 
     private void initShowCaseItem() {
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
-        if (itemIcon == null)
+        CompositeItemVO tempItemC;
+        if (showCaseVanity.name == null || showCaseVanity.name == "") {
             tempItemC = sceneLoader.loadVoFromLibrary(ShopScreenScript.ITEM_UNKNOWN_N);
+        }else{
+            tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
+        }
         itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
         sceneLoader.getEngine().addEntity(itemIcon);
