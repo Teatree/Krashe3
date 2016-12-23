@@ -38,14 +38,12 @@ active: false
 - Y Offset - 
 active: false
 - Spawn Shape - 
-shape: ellipse
-edges: false
-side: both
+shape: point
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 100.0
-highMax: 100.0
+highMin: 150.0
+highMax: 150.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -54,8 +52,8 @@ timeline0: 0.0
 - Spawn Height - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 50.0
-highMax: 50.0
+highMin: 150.0
+highMax: 150.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -64,8 +62,8 @@ timeline0: 0.0
 - Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 32.0
-highMax: 64.0
+highMin: 16.0
+highMax: 88.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -77,20 +75,22 @@ timeline1: 0.7671233
 timeline2: 1.0
 - Velocity - 
 active: true
-lowMin: -45.0
-lowMax: -45.0
-highMin: -150.0
-highMax: -400.0
+lowMin: 0.0
+lowMax: 0.0
+highMin: 240.0
+highMax: 700.0
 relative: false
-scalingCount: 2
+scalingCount: 3
 scaling0: 0.60784316
-scaling1: 0.9411765
-timelineCount: 2
+scaling1: 1.0
+scaling2: 0.23529412
+timelineCount: 3
 timeline0: 0.0
-timeline1: 0.7671233
+timeline1: 0.5205479
+timeline2: 0.86986303
 - Angle - 
 active: true
-lowMin: 0.0
+lowMin: 360.0
 lowMax: 0.0
 highMin: 360.0
 highMax: 0.0
@@ -108,7 +108,18 @@ active: false
 - Wind - 
 active: false
 - Gravity - 
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: -220.0
+highMax: -220.0
+relative: false
+scalingCount: 2
+scaling0: 0.0
+scaling1: 1.0
+timelineCount: 2
+timeline0: 0.0
+timeline1: 1.0
 - Tint - 
 colorsCount: 6
 colors0: 1.0
@@ -128,12 +139,12 @@ highMax: 1.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
-scaling1: 0.7719298
+scaling1: 0.10526316
 scaling2: 0.0
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.65753424
-timeline2: 0.9931507
+timeline1: 0.5410959
+timeline2: 1.0
 - Options - 
 attached: false
 continuous: true

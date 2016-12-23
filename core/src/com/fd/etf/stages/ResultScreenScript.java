@@ -24,7 +24,7 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ResultScreenScript implements IScript {
 
-     private static final int MAX_PROGRESS_BAR_WIDTH = 655;
+     private static final int MAX_PROGRESS_BAR_WIDTH = 660;
      public static final double PERCENTS_TO_OFFER_AD = 0.99;
      private static final int PROGRESS_BAR_STEP = 12;
      private static final String IMG_PROGRESS_BAR = "img_progress_bar";

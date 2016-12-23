@@ -76,7 +76,7 @@ public class Showcase {
     public void act(float delta) {
         if (isActing) {
             counter += 1;
-            if (counter == 40 && itemIcon != null) {
+            if (counter == 30 && itemIcon != null) {
                 EffectUtils.playShineParticleEffect(1010, 290);
                 ActionComponent ac3 = new ActionComponent();
                 ActionComponent ac2 = new ActionComponent();
