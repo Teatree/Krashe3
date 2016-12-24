@@ -310,7 +310,6 @@
 	shopIcon: itemunicorn,
 	name: Unicorn,
 	cost: 12500,
-	leaves: true
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,

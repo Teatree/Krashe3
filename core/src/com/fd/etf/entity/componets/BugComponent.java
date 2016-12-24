@@ -32,6 +32,7 @@ public class BugComponent implements Component {
     public float startX, startY;
     public float endX;
     public float endY;
+    public float y;
     public float duration = 14;
     public float amplitude = 50;
     public float time;

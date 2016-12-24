@@ -87,6 +87,7 @@ public class BugSystem extends IteratingSystem {
                     spawnBugJuiceBubble(bc);
                 }
                 if (isOutOfBounds(bc)) {
+                    gameScript.loseFeedback.getComponent(TransformComponent.class).y = entity.getComponent(TransformComponent.class).y;
                     BugPool.getInstance().release(entity);
                     gameScript.onBugOutOfBounds();
                 }
