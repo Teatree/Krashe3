@@ -3,6 +3,7 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -11,6 +12,7 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
+import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -19,6 +21,7 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Random;
@@ -39,6 +42,7 @@ public class GameScreenScript implements IScript {
 
     public static final CameraShaker cameraShaker = new CameraShaker();
     private static final String TUTORIAL_LINE = "tutorial_line";
+    private static final String LOSE_FEEDBACK = "lose_feedback";
     private static final String UMBRELLA_ANI = "umbrellaAni";
     private static final String START_MESSAGE = "TAP TO START";
     private static final String DOUBLE_BJ_ICON = "double_bj_badge";
@@ -61,6 +65,7 @@ public class GameScreenScript implements IScript {
     public Random random = new Random();
     public FlowerPublicComponent fpc;
     public Entity scoreLabelE;
+    public Entity loseFeedback;
     public Entity scoreLabelES;
     public LabelComponent startLabelComponent;
     public Entity background;
@@ -192,6 +197,9 @@ public class GameScreenScript implements IScript {
         beesModeEndAni.getComponent(SpriterComponent.class).scale = 0.7f;
         beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
         beesModeEndAni.getComponent(TransformComponent.class).y = 1800;
+
+        loseFeedback = gameItem.getChild(LOSE_FEEDBACK).getEntity();
+        loseFeedback.getComponent(TintComponent.class).color.a = 0;
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
@@ -479,6 +487,17 @@ public class GameScreenScript implements IScript {
 //            usePhoenix();
 //        }
 //        else {
+
+        loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
+        loseFeedback.getComponent(TransformComponent.class).x = 950;
+        loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.fadeIn(0.2f));
+        ac.dataArray.add(Actions.scaleTo(1.5f,1.5f,0.2f));
+        ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
+        loseFeedback.add(ac);
+
             FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
 //        }
