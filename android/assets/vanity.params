@@ -292,6 +292,7 @@
 	assetsToChange: {
 		class: java.util.HashMap,
 		leaf_left: leaf_left_flag_ireland,
+		leaf_right: leaf_right_default,
 		class: java.util.HashMap
 	},
 	shopIcon: itemflagireland,
@@ -316,6 +317,7 @@
 	assetsToChange: {
 		class: java.util.HashMap,
 		leaf_left: leaf_left_showel,
+		leaf_right: leaf_right_default,
 		class: java.util.HashMap
 	},
 	shopIcon: itemshowel,
