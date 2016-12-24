@@ -176,7 +176,7 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void finishGame() {
-        if (gameOverCounter <= 0) {
+        if (gameOverCounter+1 <= 0) {
             if (!gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow &&
