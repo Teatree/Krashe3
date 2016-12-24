@@ -30,7 +30,7 @@ public class GameOverDialog extends AbstractDialog {
 
     public static final int TAP_COOL = 30;
     private static final int GAME_OVER_X = 300;
-    private static final int GAME_OVER_Y = 100;
+    private static final int GAME_OVER_Y = 150;
     private static final String GAME_OVER_DIALOG = "game_over_lib";
     private static final String BTN_WATCH_VIDEO = "btn_watch_video";
     private static final String LABEL_TIMER_GAMEOVER = "label_timer_gameover";
@@ -124,7 +124,7 @@ public class GameOverDialog extends AbstractDialog {
         isAngeredBeesMode = false;
         BugSystem.blowUpAllBugs = true;
         BugSystem.blowUpCounter = 10;
-        FlowerComponent.state = FlowerComponent.State.IDLE;
+        FlowerComponent.state = FlowerComponent.State.REVIVE_ADS;
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {

@@ -27,6 +27,7 @@ public class FlowerSystem extends IteratingSystem {
     private static final int FLOWER_MAX_Y_POS = 640;
 
     private static final String TUTORIAL_LINE = "tutorial_line";
+    private int randomSulkSwtich;
 
     public FlowerSystem() {
         super(Family.all(FlowerComponent.class).get());
@@ -69,7 +70,13 @@ public class FlowerSystem extends IteratingSystem {
             bite(sc);
 
             usePhoenix(tc, sc);
-        } else {
+
+            reviveAds(tc, sc);
+        } else if (isPause.get() && isGameOver.get()){
+            sc.player.speed = FPS;
+
+            sulk(sc);
+        }  else {
             sc.player.speed = 0;
         }
 
@@ -81,7 +88,8 @@ public class FlowerSystem extends IteratingSystem {
                 isPause.set(true);
                 setLoseAnimation(sc);
                 if (isAnimationFinished(sc)) {
-                    state = State.DEAD;
+                    setSulkAnimation(sc);
+                    state = State.SULKING;
                     if (gameScript.fpc.canUsePhoenix()) {
                         isPause.set(false);
                         GameScreenScript.usePhoenix();
@@ -90,6 +98,22 @@ public class FlowerSystem extends IteratingSystem {
                         gameScript.endGame();
                     }
                 }
+            }
+        }
+    }
+
+    private void sulk(SpriterComponent sc) {
+        if (state.equals(SULKING)) {
+            randomSulkSwtich++;
+            if(isAnimationFinished(sc) && randomSulkSwtich > 150){
+                setSulkAnimation(sc);
+                System.out.println("TURNING ON THE LOOK");
+//                if(isAnimationFinished(sc)){
+//                    setSulkIdleAnimation(sc);
+//                    randomSulkSwtich = 0;
+//                }
+            }else if(isAnimationFinished(sc) && randomSulkSwtich < 150){
+                setSulkIdleAnimation(sc);
             }
         }
     }
@@ -165,7 +189,20 @@ public class FlowerSystem extends IteratingSystem {
         if (state.equals(PHOENIX)) {
             tc.x = FLOWER_X_POS;
             tc.y = FLOWER_Y_POS;
-            setBiteIdleAnimation(sc);
+            setReviveAnimation(sc);
+            if (isAnimationFinished(sc)) {
+                state = IDLE;
+                setIdleAnimation(sc);
+                BugSystem.blowUpAllBugs = false;
+            }
+        }
+    }
+
+    private void reviveAds(TransformComponent tc, SpriterComponent sc){
+        if (state.equals(REVIVE_ADS)) {
+            tc.x = FLOWER_X_POS;
+            tc.y = FLOWER_Y_POS;
+            setReviveAnimation(sc);
             if (isAnimationFinished(sc)) {
                 state = IDLE;
                 setIdleAnimation(sc);
@@ -269,9 +306,19 @@ public class FlowerSystem extends IteratingSystem {
         sc.player.setAnimation(5);
     }
 
-    private void setReviveAnimation(SpriterComponent sc) {
+    private void setSulkIdleAnimation(SpriterComponent sc) {
         sc.player.speed = FPS;
         sc.player.setAnimation(6);
+    }
+
+    private void setSulkAnimation(SpriterComponent sc) {
+        sc.player.speed = FPS;
+        sc.player.setAnimation(7);
+    }
+
+    private void setReviveAnimation(SpriterComponent sc) {
+        sc.player.speed = FPS;
+        sc.player.setAnimation(8);
     }
 
     public void move(TransformComponent tc, float delta) {

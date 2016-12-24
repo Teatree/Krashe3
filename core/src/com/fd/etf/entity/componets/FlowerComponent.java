@@ -23,7 +23,7 @@ public class FlowerComponent implements Component {
         ATTACK_BITE,
         PHOENIX,
         LOSING,
-        DEAD,
+        SULKING,
         REVIVE_ADS,
         NO_REVIVE
     }
