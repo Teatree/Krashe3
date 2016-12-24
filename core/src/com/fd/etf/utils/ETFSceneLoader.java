@@ -1,9 +1,6 @@
 package com.fd.etf.utils;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,7 +11,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.commons.IExternalItemType;
 import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -36,11 +32,11 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ETFSceneLoader extends SceneLoader {
+public class ETFSceneLoader {
 
     public Entity rootEntity;
     public SceneVO sceneVO;
-    public Engine engine = null;
+    public PooledEngine engine = null;
 
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
@@ -48,14 +44,14 @@ public class ETFSceneLoader extends SceneLoader {
     public ResourceManager rm = null;
     private float pixelsPerWU = 1;
 
-    public Map<String, Engine> engineByScene = new HashMap<>();
+    public Map<String, PooledEngine> engineByScene = new HashMap<>();
     public Map<String, Entity> rootEntityByScene = new HashMap<>();
 
     public ETFSceneLoader() {
         ResourceManager rm = new ResourceManager();
         rm.initAllResources();
         this.rm = rm;
-        this.engine = new Engine();
+        this.engine = new PooledEngine();
         initSceneLoader();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
             loadScene(sceneName);
@@ -66,8 +62,10 @@ public class ETFSceneLoader extends SceneLoader {
         ResourceManager rm = new ResourceManager();
         rm.initAllResources();
         this.rm = rm;
-        this.engine = new Engine();
-        initSceneLoader();
+        System.out.println(">>> rm = " + rm);
+
+        this.engine = new PooledEngine();
+//        initSceneLoader();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
             if (!(sceneName.equals("ResultScene") || sceneName.equals("ShopScene"))) {
                 loadScene(sceneName, viewport);
@@ -77,7 +75,7 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     public ETFSceneLoader(ResourceManager rm) {
-        this.engine = new Engine();
+        this.engine = new PooledEngine();
         this.rm = rm;
         initSceneLoader();
     }
@@ -137,8 +135,9 @@ public class ETFSceneLoader extends SceneLoader {
      * this method is called when rm has loaded all data
      */
     public void initSceneLoader() {
-        addSystems();
-        entityFactory = new EntityFactory( rm);
+        System.out.println(" >>> initSceneLoader ");
+            addSystems();
+            entityFactory = new EntityFactory(engine, rm);
     }
 
     public SceneVO getSceneVO() {
@@ -147,7 +146,7 @@ public class ETFSceneLoader extends SceneLoader {
 
     public SceneVO loadScene(String sceneName, Viewport viewport) {
 
-        this.engine = new Engine();
+        this.engine = new PooledEngine();
         initSceneLoader();
 
         pixelsPerWU = rm.getProjectVO().pixelToWorld;
@@ -165,9 +164,9 @@ public class ETFSceneLoader extends SceneLoader {
 
         rootEntityByScene.put(sceneName, rootEntity);
         engineByScene.put(sceneName, engine);
-        System.out.println();
+        System.out.println(">>> load scene -- " + sceneName);
 
-        setAmbienceInfo(sceneVO);
+//        setAmbienceInfo(sceneVO);
         return sceneVO;
     }
 
@@ -198,21 +197,14 @@ public class ETFSceneLoader extends SceneLoader {
     }
 
     private void addSystems() {
-        ParticleSystem particleSystem = new ParticleSystem();
-        SpriteAnimationSystem animationSystem = new SpriteAnimationSystem();
-        LayerSystem layerSystem = new LayerSystem();
-        CompositeSystem compositeSystem = new CompositeSystem();
-        LabelSystem labelSystem = new LabelSystem();
-        ScriptSystem scriptSystem = new ScriptSystem();
-        ActionSystem actionSystem = new ActionSystem();
         renderer = new Overlap2dRenderer(new SpriteBatch());
-        engine.addSystem(animationSystem);
-        engine.addSystem(particleSystem);
-        engine.addSystem(layerSystem);
-        engine.addSystem(compositeSystem);
-        engine.addSystem(labelSystem);
-        engine.addSystem(scriptSystem);
-        engine.addSystem(actionSystem);
+        engine.addSystem(new SpriteAnimationSystem());
+        engine.addSystem(new ParticleSystem());
+        engine.addSystem(new LayerSystem());
+        engine.addSystem(new CompositeSystem());
+        engine.addSystem(new LabelSystem());
+        engine.addSystem(new ScriptSystem());
+        engine.addSystem(new ActionSystem());
         engine.addSystem(renderer);
 
         // additional
@@ -256,7 +248,9 @@ public class ETFSceneLoader extends SceneLoader {
 
                 Entity parentEntity = parentComponent.parentEntity;
                 NodeComponent parentNodeComponent = ComponentRetriever.get(parentEntity, NodeComponent.class);
-                parentNodeComponent.removeChild(entity);
+                if (parentNodeComponent != null) {
+                    parentNodeComponent.removeChild(entity);
+                }
 
                 // check if composite and remove all children
                 NodeComponent nodeComponent = ComponentRetriever.get(entity, NodeComponent.class);

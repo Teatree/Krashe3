@@ -6,7 +6,7 @@ import com.brashmonkey.spriter.Player;
 
 import java.util.ArrayList;
 
-public class SpriterComponent implements Component {
+public class SpriterComponent implements Component{
 	public Player player;
 	public Data data;
 	public ArrayList<String> animations = new ArrayList<String>();

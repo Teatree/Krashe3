@@ -3,6 +3,7 @@ package com.fd.etf.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.Main;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.SaveMngr;
@@ -13,7 +14,7 @@ import java.util.Random;
 import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.GameStage.sceneLoader;
 
-public class PetComponent extends ShopItem implements Component {
+public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     public static final int OUTSIDE_DURATION_MAX = 1000;
     public static final int OUTSIDE_DURATION_MIN = 500;
@@ -141,6 +142,11 @@ public class PetComponent extends ShopItem implements Component {
 
     public void setOutsideStateDuration() {
         this.outsideCounter = new Random().nextInt(OUTSIDE_DURATION_MAX - OUTSIDE_DURATION_MIN) + OUTSIDE_DURATION_MIN;
+    }
+
+    @Override
+    public void reset() {
+
     }
 //
 //    public String updateTryPeriodTimer() {

@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Random;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
+import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.system.CocoonSystem.cocoonMultipliers;
 import static com.fd.etf.system.CocoonSystem.currentCocoonMultiplier;
-import static com.fd.etf.stages.GameScreenScript.*;
 
 public class BugSpawnSystem extends EntitySystem {
 
@@ -80,7 +80,7 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private TransformComponent getPos(BugComponent bc) {
-        TransformComponent transformComponent = new TransformComponent();
+        TransformComponent transformComponent = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
         transformComponent.x = rand.nextInt(SPAWN_MAX_X - SPAWN_MIN_X) + SPAWN_MIN_X;
         transformComponent.y = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
         bc.endX = 1450;

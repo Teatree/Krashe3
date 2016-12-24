@@ -443,7 +443,7 @@ public class MenuScreenScript implements IScript {
             startGameTransition = false;
             GameStage.viewport.getCamera().translate(0, 0, 0);
             currentFlowerFrame = menuItem.getChild(MM_FLOWER).getEntity().getComponent(NodeComponent.class).getChild("flw_ani").getComponent(SpriterComponent.class).player.getTime();
-            System.out.println("currentFlowerFrame: " + currentFlowerFrame);
+//            System.out.println("currentFlowerFrame: " + currentFlowerFrame);
             GameStage.initGame(currentFlowerFrame);
         }
     }

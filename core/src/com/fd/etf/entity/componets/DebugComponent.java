@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by ARudyk on 11/9/2016.
  */
-public class DebugComponent implements Component {
+public class DebugComponent implements Component{
     public boolean trace = true;
     public Rectangle boundingBox;
 

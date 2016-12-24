@@ -254,7 +254,7 @@ public class ResultScreenScript implements IScript {
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
             if (!show && showCaseVanity != null && showCaseVanity.cost <= gameScript.fpc.totalScore) {
-                System.out.println("INITING SHOWCASE!!");
+//                System.out.println("INITING SHOWCASE!!");
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
             }

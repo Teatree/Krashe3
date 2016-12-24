@@ -3,6 +3,7 @@ package com.fd.etf.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
 
@@ -11,7 +12,7 @@ import java.util.Random;
 import static com.fd.etf.utils.GlobalConstants.MAX_IDLE_COUNT;
 import static com.fd.etf.utils.GlobalConstants.MIN_IDLE_COUNTER;
 
-public class BugComponent implements Component {
+public class BugComponent implements Component, Pool.Poolable {
 
 
     public static final String IDLE = "IDLE";
@@ -88,5 +89,28 @@ public class BugComponent implements Component {
                 break;
             }
         }
+    }
+
+    @Override
+    public void reset() {
+        state = IDLE;
+
+        startX = 0;
+        startY= 0;
+        endX= 0;
+        endY= 0;
+        duration = 14;
+        amplitude = 50;
+        time = 0;
+        interpolation = Interpolation.exp5;
+        reverse = false;
+        began = false;
+        complete = false;
+        points = 0;
+
+        velocity = 0;
+        startYPosition = 0;
+
+        counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
     }
 }

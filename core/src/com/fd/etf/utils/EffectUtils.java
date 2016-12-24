@@ -2,7 +2,6 @@ package com.fd.etf.utils;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.entity.componets.ParticleLifespanComponent;
@@ -11,7 +10,6 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
-import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
 import static com.fd.etf.stages.GameStage.sceneLoader;

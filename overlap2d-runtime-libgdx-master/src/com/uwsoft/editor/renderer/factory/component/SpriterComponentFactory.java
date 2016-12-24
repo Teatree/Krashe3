@@ -19,6 +19,7 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.files.FileHandle;
 import com.brashmonkey.spriter.Player;
 import com.brashmonkey.spriter.Rectangle;
@@ -39,8 +40,8 @@ import com.uwsoft.editor.renderer.utils.LibGdxLoader;
  */
 public class SpriterComponentFactory extends ComponentFactory {
 
-    public SpriterComponentFactory( IResourceRetriever rm) {
-        super( rm);
+    public SpriterComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+        super( engine, rm);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SpriterComponentFactory extends ComponentFactory {
 
     @Override
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component = new DimensionsComponent();
+        DimensionsComponent component =  engine.createComponent(DimensionsComponent.class);
 
         SpriterComponent spriterComponent = ComponentRetriever.get(entity, SpriterComponent.class);
 

@@ -4,13 +4,14 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.uwsoft.editor.renderer.data.FrameRange;
 
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SpriteAnimationStateComponent implements Component {
+public class SpriteAnimationStateComponent implements Component, Pool.Poolable{
     public Array<TextureAtlas.AtlasRegion> allRegions;
 	public Animation currentAnimation;
 	public float time = 0.0f;
@@ -64,4 +65,12 @@ public class SpriteAnimationStateComponent implements Component {
                 "Frame name should be something like this '*0001', but not "
                         + name + ".");
     }
+
+    @Override
+        public void reset() {
+                allRegions=null;
+                currentAnimation=null;
+                time = 0.0f;
+                paused = false;
+            }
 }

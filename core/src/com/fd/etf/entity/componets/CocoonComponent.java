@@ -2,8 +2,9 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 
-public class CocoonComponent implements Component {
+public class CocoonComponent implements Component, Pool.Poolable {
 
     public static final float COCOON_SCALE = 0.5f;
     public static final int COCOON_X = 980;
@@ -16,6 +17,14 @@ public class CocoonComponent implements Component {
 
     public CocoonComponent() {
         this.boundsRect = new Rectangle();
+    }
+
+    @Override
+    public void reset() {
+        hitCounter = 0;
+        state = State.DEAD;
+        boundsRect = new Rectangle();
+        canHit = false;
     }
 
     public enum State {

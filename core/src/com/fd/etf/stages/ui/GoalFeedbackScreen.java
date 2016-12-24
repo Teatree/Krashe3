@@ -444,10 +444,10 @@ public class GoalFeedbackScreen {
 
         if(helpTimer>250 && saBox.currentAnimation != "open"){
             lblTapToOpen.getComponent(TintComponent.class).color.a += 0.05f;
-            System.out.println("showing tap to open");
+//            System.out.println("showing tap to open");
         }else if(saBox.currentAnimation == "open"){
 //            helpTimer = 0;
-            System.out.println("NOT showing tap to open");
+//            System.out.println("NOT showing tap to open");
             lblTapToOpen.getComponent(TintComponent.class).color.a -= 0.05f;
         }
 

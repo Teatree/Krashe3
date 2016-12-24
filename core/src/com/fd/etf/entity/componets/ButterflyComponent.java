@@ -4,11 +4,12 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * Created by Teatree on 9/3/2015.
  */
-public class ButterflyComponent implements Component {
+public class ButterflyComponent implements Component, Pool.Poolable {
 
 //    public Rectangle boundsRect = new Rectangle();
 //    public float velocityX;
@@ -37,6 +38,14 @@ public class ButterflyComponent implements Component {
     public ButterflyComponent() {
         state = State.SPAWN;
         points = 3;
+    }
+
+    @Override
+    public void reset() {
+        state = State.SPAWN;
+        points = 3;
+        speed = 0.15f;
+        current = 0;
     }
 
     public enum State {

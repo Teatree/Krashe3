@@ -19,6 +19,7 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.PooledEngine;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.PolygonComponent;
 import com.uwsoft.editor.renderer.components.TextureRegionComponent;
@@ -37,8 +38,8 @@ public class SimpleImageComponentFactory extends ComponentFactory {
 
     private TextureRegionComponent textureRegionComponent;
 
-    public SimpleImageComponentFactory( IResourceRetriever rm) {
-        super( rm);
+    public SimpleImageComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+        super( engine, rm);
     }
 
     public void createComponents(Entity root, Entity entity, MainItemVO vo) {
@@ -64,7 +65,7 @@ public class SimpleImageComponentFactory extends ComponentFactory {
 
     @Override
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component = new DimensionsComponent();
+        DimensionsComponent component =  engine.createComponent(DimensionsComponent.class);
 
         TextureRegionComponent textureRegionComponent = ComponentRetriever.get(entity, TextureRegionComponent.class);
 
@@ -83,7 +84,7 @@ public class SimpleImageComponentFactory extends ComponentFactory {
     }
 
     protected TextureRegionComponent createTextureRegionComponent(Entity entity, SimpleImageVO vo) {
-        TextureRegionComponent component = new TextureRegionComponent();
+        TextureRegionComponent component = engine.createComponent(TextureRegionComponent.class);
         component.regionName = vo.imageName;
         component.region = rm.getTextureRegion(vo.imageName);
         component.isRepeat = vo.isRepeat;

@@ -400,7 +400,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
-        TransformComponent tc = new TransformComponent();
+        TransformComponent tc = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
 
         if (previous == null) {
             tc.x = FIRST_BAG_X;
@@ -607,7 +607,7 @@ public class ShopScreenScript implements IScript {
         if (shouldReload) {
             for (Map.Entry<String, Entity> entry : itemIcons.entrySet()) {
 
-                TransformComponent oldIconTC = new TransformComponent();
+                TransformComponent oldIconTC = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
                 oldIconTC.x = entry.getValue().getComponent(TransformComponent.class).x;
                 oldIconTC.y = entry.getValue().getComponent(TransformComponent.class).y;
 

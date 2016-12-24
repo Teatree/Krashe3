@@ -201,13 +201,14 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
      * main atlas pack, particle effects, sprite animations, spine animations and fonts
      */
     public void loadAssets() {
+        System.out.println(">>> RM load assets");
         loadAtlasPack();
         loadParticleEffects();
-        loadSpineAnimations();
+//        loadSpineAnimations();
         loadSpriteAnimations();
         loadSpriterAnimations();
         loadFonts();
-        loadShaders();
+//        loadShaders();
     }
 
     @Override

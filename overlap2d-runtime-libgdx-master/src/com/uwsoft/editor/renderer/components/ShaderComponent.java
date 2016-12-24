@@ -3,7 +3,7 @@ package com.uwsoft.editor.renderer.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
-public class ShaderComponent implements Component {
+public class ShaderComponent implements Component{
 	public String shaderName;
 	private ShaderProgram shaderProgram = null;
 

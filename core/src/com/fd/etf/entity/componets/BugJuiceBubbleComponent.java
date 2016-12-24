@@ -2,8 +2,9 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.utils.Pool;
 
-public class BugJuiceBubbleComponent implements Component {
+public class BugJuiceBubbleComponent implements Component, Pool.Poolable  {
     public float startX, startY;
     public float endX = 550;
     public float endY = 680;
@@ -16,4 +17,18 @@ public class BugJuiceBubbleComponent implements Component {
     public BugJuiceBubbleComponent() {
     }
 
+    @Override
+    public void reset() {
+        startX = 0;
+        startY = 0;
+        endX = 550;
+        endY = 680;
+        duration = 1;
+        time = 0;
+        alpha = 0.2f;
+        interpolation = Interpolation.fade;
+        reverse = false;
+        began = false;
+        complete = false;
+    }
 }

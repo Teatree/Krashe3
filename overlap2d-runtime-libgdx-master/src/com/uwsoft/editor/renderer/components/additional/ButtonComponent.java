@@ -2,15 +2,16 @@ package com.uwsoft.editor.renderer.components.additional;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 /**
  * Created by azakhary on 8/1/2015.
  */
-public class ButtonComponent implements Component {
+public class ButtonComponent implements Component, Pool.Poolable {
 
     public boolean isTouched = false;
     public static boolean skipDefaultLayersChange;
-    public boolean isDefaultLayersChange=true;
+    public boolean isDefaultLayersChange = true;
 
     public boolean enable;
 
@@ -18,7 +19,9 @@ public class ButtonComponent implements Component {
 
     public interface ButtonListener {
         void touchUp();
+
         void touchDown();
+
         void clicked();
     }
 
@@ -35,17 +38,23 @@ public class ButtonComponent implements Component {
     }
 
     public void setTouchState(boolean isTouched) {
-        if(!this.isTouched && isTouched) {
-            for(int i = 0; i < listeners.size; i++) {
+        if (!this.isTouched && isTouched) {
+            for (int i = 0; i < listeners.size; i++) {
                 listeners.get(i).touchDown();
             }
         }
-        if(this.isTouched && !isTouched) {
-            for(int i = 0; i < listeners.size; i++) {
+        if (this.isTouched && !isTouched) {
+            for (int i = 0; i < listeners.size; i++) {
                 listeners.get(i).touchUp();
                 listeners.get(i).clicked();
             }
         }
         this.isTouched = isTouched;
+    }
+
+    @Override
+    public void reset() {
+        isTouched = false;
+        listeners.clear();
     }
 }

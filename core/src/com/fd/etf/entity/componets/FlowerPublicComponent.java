@@ -2,13 +2,14 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FlowerPublicComponent implements Component {
+public class FlowerPublicComponent implements Component, Pool.Poolable{
 
     public GameSettings settings = new GameSettings();
 
@@ -91,6 +92,11 @@ public class FlowerPublicComponent implements Component {
             }
             scoreGoal.update();
         }
+    }
+
+    @Override
+    public void reset() {
+
     }
 
 //

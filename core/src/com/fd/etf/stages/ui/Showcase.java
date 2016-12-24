@@ -13,7 +13,6 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ResultScreenScript.show;

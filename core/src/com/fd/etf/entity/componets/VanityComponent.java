@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.SaveMngr;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VanityComponent extends ShopItem implements Component {
+public class VanityComponent extends ShopItem implements Component, Pool.Poolable{
 
     public static final String DEFAULT = "_default";
     public static final String PATH_PREFIX_VANITY = "vanity\\";
@@ -174,6 +175,11 @@ public class VanityComponent extends ShopItem implements Component {
 
         }
         GameStage.changedFlower = true;
+    }
+
+    @Override
+    public void reset() {
+
     }
 }
 

@@ -4,13 +4,14 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.List;
 
 /**
  * Created by Teatree on 10/6/2015.
  */
-public class UmbrellaComponent implements Component {
+public class UmbrellaComponent implements Component, Pool.Poolable{
 
     public static float SPAWN_INTERVAL_BASE = 5;
     public static float SPAWNING_TIME = 0.2f;
@@ -36,6 +37,14 @@ public class UmbrellaComponent implements Component {
     public static DandelionMultiplier currentMultiplier;
 
     public UmbrellaComponent() {
+        this.state = State.PUSH;
+        getSpawningTimeCounter = 0;
+        pointsMult = 2;
+        blinkCounter = 9;
+    }
+
+    @Override
+    public void reset() {
         this.state = State.PUSH;
         getSpawningTimeCounter = 0;
         pointsMult = 2;

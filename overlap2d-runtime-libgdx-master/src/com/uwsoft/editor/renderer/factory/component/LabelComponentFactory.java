@@ -1,6 +1,7 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -15,8 +16,8 @@ public class LabelComponentFactory extends ComponentFactory{
 	
 	private static int labelDefaultSize = 12;
 
-	public LabelComponentFactory( IResourceRetriever rm) {
-        super( rm);
+	public LabelComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+        super(engine, rm);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class LabelComponentFactory extends ComponentFactory{
 
 	@Override
 	protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component = new DimensionsComponent();
+        DimensionsComponent component =engine.createComponent(DimensionsComponent.class);
         component.height = ((LabelVO) vo).height;
         component.width = ((LabelVO) vo).width;
 
@@ -38,7 +39,10 @@ public class LabelComponentFactory extends ComponentFactory{
     }
 
     protected LabelComponent createLabelComponent(Entity entity, LabelVO vo) {
+//    	LabelComponent component = new LabelComponent(vo.text, generateStyle(rm, vo.style, vo.size));
     	LabelComponent component = new LabelComponent(vo.text, generateStyle(rm, vo.style, vo.size));
+        component.setText(vo.text);
+        component.setStyle(generateStyle(rm, vo.style, vo.size));
         component.fontName = vo.style;
         component.fontSize = vo.size;
         component.setAlignment(vo.align);
