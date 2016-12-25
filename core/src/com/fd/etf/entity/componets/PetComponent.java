@@ -16,8 +16,8 @@ import static com.fd.etf.stages.GameStage.sceneLoader;
 
 public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
-    public static final int OUTSIDE_DURATION_MAX = 1000;
-    public static final int OUTSIDE_DURATION_MIN = 500;
+    public static final int OUTSIDE_DURATION_MAX = 10000;
+    public static final int OUTSIDE_DURATION_MIN = 5000;
 
     public static final float X_SPAWN_POSITION = 1150;
     public static final int Y_SPAWN_POSITION_MAX = 568;
