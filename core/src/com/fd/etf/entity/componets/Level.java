@@ -68,6 +68,8 @@ public class Level {
 
     public Level() {
         name = levelsInfo.get(difficultyLevel).name;
+
+        //BUG'S PARAMS
         spawnInterval = levelsInfo.get(difficultyLevel).spawnInterval;
         breakFreqMin = levelsInfo.get(difficultyLevel).breakFreqMin;
         breakFreqMax = levelsInfo.get(difficultyLevel).breakFreqMax;
@@ -89,6 +91,7 @@ public class Level {
         queenBeeAmplitude = levelsInfo.get(difficultyLevel).queenBeeAmplitude;
         chargerBugMove = levelsInfo.get(difficultyLevel).chargerBugMove;
 
+        //GOALS
         maxGoalsAmount = levelsInfo.get(difficultyLevel).maxGoalsAmount;
         minGoalsAmount = levelsInfo.get(difficultyLevel).minGoalsAmount;
         easyGoalsAmount = levelsInfo.get(difficultyLevel).easyGoalsAmount;

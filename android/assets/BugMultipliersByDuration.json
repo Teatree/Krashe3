@@ -36,15 +36,15 @@
     chargerBugSpawnChance: 1.2,
     queenBeeSpawnChance: 1,
     beeSpawnChance: 1.2,
-	simpleBugMoveDuration: 0.6,
+	simpleBugMoveDuration: 1,
     simpleBugAmplitude: 1,
-    drunkBugMoveDuration: 0.6,
+    drunkBugMoveDuration: 1,
     drunkBugAmplitude: 1,
-    beeMoveDuration: 0.6,
+    beeMoveDuration: 1,
     beeAmplitude: 1,
-    queenBeeMoveDuration: 0.6,
+    queenBeeMoveDuration: 1,
     queenBeeAmplitude: 1,
-	chargerBugMove: 3
+	chargerBugMove: 1.5
 },
 {
 	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
