@@ -52,7 +52,7 @@ public class GameOverDialog extends AbstractDialog {
         isGameOver.set(true);
         System.gc();
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(GAME_OVER_X, GAME_OVER_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         gameOverDialogE.add(ac);
@@ -147,7 +147,7 @@ public class GameOverDialog extends AbstractDialog {
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
             final LabelComponent gameOverLblCsh = gameOverTimerLblsh.getComponent(LabelComponent.class);
 
-            final ActionComponent ac = new ActionComponent();
+            final ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
             gameOverTimerLbl.add(ac);

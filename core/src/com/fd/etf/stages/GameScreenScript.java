@@ -491,7 +491,7 @@ public class GameScreenScript implements IScript {
         loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
         loseFeedback.getComponent(TransformComponent.class).x = 950;
         loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.2f));
         ac.dataArray.add(Actions.scaleTo(1.5f,1.5f,0.2f));

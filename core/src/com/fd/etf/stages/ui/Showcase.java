@@ -77,9 +77,9 @@ public class Showcase {
             counter += 1;
             if (counter == 30 && itemIcon != null) {
                 EffectUtils.playShineParticleEffect(1010, 290);
-                ActionComponent ac3 = new ActionComponent();
-                ActionComponent ac2 = new ActionComponent();
-                ActionComponent ac = new ActionComponent();
+                ActionComponent ac3 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
 
                 ac2.dataArray.add(Actions.fadeOut(0.3f));

@@ -101,13 +101,13 @@ public class Settings extends AbstractDialog {
                             infoE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
                             infoE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
 
-                            ActionComponent acSettings = new ActionComponent();
+                            ActionComponent acSettings = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             acSettings.dataArray.add(
                                     Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                             settingsE.add(acSettings);
 
-                            ActionComponent acInfo = new ActionComponent();
+                            ActionComponent acInfo = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                             infoE.getComponent(ZIndexComponent.class).setZIndex(
@@ -172,12 +172,12 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(backBtn) {
                     @Override
                     public void clicked() {
-                        ActionComponent acSettings = new ActionComponent();
+                        ActionComponent acSettings = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
                         acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                         settingsE.add(acSettings);
 
-                        ActionComponent acInfo = new ActionComponent();
+                        ActionComponent acInfo = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
                         acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                         infoE.add(acInfo);
@@ -210,7 +210,7 @@ public class Settings extends AbstractDialog {
         settingsE.getComponent(TransformComponent.class).y = 460;
         settingsE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);

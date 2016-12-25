@@ -81,7 +81,7 @@ public class PromoWindow extends AbstractDialog {
 //        iconE.getComponent(TransformComponent.class).x = 320;
 //        iconE.getComponent(TransformComponent.class).y = 420;
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DISCOUNT_X, DISCOUNT_Y, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);

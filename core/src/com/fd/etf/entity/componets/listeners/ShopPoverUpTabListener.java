@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -79,7 +80,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
     }
 
     private static void shiftHCsections() {
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(
                 Actions.moveTo(ShopScreenScript.INIT_HC_ITEMS_X, shopScreenScript.hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
@@ -87,7 +88,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
     }
 
     private static void shiftTouchZone() {
-        ActionComponent acTouchZone = new ActionComponent();
+        ActionComponent acTouchZone = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
 
         acTouchZone.dataArray.add(
@@ -99,7 +100,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
         ShopScreenScript.canChangeTabs = false;
         float bagsShift = 73 - shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x;
         for (Entity bag : shopScreenScript.bags) {
-            ActionComponent a = new ActionComponent();
+            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(
@@ -115,7 +116,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
     private static void shiftIcons(float bagsShift) {
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            ActionComponent a = new ActionComponent();
+            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(

@@ -270,18 +270,18 @@ public class Preview extends AbstractDialog {
         if (jump) {
             addShadow();
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_Y, 1f, Interpolation.exp10Out));
             infoTag.add(ac);
 
-            ActionComponent acButtonz = new ActionComponent();
+            ActionComponent acButtonz = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, BTNZ_Y, 1f, Interpolation.exp10Out));
             buttonz.add(acButtonz);
 
         } else {
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
@@ -328,7 +328,7 @@ public class Preview extends AbstractDialog {
                     getChild(LBL_DESC).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
 
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.sequence(Actions.delay(0.5f),
                     Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveTo(434, 51, 1, Interpolation.exp5),
@@ -525,7 +525,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (animFinished() && isPrevBtnActive(vc)) {
-                            ActionComponent ac = new ActionComponent();
+                            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -592,7 +592,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (isNextBtnActive(vc) && animFinished()) {
-                            ActionComponent ac = new ActionComponent();
+                            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -633,17 +633,17 @@ public class Preview extends AbstractDialog {
             float currentYpos = infoTag.getComponent(TransformComponent.class).y;
             if (currentYpos <= INFO_TAG_Y + 30 || currentYpos >= 800) {
                 if (isPreviewOn.get()) {
-                    ActionComponent ac = new ActionComponent();
+                    ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_HIDE_Y, 0.8f, Interpolation.exp10));
                     infoTag.add(ac);
 
-                    ActionComponent acButtonz = new ActionComponent();
+                    ActionComponent acButtonz = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
                     acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, -300, 1f, Interpolation.exp10Out));
                     buttonz.add(acButtonz);
 
-                    ActionComponent ac2 = new ActionComponent();
+                    ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
                     shadowE.add(ac2);
                 }
@@ -655,6 +655,7 @@ public class Preview extends AbstractDialog {
         if (iconE != null) {
             if (shouldDeleteIconE) {
                 sceneLoader.getEngine().removeEntity(iconE);
+                iconE = null;
             } else {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }

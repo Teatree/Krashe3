@@ -53,7 +53,7 @@ public class AbstractDialog {
         shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
         shadowE.getComponent(TintComponent.class).color.a = 0;
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
         shadowE.add(ac);
@@ -62,12 +62,12 @@ public class AbstractDialog {
     public void close (Entity e){
         if (isActive) {
             isActive = false;
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
             e.add(ac);
 
-            ActionComponent ac2 = new ActionComponent();
+            ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
 

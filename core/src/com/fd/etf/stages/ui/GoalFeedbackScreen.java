@@ -235,7 +235,7 @@ public class GoalFeedbackScreen {
         sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), tile, tempC.composite);
         sceneLoader.getEngine().addEntity(tile);
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         tile.add(ac);
 
@@ -397,7 +397,7 @@ public class GoalFeedbackScreen {
             lblTapToOpen.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex()-1);
             lbl = new ItemWrapper(giftE).getChild(LBL_GIFT_SCREEN).getEntity();
             lbl.getComponent(TintComponent.class).color.a = 0;
-            ActionComponent ac = new ActionComponent();
+            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.rotateBy(20000, 400));
             spinnyShineE.add(ac);
@@ -515,7 +515,7 @@ public class GoalFeedbackScreen {
             giftIconE.getComponent(TransformComponent.class).y = 329;
         }
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(435, 439, 2f, Interpolation.exp5));
         giftIconE.add(ac);

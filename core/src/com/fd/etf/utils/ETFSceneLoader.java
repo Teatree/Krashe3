@@ -136,8 +136,10 @@ public class ETFSceneLoader {
      */
     public void initSceneLoader() {
         System.out.println(" >>> initSceneLoader ");
-            addSystems();
+        addSystems();
+        if (entityFactory == null) {
             entityFactory = new EntityFactory(engine, rm);
+        }
     }
 
     public SceneVO getSceneVO() {

@@ -358,7 +358,7 @@ public class ResultScreenScript implements IScript {
         tc.scaleY = TENTH;
         tc.scaleX = TENTH;
         adsBtn.getComponent(TintComponent.class).color.a = TENTH;
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(
                 Actions.scaleTo(1f, 1f, 0.5f, Interpolation.exp5Out),

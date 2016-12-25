@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
@@ -95,7 +96,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     private void switchScreenToUpgrds() {
         ShopScreenScript.canChangeTabs = false;
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
 
         ac.dataArray.add(
@@ -103,7 +104,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         shopScreenScript.hcSectionE.add(ac);
 
         for (Entity bag : shopScreenScript.bags) {
-            ActionComponent a = new ActionComponent();
+            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(
@@ -115,7 +116,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         ShopScreenScript.firstBagTargetPos = shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING;
 
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            ActionComponent a = new ActionComponent();
+            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(
@@ -125,7 +126,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
             icon.add(a);
         }
-        ActionComponent acTouchZone = new ActionComponent();
+        ActionComponent acTouchZone = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
 
         acTouchZone.dataArray.add(

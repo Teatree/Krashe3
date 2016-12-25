@@ -52,7 +52,6 @@ public class TransformComponent implements Component, Pool.Poolable {
     @Override
     public void reset() {
 
-        System.out.println("reset");
         x = 0;
         y = 0;
         scaleX = 1f;

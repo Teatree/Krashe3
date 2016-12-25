@@ -173,7 +173,7 @@ public class PauseDialog extends AbstractDialog {
         pauseDialogE.getComponent(TransformComponent.class).y = PAUSE_Y_UP;
         pauseDialogE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        ActionComponent ac = new ActionComponent();
+        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(popupX, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         pauseDialogE.add(ac);
