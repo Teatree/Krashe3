@@ -150,11 +150,11 @@ public class GameOverDialog extends AbstractDialog {
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
             final LabelComponent gameOverLblCsh = gameOverTimerLblsh.getComponent(LabelComponent.class);
 
-            final ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-            Actions.checkInit();
-            ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
-            gameOverTimerLbl.add(ac);
-            gameOverTimerLblsh.add(ac);
+//            final ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+//            Actions.checkInit();
+//            ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
+//            gameOverTimerLbl.add(ac);
+//            gameOverTimerLblsh.add(ac);
 
 
             if (Gdx.input.justTouched() && tapCoolDown <= 0) {
@@ -191,7 +191,7 @@ public class GameOverDialog extends AbstractDialog {
                     isGameOver.set(false);
                     gameStage.gameScript.resetPauseDialog();
                     hide();
-                    gameStage.gameScript.gameStage.initResultWithAds();
+                    gameStage.initResultWithAds();
 //                    close(gameOverDialogE);
                 }
             }

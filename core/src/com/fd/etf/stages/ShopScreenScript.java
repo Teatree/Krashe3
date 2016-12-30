@@ -182,14 +182,14 @@ public class ShopScreenScript implements IScript {
 
     public void getAllAllVanities() {
         if (allSoftItems.isEmpty()) {
-            for (PetComponent pet : GameStage.gameScript.fpc.pets) {
+            for (PetComponent pet : gameStage.gameScript.fpc.pets) {
                 if (pet.isHardCurr) {
                     allHCItems.add(pet);
                 }
             }
             allHCItems.addAll(getAllUpgrades());
             sortHCitemsAccordingUI();
-            allSoftItems.addAll(GameStage.gameScript.fpc.vanities);
+            allSoftItems.addAll(gameStage.gameScript.fpc.vanities);
         }
 
         Collections.sort(allSoftItems, new Comparator<ShopItem>() {
@@ -318,8 +318,8 @@ public class ShopScreenScript implements IScript {
     }
 
     public List<Upgrade> getAllUpgrades() {
-        List<Upgrade> upgrades = new ArrayList<Upgrade>(GameStage.gameScript.fpc.upgrades.values());
-        for (Upgrade u : Upgrade.getAllUpgrades()) {
+        List<Upgrade> upgrades = new ArrayList<Upgrade>(gameStage.gameScript.fpc.upgrades.values());
+        for (Upgrade u : Upgrade.getAllUpgrades(gameStage)) {
             if (!upgrades.contains(u)) {
                 upgrades.add(u);
             }
@@ -367,8 +367,8 @@ public class ShopScreenScript implements IScript {
         }
         updateScrollButtonsState();
         preview.updatePreview();
-        lc.text.replace(0, lc.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
-        lcsh.text.replace(0, lcsh.text.length(), String.valueOf(GameStage.gameScript.fpc.totalScore));
+        lc.text.replace(0, lc.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
+        lcsh.text.replace(0, lcsh.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         if (firstBagTargetPos != 0) {
             float bPos = bags.get(0).getComponent(TransformComponent.class).x;

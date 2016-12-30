@@ -137,8 +137,8 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void createBug(String tempType, Multiplier currentMultiplier) {
-        Entity bugEntity = BugPool.getInstance().get(tempType);
-        BugComponent bc = new BugComponent(tempType, currentMultiplier);
+        Entity bugEntity = BugPool.getInstance(gameStage).get(tempType);
+        BugComponent bc = new BugComponent(gameStage,tempType, currentMultiplier);
         if (bugEntity == null) {
             System.out.println(tempType);
         }
@@ -153,8 +153,8 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void createAngryBee(Multiplier currentMultiplier) {
-        Entity bugEntity = BugPool.getInstance().get(BEE);
-        BugComponent bc = new BugComponent(BEE, currentMultiplier);
+        Entity bugEntity = BugPool.getInstance(gameStage).get(BEE);
+        BugComponent bc = new BugComponent(gameStage, BEE, currentMultiplier);
         bugEntity.add(bc);
 
         TransformComponent tc = bugEntity.getComponent(TransformComponent.class);
@@ -169,17 +169,17 @@ public class BugSpawnSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        curSpawnInterval = SPAWN_INTERVAL_BASE * currentMultiplier.spawnInterval * GameStage.gameScript.fpc.level.spawnInterval;
-        curBreakFreqMin = BREAK_FREQ_BASE_MIN * currentMultiplier.breakFreqMin * GameStage.gameScript.fpc.level.breakFreqMin;
-        curBreakFreqMax = BREAK_FREQ_BASE_MAX * currentMultiplier.breakFreqMax * GameStage.gameScript.fpc.level.breakFreqMax;
-        curBreakLengthMin = BREAK_LENGTH_BASE_MIN * currentMultiplier.breakLengthMin * GameStage.gameScript.fpc.level.breakLengthMin;
-        curBreakLengthMax = BREAK_LENGTH_BASE_MAX * currentMultiplier.breakLengthMax * GameStage.gameScript.fpc.level.breakLengthMax;
+        curSpawnInterval = SPAWN_INTERVAL_BASE * currentMultiplier.spawnInterval * gameStage.gameScript.fpc.level.spawnInterval;
+        curBreakFreqMin = BREAK_FREQ_BASE_MIN * currentMultiplier.breakFreqMin * gameStage.gameScript.fpc.level.breakFreqMin;
+        curBreakFreqMax = BREAK_FREQ_BASE_MAX * currentMultiplier.breakFreqMax * gameStage.gameScript.fpc.level.breakFreqMax;
+        curBreakLengthMin = BREAK_LENGTH_BASE_MIN * currentMultiplier.breakLengthMin * gameStage.gameScript.fpc.level.breakLengthMin;
+        curBreakLengthMax = BREAK_LENGTH_BASE_MAX * currentMultiplier.breakLengthMax * gameStage.gameScript.fpc.level.breakLengthMax;
 
-        curDrunkProb = (int) (DRUNK_SPAWN_PROB * currentMultiplier.drunkBugSpawnChance * GameStage.gameScript.fpc.level.drunkBugSpawnChance);
-        curSimpleProb = (int) (SIMPLE_SPAWN_PROB * currentMultiplier.simpleBugSpawnChance * GameStage.gameScript.fpc.level.simpleBugSpawnChance);
-        curChargerProb = (int) (CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * GameStage.gameScript.fpc.level.chargerBugSpawnChance);
-        curQueenBeeProb = (int) (QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * GameStage.gameScript.fpc.level.queenBeeSpawnChance);
-        curBeeProb = (int) (BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * GameStage.gameScript.fpc.level.beeSpawnChance);
+        curDrunkProb = (int) (DRUNK_SPAWN_PROB * currentMultiplier.drunkBugSpawnChance * gameStage.gameScript.fpc.level.drunkBugSpawnChance);
+        curSimpleProb = (int) (SIMPLE_SPAWN_PROB * currentMultiplier.simpleBugSpawnChance * gameStage.gameScript.fpc.level.simpleBugSpawnChance);
+        curChargerProb = (int) (CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * gameStage.gameScript.fpc.level.chargerBugSpawnChance);
+        curQueenBeeProb = (int) (QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * gameStage.gameScript.fpc.level.queenBeeSpawnChance);
+        curBeeProb = (int) (BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * gameStage.gameScript.fpc.level.beeSpawnChance);
 
         if (!isPause.get() && !isGameOver.get()) {
             if (isStarted) {

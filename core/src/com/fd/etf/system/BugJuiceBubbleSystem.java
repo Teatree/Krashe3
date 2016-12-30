@@ -12,13 +12,13 @@ import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 
-import static com.fd.etf.stages.GameStage.gameScript;
-
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
 
-    public BugJuiceBubbleSystem() {
+    private GameStage gameStage;
+    public BugJuiceBubbleSystem(GameStage gameStage) {
         super(Family.all(BugJuiceBubbleComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     protected void processEntity(Entity entity, float deltaTime) {
@@ -65,13 +65,13 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     protected void end(Entity entity) {
-        gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
-                gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
-                        "" + gameScript.fpc.score);
-        gameScript.scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
-                gameScript.scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" +
-                        "" + gameScript.fpc.score);
-        gameScript.gameStage.sceneLoader.getEngine().removeEntity(entity);
+        gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
+                        "" + gameStage.gameScript.fpc.score);
+        gameStage.gameScript.scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
+                gameStage.gameScript.scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" +
+                        "" + gameStage.gameScript.fpc.score);
+        gameStage.gameScript.gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
     public void setPosition(TransformComponent tc, float x, float y) {

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
 public class Gift {
@@ -33,40 +32,40 @@ public class Gift {
     public String type;
     public Upgrade upgrade;
 
-    public static Gift getRandomGift() {
+    public static Gift getRandomGift(GameStage gameStage) {
         Gift gift = new Gift();
 //            gift = getRandomMoneyGift();
         int i = random.nextInt(100);
-        if (i > 0 && i <= gameScript.fpc.level.rewardChanceGroups.get(PET)) {
-            gift = getPetGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(PET_2)) {
-            gift = getPet2Gift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_2) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(PET_3)) {
-            gift = getPet3Gift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PET_3) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
-            gift = getPhoenixGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE)) {
-            gift = getDoubleJuiceGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_50)) {
+        if (i > 0 && i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET)) {
+            gift = getPetGift(gameStage);
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET_2)) {
+            gift = getPet2Gift(gameStage);
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET_2) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET_3)) {
+            gift = getPet3Gift(gameStage);
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET_3) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PHOENIX)) {
+            gift = getPhoenixGift(gameStage);
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PHOENIX) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE)) {
+            gift = getDoubleJuiceGift(gameStage);
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(BJ_DOUBLE) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_50)) {
             gift = getRandomMoneyGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_50) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_100)) {
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_50) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_100)) {
             gift = getRandomMoneyGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_100) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_150)) {
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_100) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_150)) {
             gift = getRandomMoneyGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_150) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_200)) {
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_150) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_200)) {
             gift = getRandomMoneyGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_200) &&
-                i <= gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_200) &&
+                i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
             gift = getRandomMoneyGift();
-        } else if (i > gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
+        } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(MONEY_250)) {
             gift = getRandomMoneyGift();
         }
         return gift;
@@ -80,9 +79,9 @@ public class Gift {
         return gift;
     }
 
-    public static Gift getPetGift() {
+    public static Gift getPetGift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = GameStage.gameScript.fpc.pets.get(0);
+        PetComponent pet = gameStage.gameScript.fpc.pets.get(0);
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
@@ -94,9 +93,9 @@ public class Gift {
         }
     }
 
-    public static Gift getPet2Gift() {
+    public static Gift getPet2Gift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = GameStage.gameScript.fpc.pets.get(1);
+        PetComponent pet = gameStage.gameScript.fpc.pets.get(1);
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
@@ -108,9 +107,9 @@ public class Gift {
         }
     }
 
-    public static Gift getPet3Gift() {
+    public static Gift getPet3Gift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = GameStage.gameScript.fpc.pets.get(2);
+        PetComponent pet = gameStage.gameScript.fpc.pets.get(2);
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
@@ -122,10 +121,10 @@ public class Gift {
         }
     }
 
-    public static Gift getPhoenixGift() {
-        if (!Upgrade.getPhoenix().enabled && !Upgrade.getPhoenix().bought) {
+    public static Gift getPhoenixGift(GameStage gameStage) {
+        if (!Upgrade.getPhoenix(gameStage).enabled && !Upgrade.getPhoenix(gameStage).bought) {
             Gift gift = new Gift();
-            gift.upgrade = Upgrade.getPhoenix();
+            gift.upgrade = Upgrade.getPhoenix(gameStage);
             gift.upgrade.tryPeriod = true;
             gift.upgrade.tryPeriodDuration = ONE_HOUR;
             gift.type = PHOENIX;
@@ -135,10 +134,10 @@ public class Gift {
         }
     }
 
-    public static Gift getDoubleJuiceGift() {
-        if (!Upgrade.getBJDouble().enabled && !Upgrade.getBJDouble().bought) {
+    public static Gift getDoubleJuiceGift(GameStage gameStage) {
+        if (!Upgrade.getBJDouble(gameStage).enabled && !Upgrade.getBJDouble(gameStage).bought) {
             Gift gift = new Gift();
-            gift.upgrade = Upgrade.getBJDouble();
+            gift.upgrade = Upgrade.getBJDouble(gameStage);
             gift.upgrade.tryPeriod = true;
             gift.upgrade.tryPeriodDuration = ONE_HOUR;
             gift.type = BJ_DOUBLE;
@@ -148,7 +147,7 @@ public class Gift {
         }
     }
 
-    public void takeGift(FlowerPublicComponent fpc) {
+    public void takeGift(GameStage gameStage, FlowerPublicComponent fpc) {
         PromoWindow.offerPromo = false;
         switch (type) {
             case (MONEY): {
@@ -183,6 +182,6 @@ public class Gift {
                 break;
             }
         }
-        fpc.level.updateLevel(GameStage.gameScript.fpc);
+        fpc.level.updateLevel(gameStage.gameScript.fpc);
     }
 }

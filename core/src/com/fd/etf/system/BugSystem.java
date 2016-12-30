@@ -18,7 +18,6 @@ import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponen
 import static com.fd.etf.entity.componets.BugComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.*;
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class BugSystem extends IteratingSystem {
@@ -32,9 +31,12 @@ public class BugSystem extends IteratingSystem {
 
     boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
+    
+    private  GameStage gameStage;
 
-    public BugSystem() {
+    public BugSystem(GameStage gameStage) {
         super(Family.all(BugComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     @Override
@@ -60,25 +62,25 @@ public class BugSystem extends IteratingSystem {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
-                if (gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
+                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
-//                    gameScript.fpc.state = ATTACK_BITE;
-                    gameScript.fpc.isScary = true;
+//                    gameStage.gameScript.fpc.state = ATTACK_BITE;
+                    gameStage.gameScript.fpc.isScary = true;
                 }
 
                 if (checkCollision(bc)) {
                     bc.state = DEAD;
 
-                    gameScript.fpc.addScore(bc.points);
+                    gameStage.gameScript.fpc.addScore(bc.points);
 
                     if (bc.type.equals(QUEENBEE)) {
                         angerBees();
                     }
 
-                    BugPool.getInstance().release(entity);
+                    BugPool.getInstance(gameStage).release(entity);
 
-                    if (gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
-                        gameScript.fpc.isCollision = true;
+                    if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
+                        gameStage.gameScript.fpc.isCollision = true;
                         checkGoals(bc);
                     }
 
@@ -87,13 +89,14 @@ public class BugSystem extends IteratingSystem {
                     spawnBugJuiceBubble(bc);
                 }
                 if (isOutOfBounds(bc)) {
-                    gameScript.loseFeedback.getComponent(TransformComponent.class).y = entity.getComponent(TransformComponent.class).y;
-                    BugPool.getInstance().release(entity);
-                    gameScript.onBugOutOfBounds();
+                    gameStage.gameScript.loseFeedback.getComponent(TransformComponent.class).y =
+                            entity.getComponent(TransformComponent.class).y;
+                    BugPool.getInstance(gameStage).release(entity);
+                    gameStage.gameScript.onBugOutOfBounds();
                 }
             }
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
-//            GameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
+//            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
         if (isPause.get()){
@@ -102,31 +105,31 @@ public class BugSystem extends IteratingSystem {
         if(isGameOver.get() || !isStarted ){
             sasc.paused = true;
             if (!blowUpAllBugs) {
-                BugPool.getInstance().release(entity);
+                BugPool.getInstance(gameStage).release(entity);
             }
         }
     }
 
     private void checkPetEatBugGoal(BugComponent bc) {
-        if (gameScript.fpc.petCollisionCheck(bc.boundsRect)) {
-            if (GameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS) != null) {
-                GameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS).update();
+        if (gameStage.gameScript.fpc.petCollisionCheck(bc.boundsRect)) {
+            if (gameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS) != null) {
+                gameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS).update();
             }
         }
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
-        EffectUtils.spawnBugJuiceBubble(gameScript.gameStage, bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
+        EffectUtils.spawnBugJuiceBubble(gameStage.gameScript.gameStage, bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
                 bc.boundsRect.y + bc.boundsRect.getHeight() / 2);
     }
 
-    public static void destroyBug(Entity bugE, TransformComponent tc) {
-        EffectUtils.playSplatterParticleEffect(gameScript.gameStage, tc.x, tc.y);
-        BugPool.getInstance().release(bugE);
+    public void destroyBug(Entity bugE, TransformComponent tc) {
+        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
+        BugPool.getInstance(gameStage).release(bugE);
     }
 
     private boolean checkCollision(BugComponent bc) {
-        return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
+        return gameStage.gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 
     private void moveEntity(float deltaTime,
@@ -209,14 +212,14 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void updateChargerGoals(BugComponent bc) {
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkCollision(bc)) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkCollision(bc)) {
+            gameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS).update();
         }
     }
 
     private void updateBugGoals(BugComponent bc) {
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkCollision(bc)) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkCollision(bc)) {
+            gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS).update();
         }
     }
 
@@ -290,18 +293,18 @@ public class BugSystem extends IteratingSystem {
 
         updateBugGoals(bc);
 
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BEE)) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BEE)) {
+            gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES).update();
         }
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS) != null && bc.type.equals(DRUNK)) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS) != null && bc.type.equals(DRUNK)) {
+            gameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS).update();
         }
-        if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE) != null && bc.type.equals(SIMPLE)) {
-            GameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE) != null && bc.type.equals(SIMPLE)) {
+            gameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE).update();
         }
         if (bc.type.equals(QUEENBEE)) {
-            if (GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS) != null) {
-                GameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS).update();
+            if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS) != null) {
+                gameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS).update();
             }
             AchievementSystem.checkQueenSlayerAchievement();
         }

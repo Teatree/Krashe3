@@ -2,10 +2,10 @@ package com.fd.etf.entity.componets;
 
 
 import com.fd.etf.Main;
+import com.fd.etf.stages.GameStage;
 
 import java.util.Random;
 
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.ResultScreenScript.PERCENTS_TO_OFFER_AD;
 
 public class GameSettings {
@@ -108,10 +108,10 @@ public class GameSettings {
         }
     }
 
-    public boolean shouldShowGetMoneyVideoBtnAd(long need) {
-        return gameScript.fpc.settings.totalPlayedGames >= start_getMoneyAd &&
-                gameScript.fpc.totalScore < PERCENTS_TO_OFFER_AD &&
-                gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need;
+    public boolean shouldShowGetMoneyVideoBtnAd(GameStage gameStage, long need) {
+        return gameStage.gameScript.fpc.settings.totalPlayedGames >= start_getMoneyAd &&
+                gameStage.gameScript.fpc.totalScore < PERCENTS_TO_OFFER_AD &&
+                gameStage.gameScript.fpc.totalScore >= PERCENTS_TO_OFFER_AD * need;
     }
 
 }

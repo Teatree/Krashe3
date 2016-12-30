@@ -204,7 +204,7 @@ public class Preview extends AbstractDialog {
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
-        if (vc.canBuy()) {
+        if (vc.canBuy(gameStage)) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lblNotEnough.getComponent(TintComponent.class).color.a = 0;
             lblNotEnoughSh.getComponent(TintComponent.class).color.a = 0;
@@ -395,7 +395,7 @@ public class Preview extends AbstractDialog {
                         if (vc.currencyType.equals(HARD)) {
                             vc.buyHard();
                         } else {
-                            vc.buyAndUse();
+                            vc.buyAndUse(gameStage);
                             putInPlaceNewIconPosition();
                         }
                         showPreview(vc, false, true);
@@ -453,7 +453,7 @@ public class Preview extends AbstractDialog {
                         @Override
                         public void clicked() {
                             if (animFinished()) {
-                                vc.apply();
+                                vc.apply(gameStage);
                                 showPreview(vc, false, false);
                             }
                         }
@@ -485,7 +485,7 @@ public class Preview extends AbstractDialog {
                         @Override
                         public void clicked() {
                             if (animFinished()) {
-                                vc.disable();
+                                vc.disable(gameStage);
                                 showPreview(vc, false, false);
                             }
                         }

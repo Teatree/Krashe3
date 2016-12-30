@@ -35,7 +35,7 @@ public class GameStage extends Stage {
 
     public static boolean justCreated;
 
-    public static GameScreenScript gameScript;
+    public GameScreenScript gameScript;
 
     private static ResultScreenScript resultScript;
     public static ShopScreenScript shopScript;
@@ -69,7 +69,7 @@ public class GameStage extends Stage {
             sceneLoader.loadScene(MAIN_SCENE, viewport);
             sceneLoader.setScene(MAIN_SCENE, viewport);
 
-            BugPool.resetBugPool();
+            BugPool.resetBugPool(this);
 
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
             sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -96,8 +96,7 @@ public class GameStage extends Stage {
         GameScreenScript.isStarted = false;
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
-        BugPool.getInstance();
-
+        BugPool.getInstance(this);
     }
 
     public void initMenu() {
@@ -176,7 +175,7 @@ public class GameStage extends Stage {
     }
 
 
-    public static void resetAllProgress() {
+    public void resetAllProgress() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
             Set<String> changedFiles = new HashSet<>();
             if (vc.enabled || vc.bought){

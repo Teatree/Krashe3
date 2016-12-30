@@ -11,7 +11,6 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 /**
@@ -41,7 +40,7 @@ public class TrialTimer {
     }
 
     public void timer() {
-        GameScreenScript.checkTryPeriod();
+        gameStage.gameScript.checkTryPeriod();
         timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
         timerEsh = mainItem.getChild(TRIAL_TIMER_SH).getEntity();
         if (!ifShouldShowTimer()) {
@@ -65,13 +64,13 @@ public class TrialTimer {
 
     public boolean ifShouldShowTimer() {
         boolean showTimer = false;
-        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
+        if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
-            showTimer(timerE, timerEsh, gameScript.fpc.currentPet.shopIcon);
-            PromoWindow.offer = gameScript.fpc.currentPet;
+            showTimer(timerE, timerEsh, gameStage.gameScript.fpc.currentPet.shopIcon);
+            PromoWindow.offer = gameStage.gameScript.fpc.currentPet;
             PromoWindow.offerPromo = true;
         } else {
-            for (Upgrade u : gameScript.fpc.upgrades.values()) {
+            for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {
                     showTimer = true;
                     PromoWindow.offer = u;
@@ -86,7 +85,7 @@ public class TrialTimer {
     private void showTimer(Entity timerE, Entity timerEsh, String logoname) {
         if (timerE != null) {
             LabelComponent lc = timerE.getComponent(LabelComponent.class);
-            lc.text.replace(0, lc.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
+            lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
             addTimerLogo(logoname);
 //            timerE.getComponent(TransformComponent.class).x = x
 //                    + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
@@ -94,7 +93,7 @@ public class TrialTimer {
             timerE.getComponent(ZIndexComponent.class).setZIndex(31);
 
             LabelComponent lcSh = timerEsh.getComponent(LabelComponent.class);
-            lcSh.text.replace(0, lcSh.text.length, gameScript.fpc.currentPet.updateTryPeriodTimer());
+            lcSh.text.replace(0, lcSh.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
             timerEsh.getComponent(ZIndexComponent.class).setZIndex(32);
         }
     }

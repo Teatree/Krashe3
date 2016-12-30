@@ -103,7 +103,7 @@ public class EffectUtils {
         tc.y = y;
 
 //        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
-        bugJuiceBubbleE.add(GameStage.gameScript.fpc);
+        bugJuiceBubbleE.add(gameStage.gameScript.fpc);
     }
 
     public static Vector2 getTouchCoordinates() {

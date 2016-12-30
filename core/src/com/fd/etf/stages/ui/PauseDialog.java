@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.fd.etf.stages.GameScreenScript.isPause;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.ui.Settings.SETTINGS_SCALE;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
@@ -158,11 +157,11 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity levelLabels = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR_S);
         LabelComponent levelLabelComps = levelLabels.getComponent(LabelComponent.class);
-        levelLabelComps.text.replace(0, levelLabelComps.text.capacity(), gameScript.fpc.level.name);
+        levelLabelComps.text.replace(0, levelLabelComps.text.capacity(), gameStage.gameScript.fpc.level.name);
 
         final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
         LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
-        levelLabelsComp.text.replace(0, levelLabelComps.text.capacity(), gameScript.fpc.level.name);
+        levelLabelsComp.text.replace(0, levelLabelComps.text.capacity(), gameStage.gameScript.fpc.level.name);
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
@@ -194,7 +193,7 @@ public class PauseDialog extends AbstractDialog {
     private void createGoalTiles() {
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
-        for (Goal goal : gameScript.fpc.level.getGoals()) {
+        for (Goal goal : gameStage.gameScript.fpc.level.getGoals()) {
             Entity tile = tileEntities.get(i);
 
             goalProgressValue = String.valueOf(goal.getCounter());

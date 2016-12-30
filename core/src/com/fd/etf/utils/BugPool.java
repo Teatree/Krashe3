@@ -10,8 +10,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Stack;
 
-import static com.fd.etf.stages.GameStage.gameScript;
-
 public class BugPool {
 
     public static final String SIMPLE = "SIMPLE";
@@ -42,8 +40,11 @@ public class BugPool {
     private static Stack<Entity> chargerBugs = new Stack<>();
     private static Entity queenBee;
 
-    private BugPool() {
-        final ItemWrapper root = new ItemWrapper(gameScript.gameStage.sceneLoader.getRoot());
+    private GameStage gameStage;
+
+    private BugPool(GameStage gameStage) {
+        this.gameStage = gameStage;
+        final ItemWrapper root = new ItemWrapper(gameStage.gameScript.gameStage.sceneLoader.getRoot());
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_1).getEntity());
         bees.add(root.getChild(BEE_ANI_1).getEntity());
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_1).getEntity());
@@ -58,9 +59,9 @@ public class BugPool {
         bees.add(root.getChild(BEE_ANI_3).getEntity());
     }
 
-    public static BugPool getInstance() {
+    public static BugPool getInstance(GameStage gameStage) {
         if (instance == null) {
-            instance = new BugPool();
+            instance = new BugPool(gameStage);
         }
 
 //        System.out.println("SIMPLE  " + simpleBugs.size());
@@ -70,8 +71,8 @@ public class BugPool {
         return instance;
     }
 
-    public static void resetBugPool() {
-        instance = new BugPool();
+    public static void resetBugPool(GameStage gameStage) {
+        instance = new BugPool(gameStage);
     }
 
     public Entity get(String type) {
@@ -112,11 +113,11 @@ public class BugPool {
     }
 
     private Entity loadBugFromLib(String bugLib) {
-        CompositeItemVO tempItemC = gameScript.gameStage.sceneLoader.loadVoFromLibrary(bugLib);
-        gameScript.gameStage.sceneLoader.rm.addSPRITEtoLoad(bugLib);
-        Entity bugE = gameScript.gameStage.sceneLoader.entityFactory.
-                createSPRITEentity(gameScript.gameStage.sceneLoader.getRoot(), tempItemC);
-        gameScript.gameStage.sceneLoader.getEngine().addEntity(bugE);
+        CompositeItemVO tempItemC = gameStage.gameScript.gameStage.sceneLoader.loadVoFromLibrary(bugLib);
+        gameStage.gameScript.gameStage.sceneLoader.rm.addSPRITEtoLoad(bugLib);
+        Entity bugE = gameStage.gameScript.gameStage.sceneLoader.entityFactory.
+                createSPRITEentity(gameStage.gameScript.gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.gameScript.gameStage.sceneLoader.getEngine().addEntity(bugE);
         return bugE;
     }
 

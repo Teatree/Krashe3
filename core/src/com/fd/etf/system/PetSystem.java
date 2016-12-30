@@ -400,14 +400,14 @@ public class PetSystem extends IteratingSystem {
     }
 
     private void checkPetThePetGoal() {
-        if (GameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET) != null) {
-            GameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET) != null) {
+            gameStage.gameScript.fpc.level.getGoalByType(PET_THE_PET).update();
         }
     }
 
     private void checkPetDashGoal() {
-        if (GameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES) != null) {
-            GameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES) != null) {
+            gameStage.gameScript.fpc.level.getGoalByType(PET_DASH_N_TIMES).update();
         }
     }
 }

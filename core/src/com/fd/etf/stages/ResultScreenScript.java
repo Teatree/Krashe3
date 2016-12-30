@@ -17,30 +17,29 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ResultScreenScript implements IScript {
 
-     private static final int MAX_PROGRESS_BAR_WIDTH = 660;
-     public static final double PERCENTS_TO_OFFER_AD = 0.99;
-     private static final int PROGRESS_BAR_STEP = 12;
-     private static final String IMG_PROGRESS_BAR = "img_progress_bar";
-     private static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
-     private static final String YOU_EARNED = "+";
-     private static final String YOUR_BEST = "BEST: ";
-     private static final String YOU_NEED = "YOU NEED ";
-     private static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
-     private static final String BTN_BACK = "btn_back";
-     private static final String BTN_PLAY = "btn_play";
-     private static final String BTN_SHOP = "btn_shop";
-     private static final String LBL_TOTAL = "lbl_TOTAL";
-     private static final String LBL_TOTAL_S = "lbl_TOTAL_s";
-     private static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
-     private static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
-     private static final String LBL_BET_SCORE = "lbl_BET_SCORE";
-     private static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
+    private static final int MAX_PROGRESS_BAR_WIDTH = 660;
+    public static final double PERCENTS_TO_OFFER_AD = 0.99;
+    private static final int PROGRESS_BAR_STEP = 12;
+    private static final String IMG_PROGRESS_BAR = "img_progress_bar";
+    private static final String BTN_WATCH_FOR_MONEY = "btn_watch_for_money";
+    private static final String YOU_EARNED = "+";
+    private static final String YOUR_BEST = "BEST: ";
+    private static final String YOU_NEED = "YOU NEED ";
+    private static final String YOU_UNLOCKED_NEXT_ITEM = "YOU UNLOCKED NEXT ITEM!";
+    private static final String BTN_BACK = "btn_back";
+    private static final String BTN_PLAY = "btn_play";
+    private static final String BTN_SHOP = "btn_shop";
+    private static final String LBL_TOTAL = "lbl_TOTAL";
+    private static final String LBL_TOTAL_S = "lbl_TOTAL_s";
+    private static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
+    private static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
+    private static final String LBL_BET_SCORE = "lbl_BET_SCORE";
+    private static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
 //    private static final String TRIAL_TIMER = "timer_lbl";
 
     public static VanityComponent showCaseVanity;
@@ -72,7 +71,7 @@ public class ResultScreenScript implements IScript {
 
     private GameStage gameStage;
 
-    public ResultScreenScript (GameStage gameStage){
+    public ResultScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
     }
 
@@ -111,14 +110,14 @@ public class ResultScreenScript implements IScript {
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
         LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
-        totalLabel.text.replace(0, totalLabel.text.capacity(), String.valueOf(gameScript.fpc.totalScore));
-        totalLabels.text.replace(0, totalLabels.text.capacity(), String.valueOf(gameScript.fpc.totalScore));
+        totalLabel.text.replace(0, totalLabel.text.capacity(), String.valueOf(gameStage.gameScript.fpc.totalScore));
+        totalLabels.text.replace(0, totalLabels.text.capacity(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
         earnedLabels = txtEarnedsE.getComponent(LabelComponent.class);
 
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
-        bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(gameScript.fpc.bestScore));
+        bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(gameStage.gameScript.fpc.bestScore));
 
         if (showCaseVanity == null && !isWasShowcase) {
             getNeedForNextItem();
@@ -126,7 +125,7 @@ public class ResultScreenScript implements IScript {
         }
         need = 0;
         if (showCaseVanity != null) {
-            need = showCaseVanity.cost - gameScript.fpc.totalScore;
+            need = showCaseVanity.cost - gameStage.gameScript.fpc.totalScore;
         }
         setProgressBar();
 
@@ -139,9 +138,9 @@ public class ResultScreenScript implements IScript {
     }
 
     public long getNeedForNextItem() {
-        for (VanityComponent vc : gameScript.fpc.vanities) {
+        for (VanityComponent vc : gameStage.gameScript.fpc.vanities) {
             if (!vc.bought) {
-                if (vc.cost >= gameScript.fpc.totalScore) {
+                if (vc.cost >= gameStage.gameScript.fpc.totalScore) {
                     showCaseVanity = vc;
                     break;
                 } else {
@@ -150,7 +149,7 @@ public class ResultScreenScript implements IScript {
             }
         }
         if (showCaseVanity != null) {
-            return showCaseVanity.cost - gameScript.fpc.totalScore;
+            return showCaseVanity.cost - gameStage.gameScript.fpc.totalScore;
         } else {
             return 0;
         }
@@ -210,7 +209,7 @@ public class ResultScreenScript implements IScript {
         if (timer != null) {
             timer.timer();
             if (timer.timerE != null) {
-                timer.timerE.getComponent(ZIndexComponent.class).setZIndex(progressBarE.getComponent(ZIndexComponent.class).getZIndex()+1);
+                timer.timerE.getComponent(ZIndexComponent.class).setZIndex(progressBarE.getComponent(ZIndexComponent.class).getZIndex() + 1);
                 timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerE.getComponent(ZIndexComponent.class).getZIndex() + 1);
             }
 
@@ -227,16 +226,16 @@ public class ResultScreenScript implements IScript {
 
         if (active) {
             if (!isWasShowcase) {
-                if (i <= gameScript.fpc.score) {
+                if (i <= gameStage.gameScript.fpc.score) {
                     updateScore();
                 } else {
-                    earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
-                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
+                    earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
+                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
                     updateProgressBar(delta);
                 }
             } else {
-                earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
-                earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameScript.fpc.score));
+                earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
+                earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
@@ -258,20 +257,20 @@ public class ResultScreenScript implements IScript {
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
-            if (!show && showCaseVanity != null && showCaseVanity.cost <= gameScript.fpc.totalScore) {
+            if (!show && showCaseVanity != null && showCaseVanity.cost <= gameStage.gameScript.fpc.totalScore) {
 //                System.out.println("INITING SHOWCASE!!");
                 initShowcase();
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
             }
-            if (!show && gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(need) && adsBtn == null) {
+            if (!show && gameStage.gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(gameStage, need) && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
             }
         }
 
-        if (gameScript.fpc.totalScore - gameScript.fpc.score < 0) {
+        if (gameStage.gameScript.fpc.totalScore - gameStage.gameScript.fpc.score < 0) {
             dcProgressBar.width = 0;
         } else if (showCaseVanity == null ||
-                (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH
+                (gameStage.gameScript.fpc.totalScore - gameStage.gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost > MAX_PROGRESS_BAR_WIDTH
                 ) {
             dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
         }
@@ -281,8 +280,8 @@ public class ResultScreenScript implements IScript {
         if (showCaseVanity == null) {
             return MAX_PROGRESS_BAR_WIDTH;
         }
-        return gameScript.fpc.totalScore < showCaseVanity.cost ?
-                ((float) gameScript.fpc.totalScore / (float) showCaseVanity.cost) * 100 * 6.9f :
+        return gameStage.gameScript.fpc.totalScore < showCaseVanity.cost ?
+                ((float) gameStage.gameScript.fpc.totalScore / (float) showCaseVanity.cost) * 100 * 6.9f :
                 MAX_PROGRESS_BAR_WIDTH;
     }
 
@@ -290,7 +289,7 @@ public class ResultScreenScript implements IScript {
         if (showCaseVanity != null) {
             progressBarE.getComponent(TintComponent.class).color.a = 1;
             DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
-            long scoreDiff = (gameScript.fpc.totalScore - gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
+            long scoreDiff = (gameStage.gameScript.fpc.totalScore - gameStage.gameScript.fpc.score) * MAX_PROGRESS_BAR_WIDTH / showCaseVanity.cost;
             if (scoreDiff < 40) {
                 dcProgressBar.width = 40;
             } else if (scoreDiff < MAX_PROGRESS_BAR_WIDTH) {
@@ -299,13 +298,13 @@ public class ResultScreenScript implements IScript {
                 dcProgressBar.width = MAX_PROGRESS_BAR_WIDTH;
             }
         }
-        if (gameScript.fpc.totalScore == 0)
+        if (gameStage.gameScript.fpc.totalScore == 0)
             progressBarE.getComponent(TintComponent.class).color.a = 0;
     }
 
     private void updateScore() {
         j++;
-        long counterStep = gameScript.fpc.score / 48 > 1 ? gameScript.fpc.score / 48 : 1;
+        long counterStep = gameStage.gameScript.fpc.score / 48 > 1 ? gameStage.gameScript.fpc.score / 48 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(i));
             earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(i));
@@ -316,8 +315,8 @@ public class ResultScreenScript implements IScript {
 
     private void initShowcase() {
         progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
-        if (!show && gameScript.fpc.score > 0) {
-            if (showcase == null){
+        if (!show && gameStage.gameScript.fpc.score > 0) {
+            if (showcase == null) {
                 showcase = new Showcase(gameStage, this);
             }
             showcase.initShowCase();
@@ -344,14 +343,14 @@ public class ResultScreenScript implements IScript {
                                         @Override
                                         public void run() {
                                             //give that money!
-                                            gameScript.fpc.totalScore = showCaseVanity.cost;
+                                            gameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
                                             adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                                             init(resultScreenItem.getEntity());
                                         }
                                     });
                                 } else {
-                                    gameScript.fpc.score = (int) (showCaseVanity.cost - gameScript.fpc.totalScore);
-                                    gameScript.fpc.totalScore = showCaseVanity.cost;
+                                    gameStage.gameScript.fpc.score = (int) (showCaseVanity.cost - gameStage.gameScript.fpc.totalScore);
+                                    gameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
 
                                     adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                                     init(resultScreenItem.getEntity());

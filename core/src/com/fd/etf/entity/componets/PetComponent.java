@@ -101,7 +101,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     }
 
     @Override
-    public void apply() {
+    public void apply(GameStage gameStage) {
         this.enabled = true;
         gameStage.gameScript.hideCurrentPet();
         gameStage.gameScript.fpc.currentPet = this;
@@ -115,28 +115,28 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     }
 
     @Override
-    public void disable() {
+    public void disable(GameStage gameStage) {
         this.enabled = false;
 //        fpc.currentPet = null;
     }
 
     @Override
-    public void buyAndUse() {
+    public void buyAndUse(GameStage gameStage) {
         this.bought = true;
         if (gameStage.gameScript.fpc.currentPet != null) {
             gameStage.gameScript.fpc.currentPet.tryPeriod = false;
         }
-        apply();
+        apply(gameStage);
     }
 
     @Override
     public void buyHard() {
-        Main.mainController.getBirdPet(this);
+        Main.mainController.getBirdPet(gameStage, this);
     }
 
     @Override
     public void buyHardDiscount() {
-        Main.mainController.getBirdPetDiscount(this);
+        Main.mainController.getBirdPetDiscount(gameStage, this);
     }
 
     public void setOutsideStateDuration() {

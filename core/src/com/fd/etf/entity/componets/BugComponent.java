@@ -62,39 +62,41 @@ public class BugComponent implements Component, Pool.Poolable {
     public float startYPosition;
 
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
+    private GameStage gameStage;
 
-    public BugComponent(String type, BugSpawnSystem.Multiplier m) {
+    public BugComponent(GameStage gameStage, String type, BugSpawnSystem.Multiplier m) {
+        this.gameStage = gameStage;
         this.type = type;
         this.state = IDLE;
         switch (type) {
             case DRUNK: {
-                duration = DRUNK_BUG_MOVE_DURATION_BASE * m.drunkBugMoveDuration * GameStage.gameScript.fpc.level.drunkBugMoveDuration;
-                amplitude = DRUNK_BUG_AMPLITUDE_BASE * m.drunkBugAmplitude * GameStage.gameScript.fpc.level.drunkBugAmplitude;
+                duration = DRUNK_BUG_MOVE_DURATION_BASE * m.drunkBugMoveDuration * gameStage.gameScript.fpc.level.drunkBugMoveDuration;
+                amplitude = DRUNK_BUG_AMPLITUDE_BASE * m.drunkBugAmplitude * gameStage.gameScript.fpc.level.drunkBugAmplitude;
                 points = 4;
                 break;
             }
             case BEE: {
-                duration = BEE_MOVE_DURATION_BASE * m.beeMoveDuration * GameStage.gameScript.fpc.level.beeMoveDuration;
-                amplitude = BEE_AMPLITUDE_BASE * m.beeAmplitude * GameStage.gameScript.fpc.level.beeAmplitude;
+                duration = BEE_MOVE_DURATION_BASE * m.beeMoveDuration * gameStage.gameScript.fpc.level.beeMoveDuration;
+                amplitude = BEE_AMPLITUDE_BASE * m.beeAmplitude * gameStage.gameScript.fpc.level.beeAmplitude;
                 points = 6;
                 break;
             }
             case CHARGER: {
                 points = 10;
-                IDLE_MVMNT_SPEED = CHARGER_BUG_MOVE_BASE * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
-                PREPARING_MVMNT_SPEED = 40 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
-                CHARGING_MVMNT_SPEED = 505 * m.chargerBugMove * GameStage.gameScript.fpc.level.chargerBugMove;
+                IDLE_MVMNT_SPEED = CHARGER_BUG_MOVE_BASE * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
+                PREPARING_MVMNT_SPEED = 40 * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
+                CHARGING_MVMNT_SPEED = 505 * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
                 break;
             }
             case QUEENBEE: {
-                duration = QUEENBEE_MOVE_DURATION_BASE * m.queenBeeMoveDuration * GameStage.gameScript.fpc.level.queenBeeMoveDuration;
-                amplitude = QUEENBEE_AMPLITUDE_BASE * m.queenBeeAmplitude * GameStage.gameScript.fpc.level.queenBeeAmplitude;
+                duration = QUEENBEE_MOVE_DURATION_BASE * m.queenBeeMoveDuration * gameStage.gameScript.fpc.level.queenBeeMoveDuration;
+                amplitude = QUEENBEE_AMPLITUDE_BASE * m.queenBeeAmplitude * gameStage.gameScript.fpc.level.queenBeeAmplitude;
                 points = 12;
                 break;
             }
             default: {
-                duration = SIMPLE_BUG_MOVE_DURATION_BASE * m.simpleBugMoveDuration * GameStage.gameScript.fpc.level.simpleBugMoveDuration;
-                amplitude = SIMPLE_BUG_AMPLITUDE_BASE * m.simpleBugAmplitude * GameStage.gameScript.fpc.level.simpleBugAmplitude;
+                duration = SIMPLE_BUG_MOVE_DURATION_BASE * m.simpleBugMoveDuration * gameStage.gameScript.fpc.level.simpleBugMoveDuration;
+                amplitude = SIMPLE_BUG_AMPLITUDE_BASE * m.simpleBugAmplitude * gameStage.gameScript.fpc.level.simpleBugAmplitude;
                 points = 3;
                 break;
             }

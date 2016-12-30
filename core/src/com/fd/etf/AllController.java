@@ -2,6 +2,7 @@ package com.fd.etf;
 
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
+import com.fd.etf.stages.GameStage;
 
 public interface AllController extends PlayServices {
 
@@ -21,21 +22,32 @@ public interface AllController extends PlayServices {
 
     void removeAds();
 
-    void getPhoenix(Upgrade phoenix);
+//    void getPhoenix(Upgrade phoenix);
+//
+//    void getBJDouble(Upgrade bj);
+//
+//    void getBirdPet(PetComponent pet);
+//
+//    void getPhoenixDiscount(Upgrade phoenix);
+//
+//    void getBJDoubleDiscount(Upgrade bj);
 
-    void getBJDouble(Upgrade bj);
+    void getPhoenix(GameStage gameStage, Upgrade phoenix);
 
-    void getBirdPet(PetComponent pet);
+    void getBJDouble(GameStage gameStage, Upgrade bj);
 
-    void getPhoenixDiscount(Upgrade phoenix);
+    void getBirdPet(GameStage gameStage, PetComponent pet);
 
-    void getBJDoubleDiscount(Upgrade bj);
+    void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix);
 
-    void getBirdPetDiscount(PetComponent pet);
+    void getBJDoubleDiscount(GameStage gameStage, Upgrade bj);
+
+    void getBirdPetDiscount(GameStage gameStage, PetComponent pet);
 
     void rateMyApp();
 
+    void restorePurchases(GameStage gameStage) throws Exception;
+
     void openFB();
 
-    void restorePurchases() throws  Exception;
 }

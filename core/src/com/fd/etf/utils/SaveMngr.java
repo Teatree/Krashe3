@@ -164,7 +164,7 @@ public class SaveMngr {
             fc.settings.shopAd_min = stats.shopAd_min;
 
             for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
-                Upgrade u = getUpgrade(UpgradeType.valueOf(e.getValue().upgradeType));
+                Upgrade u = getUpgrade(null, UpgradeType.valueOf(e.getValue().upgradeType));
                 u.bought = e.getValue().bought;
                 u.enabled = e.getValue().enabled;
                 fc.upgrades.put(UpgradeType.valueOf(e.getKey()), u);
@@ -203,7 +203,7 @@ public class SaveMngr {
     }
 
     private static void dummyUpgrade(FlowerPublicComponent fc) {
-        Upgrade u = Upgrade.getBJDouble();
+        Upgrade u = Upgrade.getBJDouble(null);
         u.tryPeriod = true;
 //        fc.currentPet.tryPeriod = true;
 //        fc.currentPet.enabled = true;

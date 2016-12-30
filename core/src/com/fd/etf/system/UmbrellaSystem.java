@@ -23,7 +23,6 @@ import static com.fd.etf.entity.componets.UmbrellaComponent.SPAWNING_TIME;
 import static com.fd.etf.entity.componets.UmbrellaComponent.State.*;
 import static com.fd.etf.entity.componets.UmbrellaComponent.currentMultiplier;
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class UmbrellaSystem extends IteratingSystem {
@@ -65,11 +64,11 @@ public class UmbrellaSystem extends IteratingSystem {
                     entity.getComponent(TransformComponent.class));
 
             if (checkCollision(uc)) {
-                gameScript.fpc.isCollision = true;
+                gameStage.gameScript.fpc.isCollision = true;
                 hide(entity);
 
-                gameScript.fpc.umbrellaMult(uc.pointsMult);
-                gameScript.reloadScoreLabel(gameScript.fpc);
+                gameStage.gameScript.fpc.umbrellaMult(uc.pointsMult);
+                gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
 
                 playParticleEffectFor();
 
@@ -149,8 +148,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-        EffectUtils.playYellowStarsParticleEffect(gameStage, gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
-                gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
+        EffectUtils.playYellowStarsParticleEffect(gameStage, gameStage.gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
+                gameStage.gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
     }
 
     public static void hide(Entity entity) {
@@ -177,20 +176,20 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private boolean checkCollision(UmbrellaComponent bc) {
-        return gameScript.fpc.flowerCollisionCheck(bc.boundsRect);
+        return gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect);
     }
 
     private void checkEatGoal(UmbrellaComponent uc) {
-        if (gameScript.fpc.flowerCollisionCheck(uc.boundsRect)) {
-            if (gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA) != null) {
-                gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA).update();
+        if (gameStage.gameScript.fpc.flowerCollisionCheck(uc.boundsRect)) {
+            if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA) != null) {
+                gameStage.gameScript.fpc.level.getGoalByType(EAT_N_UMBRELLA).update();
             }
         }
     }
 
     private void checkBounceGoal() {
-        if (gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
-            gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
+        if (gameStage.gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES) != null) {
+            gameStage.gameScript.fpc.level.getGoalByType(BOUNCE_UMBRELLA_N_TIMES).update();
         }
     }
 

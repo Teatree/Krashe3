@@ -16,16 +16,17 @@ import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import static com.fd.etf.entity.componets.ButterflyComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 
 public class ButterflySystem extends IteratingSystem {
 
     private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
+    private GameStage gameStage;
 
-    public ButterflySystem() {
+    public ButterflySystem(GameStage gameStage) {
         super(Family.all(ButterflyComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     @Override
@@ -76,13 +77,13 @@ public class ButterflySystem extends IteratingSystem {
 
             updateRectangle(e.getComponent(ButterflyComponent.class), e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class));
             if (checkCollision(e.getComponent(ButterflyComponent.class))) {
-                gameScript.fpc.isCollision = true;
+                gameStage.gameScript.fpc.isCollision = true;
                 e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 e.getComponent(ButterflyComponent.class).state = DEAD;
 
-                gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
-                GameStage.gameScript.reloadScoreLabel(GameStage.gameScript.fpc);
+                gameStage.gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
+                gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
             }
 
             if (e.getComponent(ButterflyComponent.class).state == DEAD) {
@@ -115,15 +116,15 @@ public class ButterflySystem extends IteratingSystem {
     private boolean checkCollision(ButterflyComponent bc) {
         checkGoal(bc);
 //        System.out.print("bounds >> " + entity.getComponent(ButterflyComponent.class).boundsRect);
-//        System.out.print(" || flower >> " + gameScript.fpc.boundsRect);
-//        System.out.println(" || overlap >>> " + gameScript.fpc.petAndFlowerCollisionCheck(entity.getComponent(ButterflyComponent.class).boundsRect) );
-        return gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
+//        System.out.print(" || flower >> " + gameStage.gameScript.fpc.boundsRect);
+//        System.out.println(" || overlap >>> " + gameStage.gameScript.fpc.petAndFlowerCollisionCheck(entity.getComponent(ButterflyComponent.class).boundsRect) );
+        return gameStage.gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
     }
 
     private void checkGoal(ButterflyComponent bc) {
-        if (gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
-            if (gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
-                gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
+        if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
+            if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
+                gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
             }
         }
     }

@@ -18,7 +18,6 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -118,10 +117,10 @@ public class MenuScreenScript implements IScript {
         if (showGoalNotification) {
             lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             LabelComponent lc = lblGoalNotification.getComponent(LabelComponent.class);
-            lc.text.replace(0, lc.text.length, gameScript.fpc.level.getRemainingGoals());
+            lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.level.getRemainingGoals());
             lblGoalNotificationSh = menuItem.getChild(LBL_GOALS_NOTIFICATION_SH).getEntity();
             LabelComponent lcSh = lblGoalNotificationSh.getComponent(LabelComponent.class);
-            lcSh.text.replace(0, lcSh.text.length, gameScript.fpc.level.getRemainingGoals());
+            lcSh.text.replace(0, lcSh.text.length, gameStage.gameScript.fpc.level.getRemainingGoals());
             imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
             imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
             lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
@@ -333,7 +332,7 @@ public class MenuScreenScript implements IScript {
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(camPosX, 0, 0);
 
-        GameScreenScript.checkTryPeriod();
+        gameStage.gameScript.checkTryPeriod();
         timer.timer();
 
         if (pauseDialog != null)

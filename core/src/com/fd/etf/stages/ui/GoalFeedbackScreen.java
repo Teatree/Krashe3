@@ -341,17 +341,17 @@ public class GoalFeedbackScreen {
         }
     }
 
-    public static void hideGoalFeedback() {
+    public void hideGoalFeedback() {
         isGoalFeedbackOpen = false;
 
         feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
-        GameStage.gameScript.gameStage.sceneLoader.getEngine().removeEntity(feedbackEntity);
+        gameStage.gameScript.gameStage.sceneLoader.getEngine().removeEntity(feedbackEntity);
         prevLvlTiles = null;
         for (Entity tile : tiles) {
             tile.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         }
-        GameStage.gameScript.gameStage.initResultWithAds();
+        gameStage.gameScript.gameStage.initResultWithAds();
     }
 
     private void updateLevelLabel() {
@@ -363,16 +363,16 @@ public class GoalFeedbackScreen {
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
             LabelComponent goalsLabelShComp = goalLabelSh.getComponent(LabelComponent.class);
-            if (!goalsLabelComp.text.toString().equals(GameStage.gameScript.fpc.level.name)) {
+            if (!goalsLabelComp.text.toString().equals(gameStage.gameScript.fpc.level.name)) {
                 EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabel.getComponent(TransformComponent.class).x,
                         goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(),
-                        GameStage.gameScript.fpc.level.name);
+                        gameStage.gameScript.fpc.level.name);
             }
-            if (!goalsLabelShComp.text.toString().equals(GameStage.gameScript.fpc.level.name)) {
+            if (!goalsLabelShComp.text.toString().equals(gameStage.gameScript.fpc.level.name)) {
                 EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabelSh.getComponent(TransformComponent.class).x,
                         goalLabelSh.getComponent(TransformComponent.class).y);
-                goalsLabelShComp.text.replace(0, goalsLabelShComp.text.capacity(), GameStage.gameScript.fpc.level.name);
+                goalsLabelShComp.text.replace(0, goalsLabelShComp.text.capacity(), gameStage.gameScript.fpc.level.name);
             }
         }
     }
@@ -380,7 +380,7 @@ public class GoalFeedbackScreen {
     private void showGift() {
         if (!isGiftShown) {
             isGiftShown = true;
-            gift = Gift.getRandomGift();
+            gift = Gift.getRandomGift(gameStage);
 
             helpTimer = 0;
             boxIdleTimer = 0;

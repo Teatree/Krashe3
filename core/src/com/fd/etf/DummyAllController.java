@@ -43,39 +43,39 @@ public class DummyAllController implements AllController {
     }
 
     @Override
-    public void getPhoenix(Upgrade phoenix) {
+    public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
         System.out.println("pay to get phoenix");
         // PC only
-        Upgrade.getPhoenix().buyAndUse();
+        Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
     }
 
     @Override
-    public void getBJDouble(Upgrade bj) {
+    public void getBJDouble(GameStage gameStage, Upgrade bj) {
         System.out.println("pay to get bj");
         // PC only
-        Upgrade.getBJDouble().buyAndUse();
+        Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
     }
 
     @Override
-    public void getBirdPet(PetComponent pet) {
-        pet.buyAndUse();
+    public void getBirdPet(GameStage gameStage, PetComponent pet) {
+        pet.buyAndUse(gameStage);
         System.out.println("pay to get pet");
     }
 
     @Override
-    public void getPhoenixDiscount(Upgrade phoenix) {
+    public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
         System.out.println("pay to get phoenix cheaper");
-        Upgrade.getPhoenix().buyAndUse();
+        Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
     }
 
     @Override
-    public void getBJDoubleDiscount(Upgrade bj) {
+    public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
         System.out.println("pay to get bj cheaper");
-        Upgrade.getBJDouble().buyAndUse();
+        Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
     }
 
     @Override
-    public void getBirdPetDiscount(PetComponent pet) {
+    public void getBirdPetDiscount(GameStage gameStage, PetComponent pet) {
 //        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
         System.out.println("pay to get pet cheaper");
     }
@@ -91,7 +91,7 @@ public class DummyAllController implements AllController {
     }
 
     @Override
-    public void restorePurchases() {
+    public void restorePurchases(GameStage gameStage) {
         System.out.println("restore purchases");
     }
 

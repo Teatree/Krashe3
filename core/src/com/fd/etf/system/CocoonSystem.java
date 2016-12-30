@@ -21,7 +21,6 @@ import static com.fd.etf.entity.componets.CocoonComponent.CocoonMultiplier;
 import static com.fd.etf.entity.componets.CocoonComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
@@ -35,11 +34,13 @@ public class CocoonSystem extends IteratingSystem {
     public static final String BUTTERFLY_ANI = "butterfly";
 
     ItemWrapper gameItem;
+    private GameScreenScript gameScript;
 
     private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
 
     public CocoonSystem(GameScreenScript gameScript) {
         super(Family.all(CocoonComponent.class).get());
+        this.gameScript = gameScript;
         this.gameItem = gameScript.gameItem;
     }
 
@@ -142,8 +143,8 @@ public class CocoonSystem extends IteratingSystem {
     }
 
     public void checkCocoonGoal() {
-        if (GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
-            GameStage.gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON).update();
+        if (gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON) != null) {
+            gameScript.fpc.level.getGoalByType(DESTROY_N_COCOON).update();
         }
     }
 

@@ -30,7 +30,6 @@ import static com.fd.etf.entity.componets.CocoonComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.stages.ShopScreenScript.allSoftItems;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
@@ -141,28 +140,29 @@ public class GameScreenScript implements IScript {
         }
     }
 
-    public static void checkTryPeriod() {
+    public void checkTryPeriod() {
         long now = System.currentTimeMillis();
-        if (gameScript.fpc.currentPet != null && gameScript.fpc.currentPet.tryPeriod) {
-            if (now - gameScript.fpc.currentPet.tryPeriodStart >= gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
-                gameScript.fpc.currentPet.enabled = false;
-                gameScript.fpc.currentPet.bought = false;
-                gameScript.fpc.currentPet.tryPeriod = false;
-                gameScript.fpc.currentPet.disable();
+        if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
+            if (now - gameStage.gameScript.fpc.currentPet.tryPeriodStart >= gameStage.gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
+                gameStage.gameScript.fpc.currentPet.enabled = false;
+                gameStage.gameScript.fpc.currentPet.bought = false;
+                gameStage.gameScript.fpc.currentPet.tryPeriod = false;
+                gameStage.gameScript.fpc.currentPet.disable(gameStage);
 
-                if (allSoftItems.indexOf(gameScript.fpc.currentPet) >= 0) {
-                    allSoftItems.get(allSoftItems.indexOf(gameScript.fpc.currentPet)).bought = false;
-                    allSoftItems.get(allSoftItems.indexOf(gameScript.fpc.currentPet)).enabled = false;
+                if (allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet) >= 0) {
+                    allSoftItems.get(allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).bought = false;
+                    allSoftItems.get(allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).enabled = false;
                 }
             }
         }
-        if (gameScript.fpc.upgrades != null && !gameScript.fpc.upgrades.isEmpty()) {
-            for (Upgrade u : gameScript.fpc.upgrades.values()) {
+        if (gameStage.gameScript.fpc.upgrades != null && !gameStage.gameScript.fpc.upgrades.isEmpty()) {
+            for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
+                u.gameStage = gameStage;
                 if (u.tryPeriod && now - u.tryPeriodStart >= u.tryPeriodDuration * 1000) {
                     u.enabled = false;
                     u.bought = false;
                     u.tryPeriod = false;
-                    u.disable();
+                    u.disable(gameStage);
 
                     if (allSoftItems.indexOf(u) >= 0) {
                         allSoftItems.get(allSoftItems.indexOf(u)).bought = false;
@@ -173,8 +173,8 @@ public class GameScreenScript implements IScript {
         }
     }
 
-    public static void usePhoenix() {
-        gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
+    public void usePhoenix() {
+        gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
     }
 
     @Override
@@ -229,8 +229,8 @@ public class GameScreenScript implements IScript {
 
         checkTryPeriod();
 
-        gameScript.fpc.settings.totalPlayedGames++;
-        gameScript.fpc.settings.playedGames++;
+        gameStage.gameScript.fpc.settings.totalPlayedGames++;
+        gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
 //        isAngeredBeesMode = true;
     }
@@ -248,9 +248,9 @@ public class GameScreenScript implements IScript {
 
     private void initDoubleBJIcon() {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
-        if (gameScript.fpc.haveBugJuiceDouble()) {
+        if (gameStage.gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-            if (gameScript.fpc.havePhoenix()) {
+            if (gameStage.gameScript.fpc.havePhoenix()) {
                 tc.x = 117;
                 tc.y = 675;
             } else {
@@ -264,7 +264,7 @@ public class GameScreenScript implements IScript {
 
     private void initPhoenixIcon() {
         Entity bjIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
-        if (gameScript.fpc.havePhoenix()) {
+        if (gameStage.gameScript.fpc.havePhoenix()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
             tc.x = -24;
             tc.y = 637;
@@ -277,10 +277,10 @@ public class GameScreenScript implements IScript {
 //        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
         gameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new LeafsSystem());
-        gameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
-        gameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
-        gameStage.sceneLoader.getEngine().addSystem(new BugSystem());
-        gameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new ButterflySystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new FlowerSystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new BugSystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
         gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
@@ -346,7 +346,7 @@ public class GameScreenScript implements IScript {
     }
 
     private void initFlower() {
-        gameScript.fpc.score = 0;
+        gameStage.gameScript.fpc.score = 0;
         Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
 
         TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
@@ -371,18 +371,18 @@ public class GameScreenScript implements IScript {
     }
 
     public void hideCurrentPet() {
-        if (gameScript.fpc.currentPet != null) {
-//            gameScript.fpc.currentPet.disable();
+        if (gameStage.gameScript.fpc.currentPet != null) {
+//            gameStage.gameScript.fpc.currentPet.disable();
             if (petE != null) {
                 petE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
-            if (gameScript.fpc.currentPet.petHead != null) {
-                gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameStage.sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petCannon);
-                gameStage.sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petHead);
+            if (gameStage.gameScript.fpc.currentPet.petHead != null) {
+                gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                gameStage.gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petCannon);
+                gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petHead);
             }
         }
     }
@@ -513,16 +513,16 @@ public class GameScreenScript implements IScript {
                     !GoalFeedbackScreen.isGoalFeedbackOpen) {
                 showGoalFeedback();
                 isGameOver.set(true);
-            } else if ((gameScript.goalFeedbackScreen == null ||
+            } else if ((gameStage.gameScript.goalFeedbackScreen == null ||
                     !GoalFeedbackScreen.isGoalFeedbackOpen)) {
                 isGameOver.set(false);
-                gameScript.resetPauseDialog();
+                gameStage.gameScript.resetPauseDialog();
                 if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
                     Main.mainController.submitScore(fpc.score);
                 }
-                gameScript.gameOverDialog.hide();
+                gameStage.gameScript.gameOverDialog.hide();
                 gameItem.getChild(MEGA_FLOWER).getEntity().getComponent(SpriterComponent.class).player.setTime(0);
-                gameScript.gameStage.initResultWithAds();
+                gameStage.gameScript.gameStage.initResultWithAds();
             }
         }
     }
@@ -532,7 +532,7 @@ public class GameScreenScript implements IScript {
             goalFeedbackScreen = new GoalFeedbackScreen(gameStage);
         }
         goalFeedbackScreen.init(false);
-        gameScript.goalFeedbackScreen.show();
+        gameStage.gameScript.goalFeedbackScreen.show();
     }
 
     private void showGameOverDialog() {

@@ -56,20 +56,20 @@ public class EtfIAPhelper {
         mHelper = null;
     }
 
-    public void restorePurchases() throws Exception {
+    public void restorePurchases(GameStage gameStage) throws Exception {
         List<String> skus = mHelper.getPurchases();
         if (skus.isEmpty()) {
             for (String sku : skus) {
                 if (sku.equals(SKU_BJ) || sku.equals(SKU_PROMO_BJ)) {
-                    Upgrade.getBJDouble().buyAndUse();
+                    Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
                 }
 
                 if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_PROMO_PHOENIX)) {
-                    Upgrade.getPhoenix().buyAndUse();
+                    Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
                 }
 
                 if (sku.equals(SKU_PET) || sku.equals(SKU_PROMO_PET)) {
-                    GameStage.gameScript.fpc.pets.get(0).buyAndUse();
+                    gameStage.gameScript.fpc.pets.get(0).buyAndUse(gameStage);
                 }
             }
         }
@@ -111,7 +111,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetBirdPet(final PetComponent petComponent) {
+    public void iapGetBirdPet(final GameStage gameStage, final PetComponent petComponent) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -125,7 +125,7 @@ public class EtfIAPhelper {
                     }
 
                     if (purchase.getSku().equals(SKU_PET)) {
-                        petComponent.buyAndUse();
+                        petComponent.buyAndUse(gameStage);
                     }
                 }
             };
@@ -136,7 +136,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetBj(final Upgrade bj) {
+    public void iapGetBj(final GameStage gameStage, final Upgrade bj) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -150,7 +150,7 @@ public class EtfIAPhelper {
 
                     Log.d("IAB", "Purchase successful.");
                     if (purchase.getSku().equals(SKU_BJ)) {
-                        bj.buyAndUse();
+                        bj.buyAndUse(gameStage);
                     }
                 }
             };
@@ -161,7 +161,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetPhoenix(final Upgrade phoenix) {
+    public void iapGetPhoenix(final GameStage gameStage, final Upgrade phoenix) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -175,7 +175,7 @@ public class EtfIAPhelper {
 
                     Log.d("IAB", "Purchase successful.");
                     if (purchase.getSku().equals(SKU_PHOENIX)) {
-                        phoenix.buyAndUse();
+                        phoenix.buyAndUse(gameStage);
                     }
                 }
             };
@@ -186,7 +186,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetBirdPetDiscount(final PetComponent petComponent) {
+    public void iapGetBirdPetDiscount(final GameStage gameStage, final PetComponent petComponent) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -200,7 +200,7 @@ public class EtfIAPhelper {
                     }
 
                     if (purchase.getSku().equals(SKU_PET)) {
-                        petComponent.buyAndUse();
+                        petComponent.buyAndUse(gameStage);
                     }
                 }
             };
@@ -211,7 +211,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetBjDiscount(final Upgrade bj) {
+    public void iapGetBjDiscount(final GameStage gameStage, final Upgrade bj) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -225,7 +225,7 @@ public class EtfIAPhelper {
 
                     Log.d("IAB", "Purchase successful.");
                     if (purchase.getSku().equals(SKU_BJ)) {
-                        bj.buyAndUse();
+                        bj.buyAndUse(gameStage);
                     }
                 }
             };
@@ -236,7 +236,7 @@ public class EtfIAPhelper {
         }
     }
 
-    public void iapGetPhoenixDiscount(final Upgrade phoenix) {
+    public void iapGetPhoenixDiscount(final GameStage gameStage, final Upgrade phoenix) {
         try {
             IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
                 public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -250,7 +250,7 @@ public class EtfIAPhelper {
 
                     Log.d("IAB", "Purchase successful.");
                     if (purchase.getSku().equals(SKU_PHOENIX)) {
-                        phoenix.buyAndUse();
+                        phoenix.buyAndUse(gameStage);
                     }
                 }
             };

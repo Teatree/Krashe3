@@ -12,13 +12,15 @@ public class Upgrade extends ShopItem{
 
     public UpgradeType upgradeType;
     public int counter;
+    public GameStage gameStage;
 
 //    public boolean tryPeriod;
 //    public long tryPeriodDuration;
 //    public long tryPeriodStart;
 //    public long tryPeriodTimer;
 
-    public Upgrade() {
+    public Upgrade(GameStage gameStage) {
+        this.gameStage = gameStage;
     }
 
     public Upgrade(SaveMngr.UpgradeStats us) {
@@ -31,19 +33,19 @@ public class Upgrade extends ShopItem{
         this.enabled = us.enabled;
     }
 
-    public static List<Upgrade> getAllUpgrades() {
+    public static List<Upgrade> getAllUpgrades(GameStage gameStage) {
         List<Upgrade> all = new ArrayList<>();
-        all.add(getPhoenix());
-        all.add(getBJDouble());
+        all.add(getPhoenix(gameStage));
+        all.add(getBJDouble(gameStage));
         return all;
     }
 
-    public static Upgrade getUpgrade (UpgradeType type){
-        return type.equals(UpgradeType.PHOENIX) ? getPhoenix() : getBJDouble();
+    public static Upgrade getUpgrade (GameStage gameStage, UpgradeType type){
+        return type.equals(UpgradeType.PHOENIX) ? getPhoenix(gameStage) : getBJDouble(gameStage);
     }
 
-    public static Upgrade getPhoenix() {
-        Upgrade phoenix = new Upgrade();
+    public static Upgrade getPhoenix(GameStage gameStage) {
+        Upgrade phoenix = new Upgrade(gameStage);
         phoenix.upgradeType = UpgradeType.PHOENIX;
         phoenix.cost = 13;
         phoenix.name = "PHOENIX";
@@ -57,8 +59,8 @@ public class Upgrade extends ShopItem{
         return phoenix;
     }
 
-    public static Upgrade getBJDouble() {
-        Upgrade bjd = new Upgrade();
+    public static Upgrade getBJDouble(GameStage gameStage) {
+        Upgrade bjd = new Upgrade(gameStage);
         bjd.upgradeType = UpgradeType.BJ_DOUBLE;
         bjd.cost = 13;
         bjd.name = "DOUBLE~BUG JUICE";
@@ -73,20 +75,20 @@ public class Upgrade extends ShopItem{
     }
 
     @Override
-    public void apply() {
+    public void apply(GameStage gameStage) {
         this.enabled = true;
-        GameStage.gameScript.fpc.upgrades.put(this.upgradeType, this);
+        gameStage.gameScript.fpc.upgrades.put(this.upgradeType, this);
     }
 
     @Override
-    public void disable() {
+    public void disable(GameStage gameStage) {
         this.enabled = false;
     }
 
     @Override
-    public void buyAndUse() {
+    public void buyAndUse(GameStage gameStage) {
         this.bought = true;
-        apply();
+        apply(gameStage);
     }
 
     @Override
@@ -95,22 +97,22 @@ public class Upgrade extends ShopItem{
         this.enabled = true;
 
         if (upgradeType.equals(UpgradeType.PHOENIX)){
-            Main.mainController.getPhoenix(this);
+            Main.mainController.getPhoenix(gameStage, this);
         }
 
         if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
-            Main.mainController.getBJDouble(this);
+            Main.mainController.getBJDouble(gameStage, this);
         }
     }
 
     @Override
     public void buyHardDiscount() {
         if (upgradeType.equals(UpgradeType.PHOENIX)){
-            Main.mainController.getPhoenixDiscount(this);
+            Main.mainController.getPhoenixDiscount(gameStage, this);
         }
 
         if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
-            Main.mainController.getBJDoubleDiscount(this);
+            Main.mainController.getBJDoubleDiscount(gameStage, this);
         }
     }
 

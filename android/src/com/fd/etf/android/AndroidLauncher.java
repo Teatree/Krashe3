@@ -19,6 +19,7 @@ import com.fd.etf.android.util.EtfIAPhelper;
 import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
+import com.fd.etf.stages.GameStage;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
@@ -125,36 +126,36 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
-    public void getPhoenix(Upgrade phoenix) {
-        iapHelper.iapGetPhoenix(phoenix);
+    public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
+        iapHelper.iapGetPhoenix(gameStage, phoenix);
     }
 
     @Override
-    public void getBJDouble(Upgrade bj) {
-        iapHelper.iapGetBj(bj);
-    }
-
-
-    @Override
-    public void getBirdPet(PetComponent petComponent) {
-        iapHelper.iapGetBirdPet(petComponent);
-    }
-
-    @Override
-    public void getPhoenixDiscount(Upgrade phoenix) {
-        iapHelper.iapGetPhoenixDiscount(phoenix);
-
-    }
-
-    @Override
-    public void getBJDoubleDiscount(Upgrade bj) {
-        iapHelper.iapGetBjDiscount(bj);
+    public void getBJDouble(GameStage gameStage, Upgrade bj) {
+        iapHelper.iapGetBj(gameStage, bj);
     }
 
 
     @Override
-    public void getBirdPetDiscount(PetComponent petComponent) {
-        iapHelper.iapGetBirdPetDiscount(petComponent);
+    public void getBirdPet(GameStage gameStage, PetComponent petComponent) {
+        iapHelper.iapGetBirdPet(gameStage,petComponent);
+    }
+
+    @Override
+    public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
+        iapHelper.iapGetPhoenixDiscount(gameStage, phoenix);
+
+    }
+
+    @Override
+    public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
+        iapHelper.iapGetBjDiscount(gameStage, bj);
+    }
+
+
+    @Override
+    public void getBirdPetDiscount(GameStage gameStage, PetComponent petComponent) {
+        iapHelper.iapGetBirdPetDiscount(gameStage, petComponent);
     }
 
     @Override
@@ -163,8 +164,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
-    public void restorePurchases() throws Exception {
-        iapHelper.restorePurchases();
+    public void restorePurchases(GameStage gameStage) throws Exception {
+        iapHelper.restorePurchases(gameStage);
     }
 
     //--------------------------PLAY SERVICES -----------------------------------------------------

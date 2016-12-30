@@ -138,7 +138,7 @@ public class Settings extends AbstractDialog {
                     public void clicked() {
                         if (!isSecondDialogOpen.get() && isActive) {
                             try {
-                                Main.mainController.restorePurchases();
+                                Main.mainController.restorePurchases(gameStage);
                                 dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
                             } catch (Exception e) {
                                 dialog.show(BasicDialog.ERROR);

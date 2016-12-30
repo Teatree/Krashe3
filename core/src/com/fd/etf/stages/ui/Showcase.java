@@ -323,7 +323,7 @@ public class Showcase {
             @Override
             public void clicked() {
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
-                    showCaseVanity.buyAndUse();
+                    showCaseVanity.buyAndUse(gameStage);
                     gameStage.changedFlower2 = true;
                     ResultScreenScript.isWasShowcase = true;
                     if (gameStage.shopScript != null) {

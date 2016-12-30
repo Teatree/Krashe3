@@ -1,5 +1,6 @@
 package com.fd.etf.entity.componets;
 
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ui.TrialTimer;
 
 public abstract class ShopItem {
@@ -28,11 +29,11 @@ public abstract class ShopItem {
     //true when is applied now
     public boolean enabled ;
 
-    public abstract void apply ();
+    public abstract void apply (GameStage gameStage);
 
-    public abstract void disable();
+    public abstract void disable(GameStage gameStage);
 
-    public abstract void buyAndUse();
+    public abstract void buyAndUse(GameStage gameStage);
 
     public abstract void buyHard();
 

@@ -41,6 +41,8 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     public static Map<String, VanityCollection> vanityCollections;
     public static Map<String, List<VanityComponent>> vanityComponentsByChangedAssets;
 
+//    private GameStage gameStage;
+
     public VanityComponent() {
         currencyType = SOFT;
     }
@@ -67,14 +69,14 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         this.collection = vc.collection;
     }
 
-    public void apply() {
+    public void apply(GameStage gameStage) {
         if (bought) {
             disableSimilarVanities();
 
             this.enabled = true;
             overrideAnimationFiles();
             if (this.pet != null) {
-                GameStage.gameScript.fpc.currentPet = this.pet;
+                gameStage.gameScript.fpc.currentPet = this.pet;
             }
 
             GameStage.changedFlower = true;
@@ -100,14 +102,14 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         }
     }
 
-    public void buy() {
-        GameStage.gameScript.fpc.totalScore -= this.cost;
+    public void buy(GameStage gameStage) {
+        gameStage.gameScript.fpc.totalScore -= this.cost;
         this.bought = true;
     }
 
-    public void buyAndUse() {
-        buy();
-        apply();
+    public void buyAndUse(GameStage gameStage) {
+        buy(gameStage);
+        apply(gameStage);
     }
 
     @Override
@@ -120,17 +122,17 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         //nothing I'm soft
     }
 
-    public boolean canBuy() {
-        return GameStage.gameScript.fpc.totalScore >= this.cost;
+    public boolean canBuy(GameStage gameStage) {
+        return gameStage.gameScript.fpc.totalScore >= this.cost;
     }
 
-    public void disable() {
+    public void disable(GameStage gameStage) {
         this.enabled = false;
 
         backToDefaultAnimation();
         GameStage.changedFlower = true;
         if (this.pet != null) {
-            GameStage.gameScript.fpc.currentPet = this.pet;
+            gameStage.gameScript.fpc.currentPet = this.pet;
         }
     }
 

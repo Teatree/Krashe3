@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -17,7 +18,6 @@ import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.State.*;
 import static com.fd.etf.stages.GameScreenScript.isGameOver;
 import static com.fd.etf.stages.GameScreenScript.isPause;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.GlobalConstants.FPS;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
 
@@ -28,9 +28,12 @@ public class FlowerSystem extends IteratingSystem {
 
     private static final String TUTORIAL_LINE = "tutorial_line";
     private int randomSulkSwtich;
+    
+    private GameStage gameStage;
 
-    public FlowerSystem() {
+    public FlowerSystem(GameStage gameStage) {
         super(Family.all(FlowerComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     @Override
@@ -42,13 +45,13 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void updateRect(TransformComponent tc) {
-        gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
-        gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
-        gameScript.fpc.boundsRect.width = 160 * tc.scaleX;
-        gameScript.fpc.boundsRect.height = 180 * tc.scaleY;
+        gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
+        gameStage.gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
+        gameStage.gameScript.fpc.boundsRect.width = 160 * tc.scaleX;
+        gameStage.gameScript.fpc.boundsRect.height = 180 * tc.scaleY;
         if (state.equals(IDLE) || state.equals(IDLE_BITE)) {
-            gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
-            gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
+            gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
+            gameStage.gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
         }
     }
 
@@ -90,12 +93,12 @@ public class FlowerSystem extends IteratingSystem {
                 if (isAnimationFinished(sc)) {
                     setSulkAnimation(sc);
                     state = State.SULKING;
-                    if (gameScript.fpc.canUsePhoenix()) {
+                    if (gameStage.gameScript.fpc.canUsePhoenix()) {
                         isPause.set(false);
-                        GameScreenScript.usePhoenix();
+                        gameStage.gameScript.usePhoenix();
                     } else {
                         isGameOver.set(true);
-                        gameScript.endGame();
+                        gameStage.gameScript.endGame();
                     }
                 }
             }
@@ -121,10 +124,10 @@ public class FlowerSystem extends IteratingSystem {
     private void attackAndRetreat(TransformComponent tc, SpriterComponent sc, float delta) {
         if (state.equals(ATTACK) || state.equals(RETREAT)) {
 
-            if (gameScript.fpc.isCollision) {
+            if (gameStage.gameScript.fpc.isCollision) {
                 state = ATTACK_BITE;
                 setBiteAttackAnimation(sc);
-                gameScript.fpc.isCollision = false;
+                gameStage.gameScript.fpc.isCollision = false;
 
                 soundMgr.play(SoundMgr.EAT_SOUND);
             } else {
@@ -150,9 +153,9 @@ public class FlowerSystem extends IteratingSystem {
         }
 
         if (state.equals(IDLE)) {
-            if (gameScript.fpc.isCollision) {
+            if (gameStage.gameScript.fpc.isCollision) {
                 state = IDLE_BITE;
-                gameScript.fpc.isCollision = false;
+                gameStage.gameScript.fpc.isCollision = false;
 
                 soundMgr.play(SoundMgr.EAT_SOUND);
             } else {
@@ -220,7 +223,7 @@ public class FlowerSystem extends IteratingSystem {
                     setAttackAnimation(sc);
                 }
 
-                if (gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
+                if (gameStage.gameScript.fpc.isCollision && canInterruptAttackBite(sc)) {
                     state = ATTACK_BITE;
                     setBiteAttackAnimation(sc);
                 }
@@ -251,15 +254,15 @@ public class FlowerSystem extends IteratingSystem {
 
     private boolean canAttackCoord() {
         return (
-                gameScript.fpc.currentPet == null || !gameScript.fpc.currentPet.enabled ||
-                        !gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
-                && !gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates()
+                gameStage.gameScript.fpc.currentPet == null || !gameStage.gameScript.fpc.currentPet.enabled ||
+                        !gameStage.gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                && !gameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates()
         );
     }
 
     private void hideTutorialLine() {
-        if (gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0f) {
-            gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.1f;
+        if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0f) {
+            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.1f;
         }
     }
 
