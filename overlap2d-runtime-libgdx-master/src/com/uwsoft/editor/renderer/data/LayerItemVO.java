@@ -11,12 +11,12 @@ public class LayerItemVO {
 	}
 
     public LayerItemVO(String name) {
-        layerName = new String(name);
+        layerName = name;
 		isVisible = true;
     }
 	
 	public LayerItemVO(LayerItemVO vo) {
-		layerName = new String(vo.layerName);
+	layerName = vo.layerName;
 		isLocked = vo.isLocked;
 		isVisible = vo.isVisible;
 	}

@@ -1,13 +1,11 @@
 package com.fd.etf.system;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.entity.componets.CocoonComponent;
 import com.fd.etf.stages.GameScreenScript;
-import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -35,8 +33,6 @@ public class CocoonSystem extends IteratingSystem {
 
     ItemWrapper gameItem;
     private GameScreenScript gameScript;
-
-    private ComponentMapper<CocoonComponent> mapper = ComponentMapper.getFor(CocoonComponent.class);
 
     public CocoonSystem(GameScreenScript gameScript) {
         super(Family.all(CocoonComponent.class).get());

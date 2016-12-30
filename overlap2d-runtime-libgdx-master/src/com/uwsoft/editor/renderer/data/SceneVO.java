@@ -27,7 +27,7 @@ public class SceneVO {
     }
 
     public SceneVO(SceneVO vo) {
-        sceneName = new String(vo.sceneName);
+        sceneName = vo.sceneName;
         composite = new CompositeVO(vo.composite);
         ambientColor = Arrays.copyOf(vo.ambientColor, vo.ambientColor.length);
         physicsPropertiesVO = new PhysicsPropertiesVO(vo.physicsPropertiesVO);

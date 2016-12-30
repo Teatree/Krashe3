@@ -22,8 +22,8 @@ public class LabelVO extends MainItemVO {
 	
 	public LabelVO(LabelVO vo) {
 		super(vo);
-		text 	= new String(vo.text);
-		style 	= new String(vo.style);
+		text 	= vo.text;
+		style 	= vo.style;
 		size 	= vo.size;
 		align 	= vo.align;
         width 	= vo.width;

@@ -67,17 +67,16 @@ public class MenuScreenScript implements IScript {
     private static Entity imgGoalNotification;
     private static Entity lblGoalNotification;
     private static Entity lblGoalNotificationSh;
-    private static Entity playBtn;
-    private static Entity btnShop;
-    private static Entity btnSettings;
-    private static Entity rateAppBtn;
-    private static Entity btnChalenges;
-    private static Entity btnFB;
-    private static Entity btnLB;
-    private static Entity btnAchievements;
-    private static Entity btnPlayServices;
-    private static Entity leaderboard_C;
-    private static Entity achievements_C;
+    private Entity btnShop;
+    private Entity btnSettings;
+    private Entity rateAppBtn;
+    private Entity btnChalenges;
+    private Entity btnFB;
+    private Entity btnLB;
+    private Entity btnAchievements;
+    private Entity btnPlayServices;
+    private Entity leaderboard_C;
+    private Entity achievements_C;
 
     public float wrldW = 800;
     public float wrldH = 524;
@@ -173,7 +172,7 @@ public class MenuScreenScript implements IScript {
     }
 
     public void initButtons() {
-        playBtn = menuItem.getChild(BTN_PLAY).getEntity();
+        Entity playBtn = menuItem.getChild(BTN_PLAY).getEntity();
         btnShop = menuItem.getChild(BTN_SHOP).getEntity();
         btnSettings = menuItem.getChild(BTN_SETTINGS).getEntity();
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
@@ -317,7 +316,6 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void dispose() {
-        System.gc();
     }
 
     @Override

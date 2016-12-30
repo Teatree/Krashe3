@@ -14,7 +14,7 @@ public class SimpleImageVO extends MainItemVO {
 	
 	public SimpleImageVO(SimpleImageVO vo) {
 		super(vo);
-		imageName = new String(vo.imageName);
+		imageName = vo.imageName;
 	}
 
 	@Override

@@ -16,6 +16,6 @@ public class SelectBoxVO extends MainItemVO {
 		super(vo);
 		width 		= vo.width;
 		height 		= vo.height;
-		style = new String(vo.style);
+		style = vo.style;
 	}
 }

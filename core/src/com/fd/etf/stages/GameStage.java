@@ -37,9 +37,9 @@ public class GameStage extends Stage {
 
     public GameScreenScript gameScript;
 
-    private static ResultScreenScript resultScript;
-    public static ShopScreenScript shopScript;
-    private static MenuScreenScript menuScript;
+    private ResultScreenScript resultScript;
+    public ShopScreenScript shopScript;
+    private MenuScreenScript menuScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
         this.sceneLoader = sceneLoader;

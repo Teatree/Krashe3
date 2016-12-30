@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class ToggleButtonComponent implements Component, Pool.Poolable{
 
-    public static String ON = "ON";
-    public static String OFF = "OFF";
+    public static final String ON = "ON";
+    public static final  String OFF = "OFF";
 
     private String state = ON;
 

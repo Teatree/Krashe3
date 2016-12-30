@@ -16,7 +16,7 @@ public class Image9patchVO extends MainItemVO {
 
     public Image9patchVO(Image9patchVO vo) {
         super(vo);
-        imageName = new String(vo.imageName);
+        imageName = vo.imageName;
         width = vo.width;
         height = vo.height;
     }

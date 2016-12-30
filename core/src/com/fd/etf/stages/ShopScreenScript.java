@@ -73,8 +73,8 @@ public class ShopScreenScript implements IScript {
     public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
     public static int bagsZindex;
 
-    public static List<ShopItem> allSoftItems = new ArrayList<>();
-    public static List<ShopItem> allHCItems = new ArrayList<>();
+    public List<ShopItem> allSoftItems = new ArrayList<>();
+    public List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
     public LabelComponent lc;
@@ -602,7 +602,6 @@ public class ShopScreenScript implements IScript {
         touchZoneBtn = null;
         preview = null;
         shopItem = null;
-        System.gc();
     }
 
     public void checkIfChanged() {

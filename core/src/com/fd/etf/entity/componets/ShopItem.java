@@ -5,8 +5,8 @@ import com.fd.etf.stages.ui.TrialTimer;
 
 public abstract class ShopItem {
 
-    public static String SOFT = "SOFT";
-    public static String HARD = "HARD";
+    public static final  String SOFT = "SOFT";
+    public static final String HARD = "HARD";
 
     public String shopIcon;
     public String name;

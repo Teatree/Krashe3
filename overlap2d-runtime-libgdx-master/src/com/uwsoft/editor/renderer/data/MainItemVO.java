@@ -41,7 +41,7 @@ public class MainItemVO {
 		y = vo.y;
 		rotation = vo.rotation;
 		zIndex = vo.zIndex;
-		layerName = new String(vo.layerName);
+		layerName = vo.layerName;
 		if(vo.tint != null) tint = Arrays.copyOf(vo.tint, vo.tint.length);
 		scaleX 		= vo.scaleX;
 		scaleY 		= vo.scaleY;

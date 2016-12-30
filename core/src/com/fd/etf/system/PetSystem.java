@@ -33,7 +33,7 @@ public class PetSystem extends IteratingSystem {
     private static final int PET_CANNON_SHIFT_Y = 10;
     private static final int PET_CANNON_SHIFT_X = 62;
     private final GameStage gameStage;
-    private boolean canPlayAnimation = true;
+//    private boolean canPlayAnimation = true;
 
     private ComponentMapper<PetComponent> mapper = ComponentMapper.getFor(PetComponent.class);
 
@@ -204,7 +204,7 @@ public class PetSystem extends IteratingSystem {
             pc.velocity = 0;
             if (isAnimationFinished(scPetBody) && isAnimationFinished(scPetHead)) {
                 pc.state = IDLE;
-                canPlayAnimation = true;
+//                canPlayAnimation = true;
                 pc.setOutsideStateDuration();
                 setIdleAnimationStage1(scPetBody);
                 setIdleAnimationStage1(scPetHead);
@@ -340,7 +340,7 @@ public class PetSystem extends IteratingSystem {
                 entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
                 checkPetThePetGoal();
             } else {
-                canPlayAnimation = true;
+//                canPlayAnimation = true;
                 setDashAnimation(cannonsc);
                 setDashAnimation(entity.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));

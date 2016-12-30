@@ -2,7 +2,6 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.entity.componets.Upgrade;
-import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;

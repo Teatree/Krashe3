@@ -1,6 +1,5 @@
 package com.fd.etf.system;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -21,7 +20,6 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ButterflySystem extends IteratingSystem {
 
-    private ComponentMapper<ButterflyComponent> mapper = ComponentMapper.getFor(ButterflyComponent.class);
     private GameStage gameStage;
 
     public ButterflySystem(GameStage gameStage) {

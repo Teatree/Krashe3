@@ -942,8 +942,8 @@ public class IabHelper {
                     ownedItems.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
             ArrayList<String>  signatureList =
                     ownedItems.getStringArrayList("INAPP_DATA_SIGNATURE_LIST");
-            String continuationToken =
-                    ownedItems.getString("INAPP_CONTINUATION_TOKEN");
+//            String continuationToken =
+//                    ownedItems.getString("INAPP_CONTINUATION_TOKEN");
 
             for (int i = 0; i < purchaseDataList.size(); ++i) {
                 String purchaseData = purchaseDataList.get(i);

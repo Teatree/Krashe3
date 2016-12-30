@@ -17,7 +17,6 @@ import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
-import static com.fd.etf.stages.GameStage.shopScript;
 import static com.fd.etf.stages.ShopScreenScript.*;
 import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
 import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
@@ -530,8 +529,8 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
-                            if (vc.currencyType.equals(SOFT) && (allSoftItems.indexOf(vc)) % 8 == 0) {
-                                shopScript.scrollBagsOnePageLeft();
+                            if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc)) % 8 == 0) {
+                                gameStage.shopScript.scrollBagsOnePageLeft();
                             }
                         }
                     }
@@ -539,15 +538,15 @@ public class Preview extends AbstractDialog {
     }
 
     private boolean isPrevBtnActive(ShopItem vc) {
-        return (vc.currencyType.equals(HARD) && allHCItems.indexOf(vc) > 0) ||
-                (vc.currencyType.equals(SOFT) && allSoftItems.indexOf(vc) > 0);
+        return (vc.currencyType.equals(HARD) && gameStage.shopScript.allHCItems.indexOf(vc) > 0) ||
+                (vc.currencyType.equals(SOFT) && gameStage.shopScript.allSoftItems.indexOf(vc) > 0);
     }
 
     private void showPreviewAfterAniPrev() {
         if (vc.currencyType.equals(SOFT)) {
-            prevItem(allSoftItems);
+            prevItem(gameStage.shopScript.allSoftItems);
         } else {
-            prevItem(allHCItems);
+            prevItem(gameStage.shopScript.allHCItems);
         }
     }
 
@@ -598,8 +597,8 @@ public class Preview extends AbstractDialog {
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
 
-                            if (vc.currencyType.equals(SOFT) && (allSoftItems.indexOf(vc) + 1) % 8 == 0) {
-                                shopScript.scrollBagsOnePageRight();
+                            if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc) + 1) % 8 == 0) {
+                                gameStage.shopScript.scrollBagsOnePageRight();
                             }
                         }
                     }
@@ -607,15 +606,15 @@ public class Preview extends AbstractDialog {
     }
 
     private boolean isNextBtnActive(ShopItem vc) {
-        return (allHCItems.indexOf(vc) < allHCItems.size() - 1 && vc.currencyType.equals(HARD))
-                || (vc.currencyType.equals(SOFT) && allSoftItems.indexOf(vc) < allSoftItems.size() - 1);
+        return (gameStage.shopScript.allHCItems.indexOf(vc) < gameStage.shopScript.allHCItems.size() - 1 && vc.currencyType.equals(HARD))
+                || (vc.currencyType.equals(SOFT) && gameStage.shopScript.allSoftItems.indexOf(vc) < gameStage.shopScript.allSoftItems.size() - 1);
     }
 
     private void showPreviewAfterAniNext() {
         if (vc.currencyType.equals(SOFT)) {
-            nextItem(allSoftItems);
+            nextItem(gameStage.shopScript.allSoftItems);
         } else {
-            nextItem(allHCItems);
+            nextItem(gameStage.shopScript.allHCItems);
         }
     }
 

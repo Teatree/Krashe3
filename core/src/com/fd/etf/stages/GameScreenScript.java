@@ -30,7 +30,6 @@ import static com.fd.etf.entity.componets.CocoonComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
-import static com.fd.etf.stages.ShopScreenScript.allSoftItems;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
@@ -78,8 +77,8 @@ public class GameScreenScript implements IScript {
     public int gameOverReviveTimesLimit;
 
     //bee mode
-    private static Entity beesModeAni;
-    private static Entity beesModeEndAni;
+    private Entity beesModeAni;
+    private Entity beesModeEndAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     private static boolean shouldShowGameOverDialog;
@@ -89,7 +88,7 @@ public class GameScreenScript implements IScript {
         this.gameStage = gamestage;
     }
 
-    public static void angerBees() {
+    public void angerBees() {
         isAngeredBeesMode = true;
         BugSpawnSystem.break_counter = 1;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
@@ -149,9 +148,9 @@ public class GameScreenScript implements IScript {
                 gameStage.gameScript.fpc.currentPet.tryPeriod = false;
                 gameStage.gameScript.fpc.currentPet.disable(gameStage);
 
-                if (allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet) >= 0) {
-                    allSoftItems.get(allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).bought = false;
-                    allSoftItems.get(allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).enabled = false;
+                if (gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet) >= 0) {
+                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).bought = false;
+                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).enabled = false;
                 }
             }
         }
@@ -164,9 +163,9 @@ public class GameScreenScript implements IScript {
                     u.tryPeriod = false;
                     u.disable(gameStage);
 
-                    if (allSoftItems.indexOf(u) >= 0) {
-                        allSoftItems.get(allSoftItems.indexOf(u)).bought = false;
-                        allSoftItems.get(allSoftItems.indexOf(u)).enabled = false;
+                    if (gameStage.shopScript.allSoftItems.indexOf(u) >= 0) {
+                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).bought = false;
+                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).enabled = false;
                     }
                 }
             }
@@ -180,9 +179,6 @@ public class GameScreenScript implements IScript {
     @Override
     public void init(Entity item) {
 
-//        System.err.print("init game ");
-//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-//                Gdx.app.getNativeHeap());
         gameOverReviveTimesLimit = 2;
         gameItem = new ItemWrapper(item);
 
@@ -232,7 +228,6 @@ public class GameScreenScript implements IScript {
         gameStage.gameScript.fpc.settings.totalPlayedGames++;
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
-//        isAngeredBeesMode = true;
     }
 
     public void initButtons() {
@@ -243,7 +238,12 @@ public class GameScreenScript implements IScript {
     }
 
     public void reset() {
-        init(gameItem.getEntity());
+        fpc.score = 0;
+        scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
+        scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
+                scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
+        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
     }
 
     private void initDoubleBJIcon() {
@@ -367,7 +367,6 @@ public class GameScreenScript implements IScript {
 
         flowerEntity.add(fc);
         flowerEntity.add(fpc);
-        flowerEntity.add(new DebugComponent(flowerEntity.getComponent(FlowerPublicComponent.class).boundsRect));
     }
 
     public void hideCurrentPet() {

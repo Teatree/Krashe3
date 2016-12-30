@@ -13,9 +13,9 @@ public class TextBoxVO extends MainItemVO  {
 	
 	public TextBoxVO(TextBoxVO vo) {
 		super(vo);
-		defaultText = new String(vo.defaultText);
+		defaultText = vo.defaultText;
 		width 		= vo.width;
 		height 		= vo.height;
-		style 		= new String(vo.style);
+		style 		= vo.style;
 	}
 }

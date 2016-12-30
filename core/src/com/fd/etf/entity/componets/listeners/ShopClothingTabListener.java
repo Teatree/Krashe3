@@ -2,7 +2,6 @@ package com.fd.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
-import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;

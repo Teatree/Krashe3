@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.entity.componets.FlowerComponent;
-import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.SoundMgr;

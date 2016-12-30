@@ -64,7 +64,6 @@ public class BugSystem extends IteratingSystem {
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
                 if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
-//                    gameStage.gameScript.fpc.state = ATTACK_BITE;
                     gameStage.gameScript.fpc.isScary = true;
                 }
 
@@ -74,7 +73,7 @@ public class BugSystem extends IteratingSystem {
                     gameStage.gameScript.fpc.addScore(bc.points);
 
                     if (bc.type.equals(QUEENBEE)) {
-                        angerBees();
+                        gameStage.gameScript.angerBees();
                     }
 
                     BugPool.getInstance(gameStage).release(entity);

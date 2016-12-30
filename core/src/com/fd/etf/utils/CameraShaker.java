@@ -15,9 +15,9 @@ public class CameraShaker {
     float current_time;
     float power;
     float current_power;
-    int blinkIntervalCounter;
-    int blinkCounter;
-    int blinkInterval;
+//    int blinkIntervalCounter;
+//    int blinkCounter;
+//    int blinkInterval;
 
     public void initShaking(float power, float time) {
         this.power = power;

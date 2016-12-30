@@ -372,7 +372,6 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void dispose() {
-        System.gc();
     }
 
     public void reset() {

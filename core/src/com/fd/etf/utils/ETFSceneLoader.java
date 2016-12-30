@@ -40,7 +40,7 @@ public class ETFSceneLoader {
 
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
-    private String curResolution = "orig";
+//    private String curResolution = "orig";
     public ResourceManager rm = null;
     private float pixelsPerWU = 1;
 
@@ -70,7 +70,6 @@ public class ETFSceneLoader {
                 loadScene(sceneName, viewport);
             }
         }
-        Runtime.getRuntime().gc();
     }
 
     public ETFSceneLoader(ResourceManager rm) {

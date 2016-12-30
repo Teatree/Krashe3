@@ -53,7 +53,6 @@ public class GameOverDialog extends AbstractDialog {
         addShadow();
         isActive = true;
         isGameOver.set(true);
-        System.gc();
 
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();

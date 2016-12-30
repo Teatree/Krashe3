@@ -44,7 +44,7 @@ public class BugPool {
 
     private BugPool(GameStage gameStage) {
         this.gameStage = gameStage;
-        final ItemWrapper root = new ItemWrapper(gameStage.gameScript.gameStage.sceneLoader.getRoot());
+        final ItemWrapper root = new ItemWrapper(gameStage.sceneLoader.getRoot());
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_1).getEntity());
         bees.add(root.getChild(BEE_ANI_1).getEntity());
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_1).getEntity());

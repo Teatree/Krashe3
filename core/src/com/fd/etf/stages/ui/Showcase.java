@@ -263,7 +263,7 @@ public class Showcase {
 
     private void initShowCaseItem() {
         CompositeItemVO tempItemC;
-        if (showCaseVanity.name == null || showCaseVanity.name == "") {
+        if (showCaseVanity.name == null || "".equals(showCaseVanity.name)) {
             tempItemC = gameStage.sceneLoader.loadVoFromLibrary(ShopScreenScript.ITEM_UNKNOWN_N);
         }else{
             tempItemC = gameStage.sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
