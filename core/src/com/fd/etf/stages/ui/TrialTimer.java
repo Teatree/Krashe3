@@ -3,6 +3,7 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
@@ -11,7 +12,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 /**
@@ -22,6 +22,7 @@ public class TrialTimer {
     private static final String TRIAL_TIMER = "timer_lbl";
     private static final String TRIAL_TIMER_SH = "timer_lbl_sh";
     public static final String TIMER_LBL_TIME_UP = "TIME'NEW_LINE_SIGN UP";
+    private final GameStage gameStage;
 
     public Entity timerLogo;
     public Entity timerE;
@@ -32,9 +33,9 @@ public class TrialTimer {
     public int x;
     public int y;
 
-    public TrialTimer(ItemWrapper gameItem, int x, int y) {
+    public TrialTimer(GameStage gameStage, ItemWrapper gameItem, int x, int y) {
         this.mainItem = gameItem;
-
+        this.gameStage= gameStage;
         this.x = x;
         this.y = y;
     }
@@ -48,7 +49,7 @@ public class TrialTimer {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             if (timerLogo != null) {
                 timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                sceneLoader.getEngine().removeEntity(timerLogo);
+                gameStage.sceneLoader.getEngine().removeEntity(timerLogo);
             }
         }
         if (ifShouldShowTimer()) {
@@ -100,10 +101,10 @@ public class TrialTimer {
 
     private void addTimerLogo(String logoLibName) {
         if (timerLogo == null) {
-            final CompositeItemVO tempC = sceneLoader.loadVoFromLibrary(logoLibName);
-            timerLogo = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempC);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), timerLogo, tempC.composite);
-            sceneLoader.getEngine().addEntity(timerLogo);
+            final CompositeItemVO tempC = gameStage.sceneLoader.loadVoFromLibrary(logoLibName);
+            timerLogo = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), timerLogo, tempC.composite);
+            gameStage.sceneLoader.getEngine().addEntity(timerLogo);
         }
         timerLogo.getComponent(TransformComponent.class).x = this.x + 190;
         timerLogo.getComponent(TransformComponent.class).y = this.y;

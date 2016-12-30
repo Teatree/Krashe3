@@ -33,6 +33,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean queenBeeOnStage = false;
+    private final GameStage gameStage;
 
     private int SPAWN_MAX_X = -200;
     private int SPAWN_MIN_X = -300;
@@ -61,7 +62,8 @@ public class BugSpawnSystem extends EntitySystem {
     private float angryBeeLinePosY = 150;
     private float angryBeeLinePosX = SPAWN_MAX_X;
 
-    public BugSpawnSystem() {
+    public BugSpawnSystem(GameStage gameStage) {
+        this.gameStage = gameStage;
         init();
     }
 
@@ -80,7 +82,7 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private TransformComponent getPos(BugComponent bc) {
-        TransformComponent transformComponent = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+        TransformComponent transformComponent = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
         transformComponent.x = rand.nextInt(SPAWN_MAX_X - SPAWN_MIN_X) + SPAWN_MIN_X;
         transformComponent.y = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
         bc.endX = 1450;

@@ -17,7 +17,6 @@ import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.GameStage.shopScript;
 import static com.fd.etf.stages.ShopScreenScript.*;
 import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
@@ -90,18 +89,19 @@ public class Preview extends AbstractDialog {
     public boolean canPlayDescAni;
 
     private void loadPreviewFromLib() {
-        CompositeItemVO infoTempItemC = GameStage.sceneLoader.loadVoFromLibrary(TAG_INFO_LIB).clone();
-        infoTag = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), infoTempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), infoTag, infoTempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(infoTag);
+        CompositeItemVO infoTempItemC = gameStage.sceneLoader.loadVoFromLibrary(TAG_INFO_LIB).clone();
+        infoTag = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), infoTempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), infoTag, infoTempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(infoTag);
 
-        CompositeItemVO buttonzTempItemC = GameStage.sceneLoader.loadVoFromLibrary(TAG_BUTTONZ_LIB).clone();
-        buttonz = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), buttonzTempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), buttonz, buttonzTempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(buttonz);
+        CompositeItemVO buttonzTempItemC = gameStage.sceneLoader.loadVoFromLibrary(TAG_BUTTONZ_LIB).clone();
+        buttonz = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), buttonzTempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), buttonz, buttonzTempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(buttonz);
     }
 
-    public Preview() {
+    public Preview(GameStage gameStage) {
+        super(gameStage);
     }
 
     public void init() {
@@ -155,16 +155,16 @@ public class Preview extends AbstractDialog {
     public void initBoughtPreviewIcon(boolean playAni) {
 
         removeIconE();
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
-        iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
-        sceneLoader.getEngine().addEntity(iconE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
+        iconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(iconE);
 
         if (playAni) {
             iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
-            playYellowStarsParticleEffect(544, 467);
+            playYellowStarsParticleEffect(gameStage, 544, 467);
         } else {
             iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
             iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
@@ -227,10 +227,10 @@ public class Preview extends AbstractDialog {
     public Entity initUnknownPreviewIcon(boolean jump) {
         removeIconE();
 
-        CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN);
-        iconE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconE, tempItemC.composite);
-        sceneLoader.getEngine().addEntity(iconE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(ITEM_UNKNOWN);
+        iconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(iconE);
 
         lblNotEnough.getComponent(ZIndexComponent.class).setZIndex(52);
         lblNotEnoughSh.getComponent(ZIndexComponent.class).setZIndex(53);
@@ -270,18 +270,18 @@ public class Preview extends AbstractDialog {
         if (jump) {
             addShadow();
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
-            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_Y, 1f, Interpolation.exp10Out));
             infoTag.add(ac);
 
-            ActionComponent acButtonz = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, BTNZ_Y, 1f, Interpolation.exp10Out));
             buttonz.add(acButtonz);
 
         } else {
-            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
@@ -328,7 +328,7 @@ public class Preview extends AbstractDialog {
                     getChild(LBL_DESC).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
 
-            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.sequence(Actions.delay(0.5f),
                     Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveTo(434, 51, 1, Interpolation.exp5),
@@ -399,7 +399,7 @@ public class Preview extends AbstractDialog {
                             putInPlaceNewIconPosition();
                         }
                         showPreview(vc, false, true);
-                        ShopScreenScript.reloadScoreLabel(GameStage.gameScript.fpc);
+                        ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
                     }
                 }
             });
@@ -411,18 +411,18 @@ public class Preview extends AbstractDialog {
         itemIcons.get(vc.shopIcon).add(tc);
         itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
                 ShopScreenScript.bagsZindex + 10);
-        sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+        gameStage.sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
         itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
                 shadowE.getComponent(ZIndexComponent.class).getZIndex() - 1);
     }
 
     public TransformComponent changeBagIcon(ShopItem vc) {
         if (vc.currencyType.equals(SOFT)) {
-            CompositeItemVO tempItemC = sceneLoader.loadVoFromLibrary(vc.shopIcon);
-            Entity iconBagClone = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-            sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
+            Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
             TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
-            sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+            gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
             itemIcons.put(vc.shopIcon, iconBagClone);
             return oldTc;
         }
@@ -525,7 +525,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (animFinished() && isPrevBtnActive(vc)) {
-                            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -592,7 +592,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (isNextBtnActive(vc) && animFinished()) {
-                            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -633,17 +633,17 @@ public class Preview extends AbstractDialog {
             float currentYpos = infoTag.getComponent(TransformComponent.class).y;
             if (currentYpos <= INFO_TAG_Y + 30 || currentYpos >= 800) {
                 if (isPreviewOn.get()) {
-                    ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_HIDE_Y, 0.8f, Interpolation.exp10));
                     infoTag.add(ac);
 
-                    ActionComponent acButtonz = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
                     acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, -300, 1f, Interpolation.exp10Out));
                     buttonz.add(acButtonz);
 
-                    ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
                     shadowE.add(ac2);
                 }
@@ -654,7 +654,7 @@ public class Preview extends AbstractDialog {
     public void removeIconE() {
         if (iconE != null) {
             if (shouldDeleteIconE) {
-                sceneLoader.getEngine().removeEntity(iconE);
+                gameStage.sceneLoader.getEngine().removeEntity(iconE);
                 iconE = null;
             } else {
                 iconE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

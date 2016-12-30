@@ -19,7 +19,7 @@ public class Main extends Game {
     private static int viewportWidth = 1200;
     private static int viewportHeight = 786;
 
-    public static GameStage gameStage;
+    public  GameStage gameStage;
     private Stage loadingStage;
     private SpriteBatch batch;
     private Sprite tex;
@@ -55,7 +55,6 @@ public class Main extends Game {
 //        SaveMngr.generateLevelsJson();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
-//        SceneLoader sceneLoader = new SceneLoader();
         gameStage = new GameStage(sceneLoader);
         gameStage.setViewport(oneViewport);
         GameStage.viewport = oneViewport;

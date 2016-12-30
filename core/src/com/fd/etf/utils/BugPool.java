@@ -10,7 +10,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.Stack;
 
-import static com.fd.etf.stages.GameStage.sceneLoader;
+import static com.fd.etf.stages.GameStage.gameScript;
 
 public class BugPool {
 
@@ -43,7 +43,7 @@ public class BugPool {
     private static Entity queenBee;
 
     private BugPool() {
-        final ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+        final ItemWrapper root = new ItemWrapper(gameScript.gameStage.sceneLoader.getRoot());
         simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_1).getEntity());
         bees.add(root.getChild(BEE_ANI_1).getEntity());
         drunkBugs.add(root.getChild(DRUNK_BUG_ANI_1).getEntity());
@@ -112,10 +112,11 @@ public class BugPool {
     }
 
     private Entity loadBugFromLib(String bugLib) {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(bugLib);
-        sceneLoader.rm.addSPRITEtoLoad(bugLib);
-        Entity bugE = GameStage.sceneLoader.entityFactory.createSPRITEentity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.getEngine().addEntity(bugE);
+        CompositeItemVO tempItemC = gameScript.gameStage.sceneLoader.loadVoFromLibrary(bugLib);
+        gameScript.gameStage.sceneLoader.rm.addSPRITEtoLoad(bugLib);
+        Entity bugE = gameScript.gameStage.sceneLoader.entityFactory.
+                createSPRITEentity(gameScript.gameStage.sceneLoader.getRoot(), tempItemC);
+        gameScript.gameStage.sceneLoader.getEngine().addEntity(bugE);
         return bugE;
     }
 

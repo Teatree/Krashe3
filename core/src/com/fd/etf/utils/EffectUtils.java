@@ -12,8 +12,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
-import static com.fd.etf.stages.GameStage.sceneLoader;
-
 public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
@@ -52,7 +50,7 @@ public class EffectUtils {
         }
     }
 
-    public static void playParticleEffect(float x, float y, String particleName, float duration) {
+    public static void playParticleEffect(GameStage gameStage, float x, float y, String particleName, float duration) {
 
         ParticleEffectVO vo = new ParticleEffectVO();
         vo.particleName = particleName;
@@ -60,8 +58,8 @@ public class EffectUtils {
         vo.x = x;
         vo.y = y;
 
-        Entity particleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), vo);
-        sceneLoader.getEngine().addEntity(particleE);
+        Entity particleE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), vo);
+        gameStage.sceneLoader.getEngine().addEntity(particleE);
 
         ParticleComponent pc = ComponentRetriever.get(particleE, ParticleComponent.class);
         particleE.add(pc);
@@ -78,24 +76,24 @@ public class EffectUtils {
         pc.particleEffect.start();
     }
 
-    public static void playYellowStarsParticleEffect(float x, float y){
-        playParticleEffect(x, y, STARS_YELLOW_BURST, 1.2f);
+    public static void playYellowStarsParticleEffect(GameStage gameStage, float x, float y){
+        playParticleEffect(gameStage, x, y, STARS_YELLOW_BURST, 1.2f);
     }
 
-    public static void playShineParticleEffect(float x, float y){
-        playParticleEffect(x, y, SHINE_BURST, 0.8f);
+    public static void playShineParticleEffect(GameStage gameStage, float x, float y){
+        playParticleEffect(gameStage, x, y, SHINE_BURST, 0.8f);
     }
 
-    public static void playSplatterParticleEffect(float x, float y){
-        playParticleEffect(x, y, GREEN_SPLATTER, 0.5f);
+    public static void playSplatterParticleEffect(GameStage gameStage, float x, float y){
+        playParticleEffect(gameStage, x, y, GREEN_SPLATTER, 0.5f);
     }
 
-    public static void spawnBugJuiceBubble(float x, float y) {
-        CompositeItemVO bugJuiceBubbleC = sceneLoader.loadVoFromLibrary(BUG_JUICE_BUBBLE_LIB);
+    public static void spawnBugJuiceBubble(GameStage gameStage, float x, float y) {
+        CompositeItemVO bugJuiceBubbleC = gameStage.sceneLoader.loadVoFromLibrary(BUG_JUICE_BUBBLE_LIB);
 
-        Entity bugJuiceBubbleE = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), bugJuiceBubbleC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
-        sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
+        Entity bugJuiceBubbleE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), bugJuiceBubbleC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
 
         bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(200);
 

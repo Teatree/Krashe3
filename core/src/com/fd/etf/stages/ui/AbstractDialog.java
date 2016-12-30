@@ -31,13 +31,18 @@ public class AbstractDialog {
     public static AtomicBoolean isSecondDialogOpen = new AtomicBoolean(false);
     public static AtomicBoolean isSecondDialogClosed = new AtomicBoolean(false);
     public boolean isActive;
+    protected GameStage gameStage;
+
+    public AbstractDialog(GameStage gameStage) {
+        this.gameStage = gameStage;
+    }
 
     protected void initShadow() {
         if (shadowE == null) {
-            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
-            shadowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(shadowE);
+            CompositeItemVO tempC = gameStage.sceneLoader.loadVoFromLibrary(LIB_SHADOW).clone();
+            shadowE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), shadowE, tempC.composite);
+            gameStage.sceneLoader.getEngine().addEntity(shadowE);
         }
         hideShadow();
     }
@@ -53,7 +58,7 @@ public class AbstractDialog {
         shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
         shadowE.getComponent(TintComponent.class).color.a = 0;
 
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
         shadowE.add(ac);
@@ -62,12 +67,12 @@ public class AbstractDialog {
     public void close (Entity e){
         if (isActive) {
             isActive = false;
-            ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
             e.add(ac);
 
-            ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
 

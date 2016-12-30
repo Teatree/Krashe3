@@ -116,12 +116,12 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
-        EffectUtils.spawnBugJuiceBubble(bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
+        EffectUtils.spawnBugJuiceBubble(gameScript.gameStage, bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
                 bc.boundsRect.y + bc.boundsRect.getHeight() / 2);
     }
 
     public static void destroyBug(Entity bugE, TransformComponent tc) {
-        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+        EffectUtils.playSplatterParticleEffect(gameScript.gameStage, tc.x, tc.y);
         BugPool.getInstance().release(bugE);
     }
 

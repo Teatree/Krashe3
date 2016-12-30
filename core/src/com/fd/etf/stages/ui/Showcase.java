@@ -14,7 +14,6 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ResultScreenScript.show;
 import static com.fd.etf.stages.ResultScreenScript.showCaseVanity;
 import static com.fd.etf.utils.EffectUtils.fade;
@@ -37,6 +36,7 @@ public class Showcase {
     private static final String BTN_BUY = "btn_buy";
     private static final String COIN = "coin";
     public static final String NEW_LINE_SIGN = "~";
+    private final GameStage gameStage;
     public TransformComponent tcShowCase;
     private ResultScreenScript resultScreen;
     public Entity showcaseE;
@@ -62,7 +62,8 @@ public class Showcase {
     public boolean isActing = false;
     public boolean isCelebrating = false;
 
-    public Showcase(ResultScreenScript resultScreen) {
+    public Showcase(GameStage gameStage, ResultScreenScript resultScreen) {
+        this.gameStage = gameStage;
         this.resultScreen = resultScreen;
 
         loadShowcaseFromLib();
@@ -76,10 +77,10 @@ public class Showcase {
         if (isActing) {
             counter += 1;
             if (counter == 30 && itemIcon != null) {
-                EffectUtils.playShineParticleEffect(1010, 290);
-                ActionComponent ac3 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-                ActionComponent ac2 = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-                ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                EffectUtils.playShineParticleEffect(gameStage, 1010, 290);
+                ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
 
                 ac2.dataArray.add(Actions.fadeOut(0.3f));
@@ -120,7 +121,7 @@ public class Showcase {
         if (isCelebrating) {
             celebratingCounter++;
             if (celebratingCounter == 31) {
-                EffectUtils.playShineParticleEffect(603, 441);
+                EffectUtils.playShineParticleEffect(gameStage, 603, 441);
             }
             if (celebratingCounter > 50) {
                 fade(showcaseE, false);
@@ -150,10 +151,10 @@ public class Showcase {
     }
 
     private void loadShowcaseFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(SHOWCASE).clone();
-        showcaseE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), showcaseE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(showcaseE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(SHOWCASE).clone();
+        showcaseE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), showcaseE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(showcaseE);
     }
 
     public void showFading() {
@@ -189,7 +190,7 @@ public class Showcase {
         if (!show && ticParent.color.a <= 0 && showcaseE != null) {
             if (itemIcon != null) {
                 tcItem.x = FAR_FAR_AWAY_X;
-                sceneLoader.getEngine().removeEntity(itemIcon);
+                gameStage.sceneLoader.getEngine().removeEntity(itemIcon);
                 itemIcon = null;
                 tcItem = null;
             }
@@ -263,13 +264,13 @@ public class Showcase {
     private void initShowCaseItem() {
         CompositeItemVO tempItemC;
         if (showCaseVanity.name == null || showCaseVanity.name == "") {
-            tempItemC = sceneLoader.loadVoFromLibrary(ShopScreenScript.ITEM_UNKNOWN_N);
+            tempItemC = gameStage.sceneLoader.loadVoFromLibrary(ShopScreenScript.ITEM_UNKNOWN_N);
         }else{
-            tempItemC = sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
+            tempItemC = gameStage.sceneLoader.loadVoFromLibrary(showCaseVanity.shopIcon);
         }
-        itemIcon = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), tempItemC);
-        sceneLoader.entityFactory.initAllChildren(sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-        sceneLoader.getEngine().addEntity(itemIcon);
+        itemIcon = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(itemIcon);
         itemIcon.getComponent(ZIndexComponent.class).setZIndex(showcaseE.getComponent(ZIndexComponent.class).getZIndex() + 1);
         itemIcon.getComponent(TintComponent.class).color.a = 0;
 
@@ -323,10 +324,10 @@ public class Showcase {
             public void clicked() {
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
                     showCaseVanity.buyAndUse();
-                    GameStage.changedFlower2 = true;
+                    gameStage.changedFlower2 = true;
                     ResultScreenScript.isWasShowcase = true;
-                    if (GameStage.shopScript != null) {
-                        GameStage.shopScript.preview.changeBagIcon(showCaseVanity);
+                    if (gameStage.shopScript != null) {
+                        gameStage.shopScript.preview.changeBagIcon(showCaseVanity);
                     }
                     isCelebrating = true;
                 }

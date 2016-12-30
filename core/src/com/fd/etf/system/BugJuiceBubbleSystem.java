@@ -71,7 +71,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         gameScript.scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
                 gameScript.scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" +
                         "" + gameScript.fpc.score);
-        GameStage.sceneLoader.getEngine().removeEntity(entity);
+        gameScript.gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
     public void setPosition(TransformComponent tc, float x, float y) {

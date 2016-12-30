@@ -36,15 +36,16 @@ public class PromoWindow extends AbstractDialog {
 
     private Entity promoWindowE;
     
-    public PromoWindow(ItemWrapper gameItem) {
+    public PromoWindow(GameStage gameStage, ItemWrapper gameItem) {
+        super(gameStage);
         this.gameItem = gameItem;
     }
 
     private void loadPromoFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(PROMO_WINDOW).clone();
-        promoWindowE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), promoWindowE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(promoWindowE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(PROMO_WINDOW).clone();
+        promoWindowE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), promoWindowE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(promoWindowE);
     }
 
     public void init(){
@@ -81,7 +82,7 @@ public class PromoWindow extends AbstractDialog {
 //        iconE.getComponent(TransformComponent.class).x = 320;
 //        iconE.getComponent(TransformComponent.class).y = 420;
 
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DISCOUNT_X, DISCOUNT_Y, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);

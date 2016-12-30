@@ -44,7 +44,8 @@ public class Settings extends AbstractDialog {
     public Entity settingsE;
     private Entity infoE;
 
-    public Settings(ItemWrapper gameItem) {
+    public Settings(GameStage gameStage, ItemWrapper gameItem) {
+        super(gameStage);
         this.gameItem = gameItem;
     }
 
@@ -63,7 +64,7 @@ public class Settings extends AbstractDialog {
 
         initInfo();
 
-        final BasicDialog dialog = new BasicDialog(gameItem);
+        final BasicDialog dialog = new BasicDialog(gameStage,gameItem);
         dialog.init();
         dialog.parent = this;
 
@@ -101,13 +102,13 @@ public class Settings extends AbstractDialog {
                             infoE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
                             infoE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
 
-                            ActionComponent acSettings = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent acSettings = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             acSettings.dataArray.add(
                                     Actions.moveTo(SETTINGS_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                             settingsE.add(acSettings);
 
-                            ActionComponent acInfo = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent acInfo = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                             Actions.checkInit();
                             acInfo.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                             infoE.getComponent(ZIndexComponent.class).setZIndex(
@@ -172,12 +173,12 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(backBtn) {
                     @Override
                     public void clicked() {
-                        ActionComponent acSettings = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                        ActionComponent acSettings = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
                         acSettings.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                         settingsE.add(acSettings);
 
-                        ActionComponent acInfo = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                        ActionComponent acInfo = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
                         acInfo.dataArray.add(Actions.moveTo(INFO_HIDDEN_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10));
                         infoE.add(acInfo);
@@ -188,19 +189,19 @@ public class Settings extends AbstractDialog {
     }
 
     private void loadSettingsFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(SETTINGS).clone();
-        settingsE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), settingsE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(settingsE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(SETTINGS).clone();
+        settingsE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), settingsE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(settingsE);
         settingsE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
         settingsE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
     }
 
     private void loadInfoFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(INFO).clone();
-        infoE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), infoE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(infoE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(INFO).clone();
+        infoE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), infoE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(infoE);
     }
 
     public void show() {
@@ -210,7 +211,7 @@ public class Settings extends AbstractDialog {
         settingsE.getComponent(TransformComponent.class).y = 460;
         settingsE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);
@@ -219,25 +220,25 @@ public class Settings extends AbstractDialog {
 
     public void musicOn() {
         if (isActive) {
-            GameStage.gameScript.fpc.settings.noMusic = false;
+            gameStage.gameScript.fpc.settings.noMusic = false;
         }
     }
 
     public void musicOff() {
         if (isActive) {
-            GameStage.gameScript.fpc.settings.noMusic = true;
+            gameStage.gameScript.fpc.settings.noMusic = true;
         }
     }
 
     public void soundOn() {
         if (isActive) {
-            GameStage.gameScript.fpc.settings.noSound = false;
+            gameStage.gameScript.fpc.settings.noSound = false;
         }
     }
 
     public void soundOff() {
         if (isActive) {
-            GameStage.gameScript.fpc.settings.noSound = true;
+            gameStage.gameScript.fpc.settings.noSound = true;
         }
     }
 
@@ -295,7 +296,7 @@ public class Settings extends AbstractDialog {
     private void setMusicBtnState(Entity e) {
         ToggleButtonComponent musictbc = e.getComponent(ToggleButtonComponent.class);
         LayerMapComponent lc = e.getComponent(LayerMapComponent.class);
-        if (GameStage.gameScript.fpc.settings.noMusic) {
+        if (gameStage.gameScript.fpc.settings.noMusic) {
             lc.getLayer(BTN_NORMAL).isVisible = false;
             lc.getLayer(BTN_DEFAULT).isVisible = false;
             lc.getLayer(BTN_PRESSED).isVisible = true;
@@ -359,7 +360,7 @@ public class Settings extends AbstractDialog {
     private void setSoundBtnState(Entity e) {
         ToggleButtonComponent soundtbc = e.getComponent(ToggleButtonComponent.class);
         LayerMapComponent lc8 = e.getComponent(LayerMapComponent.class);
-        if (GameStage.gameScript.fpc.settings.noSound) {
+        if (gameStage.gameScript.fpc.settings.noSound) {
             soundtbc.setOff();
             lc8.getLayer(BTN_NORMAL).isVisible = false;
             lc8.getLayer(BTN_PRESSED).isVisible = true;

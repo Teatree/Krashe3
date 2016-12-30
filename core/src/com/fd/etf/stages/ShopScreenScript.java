@@ -99,8 +99,10 @@ public class ShopScreenScript implements IScript {
 
     public static float firstBagTargetPos;
     public static boolean canChangeTabs;
+    public GameStage gameStage;
 
-    public ShopScreenScript() {
+    public ShopScreenScript(GameStage gamestage) {
+        this.gameStage = gamestage;
         getAllAllVanities();
     }
 
@@ -111,11 +113,11 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-        GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+        gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
         shopItem = new ItemWrapper(item);
-        preview = new Preview();
-        GameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
-//        GameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
+        preview = new Preview(gameStage);
+        gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
 
         // Dima's fun house
         curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();
@@ -263,10 +265,10 @@ public class ShopScreenScript implements IScript {
     public void createIconsForAllSoftItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allSoftItems) {
-            CompositeItemVO tempC = GameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
-            final Entity bagEntity = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempC);
-            GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
-            GameStage.sceneLoader.getEngine().addEntity(bagEntity);
+            CompositeItemVO tempC = gameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
+            final Entity bagEntity = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), bagEntity, tempC.composite);
+            gameStage.sceneLoader.getEngine().addEntity(bagEntity);
 
             Entity itemIcon = initSoftCurrencyShopItem(vc);
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(200);
@@ -334,10 +336,10 @@ public class ShopScreenScript implements IScript {
     }
 
     public Entity getIconFromLib(String name) {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(name).clone();
-        Entity itemIcon = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(itemIcon);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(name).clone();
+        Entity itemIcon = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(itemIcon);
         return itemIcon;
     }
 
@@ -385,7 +387,7 @@ public class ShopScreenScript implements IScript {
             if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                 startTransitionOut = false;
                 startTransitionIn = true;
-                GameStage.initMenu();
+                gameStage.initMenu();
             }
         }
     }
@@ -400,7 +402,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
-        TransformComponent tc = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+        TransformComponent tc = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
 
         if (previous == null) {
             tc.x = FIRST_BAG_X;
@@ -482,7 +484,7 @@ public class ShopScreenScript implements IScript {
     public void scrollBagsOnePageLeft() {
         if (canMoveBagsLeft()) {
             for (Entity bag : bags) {
-                ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
@@ -491,7 +493,7 @@ public class ShopScreenScript implements IScript {
                 bag.add(a);
             }
             for (Entity icon : itemIcons.values()) {
-                ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
 
                 a.dataArray.add(
@@ -534,7 +536,7 @@ public class ShopScreenScript implements IScript {
     public void scrollBagsOnePageRight() {
         if (canMoveBagsRight()) {
             for (Entity bag : bags) {
-                ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
@@ -543,7 +545,7 @@ public class ShopScreenScript implements IScript {
                 bag.add(a);
             }
             for (Entity icon : itemIcons.values()) {
-                ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
@@ -607,12 +609,12 @@ public class ShopScreenScript implements IScript {
         if (shouldReload) {
             for (Map.Entry<String, Entity> entry : itemIcons.entrySet()) {
 
-                TransformComponent oldIconTC = GameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+                TransformComponent oldIconTC = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
                 oldIconTC.x = entry.getValue().getComponent(TransformComponent.class).x;
                 oldIconTC.y = entry.getValue().getComponent(TransformComponent.class).y;
 
                 entry.getValue().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                GameStage.sceneLoader.engine.removeEntity(entry.getValue());
+                gameStage.sceneLoader.engine.removeEntity(entry.getValue());
 
                 Entity newUnknownIcon = getIconFromLib(ITEM_UNKNOWN_N);
                 newUnknownIcon.getComponent(TransformComponent.class).x = oldIconTC.x;

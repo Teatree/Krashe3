@@ -2,6 +2,7 @@ package com.uwsoft.editor.renderer.resources;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -64,13 +65,13 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
     protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
 
-    List<String> animationsToOverride;
+    List<String> animationsToOverride = new ArrayList<String>();
+    public AssetManager manager = new AssetManager();
 
     /**
      * Constructor does nothing
      */
     public ResourceManager() {
-        animationsToOverride = new ArrayList();
         animationsToOverride.add("flower_idle");
         animationsToOverride.add("flower_leafs_idle");
     }
@@ -201,7 +202,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
      * main atlas pack, particle effects, sprite animations, spine animations and fonts
      */
     public void loadAssets() {
-        System.out.println(">>> RM load assets");
         loadAtlasPack();
         loadParticleEffects();
 //        loadSpineAnimations();
@@ -213,6 +213,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     @Override
     public void loadAtlasPack() {
+
         FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + "pack.atlas");
         if (!packFile.exists()) {
             return;
@@ -445,6 +446,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     public void dispose() {
         mainPack.dispose();
+
     }
 
     @Override

@@ -47,6 +47,7 @@ public class MenuScreenScript implements IScript {
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
     private static final float RATE_APP_BTN_ALPHA = 0.8352941f;
+    private final GameStage gameStage;
 
     public boolean playServiceFlapIsOut = false;
     public boolean movingFlaps = false;
@@ -88,9 +89,10 @@ public class MenuScreenScript implements IScript {
     public int camPosX = 430;
     private double transitionCoefficient;
 
-    public MenuScreenScript() {
+    public MenuScreenScript(GameStage gameStage) {
+        this.gameStage = gameStage;
         showGoalNotification = Level.goalStatusChanged;
-        GameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+        gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MenuScreenScript implements IScript {
 
         isDialogOpen.set(false);
         if (timer == null) {
-            timer = new TrialTimer(menuItem, TIMER_X, TIMER_Y);
+            timer = new TrialTimer(gameStage,menuItem, TIMER_X, TIMER_Y);
         } else {
             timer.mainItem = menuItem;
         }
@@ -268,7 +270,7 @@ public class MenuScreenScript implements IScript {
                             }
                             isDialogOpen.set(true);
                             if (settings == null) {
-                                settings = new Settings(menuItem);
+                                settings = new Settings(gameStage, menuItem);
                                 settings.init();
                             }
                             settings.show();
@@ -305,7 +307,7 @@ public class MenuScreenScript implements IScript {
                             imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
 
                             if (pauseDialog == null) {
-                                pauseDialog = new PauseDialog(menuItem);
+                                pauseDialog = new PauseDialog(gameStage, menuItem);
                                 pauseDialog.initGoals();
                             }
                             pauseDialog.show();
@@ -352,7 +354,7 @@ public class MenuScreenScript implements IScript {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
-                GameStage.initShopWithAds();
+                gameStage.initShopWithAds();
             }
         }
 
@@ -444,7 +446,7 @@ public class MenuScreenScript implements IScript {
             GameStage.viewport.getCamera().translate(0, 0, 0);
             currentFlowerFrame = menuItem.getChild(MM_FLOWER).getEntity().getComponent(NodeComponent.class).getChild("flw_ani").getComponent(SpriterComponent.class).player.getTime();
 //            System.out.println("currentFlowerFrame: " + currentFlowerFrame);
-            GameStage.initGame(currentFlowerFrame);
+            gameStage.initGame(currentFlowerFrame);
         }
     }
 

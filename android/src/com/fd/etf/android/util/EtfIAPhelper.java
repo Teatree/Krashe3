@@ -8,8 +8,6 @@ import com.fd.etf.stages.GameStage;
 
 import java.util.List;
 
-import static com.fd.etf.stages.GameStage.gameScript;
-
 /**
  * Created by ARudyk on 9/12/2016.
  */
@@ -101,9 +99,9 @@ public class EtfIAPhelper {
 
                     Log.d("IAB", "Purchase successful.");
 
-                    if (purchase.getSku().equals(SKU_NO_ADS)) {
-                        gameScript.fpc.settings.noAds = true;
-                    }
+//                    if (purchase.getSku().equals(SKU_NO_ADS)) {
+//                        gameScript.fpc.settings.noAds = true;
+//                    }
                 }
             };
             mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,

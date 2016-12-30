@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.UmbrellaComponent;
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -31,10 +32,12 @@ public class UmbrellaSystem extends IteratingSystem {
     public static float umbrellaSpawnStateCounter;
 
     private static Random random = new Random();
+    private final GameStage gameStage;
     private ComponentMapper<UmbrellaComponent> mapper = ComponentMapper.getFor(UmbrellaComponent.class);
 
-    public UmbrellaSystem() {
+    public UmbrellaSystem(GameStage gameStage) {
         super(Family.all(UmbrellaComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     @Override
@@ -146,7 +149,7 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-        EffectUtils.playYellowStarsParticleEffect(gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
+        EffectUtils.playYellowStarsParticleEffect(gameStage, gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
                 gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
     }
 

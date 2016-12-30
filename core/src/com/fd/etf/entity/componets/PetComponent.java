@@ -11,9 +11,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
 import java.util.Random;
 
-import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameStage.sceneLoader;
-
 public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     public static final int OUTSIDE_DURATION_MAX = 10000;
@@ -47,9 +44,11 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public int stageCounter;
     public boolean isHardCurr;
 
-    public PetComponent() {
-//        init();
+    public GameStage gameStage;
+
+    public PetComponent(GameStage gameStage) {
         currencyType = HARD;
+        this.gameStage = gameStage;
     }
 
     public PetComponent(SaveMngr.PetJson petJson) {
@@ -104,9 +103,9 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     @Override
     public void apply() {
         this.enabled = true;
-        gameScript.hideCurrentPet();
-        gameScript.fpc.currentPet = this;
-        for (PetComponent petComponent : gameScript.fpc.pets){
+        gameStage.gameScript.hideCurrentPet();
+        gameStage.gameScript.fpc.currentPet = this;
+        for (PetComponent petComponent : gameStage.gameScript.fpc.pets){
             if (petComponent != this){
                 petComponent.enabled = false;
             }
@@ -124,8 +123,8 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     @Override
     public void buyAndUse() {
         this.bought = true;
-        if (gameScript.fpc.currentPet != null) {
-            gameScript.fpc.currentPet.tryPeriod = false;
+        if (gameStage.gameScript.fpc.currentPet != null) {
+            gameStage.gameScript.fpc.currentPet.tryPeriod = false;
         }
         apply();
     }
@@ -174,18 +173,15 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     }
 
     private void loadFromLib(String petName) {
-        sceneLoader.rm.addSpriterToLoad(petName + HEAD_PREFFIX);
-        sceneLoader.rm.addSpriterToLoad(PET_CANNON);
+        gameStage.sceneLoader.rm.addSpriterToLoad(petName + HEAD_PREFFIX);
+        gameStage.sceneLoader.rm.addSpriterToLoad(PET_CANNON);
 
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(petName + HEAD_PREFFIX);
-        petHead = GameStage.sceneLoader.entityFactory.createSPRITERentity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.getEngine().addEntity(petHead);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(petName + HEAD_PREFFIX);
+        petHead = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.getEngine().addEntity(petHead);
 
-        CompositeItemVO tempItemCannon = GameStage.sceneLoader.loadVoFromLibrary(petCannonName);
-        petCannon = GameStage.sceneLoader.entityFactory.createSPRITERentity(GameStage.sceneLoader.getRoot(), tempItemCannon);
-        GameStage.sceneLoader.getEngine().addEntity(petCannon);
-
-        petCannon.add(new DebugComponent());
-        petCannon.add(new DebugComponent());
+        CompositeItemVO tempItemCannon = gameStage.sceneLoader.loadVoFromLibrary(petCannonName);
+        petCannon = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemCannon);
+        gameStage.sceneLoader.getEngine().addEntity(petCannon);
     }
 }

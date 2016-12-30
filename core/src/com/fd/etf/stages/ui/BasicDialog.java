@@ -52,15 +52,16 @@ public class BasicDialog extends AbstractDialog {
 
     public AbstractDialog parent;
 
-    public BasicDialog(ItemWrapper gameItem) {
+    public BasicDialog(GameStage gameStage,ItemWrapper gameItem) {
+        super(gameStage);
         this.gameItem = gameItem;
     }
 
     private void loadFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(BASIC_DIALOG).clone();
-        dialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), dialogE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(dialogE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(BASIC_DIALOG).clone();
+        dialogE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), dialogE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(dialogE);
     }
 
     public void init() {
@@ -131,7 +132,7 @@ public class BasicDialog extends AbstractDialog {
                 break;
             }
         }
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         dialogE.add(ac);
@@ -177,10 +178,10 @@ public class BasicDialog extends AbstractDialog {
                     public void clicked() {
                         close(dialogE);
                         VanityComponent.disableAllVanitiesAssets();
-                        GameStage.changedFlower = true;
+                        gameStage.changedFlower = true;
 //                        AbstractDialog.isDialogOpen.set(false);
 //                        AbstractDialog.isSecondDialogOpen.set(false);
-                        GameStage.initMenu();
+                        gameStage.initMenu();
                     }
                 });
     }
@@ -208,7 +209,7 @@ public class BasicDialog extends AbstractDialog {
                 new ImageButtonListener(okBtn) {
                     @Override
                     public void clicked() {
-                        GameStage.resetAllProgress();
+                        gameStage.resetAllProgress();
                         close(dialogE);
                         show(TYPE_RESET_RESULT);
                     }

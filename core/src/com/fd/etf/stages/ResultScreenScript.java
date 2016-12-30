@@ -18,7 +18,6 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -64,22 +63,28 @@ public class ResultScreenScript implements IScript {
     int i = 0;
     int j = 0;
     Entity backPlay;
-    //    private GameStage stage;
+    //    private GameStage gameStage;
     public ItemWrapper resultScreenItem;
     private Entity adsBtn;
     private Showcase showcase;
     private TrialTimer timer;
     private PromoWindow promoWindow;
 
+    private GameStage gameStage;
+
+    public ResultScreenScript (GameStage gameStage){
+        this.gameStage = gameStage;
+    }
+
     @Override
     public void init(Entity item) {
 
-        sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
         i = 0;
         j = 0;
         resultScreenItem = new ItemWrapper(item);
-        sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+        gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
 
         txtTotalE = resultScreenItem.getChild(LBL_TOTAL).getEntity();
         txtTotalsE = resultScreenItem.getChild(LBL_TOTAL_S).getEntity();
@@ -91,7 +96,7 @@ public class ResultScreenScript implements IScript {
 
         initResultScreen();
         if (timer == null) {
-            timer = new TrialTimer(resultScreenItem, 918, 289);
+            timer = new TrialTimer(gameStage, resultScreenItem, 918, 289);
         }
     }
 
@@ -158,7 +163,7 @@ public class ResultScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!showcasePopup && !show) {
-                            GameStage.initMenu();
+                            gameStage.initMenu();
                         }
                         isWasShowcase = false;
                     }
@@ -179,7 +184,7 @@ public class ResultScreenScript implements IScript {
                     }
 
                     private void backToGame() {
-                        GameStage.initGame(0);
+                        gameStage.initGame(0);
                         isWasShowcase = false;
                     }
                 });
@@ -193,7 +198,7 @@ public class ResultScreenScript implements IScript {
                     public void clicked() {
                         if (active)
                             if (!show) {
-                                GameStage.initShopWithAds();
+                                gameStage.initShopWithAds();
                                 isWasShowcase = false;
                             }
                     }
@@ -211,7 +216,7 @@ public class ResultScreenScript implements IScript {
 
             if (offerPromo && active && !timer.ifShouldShowTimer()) {
                 if (promoWindow == null) {
-                    promoWindow = new PromoWindow(resultScreenItem);
+                    promoWindow = new PromoWindow(gameStage, resultScreenItem);
                 }
                 promoWindow.init();
                 promoWindow.show();
@@ -313,7 +318,7 @@ public class ResultScreenScript implements IScript {
         progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
         if (!show && gameScript.fpc.score > 0) {
             if (showcase == null){
-                showcase = new Showcase(this);
+                showcase = new Showcase(gameStage, this);
             }
             showcase.initShowCase();
             txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
@@ -358,7 +363,7 @@ public class ResultScreenScript implements IScript {
         tc.scaleY = TENTH;
         tc.scaleX = TENTH;
         adsBtn.getComponent(TintComponent.class).color.a = TENTH;
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.parallel(
                 Actions.scaleTo(1f, 1f, 0.5f, Interpolation.exp5Out),

@@ -69,16 +69,17 @@ public class PauseDialog extends AbstractDialog {
     private String goalProgressValue;
     private float popupX;
 
-    public PauseDialog(ItemWrapper gameItem) {
+    public PauseDialog(GameStage gameStage, ItemWrapper gameItem) {
+        super(gameStage);
         tiles = new HashMap<>();
         this.gameItem = gameItem;
     }
 
     public void init() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(GOALS_POPUP).clone();
-        pauseDialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), pauseDialogE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(pauseDialogE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(GOALS_POPUP).clone();
+        pauseDialogE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), pauseDialogE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(pauseDialogE);
 
         final Entity closePauseBtn = pauseDialogE.getComponent(NodeComponent.class).getChild(BTN_CLOSE);
 
@@ -173,7 +174,7 @@ public class PauseDialog extends AbstractDialog {
         pauseDialogE.getComponent(TransformComponent.class).y = PAUSE_Y_UP;
         pauseDialogE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(popupX, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         pauseDialogE.add(ac);

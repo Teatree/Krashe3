@@ -29,7 +29,7 @@ public class GameStage extends Stage {
     private  static final String MENU_SCENE = "MenuScene";
 
     public static Viewport viewport;
-    public static ETFSceneLoader sceneLoader;
+    public ETFSceneLoader sceneLoader;
     public static boolean changedFlower;
     public static boolean changedFlower2;
 
@@ -42,7 +42,7 @@ public class GameStage extends Stage {
     private static MenuScreenScript menuScript;
 
     public GameStage(ETFSceneLoader sceneLoader) {
-        GameStage.sceneLoader = sceneLoader;
+        this.sceneLoader = sceneLoader;
         getSoundMgr();
         getBackgroundMusicMgr();
         gameScript = new GameScreenScript(this);
@@ -62,7 +62,7 @@ public class GameStage extends Stage {
 
     }
 
-    public static void initGame(int currentFlowerFrame) {
+    public void initGame(int currentFlowerFrame) {
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
         if (changedFlower || changedFlower2) {
             changedFlower = false;
@@ -100,7 +100,7 @@ public class GameStage extends Stage {
 
     }
 
-    public static void initMenu() {
+    public void initMenu() {
         if (changedFlower || changedFlower2) {
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
@@ -109,7 +109,7 @@ public class GameStage extends Stage {
         sceneLoader.setScene(MENU_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (menuScript == null) {
-            menuScript = new MenuScreenScript();
+            menuScript = new MenuScreenScript(this);
             root.addScript(menuScript);
             menuScript.initButtons();
         } else {
@@ -122,7 +122,7 @@ public class GameStage extends Stage {
         sceneLoader.setScene(RESULT_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (resultScript == null) {
-            resultScript = new ResultScreenScript();
+            resultScript = new ResultScreenScript(this);
             root.addScript(resultScript);
             resultScript.initButtons();
         } else {
@@ -130,14 +130,14 @@ public class GameStage extends Stage {
         }
     }
 
-    public static void initShop() {
+    public void initShop() {
         GameStage.viewport.setWorldSize(1200, 786);
         GameStage.viewport.getCamera().translate(0, 0, 0);
 
         sceneLoader.setScene(SHOP_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (shopScript == null) {
-            shopScript = new ShopScreenScript();
+            shopScript = new ShopScreenScript(this);
             root.addScript(shopScript);
         }
         ShopScreenScript.isPreviewOn.set(false);
@@ -145,7 +145,7 @@ public class GameStage extends Stage {
         shopScript.checkIfChanged();
     }
 
-    public static void initShopWithAds() {
+    public void initShopWithAds() {
 //        if (gameScript.fpc.settings.shouldShowShopAd()) {
 //            mainController.showGeneralShopAd(new Runnable() {
 //                @Override

@@ -62,7 +62,6 @@ public class ETFSceneLoader {
         ResourceManager rm = new ResourceManager();
         rm.initAllResources();
         this.rm = rm;
-        System.out.println(">>> rm = " + rm);
 
         this.engine = new PooledEngine();
 //        initSceneLoader();

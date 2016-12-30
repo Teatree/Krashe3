@@ -19,7 +19,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.stages.GameStage.gameScript;
 import static com.fd.etf.utils.EffectUtils.fade;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
@@ -45,6 +44,10 @@ public class GameOverDialog extends AbstractDialog {
         return (isGameOver.get() && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
     }
 
+    public GameOverDialog(GameStage gameStage){
+        super(gameStage);
+    }
+
     public void show() {
         hide();
         addShadow();
@@ -52,7 +55,7 @@ public class GameOverDialog extends AbstractDialog {
         isGameOver.set(true);
         System.gc();
 
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(GAME_OVER_X, GAME_OVER_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         gameOverDialogE.add(ac);
@@ -82,10 +85,10 @@ public class GameOverDialog extends AbstractDialog {
     public void initGameOverDialog() {
         initShadow();
 
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(GAME_OVER_DIALOG).clone();
-        gameOverDialogE = GameStage.sceneLoader.entityFactory.createEntity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.entityFactory.initAllChildren(GameStage.sceneLoader.getEngine(), gameOverDialogE, tempItemC.composite);
-        GameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(GAME_OVER_DIALOG).clone();
+        gameOverDialogE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), gameOverDialogE, tempItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(gameOverDialogE);
         hide();
 
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
@@ -108,7 +111,7 @@ public class GameOverDialog extends AbstractDialog {
                         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
                             continueGame(dialogTc);
                         }
-                        gameScript.loseFeedback.getComponent(TintComponent.class).color.a = 0;
+                        gameStage.gameScript.loseFeedback.getComponent(TintComponent.class).color.a = 0;
                         close(gameOverDialogE);
                     }
                 });
@@ -147,7 +150,7 @@ public class GameOverDialog extends AbstractDialog {
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
             final LabelComponent gameOverLblCsh = gameOverTimerLblsh.getComponent(LabelComponent.class);
 
-            final ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            final ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
             gameOverTimerLbl.add(ac);
@@ -175,40 +178,40 @@ public class GameOverDialog extends AbstractDialog {
 
     public void finishGame() {
         if (gameOverCounter+1 <= 0) {
-            if (!gameScript.fpc.canUsePhoenix()) {
+            if (!gameStage.gameScript.fpc.canUsePhoenix()) {
                 resetGameData();
                 if (GoalFeedbackScreen.shouldShow &&
-                        (gameScript.goalFeedbackScreen == null ||
+                        (gameStage.gameScript.goalFeedbackScreen == null ||
                                 !GoalFeedbackScreen.isGoalFeedbackOpen)) {
-                    gameScript.showGoalFeedback();
+                    gameStage.gameScript.showGoalFeedback();
                     close(gameOverDialogE);
                     isGameOver.set(true);
-                } else if ((gameScript.goalFeedbackScreen == null ||
+                } else if ((gameStage.gameScript.goalFeedbackScreen == null ||
                         !GoalFeedbackScreen.isGoalFeedbackOpen)) {
                     isGameOver.set(false);
-                    gameScript.resetPauseDialog();
+                    gameStage.gameScript.resetPauseDialog();
                     hide();
-                    gameScript.stage.initResultWithAds();
+                    gameStage.gameScript.gameStage.initResultWithAds();
 //                    close(gameOverDialogE);
                 }
             }
         }
     }
 
-    public static void resetGameData() {
+    public void resetGameData() {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isStarted = false;
         isPause.set(false);
         isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;
-        if (gameScript.fpc.bestScore < gameScript.fpc.score) {
-            gameScript.fpc.bestScore = gameScript.fpc.score;
+        if (gameStage.gameScript.fpc.bestScore < gameStage.gameScript.fpc.score) {
+            gameStage.gameScript.fpc.bestScore = gameStage.gameScript.fpc.score;
         }
-        gameScript.fpc.resetPhoenix();
+        gameStage.gameScript.fpc.resetPhoenix();
 
         //reset goals with type "In one life"
-        for (Goal g : gameScript.fpc.level.getGoals()) {
+        for (Goal g : gameStage.gameScript.fpc.level.getGoals()) {
             if (!g.periodType.equals(Goal.PeriodType.TOTAL) && !g.achieved) {
                 g.counter = 0;
             }

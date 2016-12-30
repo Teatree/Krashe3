@@ -96,7 +96,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
     private void switchScreenToUpgrds() {
         ShopScreenScript.canChangeTabs = false;
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
 
         ac.dataArray.add(
@@ -104,7 +104,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         shopScreenScript.hcSectionE.add(ac);
 
         for (Entity bag : shopScreenScript.bags) {
-            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent a = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(
@@ -116,7 +116,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         ShopScreenScript.firstBagTargetPos = shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING;
 
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            ActionComponent a = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent a = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
 
             a.dataArray.add(
@@ -126,7 +126,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
 
             icon.add(a);
         }
-        ActionComponent acTouchZone = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent acTouchZone = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
 
         acTouchZone.dataArray.add(

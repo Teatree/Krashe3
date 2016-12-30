@@ -32,12 +32,14 @@ public class PetSystem extends IteratingSystem {
     private static final float DURATION_TAP = 1.2f;
     private static final int PET_CANNON_SHIFT_Y = 10;
     private static final int PET_CANNON_SHIFT_X = 62;
+    private final GameStage gameStage;
     private boolean canPlayAnimation = true;
 
     private ComponentMapper<PetComponent> mapper = ComponentMapper.getFor(PetComponent.class);
 
-    public PetSystem() {
+    public PetSystem(GameStage gameStage) {
         super(Family.all(PetComponent.class).get());
+        this.gameStage = gameStage;
     }
 
     @Override
@@ -117,7 +119,7 @@ public class PetSystem extends IteratingSystem {
                 e.getComponent(PetComponent.class).petCannon.remove(ActionComponent.class);
 
                 if (e.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     e.add(ac);
                 }
                 Actions.checkInit();
@@ -290,7 +292,7 @@ public class PetSystem extends IteratingSystem {
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
                 if (entity.getComponent(ActionComponent.class) == null){
-                    ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     entity.add(ac);
                 }
                 Actions.checkInit();
@@ -325,13 +327,13 @@ public class PetSystem extends IteratingSystem {
                 setTappedAnimation(pc.petHead.getComponent(SpriterComponent.class));
                 setTappedAnimation(cannonsc);
 
-                EffectUtils.playYellowStarsParticleEffect(v.x, v.y);
+                EffectUtils.playYellowStarsParticleEffect(gameStage, v.x, v.y);
 
                 entity.remove(ActionComponent.class);
                 pc.petCannon.remove(ActionComponent.class);
 
                 if (entity.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     entity.add(ac);
                 }
                 Actions.checkInit();

@@ -10,8 +10,6 @@ import com.fd.etf.stages.GameScreenScript;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
-import static com.fd.etf.stages.GameStage.sceneLoader;
-
 /**
  * Created by ARudyk on 11/9/2016.
  */
@@ -43,22 +41,22 @@ public class DebugSystem extends IteratingSystem {
             traceEveryone = false;
         }
 
-        if (traceEveryone) {
-            if (e.getComponent(DebugComponent.class).boundingBox != null){
-                sceneLoader.renderer.drawDebugRect(e.getComponent(DebugComponent.class).boundingBox.x,
-                        e.getComponent(DebugComponent.class).boundingBox.y,
-                        e.getComponent(DebugComponent.class).boundingBox.width,
-                        e.getComponent(DebugComponent.class).boundingBox.height,
-                        e.toString());
-//                System.out.println("E: " + e + " bounding Bx!");
-            } else {
-                sceneLoader.renderer.drawDebugRect(e.getComponent(TransformComponent.class).x,
-                        e.getComponent(TransformComponent.class).y,
-                        e.getComponent(DimensionsComponent.class).width,
-                        e.getComponent(DimensionsComponent.class).height,
-                        e.toString());
-//                System.out.println("E: " + e + " TRANSFORM + DIMENSION!");
-            }
-        }
+//        if (traceEveryone) {
+//            if (e.getComponent(DebugComponent.class).boundingBox != null){
+//                sceneLoader.renderer.drawDebugRect(e.getComponent(DebugComponent.class).boundingBox.x,
+//                        e.getComponent(DebugComponent.class).boundingBox.y,
+//                        e.getComponent(DebugComponent.class).boundingBox.width,
+//                        e.getComponent(DebugComponent.class).boundingBox.height,
+//                        e.toString());
+////                System.out.println("E: " + e + " bounding Bx!");
+//            } else {
+//                sceneLoader.renderer.drawDebugRect(e.getComponent(TransformComponent.class).x,
+//                        e.getComponent(TransformComponent.class).y,
+//                        e.getComponent(DimensionsComponent.class).width,
+//                        e.getComponent(DimensionsComponent.class).height,
+//                        e.toString());
+////                System.out.println("E: " + e + " TRANSFORM + DIMENSION!");
+//            }
+//        }
     }
 }

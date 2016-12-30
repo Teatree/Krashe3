@@ -3,7 +3,6 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -32,7 +31,6 @@ import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.GameStage.gameScript;
-import static com.fd.etf.stages.GameStage.sceneLoader;
 import static com.fd.etf.stages.ShopScreenScript.allSoftItems;
 import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
@@ -61,7 +59,7 @@ public class GameScreenScript implements IScript {
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
     public static boolean isStarted;
 
-    public GameStage stage;
+    public GameStage gameStage;
     public Random random = new Random();
     public FlowerPublicComponent fpc;
     public Entity scoreLabelE;
@@ -89,7 +87,7 @@ public class GameScreenScript implements IScript {
     private Entity petE;
 
     public GameScreenScript(GameStage gamestage) {
-        this.stage = gamestage;
+        this.gameStage = gamestage;
     }
 
     public static void angerBees() {
@@ -276,17 +274,17 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-//        sceneLoader.getEngine().addSystem(new DebugSystem());
-        sceneLoader.getEngine().addSystem(new UmbrellaSystem());
-        sceneLoader.getEngine().addSystem(new LeafsSystem());
-        sceneLoader.getEngine().addSystem(new ButterflySystem());
-        sceneLoader.getEngine().addSystem(new FlowerSystem());
-        sceneLoader.getEngine().addSystem(new BugSystem());
-        sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
-        sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
-        sceneLoader.getEngine().addSystem(new PetSystem());
-        sceneLoader.getEngine().addSystem(new CocoonSystem(this));
-        sceneLoader.getEngine().addSystem(new BugSpawnSystem());
+//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new LeafsSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new ButterflySystem());
+        gameStage.sceneLoader.getEngine().addSystem(new FlowerSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new BugSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
+        gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
+        gameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(gameStage));
     }
 
     private void initBackButton() {
@@ -299,7 +297,7 @@ public class GameScreenScript implements IScript {
                         if (!isPause.get() && !isGameOver.get()) {
                             resetPauseDialog();
                             gameItem.getChild(MEGA_FLOWER).getEntity().getComponent(SpriterComponent.class).player.setTime(0);
-                            GameStage.initMenu();
+                            gameStage.initMenu();
                         }
                     }
                 });
@@ -323,7 +321,7 @@ public class GameScreenScript implements IScript {
                         if (!isGameOver.get() && isStarted && !isPause.get()) {
                             isPause.set(true);
                             if (pauseDialog == null) {
-                                pauseDialog = new PauseDialog(gameItem);
+                                pauseDialog = new PauseDialog(gameStage, gameItem);
                                 pauseDialog.init();
                             }
                             pauseDialog.show();
@@ -378,13 +376,13 @@ public class GameScreenScript implements IScript {
             if (petE != null) {
                 petE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-                sceneLoader.getEngine().removeEntity(petE);
+                gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
             if (gameScript.fpc.currentPet.petHead != null) {
                 gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petCannon);
-                sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petHead);
+                gameStage.sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petCannon);
+                gameStage.sceneLoader.getEngine().removeEntity(gameScript.fpc.currentPet.petHead);
             }
         }
     }
@@ -393,7 +391,7 @@ public class GameScreenScript implements IScript {
         hideCurrentPet();
         if (fpc.currentPet != null && fpc.currentPet.enabled) {
             loadPetFromLib();
-
+            fpc.currentPet.gameStage = gameStage;
             if (fpc.currentPet.enabled) {
                 fpc.currentPet.init();
 
@@ -420,10 +418,10 @@ public class GameScreenScript implements IScript {
     }
 
     private void loadPetFromLib() {
-        CompositeItemVO tempItemC = GameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
-        sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
-        petE = GameStage.sceneLoader.entityFactory.createSPRITERentity(GameStage.sceneLoader.getRoot(), tempItemC);
-        GameStage.sceneLoader.getEngine().addEntity(petE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
+        gameStage.sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
+        petE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.getEngine().addEntity(petE);
     }
 
     @Override
@@ -491,7 +489,7 @@ public class GameScreenScript implements IScript {
         loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
         loseFeedback.getComponent(TransformComponent.class).x = 950;
         loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
-        ActionComponent ac = GameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.2f));
         ac.dataArray.add(Actions.scaleTo(1.5f,1.5f,0.2f));
@@ -524,14 +522,14 @@ public class GameScreenScript implements IScript {
                 }
                 gameScript.gameOverDialog.hide();
                 gameItem.getChild(MEGA_FLOWER).getEntity().getComponent(SpriterComponent.class).player.setTime(0);
-                gameScript.stage.initResultWithAds();
+                gameScript.gameStage.initResultWithAds();
             }
         }
     }
 
     public void showGoalFeedback() {
         if (goalFeedbackScreen == null) {
-            goalFeedbackScreen = new GoalFeedbackScreen();
+            goalFeedbackScreen = new GoalFeedbackScreen(gameStage);
         }
         goalFeedbackScreen.init(false);
         gameScript.goalFeedbackScreen.show();
@@ -539,7 +537,7 @@ public class GameScreenScript implements IScript {
 
     private void showGameOverDialog() {
         if (gameOverDialog == null) {
-            gameOverDialog = new GameOverDialog();
+            gameOverDialog = new GameOverDialog(gameStage);
             gameOverDialog.initGameOverDialog();
         }
         gameOverDialog.show();
@@ -623,23 +621,23 @@ public class GameScreenScript implements IScript {
 
     private boolean canCocoonSpawn() {
         return
-                sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0 ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0 ||
+                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                        sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
+                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y;
     }
 
     private boolean canUmbrellaSpawn() {
 
-        return (sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+        return (gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
+                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                         .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                         .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
+                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                         .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
         );
     }
