@@ -1,5 +1,6 @@
 package com.uwsoft.editor.renderer.resources;
 
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -14,18 +15,13 @@ import com.badlogic.gdx.utils.Json;
 import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.utils.MySkin;
 
-import java.io.File;
 import java.util.*;
+import static java.io.File.separator;
 
 /**
- * Default ResourceManager that you can reuse or extend
- * Generally is good to load all the assets that are exported from editor
- * using default settings (The paths and file structure should be exact)
- * If changed by you manually, please override this class methods in order to keep it working.
- * The main logic is to prepare list of resources that needs to be load for specified scenes, and then loaded.
- * Created by azakhary on 9/9/2014.
+ * Created by ARudyk on 1/2/2017.
  */
-public class ResourceManager implements IResourceLoader, IResourceRetriever {
+public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     /**
      * Paths (please change if different) this is the default structure exported from editor
@@ -36,7 +32,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     public String particleEffectsPath = "particles";
     public String spriteAnimationsPath = "sprite_animations";
     public String spriterAnimationsPath = "spriter_animations";
-    public String spineAnimationsPath = "spine_animations";
     public String fontsPath = "freetypefonts";
     public String shadersPath = "shaders";
 
@@ -48,7 +43,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     public HashMap<String, SceneVO> loadedSceneVOs = new HashMap<String, SceneVO>();
 
     protected HashSet<String> particleEffectNamesToLoad = new HashSet<String>();
-    protected HashSet<String> spineAnimNamesToLoad = new HashSet<String>();
     protected HashSet<String> spriteAnimNamesToLoad = new HashSet<String>();
     protected HashSet<String> spriterAnimNamesToLoad = new HashSet<String>();
     protected HashSet<FontSizePair> fontsToLoad = new HashSet<FontSizePair>();
@@ -71,7 +65,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     /**
      * Constructor does nothing
      */
-    public ResourceManager() {
+    public ETFResourceManager() {
         animationsToOverride.add("flower_idle");
         animationsToOverride.add("flower_leafs_idle");
     }
@@ -106,7 +100,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     }
 
     /**
-     * Initializes scene by loading it's VO data object and loading all the assets needed for this particular scene only
+     * Initializes scene by loading it's VO data object and loading all the assets
+     * needed for this particular scene only
      *
      * @param sceneName - scene file name without ".dt" extension
      */
@@ -130,7 +125,8 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     /**
      * Schedules scene for later loading
-     * if later prepareAssetsToLoad function will be called it will only prepare assets that are used in scheduled scene
+     * if later prepareAssetsToLoad function will be called it will only prepare assets
+     * that are used in scheduled scene
      *
      * @param name - scene file name without ".dt" extension
      */
@@ -160,7 +156,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
      */
     public void prepareAssetsToLoad() {
         particleEffectNamesToLoad.clear();
-        spineAnimNamesToLoad.clear();
         spriteAnimNamesToLoad.clear();
         spriterAnimNamesToLoad.clear();
         fontsToLoad.clear();
@@ -173,7 +168,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
             }
             //
             String[] particleEffects = composite.getRecursiveParticleEffectsList();
-            String[] spineAnimations = composite.getRecursiveSpineAnimationList();
             String[] spriteAnimations = composite.getRecursiveSpriteAnimationList();
             String[] spriterAnimations = composite.getRecursiveSpriterAnimationList();
             String[] shaderNames = composite.getRecursiveShaderList();
@@ -189,7 +183,6 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
             //
             Collections.addAll(particleEffectNamesToLoad, particleEffects);
-            Collections.addAll(spineAnimNamesToLoad, spineAnimations);
             Collections.addAll(spriteAnimNamesToLoad, spriteAnimations);
             Collections.addAll(spriterAnimNamesToLoad, spriterAnimations);
             Collections.addAll(fontsToLoad, fonts);
@@ -212,7 +205,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     @Override
     public void loadAtlasPack() {
 
-        FileHandle packFile = Gdx.files.internal(packResolutionName + File.separator + "pack.atlas");
+        FileHandle packFile = Gdx.files.internal(packResolutionName + separator + "pack.atlas");
         if (!packFile.exists()) {
             return;
         }
@@ -231,7 +224,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         // load scheduled
         for (String name : particleEffectNamesToLoad) {
             ParticleEffect effect = new ParticleEffect();
-            effect.load(Gdx.files.internal(particleEffectsPath + File.separator + name), mainPack, "");
+            effect.load(Gdx.files.internal(particleEffectsPath + separator + name), mainPack, "");
             particleEffects.put(name, effect);
         }
     }
@@ -245,7 +238,9 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         }
 
         for (String name : spriteAnimNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
+            TextureAtlas animAtlas = new TextureAtlas(
+                    Gdx.files.internal(packResolutionName + separator + spriteAnimationsPath + separator
+                            + name + separator + name + ".atlas"));
             spriteAnimations.put(name, animAtlas);
         }
     }
@@ -271,40 +266,19 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         }
         for (String name : spriterAnimNamesToLoad) {
             if (!animationsToOverride.contains(name)) {
-                FileHandle animFile = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+                FileHandle animFile = Gdx.files.internal("orig" + separator + spriterAnimationsPath + separator +
+                        name + separator + name + ".scml");
                 spriterAnimations.put(name, animFile);
             } else {
-                FileHandle animFile = Gdx.files.local("orig" + File.separator + spriterAnimationsPath + File.separator + name + File.separator + name + ".scml");
+                FileHandle animFile = Gdx.files.local("orig" + separator + spriterAnimationsPath + separator +
+                        name + separator + name + ".scml");
                 spriterAnimations.put(name, animFile);
             }
         }
     }
-
-    public void loadSpineAnimation(String name) {
-        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".atlas"));
-        skeletonAtlases.put(name, animAtlas);
-        skeletonJSON.put(name, Gdx.files.internal("orig" + File.separator + spineAnimationsPath + File.separator + name + File.separator + name + ".json"));
-    }
-
 
     @Override
     public void loadSpineAnimations() {
-        // empty existing ones that are not scheduled to load
-        Iterator it = skeletonAtlases.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            if (spineAnimNamesToLoad.contains(pairs.getKey())) {
-                spineAnimNamesToLoad.remove(pairs.getKey());
-            } else {
-                it.remove();
-                skeletonJSON.remove(pairs.getKey());
-            }
-        }
-
-
-        for (String name : spineAnimNamesToLoad) {
-            loadSpineAnimation(name);
-        }
     }
 
     @Override
@@ -334,7 +308,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     public void loadFont(FontSizePair pair) {
         FileHandle fontFile;
-        fontFile = Gdx.files.internal(fontsPath + File.separator + pair.fontName + ".ttf");
+        fontFile = Gdx.files.internal(fontsPath + separator + pair.fontName + ".ttf");
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = Math.round(pair.fontSize * resMultiplier);
@@ -344,7 +318,7 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
 
     @Override
     public SceneVO loadSceneVO(String sceneName) {
-        FileHandle file = Gdx.files.internal(scenesPath + File.separator + sceneName + ".dt");
+        FileHandle file = Gdx.files.internal(scenesPath + separator + sceneName + ".dt");
         Json json = new Json();
         SceneVO sceneVO = json.fromJson(SceneVO.class, file.readString());
 
@@ -378,7 +352,9 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
         }
 
         for (String name : shaderNamesToLoad) {
-            ShaderProgram shaderProgram = new ShaderProgram(Gdx.files.internal(shadersPath + File.separator + name + ".vert"), Gdx.files.internal(shadersPath + File.separator + name + ".frag"));
+            ShaderProgram shaderProgram = new ShaderProgram(
+                    Gdx.files.internal(shadersPath + separator + name + ".vert"),
+                    Gdx.files.internal(shadersPath + separator + name + ".frag"));
             shaderPrograms.put(name, shaderProgram);
         }
     }
@@ -458,13 +434,15 @@ public class ResourceManager implements IResourceLoader, IResourceRetriever {
     }
 
     public void addSpriterToLoad(String aniName) {
-        FileHandle animFilePet = Gdx.files.internal("orig" + File.separator + spriterAnimationsPath + File.separator + aniName + File.separator + aniName + ".scml");
+        FileHandle animFilePet = Gdx.files.internal("orig" + separator + spriterAnimationsPath + separator +
+                aniName + separator + aniName + ".scml");
         spriterAnimations.put(aniName, animFilePet);
     }
 
     public void addSPRITEtoLoad(String aniName) {
-        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + aniName + File.separator + aniName + ".atlas"));
-//        TextureAtlas animAtlas = new TextureAtlas(Gdx.files.internal(packResolutionName + File.separator + spriteAnimationsPath + File.separator + aniName + File.separator + aniName + ".atlas"));
+        TextureAtlas animAtlas = new TextureAtlas(
+                Gdx.files.internal(packResolutionName + separator + spriteAnimationsPath + separator + aniName + separator + aniName + ".atlas"));
         spriteAnimations.put(aniName, animAtlas);
     }
+
 }

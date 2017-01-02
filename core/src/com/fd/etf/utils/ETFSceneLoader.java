@@ -21,6 +21,7 @@ import com.uwsoft.editor.renderer.data.CompositeVO;
 import com.uwsoft.editor.renderer.data.ProjectInfoVO;
 import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
+import com.uwsoft.editor.renderer.resources.ETFResourceManager;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.scripts.IScript;
@@ -34,23 +35,26 @@ import java.util.Map;
 
 public class ETFSceneLoader {
 
+    private static final String RESULT_SCENE = "ResultScene";
+    private static final String SHOP_SCENE = "ShopScene";
+    public static final String MAIN_SCENE = "MainScene";
+    public static final String MENU_SCENE = "MenuScene";
+
     public Entity rootEntity;
     public SceneVO sceneVO;
     public PooledEngine engine = null;
 
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
-//    private String curResolution = "orig";
-    public ResourceManager rm = null;
+    public ETFResourceManager rm = null;
     private float pixelsPerWU = 1;
 
     public Map<String, PooledEngine> engineByScene = new HashMap<>();
     public Map<String, Entity> rootEntityByScene = new HashMap<>();
 
     public ETFSceneLoader() {
-        ResourceManager rm = new ResourceManager();
+        this.rm = new ETFResourceManager();
         rm.initAllResources();
-        this.rm = rm;
         this.engine = new PooledEngine();
         initSceneLoader();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
@@ -59,20 +63,22 @@ public class ETFSceneLoader {
     }
 
     public ETFSceneLoader(Viewport viewport) {
-        ResourceManager rm = new ResourceManager();
+        this.rm = new ETFResourceManager();
         rm.initAllResources();
-        this.rm = rm;
+
+//        rm.initScene(MAIN_SCENE);
+//        rm.initScene(MENU_SCENE);
 
         this.engine = new PooledEngine();
-//        initSceneLoader();
+
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
-            if (!(sceneName.equals("ResultScene") || sceneName.equals("ShopScene"))) {
+            if ((sceneName.equals(MAIN_SCENE) || sceneName.equals(MENU_SCENE))) {
                 loadScene(sceneName, viewport);
             }
         }
     }
 
-    public ETFSceneLoader(ResourceManager rm) {
+    public ETFSceneLoader(ETFResourceManager rm) {
         this.engine = new PooledEngine();
         this.rm = rm;
         initSceneLoader();
