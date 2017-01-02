@@ -28,12 +28,11 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
      */
     public String packResolutionName = "orig";
 
-    public String scenesPath = "scenes";
-    public String particleEffectsPath = "particles";
-    public String spriteAnimationsPath = "sprite_animations";
-    public String spriterAnimationsPath = "spriter_animations";
-    public String fontsPath = "freetypefonts";
-    public String shadersPath = "shaders";
+    private static final String scenesPath = "scenes";
+    private static final String particleEffectsPath = "particles";
+    private static final String spriteAnimationsPath = "sprite_animations";
+    private static final String spriterAnimationsPath = "spriter_animations";
+    private static final String fontsPath = "freetypefonts";
 
     protected float resMultiplier;
 
@@ -46,7 +45,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     protected HashSet<String> spriteAnimNamesToLoad = new HashSet<String>();
     protected HashSet<String> spriterAnimNamesToLoad = new HashSet<String>();
     protected HashSet<FontSizePair> fontsToLoad = new HashSet<FontSizePair>();
-    protected HashSet<String> shaderNamesToLoad = new HashSet<String>();
 
     protected TextureAtlas mainPack;
     protected HashMap<String, ParticleEffect> particleEffects = new HashMap<String, ParticleEffect>();
@@ -57,7 +55,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<String, TextureAtlas>();
     public HashMap<String, FileHandle> spriterAnimations = new HashMap<String, FileHandle>();
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
-    protected HashMap<String, ShaderProgram> shaderPrograms = new HashMap<String, ShaderProgram>();
 
     List<String> animationsToOverride = new ArrayList<String>();
     public AssetManager manager = new AssetManager();
@@ -159,7 +156,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         spriteAnimNamesToLoad.clear();
         spriterAnimNamesToLoad.clear();
         fontsToLoad.clear();
-        shaderPrograms.clear();
 
         for (String preparedSceneName : preparedSceneNames) {
             CompositeVO composite = loadedSceneVOs.get(preparedSceneName).composite;
@@ -170,7 +166,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
             String[] particleEffects = composite.getRecursiveParticleEffectsList();
             String[] spriteAnimations = composite.getRecursiveSpriteAnimationList();
             String[] spriterAnimations = composite.getRecursiveSpriterAnimationList();
-            String[] shaderNames = composite.getRecursiveShaderList();
             FontSizePair[] fonts = composite.getRecursiveFontList();
             for (CompositeItemVO library : projectVO.libraryItems.values()) {
                 FontSizePair[] libFonts = library.composite.getRecursiveFontList();
@@ -186,7 +181,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
             Collections.addAll(spriteAnimNamesToLoad, spriteAnimations);
             Collections.addAll(spriterAnimNamesToLoad, spriterAnimations);
             Collections.addAll(fontsToLoad, fonts);
-            Collections.addAll(shaderNamesToLoad, shaderNames);
         }
     }
 
@@ -343,20 +337,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public void loadShaders() {
-        // empty existing ones that are not scheduled to load
-        for (String key : shaderPrograms.keySet()) {
-            if (!shaderNamesToLoad.contains(key)) {
-                shaderPrograms.get(key).dispose();
-                shaderPrograms.remove(key);
-            }
-        }
-
-        for (String name : shaderNamesToLoad) {
-            ShaderProgram shaderProgram = new ShaderProgram(
-                    Gdx.files.internal(shadersPath + separator + name + ".vert"),
-                    Gdx.files.internal(shadersPath + separator + name + ".frag"));
-            shaderPrograms.put(name, shaderProgram);
-        }
     }
 
     /**
@@ -430,7 +410,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public ShaderProgram getShaderProgram(String shaderName) {
-        return shaderPrograms.get(shaderName);
+        return null;
     }
 
     public void addSpriterToLoad(String aniName) {
