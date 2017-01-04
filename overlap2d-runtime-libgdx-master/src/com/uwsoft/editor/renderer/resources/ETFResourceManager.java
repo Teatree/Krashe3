@@ -1,6 +1,5 @@
 package com.uwsoft.editor.renderer.resources;
 
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -16,6 +15,7 @@ import com.uwsoft.editor.renderer.data.*;
 import com.uwsoft.editor.renderer.utils.MySkin;
 
 import java.util.*;
+
 import static java.io.File.separator;
 
 /**
@@ -23,9 +23,7 @@ import static java.io.File.separator;
  */
 public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
-    /**
-     * Paths (please change if different) this is the default structure exported from editor
-     */
+    public static final String MY_SEPARATOR = "/";
     public String packResolutionName = "orig";
 
     private static final String scenesPath = "scenes";
@@ -46,22 +44,15 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     protected HashSet<String> spriterAnimNamesToLoad = new HashSet<String>();
     protected HashSet<FontSizePair> fontsToLoad = new HashSet<FontSizePair>();
 
-    protected TextureAtlas mainPack;
-    protected HashMap<String, ParticleEffect> particleEffects = new HashMap<String, ParticleEffect>();
-
     protected HashMap<String, TextureAtlas> skeletonAtlases = new HashMap<String, TextureAtlas>();
     protected HashMap<String, FileHandle> skeletonJSON = new HashMap<String, FileHandle>();
 
-    protected HashMap<String, TextureAtlas> spriteAnimations = new HashMap<String, TextureAtlas>();
     public HashMap<String, FileHandle> spriterAnimations = new HashMap<String, FileHandle>();
     protected HashMap<FontSizePair, BitmapFont> bitmapFonts = new HashMap<FontSizePair, BitmapFont>();
 
     List<String> animationsToOverride = new ArrayList<String>();
     public AssetManager manager = new AssetManager();
 
-    /**
-     * Constructor does nothing
-     */
     public ETFResourceManager() {
         animationsToOverride.add("flower_idle");
         animationsToOverride.add("flower_leafs_idle");
@@ -79,12 +70,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         }
     }
 
-    /**
-     * Easy use loader
-     * Iterates through all scenes and schedules all for loading
-     * Prepares all the assets to be loaded that are used in scheduled scenes
-     * finally loads all the prepared assets
-     */
     public void initAllResources() {
         loadProjectVO();
         for (int i = 0; i < projectVO.scenes.size(); i++) {
@@ -110,7 +95,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     }
 
     /**
-     * Anloads scene from the memory, and clears all the freed assets
+     * Unloads scene from the memory, and clears all the freed assets
      *
      * @param sceneName - scene file name without ".dt" extension
      */
@@ -133,7 +118,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         } else {
             //TODO: Throw exception that scene was not loaded to be prepared for asseting
         }
-
     }
 
 
@@ -162,7 +146,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
             if (composite == null) {
                 continue;
             }
-            //
             String[] particleEffects = composite.getRecursiveParticleEffectsList();
             String[] spriteAnimations = composite.getRecursiveSpriteAnimationList();
             String[] spriterAnimations = composite.getRecursiveSpriterAnimationList();
@@ -176,12 +159,15 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
                 Collections.addAll(particleEffectNamesToLoad, libEffects);
             }
 
-            //
             Collections.addAll(particleEffectNamesToLoad, particleEffects);
             Collections.addAll(spriteAnimNamesToLoad, spriteAnimations);
             Collections.addAll(spriterAnimNamesToLoad, spriterAnimations);
             Collections.addAll(fontsToLoad, fonts);
         }
+
+        manager.load(packResolutionName + separator + "pack.atlas", TextureAtlas.class);
+        loadParticleEffects();
+        loadSpriteAnimations();
     }
 
     /**
@@ -189,53 +175,27 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
      * main atlas pack, particle effects, sprite animations, spine animations and fonts
      */
     public void loadAssets() {
-        loadAtlasPack();
-        loadParticleEffects();
-        loadSpriteAnimations();
+        while (!manager.update()) {}
         loadSpriterAnimations();
         loadFonts();
     }
 
     @Override
     public void loadAtlasPack() {
-
-        FileHandle packFile = Gdx.files.internal(packResolutionName + separator + "pack.atlas");
-        if (!packFile.exists()) {
-            return;
-        }
-        mainPack = new TextureAtlas(packFile);
     }
 
     @Override
     public void loadParticleEffects() {
-        // empty existing ones that are not scheduled to load
-        for (String key : particleEffects.keySet()) {
-            if (!particleEffectNamesToLoad.contains(key)) {
-                particleEffects.remove(key);
-            }
-        }
-
-        // load scheduled
-        for (String name : particleEffectNamesToLoad) {
-            ParticleEffect effect = new ParticleEffect();
-            effect.load(Gdx.files.internal(particleEffectsPath + separator + name), mainPack, "");
-            particleEffects.put(name, effect);
+        for (String particleName : particleEffectNamesToLoad) {
+            manager.load(particleEffectsPath + separator + particleName, ParticleEffect.class);
         }
     }
 
     @Override
     public void loadSpriteAnimations() {
-        for (String key : spriteAnimations.keySet()) {
-            if (!spriteAnimNamesToLoad.contains(key)) {
-                spriteAnimations.remove(key);
-            }
-        }
-
         for (String name : spriteAnimNamesToLoad) {
-            TextureAtlas animAtlas = new TextureAtlas(
-                    Gdx.files.internal(packResolutionName + separator + spriteAnimationsPath + separator
-                            + name + separator + name + ".atlas"));
-            spriteAnimations.put(name, animAtlas);
+            manager.load(packResolutionName + separator + spriteAnimationsPath + separator
+                    + name + separator + name + ".atlas", TextureAtlas.class);
         }
     }
 
@@ -339,20 +299,14 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public void loadShaders() {
     }
 
-    /**
-     * Following methods are for retriever interface, which is intended for runtime internal use
-     * to retrieve any already loaded into memory asset for rendering
-     */
-
-
     @Override
     public TextureRegion getTextureRegion(String name) {
-        return mainPack.findRegion(name);
+        return manager.get(packResolutionName + MY_SEPARATOR + "pack.atlas", TextureAtlas.class).findRegion(name);
     }
 
     @Override
     public ParticleEffect getParticleEffect(String name) {
-        return new ParticleEffect(particleEffects.get(name));
+        return manager.get(particleEffectsPath + MY_SEPARATOR + name, ParticleEffect.class);
     }
 
     @Override
@@ -367,11 +321,13 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public TextureAtlas getSpriteAnimation(String name) {
-        return spriteAnimations.get(name);
+        return manager.get(packResolutionName + MY_SEPARATOR + spriteAnimationsPath + MY_SEPARATOR
+                + name + MY_SEPARATOR + name + ".atlas", TextureAtlas.class);
     }
 
     @Override
     public BitmapFont getBitmapFont(String name, int size) {
+//        return manager.get(fontsPath + "/" + name + ".ttf", BitmapFont.class);
         return bitmapFonts.get(new FontSizePair(name, size));
     }
 
@@ -399,8 +355,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     }
 
     public void dispose() {
-        mainPack.dispose();
-
+        manager.dispose();
     }
 
     @Override
@@ -420,9 +375,10 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     }
 
     public void addSPRITEtoLoad(String aniName) {
-        TextureAtlas animAtlas = new TextureAtlas(
-                Gdx.files.internal(packResolutionName + separator + spriteAnimationsPath + separator + aniName + separator + aniName + ".atlas"));
-        spriteAnimations.put(aniName, animAtlas);
+        manager.load(packResolutionName + separator + spriteAnimationsPath + separator +
+                aniName + separator + aniName + ".atlas", TextureAtlas.class);
+        while (!manager.update()) {
+        }
     }
 
 }

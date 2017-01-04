@@ -38,7 +38,8 @@ public class GoalFeedbackScreen {
     public static final String GREEN_SHADE = "green_shade";
     private static final String LBL_DIALOG = "lbl_level";
     private static final String LBL_DIALOG_SH = "lbl_level_sh";
-    private static final String GOAL_LIB = "goalTile";
+    public static final String GOAL_TILE = "goalTile";
+    private static final String GOAL_LIB = GOAL_TILE;
     private static final String GOAL_ANI = "goalAni";
     private static final String GOAL_PROGRESS = "goal_progress";
     private static final String GOAL_LBL = "goal_lbl";
@@ -234,7 +235,7 @@ public class GoalFeedbackScreen {
     private Entity createGoalTile(final Goal goal, int y) {
         CompositeItemVO tempC = gameStage.sceneLoader.loadVoFromLibrary(GOAL_LIB).clone();
 
-        gameStage.sceneLoader.rm.addSPRITEtoLoad("goalTile");
+        gameStage.sceneLoader.rm.addSPRITEtoLoad(GOAL_TILE);
         final Entity tile = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempC);
         gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), tile, tempC.composite);
         gameStage.sceneLoader.getEngine().addEntity(tile);
