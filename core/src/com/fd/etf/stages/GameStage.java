@@ -80,8 +80,6 @@ public class GameStage extends Stage {
             sceneLoader.setScene(MAIN_SCENE, viewport);
             if (justCreated) {
                 ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-                //TODO: only when debug needed!
-//                sceneLoader.engine.addSystem(sceneLoader.renderer);
                 sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
                 root.addScript(gameScript);
                 gameScript.initButtons();

@@ -55,9 +55,9 @@ public class Main extends Game {
 //        SaveMngr.generateLevelsJson();
 
         ETFSceneLoader sceneLoader = new ETFSceneLoader(oneViewport);
+        GameStage.viewport = oneViewport;
         gameStage = new GameStage(sceneLoader);
         gameStage.setViewport(oneViewport);
-        GameStage.viewport = oneViewport;
         Gdx.input.setInputProcessor(gameStage);
     }
 
