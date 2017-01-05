@@ -17,7 +17,8 @@ import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.entity.componets.ShopItem.SOFT;
-import static com.fd.etf.stages.ShopScreenScript.*;
+import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
+import static com.fd.etf.stages.ShopScreenScript.itemIcons;
 import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
 import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;

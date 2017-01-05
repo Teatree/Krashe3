@@ -3,12 +3,16 @@ package com.uwsoft.editor.renderer.resources;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Json;
 import com.uwsoft.editor.renderer.data.*;
@@ -82,30 +86,6 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     }
 
     /**
-     * Initializes scene by loading it's VO data object and loading all the assets
-     * needed for this particular scene only
-     *
-     * @param sceneName - scene file name without ".dt" extension
-     */
-    public void initScene(String sceneName) {
-        loadSceneVO(sceneName);
-        scheduleScene(sceneName);
-        prepareAssetsToLoad();
-        loadAssets();
-    }
-
-    /**
-     * Unloads scene from the memory, and clears all the freed assets
-     *
-     * @param sceneName - scene file name without ".dt" extension
-     */
-    public void unLoadScene(String sceneName) {
-        unScheduleScene(sceneName);
-        loadedSceneVOs.remove(sceneName);
-        loadAssets();
-    }
-
-    /**
      * Schedules scene for later loading
      * if later prepareAssetsToLoad function will be called it will only prepare assets
      * that are used in scheduled scene
@@ -164,10 +144,10 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
             Collections.addAll(spriterAnimNamesToLoad, spriterAnimations);
             Collections.addAll(fontsToLoad, fonts);
         }
-
-        manager.load(packResolutionName + separator + "pack.atlas", TextureAtlas.class);
+        loadAtlasPack();
         loadParticleEffects();
         loadSpriteAnimations();
+        loadFonts();
     }
 
     /**
@@ -175,13 +155,16 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
      * main atlas pack, particle effects, sprite animations, spine animations and fonts
      */
     public void loadAssets() {
-        while (!manager.update()) {}
+        System.out.println();
+        while (!manager.update()) {
+        }
         loadSpriterAnimations();
-        loadFonts();
+        System.out.println("load font s");
     }
 
     @Override
     public void loadAtlasPack() {
+        manager.load(packResolutionName + separator + "pack.atlas", TextureAtlas.class);
     }
 
     @Override
@@ -237,37 +220,19 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public void loadFonts() {
-        //resolution related stuff
-        ResolutionEntryVO curResolution = getProjectVO().getResolution(packResolutionName);
-        resMultiplier = 1;
-        if (!packResolutionName.equals("orig")) {
-            if (curResolution.base == 0) {
-                resMultiplier = (float) curResolution.width / (float) getProjectVO().originalResolution.width;
-            } else {
-                resMultiplier = (float) curResolution.height / (float) getProjectVO().originalResolution.height;
-            }
-        }
-
-        // empty existing ones that are not scheduled to load
-        for (FontSizePair pair : bitmapFonts.keySet()) {
-            if (!fontsToLoad.contains(pair)) {
-                bitmapFonts.remove(pair);
-            }
-        }
-
+        FileHandleResolver resolver = new InternalFileHandleResolver();
+        manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
         for (FontSizePair pair : fontsToLoad) {
             loadFont(pair);
         }
     }
 
     public void loadFont(FontSizePair pair) {
-        FileHandle fontFile;
-        fontFile = Gdx.files.internal(fontsPath + separator + pair.fontName + ".ttf");
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = Math.round(pair.fontSize * resMultiplier);
-        BitmapFont font = generator.generateFont(parameter);
-        bitmapFonts.put(pair, font);
+        FreetypeFontLoader.FreeTypeFontLoaderParameter sizeParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + ".ttf";
+        sizeParams.fontParameters.size = pair.fontSize;
+        manager.load(pair.fontName + pair.fontSize + ".ttf", BitmapFont.class, sizeParams);
     }
 
     @Override
@@ -327,8 +292,8 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public BitmapFont getBitmapFont(String name, int size) {
-//        return manager.get(fontsPath + "/" + name + ".ttf", BitmapFont.class);
-        return bitmapFonts.get(new FontSizePair(name, size));
+        return manager.get(name + size + ".ttf", BitmapFont.class);
+//        return bitmapFonts.get(new FontSizePair(name, size));
     }
 
     @Override

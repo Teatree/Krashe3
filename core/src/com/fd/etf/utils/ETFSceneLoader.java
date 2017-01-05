@@ -2,15 +2,11 @@ package com.fd.etf.utils;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.uwsoft.editor.renderer.commons.IExternalItemType;
 import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.ParentNodeComponent;
@@ -22,7 +18,6 @@ import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
 import com.uwsoft.editor.renderer.resources.ETFResourceManager;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
-import com.uwsoft.editor.renderer.resources.ResourceManager;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.*;
 import com.uwsoft.editor.renderer.systems.action.ActionSystem;
@@ -51,36 +46,18 @@ public class ETFSceneLoader {
     public Map<String, PooledEngine> engineByScene = new HashMap<>();
     public Map<String, Entity> rootEntityByScene = new HashMap<>();
 
-    public ETFSceneLoader() {
-        this.rm = new ETFResourceManager();
-        rm.initAllResources();
-        this.engine = new PooledEngine();
-        initSceneLoader();
-        for (String sceneName : rm.loadedSceneVOs.keySet()) {
-            loadScene(sceneName);
-        }
-    }
 
     public ETFSceneLoader(Viewport viewport) {
         this.rm = new ETFResourceManager();
         rm.initAllResources();
 
-//        rm.initScene(MAIN_SCENE);
-//        rm.initScene(MENU_SCENE);
-
         this.engine = new PooledEngine();
-
+//        initSceneLoader();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
             if ((sceneName.equals(MAIN_SCENE) || sceneName.equals(MENU_SCENE))) {
                 loadScene(sceneName, viewport);
             }
         }
-    }
-
-    public ETFSceneLoader(ETFResourceManager rm) {
-        this.engine = new PooledEngine();
-        this.rm = rm;
-        initSceneLoader();
     }
 
     /**
@@ -93,14 +70,13 @@ public class ETFSceneLoader {
         }
     }
 
-    public SceneVO getSceneVO() {
-        return sceneVO;
-    }
-
     public SceneVO loadScene(String sceneName, Viewport viewport) {
 
         this.engine = new PooledEngine();
         initSceneLoader();
+        if (entityFactory == null) {
+            entityFactory = new EntityFactory(engine, rm);
+        }
 
         pixelsPerWU = rm.getProjectVO().pixelToWorld;
 
@@ -130,21 +106,6 @@ public class ETFSceneLoader {
             this.rootEntity = rootEntityByScene.get(sceneName);
             this.engine = engineByScene.get(sceneName);
         }
-    }
-
-    public SceneVO loadScene(String sceneName) {
-        ProjectInfoVO projectVO = rm.getProjectVO();
-        Viewport viewport = new ScalingViewport(Scaling.stretch, (float) projectVO.originalResolution.width / pixelsPerWU,
-                (float) projectVO.originalResolution.height / pixelsPerWU, new OrthographicCamera());
-        return loadScene(sceneName, viewport);
-    }
-
-    public void injectExternalItemType(IExternalItemType itemType) {
-        itemType.injectDependencies(rm);
-        itemType.injectMappers();
-        entityFactory.addExternalFactory(itemType);
-        engine.addSystem(itemType.getSystem());
-        renderer.addDrawableType(itemType);
     }
 
     private void addSystems() {
@@ -246,14 +207,6 @@ public class ETFSceneLoader {
                 }
             }
         }
-    }
-
-    /**
-     * Sets ambient light to the one specified in scene from editor
-     *
-     * @param vo - Scene data file to invalidate
-     */
-    public void setAmbienceInfo(SceneVO vo) {
     }
 
     public EntityFactory getEntityFactory() {
