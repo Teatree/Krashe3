@@ -42,11 +42,11 @@ public class BugSpawnSystem extends EntitySystem {
 
     private float spawner = 0;
     public static float break_counter = 0;
-    private float SPAWN_INTERVAL_BASE = 1.5f;
-    private float BREAK_FREQ_BASE_MIN = 10;
-    private float BREAK_FREQ_BASE_MAX = 15;
-    private float BREAK_LENGTH_BASE_MIN = 3;
-    private float BREAK_LENGTH_BASE_MAX = 6;
+    private float SPAWN_INTERVAL_BASE = 5.5f;
+    private float BREAK_FREQ_BASE_MIN = 13;
+    private float BREAK_FREQ_BASE_MAX = 20;
+    private float BREAK_LENGTH_BASE_MIN = 12;
+    private float BREAK_LENGTH_BASE_MAX = 20;
 
     private float curSpawnInterval = SPAWN_INTERVAL_BASE;
     private float curBreakFreqMin = BREAK_FREQ_BASE_MIN;
@@ -132,8 +132,8 @@ public class BugSpawnSystem extends EntitySystem {
         } else {
             spawner -= delta;
         }
-//        System.out.println("spanwer: " + spawner);
-//        System.out.println("break_counter: " + break_counter);
+        System.out.println("spanwer: " + spawner);
+        System.out.println("break_counter: " + break_counter);
     }
 
     private void createBug(String tempType, Multiplier currentMultiplier) {
@@ -180,6 +180,8 @@ public class BugSpawnSystem extends EntitySystem {
         curChargerProb = (int) (CHARGER_SPAWN_PROB * currentMultiplier.chargerBugSpawnChance * gameStage.gameScript.fpc.level.chargerBugSpawnChance);
         curQueenBeeProb = (int) (QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * gameStage.gameScript.fpc.level.queenBeeSpawnChance);
         curBeeProb = (int) (BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * gameStage.gameScript.fpc.level.beeSpawnChance);
+
+        System.out.println("curSpawnInterval: " + curSpawnInterval);
 
         if (!isPause.get() && !isGameOver.get()) {
             if (isStarted) {
