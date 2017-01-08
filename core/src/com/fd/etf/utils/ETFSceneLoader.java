@@ -52,12 +52,13 @@ public class ETFSceneLoader {
         rm.initAllResources();
 
         this.engine = new PooledEngine();
-//        initSceneLoader();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
-            if ((sceneName.equals(MAIN_SCENE) || sceneName.equals(MENU_SCENE))) {
+            if ((sceneName.equals(MENU_SCENE))) {
                 loadScene(sceneName, viewport);
             }
         }
+        System.gc();
+        System.runFinalization ();
     }
 
     /**
@@ -74,10 +75,13 @@ public class ETFSceneLoader {
     public void unLoadScene(String sceneName) {
         engineByScene.remove(sceneName);
         rootEntityByScene.remove(sceneName);
+        System.gc();
+        System.runFinalization();
     }
 
     public SceneVO loadScene(String sceneName, Viewport viewport) {
 
+        this.rootEntity = null;
         this.engine = new PooledEngine();
         initSceneLoader();
         if (entityFactory == null) {
@@ -90,7 +94,8 @@ public class ETFSceneLoader {
         if (sceneVO.composite == null) {
             sceneVO.composite = new CompositeVO();
         }
-        Entity rootEntity = entityFactory.createRootEntity(sceneVO.composite, viewport);
+
+        rootEntity = entityFactory.createRootEntity(sceneVO.composite, viewport);
         this.engine.addEntity(rootEntity);
 
         if (sceneVO.composite != null) {
@@ -99,6 +104,9 @@ public class ETFSceneLoader {
 
         rootEntityByScene.put(sceneName, rootEntity);
         engineByScene.put(sceneName, engine);
+
+        System.gc();
+        System.runFinalization ();
 
         return sceneVO;
     }
@@ -112,6 +120,7 @@ public class ETFSceneLoader {
             this.rootEntity = rootEntityByScene.get(sceneName);
             this.engine = engineByScene.get(sceneName);
         }
+        System.gc();
     }
 
     private void addSystems() {

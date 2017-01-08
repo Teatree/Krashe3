@@ -298,10 +298,10 @@ public class EntityFactory {
 //			engine.addEntity(child);
 //		}
 
-        for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
-            Entity child = createEntity(entity, vo.sSpineAnimations.get(i));
-            engine.addEntity(child);
-        }
+//        for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
+//            Entity child = createEntity(entity, vo.sSpineAnimations.get(i));
+//            engine.addEntity(child);
+//        }
 
         for (int i = 0; i < vo.sSpriteAnimations.size(); i++) {
             Entity child = createEntity(entity, vo.sSpriteAnimations.get(i));

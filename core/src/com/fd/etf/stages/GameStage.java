@@ -115,6 +115,8 @@ public class GameStage extends Stage {
             menuScript.init(menuScript.menuItem.getEntity());
             menuScript.setupMenuScreenWorld();
         }
+        System.gc();
+        System.runFinalization ();
     }
 
     public void initResult() {
@@ -127,6 +129,8 @@ public class GameStage extends Stage {
         } else {
             resultScript.initResultScreen();
         }
+        System.gc();
+        System.runFinalization ();
     }
 
     public void initShop() {
@@ -142,6 +146,8 @@ public class GameStage extends Stage {
         ShopScreenScript.isPreviewOn.set(false);
         ShopPoverUpTabListener.reset();
         shopScript.checkIfChanged();
+        System.gc();
+        System.runFinalization ();
     }
 
     public void initShopWithAds() {
@@ -206,5 +212,7 @@ public class GameStage extends Stage {
         gameScript.fpc.level.difficultyLevel = 0;
         gameScript.fpc.level.resetNewInfo();
         gameScript.fpc.level.goals = gameScript.fpc.level.goalGenerator.getGoals(gameScript.fpc);
+        System.gc();
+        System.runFinalization ();
     }
 }

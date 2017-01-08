@@ -28,7 +28,14 @@ import static java.io.File.separator;
 public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     public static final String MY_SEPARATOR = "/";
-    public String packResolutionName = "orig";
+    public static final String SCML = ".scml";
+    public static final String ORIG = "orig";
+    public static final String TTF = ".ttf";
+    public static final String DT = ".dt";
+    public static final String PROJECT_DT = "project.dt";
+    public static final String PACK_ATLAS = "pack.atlas";
+    public static final String ATLAS = ".atlas";
+    public String packResolutionName = ORIG;
 
     private static final String scenesPath = "scenes";
     private static final String particleEffectsPath = "particles";
@@ -134,7 +141,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
                 FontSizePair[] libFonts = library.composite.getRecursiveFontList();
                 Collections.addAll(fontsToLoad, libFonts);
 
-                // loading particle effects used in library items
+//                // loading particle effects used in library items
                 String[] libEffects = library.composite.getRecursiveParticleEffectsList();
                 Collections.addAll(particleEffectNamesToLoad, libEffects);
             }
@@ -159,12 +166,12 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         while (!manager.update()) {
         }
         loadSpriterAnimations();
-        System.out.println("load font s");
+        System.out.println();
     }
 
     @Override
     public void loadAtlasPack() {
-        manager.load(packResolutionName + separator + "pack.atlas", TextureAtlas.class);
+        manager.load(packResolutionName + separator + PACK_ATLAS, TextureAtlas.class);
     }
 
     @Override
@@ -178,7 +185,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public void loadSpriteAnimations() {
         for (String name : spriteAnimNamesToLoad) {
             manager.load(packResolutionName + separator + spriteAnimationsPath + separator
-                    + name + separator + name + ".atlas", TextureAtlas.class);
+                    + name + separator + name + ATLAS, TextureAtlas.class);
         }
     }
 
@@ -203,12 +210,12 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         }
         for (String name : spriterAnimNamesToLoad) {
             if (!animationsToOverride.contains(name)) {
-                FileHandle animFile = Gdx.files.internal("orig" + separator + spriterAnimationsPath + separator +
-                        name + separator + name + ".scml");
+                FileHandle animFile = Gdx.files.internal(ORIG + separator + spriterAnimationsPath + separator +
+                        name + separator + name + SCML);
                 spriterAnimations.put(name, animFile);
             } else {
-                FileHandle animFile = Gdx.files.local("orig" + separator + spriterAnimationsPath + separator +
-                        name + separator + name + ".scml");
+                FileHandle animFile = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                        name + separator + name + SCML);
                 spriterAnimations.put(name, animFile);
             }
         }
@@ -222,7 +229,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public void loadFonts() {
         FileHandleResolver resolver = new InternalFileHandleResolver();
         manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-        manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+        manager.setLoader(BitmapFont.class, TTF, new FreetypeFontLoader(resolver));
         for (FontSizePair pair : fontsToLoad) {
             loadFont(pair);
         }
@@ -230,14 +237,14 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     public void loadFont(FontSizePair pair) {
         FreetypeFontLoader.FreeTypeFontLoaderParameter sizeParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + ".ttf";
+        sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + TTF;
         sizeParams.fontParameters.size = pair.fontSize;
-        manager.load(pair.fontName + pair.fontSize + ".ttf", BitmapFont.class, sizeParams);
+        manager.load(pair.fontName + pair.fontSize + TTF, BitmapFont.class, sizeParams);
     }
 
     @Override
     public SceneVO loadSceneVO(String sceneName) {
-        FileHandle file = Gdx.files.internal(scenesPath + separator + sceneName + ".dt");
+        FileHandle file = Gdx.files.internal(scenesPath + separator + sceneName + DT);
         Json json = new Json();
         SceneVO sceneVO = json.fromJson(SceneVO.class, file.readString());
 
@@ -253,7 +260,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     @Override
     public ProjectInfoVO loadProjectVO() {
 
-        FileHandle file = Gdx.files.internal("project.dt");
+        FileHandle file = Gdx.files.internal(PROJECT_DT);
         Json json = new Json();
         projectVO = json.fromJson(ProjectInfoVO.class, file.readString());
 
@@ -266,7 +273,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public TextureRegion getTextureRegion(String name) {
-        return manager.get(packResolutionName + MY_SEPARATOR + "pack.atlas", TextureAtlas.class).findRegion(name);
+        return manager.get(packResolutionName + MY_SEPARATOR + PACK_ATLAS, TextureAtlas.class).findRegion(name);
     }
 
     @Override
@@ -287,12 +294,12 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     @Override
     public TextureAtlas getSpriteAnimation(String name) {
         return manager.get(packResolutionName + MY_SEPARATOR + spriteAnimationsPath + MY_SEPARATOR
-                + name + MY_SEPARATOR + name + ".atlas", TextureAtlas.class);
+                + name + MY_SEPARATOR + name + ATLAS, TextureAtlas.class);
     }
 
     @Override
     public BitmapFont getBitmapFont(String name, int size) {
-        return manager.get(name + size + ".ttf", BitmapFont.class);
+        return manager.get(name + size + TTF, BitmapFont.class);
 //        return bitmapFonts.get(new FontSizePair(name, size));
     }
 
@@ -313,7 +320,7 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
 
     @Override
     public ResolutionEntryVO getLoadedResolution() {
-        if (packResolutionName.equals("orig")) {
+        if (packResolutionName.equals(ORIG)) {
             return getProjectVO().originalResolution;
         }
         return getProjectVO().getResolution(packResolutionName);
@@ -334,14 +341,14 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     }
 
     public void addSpriterToLoad(String aniName) {
-        FileHandle animFilePet = Gdx.files.internal("orig" + separator + spriterAnimationsPath + separator +
-                aniName + separator + aniName + ".scml");
+        FileHandle animFilePet = Gdx.files.internal(ORIG + separator + spriterAnimationsPath + separator +
+                aniName + separator + aniName + SCML);
         spriterAnimations.put(aniName, animFilePet);
     }
 
     public void addSPRITEtoLoad(String aniName) {
         manager.load(packResolutionName + separator + spriteAnimationsPath + separator +
-                aniName + separator + aniName + ".atlas", TextureAtlas.class);
+                aniName + separator + aniName + ATLAS, TextureAtlas.class);
         while (!manager.update()) {
         }
     }

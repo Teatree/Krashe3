@@ -29,6 +29,7 @@ import static com.fd.etf.utils.GlobalConstants.*;
 
 public class ShopScreenScript implements IScript {
 
+    public static final String BTN_PLAY = "btn_play";
     public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final String SCORE_LBL = "total_coins";
     private static final String SCORE_LBL_SH = "total_coins_sh";
@@ -125,7 +126,7 @@ public class ShopScreenScript implements IScript {
         startTransitionIn = true;
         startTransitionOut = false;
 
-        addBackButtonPlease();
+        addButtons();
 
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
         scoreLblsh = shopItem.getChild(SCORE_LBL_SH).getEntity();
@@ -343,7 +344,7 @@ public class ShopScreenScript implements IScript {
         return itemIcon;
     }
 
-    private void addBackButtonPlease() {
+    private void addButtons() {
         Entity btnBack = shopItem.getChild(BTN_BACK).getEntity();
         btnBack.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnBack, new AtomicBoolean[]{isPreviewOn}) {
@@ -351,6 +352,17 @@ public class ShopScreenScript implements IScript {
                     public void clicked() {
                         if (!isPreviewOn.get()) {
                             startTransitionOut = true;
+                        }
+                    }
+                });
+
+        Entity btnPlay = shopItem.getChild(BTN_PLAY).getEntity();
+        btnPlay.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnPlay, new AtomicBoolean[]{isPreviewOn}) {
+                    @Override
+                    public void clicked() {
+                        if (!isPreviewOn.get()) {
+                            gameStage.initGame(0);
                         }
                     }
                 });
