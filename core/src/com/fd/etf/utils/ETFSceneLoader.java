@@ -70,6 +70,12 @@ public class ETFSceneLoader {
         }
     }
 
+
+    public void unLoadScene(String sceneName) {
+        engineByScene.remove(sceneName);
+        rootEntityByScene.remove(sceneName);
+    }
+
     public SceneVO loadScene(String sceneName, Viewport viewport) {
 
         this.engine = new PooledEngine();

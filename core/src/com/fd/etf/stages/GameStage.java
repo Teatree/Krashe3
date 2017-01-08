@@ -99,6 +99,8 @@ public class GameStage extends Stage {
 
     public void initMenu() {
         if (changedFlower || changedFlower2) {
+            sceneLoader.unLoadScene(MENU_SCENE);
+            sceneLoader.unLoadScene(MAIN_SCENE);
             sceneLoader.loadScene(MENU_SCENE, viewport);
             changedFlower2 = false;
             menuScript = null;
