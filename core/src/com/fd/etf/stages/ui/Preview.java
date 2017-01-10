@@ -36,8 +36,6 @@ public class Preview extends AbstractDialog {
 
     private static final String BTN_CLOSE = "tag_btn_close";
     private static final String LBL_ITEM_NAME = "tag_lbl_item_name";
-    private static final String LBL_ITEM_NAME_2 = "tag_lbl_item_name_2";
-    private static final String LBL_PRICE_SH = "tag_lbl_price_sh";
     private static final String LBL_PAPER_PIECE = "paper_piece_img";
     private static final String COINZ_ICON = "coinz_icon";
     private static final String LBL_PRICE = "tag_lbl_price";
@@ -108,8 +106,6 @@ public class Preview extends AbstractDialog {
         loadPreviewFromLib();
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lblTitle = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
-        lblTitle2 = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME_2);
-        lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE_SH);
         lblPriceSh = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         lblNotEnough = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         lblNotEnoughSh = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF_SH);

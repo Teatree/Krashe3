@@ -32,7 +32,6 @@ public class ShopScreenScript implements IScript {
     public static final String BTN_PLAY = "btn_play";
     public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final String SCORE_LBL = "total_coins";
-    private static final String SCORE_LBL_SH = "total_coins_sh";
     private static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
     private static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
@@ -54,7 +53,6 @@ public class ShopScreenScript implements IScript {
     private static final int PAGE_SIZE = 1050;
 
     private static final String TITLE = "title";
-    private static final String TITLE_2 = "title_2";
     private static final String NEW_LINE_SIGN = "~";  //this symbol is used in the name of the item to identify the place where it new line will start
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
@@ -79,7 +77,6 @@ public class ShopScreenScript implements IScript {
 
     public Entity touchZoneNButton;
     public LabelComponent lc;
-    public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
     public List<Entity> bags = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
@@ -129,9 +126,7 @@ public class ShopScreenScript implements IScript {
         addButtons();
 
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
-        scoreLblsh = shopItem.getChild(SCORE_LBL_SH).getEntity();
         lc = scoreLbl.getComponent(LabelComponent.class);
-        lcsh = scoreLblsh.getComponent(LabelComponent.class);
 
         touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
@@ -236,15 +231,10 @@ public class ShopScreenScript implements IScript {
 
             if (hc.name.contains(NEW_LINE_SIGN)){
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
-                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
-                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
-                        0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
-                        lines[1]);
             }else {
-                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 0;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         hc.name);
@@ -287,15 +277,10 @@ public class ShopScreenScript implements IScript {
 
             if (vc.name.contains(NEW_LINE_SIGN)){
                 String[] lines = vc.name.split(NEW_LINE_SIGN);
-                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
-                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
-                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
-                        lines[1]);
             }else {
-                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 0;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         vc.name);
@@ -380,7 +365,6 @@ public class ShopScreenScript implements IScript {
         updateScrollButtonsState();
         preview.updatePreview();
         lc.text.replace(0, lc.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
-        lcsh.text.replace(0, lcsh.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         if (firstBagTargetPos != 0) {
             float bPos = bags.get(0).getComponent(TransformComponent.class).x;

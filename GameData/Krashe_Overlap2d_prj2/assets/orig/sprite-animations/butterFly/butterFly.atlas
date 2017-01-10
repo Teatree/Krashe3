@@ -1,0 +1,55 @@
+
+butterFly.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+butterFly1
+  rotate: false
+  xy: 2, 458
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly5
+  rotate: false
+  xy: 2, 458
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly2
+  rotate: false
+  xy: 2, 248
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly3
+  rotate: false
+  xy: 224, 458
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly4
+  rotate: false
+  xy: 2, 38
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly6
+  rotate: false
+  xy: 224, 248
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1
+butterFly7
+  rotate: false
+  xy: 446, 458
+  size: 220, 208
+  orig: 220, 208
+  offset: 0, 0
+  index: -1

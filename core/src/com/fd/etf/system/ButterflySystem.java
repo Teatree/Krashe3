@@ -4,12 +4,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
+import com.brashmonkey.spriter.Dimension;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
+import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 
 import static com.fd.etf.entity.componets.ButterflyComponent.State.*;
@@ -33,14 +37,17 @@ public class ButterflySystem extends IteratingSystem {
         if (!isStarted || isGameOver.get()) {
             e.getComponent(TransformComponent.class).x = -900;
             e.getComponent(TransformComponent.class).y = -900;
-            e.getComponent(SpriterComponent.class).player.speed = 0;
+
+//            e.getComponent(SpriteAnimationStateComponent.class).set(e.getComponent(SpriteAnimationComponent.class).frameRangeMap.get("Default"), 14, Animation.PlayMode.LOOP);
+            e.getComponent(SpriteAnimationComponent.class).fps = 0;
+
+//            e.getComponent(SpriterComponent.class).player.speed = 0;
             e.getComponent(ButterflyComponent.class).state = DEAD;
         }
         if (!isPause.get() && !isGameOver.get() && isStarted &&
                 e.getComponent(ButterflyComponent.class).state != DEAD) {
-            e.getComponent(SpriterComponent.class).player.speed = FPS;
+            e.getComponent(SpriteAnimationComponent.class).fps = 14;
 
-            e.getComponent(SpriterComponent.class).scale = 1f;
             e.getComponent(DimensionsComponent.class).height = 147;
             e.getComponent(DimensionsComponent.class).width = 138;
 
@@ -63,10 +70,12 @@ public class ButterflySystem extends IteratingSystem {
             e.getComponent(TransformComponent.class).x = e.getComponent(ButterflyComponent.class).out.x;
             e.getComponent(TransformComponent.class).y = e.getComponent(ButterflyComponent.class).out.y;
 
+            //side switching
             if (e.getComponent(ButterflyComponent.class).current > 0.4f) {
-                e.getComponent(SpriterComponent.class).player.setAnimation(0);
+                e.getComponent(TransformComponent.class).scaleX = 1;
             } else {
-                e.getComponent(SpriterComponent.class).player.setAnimation(1);
+                e.getComponent(TransformComponent.class).x -= e.getComponent(DimensionsComponent.class).width/2;
+                e.getComponent(TransformComponent.class).scaleX = -1;
             }
 
             if (e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY) || isOutOfBounds(e.getComponent(ButterflyComponent.class))) {
@@ -89,7 +98,9 @@ public class ButterflySystem extends IteratingSystem {
                 e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             }
         } else {
-            e.getComponent(SpriterComponent.class).player.speed = 0;
+            // stop
+            e.getComponent(SpriteAnimationComponent.class).fps = 0;
+//            e.getComponent(SpriterComponent.class).player.speed = 0;
         }
 
     }

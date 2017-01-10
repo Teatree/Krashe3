@@ -35,9 +35,7 @@ public class ResultScreenScript implements IScript {
     private static final String BTN_PLAY = "btn_play";
     private static final String BTN_SHOP = "btn_shop";
     private static final String LBL_TOTAL = "lbl_TOTAL";
-    private static final String LBL_TOTAL_S = "lbl_TOTAL_s";
     private static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
-    private static final String LBL_YOU_EARNED_S = "lbl_YOU_EARNED_s";
     private static final String LBL_BET_SCORE = "lbl_BET_SCORE";
     private static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
 //    private static final String TRIAL_TIMER = "timer_lbl";
@@ -86,9 +84,7 @@ public class ResultScreenScript implements IScript {
         gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
 
         txtTotalE = resultScreenItem.getChild(LBL_TOTAL).getEntity();
-        txtTotalsE = resultScreenItem.getChild(LBL_TOTAL_S).getEntity();
         txtEarnedE = resultScreenItem.getChild(LBL_YOU_EARNED).getEntity();
-        txtEarnedsE = resultScreenItem.getChild(LBL_YOU_EARNED_S).getEntity();
         progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
         txtBestE = resultScreenItem.getChild(LBL_BET_SCORE).getEntity();
         txtNeedE = resultScreenItem.getChild(LBL_TO_UNLOCK).getEntity();
@@ -210,7 +206,6 @@ public class ResultScreenScript implements IScript {
             timer.timer();
             if (timer.timerE != null) {
                 timer.timerE.getComponent(ZIndexComponent.class).setZIndex(progressBarE.getComponent(ZIndexComponent.class).getZIndex() + 1);
-                timer.timerEsh.getComponent(ZIndexComponent.class).setZIndex(timer.timerE.getComponent(ZIndexComponent.class).getZIndex() + 1);
             }
 
             if (offerPromo && active && !timer.ifShouldShowTimer()) {
