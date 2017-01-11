@@ -67,19 +67,7 @@ public abstract class ComponentFactory {
         createTintComponent(entity, vo);
         createZIndexComponent(entity, vo);
         createScriptComponent(entity, vo);
-//        createMeshComponent(entity, vo);
-//        createShaderComponent(entity, vo);
     }
-
-//    protected ShaderComponent createShaderComponent(Entity entity, MainItemVO vo) {
-//    	if(vo.shaderName == null || vo.shaderName.isEmpty()){
-//    		return null;
-//    	}
-//		ShaderComponent component = new ShaderComponent();
-//		component.setShader(vo.shaderName, rm.getShaderProgram(vo.shaderName));
-//		entity.add(component);
-//		return component;
-//	}
 
 	protected MainItemComponent createMainItemComponent(Entity entity, MainItemVO vo, int entityType) {
         MainItemComponent component = engine.createComponent(MainItemComponent.class);

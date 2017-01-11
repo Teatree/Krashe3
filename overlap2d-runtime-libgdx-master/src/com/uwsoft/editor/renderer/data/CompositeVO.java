@@ -2,6 +2,7 @@ package com.uwsoft.editor.renderer.data;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.brashmonkey.spriter.Spriter;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -11,6 +12,7 @@ import com.uwsoft.editor.renderer.resources.FontSizePair;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 public class CompositeVO {
 
@@ -21,7 +23,6 @@ public class CompositeVO {
     public ArrayList<CompositeItemVO> sComposites = new ArrayList<CompositeItemVO>(1);
     public ArrayList<SelectBoxVO> sSelectBoxes = new ArrayList<SelectBoxVO>(1);
     public ArrayList<ParticleEffectVO> sParticleEffects = new ArrayList<ParticleEffectVO>(1);
-//    public ArrayList<LightVO> sLights = new ArrayList<LightVO>(1);
     public ArrayList<SpineVO> sSpineAnimations = new ArrayList<SpineVO>(1);
     public ArrayList<SpriteAnimationVO> sSpriteAnimations = new ArrayList<SpriteAnimationVO>(1);
     public ArrayList<SpriterVO> sSpriterAnimations = new ArrayList<SpriterVO>(1);
@@ -87,8 +88,16 @@ public class CompositeVO {
         }
     }
 
-    public void updateSpriter (){
+    public void updateSpriter (CompositeVO vo){
+        List<SpriterVO> spriters = new ArrayList<SpriterVO>();
+        for (SpriterVO s: vo.sSpriterAnimations) {
+            spriters.add(new SpriterVO(s));
+        }
 
+        this.sSpriterAnimations.clear();
+        for (SpriterVO spriterVO : spriters) {
+            sSpriterAnimations.add(spriterVO);
+        }
     }
 
     public void addItem(MainItemVO vo) {
@@ -115,9 +124,6 @@ public class CompositeVO {
         if (className.equals("ParticleEffectVO")) {
             sParticleEffects.add((ParticleEffectVO) vo);
         }
-//        if (className.equals("LightVO")) {
-//            sLights.add((LightVO) vo);
-//        }
         if (className.equals("SpineVO")) {
             sSpineAnimations.add((SpineVO) vo);
         }

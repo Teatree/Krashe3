@@ -333,4 +333,8 @@ public class EntityFactory {
     public void clean() {
         entities.clear();
     }
+
+    public ComponentFactory getSpriterComponentFactory() {
+        return spriterComponentFactory;
+    }
 }

@@ -8,6 +8,7 @@ import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -75,14 +76,25 @@ public class GameStage extends Stage {
             justCreated = false;
         }
         if (changedFlower || changedFlower2) {
-            sceneLoader.setScene(MAIN_SCENE, viewport);
+//            sceneLoader.setScene(MAIN_SCENE, viewport);
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
             sceneLoader.rm.reloadFlowerAni();
-            sceneVO.composite.update(sceneVO.composite);
+            sceneVO.composite.updateSpriter(sceneVO.composite);
+//            sceneVO.composite.update(sceneVO.composite);
 
-//            newFlower.getComponent(TransformComponent.class).x = 100;
-//            newFlower.getComponent(TransformComponent.class).y = 100;
+            gameScript.megaFlower.getComponent(TransformComponent.class).x = -1000;
+            gameScript.megaFlower.getComponent(TransformComponent.class).y = -1000;
 
+
+            sceneLoader.engine.removeEntity(gameScript.megaFlower);
+
+            com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
+            sceneLoader.entityFactory.getSpriterComponentFactory().createComponents(sceneLoader.getRoot(),
+                    newFlower, sceneVO.composite.sSpriterAnimations.get(0));
+            sceneLoader.entityFactory.postProcessEntity(newFlower);
+
+            sceneLoader.getEngine().addEntity(newFlower);
+            gameScript.initFlower(newFlower);
             changedFlower = false;
 //            sceneLoader.loadScene(MAIN_SCENE, viewport);
 //            sceneLoader.setScene(MAIN_SCENE, viewport);
@@ -113,10 +125,18 @@ public class GameStage extends Stage {
 //            changedFlower2 = false;
 //            menuScript = null;
 
-            sceneLoader.setScene(MENU_SCENE, viewport);
+//            sceneLoader.setScene(MENU_SCENE, viewport);
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MENU_SCENE);
             sceneLoader.rm.reloadFlowerAni();
-            sceneVO.composite.update(sceneVO.composite);
+//            sceneVO.composite.updateSpriter(sceneVO.composite);
+
+//            com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
+//
+//            sceneLoader.entityFactory.getSpriteComponentFactory().createComponents(sceneLoader.getRoot(), newFlower, sceneVO.composite.sSpriterAnimations.get(3));
+//            sceneLoader.entityFactory.postProcessEntity(newFlower);
+//
+//            sceneLoader.getEngine().addEntity(newFlower);
+//            sceneVO.composite.update(sceneVO.composite);
 
             changedFlower2 = false;
         }

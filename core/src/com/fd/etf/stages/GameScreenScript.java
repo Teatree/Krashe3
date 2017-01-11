@@ -78,6 +78,7 @@ public class GameScreenScript implements IScript {
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     private static boolean shouldShowGameOverDialog;
     private Entity petE;
+    public Entity megaFlower;
 
     public GameScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -206,7 +207,7 @@ public class GameScreenScript implements IScript {
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         addSystems();
-        initFlower();
+        initFlower(gameItem.getChild(MEGA_FLOWER).getEntity());
         initLeafs();
         initPet();
         initDoubleBJIcon();
@@ -285,7 +286,7 @@ public class GameScreenScript implements IScript {
                     public void clicked() {
                         if (!isPause.get() && !isGameOver.get()) {
                             resetPauseDialog();
-                            gameItem.getChild(MEGA_FLOWER).getEntity().getComponent(SpriterComponent.class).player.setTime(0);
+                            megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
                             gameStage.initMenu();
                         }
                     }
@@ -334,28 +335,28 @@ public class GameScreenScript implements IScript {
         leafsEntity.add(new DebugComponent());
     }
 
-    private void initFlower() {
+    public void initFlower(Entity flower) {
+        this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
-        Entity flowerEntity = gameItem.getChild(MEGA_FLOWER).getEntity();
 
-        TransformComponent tc = flowerEntity.getComponent(TransformComponent.class);
+        TransformComponent tc = megaFlower.getComponent(TransformComponent.class);
         tc.x = FLOWER_X_POS;
         tc.y = FLOWER_Y_POS;
         tc.scaleX = FLOWER_SCALE;
         tc.scaleY = FLOWER_SCALE;
-        flowerEntity.add(tc);
+        megaFlower.add(tc);
 
         FlowerComponent fc = new FlowerComponent();
 
 //        System.out.println("currentFlowerFrame: " + currentFlowerFrame);
-        flowerEntity.getComponent(SpriterComponent.class).player.setTime(currentFlowerFrame);
-//        System.out.println("flowerEntity.getComponent(SpriterComponent.class).player: " + flowerEntity.getComponent(SpriterComponent.class).player.getTime());
+        megaFlower.getComponent(SpriterComponent.class).player.setTime(currentFlowerFrame);
+//        System.out.println("megaFlower.getComponent(SpriterComponent.class).player: " + megaFlower.getComponent(SpriterComponent.class).player.getTime());
 
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0.7f;
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TransformComponent.class).x = 975;
 
-        flowerEntity.add(fc);
-        flowerEntity.add(fpc);
+        megaFlower.add(fc);
+        megaFlower.add(fpc);
     }
 
     public void hideCurrentPet() {
@@ -509,7 +510,7 @@ public class GameScreenScript implements IScript {
                     Main.mainController.submitScore(fpc.score);
                 }
                 gameStage.gameScript.gameOverDialog.hide();
-                gameItem.getChild(MEGA_FLOWER).getEntity().getComponent(SpriterComponent.class).player.setTime(0);
+                megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
                 gameStage.gameScript.gameStage.initResultWithAds();
             }
         }
