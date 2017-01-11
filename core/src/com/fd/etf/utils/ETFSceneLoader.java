@@ -58,7 +58,7 @@ public class ETFSceneLoader {
             }
         }
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
     }
 
     /**
@@ -81,9 +81,16 @@ public class ETFSceneLoader {
 
     public SceneVO loadScene(String sceneName, Viewport viewport) {
 
+        this.engine = engineByScene.get(sceneName);
+        if (engine == null) {
+            this.engine = new PooledEngine();
+        } else {
+            engine.removeEntity(rootEntity);
+        }
         this.rootEntity = null;
-        this.engine = new PooledEngine();
+
         initSceneLoader();
+
         if (entityFactory == null) {
             entityFactory = new EntityFactory(engine, rm);
         }
@@ -106,7 +113,7 @@ public class ETFSceneLoader {
         engineByScene.put(sceneName, engine);
 
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
 
         return sceneVO;
     }

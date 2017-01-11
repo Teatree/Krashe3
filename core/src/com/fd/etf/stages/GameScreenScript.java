@@ -11,10 +11,7 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -639,5 +636,11 @@ public class GameScreenScript implements IScript {
                 gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
                         .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
         );
+    }
+
+    public void reloadFlower(){
+        Entity root = gameStage.sceneLoader.rootEntityByScene.get(GameStage.MAIN_SCENE);
+
+//        root.getComponent(NodeComponent.class).addChild();
     }
 }

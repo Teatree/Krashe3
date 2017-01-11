@@ -1,5 +1,6 @@
 package com.fd.etf.stages;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -8,7 +9,9 @@ import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
+import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashMap;
@@ -25,7 +28,7 @@ public class GameStage extends Stage {
 
     private  static final String SHOP_SCENE = "ShopScene";
     private  static final String RESULT_SCENE = "ResultScene";
-    private  static final String MAIN_SCENE = "MainScene";
+    public static final String MAIN_SCENE = "MainScene";
     private  static final String MENU_SCENE = "MenuScene";
 
     public static Viewport viewport;
@@ -65,6 +68,11 @@ public class GameStage extends Stage {
     public void initGame(int currentFlowerFrame) {
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
         if (changedFlower || changedFlower2) {
+//            sceneLoader.setScene(MAIN_SCENE, viewport);
+//            SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
+//            Entity newFlower = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), sceneVO.composite.sSpriterAnimations.get(3));
+//            newFlower.getComponent(TransformComponent.class).x = 100;
+//            newFlower.getComponent(TransformComponent.class).y = 100;
             changedFlower = false;
             sceneLoader.loadScene(MAIN_SCENE, viewport);
             sceneLoader.setScene(MAIN_SCENE, viewport);
@@ -179,7 +187,6 @@ public class GameStage extends Stage {
     public void update() {
         sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
     }
-
 
     public void resetAllProgress() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
