@@ -178,7 +178,8 @@ public class BasicDialog extends AbstractDialog {
                     public void clicked() {
                         close(dialogE);
                         VanityComponent.disableAllVanitiesAssets();
-                        gameStage.changedFlower = true;
+                        GameStage.changedFlower = true;
+                        GameStage.changedFlower2 = true;
 //                        AbstractDialog.isDialogOpen.set(false);
 //                        AbstractDialog.isSecondDialogOpen.set(false);
                         gameStage.initMenu();

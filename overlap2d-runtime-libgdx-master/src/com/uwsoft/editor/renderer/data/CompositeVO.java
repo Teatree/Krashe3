@@ -64,10 +64,6 @@ public class CompositeVO {
         for (int i = 0; i < vo.sParticleEffects.size(); i++) {
             sParticleEffects.add(new ParticleEffectVO(vo.sParticleEffects.get(i)));
         }
-//
-//        for (int i = 0; i < vo.sLights.size(); i++) {
-//            sLights.add(new LightVO(vo.sLights.get(i)));
-//        }
 
         for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
             sSpineAnimations.add(new SpineVO(vo.sSpineAnimations.get(i)));
@@ -89,6 +85,9 @@ public class CompositeVO {
         for (int i = 0; i < vo.layers.size(); i++) {
             layers.add(new LayerItemVO(vo.layers.get(i)));
         }
+    }
+
+    public void updateSpriter (){
 
     }
 

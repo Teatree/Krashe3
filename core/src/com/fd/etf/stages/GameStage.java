@@ -1,6 +1,5 @@
 package com.fd.etf.stages;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -9,7 +8,6 @@ import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
-import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -26,10 +24,10 @@ import static com.fd.etf.utils.SoundMgr.getSoundMgr;
 
 public class GameStage extends Stage {
 
-    private  static final String SHOP_SCENE = "ShopScene";
-    private  static final String RESULT_SCENE = "ResultScene";
+    private static final String SHOP_SCENE = "ShopScene";
+    private static final String RESULT_SCENE = "ResultScene";
     public static final String MAIN_SCENE = "MainScene";
-    private  static final String MENU_SCENE = "MenuScene";
+    private static final String MENU_SCENE = "MenuScene";
 
     public static Viewport viewport;
     public ETFSceneLoader sceneLoader;
@@ -56,7 +54,7 @@ public class GameStage extends Stage {
 //            Main.mainController.showLaunchAd(new Runnable() {
 //                @Override
 //                public void run() {
-                    initMenu();
+            initMenu();
 //                }
 //            });
         } else {
@@ -67,15 +65,25 @@ public class GameStage extends Stage {
 
     public void initGame(int currentFlowerFrame) {
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
+
+        sceneLoader.setScene(MAIN_SCENE, viewport);
+        if (justCreated) {
+            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+            root.addScript(gameScript);
+            gameScript.initButtons();
+            justCreated = false;
+        }
         if (changedFlower || changedFlower2) {
             sceneLoader.setScene(MAIN_SCENE, viewport);
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
-//            Entity newFlower = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), sceneVO.composite.sSpriterAnimations.get(3));
+            sceneLoader.rm.reloadFlowerAni();
             sceneVO.composite.update(sceneVO.composite);
+
 //            newFlower.getComponent(TransformComponent.class).x = 100;
 //            newFlower.getComponent(TransformComponent.class).y = 100;
 
-//            changedFlower = false;
+            changedFlower = false;
 //            sceneLoader.loadScene(MAIN_SCENE, viewport);
 //            sceneLoader.setScene(MAIN_SCENE, viewport);
 //
@@ -86,18 +94,9 @@ public class GameStage extends Stage {
 //
 //            root.addScript(gameScript);
 //            gameScript.initButtons();
-        } else {
-            sceneLoader.setScene(MAIN_SCENE, viewport);
-            if (justCreated) {
-                ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-                sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-                root.addScript(gameScript);
-                gameScript.initButtons();
-                justCreated = false;
-            } else {
-                gameScript.reset();
-            }
         }
+
+        gameScript.reset();
 
         backgroundMusicMgr.stop();
 
@@ -108,14 +107,20 @@ public class GameStage extends Stage {
     }
 
     public void initMenu() {
-        if (changedFlower || changedFlower2) {
-            sceneLoader.unLoadScene(MENU_SCENE);
-            sceneLoader.unLoadScene(MAIN_SCENE);
-            sceneLoader.loadScene(MENU_SCENE, viewport);
-            changedFlower2 = false;
-            menuScript = null;
-        }
         sceneLoader.setScene(MENU_SCENE, viewport);
+        if (changedFlower || changedFlower2) {
+//            sceneLoader.loadScene(MENU_SCENE, viewport);
+//            changedFlower2 = false;
+//            menuScript = null;
+
+            sceneLoader.setScene(MENU_SCENE, viewport);
+            SceneVO sceneVO = sceneLoader.rm.getSceneVO(MENU_SCENE);
+            sceneLoader.rm.reloadFlowerAni();
+            sceneVO.composite.update(sceneVO.composite);
+
+            changedFlower2 = false;
+        }
+
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
         if (menuScript == null) {
             menuScript = new MenuScreenScript(this);
@@ -126,7 +131,7 @@ public class GameStage extends Stage {
             menuScript.setupMenuScreenWorld();
         }
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
     }
 
     public void initResult() {
@@ -140,7 +145,7 @@ public class GameStage extends Stage {
             resultScript.initResultScreen();
         }
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
     }
 
     public void initShop() {
@@ -157,7 +162,7 @@ public class GameStage extends Stage {
         ShopPoverUpTabListener.reset();
         shopScript.checkIfChanged();
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
     }
 
     public void initShopWithAds() {
@@ -169,7 +174,7 @@ public class GameStage extends Stage {
 //                }
 //            });
 //        } else {
-            initShop();
+        initShop();
 //        }
     }
 
@@ -182,7 +187,7 @@ public class GameStage extends Stage {
 //                }
 //            });
 //        } else {
-            initResult();
+        initResult();
 //        }
     }
 
@@ -193,8 +198,8 @@ public class GameStage extends Stage {
     public void resetAllProgress() {
         for (VanityComponent vc : gameScript.fpc.vanities) {
             Set<String> changedFiles = new HashSet<>();
-            if (vc.enabled || vc.bought){
-                for (Map.Entry<String,String> entry : vc.assetsToChange.entrySet()) {
+            if (vc.enabled || vc.bought) {
+                for (Map.Entry<String, String> entry : vc.assetsToChange.entrySet()) {
                     if (changedFiles.add(entry.getKey())) {
                         vc.resetOneFileTodefault(entry);
                     }
@@ -222,6 +227,6 @@ public class GameStage extends Stage {
         gameScript.fpc.level.resetNewInfo();
         gameScript.fpc.level.goals = gameScript.fpc.level.goalGenerator.getGoals(gameScript.fpc);
         System.gc();
-        System.runFinalization ();
+        System.runFinalization();
     }
 }

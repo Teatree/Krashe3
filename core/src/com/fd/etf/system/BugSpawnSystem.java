@@ -132,8 +132,8 @@ public class BugSpawnSystem extends EntitySystem {
         } else {
             spawner -= delta;
         }
-        System.out.println("spanwer: " + spawner);
-        System.out.println("break_counter: " + break_counter);
+//        System.out.println("spanwer: " + spawner);
+//        System.out.println("break_counter: " + break_counter);
     }
 
     private void createBug(String tempType, Multiplier currentMultiplier) {
@@ -181,7 +181,7 @@ public class BugSpawnSystem extends EntitySystem {
         curQueenBeeProb = (int) (QUEENBEE_SPAWN_PROB * currentMultiplier.queenBeeSpawnChance * gameStage.gameScript.fpc.level.queenBeeSpawnChance);
         curBeeProb = (int) (BEE_SPAWN_PROB * currentMultiplier.beeSpawnChance * gameStage.gameScript.fpc.level.beeSpawnChance);
 
-        System.out.println("curSpawnInterval: " + curSpawnInterval);
+//        System.out.println("curSpawnInterval: " + curSpawnInterval);
 
         if (!isPause.get() && !isGameOver.get()) {
             if (isStarted) {

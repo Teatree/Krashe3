@@ -20,6 +20,10 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     public static final String TYPE_SUFFIX = ".png";
 
     public static final String CLASS = "class";
+    public static final String HEAD_TOP = "head_top";
+    public static final String POT = "pot";
+    public static final String LEAF_LEFT = "leaf_left";
+    public static final String LEAF_RIGHT = "leaf_right";
 
     //true when was presented in showcase
     public boolean advertised;
@@ -80,6 +84,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
             }
 
             GameStage.changedFlower = true;
+            GameStage.changedFlower2 = true;
         }
     }
 
@@ -130,7 +135,10 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         this.enabled = false;
 
         backToDefaultAnimation();
+
         GameStage.changedFlower = true;
+        GameStage.changedFlower2 = true;
+
         if (this.pet != null) {
             gameStage.gameScript.fpc.currentPet = this.pet;
         }
@@ -153,12 +161,12 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
     public static void disableAllVanitiesAssets() {
         List<String> assetsToChangeFlower = new ArrayList<>();
-        assetsToChangeFlower.add("head_top");
+        assetsToChangeFlower.add(HEAD_TOP);
 
         List<String> assetsToChangeLeaves = new ArrayList<>();
-        assetsToChangeLeaves.add("pot");
-        assetsToChangeLeaves.add("leaf_left");
-        assetsToChangeLeaves.add("leaf_right");
+        assetsToChangeLeaves.add(POT);
+        assetsToChangeLeaves.add(LEAF_LEFT);
+        assetsToChangeLeaves.add(LEAF_RIGHT);
 
         for (String flowerPart : assetsToChangeFlower) {
             if (!flowerPart.equals(CLASS)) {
@@ -177,6 +185,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
         }
         GameStage.changedFlower = true;
+        GameStage.changedFlower2 = true;
     }
 
     @Override

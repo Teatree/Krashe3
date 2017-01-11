@@ -53,7 +53,7 @@ public class Preview extends AbstractDialog {
     public Entity lbl_desc;
     public Entity lblPrice;
     public Entity lblTitle;
-    public Entity lblTitle2;
+    public Entity lblTitleLine2;
 
     private static final String TAG_NOT_NUFF = "tag_lbl_not_enough";
     public Entity lblNotEnough;
@@ -104,7 +104,7 @@ public class Preview extends AbstractDialog {
         loadPreviewFromLib();
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
         lblTitle = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
-        lblTitle2 = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME_2);
+        lblTitleLine2 = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME_2);
         lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
         lblNotEnough = buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF);
         btnPrev = buttonz.getComponent(NodeComponent.class).getChild(BTN_LEFT);
@@ -178,15 +178,15 @@ public class Preview extends AbstractDialog {
 
         if (vc.name.contains(NEW_LINE_SIGN)){
             String[] lines = vc.name.split(NEW_LINE_SIGN);
-            lblTitle2.getComponent(TintComponent.class).color.a = 1;
-            lblTitle2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitleLine2.getComponent(TintComponent.class).color.a = 1;
+            lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex() + 1);
             lblTitle.getComponent(LabelComponent.class).text.replace(
                     0, lblTitle.getComponent(LabelComponent.class).text.length, lines[0]);
-            lblTitle2.getComponent(LabelComponent.class).text.replace(
-                    0, lblTitle2.getComponent(LabelComponent.class).text.length, lines[1]);
+            lblTitleLine2.getComponent(LabelComponent.class).text.replace(
+                    0, lblTitleLine2.getComponent(LabelComponent.class).text.length, lines[1]);
         }else {
-            lblTitle2.getComponent(TintComponent.class).color.a = 0;
-            lblTitle2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitleLine2.getComponent(TintComponent.class).color.a = 0;
+            lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
             lblTitle.getComponent(LabelComponent.class).text.replace(
                     0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
         }

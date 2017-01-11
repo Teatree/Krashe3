@@ -35,6 +35,9 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public static final String PROJECT_DT = "project.dt";
     public static final String PACK_ATLAS = "pack.atlas";
     public static final String ATLAS = ".atlas";
+    public static final String ORIG_SPRITER_ANIMATIONS = "\\orig\\spriter_animations\\";
+    public static final String FLOWER_IDLE = "flower_idle";
+    public static final String FLOWER_LEAFS_IDLE = "flower_leafs_idle";
     public String packResolutionName = ORIG;
 
     private static final String scenesPath = "scenes";
@@ -65,8 +68,8 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public AssetManager manager = new AssetManager();
 
     public ETFResourceManager() {
-        animationsToOverride.add("flower_idle");
-        animationsToOverride.add("flower_leafs_idle");
+        animationsToOverride.add(FLOWER_IDLE);
+        animationsToOverride.add(FLOWER_LEAFS_IDLE);
     }
 
     /**
@@ -192,9 +195,9 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
     public void moveToLocal() {
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
             for (String ani : animationsToOverride) {
-                if (!Gdx.files.local("\\orig\\spriter_animations\\" + ani).exists()) {
+                if (!Gdx.files.local(ORIG_SPRITER_ANIMATIONS + ani).exists()) {
                     Gdx.files.internal("orig\\spriter_animations\\" + ani).
-                            copyTo(Gdx.files.local("\\orig\\spriter_animations\\" + ani));
+                            copyTo(Gdx.files.local(ORIG_SPRITER_ANIMATIONS + ani));
                 }
             }
         }
@@ -214,11 +217,25 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
                         name + separator + name + SCML);
                 spriterAnimations.put(name, animFile);
             } else {
-                FileHandle animFile = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
-                        name + separator + name + SCML);
-                spriterAnimations.put(name, animFile);
+                loadLocalSpriter(name);
             }
         }
+    }
+
+    private void loadLocalSpriter(String name) {
+        FileHandle animFile = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                name + separator + name + SCML);
+        spriterAnimations.put(name, animFile);
+    }
+
+    public void reloadFlowerAni(){
+        FileHandle animFileFlower = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                 FLOWER_IDLE + separator + FLOWER_IDLE + SCML);
+        spriterAnimations.put(FLOWER_IDLE, animFileFlower);
+
+        FileHandle animFileLeaves = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                FLOWER_LEAFS_IDLE + separator + FLOWER_LEAFS_IDLE + SCML);
+        spriterAnimations.put(FLOWER_LEAFS_IDLE, animFileLeaves);
     }
 
     @Override
