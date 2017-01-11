@@ -41,7 +41,6 @@ public class GameScreenScript implements IScript {
     private static final String DOUBLE_BJ_ICON = "double_bj_badge";
     private static final String PHOENIX_ICON = "extra_life_badge";
     private static final String LBL_SCORE = "lbl_score";
-    private static final String LBL_SCORE_S = "lbl_score_s";
     private static final String LBL_TAP_2_START = "lbl_tap2start";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
@@ -59,7 +58,6 @@ public class GameScreenScript implements IScript {
     public FlowerPublicComponent fpc;
     public Entity scoreLabelE;
     public Entity loseFeedback;
-    public Entity scoreLabelES;
     public LabelComponent startLabelComponent;
     public Entity background;
     public static int currentFlowerFrame;
@@ -203,10 +201,6 @@ public class GameScreenScript implements IScript {
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
         scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + fpc.score);
 
-        scoreLabelES = gameItem.getChild(LBL_SCORE_S).getEntity();
-        LabelComponent scoreLabelS = scoreLabelES.getComponent(LabelComponent.class);
-        scoreLabelS.text.replace(0, scoreLabelS.text.capacity(), "" + fpc.score);
-
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
@@ -238,8 +232,6 @@ public class GameScreenScript implements IScript {
         fpc.score = 0;
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
-        scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
-                scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
     }
 
@@ -543,8 +535,6 @@ public class GameScreenScript implements IScript {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                 "" + fcc.score);
-        scoreLabelES.getComponent(LabelComponent.class).text.replace(0,
-                scoreLabelES.getComponent(LabelComponent.class).text.capacity(), "" + fcc.score);
     }
 
     private void initCocoon() {

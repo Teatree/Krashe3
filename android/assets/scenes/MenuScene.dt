@@ -34,7 +34,7 @@
 			"scaleY": 66.469894,
 			"originX": 16,
 			"originY": 16,
-			"zIndex": 11,
+			"zIndex": 10,
 			"layerName": "Default",
 			"imageName": "tempcurtain"
 		},
@@ -48,7 +48,7 @@
 			"scaleY": 0.6,
 			"originX": 167,
 			"originY": 25,
-			"zIndex": 12,
+			"zIndex": 11,
 			"layerName": "Default",
 			"imageName": "betaptoplay"
 		},
@@ -62,7 +62,7 @@
 			"scaleY": 1.226935,
 			"originX": 16.5,
 			"originY": 16,
-			"zIndex": 13,
+			"zIndex": 12,
 			"layerName": "Default",
 			"imageName": "notification"
 		}],
@@ -84,27 +84,6 @@
 			"height": 50
 		},
 		{
-			"uniqueId": 58,
-			"itemIdentifier": "timer_lbl_sh",
-			"tags": [],
-			"x": 1025,
-			"y": 441,
-			"originX": 60,
-			"originY": 25,
-			"zIndex": 8,
-			"layerName": "Default",
-			"tint": [0,
-			0,
-			0,
-			1],
-			"text": "88:88",
-			"style": "Carter One",
-			"size": 34,
-			"align": 16,
-			"width": 120,
-			"height": 50
-		},
-		{
 			"uniqueId": 53,
 			"itemIdentifier": "label_goal_notification",
 			"tags": [],
@@ -112,29 +91,8 @@
 			"y": 158,
 			"originX": 60,
 			"originY": 25,
-			"zIndex": 14,
+			"zIndex": 13,
 			"layerName": "Default",
-			"text": "N",
-			"style": "Carter One",
-			"size": 26,
-			"align": 1,
-			"width": 31.77,
-			"height": 31.89
-		},
-		{
-			"uniqueId": 24,
-			"itemIdentifier": "label_goal_notification_sh",
-			"tags": [],
-			"x": 1131,
-			"y": 158,
-			"originX": 60,
-			"originY": 25,
-			"zIndex": 15,
-			"layerName": "Default",
-			"tint": [0.36862746,
-			0,
-			0,
-			1],
 			"text": "N",
 			"style": "Carter One",
 			"size": 26,
@@ -363,7 +321,7 @@
 			"scaleY": 0.7,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 9,
+			"zIndex": 8,
 			"layerName": "Default",
 			"composite": {
 				"sSpriterAnimations": [{
@@ -401,7 +359,7 @@
 			"scaleY": 0.7,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 10,
+			"zIndex": 9,
 			"layerName": "Default",
 			"composite": {
 				"sSpriterAnimations": [{
@@ -429,7 +387,7 @@
 			"y": 19,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 16,
+			"zIndex": 14,
 			"layerName": "Default",
 			"composite": {
 				"sImages": [{
@@ -460,7 +418,7 @@
 			"scaleY": 0.6,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 17,
+			"zIndex": 15,
 			"layerName": "Default",
 			"composite": {
 				"sImages": [{
@@ -492,7 +450,7 @@
 			"y": -482,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 18,
+			"zIndex": 16,
 			"layerName": "Default",
 			"composite": {
 				"sImages": [{
@@ -522,7 +480,7 @@
 			"scaleY": 0.9,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 19,
+			"zIndex": 17,
 			"layerName": "Default",
 			"composite": {
 				"sImages": [{
@@ -586,7 +544,7 @@
 			"scaleY": 0.6,
 			"originX": 0,
 			"originY": 0,
-			"zIndex": 20,
+			"zIndex": 18,
 			"layerName": "Default",
 			"composite": {
 				"sImages": [{

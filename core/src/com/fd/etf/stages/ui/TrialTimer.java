@@ -18,13 +18,11 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 public class TrialTimer {
 
     private static final String TRIAL_TIMER = "timer_lbl";
-    private static final String TRIAL_TIMER_SH = "timer_lbl_sh";
     public static final String TIMER_LBL_TIME_UP = "TIME'NEW_LINE_SIGN UP";
     private final GameStage gameStage;
 
     public Entity timerLogo;
     public Entity timerE;
-    public Entity timerEsh;
     public ItemWrapper mainItem;
 
     //to be deleted
@@ -41,7 +39,6 @@ public class TrialTimer {
     public void timer() {
         gameStage.gameScript.checkTryPeriod();
         timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
-        timerEsh = mainItem.getChild(TRIAL_TIMER_SH).getEntity();
         if (!ifShouldShowTimer()) {
 
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -53,11 +50,8 @@ public class TrialTimer {
         if (ifShouldShowTimer()) {
             timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
-            timerEsh.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
-            timerEsh.getComponent(TransformComponent.class).y = y + 15;
         } else {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            timerEsh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -65,7 +59,6 @@ public class TrialTimer {
         boolean showTimer = false;
         if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
-            showTimer(timerE, timerEsh, gameStage.gameScript.fpc.currentPet.shopIcon);
             PromoWindow.offer = gameStage.gameScript.fpc.currentPet;
             PromoWindow.offerPromo = true;
         } else {
@@ -74,7 +67,6 @@ public class TrialTimer {
                     showTimer = true;
                     PromoWindow.offer = u;
                     PromoWindow.offerPromo = true;
-                    showTimer(timerE, timerEsh, u.shopIcon);
                 }
             }
         }

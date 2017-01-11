@@ -31,7 +31,6 @@ public class Showcase {
 //    private static final String SPOTLIGHT = "spotLight";
     private static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
     private static final String LBL_ITEM_PRICE = "lbl_item_price";
-    private static final String LBL_ITEM_PRICE_SH = "lbl_item_price_sh";
     private static final String BTN_NO = "btn_no";
     private static final String BTN_BUY = "btn_buy";
     private static final String COIN = "coin";
@@ -245,7 +244,6 @@ public class Showcase {
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
         lbl_priceE.getComponent(TintComponent.class).color.a = 0;
 
-        lbl_priceE_sh = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE_SH);
         LabelComponent lc4 = lbl_priceE_sh.getComponent(LabelComponent.class);
         lc4.text.replace(0, lc4.text.capacity(), Long.toString(showCaseVanity.cost));
         lbl_priceE_sh.getComponent(TintComponent.class).color.a = 0;
