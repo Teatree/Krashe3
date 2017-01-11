@@ -68,22 +68,24 @@ public class GameStage extends Stage {
     public void initGame(int currentFlowerFrame) {
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
         if (changedFlower || changedFlower2) {
-//            sceneLoader.setScene(MAIN_SCENE, viewport);
-//            SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
+            sceneLoader.setScene(MAIN_SCENE, viewport);
+            SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
 //            Entity newFlower = sceneLoader.entityFactory.createEntity(sceneLoader.getRoot(), sceneVO.composite.sSpriterAnimations.get(3));
+            sceneVO.composite.update(sceneVO.composite);
 //            newFlower.getComponent(TransformComponent.class).x = 100;
 //            newFlower.getComponent(TransformComponent.class).y = 100;
-            changedFlower = false;
-            sceneLoader.loadScene(MAIN_SCENE, viewport);
-            sceneLoader.setScene(MAIN_SCENE, viewport);
 
-            BugPool.resetBugPool(this);
-
-            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-
-            root.addScript(gameScript);
-            gameScript.initButtons();
+//            changedFlower = false;
+//            sceneLoader.loadScene(MAIN_SCENE, viewport);
+//            sceneLoader.setScene(MAIN_SCENE, viewport);
+//
+//            BugPool.resetBugPool(this);
+//
+//            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
+//            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
+//
+//            root.addScript(gameScript);
+//            gameScript.initButtons();
         } else {
             sceneLoader.setScene(MAIN_SCENE, viewport);
             if (justCreated) {
