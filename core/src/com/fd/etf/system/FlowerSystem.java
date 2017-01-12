@@ -27,7 +27,7 @@ public class FlowerSystem extends IteratingSystem {
 
     private static final String TUTORIAL_LINE = "tutorial_line";
     private int randomSulkSwtich;
-    
+
     private GameStage gameStage;
 
     public FlowerSystem(GameStage gameStage) {
@@ -74,16 +74,16 @@ public class FlowerSystem extends IteratingSystem {
             usePhoenix(tc, sc);
 
             reviveAds(tc, sc);
-        } else if (isPause.get() && isGameOver.get()){
+        } else if (isPause.get() && isGameOver.get()) {
             sc.player.speed = FPS;
 
             sulk(sc);
-        }  else {
+        } else {
             sc.player.speed = 0;
         }
 
-        if (state.equals(State.LOSING)){
-            if (tc.y > FLOWER_Y_POS){
+        if (state.equals(State.LOSING)) {
+            if (tc.y > FLOWER_Y_POS) {
                 tc.y -= FLOWER_MOVE_SPEED * delta * FPS;
                 isPause.set(true);
             } else {
@@ -107,13 +107,13 @@ public class FlowerSystem extends IteratingSystem {
     private void sulk(SpriterComponent sc) {
         if (state.equals(SULKING)) {
             randomSulkSwtich++;
-            if(isAnimationFinished(sc) && randomSulkSwtich > 150){
+            if (isAnimationFinished(sc) && randomSulkSwtich > 150) {
                 setSulkAnimation(sc);
 //                if(isAnimationFinished(sc)){
 //                    setSulkIdleAnimation(sc);
 //                    randomSulkSwtich = 0;
 //                }
-            }else if(isAnimationFinished(sc) && randomSulkSwtich < 150){
+            } else if (isAnimationFinished(sc) && randomSulkSwtich < 150) {
                 setSulkIdleAnimation(sc);
             }
         }
@@ -199,7 +199,7 @@ public class FlowerSystem extends IteratingSystem {
         }
     }
 
-    private void reviveAds(TransformComponent tc, SpriterComponent sc){
+    private void reviveAds(TransformComponent tc, SpriterComponent sc) {
         if (state.equals(REVIVE_ADS)) {
             tc.x = FLOWER_X_POS;
             tc.y = FLOWER_Y_POS;

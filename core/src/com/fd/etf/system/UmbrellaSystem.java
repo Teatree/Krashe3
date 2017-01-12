@@ -85,7 +85,7 @@ public class UmbrellaSystem extends IteratingSystem {
             e.getComponent(TransformComponent.class).x = UmbrellaComponent.INIT_SPAWN_X;
             e.getComponent(TransformComponent.class).y = 400;
             e.getComponent(UmbrellaComponent.class).blinkCounter--;
-            if (e.getComponent(UmbrellaComponent.class).blinkCounter == 0){
+            if (e.getComponent(UmbrellaComponent.class).blinkCounter == 0) {
                 if (e.getComponent(TintComponent.class).color.a > 0.95f) {
                     e.getComponent(TintComponent.class).color.a -= 0.1f;
                 } else {
@@ -154,7 +154,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
     public static void hide(Entity entity) {
         umbrellaSpawnCounter = getNextSpawnInterval();
-        if (entity.getComponent(UmbrellaComponent.class) == null){
+        if (entity.getComponent(UmbrellaComponent.class) == null) {
             entity.add(new UmbrellaComponent());
         }
         entity.getComponent(UmbrellaComponent.class).state = DEAD;
@@ -165,7 +165,7 @@ public class UmbrellaSystem extends IteratingSystem {
     public static float getNextSpawnInterval() {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 random.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
-        return UmbrellaComponent.SPAWN_INTERVAL_BASE*randCoefficient;
+        return UmbrellaComponent.SPAWN_INTERVAL_BASE * randCoefficient;
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {

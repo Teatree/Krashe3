@@ -78,28 +78,28 @@ public class BugPool {
     public Entity get(String type) {
         switch (type) {
             case SIMPLE: {
-                if(simpleBugs.isEmpty()){
+                if (simpleBugs.isEmpty()) {
                     return loadBugFromLib(SIMPLE_BUG_ANI);
                 } else {
                     return simpleBugs.pop();
                 }
             }
             case DRUNK: {
-                if(drunkBugs.isEmpty()){
+                if (drunkBugs.isEmpty()) {
                     return loadBugFromLib(DRUNK_BUG_ANI);
                 } else {
                     return drunkBugs.pop();
                 }
             }
             case CHARGER: {
-                if(chargerBugs.isEmpty()){
+                if (chargerBugs.isEmpty()) {
                     return loadBugFromLib(CHARGER_BUG_ANI);
                 } else {
                     return chargerBugs.pop();
                 }
             }
             case BEE: {
-                if(bees.isEmpty()){
+                if (bees.isEmpty()) {
                     return loadBugFromLib(BEE_ANI);
                 } else {
                     return bees.pop();
@@ -155,29 +155,29 @@ public class BugPool {
         }
     }
 
-    public static void resetAllBugs(){
+    public static void resetAllBugs() {
         releaseAll(simpleBugs);
         releaseAll(drunkBugs);
         releaseAll(bees);
         releaseAll(chargerBugs);
-        if (queenBee.getComponent(TransformComponent.class) != null){
+        if (queenBee.getComponent(TransformComponent.class) != null) {
             queenBee.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
             queenBee.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
         }
     }
 
-    public static void sendFarFarAway(Stack<Entity> bugs){
-        for (Entity e: bugs){
-            if (e.getComponent(TransformComponent.class) != null){
+    public static void sendFarFarAway(Stack<Entity> bugs) {
+        for (Entity e : bugs) {
+            if (e.getComponent(TransformComponent.class) != null) {
                 e.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
                 e.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
             }
         }
     }
 
-    public static void releaseAll(Stack<Entity> bugs){
-        for (Entity e: bugs){
-            if (e.getComponent(BugComponent.class) != null){
+    public static void releaseAll(Stack<Entity> bugs) {
+        for (Entity e : bugs) {
+            if (e.getComponent(BugComponent.class) != null) {
                 instance.release(e);
             }
         }

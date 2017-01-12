@@ -2,6 +2,7 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.Main;
+import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
@@ -18,29 +19,31 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
-public class MenuScreenScript implements IScript {
+public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
-     private static  final String BTN_PLAY = "btn_play";
-     private static  final String BTN_SHOP = "btn_shop";
-     private static  final String BTN_SETTINGS = "btn_settings";
-     private static  final String BTN_RATE = "btn_rate";
-     private static  final String BTN_GOALS = "btn_goals";
-     private static  final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
-     private static  final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
-     private static  final String CURTAIN = "curtain_mm";
-     private static  final String BTN_FB = "btn_fb";
-     private static  final String BTN_LEADERBOARD = "btn_leaderboard";
-     private static  final String LEADERBOARD_C = "lederboard_composite";
-     private static  final String BTN_ACHIEVEMENTS = "btn_achievements";
-     private static  final String ACHIEVEMENTS_C = "achievements_composite";
-     private static  final String BTN_PLAY_SERVICES = "btn_playServices";
-     private static  final String MM_FLOWER = "MM_flower";
+    private static final String BTN_PLAY = "btn_play";
+    private static final String BTN_SHOP = "btn_shop";
+    private static final String BTN_SETTINGS = "btn_settings";
+    private static final String BTN_RATE = "btn_rate";
+    private static final String BTN_GOALS = "btn_goals";
+    private static final String LBL_GOALS_NOTIFICATION = "label_goal_notification";
+    private static final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
+    private static final String CURTAIN = "curtain_mm";
+    private static final String BTN_FB = "btn_fb";
+    private static final String BTN_LEADERBOARD = "btn_leaderboard";
+    private static final String LEADERBOARD_C = "lederboard_composite";
+    private static final String BTN_ACHIEVEMENTS = "btn_achievements";
+    private static final String ACHIEVEMENTS_C = "achievements_composite";
+    private static final String BTN_PLAY_SERVICES = "btn_playServices";
+    private static final String MEGA_FLOWER = "mega_flower";
+    private static final String MEGA_LEAFS = "mega_leafs";
 
-     private static  final int TIMER_X = 945;
-     private static  final int TIMER_Y = 441;
+    private static final int TIMER_X = 945;
+    private static final int TIMER_Y = 441;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
@@ -84,6 +87,7 @@ public class MenuScreenScript implements IScript {
 
     public int camPosX = 430;
     private double transitionCoefficient;
+    public Entity megaFlower;
 
     public MenuScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -93,9 +97,7 @@ public class MenuScreenScript implements IScript {
 
     @Override
     public void init(Entity item) {
-//        System.err.print("init menu ");
-//        System.err.println(Gdx.app.getJavaHeap() / 1000000 + " : " +
-//                Gdx.app.getNativeHeap());
+
         frames = 0;
         menuItem = new ItemWrapper(item);
         curtain_mm = menuItem.getChild(CURTAIN).getEntity();
@@ -103,14 +105,21 @@ public class MenuScreenScript implements IScript {
         startGameTransition = false;
         startShopTransition = false;
         startTransitionIn = true;
-
         isDialogOpen.set(false);
+
         if (timer == null) {
-            timer = new TrialTimer(gameStage,menuItem, TIMER_X, TIMER_Y);
+            timer = new TrialTimer(gameStage, menuItem, TIMER_X, TIMER_Y);
         } else {
             timer.mainItem = menuItem;
         }
 
+        initGoalsNotification();
+
+        initFlower(menuItem.getChild(MEGA_FLOWER).getEntity());
+
+    }
+
+    private void initGoalsNotification() {
         if (showGoalNotification) {
             lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
             LabelComponent lc = lblGoalNotification.getComponent(LabelComponent.class);
@@ -152,11 +161,7 @@ public class MenuScreenScript implements IScript {
         achievements_C.getComponent(TintComponent.class).color.a = 1;
         if (timer != null) {
             timer.timerE.getComponent(TintComponent.class).color.a = 1;
-//            timer.timerLogo.getComponent(TintComponent.class).color.a = 1;
         }
-//        imgGoalNotification.getComponent(TintComponent.class).color.a = 1;
-//        lblGoalNotificationSh.getComponent(TintComponent.class).color.a = 1;
-//        lblGoalNotification.getComponent(TintComponent.class).color.a = 1;
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
@@ -412,7 +417,6 @@ public class MenuScreenScript implements IScript {
             btnAchievements.getComponent(TintComponent.class).color.a -= TINT_STEP;
             if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
-//                timer.timerLogo.getComponent(TintComponent.class).color.a -= TINT_STEP;
             }
             rateAppBtn.getComponent(TintComponent.class).color.a = 0;
             btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
@@ -428,8 +432,7 @@ public class MenuScreenScript implements IScript {
         if (GameStage.viewport.getWorldWidth() >= 1195) {
             startGameTransition = false;
             GameStage.viewport.getCamera().translate(0, 0, 0);
-            currentFlowerFrame = menuItem.getChild(MM_FLOWER).getEntity().getComponent(NodeComponent.class).getChild("flw_ani").getComponent(SpriterComponent.class).player.getTime();
-//            System.out.println("currentFlowerFrame: " + currentFlowerFrame);
+            currentFlowerFrame = megaFlower.getComponent(SpriterComponent.class).player.getTime();
             gameStage.initGame(currentFlowerFrame);
         }
     }
@@ -439,4 +442,27 @@ public class MenuScreenScript implements IScript {
             pauseDialog.deleteTiles();
     }
 
+
+    public void initFlower(Entity flower) {
+        this.megaFlower = flower;
+        gameStage.gameScript.fpc.score = 0;
+
+        TransformComponent tc = megaFlower.getComponent(TransformComponent.class);
+        tc.x = FLOWER_X_POS;
+        tc.y = FLOWER_Y_POS;
+        tc.scaleX = FLOWER_SCALE;
+        tc.scaleY = FLOWER_SCALE;
+        megaFlower.add(tc);
+
+        FlowerComponent fc = new FlowerComponent();
+
+        megaFlower.getComponent(SpriterComponent.class).player.setTime(currentFlowerFrame);
+
+        megaFlower.add(fc);
+    }
+
+    @Override
+    public Entity getMegaFlower() {
+        return megaFlower;
+    }
 }

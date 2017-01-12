@@ -19,7 +19,7 @@ public class SoundMgr {
     }
 
     public static SoundMgr getSoundMgr() {
-        if(soundMgr == null) {
+        if (soundMgr == null) {
             soundMgr = new SoundMgr();
         }
 

@@ -49,13 +49,13 @@ public class ResultScreenScript implements IScript {
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
-    public Entity txtTotalsE;
+    //    public Entity txtTotalsE;
     public Entity progressBarE;
     Entity txtEarnedE;
     Entity txtEarnedsE;
 
     LabelComponent earnedLabel;
-    LabelComponent earnedLabels;
+    //    LabelComponent earnedLabels;
     public long need;
     int i = 0;
     int j = 0;
@@ -105,12 +105,12 @@ public class ResultScreenScript implements IScript {
         show = false;
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
-        LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
+//        LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
         totalLabel.text.replace(0, totalLabel.text.capacity(), String.valueOf(gameStage.gameScript.fpc.totalScore));
-        totalLabels.text.replace(0, totalLabels.text.capacity(), String.valueOf(gameStage.gameScript.fpc.totalScore));
+//        totalLabels.text.replace(0, totalLabels.text.capacity(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         earnedLabel = txtEarnedE.getComponent(LabelComponent.class);
-        earnedLabels = txtEarnedsE.getComponent(LabelComponent.class);
+//        earnedLabels = txtEarnedsE.getComponent(LabelComponent.class);
 
         LabelComponent bestLabel = txtBestE.getComponent(LabelComponent.class);
         bestLabel.text.replace(0, bestLabel.text.capacity(), YOUR_BEST + String.valueOf(gameStage.gameScript.fpc.bestScore));
@@ -225,12 +225,12 @@ public class ResultScreenScript implements IScript {
                     updateScore();
                 } else {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
-                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
+//                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
                     updateProgressBar(delta);
                 }
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
-                earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
+//                earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
                 progressBarE.getComponent(DimensionsComponent.class).width = MAX_PROGRESS_BAR_WIDTH;
                 txtNeedE.getComponent(LabelComponent.class).text.replace(0, txtNeedE.getComponent(LabelComponent.class).text.length, "");
             }
@@ -302,7 +302,7 @@ public class ResultScreenScript implements IScript {
         long counterStep = gameStage.gameScript.fpc.score / 48 > 1 ? gameStage.gameScript.fpc.score / 48 : 1;
         if (j == 2) {
             earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(i));
-            earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(i));
+//            earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(i));
             i += counterStep;
             j = 0;
         }

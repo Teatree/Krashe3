@@ -100,6 +100,30 @@
 			"width": 31.77,
 			"height": 31.89
 		}],
+		"sSpriterAnimations": [{
+			"uniqueId": 49,
+			"itemIdentifier": "mega_flower",
+			"tags": [],
+			"x": 1104,
+			"y": 160,
+			"originX": 211,
+			"originY": 236.5,
+			"zIndex": 8,
+			"layerName": "Default",
+			"animationName": "flower_idle"
+		},
+		{
+			"uniqueId": 8,
+			"itemIdentifier": "mega_leafs",
+			"tags": [],
+			"x": 1112,
+			"y": 146,
+			"originX": 136,
+			"originY": 127.5,
+			"zIndex": 26,
+			"layerName": "Default",
+			"animationName": "flower_leafs_idle"
+		}],
 		"sComposites": [{
 			"uniqueId": 14,
 			"itemIdentifier": "btn_play",
@@ -310,74 +334,6 @@
 			},
 			"width": 139.5,
 			"height": 142.5
-		},
-		{
-			"uniqueId": 3,
-			"itemIdentifier": "MM_flower",
-			"tags": ["button"],
-			"x": 1023,
-			"y": 129,
-			"scaleX": 0.7,
-			"scaleY": 0.7,
-			"originX": 0,
-			"originY": 0,
-			"zIndex": 8,
-			"layerName": "Default",
-			"composite": {
-				"sSpriterAnimations": [{
-					"uniqueId": 2,
-					"itemIdentifier": "flw_ani",
-					"tags": [],
-					"originX": 211,
-					"originY": 236.5,
-					"layerName": "Default",
-					"animationName": "flower_idle"
-				}],
-				"layers": [{
-					"layerName": "Default",
-					"isVisible": true
-				},
-				{
-					"layerName": "normal",
-					"isVisible": true
-				},
-				{
-					"layerName": "pressed",
-					"isVisible": true
-				}]
-			},
-			"width": 376,
-			"height": 371
-		},
-		{
-			"uniqueId": 64,
-			"itemIdentifier": "MM_leafs",
-			"tags": [],
-			"x": 1023,
-			"y": 135,
-			"scaleX": 0.7,
-			"scaleY": 0.7,
-			"originX": 0,
-			"originY": 0,
-			"zIndex": 9,
-			"layerName": "Default",
-			"composite": {
-				"sSpriterAnimations": [{
-					"uniqueId": 57,
-					"itemIdentifier": "MM_leafs",
-					"tags": [],
-					"originX": 136,
-					"originY": 127.5,
-					"layerName": "Default",
-					"animationName": "flower_leafs_idle"
-				}],
-				"layers": [{
-					"layerName": "Default",
-					"isVisible": true
-				}]
-			},
-			"width": 300,
-			"height": 300
 		},
 		{
 			"uniqueId": 22,

@@ -32,8 +32,6 @@ public class EntityFactory {
     public static final int NINE_PATCH = 9;
     public static final int COLOR_PRIMITIVE = 10;
 
-    //	public RayHandler rayHandler;
-//	public World world;
     public IResourceRetriever rm = null;
 
     private ComponentFactory compositeComponentFactory, lightComponentFactory, particleEffectComponentFactory,
@@ -57,16 +55,6 @@ public class EntityFactory {
 
         this.engine = engine;
         this.rm = rm;
-
-//        compositeComponentFactory = new CompositeComponentFactory(rm);
-////		lightComponentFactory = new LightComponentFactory(rayHandler, world, rm);
-//        particleEffectComponentFactory = new ParticleEffectComponentFactory(rm);
-//        simpleImageComponentFactory = new SimpleImageComponentFactory(rm);
-//        spriteComponentFactory = new SpriteComponentFactory(rm);
-//        spriterComponentFactory = new SpriterComponentFactory(rm);
-//        labelComponentFactory = new LabelComponentFactory(rm);
-//        ninePatchComponentFactory = new NinePatchComponentFactory(rm);
-//        colorPrimitiveFactory = new ColorPrimitiveComponentFactory(rm);
 
         compositeComponentFactory = new CompositeComponentFactory(engine, rm);
         particleEffectComponentFactory = new ParticleEffectComponentFactory(engine, rm);
@@ -135,16 +123,6 @@ public class EntityFactory {
         return entity;
     }
 
-//	public Entity createEntity(Entity root, LightVO vo){
-//
-//		Entity entity = engine.createEntity();
-//
-//		lightComponentFactory.createComponents(root, entity, vo);
-//
-//		postProcessEntity(entity);
-//
-//		return entity;
-//	}
 
     public Entity createEntity(Entity root, SpineVO vo) {
 
@@ -293,16 +271,6 @@ public class EntityFactory {
             engine.addEntity(child);
         }
 
-//		for (int i = 0; i < vo.sLights.size(); i++) {
-//			Entity child = createEntity(entity, vo.sLights.get(i));
-//			engine.addEntity(child);
-//		}
-
-//        for (int i = 0; i < vo.sSpineAnimations.size(); i++) {
-//            Entity child = createEntity(entity, vo.sSpineAnimations.get(i));
-//            engine.addEntity(child);
-//        }
-
         for (int i = 0; i < vo.sSpriteAnimations.size(); i++) {
             Entity child = createEntity(entity, vo.sSpriteAnimations.get(i));
             engine.addEntity(child);
@@ -332,5 +300,9 @@ public class EntityFactory {
 
     public void clean() {
         entities.clear();
+    }
+
+    public ComponentFactory getSpriterComponentFactory() {
+        return spriterComponentFactory;
     }
 }

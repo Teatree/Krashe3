@@ -13,23 +13,23 @@ public class AchievementSystem {
     public static int bugAchCounter;
     public static int butterflyAchCounter;
 
-    public static void checkQueenSlayerAchievement(){
+    public static void checkQueenSlayerAchievement() {
         queenAchCounter++;
-        if (queenAchCounter == queenAchGoal){
+        if (queenAchCounter == queenAchGoal) {
             Main.mainController.unlockAchievement(PlayServices.ACH_QUEEN_SLAYER);
         }
     }
 
-    public static void checkBugsAchievement(){
+    public static void checkBugsAchievement() {
         bugAchCounter++;
         if (bugAchCounter == bugAchGoal) {
             Main.mainController.unlockAchievement(PlayServices.ACH_HUNGER_STRIKE);
         }
     }
 
-    public static void checkButterfliesAchievement(){
+    public static void checkButterfliesAchievement() {
         butterflyAchCounter++;
-        if (butterflyAchCounter == butterflyAchGoal){
+        if (butterflyAchCounter == butterflyAchGoal) {
             Main.mainController.unlockAchievement(PlayServices.ACH_BUTTEFLY_EATER);
         }
     }

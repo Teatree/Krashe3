@@ -16,6 +16,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
 
     private GameStage gameStage;
+
     public BugJuiceBubbleSystem(GameStage gameStage) {
         super(Family.all(BugJuiceBubbleComponent.class).get());
         this.gameStage = gameStage;
