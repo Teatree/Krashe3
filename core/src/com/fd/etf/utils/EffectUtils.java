@@ -76,15 +76,15 @@ public class EffectUtils {
         pc.particleEffect.start();
     }
 
-    public static void playYellowStarsParticleEffect(GameStage gameStage, float x, float y){
+    public static void playYellowStarsParticleEffect(GameStage gameStage, float x, float y) {
         playParticleEffect(gameStage, x, y, STARS_YELLOW_BURST, 1.2f);
     }
 
-    public static void playShineParticleEffect(GameStage gameStage, float x, float y){
+    public static void playShineParticleEffect(GameStage gameStage, float x, float y) {
         playParticleEffect(gameStage, x, y, SHINE_BURST, 0.8f);
     }
 
-    public static void playSplatterParticleEffect(GameStage gameStage, float x, float y){
+    public static void playSplatterParticleEffect(GameStage gameStage, float x, float y) {
         playParticleEffect(gameStage, x, y, GREEN_SPLATTER, 0.5f);
     }
 

@@ -1,5 +1,6 @@
 package com.fd.etf.stages;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -76,36 +77,11 @@ public class GameStage extends Stage {
             justCreated = false;
         }
         if (changedFlower || changedFlower2) {
-//            sceneLoader.setScene(MAIN_SCENE, viewport);
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
             sceneLoader.rm.reloadFlowerAni();
             sceneVO.composite.updateSpriter(sceneVO.composite);
-//            sceneVO.composite.update(sceneVO.composite);
 
-            gameScript.megaFlower.getComponent(TransformComponent.class).x = -1000;
-            gameScript.megaFlower.getComponent(TransformComponent.class).y = -1000;
-
-
-            sceneLoader.engine.removeEntity(gameScript.megaFlower);
-
-            com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
-            sceneLoader.entityFactory.getSpriterComponentFactory().createComponents(sceneLoader.getRoot(),
-                    newFlower, sceneVO.composite.sSpriterAnimations.get(0));
-            sceneLoader.entityFactory.postProcessEntity(newFlower);
-
-            sceneLoader.getEngine().addEntity(newFlower);
-            gameScript.initFlower(newFlower);
-            changedFlower = false;
-//            sceneLoader.loadScene(MAIN_SCENE, viewport);
-//            sceneLoader.setScene(MAIN_SCENE, viewport);
-//
-//            BugPool.resetBugPool(this);
-//
-//            ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
-//            sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
-//
-//            root.addScript(gameScript);
-//            gameScript.initButtons();
+            reloadFlower(sceneVO, gameScript);
         }
 
         gameScript.reset();
@@ -121,22 +97,10 @@ public class GameStage extends Stage {
     public void initMenu() {
         sceneLoader.setScene(MENU_SCENE, viewport);
         if (changedFlower || changedFlower2) {
-//            sceneLoader.loadScene(MENU_SCENE, viewport);
-//            changedFlower2 = false;
-//            menuScript = null;
 
-//            sceneLoader.setScene(MENU_SCENE, viewport);
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MENU_SCENE);
             sceneLoader.rm.reloadFlowerAni();
-//            sceneVO.composite.updateSpriter(sceneVO.composite);
-
-//            com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
-//
-//            sceneLoader.entityFactory.getSpriteComponentFactory().createComponents(sceneLoader.getRoot(), newFlower, sceneVO.composite.sSpriterAnimations.get(3));
-//            sceneLoader.entityFactory.postProcessEntity(newFlower);
-//
-//            sceneLoader.getEngine().addEntity(newFlower);
-//            sceneVO.composite.update(sceneVO.composite);
+            reloadFlower(sceneVO, menuScript);
 
             changedFlower2 = false;
         }
@@ -152,6 +116,22 @@ public class GameStage extends Stage {
         }
         System.gc();
         System.runFinalization();
+    }
+
+    private void reloadFlower(SceneVO sceneVO, IhaveFlower script) {
+        script.getMegaFlower().getComponent(TransformComponent.class).x = -1000;
+        script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
+
+        sceneLoader.engine.removeEntity(script.getMegaFlower());
+
+        com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
+        sceneLoader.entityFactory.getSpriterComponentFactory().createComponents(sceneLoader.getRoot(),
+                newFlower, sceneVO.composite.sSpriterAnimations.get(0));
+        sceneLoader.entityFactory.postProcessEntity(newFlower);
+
+        sceneLoader.getEngine().addEntity(newFlower);
+        script.initFlower(newFlower);
+        changedFlower = false;
     }
 
     public void initResult() {
@@ -248,5 +228,11 @@ public class GameStage extends Stage {
         gameScript.fpc.level.goals = gameScript.fpc.level.goalGenerator.getGoals(gameScript.fpc);
         System.gc();
         System.runFinalization();
+    }
+
+    public interface IhaveFlower {
+        Entity getMegaFlower();
+
+        void initFlower(Entity flower);
     }
 }

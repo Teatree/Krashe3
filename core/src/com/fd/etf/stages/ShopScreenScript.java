@@ -53,7 +53,7 @@ public class ShopScreenScript implements IScript {
     private static final int PAGE_SIZE = 1050;
 
     private static final String TITLE = "title";
-//    private static final String TITLE_LINE_2 = "title_2";
+    //    private static final String TITLE_LINE_2 = "title_2";
     private static final String NEW_LINE_SIGN = "~";  //this symbol is used in the name of the item to identify the place where it new line will start
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
@@ -230,7 +230,7 @@ public class ShopScreenScript implements IScript {
 //                    hc.name
 //            );
 
-            if (hc.name.contains(NEW_LINE_SIGN)){
+            if (hc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
 //                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 1;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
@@ -239,7 +239,7 @@ public class ShopScreenScript implements IScript {
 //                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.replace(
 //                        0, e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.length,
 //                        lines[1]);
-            }else {
+            } else {
 //                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 0;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
@@ -281,7 +281,7 @@ public class ShopScreenScript implements IScript {
             tcb.x = tc.x + X_ICON_ON_BAG;
             tcb.y = tc.y + Y_ICON_ON_BAG;
 
-            if (vc.name.contains(NEW_LINE_SIGN)){
+            if (vc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.name.split(NEW_LINE_SIGN);
 //                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 1;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
@@ -290,7 +290,7 @@ public class ShopScreenScript implements IScript {
 //                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.replace(
 //                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.length,
 //                        lines[1]);
-            }else {
+            } else {
 //                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 0;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,

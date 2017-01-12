@@ -51,8 +51,8 @@ public class PetSystem extends IteratingSystem {
         TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
         SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
 
-         pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
-         pc.petHead.getComponent(TransformComponent.class).y = e.getComponent(TransformComponent.class).y;
+        pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
+        pc.petHead.getComponent(TransformComponent.class).y = e.getComponent(TransformComponent.class).y;
         SpriterComponent scPetHead = pc.petHead.getComponent(SpriterComponent.class);
 
         e.getComponent(DimensionsComponent.class).width = 56;
@@ -291,7 +291,7 @@ public class PetSystem extends IteratingSystem {
             } else if (cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
-                if (entity.getComponent(ActionComponent.class) == null){
+                if (entity.getComponent(ActionComponent.class) == null) {
                     ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     entity.add(ac);
                 }

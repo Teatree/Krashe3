@@ -16,7 +16,7 @@ public class BackgroundMusicMgr {
     }
 
     public static BackgroundMusicMgr getBackgroundMusicMgr() {
-        if(backgroundMusicMgr == null) {
+        if (backgroundMusicMgr == null) {
             backgroundMusicMgr = new BackgroundMusicMgr();
         }
 
@@ -24,7 +24,7 @@ public class BackgroundMusicMgr {
     }
 
     public void play() {
-        if(!music.isPlaying()) {
+        if (!music.isPlaying()) {
             music.play();
         }
     }

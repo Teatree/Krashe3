@@ -31,8 +31,8 @@ public class BugSystem extends IteratingSystem {
 
     boolean canPlayAnimation = true;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
-    
-    private  GameStage gameStage;
+
+    private GameStage gameStage;
 
     public BugSystem(GameStage gameStage) {
         super(Family.all(BugComponent.class).get());
@@ -47,18 +47,18 @@ public class BugSystem extends IteratingSystem {
         entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
 
-         if (blowUpAllBugs) {
+        if (blowUpAllBugs) {
             destroyBug(entity, entity.getComponent(TransformComponent.class));
-            if(blowUpCounter<=0 && blowUpAllBugs){
+            if (blowUpCounter <= 0 && blowUpAllBugs) {
                 blowUpAllBugs = false;
             }
-        } else if (!isPause.get() && !isGameOver.get() && isStarted ) {
+        } else if (!isPause.get() && !isGameOver.get() && isStarted) {
 
             sasc.paused = false;
 
             BugComponent bc = mapper.get(entity);
 
-             if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
+            if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
@@ -98,10 +98,10 @@ public class BugSystem extends IteratingSystem {
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
-        if (isPause.get()){
+        if (isPause.get()) {
             sasc.paused = true;
         }
-        if(isGameOver.get() || !isStarted ){
+        if (isGameOver.get() || !isStarted) {
             sasc.paused = true;
             if (!blowUpAllBugs) {
                 BugPool.getInstance(gameStage).release(entity);
@@ -137,7 +137,7 @@ public class BugSystem extends IteratingSystem {
                             SpriteAnimationStateComponent sasc,
                             SpriteAnimationComponent sac) {
 
-        if (GameScreenScript.isAngeredBeesMode){
+        if (GameScreenScript.isAngeredBeesMode) {
             moveAngryBee(transformComponent);
         } else {
             switch (bugComponent.type) {
@@ -284,7 +284,7 @@ public class BugSystem extends IteratingSystem {
         tc.y = y;
     }
 
-    public void moveAngryBee(TransformComponent tc){
+    public void moveAngryBee(TransformComponent tc) {
         tc.x += 2.3f;
     }
 

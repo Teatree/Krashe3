@@ -49,13 +49,13 @@ public class ResultScreenScript implements IScript {
     public Entity txtNeedE;
     public Entity txtBestE;
     public Entity txtTotalE;
-//    public Entity txtTotalsE;
+    //    public Entity txtTotalsE;
     public Entity progressBarE;
     Entity txtEarnedE;
     Entity txtEarnedsE;
 
     LabelComponent earnedLabel;
-//    LabelComponent earnedLabels;
+    //    LabelComponent earnedLabels;
     public long need;
     int i = 0;
     int j = 0;

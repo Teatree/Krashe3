@@ -4,22 +4,19 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.brashmonkey.spriter.Dimension;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
-import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 
 import static com.fd.etf.entity.componets.ButterflyComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.EAT_N_BUTTERFLIES;
 import static com.fd.etf.stages.GameScreenScript.*;
-import static com.fd.etf.utils.GlobalConstants.*;
+import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 
 public class ButterflySystem extends IteratingSystem {
@@ -74,7 +71,7 @@ public class ButterflySystem extends IteratingSystem {
             if (e.getComponent(ButterflyComponent.class).current > 0.4f) {
                 e.getComponent(TransformComponent.class).scaleX = 1;
             } else {
-                e.getComponent(TransformComponent.class).x -= e.getComponent(DimensionsComponent.class).width/2;
+                e.getComponent(TransformComponent.class).x -= e.getComponent(DimensionsComponent.class).width / 2;
                 e.getComponent(TransformComponent.class).scaleX = -1;
             }
 

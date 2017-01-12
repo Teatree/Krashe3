@@ -19,7 +19,7 @@ public class Main extends Game {
     private static int viewportWidth = 1200;
     private static int viewportHeight = 786;
 
-    public  GameStage gameStage;
+    public GameStage gameStage;
     private Stage loadingStage;
     private SpriteBatch batch;
     private Sprite tex;

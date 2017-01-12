@@ -11,7 +11,10 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
-import com.uwsoft.editor.renderer.components.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.TintComponent;
+import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -31,7 +34,7 @@ import static com.fd.etf.system.BugSystem.blowUpAllBugs;
 import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
 
-public class GameScreenScript implements IScript {
+public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public static final CameraShaker cameraShaker = new CameraShaker();
     private static final String TUTORIAL_LINE = "tutorial_line";
@@ -110,7 +113,6 @@ public class GameScreenScript implements IScript {
             }
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
-//                cameraShaker.initBlinking(40, 3);
 
                 GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
                 beesModeEndAni.getComponent(TransformComponent.class).y = 394;
@@ -264,7 +266,6 @@ public class GameScreenScript implements IScript {
     }
 
     private void addSystems() {
-//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
         gameStage.sceneLoader.getEngine().addSystem(new UmbrellaSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new LeafsSystem());
         gameStage.sceneLoader.getEngine().addSystem(new ButterflySystem(gameStage));
@@ -481,11 +482,11 @@ public class GameScreenScript implements IScript {
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.fadeIn(0.2f));
-        ac.dataArray.add(Actions.scaleTo(1.5f,1.5f,0.2f));
+        ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
         ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
         loseFeedback.add(ac);
 
-            FlowerComponent.state = FlowerComponent.State.LOSING;
+        FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
 //        }
     }
@@ -629,9 +630,8 @@ public class GameScreenScript implements IScript {
         );
     }
 
-    public void reloadFlower(){
-        Entity root = gameStage.sceneLoader.rootEntityByScene.get(GameStage.MAIN_SCENE);
-
-//        root.getComponent(NodeComponent.class).addChild();
+    @Override
+    public Entity getMegaFlower() {
+        return megaFlower;
     }
 }

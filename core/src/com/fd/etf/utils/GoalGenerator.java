@@ -53,7 +53,7 @@ public class GoalGenerator {
                 dg = createGoal(1, fpc);
                 medGoalsCounter--;
             } else {
-                dg = createGoal(0,fpc);
+                dg = createGoal(0, fpc);
             }
             goals.put(dg.type, dg);
         }
@@ -61,7 +61,7 @@ public class GoalGenerator {
     }
 
     private Goal createGoal(int difficulty, FlowerPublicComponent fpc) {
-        int probabilityValueRandom = random.nextInt(100)+1;
+        int probabilityValueRandom = random.nextInt(100) + 1;
         int probabilityValueCheck = 0;
         Goal.GoalType goalType = EAT_N_BUGS;
 
@@ -182,7 +182,7 @@ public class GoalGenerator {
             goalType = PET_DASH_N_TIMES;
             return new Goal(goalType, difficulty, fpc.level.goalMultiplier);
         }
-        
+
         return new Goal(goalType, difficulty, fpc.level.goalMultiplier);
     }
 }
