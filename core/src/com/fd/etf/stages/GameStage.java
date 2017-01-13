@@ -12,6 +12,7 @@ import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.SceneVO;
+import com.uwsoft.editor.renderer.data.SpriterVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashMap;
@@ -118,22 +119,6 @@ public class GameStage extends Stage {
         System.runFinalization();
     }
 
-    private void reloadFlower(SceneVO sceneVO, IhaveFlower script) {
-        script.getMegaFlower().getComponent(TransformComponent.class).x = -1000;
-        script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
-
-        sceneLoader.engine.removeEntity(script.getMegaFlower());
-
-        com.badlogic.ashley.core.Entity newFlower = sceneLoader.entityFactory.engine.createEntity();
-        sceneLoader.entityFactory.getSpriterComponentFactory().createComponents(sceneLoader.getRoot(),
-                newFlower, sceneVO.composite.sSpriterAnimations.get(0));
-        sceneLoader.entityFactory.postProcessEntity(newFlower);
-
-        sceneLoader.getEngine().addEntity(newFlower);
-        script.initFlower(newFlower);
-        changedFlower = false;
-    }
-
     public void initResult() {
         sceneLoader.setScene(RESULT_SCENE, viewport);
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -230,9 +215,45 @@ public class GameStage extends Stage {
         System.runFinalization();
     }
 
+    //TODO: RELOAD ONLY ONE ANIMATION
+    private void reloadFlower(SceneVO sceneVO, IhaveFlower script) {
+        script.getMegaFlower().getComponent(TransformComponent.class).x = -1000;
+        script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
+
+        script.getMegaLeaves().getComponent(TransformComponent.class).x = -1000;
+        script.getMegaLeaves().getComponent(TransformComponent.class).y = -1000;
+
+        sceneLoader.engine.removeEntity(script.getMegaFlower());
+        sceneLoader.engine.removeEntity(script.getMegaLeaves());
+
+        Entity newFlower = null;
+        Entity newLeaves = null;
+        for (SpriterVO sVO : sceneVO.composite.sSpriterAnimations){
+            if (sVO.animationName.equals("flower_idle")){
+                newFlower = sceneLoader.entityFactory.engine.createEntity();
+                sceneLoader.entityFactory.getSpriterComponentFactory()
+                        .createComponents(sceneLoader.getRoot(), newFlower, sVO);
+                sceneLoader.entityFactory.postProcessEntity(newFlower);
+                sceneLoader.getEngine().addEntity(newFlower);
+            }
+            if (sVO.animationName.equals("flower_leafs_idle")){
+                newLeaves = sceneLoader.entityFactory.engine.createEntity();
+                sceneLoader.entityFactory.getSpriterComponentFactory()
+                        .createComponents(sceneLoader.getRoot(), newLeaves, sVO);
+                sceneLoader.entityFactory.postProcessEntity(newLeaves);
+                sceneLoader.getEngine().addEntity(newLeaves);
+            }
+        }
+
+        script.initFlower(newFlower, newLeaves);
+        changedFlower = false;
+    }
+
     public interface IhaveFlower {
+        void initFlower(Entity flower, Entity leaves);
+
         Entity getMegaFlower();
 
-        void initFlower(Entity flower);
+        Entity getMegaLeaves();
     }
 }

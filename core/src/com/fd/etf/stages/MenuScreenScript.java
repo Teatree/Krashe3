@@ -2,7 +2,6 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.Main;
-import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
@@ -20,6 +19,9 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
+import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
+import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
+import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -40,7 +42,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String ACHIEVEMENTS_C = "achievements_composite";
     private static final String BTN_PLAY_SERVICES = "btn_playServices";
     private static final String MEGA_FLOWER = "mega_flower";
-    private static final String MEGA_LEAFS = "mega_leafs";
+    private static final String MEGA_LEAVES = "mega_leafs";
 
     private static final int TIMER_X = 945;
     private static final int TIMER_Y = 441;
@@ -88,6 +90,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public int camPosX = 430;
     private double transitionCoefficient;
     public Entity megaFlower;
+    public Entity megaLeaves;
 
     public MenuScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -115,7 +118,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         initGoalsNotification();
 
-        initFlower(menuItem.getChild(MEGA_FLOWER).getEntity());
+        initFlower(menuItem.getChild(MEGA_FLOWER).getEntity(), menuItem.getChild(MEGA_LEAVES).getEntity());
 
     }
 
@@ -443,7 +446,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
 
-    public void initFlower(Entity flower) {
+    public void initFlower(Entity flower, Entity leaves) {
         this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
 
@@ -452,13 +455,26 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         tc.y = FLOWER_Y_POS;
         tc.scaleX = FLOWER_SCALE;
         tc.scaleY = FLOWER_SCALE;
-        megaFlower.add(tc);
 
-        FlowerComponent fc = new FlowerComponent();
+        megaFlower.getComponent(SpriterComponent.class).scale = FLOWER_SCALE;
 
-        megaFlower.getComponent(SpriterComponent.class).player.setTime(currentFlowerFrame);
+        initLeafs(leaves);
+    }
 
-        megaFlower.add(fc);
+    private void initLeafs(Entity leaves) {
+        this.megaLeaves = leaves;
+
+        TransformComponent tcL = megaLeaves.getComponent(TransformComponent.class);
+        tcL.x = LEAFS_X_POS;
+        tcL.y = LEAFS_Y_POS;
+        tcL.scaleX = LEAFS_SCALE;
+        tcL.scaleY = LEAFS_SCALE;
+
+        megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
+    }
+
+    public Entity getMegaLeaves(){
+        return megaLeaves;
     }
 
     @Override

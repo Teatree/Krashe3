@@ -47,7 +47,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String LBL_TAP_2_START = "lbl_tap2start";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
-    private static final String MEGA_LEAFS = "mega_leafs";
+    private static final String MEGA_LEAVES = "mega_leafs";
     private static final String COCOON = "coccoon";
     private static final String BTN_BACK = "btn_back";
     private static final String BEES_MODE_ANI = "bees_mode_ani";
@@ -82,6 +82,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static boolean shouldShowGameOverDialog;
     private Entity petE;
     public Entity megaFlower;
+    public Entity megaLeaves;
 
     public GameScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -209,8 +210,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         addSystems();
-        initFlower(gameItem.getChild(MEGA_FLOWER).getEntity());
-        initLeafs();
+        initFlower(gameItem.getChild(MEGA_FLOWER).getEntity(), gameItem.getChild(MEGA_LEAVES).getEntity());
         initPet();
         initDoubleBJIcon();
         initPhoenixIcon();
@@ -321,22 +321,24 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 });
     }
 
-    private void initLeafs() {
-        Entity leafsEntity = gameItem.getChild(MEGA_LEAFS).getEntity();
+    private void initLeafs(Entity leaves) {
+        this.megaLeaves = leaves;
 
-        TransformComponent tcL = leafsEntity.getComponent(TransformComponent.class);
+        TransformComponent tcL = megaLeaves.getComponent(TransformComponent.class);
         tcL.x = LEAFS_X_POS;
         tcL.y = LEAFS_Y_POS;
         tcL.scaleX = LEAFS_SCALE;
         tcL.scaleY = LEAFS_SCALE;
-        leafsEntity.add(tcL);
 
-        LeafsComponent lc = new LeafsComponent();
-        leafsEntity.add(lc);
-        leafsEntity.add(new DebugComponent());
+        megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
+
     }
 
-    public void initFlower(Entity flower) {
+    public Entity getMegaLeaves(){
+        return megaLeaves;
+    }
+
+    public void initFlower(Entity flower, Entity leaves) {
         this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
 
@@ -358,6 +360,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         megaFlower.add(fc);
         megaFlower.add(fpc);
+
+        initLeafs(leaves);
     }
 
     public void hideCurrentPet() {
