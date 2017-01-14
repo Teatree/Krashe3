@@ -45,15 +45,17 @@ public class ShopScreenScript implements IScript {
 
     private static final int FIRST_BAG_X = 1950;
     private static final int FIRST_BAG_Y = 440;
-    private static final int X_ICON_ON_BAG = 55;
-    private static final int Y_ICON_ON_BAG = 55;
+    private static final int X_ICON_ON_BAG = 20;
+    private static final int Y_ICON_ON_BAG = 79;
+    private static final float X_SCALE_ICON_ON_BAG = 1.4f;
+    private static final float Y_SCALE_ICON_ON_BAG = 1.4f;
     private static final int SPACE_BETWEEN_BAGS_X = 20;
     private static final int SPACE_BETWEEN_BAGS_Y = 0;
 
     private static final int PAGE_SIZE = 1050;
 
     private static final String TITLE = "title";
-    //    private static final String TITLE_LINE_2 = "title_2";
+    private static final String TITLE_2 = "title_2";
     private static final String NEW_LINE_SIGN = "~";  //this symbol is used in the name of the item to identify the place where it new line will start
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
@@ -230,19 +232,19 @@ public class ShopScreenScript implements IScript {
 //                    hc.name
 //            );
 
-            if (hc.name.contains(NEW_LINE_SIGN)) {
+            if (hc.name.contains(NEW_LINE_SIGN)){
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
-//                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 1;
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
-//                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.replace(
-//                        0, e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.length,
-//                        lines[1]);
-            } else {
-//                e.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 0;
-                e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
-                        0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
+                        lines[1]);
+            }else {
+                e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(TintComponent.class).color.a = 0;
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         hc.name);
             }
 
@@ -280,20 +282,22 @@ public class ShopScreenScript implements IScript {
             TransformComponent tcb = itemIcon.getComponent(TransformComponent.class);
             tcb.x = tc.x + X_ICON_ON_BAG;
             tcb.y = tc.y + Y_ICON_ON_BAG;
+            tcb.scaleX = X_SCALE_ICON_ON_BAG;
+            tcb.scaleY = Y_SCALE_ICON_ON_BAG;
 
-            if (vc.name.contains(NEW_LINE_SIGN)) {
+            if (vc.name.contains(NEW_LINE_SIGN)){
                 String[] lines = vc.name.split(NEW_LINE_SIGN);
-//                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 1;
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
-//                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.replace(
-//                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(LabelComponent.class).text.length,
-//                        lines[1]);
-            } else {
-//                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_LINE_2).getComponent(TintComponent.class).color.a = 0;
-                bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
-                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
+                        lines[1]);
+            }else {
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(TintComponent.class).color.a = 0;
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         vc.name);
             }
 

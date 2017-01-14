@@ -59,8 +59,10 @@ public class Preview extends AbstractDialog {
     public Entity lblNotEnough;
 
     private static final int ICON_X = 550;
-    private static final int ICON_X_RELATIVE = 130;
-    private static final int ICON_Y_RELATIVE = 150;
+    private static final float ICON_SCALE_X = 2.5f;
+    private static final float ICON_SCALE_Y = 2.5f;
+    private static final int ICON_X_RELATIVE = 70;
+    private static final int ICON_Y_RELATIVE = 180;
 
     private static final int INFO_TAG_X = 350;
     private static final int INFO_TAG_Y = 240;
@@ -162,6 +164,8 @@ public class Preview extends AbstractDialog {
         } else {
             iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
             iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
+            iconE.getComponent(TransformComponent.class).scaleX = ICON_SCALE_X;
+            iconE.getComponent(TransformComponent.class).scaleY = ICON_SCALE_Y;
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 200);
         }
     }
@@ -185,10 +189,10 @@ public class Preview extends AbstractDialog {
             lblTitleLine2.getComponent(LabelComponent.class).text.replace(
                     0, lblTitleLine2.getComponent(LabelComponent.class).text.length, lines[1]);
         }else {
-            lblTitleLine2.getComponent(TintComponent.class).color.a = 0;
-            lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
-            lblTitle.getComponent(LabelComponent.class).text.replace(
-                    0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
+            lblTitle.getComponent(TintComponent.class).color.a = 0;
+            lblTitle.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitleLine2.getComponent(LabelComponent.class).text.replace(
+                    0, lblTitleLine2.getComponent(LabelComponent.class).text.length, vc.name);
         }
 
         lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
@@ -227,6 +231,8 @@ public class Preview extends AbstractDialog {
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
         } else {
             iconE.getComponent(TransformComponent.class).x = ICON_X;
+            iconE.getComponent(TransformComponent.class).scaleX = ICON_SCALE_X;
+            iconE.getComponent(TransformComponent.class).scaleY = ICON_SCALE_Y;
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y_ON_JUMP;
         }
         iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 100);
@@ -660,8 +666,8 @@ public class Preview extends AbstractDialog {
         if (iconE != null) {
             iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + ICON_X_RELATIVE;
             iconE.getComponent(TransformComponent.class).y = infoTag.getComponent(TransformComponent.class).y + ICON_Y_RELATIVE;
-            iconE.getComponent(TransformComponent.class).scaleX = 1.5f;
-            iconE.getComponent(TransformComponent.class).scaleY = 1.5f;
+            iconE.getComponent(TransformComponent.class).scaleX = ICON_SCALE_X;
+            iconE.getComponent(TransformComponent.class).scaleY = ICON_SCALE_Y;
         }
         if (isPreviewOn.get() && infoTag != null && infoTag.getComponent(TransformComponent.class).y >= INFO_TAG_HIDE_Y) {
             isPreviewOn.set(false);
