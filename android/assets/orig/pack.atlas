@@ -34,10 +34,9 @@ backgroundforeground
   index: -1
 backshadow
   rotate: false
-  xy: 1831, 1309
-  size: 126, 126
-  split: 89, 11, 80, 10
-  orig: 126, 126
+  xy: 587, 601
+  size: 220, 220
+  orig: 220, 220
   offset: 0, 0
   index: -1
 backshadow1
@@ -45,6 +44,14 @@ backshadow1
   xy: 587, 601
   size: 220, 220
   orig: 220, 220
+  offset: 0, 0
+  index: -1
+backshadow
+  rotate: false
+  xy: 1831, 1309
+  size: 126, 126
+  split: 89, 11, 80, 10
+  orig: 126, 126
   offset: 0, 0
   index: -1
 bepopuptitle
