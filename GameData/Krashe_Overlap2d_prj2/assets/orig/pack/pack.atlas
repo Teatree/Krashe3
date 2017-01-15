@@ -105,7 +105,7 @@ btnarrownoright
   index: -1
 btnarrowright
   rotate: false
-  xy: 1904, 668
+  xy: 1931, 1048
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
@@ -161,35 +161,35 @@ btnmusicno
   index: -1
 btnnext
   rotate: false
-  xy: 1904, 710
+  xy: 1934, 1236
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1774, 578
+  xy: 1934, 1163
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 1845, 578
+  xy: 1931, 1090
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplay
   rotate: false
-  xy: 1975, 710
+  xy: 1642, 509
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplayservices
   rotate: false
-  xy: 1934, 1236
+  xy: 1031, 541
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -210,28 +210,28 @@ btnpreviewon
   index: -1
 btnsettings
   rotate: false
-  xy: 1934, 1163
+  xy: 1102, 541
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1931, 1090
+  xy: 1122, 468
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1642, 509
+  xy: 1122, 395
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1765, 505
+  xy: 1122, 322
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -287,21 +287,21 @@ btntextofff
   index: -1
 btnup
   rotate: false
-  xy: 1836, 505
+  xy: 1904, 576
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnwatchads
   rotate: false
-  xy: 1954, 637
+  xy: 1975, 578
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1916, 564
+  xy: 1904, 503
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -359,7 +359,7 @@ dnaamountbackground
   index: -1
 dnaamountbackground1
   rotate: false
-  xy: 1907, 538
+  xy: 1765, 542
   size: 7, 38
   orig: 7, 38
   offset: 0, 0
@@ -380,7 +380,7 @@ dotOn
   index: -1
 emptyStar
   rotate: false
-  xy: 1893, 783
+  xy: 1906, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -630,100 +630,114 @@ itemqueenbeeneck
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemscarf
+itemscarecrowhat
   rotate: false
   xy: 726, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemsheephorn
+itemscarf
   rotate: false
   xy: 858, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemshoe
+itemsheephorn
   rotate: false
   xy: 629, 68
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemshowel
+itemshoe
   rotate: false
   xy: 761, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickclover
+itemshowel
   rotate: false
   xy: 893, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgingerbeard
+itemstpatrickclover
   rotate: false
   xy: 990, 392
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgoldcouldren
+itemstpatrickgingerbeard
   rotate: false
   xy: 990, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickhat
+itemstpatrickgoldcouldren
   rotate: false
   xy: 1025, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemsunflower
+itemstpatrickhat
   rotate: false
   xy: 1621, 919
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemteacup
+itemsunflower
   rotate: false
   xy: 1753, 913
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemunicorn
+itemteacup
   rotate: false
   xy: 1885, 913
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemunknown
+itemunicorn
   rotate: false
   xy: 1629, 714
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemweat
+itemunknown
   rotate: false
   xy: 1642, 582
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemwig
+itemweat
   rotate: false
   xy: 1761, 781
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemwig
+  rotate: false
+  xy: 1893, 781
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemwoodenpot
+  rotate: false
+  xy: 1774, 649
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
@@ -880,7 +894,7 @@ standardpopup
   index: -1
 star
   rotate: false
-  xy: 1774, 651
+  xy: 1774, 519
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
