@@ -707,6 +707,7 @@ public class SaveMngr {
         public int angeredBeesDuration;
         public PetJson pet;
         public boolean leaves;
+//        public boolean changeFlower;
         public String collection;
         public String title;
 
@@ -722,7 +723,7 @@ public class SaveMngr {
             this.bought = vc.bought;
             this.advertised = vc.advertised;
             this.enabled = vc.enabled;
-            this.leaves = vc.leaves;
+            this.leaves = vc.changeLeaves;
             this.floatingText = vc.floatingText;
             this.bugsSpawnAmount = vc.bugsSpawnAmount;
             this.attackSpeed = vc.attackSpeed;

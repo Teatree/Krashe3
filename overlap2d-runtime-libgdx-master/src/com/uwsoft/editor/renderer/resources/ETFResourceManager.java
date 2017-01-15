@@ -228,14 +228,18 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         spriterAnimations.put(name, animFile);
     }
 
-    public void reloadFlowerAni(){
-        FileHandle animFileFlower = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
-                 FLOWER_IDLE + separator + FLOWER_IDLE + SCML);
-        spriterAnimations.put(FLOWER_IDLE, animFileFlower);
+    public void reloadFlowerAni(boolean flower, boolean leaves){
+        if (flower) {
+            FileHandle animFileFlower = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                    FLOWER_IDLE + separator + FLOWER_IDLE + SCML);
+            spriterAnimations.put(FLOWER_IDLE, animFileFlower);
+        }
 
-        FileHandle animFileLeaves = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
-                FLOWER_LEAFS_IDLE + separator + FLOWER_LEAFS_IDLE + SCML);
-        spriterAnimations.put(FLOWER_LEAFS_IDLE, animFileLeaves);
+        if (leaves) {
+            FileHandle animFileLeaves = Gdx.files.local(ORIG + separator + spriterAnimationsPath + separator +
+                    FLOWER_LEAFS_IDLE + separator + FLOWER_LEAFS_IDLE + SCML);
+            spriterAnimations.put(FLOWER_LEAFS_IDLE, animFileLeaves);
+        }
     }
 
     @Override

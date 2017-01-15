@@ -447,6 +447,15 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
 
     public void initFlower(Entity flower, Entity leaves) {
+        if (flower != null) {
+            initFlower(flower);
+        }
+        if (leaves != null) {
+            initLeafs(leaves);
+        }
+    }
+
+    private void initFlower(Entity flower) {
         this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
 
@@ -457,8 +466,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         tc.scaleY = FLOWER_SCALE;
 
         megaFlower.getComponent(SpriterComponent.class).scale = FLOWER_SCALE;
-
-        initLeafs(leaves);
     }
 
     private void initLeafs(Entity leaves) {

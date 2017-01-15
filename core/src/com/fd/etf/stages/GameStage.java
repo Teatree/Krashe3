@@ -36,8 +36,10 @@ public class GameStage extends Stage {
 
     public static Viewport viewport;
     public ETFSceneLoader sceneLoader;
-    public static boolean changedFlower;
-    public static boolean changedFlower2;
+    public static boolean changedFlowerEntity;
+    public static boolean changedFlowerEntity2;
+    public static boolean changedLeavesAni;
+    public static boolean changedFlowerAni;
 
     public static boolean justCreated;
 
@@ -79,13 +81,13 @@ public class GameStage extends Stage {
             gameScript.initButtons();
             justCreated = false;
         }
-        if (changedFlower || changedFlower2) {
+        if (changedFlowerEntity || changedFlowerEntity2) {
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
-            sceneLoader.rm.reloadFlowerAni();
+            sceneLoader.rm.reloadFlowerAni(changedFlowerAni, changedLeavesAni);
             sceneVO.composite.updateSpriter(sceneVO.composite);
 
+            changedFlowerEntity = false;
             reloadFlower(sceneVO, gameScript);
-            changedFlower = false;
         }
 
         gameScript.reset();
@@ -100,13 +102,13 @@ public class GameStage extends Stage {
 
     public void initMenu() {
         sceneLoader.setScene(MENU_SCENE, viewport);
-        if (changedFlower || changedFlower2) {
+        if (changedFlowerEntity || changedFlowerEntity2) {
 
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MENU_SCENE);
-            sceneLoader.rm.reloadFlowerAni();
-            reloadFlower(sceneVO, menuScript);
+            sceneLoader.rm.reloadFlowerAni(changedFlowerAni, changedLeavesAni);
 
-            changedFlower2 = false;
+            changedFlowerEntity2 = false;
+            reloadFlower(sceneVO, menuScript);
         }
 
         ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -220,31 +222,35 @@ public class GameStage extends Stage {
 
     //TODO: RELOAD ONLY ONE ANIMATION
     private void reloadFlower(SceneVO sceneVO, IhaveFlower script) {
-        script.getMegaFlower().getComponent(TransformComponent.class).x = -1000;
-        script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
-
-        script.getMegaLeaves().getComponent(TransformComponent.class).x = -1000;
-        script.getMegaLeaves().getComponent(TransformComponent.class).y = -1000;
-
-        sceneLoader.engine.removeEntity(script.getMegaFlower());
-        sceneLoader.engine.removeEntity(script.getMegaLeaves());
 
         Entity newFlower = null;
         Entity newLeaves = null;
+
         for (SpriterVO sVO : sceneVO.composite.sSpriterAnimations){
-            if (sVO.animationName.equals(FLOWER_IDLE)){
+            if (sVO.animationName.equals(FLOWER_IDLE) && changedFlowerAni){
+                script.getMegaFlower().getComponent(TransformComponent.class).x = -1000;
+                script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
+                sceneLoader.engine.removeEntity(script.getMegaFlower());
+
                 newFlower = sceneLoader.entityFactory.engine.createEntity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newFlower, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newFlower);
                 sceneLoader.getEngine().addEntity(newFlower);
+                changedFlowerAni = (changedFlowerEntity || changedFlowerEntity2);
             }
-            if (sVO.animationName.equals(FLOWER_LEAFS_IDLE)){
+
+            if (sVO.animationName.equals(FLOWER_LEAFS_IDLE) && changedLeavesAni){
+                script.getMegaLeaves().getComponent(TransformComponent.class).x = -1000;
+                script.getMegaLeaves().getComponent(TransformComponent.class).y = -1000;
+                sceneLoader.engine.removeEntity(script.getMegaLeaves());
+
                 newLeaves = sceneLoader.entityFactory.engine.createEntity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newLeaves, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newLeaves);
                 sceneLoader.getEngine().addEntity(newLeaves);
+                changedLeavesAni =  (changedFlowerEntity || changedFlowerEntity2);
             }
         }
 

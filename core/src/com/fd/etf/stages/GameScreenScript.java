@@ -344,6 +344,16 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void initFlower(Entity flower, Entity leaves) {
+        if (flower != null) {
+            initFlower(flower);
+        }
+
+        if (leaves != null) {
+            initLeafs(leaves);
+        }
+    }
+
+    private void initFlower(Entity flower) {
         this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
 
@@ -365,8 +375,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         megaFlower.add(fc);
         megaFlower.add(fpc);
-
-        initLeafs(leaves);
     }
 
     public void hideCurrentPet() {

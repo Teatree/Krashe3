@@ -27,7 +27,8 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
     //true when was presented in showcase
     public boolean advertised;
-    public boolean leaves; //if true - than change flower_leafs_idle
+    public boolean changeLeaves; //if true - than change flower_leafs_idle
+    public boolean changeFlower; //if true - than change flower_idle
 
     public boolean floatingText;
     public int bugsSpawnAmount;
@@ -59,8 +60,8 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         this.description = vc.description;
         this.bought = vc.bought;
         this.advertised = vc.advertised;
-        this.leaves = vc.leaves;
-
+        this.changeLeaves = vc.leaves;
+        this.changeFlower = !vc.leaves;
         this.enabled = vc.enabled;
         this.floatingText = vc.floatingText;
         this.bugsSpawnAmount = vc.bugsSpawnAmount;
@@ -83,8 +84,11 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
                 gameStage.gameScript.fpc.currentPet = this.pet;
             }
 
-            GameStage.changedFlower = true;
-            GameStage.changedFlower2 = true;
+            GameStage.changedFlowerEntity = true;
+            GameStage.changedFlowerEntity2 = true;
+
+            if (changeLeaves) GameStage.changedLeavesAni = true;
+            if (changeFlower) GameStage.changedFlowerAni = true;
         }
     }
 
@@ -101,7 +105,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     private void overrideAnimationFiles() {
         for (Map.Entry entry : assetsToChange.entrySet()) {
             if (!entry.getKey().equals(CLASS)) {
-                String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+                String path = changeLeaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
                 Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX).writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getValue() + TYPE_SUFFIX).readBytes(), false);
             }
         }
@@ -136,8 +140,10 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
         backToDefaultAnimation();
 
-        GameStage.changedFlower = true;
-        GameStage.changedFlower2 = true;
+        GameStage.changedFlowerEntity = true;
+        GameStage.changedFlowerEntity2 = true;
+        if (changeLeaves) GameStage.changedLeavesAni = true;
+        if (changeFlower) GameStage.changedFlowerAni = true;
 
         if (this.pet != null) {
             gameStage.gameScript.fpc.currentPet = this.pet;
@@ -152,7 +158,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
     public void resetOneFileTodefault(Map.Entry entry) {
         if (!entry.getKey().equals(CLASS)) {
-            String path = leaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
+            String path = changeLeaves ? PATH_PREFIX_LOCAL_LEAVES_ANI : PATH_PREFIX_LOCAL_ANI;
             Gdx.files.local(path + entry.getKey() + TYPE_SUFFIX)
                     .writeBytes(Gdx.files.internal(PATH_PREFIX_VANITY + entry.getKey()
                             + DEFAULT + TYPE_SUFFIX).readBytes(), false);
@@ -184,8 +190,10 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
             }
 
         }
-        GameStage.changedFlower = true;
-        GameStage.changedFlower2 = true;
+        GameStage.changedFlowerEntity = true;
+        GameStage.changedFlowerEntity2 = true;
+        GameStage.changedLeavesAni = true;
+        GameStage.changedFlowerAni = true;
     }
 
     @Override
