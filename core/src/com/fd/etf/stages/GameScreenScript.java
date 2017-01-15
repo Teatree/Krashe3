@@ -196,7 +196,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
 
         fpc.score = 0;
@@ -236,6 +235,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
+
+        loseFeedback.getComponent(TintComponent.class).color.a = 0;
+
+        CocoonSystem.resetSpawnCoefficients();
+        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
     }
 
     private void initDoubleBJIcon() {
@@ -339,6 +344,16 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void initFlower(Entity flower, Entity leaves) {
+        if (flower != null) {
+            initFlower(flower);
+        }
+
+        if (leaves != null) {
+            initLeafs(leaves);
+        }
+    }
+
+    private void initFlower(Entity flower) {
         this.megaFlower = flower;
         gameStage.gameScript.fpc.score = 0;
 
@@ -360,8 +375,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         megaFlower.add(fc);
         megaFlower.add(fpc);
-
-        initLeafs(leaves);
     }
 
     public void hideCurrentPet() {
