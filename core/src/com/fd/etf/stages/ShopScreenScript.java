@@ -337,11 +337,16 @@ public class ShopScreenScript implements IScript {
     }
 
     public Entity getIconFromLib(String name) {
-        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(name).clone();
-        Entity itemIcon = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
-        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
-        gameStage.sceneLoader.getEngine().addEntity(itemIcon);
-        return itemIcon;
+        try {
+            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(name).clone();
+            Entity itemIcon = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
+            gameStage.sceneLoader.getEngine().addEntity(itemIcon);
+            return itemIcon;
+        }catch (Exception e){
+            System.err.println(name);
+            return null;
+        }
     }
 
     private void addButtons() {
