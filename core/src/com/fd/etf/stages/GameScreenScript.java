@@ -196,7 +196,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
 
         fpc.score = 0;
@@ -236,6 +235,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
+
+        loseFeedback.getComponent(TintComponent.class).color.a = 0;
+
+        CocoonSystem.resetSpawnCoefficients();
+        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
     }
 
     private void initDoubleBJIcon() {

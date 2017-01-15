@@ -31,6 +31,8 @@ public class GameStage extends Stage {
     private static final String RESULT_SCENE = "ResultScene";
     public static final String MAIN_SCENE = "MainScene";
     private static final String MENU_SCENE = "MenuScene";
+    public static final String FLOWER_LEAFS_IDLE = "flower_leafs_idle";
+    public static final String FLOWER_IDLE = "flower_idle";
 
     public static Viewport viewport;
     public ETFSceneLoader sceneLoader;
@@ -229,14 +231,14 @@ public class GameStage extends Stage {
         Entity newFlower = null;
         Entity newLeaves = null;
         for (SpriterVO sVO : sceneVO.composite.sSpriterAnimations){
-            if (sVO.animationName.equals("flower_idle")){
+            if (sVO.animationName.equals(FLOWER_IDLE)){
                 newFlower = sceneLoader.entityFactory.engine.createEntity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newFlower, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newFlower);
                 sceneLoader.getEngine().addEntity(newFlower);
             }
-            if (sVO.animationName.equals("flower_leafs_idle")){
+            if (sVO.animationName.equals(FLOWER_LEAFS_IDLE)){
                 newLeaves = sceneLoader.entityFactory.engine.createEntity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newLeaves, sVO);
