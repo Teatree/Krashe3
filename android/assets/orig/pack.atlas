@@ -1,5 +1,5 @@
 
-pack2.png
+pack.png
 size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
@@ -105,7 +105,7 @@ btnarrownoright
   index: -1
 btnarrowright
   rotate: false
-  xy: 1700, 725
+  xy: 1904, 668
   size: 48, 40
   orig: 48, 40
   offset: 0, 0
@@ -161,35 +161,35 @@ btnmusicno
   index: -1
 btnnext
   rotate: false
-  xy: 1629, 773
+  xy: 1904, 710
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnno
   rotate: false
-  xy: 1629, 700
+  xy: 1774, 578
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnpause
   rotate: false
-  xy: 1642, 627
+  xy: 1845, 578
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplay
   rotate: false
-  xy: 1642, 554
+  xy: 1975, 710
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnplayservices
   rotate: false
-  xy: 1721, 840
+  xy: 1934, 1236
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -210,28 +210,28 @@ btnpreviewon
   index: -1
 btnsettings
   rotate: false
-  xy: 1792, 840
+  xy: 1934, 1163
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnshop
   rotate: false
-  xy: 1700, 767
+  xy: 1931, 1090
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsound
   rotate: false
-  xy: 1771, 767
+  xy: 1642, 509
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnsoundno
   rotate: false
-  xy: 1934, 1236
+  xy: 1765, 505
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -287,21 +287,21 @@ btntextofff
   index: -1
 btnup
   rotate: false
-  xy: 1934, 1163
+  xy: 1836, 505
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnwatchads
   rotate: false
-  xy: 1931, 1090
+  xy: 1954, 637
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
   index: -1
 btnyes
   rotate: false
-  xy: 1750, 694
+  xy: 1916, 564
   size: 69, 71
   orig: 69, 71
   offset: 0, 0
@@ -359,28 +359,28 @@ dnaamountbackground
   index: -1
 dnaamountbackground1
   rotate: false
-  xy: 66, 41
+  xy: 1907, 538
   size: 7, 38
   orig: 7, 38
   offset: 0, 0
   index: -1
 dotOff
   rotate: false
-  xy: 1629, 687
+  xy: 326, 173
   size: 11, 11
   orig: 11, 11
   offset: 0, 0
   index: -1
 dotOn
   rotate: false
-  xy: 530, 808
+  xy: 1629, 699
   size: 11, 13
   orig: 11, 13
   offset: 0, 0
   index: -1
 emptyStar
   rotate: false
-  xy: 1885, 915
+  xy: 1893, 783
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
@@ -497,205 +497,233 @@ itembricks
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemcatears
+itembugcocktail
   rotate: false
   xy: 1667, 1051
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemcoffeecup
+itemcatears
   rotate: false
   xy: 101, 41
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemcouldron
+itemcoffeecup
   rotate: false
   xy: 233, 41
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemfedora
+itemcouldron
   rotate: false
   xy: 1802, 1177
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemfez
+itemfedora
   rotate: false
   xy: 1799, 1045
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemflagireland
+itemfez
   rotate: false
   xy: 1365, 687
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhandkerchief
+itemflagireland
   rotate: false
   xy: 1497, 687
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhelm
+itemhandkerchief
   rotate: false
   xy: 1378, 555
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemhoneyjar
+itemhelm
   rotate: false
   xy: 1510, 555
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemiceycrown
+itemhoneyjar
   rotate: false
   xy: 330, 412
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemknife
+itemhoneyspoon
   rotate: false
   xy: 330, 280
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemmasonjar
+itemiceycrown
   rotate: false
   xy: 365, 54
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemmonknecklace
+itemknife
   rotate: false
   xy: 462, 332
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itempartyhat
+itemlifebuoy
   rotate: false
   xy: 594, 404
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemqueenbeecrown
+itemmasonjar
   rotate: false
   xy: 594, 272
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemqueenbeeneck
+itemmonknecklace
   rotate: false
   xy: 462, 200
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemscarf
+itempartyhat
   rotate: false
   xy: 497, 68
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemshoe
+itemqueenbeecrown
   rotate: false
   xy: 726, 392
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemshowel
+itemqueenbeeneck
   rotate: false
   xy: 858, 392
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickclover
+itemscarf
   rotate: false
   xy: 726, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgingerbeard
+itemsheephorn
   rotate: false
   xy: 858, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickgoldcouldren
+itemshoe
   rotate: false
   xy: 629, 68
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemstpatrickhat
+itemshowel
   rotate: false
   xy: 761, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemsunflower
+itemstpatrickclover
   rotate: false
   xy: 893, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemteacup
+itemstpatrickgingerbeard
   rotate: false
   xy: 990, 392
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemunicorn
+itemstpatrickgoldcouldren
   rotate: false
   xy: 990, 260
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemunknown
+itemstpatrickhat
   rotate: false
   xy: 1025, 128
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemweat
+itemsunflower
   rotate: false
   xy: 1621, 919
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
   index: -1
-itemwig
+itemteacup
   rotate: false
   xy: 1753, 913
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemunicorn
+  rotate: false
+  xy: 1885, 913
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemunknown
+  rotate: false
+  xy: 1629, 714
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemweat
+  rotate: false
+  xy: 1642, 582
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1
+itemwig
+  rotate: false
+  xy: 1761, 781
   size: 130, 130
   orig: 130, 130
   offset: 0, 0
@@ -760,7 +788,7 @@ pop-up_back
   index: -1
 progressbarfiller
   rotate: false
-  xy: 1821, 699
+  xy: 1713, 514
   size: 50, 66
   split: 24, 22, 28, 34
   pad: 0, 0, 0, 0
@@ -852,7 +880,7 @@ standardpopup
   index: -1
 star
   rotate: false
-  xy: 1885, 785
+  xy: 1774, 651
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
