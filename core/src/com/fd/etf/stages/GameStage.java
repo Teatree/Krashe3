@@ -85,6 +85,7 @@ public class GameStage extends Stage {
             sceneVO.composite.updateSpriter(sceneVO.composite);
 
             reloadFlower(sceneVO, gameScript);
+            changedFlower = false;
         }
 
         gameScript.reset();
@@ -248,7 +249,6 @@ public class GameStage extends Stage {
         }
 
         script.initFlower(newFlower, newLeaves);
-        changedFlower = false;
     }
 
     public interface IhaveFlower {
