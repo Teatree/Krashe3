@@ -27,7 +27,6 @@ public class Showcase {
     private static final String NEXT_ICON = "next_item";
     private static final String NEXT_ICON_SHINE = "next_item_shine";
     private static final String LBL_ITEM_NAME = "lbl_item_name";
-    private static final String LBL_ITEM_DESC = "lbl_item_desc2";
 //    private static final String SPOTLIGHT = "spotLight";
     private static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
     private static final String LBL_ITEM_PRICE = "lbl_item_price";
@@ -50,10 +49,8 @@ public class Showcase {
     public Entity backBtn;
     public Entity buyBtn;
     public Entity lbl_nameE;
-    public Entity lbl_descE;
     public Entity lbl_collE;
     public Entity lbl_priceE;
-    public Entity lbl_priceE_sh;
     public Entity showcase_background;
     public Entity coin;
 
@@ -108,10 +105,8 @@ public class Showcase {
                     buyBtn.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
-                    lbl_descE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
-                    lbl_priceE_sh.getComponent(TintComponent.class).color.a += 0.05f;
                     coin.getComponent(TintComponent.class).color.a += 0.05f;
                 }
             }
@@ -129,10 +124,8 @@ public class Showcase {
 //                    backBtn.getComponent(TintComponent.class).color.a -= 0.1f;
 //                    buyBtn.getComponent(TintComponent.class).color.a -= 0.1f;
 //                    lbl_priceE.getComponent(TintComponent.class).color.a -= 0.1f;
-//                    lbl_priceE_sh.getComponent(TintComponent.class).color.a -= 0.1f;
 //                    lbl_collE.getComponent(TintComponent.class).color.a -= 0.1f;
 //                    coin.getComponent(TintComponent.class).color.a -= 0.1f;
-//                    lbl_descE.getComponent(TintComponent.class).color.a -= 0.1f;
 //                    lbl_nameE.getComponent(TintComponent.class).color.a -= 0.1f;
                     nextIconShine.getComponent(TintComponent.class).color.a -= 0.1f;
 
@@ -173,14 +166,9 @@ public class Showcase {
             }
 
             lbl_priceE.getComponent(TintComponent.class).color.a = 0;
-            lbl_priceE_sh.getComponent(TintComponent.class).color.a = 0;
             lbl_collE.getComponent(TintComponent.class).color.a = 0;
             coin.getComponent(TintComponent.class).color.a = 0;
             lbl_nameE.getComponent(TintComponent.class).color.a = 0;
-            if (lbl_descE != null) {
-                lbl_descE.getComponent(TintComponent.class).color.a = 0;
-            }
-
         }
         hideWindow(tcp);
     }
@@ -194,6 +182,7 @@ public class Showcase {
                 tcItem = null;
             }
             tcShowCase.x = FAR_FAR_AWAY_X;
+            nextIconShine.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -222,15 +211,6 @@ public class Showcase {
 
 //        spotLightE = showcaseE.getComponent(NodeComponent.class).getChild(SPOTLIGHT);
 
-        lbl_descE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_DESC);
-        lbl_descE.getComponent(TintComponent.class).color.a = 0;
-//        LabelComponent lc2 = lbl_descE.getComponent(LabelComponent.class);
-//        if (showCaseVanity.description != null) {
-//            lc2.text.replace(0, lc2.text.capacity(), showCaseVanity.description);
-//        } else {
-//            lc2.text.replace(0, lc2.text.capacity(), "");
-//        }
-
         lbl_collE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_COLLECTION);
         LabelComponent lcColl = lbl_collE.getComponent(LabelComponent.class);
         if (showCaseVanity.collection != null && !"".equals(showCaseVanity.collection)) {
@@ -243,10 +223,6 @@ public class Showcase {
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
         lbl_priceE.getComponent(TintComponent.class).color.a = 0;
-
-        LabelComponent lc4 = lbl_priceE_sh.getComponent(LabelComponent.class);
-        lc4.text.replace(0, lc4.text.capacity(), Long.toString(showCaseVanity.cost));
-        lbl_priceE_sh.getComponent(TintComponent.class).color.a = 0;
 
         coin.getComponent(TintComponent.class).color.a = 0;
 //        spotLightE.getComponent(TintComponent.class).color.a = 0;
@@ -299,10 +275,8 @@ public class Showcase {
                     backBtn.getComponent(TintComponent.class).color.a = 0;
                     buyBtn.getComponent(TintComponent.class).color.a = 0;
                     lbl_priceE.getComponent(TintComponent.class).color.a = 0;
-                    lbl_priceE_sh.getComponent(TintComponent.class).color.a = 0;
                     lbl_collE.getComponent(TintComponent.class).color.a = 0;
                     coin.getComponent(TintComponent.class).color.a = 0;
-                    lbl_descE.getComponent(TintComponent.class).color.a = 0;
                     lbl_nameE.getComponent(TintComponent.class).color.a = 0;
                 }
             }
