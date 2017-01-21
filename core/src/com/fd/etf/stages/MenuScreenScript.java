@@ -1,22 +1,23 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
-import com.uwsoft.editor.renderer.components.MainItemComponent;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TintComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import javax.xml.soap.Node;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -127,7 +128,10 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         // all the single alphas
         total_coins.getComponent(TintComponent.class).color.a = 0f;
-//        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().font.;
+        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().fontColor.a = 0;
+
+        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleX = 0.3f;
+        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleY = 0.3f;
     }
 
     private void initGoalsNotification() {
@@ -317,6 +321,12 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                         }
                     }
                 });
+
+        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")) {
+                e.getComponent(TintComponent.class).color.a = 0;
+            }
+        }
     }
 
     @Override
@@ -363,9 +373,25 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startTransitionIn) {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
+
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
+
                 startTransitionIn = false;
+
                 curtain_mm.getComponent(TintComponent.class).color.a = 0;
+
+                ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                Actions.checkInit();
+                ac.dataArray.add(Actions.sequence(
+                        Actions.delay(0.6f),
+                        Actions.parallel(Actions.fadeIn(0.4f, Interpolation.exp5Out), Actions.scaleTo(0.6f, 0.6f, 0.4f, Interpolation.exp5Out))));
+                menuItem.getChild(IMG_LOGO).getEntity().add(ac);
+
+                ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                Actions.checkInit();
+                ac2.dataArray.add(Actions.sequence(
+                        Actions.delay(2), Actions.fadeIn(2f, Interpolation.exp5Out)));
+                menuItem.getChild(TAP_TO_PLAY).getEntity().add(ac2);
             }
         }
     }
@@ -427,6 +453,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             btnChalenges.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            total_coins.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().fontColor.a -= TINT_STEP;
             btnAchievements.getComponent(TintComponent.class).color.a -= TINT_STEP;
             if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
