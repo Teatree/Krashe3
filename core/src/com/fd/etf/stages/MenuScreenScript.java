@@ -91,7 +91,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     float dy;
     int frames;
 
-    public int camPosX = 430;
+    public int camPosX = 130;
     private double transitionCoefficient;
     public Entity megaFlower;
     public Entity megaLeaves;
@@ -160,7 +160,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public void setupMenuScreenWorld() {
         wrldW = 800;
         wrldH = 524;
-        camPosX = 430;
+        camPosX = 130;
 
         menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
@@ -373,6 +373,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startTransitionIn) {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
+            if(camPosX < 430){
+                camPosX += (430-camPosX)*(1*ALPHA_TRANSITION_STEP*3);
+            }
 
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
 
