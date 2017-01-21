@@ -339,7 +339,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     }
 
-    public Entity getMegaLeaves(){
+    public Entity getMegaLeaves() {
         return megaLeaves;
     }
 
@@ -488,24 +488,28 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void onBugOutOfBounds() {
-//        if (fpc.canUsePhoenix()) {
-//            usePhoenix();
-//        }
-//        else {
+        if (fpc.canUsePhoenix()) {
+            usePhoenix();
+        } else {
 
-        loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
-        loseFeedback.getComponent(TransformComponent.class).x = 950;
-        loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-        Actions.checkInit();
-        ac.dataArray.add(Actions.fadeIn(0.2f));
-        ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
-        ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
-        loseFeedback.add(ac);
+            loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
+            loseFeedback.getComponent(TransformComponent.class).x = 950;
+            loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
 
-        FlowerComponent.state = FlowerComponent.State.LOSING;
+            ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
+            if (ac == null) {
+                ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                Actions.checkInit();
+                loseFeedback.add(ac);
+            }
+
+            ac.dataArray.add(Actions.fadeIn(0.2f));
+            ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
+            ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
+
+            FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
-//        }
+        }
     }
 
     public void endGame() {
@@ -516,21 +520,23 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             showGameOverDialog();
         } else {
             isGameOver.set(false);
-            if (GoalFeedbackScreen.shouldShow &&
-                    !GoalFeedbackScreen.isGoalFeedbackOpen) {
+            if (GoalFeedbackScreen.shouldShow && !GoalFeedbackScreen.isGoalFeedbackOpen) {
                 showGoalFeedback();
                 isGameOver.set(true);
-            } else if ((gameStage.gameScript.goalFeedbackScreen == null ||
-                    !GoalFeedbackScreen.isGoalFeedbackOpen)) {
+            } else if ((gameStage.gameScript.goalFeedbackScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
                 isGameOver.set(false);
                 gameStage.gameScript.resetPauseDialog();
-                if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
-                    Main.mainController.submitScore(fpc.score);
-                }
+                submitScoreToGooglePlay();
                 gameStage.gameScript.gameOverDialog.hide();
                 megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
                 gameStage.gameScript.gameStage.initResultWithAds();
             }
+        }
+    }
+
+    private void submitScoreToGooglePlay() {
+        if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
+            Main.mainController.submitScore(fpc.score);
         }
     }
 

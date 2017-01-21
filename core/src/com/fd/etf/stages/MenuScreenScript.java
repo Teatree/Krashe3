@@ -19,9 +19,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
+import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -120,6 +118,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         initFlower(menuItem.getChild(MEGA_FLOWER).getEntity(), menuItem.getChild(MEGA_LEAVES).getEntity());
 
+        if (gameStage.gameScript.fpc.settings.totalPlayedGames <= 0) {
+
+        }
     }
 
     private void initGoalsNotification() {
@@ -480,7 +481,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
     }
 
-    public Entity getMegaLeaves(){
+    public Entity getMegaLeaves() {
         return megaLeaves;
     }
 
