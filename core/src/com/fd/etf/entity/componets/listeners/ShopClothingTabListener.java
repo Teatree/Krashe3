@@ -115,15 +115,16 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
         ShopScreenScript.firstBagTargetPos = shopScreenScript.bags.get(0).getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING;
 
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            ActionComponent a = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-            Actions.checkInit();
-
+            ActionComponent a = icon.getComponent(ActionComponent.class);
+            if (a == null) {
+                a = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                Actions.checkInit();
+                icon.add(a);
+            }
             a.dataArray.add(
                     Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCREEN_WIDTH + PADDING,
                             icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
             );
-
-            icon.add(a);
         }
         ActionComponent acTouchZone = shopScreenScript.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();

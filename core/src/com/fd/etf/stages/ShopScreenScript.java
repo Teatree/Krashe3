@@ -71,9 +71,7 @@ public class ShopScreenScript implements IScript {
     boolean startTransitionOut;
 
     private static Entity scoreLbl;
-    private static Entity scoreLblsh;
     public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
-    public static int bagsZindex;
 
     public List<ShopItem> allSoftItems = new ArrayList<>();
     public List<ShopItem> allHCItems = new ArrayList<>();
@@ -83,6 +81,7 @@ public class ShopScreenScript implements IScript {
     public Vector2 tempGdx = new Vector2();
     public List<Entity> bags = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
+    public static int bagsZindex;
     public int bagPosIdX;
     public Preview preview;
 
@@ -232,7 +231,7 @@ public class ShopScreenScript implements IScript {
 //                    hc.name
 //            );
 
-            if (hc.name.contains(NEW_LINE_SIGN)){
+            if (hc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
                 e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
@@ -241,7 +240,7 @@ public class ShopScreenScript implements IScript {
                 e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         lines[1]);
-            }else {
+            } else {
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(TintComponent.class).color.a = 0;
                 e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
@@ -272,7 +271,8 @@ public class ShopScreenScript implements IScript {
             Entity itemIcon = initSoftCurrencyShopItem(vc);
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(200);
 
-            final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class));
+
+            final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class), allSoftItems.indexOf(vc) == 0);
             bagEntity.add(tc);
             bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex() > bagsZindex ?
                     bagEntity.getComponent(ZIndexComponent.class).getZIndex() : bagsZindex;
@@ -285,7 +285,7 @@ public class ShopScreenScript implements IScript {
             tcb.scaleX = X_SCALE_ICON_ON_BAG;
             tcb.scaleY = Y_SCALE_ICON_ON_BAG;
 
-            if (vc.name.contains(NEW_LINE_SIGN)){
+            if (vc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.name.split(NEW_LINE_SIGN);
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
@@ -294,7 +294,7 @@ public class ShopScreenScript implements IScript {
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         lines[1]);
-            }else {
+            } else {
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(TintComponent.class).color.a = 0;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
@@ -343,7 +343,7 @@ public class ShopScreenScript implements IScript {
             gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), itemIcon, tempItemC.composite);
             gameStage.sceneLoader.getEngine().addEntity(itemIcon);
             return itemIcon;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(name);
             return null;
         }
@@ -417,7 +417,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc) {
+    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc, boolean firstDot) {
         TransformComponent tc = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
 
         if (previous == null) {
@@ -436,7 +436,10 @@ public class ShopScreenScript implements IScript {
                 tc.y = FIRST_BAG_Y - previousDc.height + SPACE_BETWEEN_BAGS_Y;
             }
         }
-        if (bagPosIdY == 7) {
+        if (firstDot){
+            placeTheDot(bagPageId);
+        }
+        if (bagPosIdY == 7 /*|| showLastDot*/) {
             bagPosIdY = 0;
             bagPosIdX++;
             bagPageId++;

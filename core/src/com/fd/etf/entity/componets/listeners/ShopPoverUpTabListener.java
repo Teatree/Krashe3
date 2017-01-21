@@ -17,6 +17,7 @@ import static com.fd.etf.utils.GlobalConstants.*;
  */
 public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
 
+    public static final int SCREEN_WIDTH = 1227;
     private static ShopScreenScript shopScreen;
 
     public ShopPoverUpTabListener(ShopScreenScript shopScript) {
@@ -103,27 +104,28 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
             Actions.checkInit();
 
             a.dataArray.add(
-                    Actions.moveTo(bag.getComponent(TransformComponent.class).x + 1227 + bagsShift,
+                    Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCREEN_WIDTH + bagsShift,
                             bag.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
             );
             bag.add(a);
         }
-        ShopScreenScript.firstBagTargetPos = shopScreen.bags.get(0).getComponent(TransformComponent.class).x + 1227 + bagsShift;
+        ShopScreenScript.firstBagTargetPos = shopScreen.bags.get(0).getComponent(TransformComponent.class).x + SCREEN_WIDTH + bagsShift;
         shiftIcons(bagsShift);
         shopScreen.resetPages();
     }
 
     private static void shiftIcons(float bagsShift) {
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            ActionComponent a = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-            Actions.checkInit();
-
+            ActionComponent a = icon.getComponent(ActionComponent.class);
+            if (a == null) {
+                a = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                Actions.checkInit();
+                icon.add(a);
+            }
             a.dataArray.add(
-                    Actions.moveTo(icon.getComponent(TransformComponent.class).x + 1227 + bagsShift,
+                    Actions.moveTo(icon.getComponent(TransformComponent.class).x + SCREEN_WIDTH + bagsShift,
                             icon.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10)
             );
-
-            icon.add(a);
         }
     }
 
@@ -146,10 +148,10 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
         shopScreen.hcSectionE.getComponent(TransformComponent.class).x = ShopScreenScript.INIT_HC_ITEMS_X;
         float bagsShift = 73 - shopScreen.bags.get(0).getComponent(TransformComponent.class).x;
         for (Entity bag : shopScreen.bags) {
-            bag.getComponent(TransformComponent.class).x += 1227 + bagsShift;
+            bag.getComponent(TransformComponent.class).x += SCREEN_WIDTH + bagsShift;
         }
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
-            icon.getComponent(TransformComponent.class).x += 1227 + bagsShift;
+            icon.getComponent(TransformComponent.class).x += SCREEN_WIDTH + bagsShift;
         }
         shopScreen.touchZoneNButton.getComponent(TransformComponent.class).x = 1300;
 //        shiftTouchZone();
