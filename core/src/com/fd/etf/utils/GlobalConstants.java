@@ -20,5 +20,5 @@ public abstract class GlobalConstants {
     public static final String BUTTON_TAG = "button";
     public static final float TENTH = 0.1f;
 
-    public static final float ALPHA_TRANSITION_STEP = 0.05f;
+    public static final float ALPHA_TRANSITION_STEP = 0.03f;
 }

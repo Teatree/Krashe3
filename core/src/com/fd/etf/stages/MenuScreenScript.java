@@ -7,6 +7,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
+import com.uwsoft.editor.renderer.components.MainItemComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -48,6 +49,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final int TIMER_Y = 441;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
+    private static final String TOTAL_COINS = "total_coins_C";
     private static final String TAP_TO_PLAY = "tap_to_play";
     private static final float RATE_APP_BTN_ALPHA = 0.8352941f;
     private final GameStage gameStage;
@@ -80,6 +82,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private Entity btnPlayServices;
     private Entity leaderboard_C;
     private Entity achievements_C;
+    private Entity total_coins;
 
     public float wrldW = 800;
     public float wrldH = 524;
@@ -109,6 +112,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         startShopTransition = false;
         startTransitionIn = true;
         isDialogOpen.set(false);
+        total_coins = menuItem.getChild(TOTAL_COINS).getEntity();
+        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).setText(String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         if (timer == null) {
             timer = new TrialTimer(gameStage, menuItem, TIMER_X, TIMER_Y);
@@ -120,6 +125,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         initFlower(menuItem.getChild(MEGA_FLOWER).getEntity(), menuItem.getChild(MEGA_LEAVES).getEntity());
 
+        // all the single alphas
+        total_coins.getComponent(TintComponent.class).color.a = 0f;
+//        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().font.;
     }
 
     private void initGoalsNotification() {
@@ -349,6 +357,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
                 gameStage.initShopWithAds();
+                curtain_mm.getComponent(TintComponent.class).color.a = 1;
             }
         }
 
@@ -356,6 +365,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
                 startTransitionIn = false;
+                curtain_mm.getComponent(TintComponent.class).color.a = 0;
             }
         }
     }
