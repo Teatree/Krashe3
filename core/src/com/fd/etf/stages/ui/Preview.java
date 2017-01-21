@@ -395,12 +395,13 @@ public class Preview extends AbstractDialog {
 
     private void putInPlaceNewIconPosition() {
         TransformComponent tc = changeBagIcon(vc);
-        itemIcons.get(vc.shopIcon).add(tc);
-        itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
-                ShopScreenScript.bagsZindex + 10);
         gameStage.sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
         itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
                 shadowE.getComponent(ZIndexComponent.class).getZIndex() - 1);
+        itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = tc.x;
+        itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = tc.y;
+        itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                ShopScreenScript.bagsZindex + 10);
     }
 
     public TransformComponent changeBagIcon(ShopItem vc) {
