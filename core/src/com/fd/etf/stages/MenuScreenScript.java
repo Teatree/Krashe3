@@ -162,20 +162,20 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         wrldH = 524;
         camPosX = 130;
 
-        menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 1;
-        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 1;
-        btnSettings.getComponent(TintComponent.class).color.a = 1;
-        btnPlayServices.getComponent(TintComponent.class).color.a = 1;
-        rateAppBtn.getComponent(TintComponent.class).color.a = RATE_APP_BTN_ALPHA;
-        btnShop.getComponent(TintComponent.class).color.a = 1;
-        btnChalenges.getComponent(TintComponent.class).color.a = 1;
-        btnFB.getComponent(TintComponent.class).color.a = 1;
-        btnLB.getComponent(TintComponent.class).color.a = 1;
-        btnAchievements.getComponent(TintComponent.class).color.a = 1;
-        leaderboard_C.getComponent(TintComponent.class).color.a = 1;
-        achievements_C.getComponent(TintComponent.class).color.a = 1;
+        menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 0;
+        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 0;
+        btnSettings.getComponent(TintComponent.class).color.a = 0;
+        btnPlayServices.getComponent(TintComponent.class).color.a = 0;
+        rateAppBtn.getComponent(TintComponent.class).color.a = 0;
+        btnShop.getComponent(TintComponent.class).color.a = 0;
+        btnChalenges.getComponent(TintComponent.class).color.a = 0;
+        btnFB.getComponent(TintComponent.class).color.a = 0;
+        btnLB.getComponent(TintComponent.class).color.a = 0;
+        btnAchievements.getComponent(TintComponent.class).color.a = 0;
+        leaderboard_C.getComponent(TintComponent.class).color.a = 0;
+        achievements_C.getComponent(TintComponent.class).color.a = 0;
         if (timer != null) {
-            timer.timerE.getComponent(TintComponent.class).color.a = 1;
+            timer.timerE.getComponent(TintComponent.class).color.a = 0;
         }
 
         GameStage.viewport.setWorldSize(wrldW, wrldH);
@@ -374,7 +374,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         if (startTransitionIn) {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
             if(camPosX < 430){
-                camPosX += (430-camPosX)*(1*ALPHA_TRANSITION_STEP*3);
+                camPosX += (430-camPosX)*(1*ALPHA_TRANSITION_STEP*4);
             }
 
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
@@ -393,8 +393,18 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                 Actions.checkInit();
                 ac2.dataArray.add(Actions.sequence(
-                        Actions.delay(2), Actions.fadeIn(2f, Interpolation.exp5Out)));
+                        Actions.delay(1.5f), Actions.fadeIn(2f, Interpolation.exp5Out)));
                 menuItem.getChild(TAP_TO_PLAY).getEntity().add(ac2);
+
+                for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+                    if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")) {
+                        ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                        Actions.checkInit();
+                        ac3.dataArray.add(Actions.sequence(
+                                Actions.delay(2.3f), Actions.fadeIn(2f, Interpolation.exp5Out)));
+                        e.add(ac3);
+                    }
+                }
             }
         }
     }
