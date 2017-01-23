@@ -140,7 +140,7 @@ public class BugSpawnSystem extends EntitySystem {
         Entity bugEntity = BugPool.getInstance(gameStage).get(tempType);
         BugComponent bc = new BugComponent(gameStage, tempType, currentMultiplier);
         if (bugEntity == null) {
-            System.out.println(tempType);
+            System.out.println("temp bug type " + tempType);
         }
         bugEntity.add(bc);
 

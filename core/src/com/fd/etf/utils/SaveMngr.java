@@ -115,14 +115,14 @@ public class SaveMngr {
         initAllMultipliers();
         initCocoonMultipliers();
         initDandelionMultipliers();
+
         FlowerPublicComponent fc = new FlowerPublicComponent();
         fc.upgrades = new HashMap<>();
         Goal.init(fc);
         String saved = readFile(DATA_FILE);
-//        saved = "";
         Level.goalStatusChanged = true;
-        if (!"".equals(saved)) {
 
+        if (!"".equals(saved)) {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
@@ -172,12 +172,7 @@ public class SaveMngr {
 
             fc.pets = getAllPets();
             PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
-            if (petComponent != null && petComponent.tryPeriod) {
-                long now = System.currentTimeMillis();
-                if (now - petComponent.tryPeriodStart >= petComponent.tryPeriodDuration * 1000) {
-                    petComponent = null;
-                }
-            }
+            petComponent = checkPetsTryPeriod(petComponent);
             fc.currentPet = petComponent;
 //            dummyPet(fc);
             Goal.init(fc);
@@ -185,6 +180,16 @@ public class SaveMngr {
         }
         fc.vanities = getAllVanity();
         return fc;
+    }
+
+    private static PetComponent checkPetsTryPeriod(PetComponent petComponent) {
+        if (petComponent != null && petComponent.tryPeriod) {
+            long now = System.currentTimeMillis();
+            if (now - petComponent.tryPeriodStart >= petComponent.tryPeriodDuration * 1000) {
+                petComponent = null;
+            }
+        }
+        return petComponent;
     }
 
     private static void dummyPet(FlowerPublicComponent fc) {

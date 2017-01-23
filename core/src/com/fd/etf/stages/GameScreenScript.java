@@ -397,8 +397,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void initPet() {
         hideCurrentPet();
         if (fpc.currentPet != null && fpc.currentPet.enabled) {
-            loadPetFromLib();
             fpc.currentPet.gameStage = gameStage;
+            loadPetFromLib();
             if (fpc.currentPet.enabled) {
                 fpc.currentPet.init();
 
@@ -425,8 +425,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void loadPetFromLib() {
-        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
         gameStage.sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name);
         petE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
         gameStage.sceneLoader.getEngine().addEntity(petE);
     }
