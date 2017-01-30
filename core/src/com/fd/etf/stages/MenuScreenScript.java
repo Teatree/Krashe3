@@ -50,7 +50,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final int TIMER_Y = 441;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
-    private static final String TOTAL_COINS = "total_coins_C";
     private static final String TAP_TO_PLAY = "tap_to_play";
     private static final float RATE_APP_BTN_ALPHA = 0.8352941f;
     private final GameStage gameStage;
@@ -83,7 +82,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private Entity btnPlayServices;
     private Entity leaderboard_C;
     private Entity achievements_C;
-    private Entity total_coins;
 
     public float wrldW = 800;
     public float wrldH = 524;
@@ -113,8 +111,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         startShopTransition = false;
         startTransitionIn = true;
         isDialogOpen.set(false);
-        total_coins = menuItem.getChild(TOTAL_COINS).getEntity();
-        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).setText(String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         if (timer == null) {
             timer = new TrialTimer(gameStage, menuItem, TIMER_X, TIMER_Y);
@@ -127,8 +123,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         initFlower(menuItem.getChild(MEGA_FLOWER).getEntity(), menuItem.getChild(MEGA_LEAVES).getEntity());
 
         // all the single alphas
-        total_coins.getComponent(TintComponent.class).color.a = 0f;
-        total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().fontColor.a = 0;
 
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleX = 0.3f;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleY = 0.3f;
@@ -466,8 +460,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             btnChalenges.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
             btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            total_coins.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            total_coins.getComponent(NodeComponent.class).getChild("total_coins").getComponent(LabelComponent.class).getStyle().fontColor.a -= TINT_STEP;
             btnAchievements.getComponent(TintComponent.class).color.a -= TINT_STEP;
             if (timer != null) {
                 timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
