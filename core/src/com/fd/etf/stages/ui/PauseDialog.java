@@ -151,6 +151,7 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
         LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
+        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf("LEVEL: " + gameStage.gameScript.fpc.level.difficultyLevel));
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
@@ -254,7 +255,6 @@ public class PauseDialog extends AbstractDialog {
                 tapCoolDown = TAP_COOLDOWN;
             }
             tapCoolDown--;
-
 
             if (pauseTimer >= 1 && lblPauseTimer != null) {
                 pauseTimer = 0;
