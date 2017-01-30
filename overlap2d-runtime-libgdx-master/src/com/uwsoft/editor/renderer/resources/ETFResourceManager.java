@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -260,6 +261,9 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         FreetypeFontLoader.FreeTypeFontLoaderParameter sizeParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + TTF;
         sizeParams.fontParameters.size = pair.fontSize;
+        // This was once a solution to the no border problem
+//        sizeParams.fontParameters.borderWidth = 4;
+//        sizeParams.fontParameters.borderColor = Color.BLACK;
         manager.load(pair.fontName + pair.fontSize + TTF, BitmapFont.class, sizeParams);
     }
 

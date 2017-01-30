@@ -102,6 +102,8 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+        goalsLabelComp.fontScaleX = 0.7f;
+        goalsLabelComp.fontScaleY = 0.7f;
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), PAUSE_TEXT);
 
         createGoalTiles();
@@ -115,7 +117,8 @@ public class PauseDialog extends AbstractDialog {
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), CHALLENGES);
-
+        goalsLabelComp.fontScaleX = 0.7f;
+        goalsLabelComp.fontScaleY = 0.7f;
 
         pauseDialogE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
         pauseDialogE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
