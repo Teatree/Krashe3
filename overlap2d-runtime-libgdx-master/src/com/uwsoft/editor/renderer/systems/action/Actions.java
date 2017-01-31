@@ -218,6 +218,10 @@ public class Actions {
         return alpha(1, duration, interpolation);
     }
 
+    public static AlphaData fadeIn (float duration, Interpolation interpolation, float alpha) {
+        checkInit();
+        return alpha(alpha, duration, interpolation);
+    }
 
     public static AlphaData fadeOut (float duration) {
         return alpha(0, duration, null);

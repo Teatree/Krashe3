@@ -60,7 +60,7 @@ public class AbstractDialog {
 
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
-        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
+        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5, 0.6f));
         shadowE.add(ac);
     }
 

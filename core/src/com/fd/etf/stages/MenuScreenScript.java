@@ -317,7 +317,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 });
 
         for (Entity e: menuItem.getComponent(NodeComponent.class).children){
-            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")) {
+            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
@@ -391,7 +391,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 menuItem.getChild(TAP_TO_PLAY).getEntity().add(ac2);
 
                 for (Entity e: menuItem.getComponent(NodeComponent.class).children){
-                    if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")) {
+                    if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                         ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
                         ac3.dataArray.add(Actions.sequence(
