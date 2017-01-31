@@ -298,6 +298,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
                             lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                             Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+                            if (imgGoalNotification.getComponent(ActionComponent.class) != null) {
+                                imgGoalNotification.getComponent(ActionComponent.class).reset();
+                            }
                             imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
 
                             if (pauseDialog == null) {
@@ -444,7 +447,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
             frames++;
         }
-
+        // less less code!
         if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
             menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
             menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;

@@ -262,8 +262,11 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + TTF;
         sizeParams.fontParameters.size = pair.fontSize;
         // This was once a solution to the no border problem
-//        sizeParams.fontParameters.borderWidth = 4;
+//        sizeParams.fontParameters.borderWidth = 2;
 //        sizeParams.fontParameters.borderColor = Color.BLACK;
+//        sizeParams.fontParameters.shadowOffsetX = 3;
+//        sizeParams.fontParameters.shadowOffsetY = 3;
+//        sizeParams.fontParameters.shadowColor = Color.BLACK;
         manager.load(pair.fontName + pair.fontSize + TTF, BitmapFont.class, sizeParams);
     }
 
