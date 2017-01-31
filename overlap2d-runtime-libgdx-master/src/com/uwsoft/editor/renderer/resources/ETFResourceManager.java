@@ -261,12 +261,14 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         FreetypeFontLoader.FreeTypeFontLoaderParameter sizeParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + TTF;
         sizeParams.fontParameters.size = pair.fontSize;
-        // This was once a solution to the no border problem
+
+        // font fiddles
 //        sizeParams.fontParameters.borderWidth = 2;
 //        sizeParams.fontParameters.borderColor = Color.BLACK;
 //        sizeParams.fontParameters.shadowOffsetX = 3;
 //        sizeParams.fontParameters.shadowOffsetY = 3;
 //        sizeParams.fontParameters.shadowColor = Color.BLACK;
+
         manager.load(pair.fontName + pair.fontSize + TTF, BitmapFont.class, sizeParams);
     }
 

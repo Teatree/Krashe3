@@ -373,26 +373,30 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
                 curtain_mm.getComponent(TintComponent.class).color.a = 0;
 
-                ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                // initial animations
+                for (Entity e2: menuItem.getComponent(NodeComponent.class).children){
+                    if (e2.getComponent(ActionComponent.class) == null){
+                        e2.add(new ActionComponent());
+                    }
+                }
+
                 Actions.checkInit();
-                ac.dataArray.add(Actions.sequence(
+
+                menuItem.getChild(IMG_LOGO).getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
                         Actions.delay(0.6f),
                         Actions.parallel(Actions.fadeIn(0.4f, Interpolation.exp5Out), Actions.scaleTo(0.6f, 0.6f, 0.4f, Interpolation.exp5Out))));
-                menuItem.getChild(IMG_LOGO).getEntity().add(ac);
 
-                ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-                Actions.checkInit();
-                ac2.dataArray.add(Actions.sequence(
+                menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
                         Actions.delay(1.5f), Actions.fadeIn(2f, Interpolation.exp5Out)));
-                menuItem.getChild(TAP_TO_PLAY).getEntity().add(ac2);
 
                 for (Entity e: menuItem.getComponent(NodeComponent.class).children){
                     if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
-                        ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                         Actions.checkInit();
-                        ac3.dataArray.add(Actions.sequence(
+                        if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification){
+                            continue;
+                        }
+                        e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
                                 Actions.delay(2.3f), Actions.fadeIn(2f, Interpolation.exp5Out)));
-                        e.add(ac3);
                     }
                 }
             }
