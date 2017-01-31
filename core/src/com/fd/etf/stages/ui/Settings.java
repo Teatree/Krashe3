@@ -36,7 +36,7 @@ public class Settings extends AbstractDialog {
     private static final String BTN_NO_ADS = "btn_noAds";
 
     private static final int SETTINGS_Y = 50;
-    private static final int SETTINGS_X = 560;
+    private static final int SETTINGS_X = 600;
     private static final int INFO_HIDDEN_X = 1600;
     private static final int SETTINGS_HIDDEN_X = -1000;
     public static final float SETTINGS_SCALE = 0.65f;

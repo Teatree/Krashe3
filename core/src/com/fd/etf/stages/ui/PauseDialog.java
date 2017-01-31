@@ -40,7 +40,7 @@ public class PauseDialog extends AbstractDialog {
 
     private static final int PAUSE_Y = 50;
     private static final int PAUSE_X = 260;
-    private static final int GOALS_X = 630;
+    private static final int GOALS_X = 610;
     private static final int GOAL_TILE_START_Y = 400;
     private static final int GOAL_TILE_SPACE_X = 170;
     private static final float GOAL_TILE_SCALE = 2f;
