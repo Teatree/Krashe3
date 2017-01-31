@@ -93,6 +93,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private double transitionCoefficient;
     public Entity megaFlower;
     public Entity megaLeaves;
+    private boolean canClickPlay;
 
     public MenuScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -104,6 +105,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public void init(Entity item) {
 
         frames = 0;
+        canClickPlay = false;
         menuItem = new ItemWrapper(item);
         curtain_mm = menuItem.getChild(CURTAIN).getEntity();
         curtain_mm.getComponent(TintComponent.class).color.a = 1f;
@@ -239,7 +241,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 new ImageButtonListener(playBtn, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen.get()) {
+                        if (!isDialogOpen.get() && canClickPlay) {
                             startGameTransition = true;
                         }
                     }
@@ -328,6 +330,10 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 //        GameStage.viewport.getCamera()
 //        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
 //        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
+
+        if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a == 1){
+            canClickPlay = true;
+        }
 
         //move da other buttons
         moveDaFlaps();
