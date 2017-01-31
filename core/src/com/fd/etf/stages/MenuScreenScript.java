@@ -156,22 +156,15 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         wrldH = 524;
         camPosX = 130;
 
-        menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a = 0;
-        menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a = 0;
-        btnSettings.getComponent(TintComponent.class).color.a = 0;
-        btnPlayServices.getComponent(TintComponent.class).color.a = 0;
-        rateAppBtn.getComponent(TintComponent.class).color.a = 0;
-        btnShop.getComponent(TintComponent.class).color.a = 0;
-        btnChalenges.getComponent(TintComponent.class).color.a = 0;
-        btnFB.getComponent(TintComponent.class).color.a = 0;
-        btnLB.getComponent(TintComponent.class).color.a = 0;
-        btnAchievements.getComponent(TintComponent.class).color.a = 0;
-        leaderboard_C.getComponent(TintComponent.class).color.a = 0;
-        achievements_C.getComponent(TintComponent.class).color.a = 0;
+        //less code!
+        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
+                e.getComponent(TintComponent.class).color.a = 0;
+            }
+        }
         if (timer != null) {
             timer.timerE.getComponent(TintComponent.class).color.a = 0;
         }
-
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
     }
