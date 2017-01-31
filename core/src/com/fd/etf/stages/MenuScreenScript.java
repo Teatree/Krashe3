@@ -389,14 +389,44 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
                         Actions.delay(1.5f), Actions.fadeIn(2f, Interpolation.exp5Out)));
 
-                for (Entity e: menuItem.getComponent(NodeComponent.class).children){
-                    if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY) && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
-                        Actions.checkInit();
-                        if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification){
-                            continue;
+//                System.out.println("Flower x: " + menuItem.getChild("mega_flower").getComponent(TransformComponent.class).x);
+                for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
+                    if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO)
+                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(TAP_TO_PLAY)
+                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg")
+                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_leafs")
+                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_flower")
+                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
+                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
+                        e.getComponent(TintComponent.class).color.a = 0;
+                        if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                            if (e.getComponent(TransformComponent.class).x < wrldW) {
+                                e.getComponent(TransformComponent.class).x -= 100;
+                            }else{
+                                e.getComponent(TransformComponent.class).x += 100;
+                            }
+                        }else{
+                            e.getComponent(TransformComponent.class).y -= 100;
                         }
-                        e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                Actions.delay(2.3f), Actions.fadeIn(2f, Interpolation.exp5Out)));
+                        if( gameStage.gameScript.fpc.settings.totalPlayedGames > 1) {
+                            Actions.checkInit();
+                            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {
+                                continue;
+                            }
+                            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                                if (e.getComponent(TransformComponent.class).x < wrldW) {
+                                    e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
+                                            Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x+100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                }else{
+                                    e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
+                                            Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x-100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                }
+                            }else{
+                                e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
+                                        Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y+100, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                            }
+
+                        }
                     }
                 }
             }
@@ -451,28 +481,21 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
             frames++;
         }
-        // less less code!
-        if (menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a >= 0) {
-            menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
-            menuItem.getChild(IMG_LOGO).getEntity().getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnSettings.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnShop.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnChalenges.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnFB.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnLB.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            btnAchievements.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            if (timer != null) {
-                timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            }
-            rateAppBtn.getComponent(TintComponent.class).color.a = 0;
-            btnPlayServices.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            leaderboard_C.getComponent(TintComponent.class).color.a = 0;
-            achievements_C.getComponent(TintComponent.class).color.a = 0;
-            if (imgGoalNotification != null && imgGoalNotification.getComponent(TintComponent.class).color.a != 0) {
-                imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
-                lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
-            }
+        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg")
+                    && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
+                    && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
+                    && e.getComponent(TintComponent.class).color.a > 0) {
 
+//                if (timer != null) {
+//                    timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
+//                }
+//                if (imgGoalNotification != null && imgGoalNotification.getComponent(TintComponent.class).color.a != 0) {
+//                    imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+//                    lblGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;
+//                }
+                e.getComponent(TintComponent.class).color.a -= TINT_STEP;
+            }
         }
 
         if (GameStage.viewport.getWorldWidth() >= 1195) {
