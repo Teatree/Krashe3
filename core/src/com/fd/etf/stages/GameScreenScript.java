@@ -223,8 +223,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.gameScript.fpc.settings.totalPlayedGames++;
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
+    }
+
+    public void initStartTrans(){
+        FlowerComponent.state = FlowerComponent.State.IDLE;
 
         gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x -= 200;
+        gameItem.getChild("btn_pause").getEntity().getComponent(TintComponent.class).color.a = 0;
         ActionComponent ac = new ActionComponent();
         ac.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
@@ -251,11 +256,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 Actions.fadeIn(2f, Interpolation.exp5, 0.5f)));
         gameItem.getChild("tutorial_line").getEntity().add(ac3);
 
+        gameItem.getChild(LBL_TAP_2_START).getEntity().getComponent(TintComponent.class).color.a = 0;
         ActionComponent ac4 = new ActionComponent();
         ac4.dataArray.add(Actions.sequence(
                 Actions.delay(5f),
                 Actions.parallel(Actions.fadeIn(1f, Interpolation.exp5Out), Actions.scaleTo(1f, 1f, 1f, Interpolation.exp5Out))));
-        startLabel.add(ac4);
+        gameItem.getChild(LBL_TAP_2_START).getEntity().add(ac4);
 
         ActionComponent ac5 = new ActionComponent();
         ac5.dataArray.add(Actions.sequence(
@@ -482,6 +488,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (blowUpAllBugs) {
             blowUpCounter--;
         }
+
+
 
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
