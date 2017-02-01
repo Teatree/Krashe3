@@ -27,6 +27,7 @@ public class PauseDialog extends AbstractDialog {
 
     private static final String PAUSE_DIALOG = "dialog";
     private static final String LBL_DIALOG = "lbl_dialog";
+    private static final String LBL_DIALOG_SH = "lbl_dialog_sh";
     private static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
     private static final String LBL_GOAL_PROGRESS = "goal_progress";
     private static final String BTN_CLOSE = "btn_close";
@@ -106,6 +107,12 @@ public class PauseDialog extends AbstractDialog {
         goalsLabelComp.fontScaleY = 0.7f;
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), PAUSE_TEXT);
 
+        final Entity goalLabelsh = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_SH);
+        LabelComponent goalsLabelCompsh = goalLabelsh.getComponent(LabelComponent.class);
+        goalsLabelCompsh.fontScaleX = 0.7f;
+        goalsLabelCompsh.fontScaleY = 0.7f;
+        goalsLabelCompsh.text.replace(0, goalsLabelCompsh.text.capacity(), PAUSE_TEXT);
+
         createGoalTiles();
 
         popupX = PAUSE_X;
@@ -119,6 +126,12 @@ public class PauseDialog extends AbstractDialog {
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), CHALLENGES);
         goalsLabelComp.fontScaleX = 0.7f;
         goalsLabelComp.fontScaleY = 0.7f;
+
+        final Entity goalLabelsh = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_SH);
+        LabelComponent goalsLabelCompsh = goalLabelsh.getComponent(LabelComponent.class);
+        goalsLabelCompsh.text.replace(0, goalsLabelCompsh.text.capacity(), CHALLENGES);
+        goalsLabelCompsh.fontScaleX = 0.7f;
+        goalsLabelCompsh.fontScaleY = 0.7f;
 
         pauseDialogE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
         pauseDialogE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;

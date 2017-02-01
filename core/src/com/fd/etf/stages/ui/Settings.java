@@ -10,6 +10,7 @@ import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
+import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
@@ -58,6 +59,20 @@ public class Settings extends AbstractDialog {
         Entity nextInfoBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_NEXT_INFO);
         Entity restorePurchasesBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESTORE);
         Entity resetProgressBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESET);
+
+
+        settingsE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        settingsE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleY = 0.7f;
+        settingsE.getComponent(NodeComponent.class).getChild("settings_title_sh").getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        settingsE.getComponent(NodeComponent.class).getChild("settings_title_sh").getComponent(LabelComponent.class).fontScaleY = 0.7f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_reset").getComponent(NodeComponent.class).getChild("reset_lbl").getComponent(LabelComponent.class).fontScaleX = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_reset").getComponent(NodeComponent.class).getChild("reset_lbl").getComponent(LabelComponent.class).fontScaleY = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_reset").getComponent(NodeComponent.class).getChild("reset_lbl_sh").getComponent(LabelComponent.class).fontScaleX = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_reset").getComponent(NodeComponent.class).getChild("reset_lbl_sh").getComponent(LabelComponent.class).fontScaleY = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_restore").getComponent(NodeComponent.class).getChild("restore_lbl").getComponent(LabelComponent.class).fontScaleX = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_restore").getComponent(NodeComponent.class).getChild("restore_lbl").getComponent(LabelComponent.class).fontScaleY = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_restore").getComponent(NodeComponent.class).getChild("restore_lbl_sh").getComponent(LabelComponent.class).fontScaleX = 0.5f;
+        settingsE.getComponent(NodeComponent.class).getChild("btn_restore").getComponent(NodeComponent.class).getChild("restore_lbl_sh").getComponent(LabelComponent.class).fontScaleY = 0.5f;
 
         initSoundBtn();
         initMusicBtn();
@@ -202,6 +217,11 @@ public class Settings extends AbstractDialog {
         infoE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
         gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), infoE, tempItemC.composite);
         gameStage.sceneLoader.getEngine().addEntity(infoE);
+
+        infoE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        infoE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleY = 0.7f;
+        infoE.getComponent(NodeComponent.class).getChild("settings_title_sh").getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        infoE.getComponent(NodeComponent.class).getChild("settings_title_sh").getComponent(LabelComponent.class).fontScaleY = 0.7f;
     }
 
     public void show() {
