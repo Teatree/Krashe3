@@ -138,8 +138,6 @@ public class ShopScreenScript implements IScript {
             }
         }
 
-        createIconsForAllSoftItems();
-        createIconsForAllHCItems();
         initTabBtns();
         initScrollLeftBtn();
         initScrollRightBtn();
@@ -150,6 +148,8 @@ public class ShopScreenScript implements IScript {
         canChangeTabs = true;
         isPreviewOn.set(false);
         isAllowedMoving = true;
+        createIconsForAllSoftItems();
+        createIconsForAllHCItems();
     }
 
     public void initTabBtns() {
@@ -225,11 +225,6 @@ public class ShopScreenScript implements IScript {
 
         for (Entity e : nc.children) {
             final ShopItem hc = findCorrectHCitemByTitle(e.getComponent(MainItemComponent.class).itemIdentifier);
-//            Entity child = e.getComponent(NodeComponent.class).getChild(TITLE);
-//            child.getComponent(LabelComponent.class).text.replace(
-//                    0, child.getComponent(LabelComponent.class).text.length,
-//                    hc.name
-//            );
 
             if (hc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
@@ -386,6 +381,11 @@ public class ShopScreenScript implements IScript {
         preview.updatePreview();
         lc.text.replace(0, lc.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
+        for (Entity e3: shopItem.getComponent(NodeComponent.class).children){
+//            if(e3.getComponent(MainItemComponent.class).itemIdentifier) {
+                System.out.println("fuck: " + e3.getComponent(ButtonComponent.class));
+//            }
+        }
         if (firstBagTargetPos != 0) {
             float bPos = bags.get(0).getComponent(TransformComponent.class).x;
             if (firstBagTargetPos == 0 || bPos == firstBagTargetPos) {
