@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -12,6 +13,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+//import com.badlogic.gdx.scenes.scene2d.actions.A
 
 import java.util.List;
 
@@ -208,6 +210,24 @@ public class Preview extends AbstractDialog {
             btn_buy.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblNotEnough.getComponent(TransformComponent.class).y = 36;
             lblNotEnough.getComponent(TintComponent.class).color.a = 1;
+            if(lblNotEnough.getComponent(ActionComponent.class) == null){
+                lblNotEnough.add(new ActionComponent());
+            }
+            lblNotEnough.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 1f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade)));
+            Actions.checkInit();
             lblNotEnough.getComponent(ZIndexComponent.class).setZIndex(99);
             lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -260,7 +280,7 @@ public class Preview extends AbstractDialog {
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
-            addShadow();
+            addShadow(1f);
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
             ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
@@ -296,6 +316,7 @@ public class Preview extends AbstractDialog {
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         } else if (vc.description != null && canPlayDescAni){
+
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(TransformComponent.class).x = 100;
             infoTag.getComponent(NodeComponent.class).
@@ -489,7 +510,7 @@ public class Preview extends AbstractDialog {
             lc.getLayer(DEFAULT_LAYER).isVisible = true;
         } else {
             lc.getLayer(DEFAULT_LAYER).isVisible = false;
-            lc.getLayer(BTN_INACTIVE).isVisible = true;
+            lc.getLayer(BTN_INACTIVE).isVisible = false;
         }
 
         btnPrev.getComponent(ButtonComponent.class)
@@ -555,7 +576,7 @@ public class Preview extends AbstractDialog {
             lc.getLayer(DEFAULT_LAYER).isVisible = true;
         } else {
             lc.getLayer(DEFAULT_LAYER).isVisible = false;
-            lc.getLayer(BTN_INACTIVE).isVisible = true;
+            lc.getLayer(BTN_INACTIVE).isVisible = false;
         }
 
         btnNext.getComponent(ButtonComponent.class).clearListeners();

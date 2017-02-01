@@ -583,7 +583,7 @@ public class ShopScreenScript implements IScript {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
         if (canMoveBagsRight()) {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
@@ -594,7 +594,7 @@ public class ShopScreenScript implements IScript {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
     }
 
@@ -646,6 +646,6 @@ public class ShopScreenScript implements IScript {
         touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                 .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
         touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
     }
 }
