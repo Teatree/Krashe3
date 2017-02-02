@@ -286,6 +286,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
 
+        initDoubleBJIcon();
+        initPhoenixIcon();
+
         CocoonSystem.resetSpawnCoefficients();
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();

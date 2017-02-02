@@ -43,6 +43,7 @@ public class GoalFeedbackScreen {
     private static final String GOAL_PROGRESS = "goal_progress";
     private static final String GOAL_LBL = "goal_lbl";
     public static final String LBL_GIFT_SCREEN = "lbl_gift_screen";
+    public static final String LBL_GIFT_SCREEN2 = "lbl_gift_screen2";
     public static final String LBL_TAP_TO_OPEN = "lbl_tap_to_open";
     public final String BOX_ANI = "box_ani";
     private static final int POS_X = -22;
@@ -79,6 +80,7 @@ public class GoalFeedbackScreen {
     private Gift gift;
     private Entity lblTapToOpen;
     private Entity lbl;
+    private Entity lbl2;
 //    private Entity lblMoney;
     private Entity giftE;
     private Entity greenShadeE;
@@ -392,6 +394,8 @@ public class GoalFeedbackScreen {
             lblTapToOpen.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex() - 1);
             lbl = new ItemWrapper(giftE).getChild(LBL_GIFT_SCREEN).getEntity();
             lbl.getComponent(TintComponent.class).color.a = 0;
+            lbl2 = new ItemWrapper(giftE).getChild(LBL_GIFT_SCREEN2).getEntity();
+            lbl2.getComponent(TintComponent.class).color.a = 0;
             ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
             ac.dataArray.add(Actions.rotateBy(20000, 400));
@@ -436,6 +440,10 @@ public class GoalFeedbackScreen {
             greenShadeE.getComponent(TintComponent.class).color.a += 0.02f;
             lbl.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex()+1);
             lbl.getComponent(TintComponent.class).color.a += 0.02f;
+            if (gift.pet != null || gift.upgrade != null){
+                lbl2.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex()+1);
+                lbl2.getComponent(TintComponent.class).color.a += 0.02f;
+            }
         }
 
         if (helpTimer > 250 && saBox.currentAnimation != "open") {
@@ -477,6 +485,17 @@ public class GoalFeedbackScreen {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT A " + gift.type + " !!!");
+            if (gift.pet != null) {
+                lbl2.getComponent(LabelComponent.class).text.replace(0,
+                        lbl2.getComponent(LabelComponent.class).text.capacity(),
+                        "IT EXPIRES IN " + gift.pet.tryPeriodDuration + " !!!");
+            }
+            if (gift.upgrade != null) {
+                lbl2.getComponent(LabelComponent.class).text.replace(0,
+                        lbl2.getComponent(LabelComponent.class).text.capacity(),
+                        "IT EXPIRES IN " + gift.upgrade.tryPeriodDuration + " !!!");
+            }
+
         } else {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
@@ -527,5 +546,6 @@ public class GoalFeedbackScreen {
         stateTime = 0;
         isGoalFeedbackOpen = false;
         hideGoalFeedback();
+        gift.takeGift(gameStage, gameStage.gameScript.fpc);
     }
 }
