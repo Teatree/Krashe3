@@ -64,7 +64,7 @@ public class LabelComponentFactory extends ComponentFactory{
         if (size == 0) {
             size = labelDefaultSize;
         }
-        return new LabelStyle(rManager.getBitmapFont(fontName, size), new Color(tint[0],tint[1],tint[2],tint[3]));
+        return new LabelStyle(rManager.getBitmapFont(fontName, size), new Color(1,1,1,1));
     }
 
 }
