@@ -184,7 +184,7 @@ public class Preview extends AbstractDialog {
 
         if (vc.name.contains(NEW_LINE_SIGN)){
             String[] lines = vc.name.split(NEW_LINE_SIGN);
-            lblTitleLine2.getComponent(TintComponent.class).color.a = 1;
+            lblTitle.getComponent(TintComponent.class).color.a = 1;
             lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex() + 1);
             lblTitle.getComponent(LabelComponent.class).text.replace(
                     0, lblTitle.getComponent(LabelComponent.class).text.length, lines[0]);
@@ -210,29 +210,31 @@ public class Preview extends AbstractDialog {
             btn_buy.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblNotEnough.getComponent(TransformComponent.class).y = 36;
             lblNotEnough.getComponent(TintComponent.class).color.a = 1;
-            if(lblNotEnough.getComponent(ActionComponent.class) == null){
+            if (lblNotEnough.getComponent(ActionComponent.class) == null) {
                 lblNotEnough.add(new ActionComponent());
             }
-            lblNotEnough.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 1f, Interpolation.fade),
+            lblNotEnough.getComponent(ActionComponent.class).reset();
+
+            lblNotEnough.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 1f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade),
-                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y+20, 2f, Interpolation.fade),
+                    Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y + 20, 2f, Interpolation.fade),
                     Actions.moveTo(lblNotEnough.getComponent(TransformComponent.class).x, lblNotEnough.getComponent(TransformComponent.class).y, 2f, Interpolation.fade)));
             Actions.checkInit();
-            lblNotEnough.getComponent(ZIndexComponent.class).setZIndex(99);
-            lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            return false;
         }
+        lblNotEnough.getComponent(ZIndexComponent.class).setZIndex(99);
+        lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+        return false;
     }
 
     public Entity initUnknownPreviewIcon(boolean jump) {
@@ -280,7 +282,7 @@ public class Preview extends AbstractDialog {
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
-            addShadow(1f);
+            addShadow(0.8f);
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
             ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
@@ -535,6 +537,12 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
+
+                            if(lblNotEnough.getComponent(ActionComponent.class) != null) {
+                                lblNotEnough.getComponent(ActionComponent.class).reset();
+                                lblNotEnough.getComponent(TintComponent.class).color.a = 0;
+                            }
+
                             if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc)) % 8 == 0) {
                                 gameStage.shopScript.scrollBagsOnePageLeft();
                             }
@@ -602,6 +610,10 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
+                            if(lblNotEnough.getComponent(ActionComponent.class) != null) {
+                                lblNotEnough.getComponent(ActionComponent.class).reset();
+                                lblNotEnough.getComponent(TintComponent.class).color.a = 0;
+                            }
 
                             if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc) + 1) % 8 == 0) {
                                 gameStage.shopScript.scrollBagsOnePageRight();

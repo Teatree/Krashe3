@@ -570,6 +570,7 @@ public class ShopScreenScript implements IScript {
             currentPageIndex++;
             setDotActive(currentPageIndex);
             firstBagTargetPos = bags.get(0).getComponent(TransformComponent.class).x - SCCREEN_WIDTH;
+
         }
     }
 
