@@ -90,6 +90,18 @@ public class PauseDialog extends AbstractDialog {
                     }
                 });
 
+        final Entity finishCheatBtn = pauseDialogE.getComponent(NodeComponent.class).getChild("btn_finish_cheat");
+        finishCheatBtn.add(new ButtonComponent());
+        finishCheatBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(finishCheatBtn) {
+                    @Override
+                    public void clicked() {
+                        for (Goal g :gameStage.gameScript.fpc.level.goals.values()) {
+                            g.counter = g.n;
+                        }
+                    }
+                });
+
         final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;

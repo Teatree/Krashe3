@@ -434,6 +434,7 @@ public class GoalFeedbackScreen {
 
         if (isShading && greenShadeE.getComponent(TintComponent.class).color.a < 0.98f) {
             greenShadeE.getComponent(TintComponent.class).color.a += 0.02f;
+            lbl.getComponent(ZIndexComponent.class).setZIndex(greenShadeE.getComponent(ZIndexComponent.class).getZIndex()+1);
             lbl.getComponent(TintComponent.class).color.a += 0.02f;
         }
 

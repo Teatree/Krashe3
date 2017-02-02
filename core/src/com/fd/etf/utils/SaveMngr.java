@@ -527,9 +527,9 @@ public class SaveMngr {
         public static final String MONEY_250 = "MONEY_250";
         public static final String MONEY_300 = "MONEY_300";
 
-        public static final String PET = "PET";
-        public static final String PET_2 = "PET2";
-        public static final String PET_3 = "PET3";
+        public static final String PET = "DOG";
+        public static final String PET_2 = "CAT";
+        public static final String PET_3 = "RAVEN";
 
         public static final String PHOENIX = "PHOENIX";
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
@@ -585,16 +585,16 @@ public class SaveMngr {
         public float prob_pet_eat_n_bugs;
         public float prob_pet_dash_n_times;
 
-        public int chanceMONEY_50 = 10;
-        public int chanceMONEY_100 = 10;
-        public int chanceMONEY_150 = 10;
-        public int chanceMONEY_200 = 10;
-        public int chanceMONEY_250 = 10;
-        public int chancePHOENIX = 10;
-        public int chancePET1 = 10;
-        public int chancePET2 = 10;
-        public int chancePET3 = 10;
-        public int chanceBJ_DOUBLE = 10;
+        public int chanceMONEY_50 = 2;
+        public int chanceMONEY_100 = 2;
+        public int chanceMONEY_150 = 2;
+        public int chanceMONEY_200 = 2;
+        public int chanceMONEY_250 = 2;
+        public int chancePHOENIX = 2;
+        public int chancePET1 = 30;
+        public int chancePET2 = 30;
+        public int chancePET3 = 26;
+        public int chanceBJ_DOUBLE = 2;
 
         public LevelInfo() {
         }
