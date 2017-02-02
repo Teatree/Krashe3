@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -260,6 +261,14 @@ public class ETFResourceManager implements IResourceRetriever, IResourceLoader {
         FreetypeFontLoader.FreeTypeFontLoaderParameter sizeParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         sizeParams.fontFileName = fontsPath + MY_SEPARATOR + pair.fontName + TTF;
         sizeParams.fontParameters.size = pair.fontSize;
+
+        // font fiddles
+//        sizeParams.fontParameters.borderWidth = 2;
+//        sizeParams.fontParameters.borderColor = Color.BLACK;
+//        sizeParams.fontParameters.shadowOffsetX = 3;
+//        sizeParams.fontParameters.shadowOffsetY = 3;
+//        sizeParams.fontParameters.shadowColor = Color.BLACK;
+
         manager.load(pair.fontName + pair.fontSize + TTF, BitmapFont.class, sizeParams);
     }
 

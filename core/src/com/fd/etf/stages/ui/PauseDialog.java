@@ -27,6 +27,7 @@ public class PauseDialog extends AbstractDialog {
 
     private static final String PAUSE_DIALOG = "dialog";
     private static final String LBL_DIALOG = "lbl_dialog";
+    private static final String LBL_DIALOG_SH = "lbl_dialog_sh";
     private static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
     private static final String LBL_GOAL_PROGRESS = "goal_progress";
     private static final String BTN_CLOSE = "btn_close";
@@ -40,7 +41,7 @@ public class PauseDialog extends AbstractDialog {
 
     private static final int PAUSE_Y = 50;
     private static final int PAUSE_X = 260;
-    private static final int GOALS_X = 630;
+    private static final int GOALS_X = 610;
     private static final int GOAL_TILE_START_Y = 400;
     private static final int GOAL_TILE_SPACE_X = 170;
     private static final float GOAL_TILE_SCALE = 2f;
@@ -89,6 +90,18 @@ public class PauseDialog extends AbstractDialog {
                     }
                 });
 
+        final Entity finishCheatBtn = pauseDialogE.getComponent(NodeComponent.class).getChild("btn_finish_cheat");
+        finishCheatBtn.add(new ButtonComponent());
+        finishCheatBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(finishCheatBtn) {
+                    @Override
+                    public void clicked() {
+                        for (Goal g :gameStage.gameScript.fpc.level.goals.values()) {
+                            g.counter = g.n;
+                        }
+                    }
+                });
+
         final TransformComponent dialogTc = pauseDialogE.getComponent(TransformComponent.class);
         dialogTc.x = FAR_FAR_AWAY_X;
         dialogTc.y = FAR_FAR_AWAY_Y;
@@ -102,7 +115,15 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
+        goalsLabelComp.fontScaleX = 0.7f;
+        goalsLabelComp.fontScaleY = 0.7f;
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), PAUSE_TEXT);
+
+        final Entity goalLabelsh = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_SH);
+        LabelComponent goalsLabelCompsh = goalLabelsh.getComponent(LabelComponent.class);
+        goalsLabelCompsh.fontScaleX = 0.7f;
+        goalsLabelCompsh.fontScaleY = 0.7f;
+        goalsLabelCompsh.text.replace(0, goalsLabelCompsh.text.capacity(), PAUSE_TEXT);
 
         createGoalTiles();
 
@@ -115,7 +136,14 @@ public class PauseDialog extends AbstractDialog {
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
         goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), CHALLENGES);
+        goalsLabelComp.fontScaleX = 0.7f;
+        goalsLabelComp.fontScaleY = 0.7f;
 
+        final Entity goalLabelsh = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG_SH);
+        LabelComponent goalsLabelCompsh = goalLabelsh.getComponent(LabelComponent.class);
+        goalsLabelCompsh.text.replace(0, goalsLabelCompsh.text.capacity(), CHALLENGES);
+        goalsLabelCompsh.fontScaleX = 0.7f;
+        goalsLabelCompsh.fontScaleY = 0.7f;
 
         pauseDialogE.getComponent(TransformComponent.class).scaleX = SETTINGS_SCALE;
         pauseDialogE.getComponent(TransformComponent.class).scaleY = SETTINGS_SCALE;
@@ -148,6 +176,7 @@ public class PauseDialog extends AbstractDialog {
 
         final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
         LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
+        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf("LEVEL: " + gameStage.gameScript.fpc.level.difficultyLevel));
 
         int y = GOAL_TILE_START_Y;
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
@@ -251,7 +280,6 @@ public class PauseDialog extends AbstractDialog {
                 tapCoolDown = TAP_COOLDOWN;
             }
             tapCoolDown--;
-
 
             if (pauseTimer >= 1 && lblPauseTimer != null) {
                 pauseTimer = 0;

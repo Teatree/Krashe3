@@ -27,7 +27,6 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public Level level = new Level();
     public PetComponent currentPet;
 
-
     public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
         return boundsRect.overlaps(rectangle) || petCollisionCheck(rectangle);
     }

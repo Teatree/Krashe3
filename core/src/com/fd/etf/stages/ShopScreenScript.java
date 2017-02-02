@@ -138,8 +138,6 @@ public class ShopScreenScript implements IScript {
             }
         }
 
-        createIconsForAllSoftItems();
-        createIconsForAllHCItems();
         initTabBtns();
         initScrollLeftBtn();
         initScrollRightBtn();
@@ -150,6 +148,8 @@ public class ShopScreenScript implements IScript {
         canChangeTabs = true;
         isPreviewOn.set(false);
         isAllowedMoving = true;
+        createIconsForAllSoftItems();
+        createIconsForAllHCItems();
     }
 
     public void initTabBtns() {
@@ -225,11 +225,6 @@ public class ShopScreenScript implements IScript {
 
         for (Entity e : nc.children) {
             final ShopItem hc = findCorrectHCitemByTitle(e.getComponent(MainItemComponent.class).itemIdentifier);
-//            Entity child = e.getComponent(NodeComponent.class).getChild(TITLE);
-//            child.getComponent(LabelComponent.class).text.replace(
-//                    0, child.getComponent(LabelComponent.class).text.length,
-//                    hc.name
-//            );
 
             if (hc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
@@ -575,6 +570,7 @@ public class ShopScreenScript implements IScript {
             currentPageIndex++;
             setDotActive(currentPageIndex);
             firstBagTargetPos = bags.get(0).getComponent(TransformComponent.class).x - SCCREEN_WIDTH;
+
         }
     }
 
@@ -588,7 +584,7 @@ public class ShopScreenScript implements IScript {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
         if (canMoveBagsRight()) {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
@@ -599,7 +595,7 @@ public class ShopScreenScript implements IScript {
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
                     .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
             touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_RIGHT)
-                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                    .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
         }
     }
 
@@ -651,6 +647,6 @@ public class ShopScreenScript implements IScript {
         touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                 .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
         touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
-                .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = true;
+                .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
     }
 }

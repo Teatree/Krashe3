@@ -259,8 +259,10 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     private void hideTutorialLine() {
-        if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0f) {
-            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.1f;
+        if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.1f) {
+            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.15f;
+        }else{
+            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0;
         }
     }
 

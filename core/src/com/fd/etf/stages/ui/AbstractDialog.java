@@ -52,7 +52,11 @@ public class AbstractDialog {
         shadowE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }
 
-    protected void addShadow() {
+    protected void addShadow(){
+        addShadow(0.7f);
+    }
+
+    protected void addShadow(float alpha) {
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
         shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
@@ -60,7 +64,7 @@ public class AbstractDialog {
 
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
-        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5));
+        ac.dataArray.add(Actions.fadeIn(0.5f, Interpolation.exp5, alpha));
         shadowE.add(ac);
     }
 

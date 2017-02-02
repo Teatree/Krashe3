@@ -94,10 +94,12 @@ public class GameStage extends Stage {
 
         backgroundMusicMgr.stop();
 
+        gameScript.initStartTrans();
         GameScreenScript.isStarted = false;
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance(this);
+
     }
 
     public void initMenu() {
