@@ -17,6 +17,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.fd.etf.stages.ui.PromoWindow.offer;
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
