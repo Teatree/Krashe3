@@ -10,10 +10,14 @@ import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
+import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+import com.uwsoft.editor.renderer.systems.action.Actions;
+
+import javax.swing.*;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.*;

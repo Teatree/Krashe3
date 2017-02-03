@@ -592,7 +592,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 submitScoreToGooglePlay();
                 gameStage.gameScript.gameOverDialog.hide();
                 megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
-                gameStage.gameScript.gameStage.initResultWithAds();
+
+                gameStage.initResultWithAds();
             }
         }
     }
