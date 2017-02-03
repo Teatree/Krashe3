@@ -11,6 +11,7 @@ import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -55,6 +56,23 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
+
+        if(BugJuiceBubbleSystem.isCalculatingScore) {
+            if(gameStage.gameScript.fpc.oldScore <= (float) gameStage.gameScript.fpc.score){
+                gameStage.gameScript.fpc.oldScore += gameStage.gameScript.fpc.scoreDiff;
+
+                gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                        gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
+                                "" + (int) gameStage.gameScript.fpc.oldScore);
+                gameStage.gameScript.scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                        gameStage.gameScript.scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(), "" +
+                                "" + (int) gameStage.gameScript.fpc.oldScore);
+
+            }
+            if(gameStage.gameScript.fpc.oldScore >= gameStage.gameScript.fpc.score){
+                BugJuiceBubbleSystem.isCalculatingScore = false;
+            }
+        }
 
         if (!isPause.get() && !isGameOver.get()) {
             sc.player.speed = FPS;

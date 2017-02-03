@@ -26,8 +26,16 @@ public class PromoWindow extends AbstractDialog {
     
     private static final String PROMO_WINDOW = "promo_lib";
     private static final String BUY_DISC_BTN = "buy_disc_btn";
-    private static final String DISC_TEXT_LBL = "disc_text_lbl";
+    private static final String PRICE_LBL = "price_lbl";
+    private static final String PRICE_LBL_SH = "price_lbl_sh";
+    private static final String PRICE_CROSS_LBL = "price_cross_lbl";
     private static final String CLOSE_DISC_BTN = "close_disc_btn";
+    private static final String HEADER_LBL = "header_lbl";
+    private static final String HEADER_LBL_SH = "header_lbl_sh";
+    private static final String DESCRIPTION_LBL = "description_lbl";
+    private static final String DESCRIPTION_LBL_SH = "description_lbl_sh";
+    private static final String PROMO_TITLE = "promo_title";
+    private static final String PROMO_TITLE_SH = "promo_title_sh";
     private static final int DISCOUNT_Y = 30;
     private static final int DISCOUNT_X = 260;
 
@@ -102,10 +110,22 @@ public class PromoWindow extends AbstractDialog {
                     }
                 });
 
-        Entity lbl = promoWindowE.getComponent(NodeComponent.class).getChild(DISC_TEXT_LBL);
+        Entity lbl = promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_LBL);
+        Entity lbl_sh = promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_LBL_SH);
         LabelComponent lc = lbl.getComponent(LabelComponent.class);
+        LabelComponent lc_sh = lbl_sh.getComponent(LabelComponent.class);
         if(offer != null) {
-            lc.text.replace(0, lc.text.capacity(), "Buy " + offer.name + " with discount!!! ");
+            lc.text.replace(0, lc.text.capacity(),  "$ " + String.valueOf(offer.cost));
+            lc_sh.text.replace(0, lc_sh.text.capacity(),  "$ " + String.valueOf(offer.cost));
+            promoWindowE.getComponent(NodeComponent.class).getChild(PROMO_TITLE).getComponent(TransformComponent.class).scaleX = 0.7f;
+            promoWindowE.getComponent(NodeComponent.class).getChild(PROMO_TITLE).getComponent(TransformComponent.class).scaleY = 0.7f;
+            promoWindowE.getComponent(NodeComponent.class).getChild(PROMO_TITLE_SH).getComponent(TransformComponent.class).scaleX = 0.7f;
+            promoWindowE.getComponent(NodeComponent.class).getChild(PROMO_TITLE_SH).getComponent(TransformComponent.class).scaleY = 0.7f;
+            promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL).getComponent(LabelComponent.class).text.capacity(), offer.description);
+            promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL_SH).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL_SH).getComponent(LabelComponent.class).text.capacity(), offer.description);
+            promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL).getComponent(LabelComponent.class).text.capacity(), offer.name);
+            promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.capacity(), offer.name);
+            promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.capacity(), "$ " + String.valueOf(offer.cost));
         }
     }
 }
