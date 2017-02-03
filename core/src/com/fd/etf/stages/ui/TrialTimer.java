@@ -48,7 +48,8 @@ public class TrialTimer {
             }
         }
         if (ifShouldShowTimer()) {
-            timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
+
+//            timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
         } else {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
@@ -73,7 +74,7 @@ public class TrialTimer {
         return showTimer;
     }
 
-    private void showTimer(Entity timerE, Entity timerEsh, String logoname) {
+    private void showTimer(Entity timerE, String logoname) {
         if (timerE != null) {
             LabelComponent lc = timerE.getComponent(LabelComponent.class);
             lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
@@ -82,10 +83,6 @@ public class TrialTimer {
 //                    + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
 //            timerE.getComponent(TransformComponent.class).y = y + 15;
             timerE.getComponent(ZIndexComponent.class).setZIndex(31);
-
-            LabelComponent lcSh = timerEsh.getComponent(LabelComponent.class);
-            lcSh.text.replace(0, lcSh.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
-            timerEsh.getComponent(ZIndexComponent.class).setZIndex(32);
         }
     }
 
