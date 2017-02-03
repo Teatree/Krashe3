@@ -360,6 +360,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+//            curtain_mm.getComponent(TransformComponent.class).x = 500;
+//            curtain_mm.getComponent(TransformComponent.class).y = 500;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
                 gameStage.initShopWithAds();
