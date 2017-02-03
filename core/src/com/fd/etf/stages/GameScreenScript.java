@@ -43,6 +43,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String DOUBLE_BJ_ICON = "double_bj_badge";
     private static final String PHOENIX_ICON = "extra_life_badge";
     private static final String LBL_SCORE = "lbl_score";
+    private static final String LBL_SCORE_SH = "lbl_score_sh";
     private static final String LBL_TAP_2_START = "lbl_tap2start";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
@@ -59,6 +60,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Random random = new Random();
     public FlowerPublicComponent fpc;
     public Entity scoreLabelE;
+    public Entity scoreLabelEsh;
     public Entity loseFeedback;
     public LabelComponent startLabelComponent;
     public Entity background;
@@ -203,6 +205,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
         scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + fpc.score);
 
+        scoreLabelEsh = gameItem.getChild(LBL_SCORE_SH).getEntity();
+        LabelComponent scoreLabelsh = scoreLabelEsh.getComponent(LabelComponent.class);
+        scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), "" + fpc.score);
+
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabel.getComponent(TintComponent.class).color.a = 0;
         startLabel.getComponent(TransformComponent.class).scaleX = 0.1f;
@@ -268,6 +274,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 Actions.delay(1f),
                 Actions.fadeIn(2f, Interpolation.exp5)));
         scoreLabelE.add(ac5);
+        scoreLabelEsh.add(ac5);
     }
 
     public void initButtons() {
@@ -282,6 +289,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         scoreLabelE.getComponent(TintComponent.class).color.a = 0;
+        scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
+        scoreLabelEsh.getComponent(TintComponent.class).color.a = 0;
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
@@ -612,6 +622,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void reloadScoreLabel(FlowerPublicComponent fcc) {
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                "" + fcc.score);
+        scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                 "" + fcc.score);
     }
 

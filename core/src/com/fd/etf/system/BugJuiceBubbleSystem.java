@@ -4,18 +4,22 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.GlobalConstants;
+import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
 
     private GameStage gameStage;
+    public static boolean isCalculatingScore;
 
     public BugJuiceBubbleSystem(GameStage gameStage) {
         super(Family.all(BugJuiceBubbleComponent.class).get());
@@ -58,6 +62,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
 
     public void update(BugJuiceBubbleComponent bjc, TransformComponent tc, float percent) {
         setPosition(tc, bjc.startX + (bjc.endX - bjc.startX) * percent, bjc.startY + (bjc.endY - bjc.startY) * percent);
+
     }
 
     protected void begin(BugJuiceBubbleComponent bjc, TransformComponent tc) {
@@ -66,9 +71,8 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     }
 
     protected void end(Entity entity) {
-        gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
-                gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
-                        "" + gameStage.gameScript.fpc.score);
+        isCalculatingScore = true;
+
         gameStage.gameScript.gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
