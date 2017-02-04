@@ -78,7 +78,6 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
         scoreDiff = (float)(score - oldScore)/20;
         totalScore += haveBugJuiceDouble() ? 2 * points : points;
         updateScoreGoal();
-
     }
 
     public void umbrellaMult(int pointsMult) {
