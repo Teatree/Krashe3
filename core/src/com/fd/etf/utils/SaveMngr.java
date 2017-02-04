@@ -68,7 +68,7 @@ public class SaveMngr {
             gameStats.upgrades.put(u.upgradeType.toString(), new UpgradeStats(u));
         }
         saveVanities(fc);
-        saveOtherPets(fc);
+        // saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
 
