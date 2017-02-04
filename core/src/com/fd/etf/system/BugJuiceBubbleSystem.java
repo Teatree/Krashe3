@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
@@ -14,6 +15,8 @@ import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+
+import javax.swing.*;
 
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
@@ -73,7 +76,20 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
     protected void end(Entity entity) {
         isCalculatingScore = true;
 
-        gameStage.gameScript.gameStage.sceneLoader.getEngine().removeEntity(entity);
+        if(gameStage.gameScript.scoreCE.getComponent(ActionComponent.class) == null){
+            gameStage.gameScript.scoreCE.add(new ActionComponent());
+        }
+        gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).reset();
+        gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).dataArray.add(
+                Actions.sequence(
+                        Actions.parallel(
+                                Actions.moveBy(-15*((gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3), 0, 0.3f, Interpolation.exp5),
+                                Actions.scaleTo(1.2f*(gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1, 1.2f*(gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1, 0.3f, Interpolation.exp5)),
+                        Actions.parallel(
+                                Actions.moveBy(15*((gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3), 0, 0.3f, Interpolation.exp5),
+                                Actions.scaleTo(1f, 1f, 0.3f, Interpolation.fade))));
+
+        gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
     public void setPosition(TransformComponent tc, float x, float y) {

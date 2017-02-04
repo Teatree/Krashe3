@@ -44,6 +44,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String PHOENIX_ICON = "extra_life_badge";
     private static final String LBL_SCORE = "lbl_score";
     private static final String LBL_SCORE_SH = "lbl_score_sh";
+    private static final String SCOREC = "scoreC";
     private static final String LBL_TAP_2_START = "lbl_tap2start";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
@@ -84,6 +85,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private Entity petE;
     public Entity megaFlower;
     public Entity megaLeaves;
+    public Entity scoreCE;
 
     public GameScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -201,11 +203,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         fpc.score = 0;
 
-        scoreLabelE = gameItem.getChild(LBL_SCORE).getEntity();
+        scoreCE = gameItem.getChild(SCOREC).getEntity();
+        scoreLabelE = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE);
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
         scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + fpc.score);
 
-        scoreLabelEsh = gameItem.getChild(LBL_SCORE_SH).getEntity();
+        scoreLabelEsh = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE_SH);
         LabelComponent scoreLabelsh = scoreLabelEsh.getComponent(LabelComponent.class);
         scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), "" + fpc.score);
 
