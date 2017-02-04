@@ -94,6 +94,18 @@ public class ResultScreenScript implements IScript {
         if (timer == null) {
             timer = new TrialTimer(gameStage, resultScreenItem, 918, 289);
         }
+
+        for (Entity e2: resultScreenItem.getComponent(NodeComponent.class).children){
+            if (e2.getComponent(ActionComponent.class) == null){
+                e2.add(new ActionComponent());
+            }
+            e2.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveBy(0, +100, 0), Actions.moveBy(0, -100, 0.5f, Interpolation.exp5)));
+        }
+        if(resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class) == null){
+            resultScreenItem.getChild("curtain_result").getEntity().add(new ActionComponent());
+        }
+        resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a = 0;
+        resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.7f));
     }
 
     public void initButtons() {
@@ -220,7 +232,7 @@ public class ResultScreenScript implements IScript {
             }
         }
 
-        if (active) {
+        if (active && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 1) {
             if (!isWasShowcase) {
                 if (i <= gameStage.gameScript.fpc.score) {
                     updateScore();

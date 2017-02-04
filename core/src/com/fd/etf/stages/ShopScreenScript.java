@@ -89,6 +89,7 @@ public class ShopScreenScript implements IScript {
     public Entity hcSectionE;
     public Entity btnClothing;
     public Entity btnPowerUp;
+    public Entity curtainShop;
     private int bagPosIdY;
     private int bagPageId;
 
@@ -122,8 +123,12 @@ public class ShopScreenScript implements IScript {
         // Dima's fun house
         curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();
         curtain_shop.getComponent(TintComponent.class).color.a = 1f;
+        curtain_shop.getComponent(ZIndexComponent.class).setZIndex(1000);
+//        curtain_shop.add(new ActionComponent());
+//        curtain_shop.getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(5f));
         startTransitionIn = true;
         startTransitionOut = false;
+
 
         addButtons();
 
@@ -395,8 +400,10 @@ public class ShopScreenScript implements IScript {
     private void transitionOut() {
         if (startTransitionOut) {
             curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+//            curtain_shop.getComponent(TransformComponent.class).x = 500;
             if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                 startTransitionOut = false;
+                curtain_shop.getComponent(TintComponent.class).color.a = 1;
                 startTransitionIn = true;
                 gameStage.initMenu();
             }
@@ -406,8 +413,9 @@ public class ShopScreenScript implements IScript {
     private void transitionIn() {
         if (startTransitionIn) {
             curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
-            if (curtain_shop.getComponent(TintComponent.class).color.a <= 0) {
+            if (curtain_shop.getComponent(TintComponent.class).color.a <= 0.1f) {
                 startTransitionIn = false;
+                curtain_shop.getComponent(TintComponent.class).color.a = 0;
             }
         }
     }

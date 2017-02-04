@@ -8,7 +8,7 @@ import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
-//import com.fd.etf.stages.ui.TrialTimer;
+import com.fd.etf.stages.ui.TrialTimer;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -17,7 +17,6 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import javax.xml.soap.Node;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -68,7 +67,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public static boolean showGoalNotification;
     public int currentFlowerFrame;
 
-//    private static TrialTimer timer;
+    private static TrialTimer timer;
     private static PauseDialog pauseDialog;
     private static Entity imgGoalNotification;
     private static Entity lblGoalNotification;
@@ -114,11 +113,11 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         startTransitionIn = true;
         isDialogOpen.set(false);
 
-//        if (timer == null) {
-//            timer = new TrialTimer(gameStage, menuItem, TIMER_X, TIMER_Y);
-//        } else {
-//            timer.mainItem = menuItem;
-//        }
+        if (timer == null) {
+            timer = new TrialTimer(gameStage, menuItem, TIMER_X, TIMER_Y);
+        } else {
+            timer.mainItem = menuItem;
+        }
 
         initGoalsNotification();
 
@@ -164,9 +163,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
-//        if (timer != null) {
-//            timer.timerE.getComponent(TintComponent.class).color.a = 0;
-//        }
+        if (timer != null) {
+            timer.timerE.getComponent(TintComponent.class).color.a = 0;
+        }
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
     }
@@ -342,7 +341,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         GameStage.viewport.getCamera().translate(camPosX, 0, 0);
 
         gameStage.gameScript.checkTryPeriod();
-//        timer.timer();
+        timer.timer();
 
         if (pauseDialog != null)
             pauseDialog.update(delta);
@@ -360,6 +359,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+//            curtain_mm.getComponent(TransformComponent.class).x = 500;
+//            curtain_mm.getComponent(TransformComponent.class).y = 500;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
                 gameStage.initShopWithAds();
