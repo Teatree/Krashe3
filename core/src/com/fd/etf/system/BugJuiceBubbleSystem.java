@@ -80,13 +80,21 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
             gameStage.gameScript.scoreCE.add(new ActionComponent());
         }
         gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).reset();
+        float moveMulti = (gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3;
+        float sizeMulti = (gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1;
+//        if (moveMulti > 5f){
+//            moveMulti = 5f;
+//        }
+        if (sizeMulti > 2f){
+            sizeMulti = 2f;
+        }
         gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).dataArray.add(
                 Actions.sequence(
                         Actions.parallel(
-                                Actions.moveBy(-15*((gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3), 0, 0.3f, Interpolation.exp5),
-                                Actions.scaleTo(1.2f*(gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1, 1.2f*(gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1, 0.3f, Interpolation.exp5)),
+                                Actions.moveBy(-15*moveMulti, 0, 0.3f, Interpolation.exp5),
+                                Actions.scaleTo(1.2f*sizeMulti, 1.2f*sizeMulti, 0.3f, Interpolation.exp5)),
                         Actions.parallel(
-                                Actions.moveBy(15*((gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3), 0, 0.3f, Interpolation.exp5),
+                                Actions.moveBy(15*moveMulti, 0, 0.3f, Interpolation.exp5),
                                 Actions.scaleTo(1f, 1f, 0.3f, Interpolation.fade))));
 
         gameStage.sceneLoader.getEngine().removeEntity(entity);
