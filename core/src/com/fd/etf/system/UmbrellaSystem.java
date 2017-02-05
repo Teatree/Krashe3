@@ -148,8 +148,8 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private void playParticleEffectFor() {
-        EffectUtils.playYellowStarsParticleEffect(gameStage, gameStage.gameScript.scoreLabelE.getComponent(TransformComponent.class).x,
-                gameStage.gameScript.scoreLabelE.getComponent(TransformComponent.class).y);
+        EffectUtils.playYellowStarsParticleEffect(gameStage, gameStage.gameScript.scoreCE.getComponent(TransformComponent.class).x,
+                gameStage.gameScript.scoreCE.getComponent(TransformComponent.class).y);
     }
 
     public static void hide(Entity entity) {

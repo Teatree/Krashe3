@@ -6,8 +6,10 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
+import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -82,12 +84,14 @@ public class ButterflySystem extends IteratingSystem {
             updateRectangle(e.getComponent(ButterflyComponent.class), e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class));
             if (checkCollision(e.getComponent(ButterflyComponent.class))) {
                 gameStage.gameScript.fpc.isCollision = true;
-                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-                e.getComponent(ButterflyComponent.class).state = DEAD;
 
                 gameStage.gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
-                gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                spawnBugJuiceBubble(e);
+                e.getComponent(ButterflyComponent.class).state = DEAD;
+                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+//                gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
             }
 
             if (e.getComponent(ButterflyComponent.class).state == DEAD) {
@@ -113,6 +117,11 @@ public class ButterflySystem extends IteratingSystem {
         bc.boundsRect.y = (int) tc.y;
         bc.boundsRect.width = (int) dc.width * tc.scaleX;
         bc.boundsRect.height = (int) dc.height * tc.scaleY;
+    }
+
+    private void spawnBugJuiceBubble(Entity e) {
+        EffectUtils.spawnBugJuiceBubble(gameStage.gameScript.gameStage, e.getComponent(TransformComponent.class).x,
+                e.getComponent(TransformComponent.class).y);
     }
 
     public boolean isOutOfBounds(ButterflyComponent bc) {
