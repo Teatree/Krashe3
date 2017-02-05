@@ -399,7 +399,7 @@ public class ShopScreenScript implements IScript {
 
     private void transitionOut() {
         if (startTransitionOut) {
-            curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
+            curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP*2;
 //            curtain_shop.getComponent(TransformComponent.class).x = 500;
             if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                 startTransitionOut = false;
@@ -412,7 +412,7 @@ public class ShopScreenScript implements IScript {
 
     private void transitionIn() {
         if (startTransitionIn) {
-            curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
+            curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP*2;
             if (curtain_shop.getComponent(TintComponent.class).color.a <= 0.1f) {
                 startTransitionIn = false;
                 curtain_shop.getComponent(TintComponent.class).color.a = 0;

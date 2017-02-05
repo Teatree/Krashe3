@@ -187,7 +187,7 @@ public class GameOverDialog extends AbstractDialog {
                     if (gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class) == null) {
                         gameStage.gameScript.curtainGameE.add(new ActionComponent());
                     }
-                    gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeIn(0.5f));
+                    gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeIn(0.3f));
                     gameStage.gameScript.curtainGameE.getComponent(ZIndexComponent.class).setZIndex(200);
 //                    hide();
 //                    close(gameOverDialogE);

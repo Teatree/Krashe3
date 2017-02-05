@@ -44,6 +44,7 @@ public class ResultScreenScript implements IScript {
     public static VanityComponent showCaseVanity;
     public static boolean show;
     boolean showcasePopup;
+    boolean shopTransitionIsOn;
     public static boolean isWasShowcase;
     public static boolean active = true;
 
@@ -104,8 +105,8 @@ public class ResultScreenScript implements IScript {
         if(resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class) == null){
             resultScreenItem.getChild("curtain_result").getEntity().add(new ActionComponent());
         }
-        resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a = 0;
-        resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.7f));
+        resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a = 1;
+        resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
     }
 
     public void initButtons() {
@@ -206,7 +207,7 @@ public class ResultScreenScript implements IScript {
                     public void clicked() {
                         if (active)
                             if (!show) {
-                                gameStage.initShopWithAds();
+                                shopTransitionIsOn = true;
                                 isWasShowcase = false;
                             }
                     }
@@ -254,6 +255,10 @@ public class ResultScreenScript implements IScript {
 
         if (showcase != null) {
             showcase.act(delta);
+        }
+        if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 1){
+            shopTransitionIsOn = false;
+            gameStage.initShopWithAds();
         }
 
     }
