@@ -52,6 +52,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String COCOON = "coccoon";
     private static final String BTN_BACK = "btn_back";
     private static final String BEES_MODE_ANI = "bees_mode_ani";
+    private static final String CURTAIN_GAME = "curtain_game";
 
     public static AtomicBoolean isPause = new AtomicBoolean(false);
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
@@ -63,6 +64,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity scoreLabelE;
     public Entity scoreLabelEsh;
     public Entity loseFeedback;
+    public Entity curtainGameE;
     public LabelComponent startLabelComponent;
     public Entity background;
     public static int currentFlowerFrame;
@@ -202,6 +204,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
 
         fpc.score = 0;
+        curtainGameE = gameItem.getChild(CURTAIN_GAME).getEntity();
 
         scoreCE = gameItem.getChild(SCOREC).getEntity();
         scoreLabelE = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE);

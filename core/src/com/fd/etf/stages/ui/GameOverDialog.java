@@ -164,6 +164,11 @@ public class GameOverDialog extends AbstractDialog {
             shadowE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             gameOverDialogE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
+
+        if(gameStage.gameScript.curtainGameE.getComponent(TintComponent.class).color.a >= 1) {
+            isGameOver.set(false);
+            gameStage.initResultWithAds();
+        }
     }
 
     public void finishGame() {
@@ -178,10 +183,13 @@ public class GameOverDialog extends AbstractDialog {
                     isGameOver.set(true);
                 } else if ((gameStage.gameScript.goalFeedbackScreen == null ||
                         !GoalFeedbackScreen.isGoalFeedbackOpen)) {
-                    isGameOver.set(false);
                     gameStage.gameScript.resetPauseDialog();
-                    hide();
-                    gameStage.initResultWithAds();
+                    if (gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class) == null) {
+                        gameStage.gameScript.curtainGameE.add(new ActionComponent());
+                    }
+                    gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeIn(0.3f));
+                    gameStage.gameScript.curtainGameE.getComponent(ZIndexComponent.class).setZIndex(200);
+//                    hide();
 //                    close(gameOverDialogE);
                 }
             }
