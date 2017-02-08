@@ -25,6 +25,7 @@ public class TrialTimer {
     public Entity timerE;
     public ItemWrapper mainItem;
 
+    public static String trialTimerLogoName;
     //to be deleted
     public int x;
     public int y;
@@ -40,19 +41,18 @@ public class TrialTimer {
         gameStage.gameScript.checkTryPeriod();
         timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
         if (!ifShouldShowTimer()) {
-
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             if (timerLogo != null) {
                 timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameStage.sceneLoader.getEngine().removeEntity(timerLogo);
+//                gameStage.sceneLoader.getEngine().removeEntity(timerLogo);
             }
         }
         if (ifShouldShowTimer()) {
-
+            if (timerLogo == null){
+                showTimer();
+            }
 //            timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
-        } else {
-            timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -74,11 +74,20 @@ public class TrialTimer {
         return showTimer;
     }
 
-    private void showTimer(Entity timerE, String logoname) {
+    private void showTimer() {
         if (timerE != null) {
             LabelComponent lc = timerE.getComponent(LabelComponent.class);
-            lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
-            addTimerLogo(logoname);
+            if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
+                lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
+            }
+            for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()){
+                if (u.tryPeriod){
+                    lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
+                }
+            }
+            if (trialTimerLogoName != null && trialTimerLogoName != "") {
+                addTimerLogo(trialTimerLogoName);
+            }
 //            timerE.getComponent(TransformComponent.class).x = x
 //                    + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
 //            timerE.getComponent(TransformComponent.class).y = y + 15;

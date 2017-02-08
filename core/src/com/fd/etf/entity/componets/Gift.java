@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets;
 
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ui.PromoWindow;
+import com.fd.etf.stages.ui.TrialTimer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +162,8 @@ public class Gift {
                 fpc.currentPet.tryPeriodStart = System.currentTimeMillis();
                 fpc.currentPet.bought = true;
                 fpc.currentPet.enabled = true;
+
+                TrialTimer.trialTimerLogoName = fpc.currentPet.shopIcon;
                 break;
             }
             case (PHOENIX): {
@@ -170,6 +173,7 @@ public class Gift {
                 upgrade.bought = true;
                 upgrade.enabled = true;
                 fpc.upgrades.put(Upgrade.UpgradeType.PHOENIX, upgrade);
+                TrialTimer.trialTimerLogoName = upgrade.shopIcon;
                 break;
             }
             case (BJ_DOUBLE): {
@@ -179,6 +183,7 @@ public class Gift {
                 upgrade.bought = true;
                 upgrade.enabled = true;
                 fpc.upgrades.put(Upgrade.UpgradeType.BJ_DOUBLE, upgrade);
+                TrialTimer.trialTimerLogoName = upgrade.shopIcon;
                 break;
             }
         }

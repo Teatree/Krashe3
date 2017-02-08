@@ -45,8 +45,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
 
-    private static final int TIMER_X = 945;
-    private static final int TIMER_Y = 441;
+    private static final int TIMER_X = 345;
+    private static final int TIMER_Y = 341;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";
@@ -67,7 +67,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public static boolean showGoalNotification;
     public int currentFlowerFrame;
 
-    private static TrialTimer timer;
+    private TrialTimer timer;
     private static PauseDialog pauseDialog;
     private static Entity imgGoalNotification;
     private static Entity lblGoalNotification;
@@ -163,9 +163,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
-        if (timer != null) {
-            timer.timerE.getComponent(TintComponent.class).color.a = 0;
-        }
+//        if (timer != null) {
+//            timer.timerE.getComponent(TintComponent.class).color.a = 0;
+//        }
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
     }
