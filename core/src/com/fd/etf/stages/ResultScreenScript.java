@@ -227,9 +227,9 @@ public class ResultScreenScript implements IScript {
                     promoWindow = new PromoWindow(gameStage, resultScreenItem);
                 }
                 promoWindow.init();
-                promoWindow.show();
                 offerPromo = false;
                 active = false;
+                promoWindow.show();
             }
         }
 
