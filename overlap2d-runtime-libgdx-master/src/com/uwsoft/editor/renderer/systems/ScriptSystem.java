@@ -20,8 +20,16 @@ public class ScriptSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        for (IScript script : scriptComponentComponentMapper.get(entity).scripts) {
-            script.act(deltaTime);
+        try {
+            if(scriptComponentComponentMapper.get(entity) == null){
+                scriptComponentComponentMapper = ComponentMapper.getFor(ScriptComponent.class);
+            }else {
+                for (IScript script : scriptComponentComponentMapper.get(entity).scripts) {
+                    script.act(deltaTime);
+                }
+            }
+        }catch (Throwable throwable){
+            System.err.print(throwable);
         }
     }
 }

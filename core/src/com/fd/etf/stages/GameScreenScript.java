@@ -167,10 +167,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     u.tryPeriod = false;
                     u.disable(gameStage);
 
-                    if (gameStage.shopScript.allSoftItems.indexOf(u) >= 0) {
-                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).bought = false;
-                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).enabled = false;
-                    }
+//                    if (gameStage.shopScript.allSoftItems.indexOf(u) >= 0) {
+//                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).bought = false;
+//                        gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(u)).enabled = false;
+//                    }
                 }
             }
         }
@@ -310,13 +310,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         curtainGameE.getComponent(ActionComponent.class).reset();
         curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
 
-        initDoubleBJIcon();
-        initPhoenixIcon();
+            initDoubleBJIcon();
+            initPhoenixIcon();
 
-        CocoonSystem.resetSpawnCoefficients();
-        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-    }
+            CocoonSystem.resetSpawnCoefficients();
+            cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+            umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        }
 
     private void initDoubleBJIcon() {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
