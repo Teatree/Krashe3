@@ -99,7 +99,6 @@ public class GameStage extends Stage {
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance(this);
-
     }
 
     public void initMenu() {
