@@ -205,6 +205,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         fpc.score = 0;
         curtainGameE = gameItem.getChild(CURTAIN_GAME).getEntity();
+        curtainGameE.getComponent(TintComponent.class).color.a = 0;
 
         scoreCE = gameItem.getChild(SCOREC).getEntity();
         scoreLabelE = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE);
@@ -288,6 +289,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         pauseDialog = null;
         gameOverDialog = null;
         initBackButton();
+        curtainGameE.getComponent(TintComponent.class).color.a = 0;
     }
 
     public void reset() {
@@ -301,6 +303,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
+        curtainGameE.getComponent(TintComponent.class).color.a = 0.99f;
+        if(curtainGameE.getComponent(ActionComponent.class) == null){
+            curtainGameE.add(new ActionComponent());
+        }
+        curtainGameE.getComponent(ActionComponent.class).reset();
+        curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
 
         initDoubleBJIcon();
         initPhoenixIcon();
@@ -507,8 +515,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (blowUpAllBugs) {
             blowUpCounter--;
         }
-
-
 
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {

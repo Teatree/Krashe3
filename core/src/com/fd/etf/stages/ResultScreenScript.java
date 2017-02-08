@@ -233,7 +233,7 @@ public class ResultScreenScript implements IScript {
             }
         }
 
-        if (active && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 1) {
+        if (active && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a <= 0) {
             if (!isWasShowcase) {
                 if (i <= gameStage.gameScript.fpc.score) {
                     updateScore();
