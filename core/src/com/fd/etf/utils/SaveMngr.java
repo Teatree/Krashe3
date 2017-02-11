@@ -745,6 +745,8 @@ public class SaveMngr {
         public boolean bought;
         public boolean activated;
         public long cost;
+        public long costDisc;
+        public long disc;
         public boolean tryPeriod;
         public long tryPeriodDuration;
         public int amountBugsBeforeCharging;
@@ -767,6 +769,8 @@ public class SaveMngr {
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;
+            this.costDisc = petComponent.costDisc;
+            this.disc = petComponent.disc;
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
             this.totalEatenBugs = petComponent.totalEatenBugs;
             this.shopIcon = petComponent.shopIcon;

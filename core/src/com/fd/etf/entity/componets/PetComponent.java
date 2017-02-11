@@ -57,6 +57,8 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         this.enabled = petJson.activated;
         this.bought = petJson.bought;
         this.cost = petJson.cost;
+        this.costDisc = petJson.costDisc;
+        this.disc = petJson.disc;
         this.tryPeriod = petJson.tryPeriod;
         this.tryPeriodDuration = petJson.tryPeriodDuration - (System.currentTimeMillis() - petJson.tryPeriodStart) / 1000;
         this.amountBugsBeforeCharging = petJson.amountBugsBeforeCharging;
