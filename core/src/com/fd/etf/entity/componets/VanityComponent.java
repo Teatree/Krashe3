@@ -122,12 +122,12 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     }
 
     @Override
-    public void buyHard() {
+    public void buyHard(GameStage gameStage) {
         //nothing I'm soft
     }
 
     @Override
-    public void buyHardDiscount() {
+    public void buyHardDiscount(GameStage gameStage) {
         //nothing I'm soft
     }
 

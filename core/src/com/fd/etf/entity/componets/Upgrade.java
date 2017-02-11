@@ -92,7 +92,7 @@ public class Upgrade extends ShopItem{
     }
 
     @Override
-    public void buyHard() {
+    public void buyHard(GameStage gameStage) {
         this.bought = true;
         this.enabled = true;
 
@@ -106,7 +106,7 @@ public class Upgrade extends ShopItem{
     }
 
     @Override
-    public void buyHardDiscount() {
+    public void buyHardDiscount(GameStage gameStage) {
         if (upgradeType.equals(UpgradeType.PHOENIX)){
             Main.mainController.getPhoenixDiscount(gameStage, this);
         }

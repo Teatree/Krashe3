@@ -11,6 +11,9 @@ public abstract class ShopItem {
     public String shopIcon;
     public String name;
     public long cost;
+    public long disc;
+    public long costDisc;
+
     public String description;
     public String collection;
     public String currencyType;
@@ -29,15 +32,16 @@ public abstract class ShopItem {
     //true when is applied now
     public boolean enabled ;
 
+
     public abstract void apply (GameStage gameStage);
 
     public abstract void disable(GameStage gameStage);
 
     public abstract void buyAndUse(GameStage gameStage);
 
-    public abstract void buyHard();
+    public abstract void buyHard(GameStage gameStage);
 
-    public abstract void buyHardDiscount();
+    public abstract void buyHardDiscount(GameStage gameStage);
 
 
     public String updateTryPeriodTimer() {

@@ -14,7 +14,7 @@ public class Gift {
 
     public static final String MONEY = "MONEY";
 
-    public static final int ONE_HOUR = 30000;
+    public static final int ONE_HOUR = 5000;
 
     private static Random random = new Random();
 
