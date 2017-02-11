@@ -129,21 +129,22 @@ public class PromoWindow extends AbstractDialog {
             promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.capacity(), offer.name);
             promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.capacity(), "$ " + String.valueOf(offer.cost));
 
-            if(gameStage.gameScript.fpc.currentPet != null) {
+            if(gameStage.gameScript.fpc.currentPet != null && offer == gameStage.gameScript.fpc.currentPet) {
                 gameStage.sceneLoader.rm.addSpriterToLoad(gameStage.gameScript.fpc.currentPet.name);
                 CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(gameStage.gameScript.fpc.currentPet.name);
                 Entity petPromoE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
+                gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);
-                petPromoE.getComponent(TransformComponent.class).x = 300;
-                petPromoE.getComponent(TransformComponent.class).y = 300;
+                petPromoE.getComponent(TransformComponent.class).x = 600;
+                petPromoE.getComponent(TransformComponent.class).y = 200;
                 petPromoE.getComponent(ZIndexComponent.class).setZIndex(230);
             }else{
                 CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(offer.shopIcon);
                 Entity offerIconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
-//                gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+                gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), offerIconE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(offerIconE);
-                offerIconE.getComponent(TransformComponent.class).x = 300;
-                offerIconE.getComponent(TransformComponent.class).y = 300;
+                offerIconE.getComponent(TransformComponent.class).x = 600;
+                offerIconE.getComponent(TransformComponent.class).y = 200;
                 offerIconE.getComponent(ZIndexComponent.class).setZIndex(230);
             }
         }
