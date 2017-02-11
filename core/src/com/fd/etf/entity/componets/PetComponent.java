@@ -106,12 +106,12 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         gameStage.gameScript.hideCurrentPet();
         gameStage.gameScript.fpc.currentPet = this;
         for (PetComponent petComponent : gameStage.gameScript.fpc.pets){
-            if (petComponent != this){
+            if (!petComponent.equals(this)){
                 petComponent.enabled = false;
             }
         }
 
-//        gameScript.initPet();
+        gameStage.gameScript.initPet();
     }
 
     @Override
@@ -126,6 +126,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         if (gameStage.gameScript.fpc.currentPet != null) {
             gameStage.gameScript.fpc.currentPet.tryPeriod = false;
         }
+//        gameStage.gameScript.fpc.currentPet = this;
         apply(gameStage);
     }
 
@@ -173,7 +174,8 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         OUTSIDE
     }
 
-    private void loadFromLib(String petName) {
+    private void loadFromLib(String petNamecaps) {
+        String petName = petNamecaps.toLowerCase();
         gameStage.sceneLoader.rm.addSpriterToLoad(petName + HEAD_PREFFIX);
         gameStage.sceneLoader.rm.addSpriterToLoad(PET_CANNON);
 
