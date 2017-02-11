@@ -11,6 +11,9 @@ public abstract class ShopItem {
     public String shopIcon;
     public String name;
     public long cost;
+    public long disc;
+    public long costDisc;
+
     public String description;
     public String collection;
     public String currencyType;
@@ -28,6 +31,7 @@ public abstract class ShopItem {
     public boolean bought;
     //true when is applied now
     public boolean enabled ;
+
 
     public abstract void apply (GameStage gameStage);
 
