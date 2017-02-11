@@ -412,7 +412,7 @@ public class Preview extends AbstractDialog {
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
                         if (vc.currencyType.equals(HARD)) {
-                            vc.buyHard();
+                            vc.buyHard(gameStage);
                         } else {
                             vc.buyAndUse(gameStage);
                             putInPlaceNewIconPosition();

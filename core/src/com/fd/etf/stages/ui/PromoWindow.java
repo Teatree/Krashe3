@@ -104,7 +104,7 @@ public class PromoWindow extends AbstractDialog {
                 new ImageButtonListener(buyBtn) {
                     @Override
                     public void clicked() {
-                        PromoWindow.offer.buyHard();
+                        PromoWindow.offer.buyHard(gameStage);
                         close(promoWindowE);
                         ResultScreenScript.active = true;
                     }

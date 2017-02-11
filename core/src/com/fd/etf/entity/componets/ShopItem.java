@@ -35,9 +35,9 @@ public abstract class ShopItem {
 
     public abstract void buyAndUse(GameStage gameStage);
 
-    public abstract void buyHard();
+    public abstract void buyHard(GameStage gameStage);
 
-    public abstract void buyHardDiscount();
+    public abstract void buyHardDiscount(GameStage gameStage);
 
 
     public String updateTryPeriodTimer() {
