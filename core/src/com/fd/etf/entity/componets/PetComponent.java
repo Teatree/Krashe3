@@ -130,12 +130,13 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     }
 
     @Override
-    public void buyHard() {
-        Main.mainController.getBirdPet(gameStage, this);
+    public void buyHard(GameStage gameStage) {
+        this.buyAndUse(gameStage);
+//        Main.mainController.getBirdPet(gameStage, this);
     }
 
     @Override
-    public void buyHardDiscount() {
+    public void buyHardDiscount(GameStage gameStage) {
         Main.mainController.getBirdPetDiscount(gameStage, this);
     }
 
