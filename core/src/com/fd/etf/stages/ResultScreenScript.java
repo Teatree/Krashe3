@@ -227,8 +227,8 @@ public class ResultScreenScript implements IScript {
                     promoWindow = new PromoWindow(gameStage, resultScreenItem);
                 }
                 promoWindow.init();
-                promoWindow.show();
                 offerPromo = false;
+                promoWindow.show();
                 active = false;
             }
         }
@@ -256,7 +256,7 @@ public class ResultScreenScript implements IScript {
         if (showcase != null) {
             showcase.act(delta);
         }
-        if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 1){
+        if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 0){
             shopTransitionIsOn = false;
             gameStage.initShopWithAds();
         }
