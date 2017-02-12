@@ -244,25 +244,29 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void initStartTrans() {
         FlowerComponent.state = FlowerComponent.State.IDLE;
 
-        gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x -= 200;
-        gameItem.getChild("btn_pause").getEntity().getComponent(TintComponent.class).color.a = 0;
+        gameItem.getChild(BTN_PAUSE).getEntity().getComponent(TransformComponent.class).x -= 200;
+        gameItem.getChild(BTN_PAUSE).getEntity().getComponent(TintComponent.class).color.a = 0;
         ActionComponent ac = new ActionComponent();
         ac.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
-                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x + 200, gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
+                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f),
+                        Actions.moveTo(gameItem.getChild(BTN_PAUSE).getEntity().getComponent(TransformComponent.class).x + 200,
+                                gameItem.getChild(BTN_PAUSE).getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
 
-        if (gameItem.getChild("btn_back") != null) {
-            gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).x -= 200;
+        if (gameItem.getChild(BTN_BACK) != null) {
+            gameItem.getChild(BTN_BACK).getEntity().getComponent(TransformComponent.class).x -= 200;
         }
 
         ActionComponent ac2 = new ActionComponent();
         ac2.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
-                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).x + 200, gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
+                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f),
+                        Actions.moveTo(gameItem.getChild(BTN_BACK).getEntity().getComponent(TransformComponent.class).x + 200,
+                                gameItem.getChild(BTN_BACK).getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
 
-        gameItem.getChild("btn_pause").getEntity().add(ac);
-        if (gameItem.getChild("btn_back") != null) {
-            gameItem.getChild("btn_back").getEntity().add(ac2);
+        gameItem.getChild(BTN_PAUSE).getEntity().add(ac);
+        if (gameItem.getChild(BTN_BACK) != null) {
+            gameItem.getChild(BTN_BACK).getEntity().add(ac2);
         }
 
         gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a = 0;
