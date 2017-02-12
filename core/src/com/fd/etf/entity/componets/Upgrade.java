@@ -70,7 +70,7 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = HARD;
 //        bjd.logoName = "itemwig";
-        bjd.shopIcon = "itemdoubleUPGRADE";
+        bjd.shopIcon = "itemdoubleUPGRDE";
 //        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }
