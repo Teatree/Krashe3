@@ -353,6 +353,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.sceneLoader.getEngine().addSystem(new FlowerSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new BugSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new BugJuiceBubbleSystem(gameStage));
+        gameStage.sceneLoader.getEngine().addSystem(new PetProjectileSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
         gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
