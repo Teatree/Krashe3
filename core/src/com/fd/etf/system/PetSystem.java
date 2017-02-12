@@ -97,28 +97,28 @@ public class PetSystem extends IteratingSystem {
 
             tap(e, cannonsc);
 
-            if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
-                pc.state = TAPPED;
-                setDashAnimation(e.getComponent(SpriterComponent.class));
-                setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
-                pc.isCollision = false;
-                setTappedAnimation(e.getComponent(SpriterComponent.class));
-                setTappedAnimation(pc.petHead.getComponent(SpriterComponent.class));
-                setTappedAnimation(cannonsc);
-
-//                EffectUtils.playYellowStarsParticleEffect(gameStage, v.x, v.y);
-
-                e.remove(ActionComponent.class);
-                pc.petCannon.remove(ActionComponent.class);
-
-                if (e.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-                    e.add(ac);
-                }
-                Actions.checkInit();
-                e.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(TAPPED_X, e.getComponent(TransformComponent.class).y, DURATION_TAP));
-                checkPetThePetGoal();
-            }
+//            if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+//                pc.state = TAPPED;
+//                setDashAnimation(e.getComponent(SpriterComponent.class));
+//                setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
+//                pc.isCollision = false;
+//                setTappedAnimation(e.getComponent(SpriterComponent.class));
+//                setTappedAnimation(pc.petHead.getComponent(SpriterComponent.class));
+//                setTappedAnimation(cannonsc);
+//
+////                EffectUtils.playYellowStarsParticleEffect(gameStage, v.x, v.y);
+//
+//                e.remove(ActionComponent.class);
+//                pc.petCannon.remove(ActionComponent.class);
+//
+//                if (e.getComponent(ActionComponent.class) == null) {
+//                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+//                    e.add(ac);
+//                }
+//                Actions.checkInit();
+//                e.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(TAPPED_X, e.getComponent(TransformComponent.class).y, DURATION_TAP));
+//                checkPetThePetGoal();
+//            }
         } else {
             pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class), cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
         }
@@ -340,7 +340,7 @@ public class PetSystem extends IteratingSystem {
         if (Gdx.input.justTouched() &&
                 pc.boundsRect.contains(v.x, v.y)
                 && !pc.state.equals(TAPPED) && !pc.state.equals(DASH)) {
-            /*if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
+            if (pc.eatenBugsCounter < pc.amountBugsBeforeCharging) {
                 pc.state = TAPPED;
                 setDashAnimation(entity.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
@@ -361,14 +361,14 @@ public class PetSystem extends IteratingSystem {
                 Actions.checkInit();
                 entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(TAPPED_X, entity.getComponent(TransformComponent.class).y, DURATION_TAP));
                 checkPetThePetGoal();
-            } else {*/
+            } else {
 //                canPlayAnimation = true;
                 setDashAnimation(cannonsc);
                 setDashAnimation(entity.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
                 pc.state = DASH;
                 checkPetDashGoal();
-//            }
+            }
         }
     }
 
