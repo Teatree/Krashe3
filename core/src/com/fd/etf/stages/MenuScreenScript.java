@@ -481,7 +481,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                         }else{
                             e.getComponent(TransformComponent.class).y -= 100;
                         }
-                        if( gameStage.gameScript.fpc.settings.totalPlayedGames > 1) {
+                        if( gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
                             Actions.checkInit();
                             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {
                                 continue;
