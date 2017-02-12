@@ -157,6 +157,7 @@ public class Gift {
             }
             case (PET): {
                 fpc.currentPet = pet;
+                gameStage.gameScript.changePet = true;
                 fpc.currentPet.tryPeriod = true;
                 fpc.currentPet.tryPeriodDuration = 1 * 60;
                 fpc.currentPet.tryPeriodStart = System.currentTimeMillis();

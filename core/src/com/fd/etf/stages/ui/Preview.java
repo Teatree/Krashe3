@@ -451,14 +451,14 @@ public class Preview extends AbstractDialog {
 
     public void initEnableButton(final ShopItem vc) {
         if (vc.bought && !vc.enabled) {
-            buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
-            Entity enableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
+            Entity enableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
 //            enableBtn.getComponent(TransformComponent.class).x = 282;
             enableBtn.getComponent(TransformComponent.class).y = 0;
@@ -482,14 +482,14 @@ public class Preview extends AbstractDialog {
 
     public void initDisableButton(final ShopItem vc) {
         if (vc.bought && vc.enabled) {
-            buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+            buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             buttonz.getComponent(NodeComponent.class).getChild(TAG_NOT_NUFF).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_X;
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
 
-            Entity disableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
+            Entity disableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE);
             disableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
 //            disableBtn.getComponent(TransformComponent.class).x = 282;
             disableBtn.getComponent(TransformComponent.class).y = 0;

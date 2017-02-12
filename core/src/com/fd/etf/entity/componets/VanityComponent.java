@@ -82,6 +82,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
             overrideAnimationFiles();
             if (this.pet != null) {
                 gameStage.gameScript.fpc.currentPet = this.pet;
+                gameStage.gameScript.changePet = true;
             }
 
             GameStage.changedFlowerEntity = true;
@@ -147,6 +148,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
 
         if (this.pet != null) {
             gameStage.gameScript.fpc.currentPet = this.pet;
+            gameStage.gameScript.changePet = true;
         }
     }
 
