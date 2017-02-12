@@ -115,7 +115,6 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
                 petComponent.enabled = false;
             }
         }
-
 //        gameStage.gameScript.initPet();
     }
 

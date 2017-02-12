@@ -329,6 +329,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             initPet();
             changePet = false;
         }
+
+        megaFlower.getComponent(TransformComponent.class).y = FLOWER_Y_POS;
+        megaFlower.getComponent(TransformComponent.class).x = FLOWER_X_POS;
     }
 
     private void initDoubleBJIcon() {
