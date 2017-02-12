@@ -21,7 +21,6 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import javax.swing.*;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -238,7 +237,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         isAngeredBeesMode = false;
     }
 
-    public void initStartTrans(){
+    public void initStartTrans() {
         FlowerComponent.state = FlowerComponent.State.IDLE;
 
         gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x -= 200;
@@ -246,19 +245,19 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         ActionComponent ac = new ActionComponent();
         ac.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
-                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x+200, gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
+                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).x + 200, gameItem.getChild("btn_pause").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
 
-        if(gameItem.getChild("btn_back") != null) {
+        if (gameItem.getChild("btn_back") != null) {
             gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).x -= 200;
         }
 
         ActionComponent ac2 = new ActionComponent();
         ac2.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
-                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).x+200, gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
+                Actions.parallel(Actions.fadeIn(2f, Interpolation.exp10, 0.5f), Actions.moveTo(gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).x + 200, gameItem.getChild("btn_back").getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
 
         gameItem.getChild("btn_pause").getEntity().add(ac);
-        if(gameItem.getChild("btn_back") != null) {
+        if (gameItem.getChild("btn_back") != null) {
             gameItem.getChild("btn_back").getEntity().add(ac2);
         }
 
@@ -304,19 +303,21 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
         curtainGameE.getComponent(TintComponent.class).color.a = 0.99f;
-        if(curtainGameE.getComponent(ActionComponent.class) == null){
+        if (curtainGameE.getComponent(ActionComponent.class) == null) {
             curtainGameE.add(new ActionComponent());
         }
         curtainGameE.getComponent(ActionComponent.class).reset();
         curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
 
-            initDoubleBJIcon();
-            initPhoenixIcon();
+        initDoubleBJIcon();
+        initPhoenixIcon();
 
-            CocoonSystem.resetSpawnCoefficients();
-            cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-            umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-        }
+        CocoonSystem.resetSpawnCoefficients();
+        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+
+        initPet();
+    }
 
     private void initDoubleBJIcon() {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();

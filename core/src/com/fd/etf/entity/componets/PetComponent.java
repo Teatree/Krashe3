@@ -113,7 +113,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
             }
         }
 
-        gameStage.gameScript.initPet();
+//        gameStage.gameScript.initPet();
     }
 
     @Override
