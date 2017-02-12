@@ -65,7 +65,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity loseFeedback;
     public Entity curtainGameE;
     public LabelComponent startLabelComponent;
-    public Entity background;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
 
@@ -83,7 +82,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     private static boolean shouldShowGameOverDialog;
+
     private Entity petE;
+    public boolean changePet;
+
     public Entity megaFlower;
     public Entity megaLeaves;
     public Entity scoreCE;
@@ -235,6 +237,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.gameScript.fpc.settings.totalPlayedGames++;
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
+
+        changePet = true;
     }
 
     public void initStartTrans() {
@@ -316,8 +320,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
 
-        hideCurrentPet();
-        initPet();
+        if (changePet) {
+            hideCurrentPet();
+            initPet();
+            changePet = false;
+        }
     }
 
     private void initDoubleBJIcon() {
@@ -462,7 +469,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
-            if (gameStage.gameScript.fpc.currentPet.petHead != null) {
+            if (gameStage.gameScript.fpc.currentPet.petHead != null &&
+                    gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class)!= null) {
                 gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 gameStage.gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petCannon);
