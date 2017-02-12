@@ -55,7 +55,7 @@ public class Upgrade extends ShopItem{
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
 //        phoenix.logoName = "itemfedora";
-        phoenix.shopIcon = "itemfedora";
+        phoenix.shopIcon = "itemphoenixUPGRADE";
 //        phoenix.transactionId = Main.phoenix_trans_ID;
         return phoenix;
     }
@@ -70,7 +70,7 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = HARD;
 //        bjd.logoName = "itemwig";
-        bjd.shopIcon = "itemwig";
+        bjd.shopIcon = "itemdoubleUPGRADE";
 //        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }
