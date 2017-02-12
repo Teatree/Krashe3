@@ -93,7 +93,7 @@ public class PromoWindow extends AbstractDialog {
 
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(DISCOUNT_X, DISCOUNT_Y, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveBy(0, -530, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);
 
         Entity buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);
@@ -136,16 +136,18 @@ public class PromoWindow extends AbstractDialog {
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);
                 petPromoE.getComponent(TransformComponent.class).x = 600;
-                petPromoE.getComponent(TransformComponent.class).y = 200;
+                petPromoE.getComponent(TransformComponent.class).y = 630;
                 petPromoE.getComponent(ZIndexComponent.class).setZIndex(230);
+                petPromoE.add(ac);
             }else{
                 CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(offer.shopIcon);
                 Entity offerIconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), offerIconE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(offerIconE);
                 offerIconE.getComponent(TransformComponent.class).x = 600;
-                offerIconE.getComponent(TransformComponent.class).y = 200;
+                offerIconE.getComponent(TransformComponent.class).y = 630;
                 offerIconE.getComponent(ZIndexComponent.class).setZIndex(230);
+                offerIconE.add(ac);
             }
         }
     }

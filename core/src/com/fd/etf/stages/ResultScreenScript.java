@@ -230,7 +230,6 @@ public class ResultScreenScript implements IScript {
                 offerPromo = false;
                 promoWindow.show();
                 active = false;
-                promoWindow.show();
             }
         }
 
