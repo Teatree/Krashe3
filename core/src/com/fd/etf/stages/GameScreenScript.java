@@ -316,6 +316,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
 
+        hideCurrentPet();
         initPet();
     }
 
