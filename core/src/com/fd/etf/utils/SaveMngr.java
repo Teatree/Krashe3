@@ -69,7 +69,7 @@ public class SaveMngr {
             gameStats.upgrades.add(new UpgradeStats(u));
         }
         saveVanities(fc);
-        // saveOtherPets(fc);
+        saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
 
@@ -713,7 +713,7 @@ public class SaveMngr {
         public int angeredBeesDuration;
         public PetJson pet;
         public boolean leaves;
-//        public boolean changeFlower;
+        //        public boolean changeFlower;
         public String collection;
         public String title;
 
