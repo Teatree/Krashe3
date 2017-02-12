@@ -224,7 +224,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         addSystems();
         initFlower(gameItem.getChild(MEGA_FLOWER).getEntity(), gameItem.getChild(MEGA_LEAVES).getEntity());
-        initPet();
+//        initPet();
         initDoubleBJIcon();
         initPhoenixIcon();
         initUmbrella();
@@ -456,7 +456,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void hideCurrentPet() {
         if (gameStage.gameScript.fpc.currentPet != null) {
 //            gameStage.gameScript.fpc.currentPet.disable();
-            if (petE != null) {
+            if (petE != null && petE.getComponent(TransformComponent.class) != null) {
                 petE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
