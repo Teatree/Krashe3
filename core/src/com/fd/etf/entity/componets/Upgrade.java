@@ -19,6 +19,7 @@ public class Upgrade extends ShopItem{
 //    public long tryPeriodStart;
 //    public long tryPeriodTimer;
 
+    public Upgrade(){}
     public Upgrade(GameStage gameStage) {
         this.gameStage = gameStage;
     }

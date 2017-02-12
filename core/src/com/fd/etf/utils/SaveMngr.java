@@ -64,8 +64,9 @@ public class SaveMngr {
         gameStats.shopAd_min = fc.settings.shopAd_min;
 
         writeFile(ADS_SETTINGS_JSON, new Json().toJson(gameStats));
+        gameStats.upgrades = new ArrayList<>();
         for (Upgrade u : fc.upgrades.values()) {
-            gameStats.upgrades.put(u.upgradeType.toString(), new UpgradeStats(u));
+            gameStats.upgrades.add(new UpgradeStats(u));
         }
         saveVanities(fc);
         // saveOtherPets(fc);
@@ -163,11 +164,11 @@ public class SaveMngr {
             fc.settings.reviveAd_min = stats.reviveAd_min;
             fc.settings.shopAd_min = stats.shopAd_min;
 
-            for (Map.Entry<String, UpgradeStats> e : gameStats.upgrades.entrySet()) {
-                Upgrade u = getUpgrade(null, UpgradeType.valueOf(e.getValue().upgradeType));
-                u.bought = e.getValue().bought;
-                u.enabled = e.getValue().enabled;
-                fc.upgrades.put(UpgradeType.valueOf(e.getKey()), u);
+            for (UpgradeStats e : gameStats.upgrades) {
+                Upgrade u = getUpgrade(null, UpgradeType.valueOf(e.upgradeType));
+                u.bought = e.bought;
+                u.enabled = e.enabled;
+                fc.upgrades.put(UpgradeType.valueOf(e.upgradeType), u);
             }
 
             fc.pets = getAllPets();
@@ -629,7 +630,7 @@ public class SaveMngr {
         public long totalScore;
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
-        public Map<String, UpgradeStats> upgrades = new HashMap<String, UpgradeStats>();
+        public List<UpgradeStats> upgrades;
         public int totalPlayedGames;
 
         public int shopAd_max = 4;
