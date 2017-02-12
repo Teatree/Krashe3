@@ -295,7 +295,9 @@ public class PetSystem extends IteratingSystem {
             if (entity.getComponent(TransformComponent.class).x < 900 && cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 ActionComponent ac2 = entity.getComponent(ActionComponent.class);
                 Actions.checkInit();
-                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 1.6f, Interpolation.linear));
+                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 3.6f, Interpolation.linear));
+                // spawning projectiles
+                // ...
             } else if (cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
@@ -304,7 +306,7 @@ public class PetSystem extends IteratingSystem {
                     entity.add(ac);
                 }
                 Actions.checkInit();
-                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 3.2f, Interpolation.pow3Out));
+                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 4.2f, Interpolation.pow3Out));
             }
 
             if (pc.isBiteDash) {
