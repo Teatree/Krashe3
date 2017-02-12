@@ -1,5 +1,5 @@
 
-pack2.png
+pack.png
 size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
@@ -825,7 +825,7 @@ progressbarframe
   orig: 90, 92
   offset: 0, 0
   index: -1
-projectileDOG
+projectile_DOG
   rotate: false
   xy: 1928, 1300
   size: 90, 90
