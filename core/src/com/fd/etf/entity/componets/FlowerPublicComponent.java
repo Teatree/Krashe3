@@ -34,7 +34,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public PetComponent currentPet;
 
     public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
-        return boundsRect.overlaps(rectangle) || petCollisionCheck(rectangle);
+        return boundsRect.overlaps(rectangle);
     }
 
     public boolean petCollisionCheck(Rectangle rectangle) {

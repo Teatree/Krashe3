@@ -5,11 +5,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -29,39 +31,37 @@ public class PetProjectileSystem extends IteratingSystem {
     }
 
     protected void processEntity(Entity entity, float deltaTime) {
-        PetProjectileComponent bjc = mapper.get(entity);
+        PetProjectileComponent ppc = mapper.get(entity);
 
         if (GameScreenScript.isGameOver.get() || !GameScreenScript.isStarted) {
             entity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-            bjc.complete = true;
+            ppc.complete = true;
             end(entity);
         } else {
-            if (!bjc.began) {
-                begin(bjc, entity.getComponent(TransformComponent.class));
-                bjc.began = true;
+            if (!ppc.began) {
+                begin(ppc, entity.getComponent(TransformComponent.class));
+                ppc.began = true;
             }
-            bjc.time += deltaTime;
-            bjc.complete = bjc.time >= bjc.duration;
+            ppc.time += deltaTime;
+            ppc.complete = ppc.time >= ppc.duration;
             float percent;
-            if (bjc.complete) {
+            if (ppc.complete) {
                 percent = 1;
             } else {
-                percent = bjc.time / bjc.duration;
-                if (bjc.interpolation != null) percent = bjc.interpolation.apply(percent);
+                percent = ppc.time / ppc.duration;
+                if (ppc.interpolation != null) percent = ppc.interpolation.apply(percent);
             }
-            update(bjc, entity.getComponent(TransformComponent.class), bjc.reverse ? 1 - percent : percent);
-            if (bjc.complete) end(entity);
+            update(ppc, entity.getComponent(TransformComponent.class), ppc.reverse ? 1 - percent : percent);
+            if (ppc.complete) end(entity);
 
-            if (bjc.time <= (bjc.duration / 5)) {
+            if (ppc.time <= (ppc.duration / 5)) {
                 entity.getComponent(TintComponent.class).color.a = 0;
-            } else if (bjc.time > (bjc.duration / 5) && bjc.time < (4 * bjc.duration / 5) && entity.getComponent(TintComponent.class).color.a <= 0.7f) {
+            } else if (ppc.time > (ppc.duration / 5) && ppc.time < (4 * ppc.duration / 5) && entity.getComponent(TintComponent.class).color.a <= 0.7f) {
                 entity.getComponent(TintComponent.class).color.a += 0.1f;
-            } else if (bjc.time >= (4 * bjc.duration / 5)) {
+            } else if (ppc.time >= (4 * ppc.duration / 5)) {
                 entity.getComponent(TintComponent.class).color.a -= 0.05f;
             }
         }
-
-
 
 
 //        // Soemthing
@@ -80,14 +80,28 @@ public class PetProjectileSystem extends IteratingSystem {
 //        }
     }
 
-    public void update(PetProjectileComponent bjc, TransformComponent tc, float percent) {
-        setPosition(tc, bjc.startX + (bjc.endX - bjc.startX) * percent, bjc.startY + (bjc.endY - bjc.startY) * percent);
+    private boolean checkCollision(PetProjectileComponent ppc) {
+        // TAKE BUG AND CHECK COLLISION...
 
+        return gameStage.gameScript.fpc.petAndFlowerCollisionCheck(ppc.boundsRect);
     }
 
-    protected void begin(PetProjectileComponent bjc, TransformComponent tc) {
-        bjc.startX = tc.x;
-        bjc.startY = tc.y;
+    public void updateRect(PetProjectileComponent ppc, TransformComponent tc) {
+        ppc.boundsRect.x = (int) tc.x + 50; //Nastya can not see this. I can.
+        ppc.boundsRect.y = (int) tc.y + 30;
+        ppc.boundsRect.width = 100;
+        ppc.boundsRect.height = 100;
+    }
+
+    public void update(PetProjectileComponent ppc, TransformComponent tc, float percent) {
+        setPosition(tc, ppc.startX + (ppc.endX - ppc.startX) * percent, ppc.startY + (ppc.endY - ppc.startY) * percent);
+        updateRect(ppc, tc);
+        checkCollision(ppc);
+    }
+
+    protected void begin(PetProjectileComponent ppc, TransformComponent tc) {
+        ppc.startX = tc.x;
+        ppc.startY = tc.y;
     }
 
     protected void end(Entity entity) {

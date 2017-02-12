@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.Random;
@@ -15,6 +16,7 @@ public class PetProjectileComponent implements Component, Pool.Poolable  {
     public float alpha = 0.2f;
     public Interpolation interpolation = Interpolation.fade;
     public boolean reverse, began, complete;
+    public Rectangle boundsRect = new Rectangle();
 
     public PetProjectileComponent() {
     }
