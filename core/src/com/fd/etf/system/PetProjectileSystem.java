@@ -23,7 +23,6 @@ public class PetProjectileSystem extends IteratingSystem {
     private ComponentMapper<PetProjectileComponent> mapper = ComponentMapper.getFor(PetProjectileComponent.class);
 
     private GameStage gameStage;
-    public static boolean isCalculatingScore;
 
     public PetProjectileSystem(GameStage gameStage) {
         super(Family.all(PetProjectileComponent.class).get());
@@ -62,32 +61,10 @@ public class PetProjectileSystem extends IteratingSystem {
                 entity.getComponent(TintComponent.class).color.a -= 0.05f;
             }
         }
-
-
-//        // Soemthing
-//
-//        ActionComponent ac3 = new ActionComponent();
-//        Actions.checkInit();
-//        ac3.dataArray.add(Actions.moveBy(0, 150, 3.6f));
-//
-//        for(int i = 0; i < gameStage.gameScript.fpc.currentPet.projectilesNum ; i++){
-//            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary("projectile_DOG");
-//            Entity petPromoE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
-//            projectileEntities.add(petPromoE);
-//            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), projectileEntities.get(i), tempItemC.composite);
-//            gameStage.sceneLoader.getEngine().addEntity(projectileEntities.get(i));
-//            projectileEntities.get(i).add(ac3);
-//        }
-    }
-
-    private boolean checkCollision(PetProjectileComponent ppc) {
-        // TAKE BUG AND CHECK COLLISION...
-
-        return gameStage.gameScript.fpc.petAndFlowerCollisionCheck(ppc.boundsRect);
     }
 
     public void updateRect(PetProjectileComponent ppc, TransformComponent tc) {
-        ppc.boundsRect.x = (int) tc.x + 50; //Nastya can not see this. I can.
+        ppc.boundsRect.x = (int) tc.x + 50;
         ppc.boundsRect.y = (int) tc.y + 30;
         ppc.boundsRect.width = 100;
         ppc.boundsRect.height = 100;
@@ -96,12 +73,13 @@ public class PetProjectileSystem extends IteratingSystem {
     public void update(PetProjectileComponent ppc, TransformComponent tc, float percent) {
         setPosition(tc, ppc.startX + (ppc.endX - ppc.startX) * percent, ppc.startY + (ppc.endY - ppc.startY) * percent);
         updateRect(ppc, tc);
-        checkCollision(ppc);
     }
 
     protected void begin(PetProjectileComponent ppc, TransformComponent tc) {
         ppc.startX = tc.x;
         ppc.startY = tc.y;
+
+        gameStage.gameScript.projectileBounds.add(ppc.boundsRect);
     }
 
     protected void end(Entity entity) {

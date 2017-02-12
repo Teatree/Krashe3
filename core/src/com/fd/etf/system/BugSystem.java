@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
@@ -71,7 +72,7 @@ public class BugSystem extends IteratingSystem {
                     gameStage.gameScript.fpc.isScary = true;
                 }
 
-                if (checkCollision(bc)) {
+                if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
                     bc.state = DEAD;
 
                     gameStage.gameScript.fpc.addScore(bc.points);
@@ -133,6 +134,16 @@ public class BugSystem extends IteratingSystem {
 
     private boolean checkCollision(BugComponent bc) {
         return gameStage.gameScript.fpc.petAndFlowerCollisionCheck(bc.boundsRect);
+    }
+
+    private boolean checkCollisionPetProjectiles(BugComponent bc) {
+        boolean collides = false;
+        if (projectileBounds != null) {
+            for (Rectangle r : projectileBounds) {
+                collides = r.overlaps(bc.boundsRect);
+            }
+        }
+        return collides;
     }
 
     private void moveEntity(float deltaTime,
@@ -205,7 +216,8 @@ public class BugSystem extends IteratingSystem {
             bc.velocity += deltaTime * 3.4;
         }
 
-        if (checkCollision(bc) || isOutOfBounds(bc)) {
+        // Checking collision
+        if (checkCollision(bc) || isOutOfBounds(bc) || checkCollisionPetProjectiles(bc)) {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
@@ -215,13 +227,13 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void updateChargerGoals(BugComponent bc) {
-        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && checkCollision(bc)) {
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS) != null && (checkCollision(bc) || checkCollisionPetProjectiles(bc))) {
             gameStage.gameScript.fpc.level.getGoalByType(EAT_N_CHARGERS).update();
         }
     }
 
     private void updateBugGoals(BugComponent bc) {
-        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && checkCollision(bc)) {
+        if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS) != null && (checkCollision(bc) || checkCollisionPetProjectiles(bc))) {
             gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUGS).update();
         }
     }
@@ -257,7 +269,6 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRectScary.width = (int) dc.width;
         bc.boundsRectScary.height = (int) dc.height * 2;
     }
-
 
     public void update(BugComponent uc, TransformComponent tc, float percent) {
         float step = percent <= 0.3 ? 5 : 0;

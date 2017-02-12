@@ -1,9 +1,11 @@
 package com.fd.etf.stages;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -21,6 +23,8 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -67,6 +71,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
+    public static List<Rectangle> projectileBounds;
 
     public static float umbrellaSpawnCounter;
     public float cocoonSpawnCounter;
@@ -186,6 +191,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         gameOverReviveTimesLimit = 2;
         gameItem = new ItemWrapper(item);
+        projectileBounds = new ArrayList<Rectangle>();
 
         beesModeAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
         beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
