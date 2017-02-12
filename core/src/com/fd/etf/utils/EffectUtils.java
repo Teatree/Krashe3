@@ -20,7 +20,7 @@ public class EffectUtils {
     public static final String GREEN_SPLATTER = "splatter.party";
     public static final String DEFAULT_LAYER = "Default";
     public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
-    public static final String PROJECTILE_DOG = "projectile_DOG";
+    public static final String PROJECTILE_DOG = "projctile_DOG";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -109,21 +109,21 @@ public class EffectUtils {
     }
 
     public static void spawnPetProjectile(GameStage gameStage, float x, float y) {
-        CompositeItemVO bugJuiceBubbleC = gameStage.sceneLoader.loadVoFromLibrary(PROJECTILE_DOG);
+        CompositeItemVO petProjectileC = gameStage.sceneLoader.loadVoFromLibrary(PROJECTILE_DOG);
 
-        Entity bugJuiceBubbleE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), bugJuiceBubbleC);
-        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
-        gameStage.sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
+        Entity petProjectileE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), petProjectileC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petProjectileE, petProjectileC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(petProjectileE);
 
-        bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(200);
+        petProjectileE.getComponent(ZIndexComponent.class).setZIndex(200);
 
-        TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
-        bugJuiceBubbleE.add(new PetProjectileComponent());
+        TransformComponent tc = petProjectileE.getComponent(TransformComponent.class);
+        petProjectileE.add(new PetProjectileComponent());
         tc.x = x;
         tc.y = y;
 
 //        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
-        bugJuiceBubbleE.add(gameStage.gameScript.fpc);
+        petProjectileE.add(gameStage.gameScript.fpc);
     }
 
     public static Vector2 getTouchCoordinates() {
