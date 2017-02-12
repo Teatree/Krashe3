@@ -760,6 +760,7 @@ public class SaveMngr {
         public String petCannonName;
         public String petHeadName;
         public String logoName;
+        public int projectileSpawnIntervalFrames;
         public boolean isHardCurr;
 
         public PetJson() {
@@ -770,6 +771,7 @@ public class SaveMngr {
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;
+            this.projectileSpawnIntervalFrames = petComponent.projectileSpawnIntervalFrames;
             this.costDisc = petComponent.costDisc;
             this.disc = petComponent.disc;
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;

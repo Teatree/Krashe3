@@ -14,7 +14,11 @@ import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_DASH_N_TIMES;
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_THE_PET;
@@ -33,6 +37,7 @@ public class PetSystem extends IteratingSystem {
     private static final int PET_CANNON_SHIFT_Y = 10;
     private static final int PET_CANNON_SHIFT_X = 62;
     private final GameStage gameStage;
+    private int counter = 0;
 //    private boolean canPlayAnimation = true;
 
     private ComponentMapper<PetComponent> mapper = ComponentMapper.getFor(PetComponent.class);
@@ -44,7 +49,7 @@ public class PetSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity e, float deltaTime) {
-
+        counter++;
         PetComponent pc = mapper.get(e);
 
         DimensionsComponent cannondc = e.getComponent(DimensionsComponent.class);
@@ -295,7 +300,9 @@ public class PetSystem extends IteratingSystem {
             if (entity.getComponent(TransformComponent.class).x < 900 && cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 ActionComponent ac2 = entity.getComponent(ActionComponent.class);
                 Actions.checkInit();
-                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 1.6f, Interpolation.linear));
+                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 3.6f, Interpolation.linear));
+                // spawning projectiles
+
             } else if (cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
@@ -304,7 +311,7 @@ public class PetSystem extends IteratingSystem {
                     entity.add(ac);
                 }
                 Actions.checkInit();
-                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 3.2f, Interpolation.pow3Out));
+                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 4.2f, Interpolation.pow3Out));
             }
 
             if (pc.isBiteDash) {
@@ -316,6 +323,11 @@ public class PetSystem extends IteratingSystem {
             }
             if (isAnimationFinished(cannonsc)) {
                 cannonsc.player.speed = 0;
+            }
+
+            if(counter > gameStage.gameScript.fpc.currentPet.projectileSpawnIntervalFrames) {
+                EffectUtils.spawnPetProjectile(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
+                counter = 0;
             }
         }
     }

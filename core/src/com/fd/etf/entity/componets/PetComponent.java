@@ -25,6 +25,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public State state;
     public Rectangle boundsRect;
     public float velocity;
+    public int projectileSpawnIntervalFrames;
     public boolean isCollision;
     public boolean isBiteDash;
     public float previousX;
@@ -59,6 +60,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         this.cost = petJson.cost;
         this.costDisc = petJson.costDisc;
         this.disc = petJson.disc;
+        this.projectileSpawnIntervalFrames = petJson.projectileSpawnIntervalFrames;
         this.tryPeriod = petJson.tryPeriod;
         this.tryPeriodDuration = petJson.tryPeriodDuration - (System.currentTimeMillis() - petJson.tryPeriodStart) / 1000;
         this.amountBugsBeforeCharging = petJson.amountBugsBeforeCharging;

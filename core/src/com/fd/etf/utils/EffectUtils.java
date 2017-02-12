@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.entity.componets.ParticleLifespanComponent;
+import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
@@ -19,6 +20,7 @@ public class EffectUtils {
     public static final String GREEN_SPLATTER = "splatter.party";
     public static final String DEFAULT_LAYER = "Default";
     public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
+    public static final String PROJECTILE_DOG = "projectile_DOG";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -99,6 +101,24 @@ public class EffectUtils {
 
         TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
         bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
+        tc.x = x;
+        tc.y = y;
+
+//        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
+        bugJuiceBubbleE.add(gameStage.gameScript.fpc);
+    }
+
+    public static void spawnPetProjectile(GameStage gameStage, float x, float y) {
+        CompositeItemVO bugJuiceBubbleC = gameStage.sceneLoader.loadVoFromLibrary(PROJECTILE_DOG);
+
+        Entity bugJuiceBubbleE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), bugJuiceBubbleC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
+
+        bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(200);
+
+        TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
+        bugJuiceBubbleE.add(new PetProjectileComponent());
         tc.x = x;
         tc.y = y;
 
