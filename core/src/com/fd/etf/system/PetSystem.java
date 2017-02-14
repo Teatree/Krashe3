@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.PetComponent;
@@ -14,11 +15,7 @@ import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_DASH_N_TIMES;
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_THE_PET;
@@ -102,12 +99,19 @@ public class PetSystem extends IteratingSystem {
 
             tap(e, cannonsc);
 
-            if (pc.eatenBugsCounter >= pc.amountBugsBeforeCharging) {
+            if (pc.eatenBugsCounter >= pc.amountBugsBeforeCharging || Gdx.input.isKeyPressed(Input.Keys.A)) {
+
 //                canPlayAnimation = true;
                 setDashAnimation(cannonsc);
                 setDashAnimation(e.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
+                if (!pc.state.equals(DASH)){
+                    for (int i = 0; i < 4; i++) {
+                        EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y);
+                    }
+                }
                 pc.state = DASH;
+
                 checkPetDashGoal();
             }
         } else {
@@ -325,10 +329,10 @@ public class PetSystem extends IteratingSystem {
                 cannonsc.player.speed = 0;
             }
 
-            if(counter > gameStage.gameScript.fpc.currentPet.projectileSpawnIntervalFrames) {
-                EffectUtils.spawnPetProjectile(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
-                counter = 0;
-            }
+//            if(counter > gameStage.gameScript.fpc.currentPet.projectileSpawnIntervalFrames) {
+//                EffectUtils.spawnPetProjectile(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
+//                counter = 0;
+//            }
         }
     }
 
