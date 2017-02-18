@@ -12,6 +12,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.BugSystem;
+import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -117,7 +118,7 @@ public class GameOverDialog extends AbstractDialog {
         gameOverCounter = GAME_OVER_COUNT;
         isAngeredBeesMode = false;
         BugSystem.blowUpAllBugs = true;
-        BugSystem.blowUpCounter = 10;
+        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
         FlowerComponent.state = FlowerComponent.State.REVIVE_ADS;
     }
 

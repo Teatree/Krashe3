@@ -15,6 +15,7 @@ import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
 import com.fd.etf.utils.DebugSystem;
+import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -107,7 +108,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         BugSpawnSystem.queenBeeOnStage = false;
 
         BugSystem.blowUpAllBugs = true;
-        BugSystem.blowUpCounter = 10;
+        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
         beesModeAni.getComponent(TransformComponent.class).y = 394;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;

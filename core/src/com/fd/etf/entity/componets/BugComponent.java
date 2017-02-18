@@ -53,6 +53,8 @@ public class BugComponent implements Component, Pool.Poolable {
     public float PREPARING_MVMNT_SPEED;
     public float CHARGING_MVMNT_SPEED;
 
+    public boolean isPlayingDeathAnimation;
+
     public int points;
 
     public Rectangle boundsRect = new Rectangle();
