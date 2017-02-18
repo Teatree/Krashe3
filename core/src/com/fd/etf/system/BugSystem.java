@@ -57,6 +57,10 @@ public class BugSystem extends IteratingSystem {
             if (blowUpCounter <= 0 && blowUpAllBugs) {
                 blowUpAllBugs = false;
             }
+            if(sac.frameRangeMap.containsKey("death")) {
+                canPlayAnimation = true;
+                setAnimation("death", Animation.PlayMode.LOOP, sasc, sac);
+            }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
 
             sasc.paused = false;
@@ -70,6 +74,10 @@ public class BugSystem extends IteratingSystem {
                 if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
                     gameStage.gameScript.fpc.isScary = true;
+                    if(sac.frameRangeMap.containsKey("scare")) {
+                        canPlayAnimation = true;
+                        setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
+                    }
                 }
 
                 if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
@@ -89,6 +97,11 @@ public class BugSystem extends IteratingSystem {
                     }
 
                     checkPetEatBugGoal(bc);
+
+                    if(sac.frameRangeMap.containsKey("fly")) {
+                        canPlayAnimation = true;
+                        setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+                    }
 
                     spawnBugJuiceBubble(bc);
                 }
@@ -159,20 +172,20 @@ public class BugSystem extends IteratingSystem {
                 case SIMPLE:
                     bugComponent.boundsRect.setHeight(70);
                     bugComponent.boundsRect.setY(transformComponent.y + 90);
-                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
                     break;
                 case DRUNK:
-                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
                     break;
                 case CHARGER:
                     moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
                     break;
                 case BEE:
                     bugComponent.boundsRect.setHeight(70);
-                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
                     break;
                 case QUEENBEE:
-                    moveSimple(deltaTime, transformComponent, bugComponent);
+                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
                     break;
                 default:
                     break;
@@ -238,7 +251,8 @@ public class BugSystem extends IteratingSystem {
         }
     }
 
-    private void moveSimple(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent) {
+    private void moveSimple(float deltaTime, TransformComponent transformComponent, BugComponent bugComponent, SpriteAnimationStateComponent sasc,
+                            SpriteAnimationComponent sac) {
         if (!bugComponent.began) {
             begin(bugComponent, transformComponent);
             bugComponent.began = true;
@@ -253,6 +267,11 @@ public class BugSystem extends IteratingSystem {
             if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
         }
 
+        if(sac.animationName == "default") {
+            canPlayAnimation = true;
+            setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+        }
+
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
     }
 
@@ -261,6 +280,12 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRect.y = (int) tc.y + 30;
         bc.boundsRect.width = (int) dc.width * tc.scaleX - 50;
         bc.boundsRect.height = (int) dc.height * tc.scaleY - 30;
+        if(bc.type == "BEE"){
+            bc.boundsRect.x = (int) tc.x + 250; //Nastya can not see this. I can.
+            bc.boundsRect.y = (int) tc.y + 130;
+            bc.boundsRect.width = (int) dc.width * tc.scaleX - 330;
+            bc.boundsRect.height = (int) dc.height * tc.scaleY - 300;
+        }
     }
 
     public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {

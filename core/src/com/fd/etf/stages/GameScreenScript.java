@@ -14,6 +14,7 @@ import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
 import com.fd.etf.utils.CameraShaker;
+import com.fd.etf.utils.DebugSystem;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -379,6 +380,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
         gameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(gameStage));
+//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem(gameStage));
     }
 
     private void initBackButton() {
