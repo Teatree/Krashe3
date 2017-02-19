@@ -12,14 +12,10 @@ import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
-import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
-import com.uwsoft.editor.renderer.systems.action.Actions;
-
-import javax.swing.*;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.*;
@@ -33,8 +29,8 @@ public class BugSystem extends IteratingSystem {
     private static final String PREPARING_ANI = "PREPARING";
 
     public static boolean blowUpAllBugs;
-    public static int blowUpCounter;
-    public static int shittyCounter = 10;
+    public static float blowUpCounter;
+    public static float destroyAllBugsCounter = 0.08f; // necessary to destroy all bugs
 
     boolean canPlayAnimation = true;
 
@@ -49,6 +45,7 @@ public class BugSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
 
@@ -56,6 +53,8 @@ public class BugSystem extends IteratingSystem {
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
 
         BugComponent bc = mapper.get(entity);
+
+        bc.scareCounter -= deltaTime;
 
         if (blowUpAllBugs) {
             if(sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
@@ -70,16 +69,15 @@ public class BugSystem extends IteratingSystem {
             if (blowUpCounter <= 0 && blowUpAllBugs) {
                 destroyBug(entity, entity.getComponent(TransformComponent.class));
                 bc.isPlayingDeathAnimation = false;
-                shittyCounter--;
-                if(shittyCounter <= 0) {
+                destroyAllBugsCounter -= deltaTime;
+                if(destroyAllBugsCounter <= 0) {
                     blowUpAllBugs = false;
-                    shittyCounter = 10;
+                    destroyAllBugsCounter = 0.08f;
                 }
             }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
 
             sasc.paused = false;
-
 
             if (!blowUpAllBugs && !DEAD.equals(bc.state) ) {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
@@ -90,6 +88,7 @@ public class BugSystem extends IteratingSystem {
                     if(sac.frameRangeMap.containsKey("scare") && !gameStage.gameScript.fpc.isScary) {
                         canPlayAnimation = true;
                         setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
+                        bc.scareCounter = 2f;
                     }
                     gameStage.gameScript.fpc.isScary = true;
                 }
@@ -139,6 +138,9 @@ public class BugSystem extends IteratingSystem {
             if (!blowUpAllBugs) {
                 BugPool.getInstance(gameStage).release(entity);
             }
+        }
+        if(bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")){
+            setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
         }
     }
 

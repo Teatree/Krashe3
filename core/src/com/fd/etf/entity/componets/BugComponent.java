@@ -65,6 +65,7 @@ public class BugComponent implements Component, Pool.Poolable {
 
     public int counter = new Random().nextInt(MAX_IDLE_COUNT - MIN_IDLE_COUNTER) + MIN_IDLE_COUNTER;
     private GameStage gameStage;
+    public float scareCounter;
 
     public BugComponent(GameStage gameStage, String type, BugSpawnSystem.Multiplier m) {
         this.gameStage = gameStage;
