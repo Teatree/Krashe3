@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.entity.componets.BugComponent;
+import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
@@ -84,7 +85,7 @@ public class BugSystem extends IteratingSystem {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
-                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)) {
+                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary) &&  gameStage.gameScript.fpc.state == FlowerComponent.State.ATTACK) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
                     if(sac.frameRangeMap.containsKey("scare") && !gameStage.gameScript.fpc.isScary) {
                         canPlayAnimation = true;

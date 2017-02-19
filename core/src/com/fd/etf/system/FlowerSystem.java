@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.entity.componets.FlowerComponent;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.SoundMgr;
@@ -56,6 +57,8 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
+
+        gameStage.gameScript.fpc.state = state;
 
         if(BugJuiceBubbleSystem.isCalculatingScore) {
             if(gameStage.gameScript.fpc.oldScore <= (float) gameStage.gameScript.fpc.score){
