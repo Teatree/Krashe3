@@ -71,6 +71,7 @@ public class FlowerSystem extends IteratingSystem {
             }
             if(gameStage.gameScript.fpc.oldScore >= gameStage.gameScript.fpc.score){
                 BugJuiceBubbleSystem.isCalculatingScore = false;
+                gameStage.gameScript.fpc.scoreDiff = 0;
             }
         }
 

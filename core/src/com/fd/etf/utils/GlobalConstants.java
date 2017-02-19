@@ -20,7 +20,7 @@ public abstract class GlobalConstants {
     public static final String BUTTON_TAG = "button";
     public static final float TENTH = 0.1f;
 
-    public static final int BEES_MODE_BLOW_UP_LENGTH = 37;
+    public static final int BEES_MODE_BLOW_UP_LENGTH = 35;
 
     public static final float ALPHA_TRANSITION_STEP = 0.03f;
 }
