@@ -541,7 +541,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void act(float delta) {
         if (blowUpAllBugs) {
             blowUpCounter -= delta;
-            System.out.println("blowUpCounter: " + blowUpCounter);
         }
 
         if (!GameStage.justCreated) {

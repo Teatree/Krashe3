@@ -30,7 +30,7 @@ public class BugSystem extends IteratingSystem {
 
     public static boolean blowUpAllBugs;
     public static float blowUpCounter;
-    public static float destroyAllBugsCounter = 0.1f; // necessary to destroy all bugs
+    public static float destroyAllBugsCounter;
 
     boolean canPlayAnimation = true;
 
@@ -41,6 +41,7 @@ public class BugSystem extends IteratingSystem {
     public BugSystem(GameStage gameStage) {
         super(Family.all(BugComponent.class).get());
         this.gameStage = gameStage;
+        destroyAllBugsCounter = BEES_MODE_DESTROY_COUNTER;
     }
 
     @Override
@@ -72,7 +73,7 @@ public class BugSystem extends IteratingSystem {
                 destroyAllBugsCounter -= deltaTime;
                 if(destroyAllBugsCounter <= 0) {
                     blowUpAllBugs = false;
-                    destroyAllBugsCounter = 0.1f;
+                    destroyAllBugsCounter = BEES_MODE_DESTROY_COUNTER;
                 }
             }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
