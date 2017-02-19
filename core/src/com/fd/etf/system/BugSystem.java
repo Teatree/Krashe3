@@ -159,15 +159,17 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void destroyBug(Entity bugE, TransformComponent tc) {
+        if(!bugE.getComponent(BugComponent.class).isAngeredBee) {
 //        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
 
 //        gameStage.gameScript.fpc.addScore(bugE.getComponent(BugComponent.class).points);// bug juice maybe?
-        spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
-        BugPool.getInstance(gameStage).release(bugE);
+            spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
+            BugPool.getInstance(gameStage).release(bugE);
 
-        if(bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
-            canPlayAnimation = true;
-            setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
+            if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
+                canPlayAnimation = true;
+                setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
+            }
         }
     }
 
@@ -191,31 +193,27 @@ public class BugSystem extends IteratingSystem {
                             SpriteAnimationStateComponent sasc,
                             SpriteAnimationComponent sac) {
 
-        if (GameScreenScript.isAngeredBeesMode) {
-            moveAngryBee(transformComponent);
-        } else {
-            switch (bugComponent.type) {
-                case SIMPLE:
-                    bugComponent.boundsRect.setHeight(70);
-                    bugComponent.boundsRect.setY(transformComponent.y + 90);
-                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
-                    break;
-                case DRUNK:
-                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
-                    break;
-                case CHARGER:
-                    moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
-                    break;
-                case BEE:
-                    bugComponent.boundsRect.setHeight(70);
-                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
-                    break;
-                case QUEENBEE:
-                    moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
-                    break;
-                default:
-                    break;
-            }
+        switch (bugComponent.type) {
+            case SIMPLE:
+                bugComponent.boundsRect.setHeight(70);
+                bugComponent.boundsRect.setY(transformComponent.y + 90);
+                moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
+                break;
+            case DRUNK:
+                moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
+                break;
+            case CHARGER:
+                moveCharger(deltaTime, transformComponent, bugComponent, sasc, sac);
+                break;
+            case BEE:
+                bugComponent.boundsRect.setHeight(70);
+                moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
+                break;
+            case QUEENBEE:
+                moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
+                break;
+            default:
+                break;
         }
     }
 
@@ -293,14 +291,8 @@ public class BugSystem extends IteratingSystem {
             if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
         }
 
-        if(/*sac.frameRangeMap.containsKey("scare") &&*/ gameStage.gameScript.fpc.isScary) {
-//            canPlayAnimation = true;
+        if(gameStage.gameScript.fpc.isScary) {
             setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
-        }
-
-        if(sac.animationName == "default") {
-//            canPlayAnimation = true;
-//            setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
         }
 
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
@@ -353,10 +345,6 @@ public class BugSystem extends IteratingSystem {
     public void setPosition(TransformComponent tc, float x, float y) {
         tc.x = x;
         tc.y = y;
-    }
-
-    public void moveAngryBee(TransformComponent tc) {
-        tc.x += 2.3f;
     }
 
     private void checkGoals(BugComponent bc) {

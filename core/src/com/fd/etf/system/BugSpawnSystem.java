@@ -39,7 +39,7 @@ public class BugSpawnSystem extends EntitySystem {
     private int SPAWN_MAX_X = -200;
     private int SPAWN_MIN_X = -300;
     private int SPAWN_MIN_Y = 100;
-    private int SPAWN_MAX_Y = 460;
+    private int SPAWN_MAX_Y = 360;
 
     private float spawner = 0;
     public static float break_counter = 0;
@@ -57,6 +57,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     public static List<Multiplier> mulipliers;
     public static Multiplier currentMultiplier;
+    public static boolean isFirst;
     public int bugsSpawned;
 
     private Random rand = new Random();
@@ -94,9 +95,9 @@ public class BugSpawnSystem extends EntitySystem {
 
     public void spawn(float delta) {
         break_counter -= delta;
-        if (spawner <= 0) {
+        if (spawner <= 0 && !BugSystem.blowUpAllBugs) {
             if (isAngeredBeesMode) {
-                curSpawnInterval = 0.8f;
+                curSpawnInterval = 0.2f;
 //                createBug(BEE, currentMultiplier);
                 createAngryBee(currentMultiplier);
             } else {
@@ -123,6 +124,7 @@ public class BugSpawnSystem extends EntitySystem {
 
             if (break_counter > 0) {
                 spawner = curSpawnInterval;
+                isFirst = true;
             } else {
                 spawner = rand.nextInt((int) curBreakLengthMax - (int) curBreakLengthMin) + curBreakLengthMin;
                 break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
@@ -156,11 +158,21 @@ public class BugSpawnSystem extends EntitySystem {
     private void createAngryBee(Multiplier currentMultiplier) {
         Entity bugEntity = BugPool.getInstance(gameStage).get(BEE);
         BugComponent bc = new BugComponent(gameStage, BEE, currentMultiplier);
+        bc.isAngeredBee = true;
+        bc.duration = bc.duration/1.5f;
+        bc.interpolation = null;
         bugEntity.add(bc);
 
         TransformComponent tc = bugEntity.getComponent(TransformComponent.class);
-        tc.x = angryBeeLinePosX;
-        tc.y = angryBeeLinePosY;
+        if(isFirst){
+            System.out.println("YES, I AM WORKING!");
+            tc.x = angryBeeLinePosX;
+            tc.y = angryBeeLinePosY - 60;
+            isFirst = false;
+        }else {
+            tc.x = angryBeeLinePosX;
+            tc.y = angryBeeLinePosY;
+        }
 
         bc.endX = 1450;
         bc.endY = tc.y;
