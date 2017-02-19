@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
@@ -35,7 +36,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         if (GameScreenScript.isGameOver.get() || !GameScreenScript.isStarted) {
             entity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
             bjc.complete = true;
-            end(entity);
+            end(bjc, entity);
         } else {
             if (!bjc.began) {
                 begin(bjc, entity.getComponent(TransformComponent.class));
@@ -51,7 +52,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
                 if (bjc.interpolation != null) percent = bjc.interpolation.apply(percent);
             }
             update(bjc, entity.getComponent(TransformComponent.class), bjc.reverse ? 1 - percent : percent);
-            if (bjc.complete) end(entity);
+            if (bjc.complete) end(bjc, entity);
 
             if (bjc.time <= (bjc.duration / 5)) {
                 entity.getComponent(TintComponent.class).color.a = 0;
@@ -73,8 +74,9 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         bjc.startY = tc.y;
     }
 
-    protected void end(Entity entity) {
+    protected void end(BugJuiceBubbleComponent bjc, Entity entity) {
         isCalculatingScore = true;
+        gameStage.gameScript.fpc.addScore(bjc.pointsToAdd);
 
         if(gameStage.gameScript.scoreCE.getComponent(ActionComponent.class) == null){
             gameStage.gameScript.scoreCE.add(new ActionComponent());

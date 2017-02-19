@@ -90,7 +90,7 @@ public class EffectUtils {
         playParticleEffect(gameStage, x, y, GREEN_SPLATTER, 0.5f);
     }
 
-    public static void spawnBugJuiceBubble(GameStage gameStage, float x, float y) {
+    public static void spawnBugJuiceBubble(int points, GameStage gameStage, float x, float y) {
         CompositeItemVO bugJuiceBubbleC = gameStage.sceneLoader.loadVoFromLibrary(BUG_JUICE_BUBBLE_LIB);
 
         Entity bugJuiceBubbleE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), bugJuiceBubbleC);
@@ -100,7 +100,7 @@ public class EffectUtils {
         bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(200);
 
         TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
-        bugJuiceBubbleE.add(new BugJuiceBubbleComponent());
+        bugJuiceBubbleE.add(new BugJuiceBubbleComponent(points));
         tc.x = x;
         tc.y = y;
 

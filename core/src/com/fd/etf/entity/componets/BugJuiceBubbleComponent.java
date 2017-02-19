@@ -13,8 +13,10 @@ public class BugJuiceBubbleComponent implements Component, Pool.Poolable  {
     public float alpha = 0.2f;
     public Interpolation interpolation = Interpolation.fade;
     public boolean reverse, began, complete;
+    public int pointsToAdd;
 
-    public BugJuiceBubbleComponent() {
+    public BugJuiceBubbleComponent(int points) {
+        pointsToAdd = points;
     }
 
     @Override

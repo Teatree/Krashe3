@@ -85,7 +85,7 @@ public class ButterflySystem extends IteratingSystem {
             if (checkCollision(e.getComponent(ButterflyComponent.class))) {
                 gameStage.gameScript.fpc.isCollision = true;
 
-                gameStage.gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
+//                gameStage.gameScript.fpc.addScore(e.getComponent(ButterflyComponent.class).points);
 
                 spawnBugJuiceBubble(e);
                 e.getComponent(ButterflyComponent.class).state = DEAD;
@@ -120,7 +120,7 @@ public class ButterflySystem extends IteratingSystem {
     }
 
     private void spawnBugJuiceBubble(Entity e) {
-        EffectUtils.spawnBugJuiceBubble(gameStage.gameScript.gameStage, e.getComponent(TransformComponent.class).x,
+        EffectUtils.spawnBugJuiceBubble(e.getComponent(ButterflyComponent.class).points, gameStage, e.getComponent(TransformComponent.class).x,
                 e.getComponent(TransformComponent.class).y);
     }
 

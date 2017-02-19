@@ -30,7 +30,7 @@ public class BugSystem extends IteratingSystem {
 
     public static boolean blowUpAllBugs;
     public static float blowUpCounter;
-    public static float destroyAllBugsCounter = 0.08f; // necessary to destroy all bugs
+    public static float destroyAllBugsCounter = 0.1f; // necessary to destroy all bugs
 
     boolean canPlayAnimation = true;
 
@@ -72,7 +72,7 @@ public class BugSystem extends IteratingSystem {
                 destroyAllBugsCounter -= deltaTime;
                 if(destroyAllBugsCounter <= 0) {
                     blowUpAllBugs = false;
-                    destroyAllBugsCounter = 0.08f;
+                    destroyAllBugsCounter = 0.1f;
                 }
             }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
@@ -96,7 +96,7 @@ public class BugSystem extends IteratingSystem {
                 if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
                     bc.state = DEAD;
 
-                    gameStage.gameScript.fpc.addScore(bc.points);
+//                    gameStage.gameScript.fpc.addScore(bc.points);
 
                     if (bc.type.equals(QUEENBEE)) {
                         gameStage.gameScript.angerBees();
@@ -153,12 +153,15 @@ public class BugSystem extends IteratingSystem {
     }
 
     private void spawnBugJuiceBubble(BugComponent bc) {
-        EffectUtils.spawnBugJuiceBubble(gameStage.gameScript.gameStage, bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
+        EffectUtils.spawnBugJuiceBubble(bc.points, gameStage.gameScript.gameStage, bc.boundsRect.x + bc.boundsRect.getWidth() / 2,
                 bc.boundsRect.y + bc.boundsRect.getHeight() / 2);
     }
 
     public void destroyBug(Entity bugE, TransformComponent tc) {
 //        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
+
+//        gameStage.gameScript.fpc.addScore(bugE.getComponent(BugComponent.class).points);// bug juice maybe?
+        spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
         BugPool.getInstance(gameStage).release(bugE);
 
         if(bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
