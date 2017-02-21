@@ -53,7 +53,12 @@ public class BugSystem extends IteratingSystem {
         entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
 
+
         BugComponent bc = mapper.get(entity);
+        if(bc.type == QUEENBEE) {
+            entity.getComponent(TransformComponent.class).scaleX = 0.6f;
+            entity.getComponent(TransformComponent.class).scaleY = 0.6f;
+        }
 
         bc.scareCounter -= deltaTime;
 

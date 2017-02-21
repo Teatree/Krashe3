@@ -6,141 +6,582 @@ filter: Nearest,Nearest
 repeat: none
 queenBeeAni01
   rotate: false
-  xy: 2, 618
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni45
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni59
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni02
   rotate: false
-  xy: 2, 342
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
-queenBeeAni20
-  rotate: false
-  xy: 2, 342
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
+
+queenBeeAni2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 queenBeeAni03
   rotate: false
-  xy: 225, 618
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
-queenBeeAni19
-  rotate: false
-  xy: 225, 618
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni04
   rotate: false
-  xy: 2, 66
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
-queenBeeAni18
-  rotate: false
-  xy: 2, 66
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
+
+queenBeeAni3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 queenBeeAni05
   rotate: false
-  xy: 225, 342
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
-queenBeeAni17
-  rotate: false
-  xy: 225, 342
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni06
   rotate: false
-  xy: 448, 618
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
-queenBeeAni16
-  rotate: false
-  xy: 448, 618
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
+
+queenBeeAni4.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 queenBeeAni07
   rotate: false
-  xy: 225, 66
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
-queenBeeAni15
-  rotate: false
-  xy: 225, 66
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni08
   rotate: false
-  xy: 448, 342
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
-queenBeeAni14
-  rotate: false
-  xy: 448, 342
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
+
+queenBeeAni5.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 queenBeeAni09
   rotate: false
-  xy: 671, 618
-  size: 221, 274
-  orig: 221, 274
-  offset: 0, 0
-  index: -1
-queenBeeAni13
-  rotate: false
-  xy: 671, 618
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni10
   rotate: false
-  xy: 448, 66
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni6.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni11
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
 queenBeeAni12
   rotate: false
-  xy: 448, 66
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
-queenBeeAni11
+
+queenBeeAni7.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni13
   rotate: false
-  xy: 671, 342
-  size: 221, 274
-  orig: 221, 274
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni14
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni8.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni15
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni16
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni9.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni17
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni18
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni10.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni19
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni20
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni11.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni21
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni22
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni12.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni23
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni24
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni13.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni25
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni26
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni14.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni27
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni28
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni15.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni29
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni30
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni16.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni31
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni32
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni17.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni33
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni34
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni18.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni35
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni36
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni19.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni37
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni38
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni20.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni39
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni40
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni21.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni41
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni42
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni22.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni43
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni44
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni23.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni46
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni47
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni24.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni48
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni49
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni25.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni50
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni51
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni26.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni52
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni53
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni27.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni54
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni55
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni28.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni56
+  rotate: false
+  xy: 2, 374
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+queenBeeAni57
+  rotate: false
+  xy: 2, 2
+  size: 569, 370
+  orig: 569, 370
+  offset: 0, 0
+  index: -1
+
+queenBeeAni29.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+queenBeeAni58
+  rotate: false
+  xy: 2, 201
+  size: 569, 370
+  orig: 569, 370
   offset: 0, 0
   index: -1
