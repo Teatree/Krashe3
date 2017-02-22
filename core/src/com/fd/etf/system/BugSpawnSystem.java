@@ -44,23 +44,23 @@ public class BugSpawnSystem extends EntitySystem {
     private float spawner = 0;
     public static float break_counter = 0;
     private float SPAWN_INTERVAL_BASE = 2.5f;
-    private float BREAK_FREQ_BASE_MIN = 20;
-    private float BREAK_FREQ_BASE_MAX = 28;
-    private float BREAK_LENGTH_BASE_MIN = 2;
-    private float BREAK_LENGTH_BASE_MAX = 5;
+    public static float BREAK_FREQ_BASE_MIN = 20;
+    public static float BREAK_FREQ_BASE_MAX = 28;
+    public static float BREAK_LENGTH_BASE_MIN = 2;
+    public static float BREAK_LENGTH_BASE_MAX = 5;
 
     private float curSpawnInterval = SPAWN_INTERVAL_BASE;
-    private float curBreakFreqMin = BREAK_FREQ_BASE_MIN;
-    private float curBreakFreqMax = BREAK_FREQ_BASE_MAX;
-    private float curBreakLengthMin = BREAK_LENGTH_BASE_MIN;
-    private float curBreakLengthMax = BREAK_LENGTH_BASE_MAX;
+    public static float curBreakFreqMin = BREAK_FREQ_BASE_MIN;
+    public static float curBreakFreqMax = BREAK_FREQ_BASE_MAX;
+    public static float curBreakLengthMin = BREAK_LENGTH_BASE_MIN;
+    public static float curBreakLengthMax = BREAK_LENGTH_BASE_MAX;
 
     public static List<Multiplier> mulipliers;
     public static Multiplier currentMultiplier;
     public static boolean isFirst;
     public int bugsSpawned;
 
-    private Random rand = new Random();
+    public static Random rand = new Random();
     private float angryBeeLinePosY = 150;
     private float angryBeeLinePosX = SPAWN_MAX_X;
 
@@ -79,8 +79,17 @@ public class BugSpawnSystem extends EntitySystem {
         SPAWN_MAX_X = -200;
         SPAWN_MAX_Y = 650;
 
-        break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
+        BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
+        BugSpawnSystem.break_counter /= 100;
+        System.out.println("init() + break_counter: " + BugSpawnSystem.break_counter);
         currentMultiplier = mulipliers.get(0);
+    }
+
+    public static void resetBreakCounter() {
+        curBreakFreqMin = 0.12f;
+        curBreakFreqMax = 0.16f;
+//                curBreakLengthMin = BREAK_LENGTH_BASE_MIN/3;
+//                curBreakLengthMax = BREAK_LENGTH_BASE_MAX/3;
     }
 
     private TransformComponent getPos(BugComponent bc) {
@@ -94,10 +103,13 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     public void spawn(float delta) {
-        break_counter -= delta;
+        if(!isAngeredBeesMode) {
+            break_counter -= delta;
+        }
         if (spawner <= 0 && !BugSystem.blowUpAllBugs) {
             if (isAngeredBeesMode) {
-                curSpawnInterval = 0.2f;
+                curSpawnInterval = 0.3f;
+                resetBreakCounter();
 //                createBug(BEE, currentMultiplier);
                 createAngryBee(currentMultiplier);
             } else {
@@ -122,16 +134,23 @@ public class BugSpawnSystem extends EntitySystem {
 //                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
             }
 
-            if (break_counter > 0) {
+            System.out.println(" spawn() everytime + break_counter: " + break_counter);
+            if (break_counter > 0.1f) {
+                if(isAngeredBeesMode) {
+                    break_counter -= delta;
+                }
                 spawner = curSpawnInterval;
                 isFirst = true;
             } else {
                 spawner = rand.nextInt((int) curBreakLengthMax - (int) curBreakLengthMin) + curBreakLengthMin;
-                break_counter = rand.nextInt((int) curBreakFreqMax - (int) curBreakFreqMin) + curBreakFreqMin;
+                BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
+                BugSpawnSystem.break_counter /= 100;
+                System.out.println("spawn() + break_counter: " + BugSpawnSystem.break_counter);
 
                 //new angry bee row
                 angryBeeLinePosY = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
             }
+
         } else {
             spawner -= delta;
         }
@@ -159,13 +178,13 @@ public class BugSpawnSystem extends EntitySystem {
         Entity bugEntity = BugPool.getInstance(gameStage).get(BEE);
         BugComponent bc = new BugComponent(gameStage, BEE, currentMultiplier);
         bc.isAngeredBee = true;
-        bc.duration = bc.duration/1.5f;
+        bc.duration = bc.duration/1.2f;
         bc.interpolation = null;
         bugEntity.add(bc);
 
         TransformComponent tc = bugEntity.getComponent(TransformComponent.class);
         if(isFirst){
-            System.out.println("YES, I AM WORKING!");
+//            System.out.println("YES, I AM WORKING!");
             tc.x = angryBeeLinePosX;
             tc.y = angryBeeLinePosY - 60;
             isFirst = false;
@@ -203,7 +222,7 @@ public class BugSpawnSystem extends EntitySystem {
                     int index = mulipliers.indexOf(currentMultiplier);
                     currentMultiplier = mulipliers.get(index < mulipliers.size() - 1 ? index + 1 : index);
 
-                }
+           }
                 if (bugsSpawned >= currentCocoonMultiplier.finishOn) {
                     int indexC = cocoonMultipliers.indexOf(currentCocoonMultiplier);
                     currentCocoonMultiplier = cocoonMultipliers.get(indexC < cocoonMultipliers.size() - 1 ? indexC + 1 : indexC);

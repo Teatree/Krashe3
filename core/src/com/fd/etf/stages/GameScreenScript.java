@@ -104,7 +104,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void angerBees() {
         BugSpawnSystem.isFirst = true;
         isAngeredBeesMode = true;
-        BugSpawnSystem.break_counter = 1;
+//        BugSpawnSystem.break_counter = 1;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
 
@@ -114,6 +114,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
         beesModeAni.getComponent(SpriterComponent.class).player.setTime(0);
+
+        BugSpawnSystem.resetBreakCounter();
+        BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
+        BugSpawnSystem.break_counter /= 100;
+        System.out.println("angerBees() + break_counter: " + BugSpawnSystem.break_counter);
     }
 
     private void updateAngeredBeesMode() {
