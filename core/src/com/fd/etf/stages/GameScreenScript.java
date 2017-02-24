@@ -104,6 +104,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void angerBees() {
         BugSpawnSystem.isFirst = true;
         isAngeredBeesMode = true;
+        BugSpawnSystem.angerBeePattern = random.nextInt(3);
 //        BugSpawnSystem.break_counter = 1;
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;

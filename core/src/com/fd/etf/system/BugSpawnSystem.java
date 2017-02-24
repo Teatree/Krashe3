@@ -25,15 +25,30 @@ public class BugSpawnSystem extends EntitySystem {
     public static final int CHARGER_SPAWN_PROB = 27;
     public static final int QUEENBEE_SPAWN_PROB = 29;
     public static final int BEE_SPAWN_PROB = 30;
+    public static final int ANGERED_BEE_PATTERN_1_y_1 = 32;
+    public static final int ANGERED_BEE_PATTERN_1_y_2 = 500;
+    public static final int ANGERED_BEE_PATTERN_2_y_1 = 300;
+    public static final int ANGERED_BEE_PATTERN_2_y_1Stage = 200;
+    public static final int ANGERED_BEE_PATTERN_2_y_2 = 100;
+    public static final int ANGERED_BEE_PATTERN_2_y_2Stage = 500;
 
     public static int curDrunkProb = DRUNK_SPAWN_PROB;
     public static int curSimpleProb = SIMPLE_SPAWN_PROB;
     public static int curChargerProb = CHARGER_SPAWN_PROB;
     public static int curQueenBeeProb = QUEENBEE_SPAWN_PROB;
     public static int curBeeProb = BEE_SPAWN_PROB;
+    public static int angeredBeePattern1Y1 = ANGERED_BEE_PATTERN_1_y_1;
+    public static int angeredBeePattern1Y2 = ANGERED_BEE_PATTERN_1_y_2;
+    public static int angeredBeePattern2Y1 = ANGERED_BEE_PATTERN_2_y_1;
+    public static int angeredBeePattern2Y1stage = ANGERED_BEE_PATTERN_2_y_1Stage;
+    public static int angeredBeePattern2Y2 = ANGERED_BEE_PATTERN_2_y_2;
+    public static int angeredBeePattern2Y2stage = ANGERED_BEE_PATTERN_2_y_2Stage;
 
     public static int ANGERED_BEES_MODE_DURATION = 800;
     public static boolean queenBeeOnStage = false;
+    public static int angerBeePattern;
+    public static int angerBeePattern1case;
+    public static int angerBeePattern2case;
     private final GameStage gameStage;
 
     private int SPAWN_MAX_X = -200;
@@ -108,7 +123,13 @@ public class BugSpawnSystem extends EntitySystem {
         }
         if (spawner <= 0 && !BugSystem.blowUpAllBugs) {
             if (isAngeredBeesMode) {
-                curSpawnInterval = 0.3f;
+                if(angerBeePattern == 0) {
+                    curSpawnInterval = 0.3f;
+                }else if (angerBeePattern == 1){
+                    curSpawnInterval = 0.6f;
+                }else{
+                    curSpawnInterval = 0.6f;
+                }
                 resetBreakCounter();
 //                createBug(BEE, currentMultiplier);
                 createAngryBee(currentMultiplier);
@@ -145,6 +166,14 @@ public class BugSpawnSystem extends EntitySystem {
                 spawner = rand.nextInt((int) curBreakLengthMax - (int) curBreakLengthMin) + curBreakLengthMin;
                 BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
                 BugSpawnSystem.break_counter /= 100;
+                angerBeePattern1case = rand.nextInt(2);
+                angerBeePattern2case = rand.nextInt(2);
+                angeredBeePattern1Y1 = ANGERED_BEE_PATTERN_1_y_1;
+                angeredBeePattern1Y2 = ANGERED_BEE_PATTERN_1_y_2;
+                angeredBeePattern2Y1 = ANGERED_BEE_PATTERN_2_y_1;
+                angeredBeePattern2Y1stage = ANGERED_BEE_PATTERN_2_y_1Stage;
+                angeredBeePattern2Y2 = ANGERED_BEE_PATTERN_2_y_2;
+                angeredBeePattern2Y2stage = ANGERED_BEE_PATTERN_2_y_2Stage;
                 System.out.println("spawn() + break_counter: " + BugSpawnSystem.break_counter);
 
                 //new angry bee row
@@ -183,20 +212,51 @@ public class BugSpawnSystem extends EntitySystem {
         bugEntity.add(bc);
 
         TransformComponent tc = bugEntity.getComponent(TransformComponent.class);
-        if(isFirst){
+        tc.x = angryBeeLinePosX;
+
+        if(angerBeePattern == 0) {
+            if (isFirst) {
 //            System.out.println("YES, I AM WORKING!");
-            tc.x = angryBeeLinePosX;
-            tc.y = angryBeeLinePosY - 60;
-            isFirst = false;
+                tc.y = angryBeeLinePosY - 60;
+                isFirst = false;
+            } else {
+                tc.y = angryBeeLinePosY;
+            }
+
+            bc.endX = 1450;
+            bc.endY = tc.y;
+
+            bc.startYPosition = tc.y;
+        }else if(angerBeePattern == 1){
+            if(angerBeePattern1case == 1) {
+                tc.y = angeredBeePattern1Y1 += 100;
+                bc.endX = 1450;
+                bc.endY = tc.y;
+            }else {
+                tc.y = angeredBeePattern1Y2 -= 100;
+                bc.endX = 1450;
+                bc.endY = tc.y;
+            }
         }else {
-            tc.x = angryBeeLinePosX;
-            tc.y = angryBeeLinePosY;
+            if(angerBeePattern2case == 1) {
+                if(angeredBeePattern2Y1 < 490) {
+                    tc.y = angeredBeePattern2Y1 += 100;
+                }else{
+                    tc.y = angeredBeePattern2Y1stage -= 100;
+                }
+
+                bc.endX = 1450;
+                bc.endY = tc.y;
+            }else {
+                if(angeredBeePattern2Y2 < 290) {
+                    tc.y = angeredBeePattern2Y2 += 100;
+                }else{
+                    tc.y = angeredBeePattern2Y2stage -= 100;
+                }
+                bc.endX = 1450;
+                bc.endY = tc.y;
+            }
         }
-
-        bc.endX = 1450;
-        bc.endY = tc.y;
-
-        bc.startYPosition = tc.y;
     }
 
     @Override
