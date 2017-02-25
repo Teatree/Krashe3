@@ -154,6 +154,7 @@ public class GameStage extends Stage {
         shopScript.checkIfChanged();
         System.gc();
         System.runFinalization();
+        ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = -300;
     }
 
     public void initShopWithAds() {
