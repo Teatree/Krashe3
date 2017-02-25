@@ -1,6 +1,7 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
@@ -32,6 +33,7 @@ public class ShopScreenScript implements IScript {
     public static final String BTN_PLAY = "btn_play";
     public static Map<String, Entity> itemIcons = new LinkedHashMap<>();
     public static final String SCORE_LBL = "total_coins";
+    public static final String SCORE_LBL_SH = "total_coins_sh";
     private static final String TOUCH_ZON_AND_BUTTONS = "touch_zon_and_buttons";
     private static final String BTN_IMG_SHOP_ICON_LIB = "btn_img_shop_icon_lib";
     public static final String ITEM_UNKNOWN_N = "item_unknown_n";
@@ -41,14 +43,14 @@ public class ShopScreenScript implements IScript {
     private static final String TAB_BTN_UPG = "tab_btn_upg";
     private static final String CURTAIN_SHOP = "curtain_shop";
 
-    public static final int INIT_HC_ITEMS_X = 146;
+    public static final int INIT_HC_ITEMS_X = 209;
 
     private static final int FIRST_BAG_X = 1950;
     private static final int FIRST_BAG_Y = 440;
-    private static final int X_ICON_ON_BAG = 20;
-    private static final int Y_ICON_ON_BAG = 79;
-    private static final float X_SCALE_ICON_ON_BAG = 1.4f;
-    private static final float Y_SCALE_ICON_ON_BAG = 1.4f;
+    private static final int X_ICON_ON_BAG = 40;
+    private static final int Y_ICON_ON_BAG = 82;
+    private static final float X_SCALE_ICON_ON_BAG = 0.9f;
+    private static final float Y_SCALE_ICON_ON_BAG = 0.9f;
     private static final int SPACE_BETWEEN_BAGS_X = 20;
     private static final int SPACE_BETWEEN_BAGS_Y = 0;
 
@@ -63,6 +65,7 @@ public class ShopScreenScript implements IScript {
     private static final String BTN_SCROLL_INACTIVE = "Gray";
     private static final String DOTZ = "dotz_";
     private static final String DOT_TAG = "dot";
+    private static final String COINS_IMG = "coinsImg";
 
     // Dima's fun house
     private static Entity curtain_shop;
@@ -71,13 +74,16 @@ public class ShopScreenScript implements IScript {
     boolean startTransitionOut;
 
     private static Entity scoreLbl;
+    private static Entity scoreLblSh;
     public static AtomicBoolean isPreviewOn = new AtomicBoolean(false);
 
     public List<ShopItem> allSoftItems = new ArrayList<>();
     public List<ShopItem> allHCItems = new ArrayList<>();
 
     public Entity touchZoneNButton;
+    public Entity coinsImg;
     public LabelComponent lc;
+    public LabelComponent lcsh;
     public Vector2 tempGdx = new Vector2();
     public List<Entity> bags = new ArrayList<>();
     public ButtonComponent touchZoneBtn;
@@ -101,6 +107,7 @@ public class ShopScreenScript implements IScript {
     public static float firstBagTargetPos;
     public static boolean canChangeTabs;
     public GameStage gameStage;
+    public static Entity btnPlay;
 
     public ShopScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -129,11 +136,13 @@ public class ShopScreenScript implements IScript {
         startTransitionIn = true;
         startTransitionOut = false;
 
-
         addButtons();
 
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
+        scoreLblSh = shopItem.getChild(SCORE_LBL_SH).getEntity();
+        coinsImg = shopItem.getChild(COINS_IMG).getEntity();;
         lc = scoreLbl.getComponent(LabelComponent.class);
+        lcsh = scoreLblSh.getComponent(LabelComponent.class);
 
         touchZoneNButton = shopItem.getChild(TOUCH_ZON_AND_BUTTONS).getEntity();
         touchZoneNButton.getComponent(TransformComponent.class).x = 1320;
@@ -155,6 +164,7 @@ public class ShopScreenScript implements IScript {
         isAllowedMoving = true;
         createIconsForAllSoftItems();
         createIconsForAllHCItems();
+        btnPlay.getComponent(TransformComponent.class).y = -FAR_FAR_AWAY_Y;
     }
 
     public void initTabBtns() {
@@ -273,6 +283,8 @@ public class ShopScreenScript implements IScript {
 
 
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class), allSoftItems.indexOf(vc) == 0);
+            tc.scaleX = 0.9f;
+            tc.scaleY = 0.9f;
             bagEntity.add(tc);
             bagsZindex = bagEntity.getComponent(ZIndexComponent.class).getZIndex() > bagsZindex ?
                     bagEntity.getComponent(ZIndexComponent.class).getZIndex() : bagsZindex;
@@ -361,7 +373,7 @@ public class ShopScreenScript implements IScript {
                     }
                 });
 
-        Entity btnPlay = shopItem.getChild(BTN_PLAY).getEntity();
+        btnPlay = shopItem.getChild(BTN_PLAY).getEntity();
         btnPlay.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(btnPlay, new AtomicBoolean[]{isPreviewOn}) {
                     @Override
@@ -385,6 +397,7 @@ public class ShopScreenScript implements IScript {
         updateScrollButtonsState();
         preview.updatePreview();
         lc.text.replace(0, lc.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
+        lcsh.text.replace(0, lcsh.text.length(), String.valueOf(gameStage.gameScript.fpc.totalScore));
 
         if (firstBagTargetPos != 0) {
             float bPos = bags.get(0).getComponent(TransformComponent.class).x;
@@ -395,6 +408,10 @@ public class ShopScreenScript implements IScript {
                 isAllowedMoving = false;
             }
         }
+
+        scoreLbl.getComponent(TransformComponent.class).x = 1150 - scoreLbl.getComponent(LabelComponent.class).text.length * 30;
+        scoreLblSh.getComponent(TransformComponent.class).x = 1153 - scoreLblSh.getComponent(LabelComponent.class).text.length * 30;
+        coinsImg.getComponent(TransformComponent.class).x = scoreLbl.getComponent(TransformComponent.class).x - 60;
     }
 
     private void transitionOut() {

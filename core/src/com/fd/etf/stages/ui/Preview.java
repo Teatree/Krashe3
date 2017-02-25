@@ -418,6 +418,7 @@ public class Preview extends AbstractDialog {
                             putInPlaceNewIconPosition();
                         }
                         showPreview(vc, false, true);
+                        ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
                         ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
                     }
                 }
@@ -474,6 +475,7 @@ public class Preview extends AbstractDialog {
                             if (animFinished()) {
                                 vc.apply(gameStage);
                                 showPreview(vc, false, false);
+                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
                             }
                         }
                     });
@@ -505,6 +507,7 @@ public class Preview extends AbstractDialog {
                             if (animFinished()) {
                                 vc.disable(gameStage);
                                 showPreview(vc, false, false);
+                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
                             }
                         }
                     });
