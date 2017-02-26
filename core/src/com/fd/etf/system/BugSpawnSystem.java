@@ -29,8 +29,8 @@ public class BugSpawnSystem extends EntitySystem {
     public static final int ANGERED_BEE_PATTERN_1_y_2 = 500;
     public static final int ANGERED_BEE_PATTERN_2_y_1 = 300;
     public static final int ANGERED_BEE_PATTERN_2_y_1Stage = 200;
-    public static final int ANGERED_BEE_PATTERN_2_y_2 = 100;
-    public static final int ANGERED_BEE_PATTERN_2_y_2Stage = 500;
+    public static final int ANGERED_BEE_PATTERN_2_y_2 = 30;
+    public static final int ANGERED_BEE_PATTERN_2_y_2Stage = 550;
 
     public static int curDrunkProb = DRUNK_SPAWN_PROB;
     public static int curSimpleProb = SIMPLE_SPAWN_PROB;
@@ -103,8 +103,8 @@ public class BugSpawnSystem extends EntitySystem {
     public static void resetBreakCounter() {
         curBreakFreqMin = 0.12f;
         curBreakFreqMax = 0.16f;
-//                curBreakLengthMin = BREAK_LENGTH_BASE_MIN/3;
-//                curBreakLengthMax = BREAK_LENGTH_BASE_MAX/3;
+        curBreakLengthMin = BREAK_LENGTH_BASE_MIN/2;
+        curBreakLengthMax = BREAK_LENGTH_BASE_MAX/2;
     }
 
     private TransformComponent getPos(BugComponent bc) {
@@ -242,16 +242,24 @@ public class BugSpawnSystem extends EntitySystem {
                 if(angeredBeePattern2Y1 < 490) {
                     tc.y = angeredBeePattern2Y1 += 100;
                 }else{
-                    tc.y = angeredBeePattern2Y1stage -= 100;
+                    if(angeredBeePattern2Y1stage > 150) {
+                        tc.y = angeredBeePattern2Y1stage -= 100;
+                    }else{
+                        tc.y = angeredBeePattern2Y1stage += 100;
+                    }
                 }
 
                 bc.endX = 1450;
                 bc.endY = tc.y;
             }else {
-                if(angeredBeePattern2Y2 < 290) {
+                if(angeredBeePattern2Y2 < 150) {
                     tc.y = angeredBeePattern2Y2 += 100;
                 }else{
-                    tc.y = angeredBeePattern2Y2stage -= 100;
+                    if(angeredBeePattern2Y2stage > 150) {
+                        tc.y = angeredBeePattern2Y2stage -= 100;
+                    }else{
+                        tc.y = angeredBeePattern2Y2stage += 100;
+                    }
                 }
                 bc.endX = 1450;
                 bc.endY = tc.y;
