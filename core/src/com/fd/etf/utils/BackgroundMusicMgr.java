@@ -8,11 +8,16 @@ public class BackgroundMusicMgr {
     public static BackgroundMusicMgr backgroundMusicMgr;
     public static boolean musicOn;
 
-    private Music music;
+    private Music musicMenu;
+    private Music musicGame;
 
     private BackgroundMusicMgr() {
-        music = Gdx.audio.newMusic(Gdx.files.internal("sound/back_ground.mp3"));
-        music.setLooping(true);
+        musicMenu = Gdx.audio.newMusic(Gdx.files.internal("sound/background_menu.mp3"));
+        musicMenu.setLooping(true);
+        musicGame = Gdx.audio.newMusic(Gdx.files.internal("sound/background_game.mp3"));
+        musicGame.setLooping(true);
+        musicGame.setVolume(0.2f);
+        musicMenu.setVolume(0.2f);
     }
 
     public static BackgroundMusicMgr getBackgroundMusicMgr() {
@@ -23,15 +28,25 @@ public class BackgroundMusicMgr {
         return backgroundMusicMgr;
     }
 
-    public void play() {
-        if (!music.isPlaying()) {
-            music.play();
+    public void playMenu() {
+        if (!musicMenu.isPlaying()) {
+            stopGame();
+            musicMenu.play();
+        }
+    }
+    public void playGame() {
+        if (!musicGame.isPlaying()) {
+            stopMenu();
+            musicGame.play();
         }
     }
 
-    public void stop() {
-        music.stop();
+    public void stopMenu() {
+        musicMenu.stop();
     }
 
+    public void stopGame() {
+        musicMenu.stop();
+    }
 
 }

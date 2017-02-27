@@ -1,7 +1,6 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
@@ -9,6 +8,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -127,6 +127,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleX = 0.3f;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleY = 0.3f;
+        BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
     }
 
     private void initGoalsNotification() {

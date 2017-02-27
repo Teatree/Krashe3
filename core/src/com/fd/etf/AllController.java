@@ -6,7 +6,7 @@ import com.fd.etf.stages.GameStage;
 
 public interface AllController extends PlayServices {
 
-    String ANDROID_APP_LINK = "https://play.google.com/store/apps/details?id=com.fd.etf.android";
+    String ANDROID_APP_LINK = "https://playMenu.google.com/store/apps/details?id=com.fd.etf.android";
 
     boolean isWifiConnected();
 

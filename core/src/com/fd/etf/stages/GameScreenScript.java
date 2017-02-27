@@ -13,6 +13,7 @@ import com.fd.etf.stages.ui.GameOverDialog;
 import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.CameraShaker;
 import com.fd.etf.utils.DebugSystem;
 import com.fd.etf.utils.GlobalConstants;
@@ -125,7 +126,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private void updateAngeredBeesMode() {
         if (isAngeredBeesMode) {
             angeredBeesModeTimer--;
-            //stop ani when it's finished
+            //stopMenu ani when it's finished
             if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
                     beesModeAni.getComponent(SpriterComponent.class).player.getTime() %
                             beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
@@ -254,6 +255,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         isAngeredBeesMode = false;
 
         changePet = true;
+        BackgroundMusicMgr.getBackgroundMusicMgr().playGame();
     }
 
     public void initStartTrans() {

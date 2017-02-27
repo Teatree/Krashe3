@@ -99,7 +99,7 @@ public class ButterflySystem extends IteratingSystem {
                 e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             }
         } else {
-            // stop
+            // stopMenu
             e.getComponent(SpriteAnimationComponent.class).fps = 0;
 //            e.getComponent(SpriterComponent.class).player.speed = 0;
         }
