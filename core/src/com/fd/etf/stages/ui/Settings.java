@@ -7,7 +7,9 @@ import com.fd.etf.Main;
 import com.fd.etf.entity.componets.ToggleButtonComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -241,24 +243,31 @@ public class Settings extends AbstractDialog {
     public void musicOn() {
         if (isActive) {
             gameStage.gameScript.fpc.settings.noMusic = false;
+            BackgroundMusicMgr.musicOn = true;
+            BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
         }
     }
 
     public void musicOff() {
         if (isActive) {
             gameStage.gameScript.fpc.settings.noMusic = true;
+            BackgroundMusicMgr.musicOn = false;
+            BackgroundMusicMgr.getBackgroundMusicMgr().stopMenu();
+            BackgroundMusicMgr.getBackgroundMusicMgr().stopGame();
         }
     }
 
     public void soundOn() {
         if (isActive) {
             gameStage.gameScript.fpc.settings.noSound = false;
+            SoundMgr.soundOn = true;
         }
     }
 
     public void soundOff() {
         if (isActive) {
             gameStage.gameScript.fpc.settings.noSound = true;
+            SoundMgr.soundOn = false;
         }
     }
 

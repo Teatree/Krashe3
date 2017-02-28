@@ -9,6 +9,7 @@ import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.utils.BackgroundMusicMgr;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -191,6 +192,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 new ImageButtonListener(btnFB, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
+
                         if (!isDialogOpen.get()) {
                             movingFlaps = playServiceFlapIsOut;
                             Main.mainController.openFB();

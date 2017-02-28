@@ -96,7 +96,7 @@ public class BugSpawnSystem extends EntitySystem {
 
         BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
         BugSpawnSystem.break_counter /= 100;
-        System.out.println("init() + break_counter: " + BugSpawnSystem.break_counter);
+//        System.out.println("init() + break_counter: " + BugSpawnSystem.break_counter);
         currentMultiplier = mulipliers.get(0);
     }
 
@@ -155,7 +155,6 @@ public class BugSpawnSystem extends EntitySystem {
 //                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
             }
 
-            System.out.println(" spawn() everytime + break_counter: " + break_counter);
             if (break_counter > 0.1f) {
                 if(isAngeredBeesMode) {
                     break_counter -= delta;
@@ -174,7 +173,6 @@ public class BugSpawnSystem extends EntitySystem {
                 angeredBeePattern2Y1stage = ANGERED_BEE_PATTERN_2_y_1Stage;
                 angeredBeePattern2Y2 = ANGERED_BEE_PATTERN_2_y_2;
                 angeredBeePattern2Y2stage = ANGERED_BEE_PATTERN_2_y_2Stage;
-                System.out.println("spawn() + break_counter: " + BugSpawnSystem.break_counter);
 
                 //new angry bee row
                 angryBeeLinePosY = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
@@ -191,7 +189,7 @@ public class BugSpawnSystem extends EntitySystem {
         Entity bugEntity = BugPool.getInstance(gameStage).get(tempType);
         BugComponent bc = new BugComponent(gameStage, tempType, currentMultiplier);
         if (bugEntity == null) {
-            System.out.println("temp bug type " + tempType);
+//            System.out.println("temp bug type " + tempType);
         }
         bugEntity.add(bc);
 

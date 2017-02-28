@@ -2,6 +2,7 @@ package com.fd.etf.entity.componets.listeners;
 
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -35,6 +36,7 @@ public abstract class ImageButtonListener implements ButtonComponent.ButtonListe
     @Override
     public void touchUp() {
         Boolean shouldSkip = false;
+        SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP);
         if (atomicpropertiesToCheck.length != 0) {
             for (AtomicBoolean b : atomicpropertiesToCheck) {
                 shouldSkip = shouldSkip || b.get();
