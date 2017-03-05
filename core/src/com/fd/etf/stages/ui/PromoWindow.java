@@ -7,6 +7,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ResultScreenScript;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -81,6 +82,7 @@ public class PromoWindow extends AbstractDialog {
     }
 
     public void show() {
+        SoundMgr.getSoundMgr().play(SoundMgr.SPECIAL_OFFER);
         isActive = true;
         addShadow();
         promoWindowE.getComponent(TransformComponent.class).x = DISCOUNT_X;
@@ -136,7 +138,7 @@ public class PromoWindow extends AbstractDialog {
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);
                 petPromoE.getComponent(TransformComponent.class).x = 600;
-                petPromoE.getComponent(TransformComponent.class).y = 230;
+                petPromoE.getComponent(TransformComponent.class).y = 875;
                 petPromoE.getComponent(ZIndexComponent.class).setZIndex(230);
                 petPromoE.add(ac);
             }else{
@@ -145,7 +147,7 @@ public class PromoWindow extends AbstractDialog {
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), offerIconE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(offerIconE);
                 offerIconE.getComponent(TransformComponent.class).x = 600;
-                offerIconE.getComponent(TransformComponent.class).y = 230;
+                offerIconE.getComponent(TransformComponent.class).y = 875;
                 offerIconE.getComponent(ZIndexComponent.class).setZIndex(230);
                 offerIconE.add(ac);
             }

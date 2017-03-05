@@ -12,6 +12,7 @@ public class SoundMgr {
     public static final String EAT_SOUND_1 = "eat_1";
     public static final String EAT_SOUND_2 = "eat_2";
     public static final String BUTTON_TAP = "ui_button_tap";
+    public static final String SPECIAL_OFFER = "special_offer";
     public static SoundMgr soundMgr;
     public static boolean soundOn = true;
 //    private Random rand;
@@ -25,6 +26,7 @@ public class SoundMgr {
         loadSound(EAT_SOUND_1);
         loadSound(EAT_SOUND_2);
         loadSound(BUTTON_TAP);
+        loadSound(SPECIAL_OFFER);
         loadSound("tuturu");
     }
 
