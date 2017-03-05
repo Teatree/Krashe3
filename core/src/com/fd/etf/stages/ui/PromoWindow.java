@@ -84,7 +84,7 @@ public class PromoWindow extends AbstractDialog {
         isActive = true;
         addShadow();
         promoWindowE.getComponent(TransformComponent.class).x = DISCOUNT_X;
-        promoWindowE.getComponent(TransformComponent.class).y = 460;
+        promoWindowE.getComponent(TransformComponent.class).y = 600;
         promoWindowE.getComponent(ZIndexComponent.class).setZIndex(100);
 
 //        Entity iconE = new ItemWrapper(sceneLoader.getRoot()).getChild(PROMO_WINDOW).getChild(offer.name);
@@ -93,7 +93,7 @@ public class PromoWindow extends AbstractDialog {
 
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveBy(0, -530, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveBy(0, -1130, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);
 
         Entity buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);
@@ -105,7 +105,7 @@ public class PromoWindow extends AbstractDialog {
                 new ImageButtonListener(buyBtn) {
                     @Override
                     public void clicked() {
-                        PromoWindow.offer.buyHard(gameStage);
+                        PromoWindow.offer.buyHardDiscount(gameStage);
                         close(promoWindowE);
                         ResultScreenScript.active = true;
                     }
@@ -113,13 +113,13 @@ public class PromoWindow extends AbstractDialog {
 
         Entity lbl = promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_LBL);
         Entity lbl_sh = promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_LBL_SH);
-        LabelComponent lc = lbl.getComponent(LabelComponent.class);
-        LabelComponent lc_sh = lbl_sh.getComponent(LabelComponent.class);
+//        LabelComponent lc = lbl.getComponent(LabelComponent.class);
+//        LabelComponent lc_sh = lbl_sh.getComponent(LabelComponent.class);
         LabelComponent dL = lbl.getComponent(LabelComponent.class);
         LabelComponent dL_sh = lbl_sh.getComponent(LabelComponent.class);
         if(offer != null) {
-            lc.text.replace(0, lc.text.capacity(),  "$ " + String.valueOf(offer.cost));
-            lc_sh.text.replace(0, lc_sh.text.capacity(),  "$ " + String.valueOf(offer.cost));
+//            lc.text.replace(0, lc.text.capacity(),  "$ " + String.valueOf(offer.cost));
+//            lc_sh.text.replace(0, lc_sh.text.capacity(),  "$ " + String.valueOf(offer.cost));
             dL.text.replace(0, dL.text.capacity(),  "$ " + String.valueOf(offer.costDisc));
             dL_sh.text.replace(0, dL_sh.text.capacity(),  "$ " + String.valueOf(offer.costDisc));
 

@@ -30,18 +30,20 @@ public class BackgroundMusicMgr {
     }
 
     public void playMenu() {
-        if (!musicMenu.isPlaying()) {
-            stopGame();
-            musicMenu.play();
+        if (musicOn) {
+            if (!musicMenu.isPlaying()) {
+                stopGame();
+                musicMenu.play();
+            }
         }
     }
     public void playGame() {
-//        if (!musicGame.isPlaying()) {
+        if (musicOn) {
             stopMenu();
             long idd = musicGame.play();
-        musicGame.setPitch(idd, 2.2f);
-        musicGame.setLooping(idd, true);
-//        }
+            musicGame.setPitch(idd, 2.2f);
+            musicGame.setLooping(idd, true);
+        }
     }
 
     public void stopMenu() {

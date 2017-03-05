@@ -771,9 +771,9 @@ public class SaveMngr {
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;
-            this.projectileSpawnIntervalFrames = petComponent.projectileSpawnIntervalFrames;
             this.costDisc = petComponent.costDisc;
             this.disc = petComponent.disc;
+            this.projectileSpawnIntervalFrames = petComponent.projectileSpawnIntervalFrames;
             this.amountBugsBeforeCharging = petComponent.amountBugsBeforeCharging;
             this.totalEatenBugs = petComponent.totalEatenBugs;
             this.shopIcon = petComponent.shopIcon;
