@@ -337,6 +337,7 @@ public class GoalFeedbackScreen {
 
             tiles = new ArrayList<>();
             showNewLevel();
+            PauseDialog.setToUpdate();
         }
     }
 

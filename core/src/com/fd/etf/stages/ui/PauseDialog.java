@@ -25,7 +25,6 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class PauseDialog extends AbstractDialog {
 
-    private static final String PAUSE_DIALOG = "dialog";
     private static final String LBL_DIALOG = "lbl_dialog";
     private static final String LBL_DIALOG_SH = "lbl_dialog_sh";
     private static final String LBL_LEVEL_INDICATOR = "lbl_level_indicator";
@@ -33,9 +32,9 @@ public class PauseDialog extends AbstractDialog {
     private static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
     private static final String TILE_TAG = "tile";
-    public static final String COMPLETED = "Completed";
-    public static final String PROGRESS = "Progress: ";
-    public static final String SLASH = "/";
+    static final String COMPLETED = "Completed";
+    static final String PROGRESS = "Progress: ";
+    static final String SLASH = "/";
     private static final String GOAL_PROGRESS_LBL = "goal_progress_lbl";
     private static final String GOAL_LBL = "goal_lbl";
 
@@ -54,14 +53,19 @@ public class PauseDialog extends AbstractDialog {
     private static final int PAUSE_Y_UP = 460;
     private static final String PAUSE_TEXT = "Pause";
     private static final String CHALLENGES = "Challenges";
+    private static final String LEVEL = "LEVEL: ";
 
-    private Map<Goal, Entity> tiles;
+    private static Map<Goal, Entity> tiles;
+
+    public static boolean pauseUpdate;
+    public static boolean goalsUpdate;
+
     private ItemWrapper gameItem;
     private Entity pauseDialogE;
 
     private Entity lblPauseTimer;
-    public float pauseTimer = 0;
-    public int pauseCounter = 10;
+    private float pauseTimer = 0;
+    private int pauseCounter = 10;
     private int tapCoolDown = 30;
 
     private String goalProgressValue;
@@ -173,12 +177,14 @@ public class PauseDialog extends AbstractDialog {
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
         }
 
-
-        final Entity levelLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR);
-        LabelComponent levelLabelsComp = levelLabel.getComponent(LabelComponent.class);
-        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf("LEVEL: " + gameStage.gameScript.fpc.level.difficultyLevel));
-
         int y = GOAL_TILE_START_Y;
+        LabelComponent levelLabelsComp = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR).getComponent(LabelComponent.class);
+        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf(LEVEL + gameStage.gameScript.fpc.level.difficultyLevel));
+
+        if (goalsUpdate || pauseUpdate){
+            createGoalTiles();
+        }
+
         for (Map.Entry<Goal, Entity> pair : tiles.entrySet()) {
             showGoalTile(y, pair.getValue(), pair.getKey());
             y -= GOAL_TILE_STEP_Y;
@@ -206,6 +212,7 @@ public class PauseDialog extends AbstractDialog {
     }
 
     private void createGoalTiles() {
+        tiles = new HashMap<>();
         List<Entity> tileEntities = getTileEntities(pauseDialogE);
         int i = 0;
         for (Goal goal : gameStage.gameScript.fpc.level.getGoals()) {
@@ -228,6 +235,7 @@ public class PauseDialog extends AbstractDialog {
                             goal.getDescription());
                 }
             }
+            tile.getComponent(ZIndexComponent.class).setZIndex(160);
             tiles.put(goal, tile);
             i++;
         }
@@ -248,8 +256,7 @@ public class PauseDialog extends AbstractDialog {
             tile.getComponent(LayerMapComponent.class).getLayer(NOTACHIEVED).isVisible = true;
         }
 
-        NodeComponent nc = tile.getComponent(NodeComponent.class);
-        for (Entity e : nc.children) {
+        for (Entity e : tile.getComponent(NodeComponent.class).children) {
             if (goal.getCounter() >= goal.getN()) {
                 goalProgressValue = COMPLETED;
             }else{
@@ -263,7 +270,7 @@ public class PauseDialog extends AbstractDialog {
                 }
             }
         }
-        tile.getComponent(ZIndexComponent.class).setZIndex(200);
+        tile.getComponent(ZIndexComponent.class).setZIndex(pauseDialogE.getComponent(ZIndexComponent.class).getZIndex()+20);
     }
 
     public void update(float delta) {
@@ -300,5 +307,10 @@ public class PauseDialog extends AbstractDialog {
                 e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             }
         }
+    }
+
+    public static void setToUpdate (){
+        pauseUpdate = true;
+        goalsUpdate = true;
     }
 }
