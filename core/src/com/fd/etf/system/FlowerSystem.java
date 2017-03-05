@@ -115,7 +115,6 @@ public class FlowerSystem extends IteratingSystem {
                     setSulkAnimation(sc);
                     state = State.SULKING;
                     if (gameStage.gameScript.fpc.canUsePhoenix()) {
-                        isPause.set(false);
                         gameStage.gameScript.usePhoenix();
                     } else {
                         isGameOver.set(true);
