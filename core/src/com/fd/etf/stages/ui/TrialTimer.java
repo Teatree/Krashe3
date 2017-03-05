@@ -37,21 +37,19 @@ public class TrialTimer {
         this.y = y;
     }
 
-    public void timer() {
+    public void update() {
         gameStage.gameScript.checkTryPeriod();
         timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
         if (!ifShouldShowTimer()) {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             if (timerLogo != null) {
                 timerLogo.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-//                gameStage.sceneLoader.getEngine().removeEntity(timerLogo);
             }
         }
         if (ifShouldShowTimer()) {
             if (timerLogo == null){
                 showTimer();
             }
-//            timerE.getComponent(TransformComponent.class).x = x + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
             timerE.getComponent(TransformComponent.class).y = y + 15;
         }
     }
@@ -85,13 +83,15 @@ public class TrialTimer {
                     lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
                 }
             }
-            if (trialTimerLogoName != null && trialTimerLogoName != "") {
+
+
+            timerE.getComponent(TransformComponent.class).x = this.x;
+            timerE.getComponent(TransformComponent.class).y = this.y;
+            if (trialTimerLogoName != null && "".equals(trialTimerLogoName)) {
                 addTimerLogo(trialTimerLogoName);
             }
-//            timerE.getComponent(TransformComponent.class).x = x
-//                    + timerLogo.getComponent(DimensionsComponent.class).width * timerLogo.getComponent(TransformComponent.class).scaleX;
-//            timerE.getComponent(TransformComponent.class).y = y + 15;
-            timerE.getComponent(ZIndexComponent.class).setZIndex(31);
+
+            timerE.getComponent(ZIndexComponent.class).setZIndex(531);
         }
     }
 
@@ -106,6 +106,6 @@ public class TrialTimer {
         timerLogo.getComponent(TransformComponent.class).y = this.y;
         timerLogo.getComponent(TransformComponent.class).scaleX = 0.7f;
         timerLogo.getComponent(TransformComponent.class).scaleY = 0.7f;
-        timerLogo.getComponent(ZIndexComponent.class).setZIndex(10);
+        timerLogo.getComponent(ZIndexComponent.class).setZIndex(531);
     }
 }

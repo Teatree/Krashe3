@@ -164,9 +164,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
-        if (timer != null) {
-            timer.timerE.getComponent(TintComponent.class).color.a = 0;
-        }
+//        if (timer != null) {
+//            timer.timerE.getComponent(TintComponent.class).color.a = 0;
+//        }
         GameStage.viewport.setWorldSize(wrldW, wrldH);
         GameStage.viewport.getCamera().translate(0, 0, 0);
     }
@@ -344,7 +344,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         GameStage.viewport.getCamera().translate(camPosX, 0, 0);
 
         gameStage.gameScript.checkTryPeriod();
-        timer.timer();
+        timer.update();
 
         if (pauseDialog != null)
             pauseDialog.update(delta);
@@ -563,8 +563,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                     && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
                     && e.getComponent(TintComponent.class).color.a > 0) {
 
-//                if (timer != null) {
-//                    timer.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
+//                if (update != null) {
+//                    update.timerE.getComponent(TintComponent.class).color.a -= TINT_STEP;
 //                }
 //                if (imgGoalNotification != null && imgGoalNotification.getComponent(TintComponent.class).color.a != 0) {
 //                    imgGoalNotification.getComponent(TintComponent.class).color.a -= TINT_STEP;

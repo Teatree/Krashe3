@@ -17,7 +17,6 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.fd.etf.stages.ui.PromoWindow.offer;
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -217,7 +216,7 @@ public class ResultScreenScript implements IScript {
     @Override
     public void act(float delta) {
         if (timer != null) {
-            timer.timer();
+            timer.update();
             if (timer.timerE != null) {
                 timer.timerE.getComponent(ZIndexComponent.class).setZIndex(progressBarE.getComponent(ZIndexComponent.class).getZIndex() + 1);
             }
