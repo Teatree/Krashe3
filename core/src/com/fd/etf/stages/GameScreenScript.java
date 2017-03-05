@@ -92,6 +92,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static boolean shouldShowGameOverDialog;
 
     private Entity petE;
+    private Entity phoenixIcon;
     public boolean changePet;
 
     public Entity megaFlower;
@@ -193,7 +194,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void usePhoenix() {
-        gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
+        ActionComponent ac2 = new ActionComponent();
+        ac2.dataArray.add(Actions.sequence(
+                Actions.delay(1f),
+                Actions.moveTo(1100, 58, 1f, Interpolation.exp5)));
+        phoenixIcon.add(ac2);
     }
 
     @Override
@@ -368,13 +373,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void initPhoenixIcon() {
-        Entity bjIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
+        phoenixIcon = gameItem.getChild(PHOENIX_ICON).getEntity();
         if (gameStage.gameScript.fpc.havePhoenix()) {
-            TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
+            TransformComponent tc = phoenixIcon.getComponent(TransformComponent.class);
             tc.x = -24;
             tc.y = 637;
         } else {
-            bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            phoenixIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
     }
 
@@ -590,6 +595,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
+            if(phoenixIcon.getComponent(TransformComponent.class).x > 900) {
+                phoenixIcon.getComponent(TransformComponent.class).x = -200;
+                loseFeedback.getComponent(TransformComponent.class).x = -600;
+                gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
+                System.out.println("Phoenix!");
+                isPause.set(false);
+            }
         }
     }
 
@@ -600,9 +612,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void onBugOutOfBounds() {
-        if (fpc.canUsePhoenix()) {
-            usePhoenix();
-        } else {
+        FlowerComponent.state = FlowerComponent.State.LOSING;
+
+//        if (fpc.canUsePhoenix()) {
+//            usePhoenix();
+//        } else {
 
             loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
             loseFeedback.getComponent(TransformComponent.class).x = 950;
@@ -619,9 +633,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
             ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
 
-            FlowerComponent.state = FlowerComponent.State.LOSING;
+//            FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
-        }
+//        }
     }
 
     public void endGame() {
