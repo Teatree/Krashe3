@@ -431,6 +431,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                                 pauseDialog.init();
                             }
                             pauseDialog.show();
+                            PauseDialog.pauseUpdate = false;
                         }
                     }
                 });
