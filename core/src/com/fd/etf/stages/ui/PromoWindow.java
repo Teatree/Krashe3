@@ -18,6 +18,7 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
 import static com.fd.etf.stages.ShopScreenScript.itemIcons;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
@@ -40,11 +41,17 @@ public class PromoWindow extends AbstractDialog {
     private static final int DISCOUNT_Y = 30;
     private static final int DISCOUNT_X = 260;
 
+    private static final int PREVIEW_Y = 900;
+
+    private static final int ICON_Y = 1171;
+
     public static boolean offerPromo;
     public static ShopItem offer;
 
     private Entity promoWindowE;
-    
+    private Entity offerIconE;
+    private Entity petPromoE;
+
     public PromoWindow(GameStage gameStage, ItemWrapper gameItem) {
         super(gameStage);
         this.gameItem = gameItem;
@@ -72,7 +79,8 @@ public class PromoWindow extends AbstractDialog {
                 new ImageButtonListener(closeBtn) {
                     @Override
                     public void clicked() {
-                        close(promoWindowE);
+//                        close(promoWindowE);
+                        checkAndClose();
                         ResultScreenScript.active = true;
                     }});
 
@@ -108,7 +116,8 @@ public class PromoWindow extends AbstractDialog {
                     @Override
                     public void clicked() {
                         PromoWindow.offer.buyHardDiscount(gameStage);
-                        close(promoWindowE);
+                        checkAndClose();
+//                        close(promoWindowE);
                         ResultScreenScript.active = true;
                     }
                 });
@@ -134,23 +143,48 @@ public class PromoWindow extends AbstractDialog {
             if(gameStage.gameScript.fpc.currentPet != null && offer == gameStage.gameScript.fpc.currentPet) {
                 gameStage.sceneLoader.rm.addSpriterToLoad(gameStage.gameScript.fpc.currentPet.name);
                 CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(gameStage.gameScript.fpc.currentPet.name);
-                Entity petPromoE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
+                petPromoE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);
-                petPromoE.getComponent(TransformComponent.class).x = 600;
+                petPromoE.getComponent(TransformComponent.class).x = 520;
                 petPromoE.getComponent(TransformComponent.class).y = 875;
                 petPromoE.getComponent(ZIndexComponent.class).setZIndex(230);
                 petPromoE.add(ac);
             }else{
                 CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(offer.shopIcon);
-                Entity offerIconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+                offerIconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), offerIconE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(offerIconE);
-                offerIconE.getComponent(TransformComponent.class).x = 600;
+                offerIconE.getComponent(TransformComponent.class).x = 520;
                 offerIconE.getComponent(TransformComponent.class).y = 875;
                 offerIconE.getComponent(ZIndexComponent.class).setZIndex(230);
                 offerIconE.add(ac);
             }
         }
+    }
+
+    public void checkAndClose(){
+        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        Actions.checkInit();
+        ac.dataArray.add(Actions.moveTo(promoWindowE.getComponent(TransformComponent.class).x, PREVIEW_Y, 0.8f, Interpolation.exp10));
+        promoWindowE.add(ac);
+
+        if(petPromoE != null) {
+            ActionComponent acIconz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            Actions.checkInit();
+            acIconz.dataArray.add(Actions.moveTo(petPromoE.getComponent(TransformComponent.class).x, ICON_Y, 0.8f, Interpolation.exp10));
+            petPromoE.add(acIconz);
+        }
+
+        if(offerIconE != null) {
+            ActionComponent acIconz2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            Actions.checkInit();
+            acIconz2.dataArray.add(Actions.moveTo(offerIconE.getComponent(TransformComponent.class).x, ICON_Y, 0.8f, Interpolation.exp10));
+            offerIconE.add(acIconz2);
+        }
+
+        ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
+        shadowE.add(ac2);
     }
 }

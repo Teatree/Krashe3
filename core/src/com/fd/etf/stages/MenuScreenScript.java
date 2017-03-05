@@ -398,7 +398,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
                 menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(ActionComponent.class).reset();
                 menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                        Actions.delay(1.5f), Actions.fadeIn(2f, Interpolation.exp5Out), Actions.delay(2f), Actions.parallel(Actions.scaleTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleX+0.1f, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleY+0.1f, 0.4f), Actions.rotateTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).rotation+1, 0.3f), Actions.moveTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).x, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).y+5, 0.3f, Interpolation.fade)),
+                        Actions.delay(1.1f), Actions.fadeIn(2f, Interpolation.exp5Out), Actions.delay(2f), Actions.parallel(Actions.scaleTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleX+0.1f, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleY+0.1f, 0.4f), Actions.rotateTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).rotation+1, 0.3f), Actions.moveTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).x, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).y+5, 0.3f, Interpolation.fade)),
                         Actions.parallel(Actions.scaleTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleX, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleY, 0.4f), Actions.rotateTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).rotation, 0.4f), Actions.moveTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).x, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).y, 0.4f, Interpolation.fade)),
                         Actions.delay(3f),
                         Actions.parallel(Actions.scaleTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleX+0.1f, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).scaleY+0.1f, 0.4f), Actions.rotateTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).rotation+1, 0.3f), Actions.moveTo(menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).x, menuItem.getChild(TAP_TO_PLAY).getEntity().getComponent(TransformComponent.class).y+5, 0.3f, Interpolation.fade)),
@@ -492,14 +492,14 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
                                 if (e.getComponent(TransformComponent.class).x < wrldW) {
                                     e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                            Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x+100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x+100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
                                 }else{
                                     e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                            Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x-100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x-100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
                                 }
                             }else{
                                 e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                        Actions.delay(2.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y+100, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                        Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y+100, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
                             }
 
                         }
