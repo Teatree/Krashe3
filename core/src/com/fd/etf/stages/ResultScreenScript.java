@@ -92,7 +92,7 @@ public class ResultScreenScript implements IScript {
 
         initResultScreen();
         if (timer == null) {
-            timer = new TrialTimer(gameStage, resultScreenItem, 918, 289);
+            timer = new TrialTimer(gameStage, resultScreenItem, 140, 289);
         }
 
         for (Entity e2: resultScreenItem.getComponent(NodeComponent.class).children){

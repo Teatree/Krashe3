@@ -45,8 +45,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
 
-    private static final int TIMER_X = 345;
-    private static final int TIMER_Y = 341;
+    private static final int TIMER_X = 1064;
+    private static final int TIMER_Y = 411;
     private static final float TINT_STEP = 0.05f;
     private static final String IMG_LOGO = "img_logo";
     private static final String TAP_TO_PLAY = "tap_to_play";

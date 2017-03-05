@@ -165,9 +165,7 @@ public class SaveMngr {
             fc.settings.shopAd_min = stats.shopAd_min;
 
             for (UpgradeStats e : gameStats.upgrades) {
-                Upgrade u = getUpgrade(null, UpgradeType.valueOf(e.upgradeType));
-                u.bought = e.bought;
-                u.enabled = e.enabled;
+                Upgrade u = new Upgrade(e);
                 fc.upgrades.put(UpgradeType.valueOf(e.upgradeType), u);
             }
 
@@ -680,6 +678,7 @@ public class SaveMngr {
         public long tryPeriodTimer;
         public boolean bought;
         public boolean enabled;
+        public String shopIcon;
 
         public UpgradeStats() {
         }
@@ -692,6 +691,7 @@ public class SaveMngr {
             this.tryPeriodStart = us.tryPeriodStart;
             this.bought = us.bought;
             this.enabled = us.enabled;
+            this.shopIcon = us.shopIcon;
         }
     }
 
