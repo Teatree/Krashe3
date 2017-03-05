@@ -32,7 +32,7 @@ public class TrialTimer {
 
     public TrialTimer(GameStage gameStage, ItemWrapper gameItem, int x, int y) {
         this.mainItem = gameItem;
-        this.gameStage= gameStage;
+        this.gameStage = gameStage;
         this.x = x;
         this.y = y;
     }
@@ -47,9 +47,7 @@ public class TrialTimer {
             }
         }
         if (ifShouldShowTimer()) {
-            if (timerLogo == null){
-                showTimer();
-            }
+            showTimer();
             timerE.getComponent(TransformComponent.class).y = y + 15;
         }
     }
@@ -58,12 +56,14 @@ public class TrialTimer {
         boolean showTimer = false;
         if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
             showTimer = true;
+            TrialTimer.trialTimerLogoName = gameStage.gameScript.fpc.currentPet.shopIcon;
             PromoWindow.offer = gameStage.gameScript.fpc.currentPet;
             PromoWindow.offerPromo = true;
         } else {
             for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {
                     showTimer = true;
+                    TrialTimer.trialTimerLogoName = u.shopIcon;
                     PromoWindow.offer = u;
                     PromoWindow.offerPromo = true;
                 }
@@ -78,8 +78,8 @@ public class TrialTimer {
             if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
                 lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
             }
-            for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()){
-                if (u.tryPeriod){
+            for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
+                if (u.tryPeriod) {
                     lc.text.replace(0, lc.text.length, u.updateTryPeriodTimer());
                 }
             }
@@ -87,7 +87,7 @@ public class TrialTimer {
 
             timerE.getComponent(TransformComponent.class).x = this.x;
             timerE.getComponent(TransformComponent.class).y = this.y;
-            if (trialTimerLogoName != null && "".equals(trialTimerLogoName)) {
+            if (trialTimerLogoName != null && !"".equals(trialTimerLogoName)) {
                 addTimerLogo(trialTimerLogoName);
             }
 
@@ -102,8 +102,8 @@ public class TrialTimer {
             gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), timerLogo, tempC.composite);
             gameStage.sceneLoader.getEngine().addEntity(timerLogo);
         }
-        timerLogo.getComponent(TransformComponent.class).x = this.x + 190;
-        timerLogo.getComponent(TransformComponent.class).y = this.y;
+        timerLogo.getComponent(TransformComponent.class).x = this.x - 55;
+        timerLogo.getComponent(TransformComponent.class).y = this.y - 5;
         timerLogo.getComponent(TransformComponent.class).scaleX = 0.7f;
         timerLogo.getComponent(TransformComponent.class).scaleY = 0.7f;
         timerLogo.getComponent(ZIndexComponent.class).setZIndex(531);

@@ -14,11 +14,6 @@ public class Upgrade extends ShopItem{
     public int counter;
     public GameStage gameStage;
 
-//    public boolean tryPeriod;
-//    public long tryPeriodDuration;
-//    public long tryPeriodStart;
-//    public long tryPeriodTimer;
-
     public Upgrade(){}
     public Upgrade(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -32,6 +27,7 @@ public class Upgrade extends ShopItem{
         this.tryPeriodStart = us.tryPeriodStart;
         this.bought = us.bought;
         this.enabled = us.enabled;
+        this.shopIcon = us.shopIcon;
     }
 
     public static List<Upgrade> getAllUpgrades(GameStage gameStage) {
