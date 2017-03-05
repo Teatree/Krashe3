@@ -136,7 +136,7 @@ public class PromoWindow extends AbstractDialog {
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);
                 petPromoE.getComponent(TransformComponent.class).x = 600;
-                petPromoE.getComponent(TransformComponent.class).y = 630;
+                petPromoE.getComponent(TransformComponent.class).y = 230;
                 petPromoE.getComponent(ZIndexComponent.class).setZIndex(230);
                 petPromoE.add(ac);
             }else{
@@ -145,7 +145,7 @@ public class PromoWindow extends AbstractDialog {
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), offerIconE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(offerIconE);
                 offerIconE.getComponent(TransformComponent.class).x = 600;
-                offerIconE.getComponent(TransformComponent.class).y = 630;
+                offerIconE.getComponent(TransformComponent.class).y = 230;
                 offerIconE.getComponent(ZIndexComponent.class).setZIndex(230);
                 offerIconE.add(ac);
             }
