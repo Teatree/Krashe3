@@ -53,7 +53,6 @@ public class BugSystem extends IteratingSystem {
         entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
 
-
         BugComponent bc = mapper.get(entity);
         if (bc.type == QUEENBEE) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
@@ -120,13 +119,13 @@ public class BugSystem extends IteratingSystem {
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
 
-        if (isPause.get()) {
+        if (isPause.get() && !blowUpAllBugs) {
             sasc.paused = true;
         }
         if (isGameOver.get() || !isStarted) {
             sasc.paused = true;
             if (!blowUpAllBugs) {
-                BugPool.getInstance(gameStage).release(entity);
+//                BugPool.getInstance(gameStage).release(entity);
             }
         }
         if (bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")) {
@@ -137,12 +136,15 @@ public class BugSystem extends IteratingSystem {
     public static void blowUpAllBugs() {
         blowUpAllBugs = true;
         blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+        System.out.println("HOW MANY TIMES AM I CALLED?");
     }
 
     private void updateBlowUpAllBugs(Entity entity, float deltaTime) {
         SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
         SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
         BugComponent bc = entity.getComponent(BugComponent.class);
+
+
 
         if (sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
             canPlayAnimation = true;
@@ -179,7 +181,7 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void destroyBug(Entity bugE) {
-        if (!bugE.getComponent(BugComponent.class).isAngeredBee) {
+//        if (!bugE.getComponent(BugComponent.class).isAngeredBee) {
 //        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
 
 //        gameStage.gameScript.fpc.addScore(bugE.getComponent(BugComponent.class).points);// bug juice maybe?
@@ -190,7 +192,7 @@ public class BugSystem extends IteratingSystem {
                 canPlayAnimation = true;
                 setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
             }
-        }
+//        }
     }
 
     private boolean checkCollision(BugComponent bc) {

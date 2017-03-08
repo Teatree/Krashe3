@@ -40,10 +40,6 @@ public class GameOverDialog extends AbstractDialog {
 
     public static Entity gameOverDialogE;
 
-    public static boolean releaseAllBugs() {
-        return (isGameOver.get() && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
-    }
-
     public GameOverDialog(GameStage gameStage){
         super(gameStage);
     }

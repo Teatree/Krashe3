@@ -132,7 +132,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     beesModeAni.getComponent(SpriterComponent.class).player.getTime() %
                             beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
                 beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
-                BugSystem.blowUpAllBugs = false;
+//                BugSystem.blowUpAllBugs = false;
 //                System.out.println("updateAngeredBeesMode(): " + BugSystem.blowUpAllBugs);
             }
             if (angeredBeesModeTimer <= 0) {
@@ -593,10 +593,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
-            if(phoenixIcon.getComponent(TransformComponent.class).x > 900) {
+            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
+                System.out.println("IT'S VERY UNLIKELY THAT I AM CALLED MORE THAN ONCE");
 //                System.out.println("Phoenix!");
                 isPause.set(false);
             }
@@ -614,6 +615,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 BugSystem.destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
                 System.out.println("let's put it there!");
             }
+
+            System.out.println("destroyAllBugsCounter: " + BugSystem.destroyAllBugsCounter + " blowUpCounter: " + BugSystem.blowUpCounter + " delta: " + delta);
         }
     }
 
