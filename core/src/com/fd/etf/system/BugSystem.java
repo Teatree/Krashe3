@@ -127,7 +127,7 @@ public class BugSystem extends IteratingSystem {
                 }
                 if (isOutOfBounds(bc)) {
                     gameStage.gameScript.loseFeedback.getComponent(TransformComponent.class).y =
-                            entity.getComponent(TransformComponent.class).y;
+                            entity.getComponent(BugComponent.class).boundsRect.y;
                     BugPool.getInstance(gameStage).release(entity);
                     gameStage.gameScript.onBugOutOfBounds();
                 }

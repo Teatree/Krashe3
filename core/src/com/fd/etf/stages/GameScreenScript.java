@@ -27,6 +27,7 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -206,7 +207,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         gameOverReviveTimesLimit = 2;
         gameItem = new ItemWrapper(item);
-        projectileBounds = new ArrayList<Rectangle>();
+        projectileBounds = new LinkedList<>();
 
         beesModeAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
         beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
@@ -323,6 +324,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void reset() {
         fpc.score = 0;
+        isAngeredBeesMode = false;
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         scoreLabelE.getComponent(TintComponent.class).color.a = 0;

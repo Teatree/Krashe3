@@ -4,20 +4,12 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Interpolation;
-import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.data.CompositeItemVO;
-import com.uwsoft.editor.renderer.systems.action.Actions;
-
-import java.util.Random;
 
 public class PetProjectileSystem extends IteratingSystem {
     private ComponentMapper<PetProjectileComponent> mapper = ComponentMapper.getFor(PetProjectileComponent.class);
@@ -106,6 +98,7 @@ public class PetProjectileSystem extends IteratingSystem {
 //                                Actions.moveBy(15*moveMulti, 0, 0.3f, Interpolation.exp5),
 //                                Actions.scaleTo(1f, 1f, 0.3f, Interpolation.fade))));
 
+        gameStage.gameScript.projectileBounds.remove(entity.getComponent(PetProjectileComponent.class).boundsRect);
         gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
