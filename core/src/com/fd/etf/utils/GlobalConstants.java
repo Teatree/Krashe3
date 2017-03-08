@@ -21,7 +21,7 @@ public abstract class GlobalConstants {
     public static final float TENTH = 0.1f;
 
     public static final float BEES_MODE_BLOW_UP_LENGTH = 0.5f;
-    public static final float BEES_MODE_DESTROY_COUNTER = 0.08f;
+    public static final float BEES_MODE_DESTROY_LENGTH = 0.08f;
 
     public static final float ALPHA_TRANSITION_STEP = 0.03f;
 }

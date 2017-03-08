@@ -118,7 +118,8 @@ public class Upgrade extends ShopItem{
     }
 
     public void usePhoenix() {
-        BugSystem.blowUpAllBugs = true;
+//        BugSystem.blowUpAllBugs = true;
+        BugSystem.blowUpAllBugs();
         FlowerComponent.state = FlowerComponent.State.PHOENIX;
         counter++;
     }

@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.FlowerComponent;
-import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
+import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -41,7 +41,7 @@ public class BugSystem extends IteratingSystem {
     public BugSystem(GameStage gameStage) {
         super(Family.all(BugComponent.class).get());
         this.gameStage = gameStage;
-        destroyAllBugsCounter = BEES_MODE_DESTROY_COUNTER;
+        destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BugSystem extends IteratingSystem {
 
 
         BugComponent bc = mapper.get(entity);
-        if(bc.type == QUEENBEE) {
+        if (bc.type == QUEENBEE) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
         }
@@ -63,35 +63,18 @@ public class BugSystem extends IteratingSystem {
         bc.scareCounter -= deltaTime;
 
         if (blowUpAllBugs) {
-            if(sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
-                canPlayAnimation = true;
-                setAnimation("death", Animation.PlayMode.NORMAL, sasc, sac);
-                bc.isPlayingDeathAnimation = true;
-            }
-//            if(sasc.get().isAnimationFinished(bc.time) && sasc.get().getKeyFrames().length >= 15 && bc.isPlayingDeathAnimation) {
-//                destroyBug(entity, entity.getComponent(TransformComponent.class));
-//                bc.isPlayingDeathAnimation = false;
-//            }
-            if (blowUpCounter <= 0 && blowUpAllBugs) {
-                destroyBug(entity, entity.getComponent(TransformComponent.class));
-                bc.isPlayingDeathAnimation = false;
-                destroyAllBugsCounter -= deltaTime;
-                if(destroyAllBugsCounter <= 0) {
-                    blowUpAllBugs = false;
-                    destroyAllBugsCounter = BEES_MODE_DESTROY_COUNTER;
-                }
-            }
+            updateBlowUpAllBugs(entity, deltaTime);
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
 
             sasc.paused = false;
 
-            if (!blowUpAllBugs && !DEAD.equals(bc.state) ) {
+            if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
-                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary) &&  gameStage.gameScript.fpc.state == FlowerComponent.State.ATTACK) {
+                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary) && gameStage.gameScript.fpc.state == FlowerComponent.State.ATTACK) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
-                    if(sac.frameRangeMap.containsKey("scare") && !gameStage.gameScript.fpc.isScary) {
+                    if (sac.frameRangeMap.containsKey("scare") && !gameStage.gameScript.fpc.isScary) {
                         canPlayAnimation = true;
                         setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
                         bc.scareCounter = 2f;
@@ -108,7 +91,7 @@ public class BugSystem extends IteratingSystem {
                         gameStage.gameScript.angerBees();
                     }
 
-                    if(sac.frameRangeMap.containsKey("fly")) {
+                    if (sac.frameRangeMap.containsKey("fly")) {
                         canPlayAnimation = true;
                         setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
                     }
@@ -136,6 +119,7 @@ public class BugSystem extends IteratingSystem {
 //            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
 //                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
+
         if (isPause.get()) {
             sasc.paused = true;
         }
@@ -145,8 +129,39 @@ public class BugSystem extends IteratingSystem {
                 BugPool.getInstance(gameStage).release(entity);
             }
         }
-        if(bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")){
+        if (bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")) {
             setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+        }
+    }
+
+    public static void blowUpAllBugs() {
+        blowUpAllBugs = true;
+        blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+    }
+
+    private void updateBlowUpAllBugs(Entity entity, float deltaTime) {
+        SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
+        SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
+        BugComponent bc = entity.getComponent(BugComponent.class);
+
+        if (sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
+            canPlayAnimation = true;
+            setAnimation("death", Animation.PlayMode.NORMAL, sasc, sac);
+            bc.isPlayingDeathAnimation = true;
+            System.out.println("setting death animation!");
+            sasc.paused = false;
+        }
+        if (blowUpCounter <= 0) {
+            destroyBug(entity);
+            bc.isPlayingDeathAnimation = false;
+//                destroyAllBugsCounter -= deltaTime;
+//                if (destroyAllBugsCounter <= 0) {
+//                    blowUpAllBugs = false;
+//                    destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
+//                    System.out.println("let's put it there!");
+//                }
+        } else {
+            destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
         }
     }
 
@@ -163,8 +178,8 @@ public class BugSystem extends IteratingSystem {
                 bc.boundsRect.y + bc.boundsRect.getHeight() / 2);
     }
 
-    public void destroyBug(Entity bugE, TransformComponent tc) {
-        if(!bugE.getComponent(BugComponent.class).isAngeredBee) {
+    public void destroyBug(Entity bugE) {
+        if (!bugE.getComponent(BugComponent.class).isAngeredBee) {
 //        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
 
 //        gameStage.gameScript.fpc.addScore(bugE.getComponent(BugComponent.class).points);// bug juice maybe?
@@ -296,7 +311,7 @@ public class BugSystem extends IteratingSystem {
             if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
         }
 
-        if(gameStage.gameScript.fpc.isScary) {
+        if (gameStage.gameScript.fpc.isScary) {
             setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
         }
 
@@ -308,7 +323,7 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRect.y = (int) tc.y + 30;
         bc.boundsRect.width = (int) dc.width * tc.scaleX - 50;
         bc.boundsRect.height = (int) dc.height * tc.scaleY - 30;
-        if(bc.type == "BEE"){
+        if (bc.type == "BEE") {
             bc.boundsRect.x = (int) tc.x + 250; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 130;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 330;
@@ -317,9 +332,9 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void updateRectScary(BugComponent bc, TransformComponent tc, DimensionsComponent dc) {
-        bc.boundsRectScary.x = (int) tc.x+dc.width/4;
+        bc.boundsRectScary.x = (int) tc.x + dc.width / 4;
         bc.boundsRectScary.y = (int) tc.y;
-        bc.boundsRectScary.width = (int) dc.width/2;
+        bc.boundsRectScary.width = (int) dc.width / 2;
         bc.boundsRectScary.height = (int) dc.height;
     }
 

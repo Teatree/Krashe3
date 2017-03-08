@@ -215,7 +215,8 @@ public class FlowerSystem extends IteratingSystem {
             if (isAnimationFinished(sc)) {
                 state = IDLE;
                 setIdleAnimation(sc);
-                BugSystem.blowUpAllBugs = false;
+//                BugSystem.blowUpAllBugs = false;
+//                System.out.println("USEPHOENIX(): " + BugSystem.blowUpAllBugs);
             }
         }
     }
@@ -229,6 +230,7 @@ public class FlowerSystem extends IteratingSystem {
                 state = IDLE;
                 setIdleAnimation(sc);
                 BugSystem.blowUpAllBugs = false;
+                System.out.println("reviveAds(): " + BugSystem.blowUpAllBugs);
             }
         }
     }

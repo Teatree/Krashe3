@@ -117,8 +117,9 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
         isAngeredBeesMode = false;
-        BugSystem.blowUpAllBugs = true;
-        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+//        BugSystem.blowUpAllBugs = true;
+//        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+        BugSystem.blowUpAllBugs();
         FlowerComponent.state = FlowerComponent.State.REVIVE_ADS;
     }
 

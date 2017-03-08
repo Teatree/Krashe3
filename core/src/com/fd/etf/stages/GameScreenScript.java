@@ -36,8 +36,6 @@ import static com.fd.etf.entity.componets.CocoonComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
-import static com.fd.etf.system.BugSystem.blowUpAllBugs;
-import static com.fd.etf.system.BugSystem.blowUpCounter;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class GameScreenScript implements IScript, GameStage.IhaveFlower {
@@ -112,8 +110,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
         BugSpawnSystem.queenBeeOnStage = false;
 
-        BugSystem.blowUpAllBugs = true;
-        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+//        BugSystem.blowUpAllBugs = true;
+//        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+        BugSystem.blowUpAllBugs();
         beesModeAni.getComponent(TransformComponent.class).y = 394;
         beesModeAni.getComponent(SpriterComponent.class).player.setAnimation(0);
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 26;
@@ -134,6 +133,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                             beesModeAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
                 beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
                 BugSystem.blowUpAllBugs = false;
+//                System.out.println("updateAngeredBeesMode(): " + BugSystem.blowUpAllBugs);
             }
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
@@ -556,10 +556,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void act(float delta) {
-        if (blowUpAllBugs) {
-            blowUpCounter -= delta;
-        }
-
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
@@ -601,8 +597,22 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
-                System.out.println("Phoenix!");
+//                System.out.println("Phoenix!");
                 isPause.set(false);
+            }
+        }
+        if(BugSystem.blowUpAllBugs){
+            BugSystem.blowUpCounter -= delta;
+            BugSystem.destroyAllBugsCounter -= delta;
+
+            if( BugSystem.blowUpCounter >= 0) {
+                BugSystem.destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
+            }
+
+            if (BugSystem.blowUpCounter <= 0 && BugSystem.destroyAllBugsCounter <= 0) {
+                BugSystem.blowUpAllBugs = false;
+                BugSystem.destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
+                System.out.println("let's put it there!");
             }
         }
     }
