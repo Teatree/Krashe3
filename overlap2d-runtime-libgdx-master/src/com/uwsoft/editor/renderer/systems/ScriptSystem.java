@@ -23,7 +23,7 @@ public class ScriptSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        try {
+//        try {
             if(scriptComponentComponentMapper.get(entity) == null){
                 scriptComponentComponentMapper = ComponentMapper.getFor(ScriptComponent.class);
             }else {
@@ -31,10 +31,10 @@ public class ScriptSystem extends IteratingSystem {
                     script.act(deltaTime);
                 }
             }
-        }catch (Throwable throwable){
-            System.err.print(throwable);
-            System.err.print(throwable.getMessage());
-            System.err.println(entity.getComponent(MainItemComponent.class).itemIdentifier);
-        }
+//        }catch (Throwable throwable){
+//            System.err.print(throwable);
+//            System.err.print(throwable.getMessage());
+//            System.err.println(entity.getComponent(MainItemComponent.class).itemIdentifier);
+//        }
     }
 }

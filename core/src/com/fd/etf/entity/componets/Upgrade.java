@@ -28,6 +28,7 @@ public class Upgrade extends ShopItem{
         this.bought = us.bought;
         this.enabled = us.enabled;
         this.shopIcon = us.shopIcon;
+        this.name = us.name;
     }
 
     public static List<Upgrade> getAllUpgrades(GameStage gameStage) {

@@ -12,7 +12,6 @@ import com.fd.etf.system.CocoonSystem;
 import java.util.*;
 
 import static com.fd.etf.entity.componets.Upgrade.UpgradeType;
-import static com.fd.etf.entity.componets.Upgrade.getUpgrade;
 import static com.fd.etf.entity.componets.VanityComponent.vanityCollections;
 import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChangedAssets;
 
@@ -672,6 +671,7 @@ public class SaveMngr {
 
     public static class UpgradeStats {
         public String upgradeType;
+        public String name;
         public boolean tryPeriod;
         public long tryPeriodDuration;
         public long tryPeriodStart;
@@ -692,6 +692,7 @@ public class SaveMngr {
             this.bought = us.bought;
             this.enabled = us.enabled;
             this.shopIcon = us.shopIcon;
+            this.name = us.name;
         }
     }
 
