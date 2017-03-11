@@ -84,8 +84,6 @@ public class BugSystem extends IteratingSystem {
                 if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
                     bc.state = DEAD;
 
-//                    gameStage.gameScript.fpc.addScore(bc.points);
-
                     if (bc.type.equals(QUEENBEE)) {
                         gameStage.gameScript.angerBees();
                     }
@@ -122,10 +120,10 @@ public class BugSystem extends IteratingSystem {
         if (isPause.get() && !blowUpAllBugs) {
             sasc.paused = true;
         }
-        if (isGameOver.get() || !isStarted) {
+        if (!isStarted) {
             sasc.paused = true;
             if (!blowUpAllBugs) {
-//                BugPool.getInstance(gameStage).release(entity);
+                BugPool.getInstance(gameStage).release(entity);
             }
         }
         if (bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")) {
@@ -144,24 +142,15 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
         BugComponent bc = entity.getComponent(BugComponent.class);
 
-
-
         if (sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
             canPlayAnimation = true;
             setAnimation("death", Animation.PlayMode.NORMAL, sasc, sac);
             bc.isPlayingDeathAnimation = true;
-            System.out.println("setting death animation!");
             sasc.paused = false;
         }
         if (blowUpCounter <= 0) {
             destroyBug(entity);
             bc.isPlayingDeathAnimation = false;
-//                destroyAllBugsCounter -= deltaTime;
-//                if (destroyAllBugsCounter <= 0) {
-//                    blowUpAllBugs = false;
-//                    destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
-//                    System.out.println("let's put it there!");
-//                }
         } else {
             destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
         }
@@ -181,18 +170,13 @@ public class BugSystem extends IteratingSystem {
     }
 
     public void destroyBug(Entity bugE) {
-//        if (!bugE.getComponent(BugComponent.class).isAngeredBee) {
-//        EffectUtils.playSplatterParticleEffect(gameStage.gameScript.gameStage, tc.x, tc.y);
+        spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
+        BugPool.getInstance(gameStage).release(bugE);
 
-//        gameStage.gameScript.fpc.addScore(bugE.getComponent(BugComponent.class).points);// bug juice maybe?
-            spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
-            BugPool.getInstance(gameStage).release(bugE);
-
-            if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
-                canPlayAnimation = true;
-                setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
-            }
-//        }
+        if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
+            canPlayAnimation = true;
+            setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
+        }
     }
 
     private boolean checkCollision(BugComponent bc) {

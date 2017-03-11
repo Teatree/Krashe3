@@ -73,6 +73,10 @@ public class GameOverDialog extends AbstractDialog {
         gameOverDialogE.getComponent(TransformComponent.class).y = HIDE_Y;
     }
 
+    public static boolean releaseAllBugs() {
+        return (isGameOver.get() && gameOverCounter <= 0 && !BugSystem.blowUpAllBugs);
+    }
+
     public void initGameOverDialog() {
         initShadow();
 

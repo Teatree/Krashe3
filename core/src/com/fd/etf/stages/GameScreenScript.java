@@ -13,10 +13,7 @@ import com.fd.etf.stages.ui.GameOverDialog;
 import com.fd.etf.stages.ui.GoalFeedbackScreen;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.system.*;
-import com.fd.etf.utils.BackgroundMusicMgr;
-import com.fd.etf.utils.CameraShaker;
-import com.fd.etf.utils.DebugSystem;
-import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.*;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -420,6 +417,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                         if (!isPause.get() && !isGameOver.get()) {
                             resetPauseDialog();
                             megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
+//                            BugPool.resetAllBugs();
                             gameStage.initMenu();
                         }
                     }
@@ -680,6 +678,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 gameStage.gameScript.gameOverDialog.hide();
                 megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
 
+//                BugPool.re();
                 gameStage.initResultWithAds();
             }
         }

@@ -155,16 +155,16 @@ public class BugPool {
         }
     }
 
-    public static void resetAllBugs() {
-        releaseAll(simpleBugs);
-        releaseAll(drunkBugs);
-        releaseAll(bees);
-        releaseAll(chargerBugs);
-        if (queenBee.getComponent(TransformComponent.class) != null) {
-            queenBee.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
-            queenBee.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
-        }
-    }
+//    public static void resetAllBugs() {
+//        releaseAll(simpleBugs);
+//        releaseAll(drunkBugs);
+//        releaseAll(bees);
+//        releaseAll(chargerBugs);
+//        if (queenBee != null && queenBee.getComponent(TransformComponent.class) != null) {
+//            queenBee.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+//            queenBee.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+//        }
+//    }
 
     public static void sendFarFarAway(Stack<Entity> bugs) {
         for (Entity e : bugs) {
