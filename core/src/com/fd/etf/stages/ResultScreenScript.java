@@ -94,7 +94,7 @@ public class ResultScreenScript implements IScript {
         if (timer == null) {
             timer = new TrialTimer(gameStage, resultScreenItem, 140, 289);
         }
-//        resultScreenItem.getComponent(NodeComponent.class).addChild(timer.timerE);
+        resultScreenItem.getComponent(NodeComponent.class).addChild(timer.timerE);
 
         for (Entity e2: resultScreenItem.getComponent(NodeComponent.class).children){
             if (e2.getComponent(ActionComponent.class) == null){
@@ -102,6 +102,7 @@ public class ResultScreenScript implements IScript {
             }
             e2.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveBy(0, +100, 0), Actions.moveBy(0, -100, 0.5f, Interpolation.exp5)));
         }
+
         if(resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class) == null){
             resultScreenItem.getChild("curtain_result").getEntity().add(new ActionComponent());
         }

@@ -35,6 +35,7 @@ public class TrialTimer {
         this.gameStage = gameStage;
         this.x = x;
         this.y = y;
+        timerE = mainItem.getChild(TRIAL_TIMER).getEntity();//
     }
 
     public void update() {
@@ -48,7 +49,7 @@ public class TrialTimer {
         }
         if (ifShouldShowTimer()) {
             showTimer();
-            timerE.getComponent(TransformComponent.class).y = y + 15;
+//            timerE.getComponent(TransformComponent.class).y = y + 15;
         }
     }
 
@@ -85,8 +86,8 @@ public class TrialTimer {
             }
 
 
-            timerE.getComponent(TransformComponent.class).x = this.x;
-            timerE.getComponent(TransformComponent.class).y = this.y;
+//            timerE.getComponent(TransformComponent.class).x = this.x;
+//            timerE.getComponent(TransformComponent.class).y = this.y;
             if (trialTimerLogoName != null && !"".equals(trialTimerLogoName)) {
                 addTimerLogo(trialTimerLogoName);
             }
@@ -102,8 +103,8 @@ public class TrialTimer {
             gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), timerLogo, tempC.composite);
             gameStage.sceneLoader.getEngine().addEntity(timerLogo);
         }
-        timerLogo.getComponent(TransformComponent.class).x = this.x - 55;
-        timerLogo.getComponent(TransformComponent.class).y = this.y - 5;
+        timerLogo.getComponent(TransformComponent.class).x = timerE.getComponent(TransformComponent.class).x - 55;
+        timerLogo.getComponent(TransformComponent.class).y = timerE.getComponent(TransformComponent.class).y - 5;
         timerLogo.getComponent(TransformComponent.class).scaleX = 0.7f;
         timerLogo.getComponent(TransformComponent.class).scaleY = 0.7f;
         timerLogo.getComponent(ZIndexComponent.class).setZIndex(531);
