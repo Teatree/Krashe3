@@ -59,6 +59,8 @@ public abstract class ShopItem {
     public String getTimerTimeTime() {
         int minutes = ((int) tryPeriodDuration) / 60;
         int seconds = ((int) tryPeriodDuration) % 60;
-        return "" + minutes + " : " + seconds;
+        String result = "" + minutes + " MINUTE ";
+        result += seconds == 0 ? " " : seconds + " SECONDS ";
+        return result;
     }
 }
