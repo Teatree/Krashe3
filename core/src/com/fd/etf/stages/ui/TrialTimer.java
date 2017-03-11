@@ -39,7 +39,7 @@ public class TrialTimer {
 
     public void update() {
         gameStage.gameScript.checkTryPeriod();
-        timerE = mainItem.getChild(TRIAL_TIMER).getEntity();
+        timerE = mainItem.getChild(TRIAL_TIMER).getEntity();//
         if (!ifShouldShowTimer()) {
             timerE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             if (timerLogo != null) {

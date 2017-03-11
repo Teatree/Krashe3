@@ -14,7 +14,7 @@ public class Gift {
 
     public static final String MONEY = "MONEY";
 
-    public static final int ONE_HOUR = 5000;
+    public static final int ONE_HOUR = 60;
 
     private static Random random = new Random();
 
@@ -159,7 +159,7 @@ public class Gift {
                 fpc.currentPet = pet;
                 gameStage.gameScript.changePet = true;
                 fpc.currentPet.tryPeriod = true;
-                fpc.currentPet.tryPeriodDuration = 1 * 60;
+//                fpc.currentPet.tryPeriodDuration = 1 * 60;
                 fpc.currentPet.tryPeriodStart = System.currentTimeMillis();
                 fpc.currentPet.bought = true;
                 fpc.currentPet.enabled = true;
@@ -169,7 +169,7 @@ public class Gift {
             }
             case (PHOENIX): {
                 upgrade.tryPeriod = true;
-                upgrade.tryPeriodDuration = 1 * 60;
+//                upgrade.tryPeriodDuration = 1 * 60;
                 upgrade.tryPeriodStart = System.currentTimeMillis();
                 upgrade.bought = true;
                 upgrade.enabled = true;
@@ -179,7 +179,7 @@ public class Gift {
             }
             case (BJ_DOUBLE): {
                 upgrade.tryPeriod = true;
-                upgrade.tryPeriodDuration = 1 * 60;
+//                upgrade.tryPeriodDuration = 1 * 60;
                 upgrade.tryPeriodStart = System.currentTimeMillis();
                 upgrade.bought = true;
                 upgrade.enabled = true;

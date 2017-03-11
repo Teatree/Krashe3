@@ -483,18 +483,19 @@ public class GoalFeedbackScreen {
 
     private void showGiftIcon(Gift gift) {
         if (gift.pet != null || gift.upgrade != null) {
+
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
                     "YOU GOT A " + gift.type + " !!!");
             if (gift.pet != null) {
                 lbl2.getComponent(LabelComponent.class).text.replace(0,
                         lbl2.getComponent(LabelComponent.class).text.capacity(),
-                        "IT EXPIRES IN " + gift.pet.tryPeriodDuration + " !!!");
+                        "IT EXPIRES IN " + gift.pet.getTimerTimeTime() + " !!!");
             }
             if (gift.upgrade != null) {
                 lbl2.getComponent(LabelComponent.class).text.replace(0,
                         lbl2.getComponent(LabelComponent.class).text.capacity(),
-                        "IT EXPIRES IN " + gift.upgrade.tryPeriodDuration + " !!!");
+                        "IT EXPIRES IN " + gift.upgrade.getTimerTimeTime() + " !!!");
             }
 
         } else {
