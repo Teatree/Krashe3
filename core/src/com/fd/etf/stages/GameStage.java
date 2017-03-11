@@ -209,6 +209,7 @@ public class GameStage extends Stage {
         gameScript.fpc.score = 0;
         gameScript.fpc.bestScore = 0;
         gameScript.fpc.totalScore = 0;
+        gameScript.fpc.curDay = 0;
         gameScript.fpc.level.difficultyLevel = 0;
         gameScript.fpc.level.resetNewInfo();
 

@@ -82,6 +82,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
     public int gameOverReviveTimesLimit;
+    public boolean wasGameOverReviveShown;
 
     //bee mode
     private Entity beesModeAni;
@@ -205,7 +206,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void init(Entity item) {
 
-        gameOverReviveTimesLimit = 2;
+        if(!fpc.isSameDay()) {
+            gameOverReviveTimesLimit = 5;
+        }
+
         gameItem = new ItemWrapper(item);
         projectileBounds = new LinkedList<>();
 
@@ -341,6 +345,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         curtainGameE.getComponent(ActionComponent.class).reset();
         curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
 
+        wasGameOverReviveShown = false;
+
         initDoubleBJIcon();
         initPhoenixIcon();
 
@@ -352,6 +358,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             hideCurrentPet();
             initPet();
             changePet = false;
+        }
+
+        if(fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null) {
+            fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).counter = 0;
         }
 
         megaFlower.getComponent(TransformComponent.class).y = FLOWER_Y_POS;
@@ -593,7 +603,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
-            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100) {
+            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
@@ -654,8 +664,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void endGame() {
-        gameOverReviveTimesLimit--;
-        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0;
+        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown;
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
@@ -695,6 +704,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             gameOverDialog = new GameOverDialog(gameStage);
             gameOverDialog.initGameOverDialog();
         }
+        gameOverReviveTimesLimit--;
+        wasGameOverReviveShown = true;
         gameOverDialog.show();
     }
 

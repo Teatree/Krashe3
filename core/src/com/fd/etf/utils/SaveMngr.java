@@ -127,6 +127,7 @@ public class SaveMngr {
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
+            fc.curDay = gameStats.curDay;
 
             GameStats stats = json.fromJson(GameStats.class, saved);
             fc.settings.noAds = stats.noAds;
@@ -143,7 +144,6 @@ public class SaveMngr {
             AchievementSystem.queenAchGoal = stats.queenAchGoal;
             AchievementSystem.bugAchGoal = stats.bugAchGoal;
             AchievementSystem.bugAchGoal = stats.bugAchGoal;
-
 
             fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
             fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
@@ -625,6 +625,7 @@ public class SaveMngr {
         public boolean noMusic;
         public long bestScore;
         public long totalScore;
+        public long curDay;
         public List<DailyGoalStats> goals = new ArrayList<DailyGoalStats>();
         public PetJson currentPet;
         public List<UpgradeStats> upgrades;

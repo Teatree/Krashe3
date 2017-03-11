@@ -36,6 +36,7 @@ public class GameOverDialog extends AbstractDialog {
     public static float gameOverTimer = 0;
     public static final int GAME_OVER_COUNT = 5;
     public static int gameOverCounter;
+
     private int tapCoolDown = TAP_COOL;
 
     public static Entity gameOverDialogE;

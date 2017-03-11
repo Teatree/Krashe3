@@ -8,10 +8,7 @@ import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSystem;
 import com.fd.etf.system.FlowerSystem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FlowerPublicComponent implements Component, Pool.Poolable{
 
@@ -23,6 +20,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
 
     public long bestScore;
     public long totalScore;
+    public long curDay;
     public static float oldScore;
     public static float scoreDiff;
     public int score;
@@ -104,6 +102,17 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     @Override
     public void reset() {
 
+    }
+
+    public boolean isSameDay(){
+        Date d = new Date();
+
+        if(d.getTime() - curDay > 86400000){
+            curDay = d.getTime();
+            return false;
+        }else{
+            return true;
+        }
     }
 
 //
