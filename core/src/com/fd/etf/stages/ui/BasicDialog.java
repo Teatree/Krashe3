@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.stages.MenuScreenScript;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.NodeComponent;
@@ -20,11 +21,11 @@ import static com.fd.etf.stages.ui.Settings.SETTINGS_SCALE;
 
 public class BasicDialog extends AbstractDialog {
 
-    private static final String RESET_ALL_PROGRESS = "RESET ALL PROGRESS. ARE YOU SURE?";
-    private static final String RESTORE_ALL_PURCHASES = "RESTORE ALL PURCHASES. ARE YOU SURE?";
+    private static final String RESET_ALL_PROGRESS = "ARE YOU SURE YOU'D LIKE TO \n" + "RESET ALL YOUR PROGRESS?";
+    private static final String RESTORE_ALL_PURCHASES = "ARE YOU SURE YOU'D LIKE TO \n" + " RESTORE ALL YOUR PURCHASES?";
     private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE RESTORED";
-    public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS ERASED";
-    public static final String ERROR = "WE HAD ERROR :(";
+    public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS RESET";
+    public static final String ERROR = "WE HAD AN ERROR :(";
 
     private static final String BASIC_DIALOG = "popup_basic_lib";
     private static final String DIALOG_TEXT = "dialog_text";
@@ -177,6 +178,9 @@ public class BasicDialog extends AbstractDialog {
                     @Override
                     public void clicked() {
                         close(dialogE);
+                        dialogE.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+                        MenuScreenScript.settings.close(MenuScreenScript.settings.settingsE);
+                        MenuScreenScript.settings.settingsE.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
                         VanityComponent.disableAllVanitiesAssets();
                         GameStage.changedFlowerEntity = true;
                         GameStage.changedFlowerEntity2 = true;

@@ -57,7 +57,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public boolean movingFlaps = false;
 
     ItemWrapper menuItem;
-    private Settings settings;
+    public static Settings settings;
 
     //Dima's party time
     static Entity curtain_mm;

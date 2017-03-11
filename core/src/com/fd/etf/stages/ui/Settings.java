@@ -92,6 +92,7 @@ public class Settings extends AbstractDialog {
                 new ImageButtonListener(closeSettingsBtn) {
                     @Override
                     public void clicked() {
+                        checkSecondaryDialog();
                         close(settingsE);
                     }
                 });
