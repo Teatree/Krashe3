@@ -27,6 +27,8 @@ public class BugSystem extends IteratingSystem {
     private static final String CHARGING_ANI = "CHARGING";
     private static final String IDLE_ANI = "IDLE";
     private static final String PREPARING_ANI = "PREPARING";
+    public static final String FLY_ANI = "fly";
+    public static final String SCARE_ANI = "scare";
 
     public static boolean blowUpAllBugs;
     public static float blowUpCounter;
@@ -52,14 +54,16 @@ public class BugSystem extends IteratingSystem {
 
         entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
+        if(entity.getComponent(BugComponent.class).type.equals(DRUNK)) {
+            entity.getComponent(TransformComponent.class).scaleX = 0.5f;
+            entity.getComponent(TransformComponent.class).scaleY = 0.5f;
+        }
 
         BugComponent bc = mapper.get(entity);
         if (bc.type == QUEENBEE) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
         }
-
-        bc.scareCounter -= deltaTime;
 
         if (blowUpAllBugs) {
             updateBlowUpAllBugs(entity, deltaTime);
@@ -71,14 +75,17 @@ public class BugSystem extends IteratingSystem {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
-                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary) && gameStage.gameScript.fpc.state == FlowerComponent.State.ATTACK) {
+                if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)
+                        && FlowerComponent.state.equals(FlowerComponent.State.ATTACK)) {
                     entity.getComponent(TransformComponent.class).scaleX += 0.5f;
-                    if (sac.frameRangeMap.containsKey("scare") && !gameStage.gameScript.fpc.isScary) {
+                    if (sac.frameRangeMap.containsKey(SCARE_ANI) && !gameStage.gameScript.fpc.isScary && !bc.state.equals(SCARED)) {
                         canPlayAnimation = true;
-                        setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
-                        bc.scareCounter = 2f;
+                        bc.state = SCARED;
+                        setAnimation(SCARE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                        bc.scareCounter = 0.5f;
+//                        System.out.println("SETTING scareCounter!!! OMG " + bc.scareCounter);
+                        gameStage.gameScript.fpc.isScary = true;
                     }
-                    gameStage.gameScript.fpc.isScary = true;
                 }
 
                 if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
@@ -88,9 +95,9 @@ public class BugSystem extends IteratingSystem {
                         gameStage.gameScript.angerBees();
                     }
 
-                    if (sac.frameRangeMap.containsKey("fly")) {
+                    if (sac.frameRangeMap.containsKey(FLY_ANI)) {
                         canPlayAnimation = true;
-                        setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+                        setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
                     }
                     gameStage.gameScript.fpc.isScary = false;
 
@@ -126,15 +133,18 @@ public class BugSystem extends IteratingSystem {
                 BugPool.getInstance(gameStage).release(entity);
             }
         }
-        if (bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")) {
-            setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+
+        if (bc.scareCounter <= 0 && bc.state.equals(SCARED) && sac.frameRangeMap.containsKey(FLY_ANI)) {
+            canPlayAnimation = true;
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
+//            System.out.println("SETTING FLY ANIMATION!!! OMG " + bc.scareCounter);
         }
     }
 
     public static void blowUpAllBugs() {
         blowUpAllBugs = true;
         blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
-        System.out.println("HOW MANY TIMES AM I CALLED?");
+//        System.out.println("HOW MANY TIMES AM I CALLED?");
     }
 
     private void updateBlowUpAllBugs(Entity entity, float deltaTime) {
@@ -173,9 +183,9 @@ public class BugSystem extends IteratingSystem {
         spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
         BugPool.getInstance(gameStage).release(bugE);
 
-        if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey("fly")) {
+        if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey(FLY_ANI)) {
             canPlayAnimation = true;
-            setAnimation("fly", Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
         }
     }
 
@@ -297,8 +307,9 @@ public class BugSystem extends IteratingSystem {
             if (bugComponent.interpolation != null) percent = bugComponent.interpolation.apply(percent);
         }
 
-        if (gameStage.gameScript.fpc.isScary) {
-            setAnimation("scare", Animation.PlayMode.LOOP, sasc, sac);
+        if (bugComponent.state.equals(SCARED)) {
+            setAnimation(SCARE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+            bugComponent.scareCounter -= deltaTime;
         }
 
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
@@ -309,7 +320,7 @@ public class BugSystem extends IteratingSystem {
         bc.boundsRect.y = (int) tc.y + 30;
         bc.boundsRect.width = (int) dc.width * tc.scaleX - 50;
         bc.boundsRect.height = (int) dc.height * tc.scaleY - 30;
-        if (bc.type == "BEE") {
+        if (bc.type.equals(BEE)) {
             bc.boundsRect.x = (int) tc.x + 250; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 130;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 330;

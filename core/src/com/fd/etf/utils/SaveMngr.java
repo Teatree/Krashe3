@@ -163,9 +163,11 @@ public class SaveMngr {
             fc.settings.reviveAd_min = stats.reviveAd_min;
             fc.settings.shopAd_min = stats.shopAd_min;
 
-            for (UpgradeStats e : gameStats.upgrades) {
-                Upgrade u = new Upgrade(e);
-                fc.upgrades.put(UpgradeType.valueOf(e.upgradeType), u);
+            if(gameStats.upgrades != null) {
+                for (UpgradeStats e : gameStats.upgrades) {
+                    Upgrade u = new Upgrade(e);
+                    fc.upgrades.put(UpgradeType.valueOf(e.upgradeType), u);
+                }
             }
 
             fc.pets = getAllPets();
@@ -673,6 +675,14 @@ public class SaveMngr {
     public static class UpgradeStats {
         public String upgradeType;
         public String name;
+        public long cost;
+        public long disc;
+        public long costDisc;
+        public String description;
+        public String collection;
+        public String currencyType;
+        public String transactionId;
+        public String discountTransactionId;
         public boolean tryPeriod;
         public long tryPeriodDuration;
         public long tryPeriodStart;
@@ -694,6 +704,15 @@ public class SaveMngr {
             this.enabled = us.enabled;
             this.shopIcon = us.shopIcon;
             this.name = us.name;
+            this.cost = us.cost;
+            this.disc = us.disc;
+            this.costDisc = us.costDisc;
+            this.description = us.description;
+            this.collection = us.collection;
+            this.currencyType = us.currencyType;
+            this.transactionId = us.transactionId;
+            this.discountTransactionId = us.discountTransactionId;
+
         }
     }
 

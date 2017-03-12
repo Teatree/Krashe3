@@ -29,6 +29,14 @@ public class Upgrade extends ShopItem{
         this.enabled = us.enabled;
         this.shopIcon = us.shopIcon;
         this.name = us.name;
+        this.cost = us.cost;
+        this.disc = us.disc;
+        this.costDisc = us.costDisc;
+        this.description = us.description;
+        this.collection = us.collection;
+        this.currencyType = us.currencyType;
+        this.transactionId = us.transactionId;
+        this.discountTransactionId = us.discountTransactionId;
     }
 
     public static List<Upgrade> getAllUpgrades(GameStage gameStage) {

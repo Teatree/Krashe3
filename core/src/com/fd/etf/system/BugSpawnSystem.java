@@ -20,11 +20,11 @@ public class BugSpawnSystem extends EntitySystem {
 
     // spawn probability
     // combined has to be equal to 100
-    public static final int DRUNK_SPAWN_PROB = 10;
-    public static final int SIMPLE_SPAWN_PROB = 1;
+    public static final int DRUNK_SPAWN_PROB = 20;
+    public static final int SIMPLE_SPAWN_PROB = 29;
     public static final int CHARGER_SPAWN_PROB = 27;
-    public static final int QUEENBEE_SPAWN_PROB = 29;
-    public static final int BEE_SPAWN_PROB = 30;
+    public static final int QUEENBEE_SPAWN_PROB = 9;
+    public static final int BEE_SPAWN_PROB = 12;
     public static final int ANGERED_BEE_PATTERN_1_y_1 = 32;
     public static final int ANGERED_BEE_PATTERN_1_y_2 = 500;
     public static final int ANGERED_BEE_PATTERN_2_y_1 = 300;
@@ -136,19 +136,19 @@ public class BugSpawnSystem extends EntitySystem {
             } else {
                 int probabilityValue = rand.nextInt(100);
                 if (probabilityValue <= curDrunkProb) {
-                    createBug(BEE, currentMultiplier);
+                    createBug(DRUNK, currentMultiplier);  // Drunk
                 } else if (probabilityValue > curDrunkProb && probabilityValue < curDrunkProb + curSimpleProb) {
-                    createBug(BEE, currentMultiplier);
+                    createBug(SIMPLE, currentMultiplier);   // Simple
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb) {
-                    createBug(BEE, currentMultiplier);
+                    createBug(BEE, currentMultiplier);  // Charger
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb) {
                     if (!queenBeeOnStage) {
-                        createBug(QUEENBEE, currentMultiplier);
+                        createBug(QUEENBEE, currentMultiplier);    // Queen Bee, duh
                         queenBeeOnStage = true;
                     }
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + 1 &&
                         probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + curBeeProb) {
-                    createBug(BEE, currentMultiplier);
+                    createBug(BEE, currentMultiplier);   // Bee
                 }
                 bugsSpawned++;
 //                System.out.println("bugSpawned: " + bugsSpawned);
