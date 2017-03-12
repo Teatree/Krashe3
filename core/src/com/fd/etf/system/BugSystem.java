@@ -63,8 +63,6 @@ public class BugSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
         }
 
-        bc.scareCounter -= deltaTime;
-
         if (blowUpAllBugs) {
             updateBlowUpAllBugs(entity, deltaTime);
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
@@ -132,6 +130,7 @@ public class BugSystem extends IteratingSystem {
         }
         if (bc.scareCounter <= 0 && sac.frameRangeMap.containsKey("fly")) {
             setAnimation("fly", Animation.PlayMode.LOOP, sasc, sac);
+            System.out.println("SETTING FLY ANIMATION!!! OMG");
         }
     }
 

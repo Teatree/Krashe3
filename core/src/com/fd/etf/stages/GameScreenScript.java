@@ -601,7 +601,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
-            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null) {
+            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
