@@ -621,10 +621,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             if (BugSystem.blowUpCounter <= 0 && BugSystem.destroyAllBugsCounter <= 0) {
                 BugSystem.blowUpAllBugs = false;
                 BugSystem.destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
-                System.out.println("let's put it there!");
+//                System.out.println("let's put it there!");
             }
 
-            System.out.println("destroyAllBugsCounter: " + BugSystem.destroyAllBugsCounter + " blowUpCounter: " + BugSystem.blowUpCounter + " delta: " + delta);
+//            System.out.println("destroyAllBugsCounter: " + BugSystem.destroyAllBugsCounter + " blowUpCounter: " + BugSystem.blowUpCounter + " delta: " + delta);
         }
     }
 
