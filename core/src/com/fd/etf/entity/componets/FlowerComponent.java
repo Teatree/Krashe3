@@ -8,6 +8,7 @@ public class FlowerComponent implements Component, Pool.Poolable{
     public static final int FLOWER_X_POS = 1023;
     public static final float FLOWER_SCALE = 0.7f;
 
+    public static boolean isLosing;
     public static State state = State.IDLE;
 
     public FlowerComponent() {

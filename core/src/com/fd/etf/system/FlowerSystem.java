@@ -57,8 +57,12 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
-
+        System.out.println("state " + state);
         gameStage.gameScript.fpc.state = state;
+
+//        if(FlowerComponent.isLosing){
+//            sd
+//        }
 
         if(BugJuiceBubbleSystem.isCalculatingScore) {
             if(gameStage.gameScript.fpc.oldScore <= (float) gameStage.gameScript.fpc.score){
@@ -114,6 +118,7 @@ public class FlowerSystem extends IteratingSystem {
                 if (isAnimationFinished(sc)) {
                     setSulkAnimation(sc);
                     state = State.SULKING;
+                    FlowerComponent.isLosing = false;
                     if (gameStage.gameScript.fpc.canUsePhoenix()) {
                         gameStage.gameScript.usePhoenix();
                     } else {
@@ -153,7 +158,7 @@ public class FlowerSystem extends IteratingSystem {
                 if (tc.y < FLOWER_MAX_Y_POS || !Gdx.input.isTouched()) {
                     move(tc, delta);
                 }
-                if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK)) {
+                if (tc.y >= FLOWER_MAX_Y_POS && state.equals(ATTACK) && !Gdx.input.isTouched()) {
                     state = RETREAT;
                     hideTutorialLine();
                 }
@@ -194,11 +199,11 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     private void ifIsTouched(TransformComponent tc, SpriterComponent sc) {
-        if (Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord()) {
+        if (!FlowerComponent.isLosing && Gdx.input.isTouched() && state.equals(IDLE) && canAttackCoord()) {
             state = TRANSITION;
         }
 
-        if (Gdx.input.isTouched()
+        if (!FlowerComponent.isLosing && Gdx.input.isTouched()
                 && !state.equals(TRANSITION)
                 && !state.equals(ATTACK) && canAttackCoord()) {
             state = ATTACK;

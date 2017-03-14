@@ -636,6 +636,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void onBugOutOfBounds() {
         FlowerComponent.state = FlowerComponent.State.LOSING;
+        FlowerComponent.isLosing = true;
 
 //        if (fpc.canUsePhoenix()) {
 //            usePhoenix();
