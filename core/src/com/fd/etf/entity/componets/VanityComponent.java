@@ -96,7 +96,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     private void disableSimilarVanities() {
         for (String fileName : assetsToChange.keySet()){
             for (VanityComponent vc : vanityComponentsByChangedAssets.get(fileName)){
-                if (vc.enabled) {
+                if (vc.enabled && !fileName.equals("class")) {
                     vc.enabled = false;
                 }
             }
