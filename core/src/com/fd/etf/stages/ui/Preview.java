@@ -36,7 +36,7 @@ public class Preview extends AbstractDialog {
     private static final String BTN_ENABLE = "tag_btn_enable";
     private static final String TAG_INFO_LIB = "tag_info_lib";
 
-    private static final String BTN_CLOSE = "tag_btn_close";
+    private static final String BTN_CLOSE = "btn_close_lib";
     private static final String LBL_ITEM_NAME = "tag_lbl_item_name";
     private static final String LBL_ITEM_NAME_2 = "tag_lbl_item_name_2";
     private static final String LBL_PAPER_PIECE = "paper_piece_img";
@@ -72,6 +72,9 @@ public class Preview extends AbstractDialog {
 
     private static final int BTNZ_X = 308;
     private static final int BTNZ_Y = 33;
+
+    private static final int BTNZ_CLOSE_X = 1050;
+    private static final int BTNZ_CLOSE_Y = 625;
 
     private static final int UNKNOWN_ICON_Y = 350;
     private static final int INFO_TAG_HIDE_Y = 900;
@@ -116,6 +119,11 @@ public class Preview extends AbstractDialog {
         btnPrev = buttonz.getComponent(NodeComponent.class).getChild(BTN_LEFT);
         btnNext = buttonz.getComponent(NodeComponent.class).getChild(BTN_RIGHT);
 
+        CompositeItemVO closeItemC = gameStage.sceneLoader.loadVoFromLibrary(BTN_CLOSE);
+        btnClose = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), closeItemC);
+        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), btnClose, closeItemC.composite);
+        gameStage.sceneLoader.getEngine().addEntity(btnClose);
+
         initCloseBtn();
         infoTag.getComponent(ZIndexComponent.class).setZIndex(51);
         buttonz.getComponent(ZIndexComponent.class).setZIndex(51);
@@ -128,8 +136,7 @@ public class Preview extends AbstractDialog {
                 getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class).setZIndex(20);
         ZIndexComponent z1 = infoTag.getComponent(NodeComponent.class).
                 getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class);
-        infoTag.getComponent(NodeComponent.class).
-                getChild(BTN_CLOSE).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+1);
+        btnClose.getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+100);
         infoTag.getComponent(NodeComponent.class).
                 getChild(LBL_ITEM_NAME).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+1);
 
@@ -137,11 +144,13 @@ public class Preview extends AbstractDialog {
     }
 
     private void initCloseBtn() {
-        btnClose = infoTag.getComponent(NodeComponent.class).getChild(BTN_CLOSE);
+//        btnClose = infoTag.getComponent(NodeComponent.class).getChild(BTN_CLOSE);
 
         if (btnClose.getComponent(ButtonComponent.class) == null) {
             btnClose.add(new ButtonComponent());
         }
+        btnClose.getComponent(TransformComponent.class).x = 760;
+        btnClose.getComponent(TransformComponent.class).y = 470;
         btnClose.getComponent(ButtonComponent.class).clearListeners();
         btnClose.getComponent(ButtonComponent.class).
                 addListener(new ImageButtonListener(btnClose) {
@@ -293,6 +302,13 @@ public class Preview extends AbstractDialog {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_Y, 1f, Interpolation.exp10Out));
             infoTag.add(ac);
+
+            btnClose.getComponent(TransformComponent.class).x = BTNZ_CLOSE_X;
+            btnClose.getComponent(TransformComponent.class).y = 1200;
+            ActionComponent acClose = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            Actions.checkInit();
+            acClose.dataArray.add(Actions.moveTo(BTNZ_CLOSE_X, BTNZ_CLOSE_Y, 1f, Interpolation.exp10Out));
+            btnClose.add(acClose);
 
             ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             Actions.checkInit();
@@ -666,12 +682,13 @@ public class Preview extends AbstractDialog {
                 if (isPreviewOn.get()) {
                     ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
-                    ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_HIDE_Y, 0.8f, Interpolation.exp10));
+                    ac.dataArray.add(Actions.moveBy(0, 1800, 1f, Interpolation.exp10));
                     infoTag.add(ac);
+                    btnClose.add(ac);
 
                     ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
                     Actions.checkInit();
-                    acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, -300, 1f, Interpolation.exp10Out));
+                    acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, -200, 0.4f, Interpolation.exp10));
                     buttonz.add(acButtonz);
 
                     ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
