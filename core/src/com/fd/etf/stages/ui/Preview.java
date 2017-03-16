@@ -85,6 +85,7 @@ public class Preview extends AbstractDialog {
     private Entity btnPrev;
     private Entity btnNext;
     private Entity btnClose;
+    private Entity btnBuy;
     private Entity infoTag;
     private Entity buttonz;
 
@@ -212,6 +213,21 @@ public class Preview extends AbstractDialog {
                 String.valueOf(vc.cost));
         lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
                 String.valueOf(vc.cost));
+        lblPrice.getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        lblPrice.getComponent(LabelComponent.class).fontScaleY = 0.7f;
+        lblPriceSh.getComponent(LabelComponent.class).fontScaleX = 0.7f;
+        lblPriceSh.getComponent(LabelComponent.class).fontScaleY = 0.7f;
+
+        if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
+            btnBuy.getComponent(TransformComponent.class).scaleX = 0.9f;
+            btnBuy.getComponent(TransformComponent.class).x = 140;
+        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4){
+            btnBuy.getComponent(TransformComponent.class).scaleX = 1f;
+            btnBuy.getComponent(TransformComponent.class).x = 130;
+        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
+            btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
+            btnBuy.getComponent(TransformComponent.class).x = 115;
+        }
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
@@ -386,7 +402,7 @@ public class Preview extends AbstractDialog {
     }
 
     public void initBuyButton(final ShopItem vc) {
-        final Entity btnBuy = buttonz.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        btnBuy = buttonz.getComponent(NodeComponent.class).getChild(BTN_BUY);
         final Entity coinzE = buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON);
         buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
         buttonz.getComponent(NodeComponent.class).getChild(BTN_ENABLE).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
@@ -394,7 +410,21 @@ public class Preview extends AbstractDialog {
 
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(61);
+
+            if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
+                btnBuy.getComponent(TransformComponent.class).scaleX = 0.9f;
+                btnBuy.getComponent(TransformComponent.class).x = 140;
+            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4){
+                btnBuy.getComponent(TransformComponent.class).scaleX = 1f;
+                btnBuy.getComponent(TransformComponent.class).x = 130;
+            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
+                btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
+                btnBuy.getComponent(TransformComponent.class).x = 115;
+            }
+            
+
             btnBuy.getComponent(TransformComponent.class).y = 5;
+
             if (vc.currencyType.equals(HARD)) {
                 coinzE.getComponent(TintComponent.class).color.a = 0;
                 lblPrice.getComponent(LabelComponent.class).text.append("$");
