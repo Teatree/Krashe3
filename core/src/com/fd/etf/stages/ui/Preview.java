@@ -227,12 +227,16 @@ public class Preview extends AbstractDialog {
         }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
             btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
             btnBuy.getComponent(TransformComponent.class).x = 115;
+        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6){
+            btnBuy.getComponent(TransformComponent.class).scaleX = 1.2f;
+            btnBuy.getComponent(TransformComponent.class).x = 110;
         }
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
         if (vc.canBuy(gameStage)) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
+            lblNotEnough.remove(ActionComponent.class);
             lblNotEnough.getComponent(TintComponent.class).color.a = 0;
             return true;
         } else {
@@ -420,8 +424,10 @@ public class Preview extends AbstractDialog {
             }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
                 btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
                 btnBuy.getComponent(TransformComponent.class).x = 115;
+            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6){
+                btnBuy.getComponent(TransformComponent.class).scaleX = 1.2f;
+                btnBuy.getComponent(TransformComponent.class).x = 108;
             }
-            
 
             btnBuy.getComponent(TransformComponent.class).y = 5;
 
