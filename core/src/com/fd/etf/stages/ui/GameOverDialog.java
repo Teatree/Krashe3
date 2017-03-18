@@ -202,7 +202,7 @@ public class GameOverDialog extends AbstractDialog {
     public void resetGameData() {
         gameOverTimer = 0;
         gameOverCounter = GAME_OVER_COUNT;
-        isStarted = false;
+//        isStarted = false;
         isPause.set(false);
         isAngeredBeesMode = false;
         BugSpawnSystem.queenBeeOnStage = false;

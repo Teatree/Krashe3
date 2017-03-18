@@ -135,10 +135,6 @@ public class FlowerSystem extends IteratingSystem {
             randomSulkSwtich++;
             if (isAnimationFinished(sc) && randomSulkSwtich > 150) {
                 setSulkAnimation(sc);
-//                if(isAnimationFinished(sc)){
-//                    setSulkIdleAnimation(sc);
-//                    randomSulkSwtich = 0;
-//                }
             } else if (isAnimationFinished(sc) && randomSulkSwtich < 150) {
                 setSulkIdleAnimation(sc);
             }

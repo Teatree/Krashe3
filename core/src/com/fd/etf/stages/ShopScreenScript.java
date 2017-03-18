@@ -379,6 +379,7 @@ public class ShopScreenScript implements IScript {
                     @Override
                     public void clicked() {
                         if (!isPreviewOn.get()) {
+                            GameScreenScript.isStarted = false;
                             gameStage.initGame(0);
                         }
                     }

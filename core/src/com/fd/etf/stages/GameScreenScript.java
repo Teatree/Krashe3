@@ -1,6 +1,5 @@
 package com.fd.etf.stages;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
@@ -23,7 +22,6 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -41,14 +39,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String TUTORIAL_LINE = "tutorial_line";
     private static final String LOSE_FEEDBACK = "lose_feedback";
     private static final String UMBRELLA_ANI = "umbrellaAni";
-    private static final String START_MESSAGE = "TAP TO START";
     private static final String DOUBLE_BJ_ICON = "double_bj_badge";
     private static final String PHOENIX_ICON = "extra_life_badge";
     private static final String LBL_SCORE = "lbl_score";
     private static final String LBL_SCORE_SH = "lbl_score_sh";
     private static final String SCOREC = "scoreC";
     private static final String LBL_TAP_2_START = "lbl_tap2start";
-    private static final String LBL_TAP_2_START_S = "lbl_tap2start_s";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
@@ -242,14 +238,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), " ");
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
-        Entity startLabels = gameItem.getChild(LBL_TAP_2_START_S).getEntity();
         startLabel.getComponent(TintComponent.class).color.a = 0;
         startLabel.getComponent(TransformComponent.class).scaleX = 0.1f;
         startLabel.getComponent(TransformComponent.class).scaleY = 0.1f;
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
-        startLabels.getComponent(TintComponent.class).color.a = 0;
-        startLabels.getComponent(TransformComponent.class).scaleX = 0.1f;
-        startLabels.getComponent(TransformComponent.class).scaleY = 0.1f;
 
         addSystems();
         initFlower(gameItem.getChild(MEGA_FLOWER).getEntity(), gameItem.getChild(MEGA_LEAVES).getEntity());
@@ -304,21 +296,25 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 Actions.fadeIn(2f, Interpolation.exp5, 0.5f)));
         gameItem.getChild("tutorial_line").getEntity().add(ac3);
 
+        if (!isStarted){
+            setTapToPlayAnimations();
+        }
+
+        ActionComponent ac5 = new ActionComponent();
+                ac5.dataArray.add(Actions.sequence(
+                Actions.delay(1f),
+                Actions.fadeIn(2f, Interpolation.exp5)));
+        scoreLabelE.add(ac5);
+        scoreLabelEsh.add(ac5);
+    }
+
+    private void setTapToPlayAnimations() {
         gameItem.getChild(LBL_TAP_2_START).getEntity().getComponent(TintComponent.class).color.a = 0;
-        gameItem.getChild(LBL_TAP_2_START_S).getEntity().getComponent(TintComponent.class).color.a = 0;
         ActionComponent ac4 = new ActionComponent();
         ac4.dataArray.add(Actions.sequence(
                 Actions.delay(2f),
                 Actions.parallel(Actions.fadeIn(1f, Interpolation.exp5Out), Actions.scaleTo(1f, 1f, 1f, Interpolation.exp5Out))));
         gameItem.getChild(LBL_TAP_2_START).getEntity().add(ac4);
-        gameItem.getChild(LBL_TAP_2_START_S).getEntity().add(ac4);
-
-        ActionComponent ac5 = new ActionComponent();
-        ac5.dataArray.add(Actions.sequence(
-                Actions.delay(1f),
-                Actions.fadeIn(2f, Interpolation.exp5)));
-        scoreLabelE.add(ac5);
-        scoreLabelEsh.add(ac5);
     }
 
     public void initButtons() {
@@ -368,6 +364,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         megaFlower.getComponent(TransformComponent.class).y = FLOWER_Y_POS;
         megaFlower.getComponent(TransformComponent.class).x = FLOWER_X_POS;
+
+        if(!isStarted) {
+            setTapToPlayAnimations();
+        }
     }
 
     private void initDoubleBJIcon() {
@@ -576,7 +576,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
             if (!isStarted && Gdx.input.justTouched()) {
                 gameItem.getChild(LBL_TAP_2_START).getEntity().getComponent(LabelComponent.class).text.replace(0, startLabelComponent.text.capacity(), "");
-                gameItem.getChild(LBL_TAP_2_START_S).getEntity().getComponent(LabelComponent.class).text.replace(0, startLabelComponent.text.capacity(), "");
                 isStarted = true;
 
                 updateTapGoal();

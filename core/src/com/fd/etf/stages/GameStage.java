@@ -95,7 +95,6 @@ public class GameStage extends Stage {
         backgroundMusicMgr.stopMenu();
 
         gameScript.initStartTrans();
-        GameScreenScript.isStarted = false;
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance(this);

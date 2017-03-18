@@ -194,6 +194,7 @@ public class ResultScreenScript implements IScript {
                     }
 
                     private void backToGame() {
+                        GameScreenScript.isStarted = false;
                         gameStage.initGame(0);
                         isWasShowcase = false;
                     }
