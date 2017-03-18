@@ -48,6 +48,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String LBL_SCORE_SH = "lbl_score_sh";
     private static final String SCOREC = "scoreC";
     private static final String LBL_TAP_2_START = "lbl_tap2start";
+    private static final String LBL_TAP_2_START_S = "lbl_tap2start_s";
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
@@ -234,18 +235,21 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreCE = gameItem.getChild(SCOREC).getEntity();
         scoreLabelE = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE);
         LabelComponent scoreLabel = scoreLabelE.getComponent(LabelComponent.class);
-        scoreLabel.text.replace(0, scoreLabel.text.capacity(), "" + fpc.score);
+        scoreLabel.text.replace(0, scoreLabel.text.capacity(), " ");
 
         scoreLabelEsh = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE_SH);
         LabelComponent scoreLabelsh = scoreLabelEsh.getComponent(LabelComponent.class);
-        scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), "" + fpc.score);
+        scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), " ");
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
+        Entity startLabels = gameItem.getChild(LBL_TAP_2_START_S).getEntity();
         startLabel.getComponent(TintComponent.class).color.a = 0;
         startLabel.getComponent(TransformComponent.class).scaleX = 0.1f;
         startLabel.getComponent(TransformComponent.class).scaleY = 0.1f;
         startLabelComponent = startLabel.getComponent(LabelComponent.class);
-        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
+        startLabels.getComponent(TintComponent.class).color.a = 0;
+        startLabels.getComponent(TransformComponent.class).scaleX = 0.1f;
+        startLabels.getComponent(TransformComponent.class).scaleY = 0.1f;
 
         addSystems();
         initFlower(gameItem.getChild(MEGA_FLOWER).getEntity(), gameItem.getChild(MEGA_LEAVES).getEntity());
@@ -301,11 +305,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameItem.getChild("tutorial_line").getEntity().add(ac3);
 
         gameItem.getChild(LBL_TAP_2_START).getEntity().getComponent(TintComponent.class).color.a = 0;
+        gameItem.getChild(LBL_TAP_2_START_S).getEntity().getComponent(TintComponent.class).color.a = 0;
         ActionComponent ac4 = new ActionComponent();
         ac4.dataArray.add(Actions.sequence(
-                Actions.delay(5f),
+                Actions.delay(2f),
                 Actions.parallel(Actions.fadeIn(1f, Interpolation.exp5Out), Actions.scaleTo(1f, 1f, 1f, Interpolation.exp5Out))));
         gameItem.getChild(LBL_TAP_2_START).getEntity().add(ac4);
+        gameItem.getChild(LBL_TAP_2_START_S).getEntity().add(ac4);
 
         ActionComponent ac5 = new ActionComponent();
         ac5.dataArray.add(Actions.sequence(
@@ -332,7 +338,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         scoreLabelEsh.getComponent(TintComponent.class).color.a = 0;
-        startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), START_MESSAGE);
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
         curtainGameE.getComponent(TintComponent.class).color.a = 0.99f;
@@ -570,7 +575,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             }
 
             if (!isStarted && Gdx.input.justTouched()) {
-                startLabelComponent.text.replace(0, startLabelComponent.text.capacity(), "");
+                gameItem.getChild(LBL_TAP_2_START).getEntity().getComponent(LabelComponent.class).text.replace(0, startLabelComponent.text.capacity(), "");
+                gameItem.getChild(LBL_TAP_2_START_S).getEntity().getComponent(LabelComponent.class).text.replace(0, startLabelComponent.text.capacity(), "");
                 isStarted = true;
 
                 updateTapGoal();
@@ -625,6 +631,15 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             }
 
 //            System.out.println("destroyAllBugsCounter: " + BugSystem.destroyAllBugsCounter + " blowUpCounter: " + BugSystem.blowUpCounter + " delta: " + delta);
+        }
+
+        if(fpc.score == 0) {
+            scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "");
+            scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "");
         }
     }
 
@@ -710,12 +725,21 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void reloadScoreLabel(FlowerPublicComponent fcc) {
-        scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
-                scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
-                "" + fcc.score);
-        scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
-                scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
-                "" + fcc.score);
+        if(fpc.score > 0) {
+            scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "" + fcc.score);
+            scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "" + fcc.score);
+        } else {
+            scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "");
+            scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
+                    scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
+                    "");
+        }
     }
 
     private void initCocoon() {
