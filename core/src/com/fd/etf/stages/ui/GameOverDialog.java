@@ -116,7 +116,7 @@ public class GameOverDialog extends AbstractDialog {
         isGameOver.set(false);
         isPause.set(false);
         gameOverTimer = 0;
-        gameOverCounter = GAME_OVER_COUNT;
+        gameOverCounter = 0;
         isAngeredBeesMode = false;
 //        BugSystem.blowUpAllBugs = true;
 //        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
@@ -190,6 +190,7 @@ public class GameOverDialog extends AbstractDialog {
                     if (gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class) == null) {
                         gameStage.gameScript.curtainGameE.add(new ActionComponent());
                     }
+                    gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class).reset();
                     gameStage.gameScript.curtainGameE.getComponent(ActionComponent.class).dataArray.add(Actions.fadeIn(0.3f));
                     gameStage.gameScript.curtainGameE.getComponent(ZIndexComponent.class).setZIndex(200);
 //                    hide();

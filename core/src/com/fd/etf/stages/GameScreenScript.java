@@ -3,6 +3,7 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.Main;
@@ -52,6 +53,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String BTN_BACK = "btn_back";
     private static final String BEES_MODE_ANI = "bees_mode_ani";
     private static final String CURTAIN_GAME = "curtain_game";
+    private static final String GAME_OVER_LBL = "lbl_gameover";
 
     public static AtomicBoolean isPause = new AtomicBoolean(false);
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
@@ -629,7 +631,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                System.out.println("let's put it there!");
             }
 
-//            System.out.println("destroyAllBugsCounter: " + BugSystem.destroyAllBugsCounter + " blowUpCounter: " + BugSystem.blowUpCounter + " delta: " + delta);
         }
 
         if(fpc.score == 0) {
@@ -683,19 +684,56 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             showGameOverDialog();
         } else {
             isGameOver.set(false);
-            if (GoalFeedbackScreen.shouldShow && !GoalFeedbackScreen.isGoalFeedbackOpen) {
-                showGoalFeedback();
-                isGameOver.set(true);
-            } else if ((gameStage.gameScript.goalFeedbackScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
-                isGameOver.set(false);
-                gameStage.gameScript.resetPauseDialog();
-                submitScoreToGooglePlay();
-                gameStage.gameScript.gameOverDialog.hide();
-                megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
 
-//                BugPool.re();
-                gameStage.initResultWithAds();
+            if (curtainGameE.getComponent(ActionComponent.class) != null){
+                curtainGameE.getComponent(ActionComponent.class).reset();
             }
+            ActionComponent ac = new ActionComponent();
+            ac.dataArray.add(Actions.fadeIn(1f, Interpolation.exp5, 0.5f));
+            curtainGameE.add(ac);
+            curtainGameE.getComponent(ZIndexComponent.class).setZIndex(150);
+            ActionComponent ac2 = new ActionComponent();
+            ac2.dataArray.add(Actions.sequence(
+                    Actions.parallel(Actions.moveTo(305, 352, 0.7f, Interpolation.exp5), Actions.fadeIn(0.7f)),
+                    Actions.delay(1.5f),
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(curtainGameE.getComponent(ActionComponent.class) != null) {
+                                curtainGameE.getComponent(ActionComponent.class).reset();
+                            }
+                            gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ZIndexComponent.class).setZIndex(curtainGameE.getComponent(ZIndexComponent.class).getZIndex() - 1);
+                            ActionComponent ac3 = new ActionComponent();
+                            ac3.dataArray.add(Actions.fadeIn(0.3f));
+                            curtainGameE.add(ac3);
+                        }
+                    }),
+                    Actions.delay(0.3f),
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (GoalFeedbackScreen.shouldShow && !GoalFeedbackScreen.isGoalFeedbackOpen) {
+                                showGoalFeedback();
+                                isGameOver.set(true);
+                            } else if ((gameStage.gameScript.goalFeedbackScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
+                                isGameOver.set(false);
+                                gameStage.gameScript.resetPauseDialog();
+                                submitScoreToGooglePlay();
+                                gameStage.gameScript.gameOverDialog.hide();
+                                megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
+
+                                gameStage.initResultWithAds();
+                                gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(TransformComponent.class).y = -108;
+                            }
+                        }
+                    })));
+            if(gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class) != null) {
+                gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class).reset();
+            }
+            gameItem.getChild(GAME_OVER_LBL).getEntity().add(ac2);
+            gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ZIndexComponent.class).setZIndex(curtainGameE.getComponent(ZIndexComponent.class).getZIndex() + 1);
+
+
         }
     }
 
