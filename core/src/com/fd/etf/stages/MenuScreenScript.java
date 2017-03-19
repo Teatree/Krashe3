@@ -329,12 +329,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void act(float delta) {
-//        GameStage.viewport.getCamera()
-//        System.out.println("world width:" + GameStage.viewport.getWorldWidth());
-//        System.out.println("world height:" + GameStage.viewport.getWorldHeight());
 
         if (menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class) != null &&
-                menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class).color.a == 1){
+                menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class).color.a > 0.7f){
             canClickPlay = true;
         }
 
@@ -350,11 +347,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         if (pauseDialog != null)
             pauseDialog.update(delta);
         if (startGameTransition) {
-//            curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
-//            if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
-//                startGameTransition = false;
-//                GameStage.initGame();
-//            }
 
             //world size
             transitionCoefficient = 1;
@@ -363,8 +355,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startShopTransition) {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
-//            curtain_mm.getComponent(TransformComponent.class).x = 500;
-//            curtain_mm.getComponent(TransformComponent.class).y = 500;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
                 gameStage.initShopWithAds();

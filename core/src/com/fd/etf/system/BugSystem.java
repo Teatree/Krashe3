@@ -25,7 +25,6 @@ import static com.fd.etf.utils.GlobalConstants.*;
 public class BugSystem extends IteratingSystem {
 
     private static final String CHARGING_ANI = "CHARGING";
-    private static final String IDLE_ANI = "IDLE";
     private static final String PREPARING_ANI = "PREPARING";
     public static final String FLY_ANI = "fly";
     public static final String SCARE_ANI = "scare";
@@ -77,7 +76,7 @@ public class BugSystem extends IteratingSystem {
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
                 if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRectScary)
                         && FlowerComponent.state.equals(FlowerComponent.State.ATTACK)) {
-                    entity.getComponent(TransformComponent.class).scaleX += 0.5f;
+//                    entity.getComponent(TransformComponent.class).scaleX += 0.5f;
                     if (sac.frameRangeMap.containsKey(SCARE_ANI) && !gameStage.gameScript.fpc.isScary && !bc.state.equals(SCARED)) {
                         canPlayAnimation = true;
                         bc.state = SCARED;
@@ -101,6 +100,7 @@ public class BugSystem extends IteratingSystem {
                     }
                     gameStage.gameScript.fpc.isScary = false;
 
+                    setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
                     BugPool.getInstance(gameStage).release(entity);
 
                     if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
@@ -245,7 +245,7 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
-            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * bc.IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
                 canPlayAnimation = true;
@@ -273,7 +273,7 @@ public class BugSystem extends IteratingSystem {
         if (checkCollision(bc) || isOutOfBounds(bc) || checkCollisionPetProjectiles(bc)) {
             bc.state = DEAD;
             canPlayAnimation = true;
-            setAnimation(IDLE_ANI, Animation.PlayMode.LOOP, sasc, sac);
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
             updateChargerGoals(bc);
             updateBugGoals(bc);
         }

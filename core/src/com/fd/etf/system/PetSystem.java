@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.PetComponent;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.uwsoft.editor.renderer.components.ActionComponent;
@@ -329,10 +330,6 @@ public class PetSystem extends IteratingSystem {
                 cannonsc.player.speed = 0;
             }
 
-//            if(counter > gameStage.gameScript.fpc.currentPet.projectileSpawnIntervalFrames) {
-//                EffectUtils.spawnPetProjectile(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
-//                counter = 0;
-//            }
         }
     }
 
