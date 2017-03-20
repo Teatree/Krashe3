@@ -9,25 +9,29 @@ import com.uwsoft.editor.renderer.systems.action.data.TemporalData;
 public abstract class TemporalAction<T extends TemporalData> extends ActionLogic<T> {
     @Override
     public boolean act(float delta, Entity entity, T actionData) {
-        if (actionData.complete) return true;
+        if (!actionData.paused) {
+            if (actionData.complete) return true;
 
-        if (!actionData.began) {
-            begin(entity, actionData);
-            actionData.began = true;
-        }
+            if (!actionData.began) {
+                begin(entity, actionData);
+                actionData.began = true;
+            }
 
-        actionData.passedTime += delta;
-        actionData.complete = actionData.passedTime >= actionData.duration;
-        float percent;
-        if (actionData.complete) {
-            percent = 1;
+            actionData.passedTime += delta;
+            actionData.complete = actionData.passedTime >= actionData.duration;
+            float percent;
+            if (actionData.complete) {
+                percent = 1;
+            } else {
+                percent = actionData.passedTime / actionData.duration;
+                if (actionData.interpolation != null) percent = actionData.interpolation.apply(percent);
+            }
+            update(percent, entity, actionData);
+            if (actionData.complete) end(entity, actionData);
+            return actionData.complete;
         } else {
-            percent = actionData.passedTime / actionData.duration;
-            if (actionData.interpolation != null) percent = actionData.interpolation.apply(percent);
+            return false;
         }
-        update(percent, entity, actionData);
-        if (actionData.complete) end(entity, actionData);
-        return actionData.complete;
     }
 
     abstract protected void update (float percent, Entity entity, T actionData);

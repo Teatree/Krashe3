@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
+import static com.fd.etf.entity.componets.PetComponent.State.SPAWNING;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class GameScreenScript implements IScript, GameStage.IhaveFlower {
@@ -197,7 +198,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void init(Entity item) {
 
-        if(!fpc.isSameDay()) {
+        if (!fpc.isSameDay()) {
             gameOverReviveTimesLimit = 5;
         }
 
@@ -294,12 +295,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 Actions.fadeIn(2f, Interpolation.exp5, 0.5f)));
         gameItem.getChild(TUTORIAL_LINE).getEntity().add(ac3);
 
-        if (!isStarted){
+        if (!isStarted) {
             setTapToPlayAnimations();
         }
 
         ActionComponent ac5 = new ActionComponent();
-                ac5.dataArray.add(Actions.sequence(
+        ac5.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
                 Actions.fadeIn(2f, Interpolation.exp5)));
         scoreLabelE.add(ac5);
@@ -355,14 +356,14 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             changePet = false;
         }
 
-        if(fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null) {
+        if (fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null) {
             fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).counter = 0;
         }
 
         megaFlower.getComponent(TransformComponent.class).y = FLOWER_Y_POS;
         megaFlower.getComponent(TransformComponent.class).x = FLOWER_X_POS;
 
-        if(!isStarted) {
+        if (!isStarted) {
             setTapToPlayAnimations();
         }
     }
@@ -513,7 +514,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
             if (gameStage.gameScript.fpc.currentPet.petHead != null &&
-                    gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class)!= null) {
+                    gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class) != null) {
                 gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 gameStage.gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petCannon);
@@ -528,20 +529,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             fpc.currentPet.gameStage = gameStage;
             loadPetFromLib();
             if (fpc.currentPet.enabled) {
-                fpc.currentPet.init();
-
-                TransformComponent tc = petE.getComponent(TransformComponent.class); //TODO: NPE
-                tc.x = PetComponent.X_SPAWN_POSITION;
-                tc.y = PetComponent.getNewPositionY();
-                tc.scaleX = 1.3f;
-                tc.scaleY = 1.3f;
-
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
-
+                setInitialPetState();
                 petE.add(fpc.currentPet);
-                petE.add(new DebugComponent());
             } else {
                 if (petE != null && !fpc.currentPet.enabled) {
                     if (fpc.currentPet.petCannon != null) {
@@ -550,6 +539,20 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 }
             }
         }
+    }
+
+    private void setInitialPetState() {
+        fpc.currentPet.init();
+
+        TransformComponent tc = petE.getComponent(TransformComponent.class); //TODO: NPE
+        tc.x = PetComponent.X_SPAWN_POSITION;
+        tc.y = PetComponent.getNewPositionY();
+        tc.scaleX = 1.3f;
+        tc.scaleY = 1.3f;
+
+        fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+        fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
+        fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
     }
 
     private void loadPetFromLib() {
@@ -591,7 +594,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
-            if(phoenixIcon.getComponent(TransformComponent.class).x >= 1100 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
+            if (phoenixIcon.getComponent(TransformComponent.class).x >= 1100 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
@@ -600,11 +603,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 isPause.set(false);
             }
         }
-        if(BugSystem.blowUpAllBugs){
+        if (BugSystem.blowUpAllBugs) {
             BugSystem.blowUpCounter -= delta;
             BugSystem.destroyAllBugsCounter -= delta;
 
-            if( BugSystem.blowUpCounter >= 0) {
+            if (BugSystem.blowUpCounter >= 0) {
                 BugSystem.destroyAllBugsCounter = BEES_MODE_DESTROY_LENGTH;
             }
 
@@ -616,7 +619,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         }
 
-        if(fpc.score == 0) {
+        if (fpc.score == 0) {
             scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                     scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                     "");
@@ -640,20 +643,20 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //            usePhoenix();
 //        } else {
 
-            loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
-            loseFeedback.getComponent(TransformComponent.class).x = 950;
-            loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
+        loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
+        loseFeedback.getComponent(TransformComponent.class).x = 950;
+        loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
 
-            ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
-            if (ac == null) {
-                ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
-                Actions.checkInit();
-                loseFeedback.add(ac);
-            }
+        ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
+        if (ac == null) {
+            ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            Actions.checkInit();
+            loseFeedback.add(ac);
+        }
 
-            ac.dataArray.add(Actions.fadeIn(0.2f));
-            ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
-            ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
+        ac.dataArray.add(Actions.fadeIn(0.2f));
+        ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
+        ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
 
 //            FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
@@ -668,7 +671,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         } else {
             isGameOver.set(false);
 
-            if (curtainGameE.getComponent(ActionComponent.class) != null){
+            if (curtainGameE.getComponent(ActionComponent.class) != null) {
                 curtainGameE.getComponent(ActionComponent.class).reset();
             }
             ActionComponent ac = new ActionComponent();
@@ -682,7 +685,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     Actions.run(new Runnable() {
                         @Override
                         public void run() {
-                            if(curtainGameE.getComponent(ActionComponent.class) != null) {
+                            if (curtainGameE.getComponent(ActionComponent.class) != null) {
                                 curtainGameE.getComponent(ActionComponent.class).reset();
                             }
                             gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ZIndexComponent.class).setZIndex(curtainGameE.getComponent(ZIndexComponent.class).getZIndex() - 1);
@@ -711,7 +714,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                             }
                         }
                     })));
-            if(gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class) != null) {
+            if (gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class) != null) {
                 gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class).reset();
             }
             gameItem.getChild(GAME_OVER_LBL).getEntity().add(ac2);
@@ -746,7 +749,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void reloadScoreLabel(FlowerPublicComponent fcc) {
-        if(fpc.score > 0) {
+        if (fpc.score > 0) {
             scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                     scoreLabelE.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                     "" + fcc.score);
@@ -763,9 +766,24 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
     }
 
-    private void cleanupTheScene(){
+    private void cleanupTheScene() {
         powerupSystem.removePowerupsFromStage();
         BugPool.getInstance(gameStage).removeBugsFromStage();
+        if (petE != null) {
+            if (petE.getComponent(ActionComponent.class) != null) {
+                petE.getComponent(ActionComponent.class).reset();
+                petE.getComponent(PetComponent.class).state = SPAWNING;
+            }
+            TransformComponent tc = petE.getComponent(TransformComponent.class); //TODO: NPE
+            tc.x = PetComponent.X_SPAWN_POSITION;
+            tc.y = PetComponent.getNewPositionY();
+
+            fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+            fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
+            fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
+
+            fpc.currentPet.state = SPAWNING;
+        }
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.action.data.ActionData;
 
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_DASH_N_TIMES;
 import static com.fd.etf.entity.componets.Goal.GoalType.PET_THE_PET;
@@ -63,7 +64,22 @@ public class PetSystem extends IteratingSystem {
         updateRect(pc, e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class), cannontc, cannondc);
         moveCannonWithPet(e, pc);
 
+//        if (isGameOver.get() && e.getComponent(ActionComponent.class) != null){
+//            e.getComponent(ActionComponent.class).reset();
+//            e.getComponent(PetComponent.class).state = SPAWNING;
+//        }
+
         if (!isPause.get() && !isGameOver.get()) {
+
+            if (e.getComponent(ActionComponent.class) != null) {
+                for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
+                    ad.paused = false;
+                }
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+                pc.state = DASH;
+            }
 
             e.getComponent(SpriterComponent.class).player.speed = FPS;
             scPetHead.player.speed = FPS;
@@ -106,7 +122,7 @@ public class PetSystem extends IteratingSystem {
                 setDashAnimation(cannonsc);
                 setDashAnimation(e.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
-                if (!pc.state.equals(DASH)){
+                if (!pc.state.equals(DASH)) {
                     for (int i = 0; i < 4; i++) {
                         EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y);
                     }
@@ -116,7 +132,15 @@ public class PetSystem extends IteratingSystem {
                 checkPetDashGoal();
             }
         } else {
-            pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class), cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
+
+            pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class),
+                    cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
+
+            if (e.getComponent(ActionComponent.class) != null) {
+                for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
+                    ad.paused = true;
+                }
+            }
         }
         if (!pc.enabled) {
             e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;

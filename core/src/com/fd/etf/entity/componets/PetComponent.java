@@ -99,8 +99,6 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         eatenBugsCounter = 0;
 
         loadFromLib(name);
-//        petCannon = gameScript.gameItem.getChild(petCannonName).getEntity();
-//        petHead = gameScript.gameItem.getChild(name+"_head").getEntity();
         stageCounter = 0;
     }
 

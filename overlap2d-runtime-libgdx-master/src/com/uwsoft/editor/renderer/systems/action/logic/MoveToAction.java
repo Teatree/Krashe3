@@ -11,13 +11,15 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 public class MoveToAction<T extends MoveToData> extends TemporalAction<T> {
     @Override
     public void update(float percent, Entity entity, T actionData) {
-        TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+        if (!actionData.paused) {
+            TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
 
-        float x = actionData.startX + (actionData.endX - actionData.startX) * percent;
-        float y = actionData.startY + (actionData.endY - actionData.startY) * percent;
+            float x = actionData.startX + (actionData.endX - actionData.startX) * percent;
+            float y = actionData.startY + (actionData.endY - actionData.startY) * percent;
 
-        transformComponent.x = x;
-        transformComponent.y = y;
+            transformComponent.x = x;
+            transformComponent.y = y;
+        }
     }
 
     @Override

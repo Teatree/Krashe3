@@ -57,7 +57,6 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
-        System.out.println("state " + state);
         gameStage.gameScript.fpc.state = state;
 
 //        if(FlowerComponent.isLosing){
