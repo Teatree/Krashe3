@@ -8,6 +8,8 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class BugPool {
@@ -39,6 +41,8 @@ public class BugPool {
     private static Stack<Entity> drunkBugs = new Stack<>();
     private static Stack<Entity> chargerBugs = new Stack<>();
     private static Entity queenBee;
+
+    public static List<Entity> bugsOnStage = new ArrayList<>();
 
     private GameStage gameStage;
 
@@ -76,40 +80,54 @@ public class BugPool {
     }
 
     public Entity get(String type) {
+        Entity newBug = null;
+
         switch (type) {
             case SIMPLE: {
                 if (simpleBugs.isEmpty()) {
-                    return loadBugFromLib(SIMPLE_BUG_ANI);
+                    newBug = loadBugFromLib(SIMPLE_BUG_ANI);
                 } else {
-                    return simpleBugs.pop();
+                    newBug =  simpleBugs.pop();
                 }
+                break;
             }
             case DRUNK: {
                 if (drunkBugs.isEmpty()) {
-                    return loadBugFromLib(DRUNK_BUG_ANI);
+                    newBug =  loadBugFromLib(DRUNK_BUG_ANI);
                 } else {
-                    return drunkBugs.pop();
+                    newBug =  drunkBugs.pop();
                 }
+                break;
             }
             case CHARGER: {
                 if (chargerBugs.isEmpty()) {
-                    return loadBugFromLib(CHARGER_BUG_ANI);
+                    newBug =  loadBugFromLib(CHARGER_BUG_ANI);
                 } else {
-                    return chargerBugs.pop();
+                    newBug =  chargerBugs.pop();
                 }
+                break;
             }
             case BEE: {
                 if (bees.isEmpty()) {
-                    return loadBugFromLib(BEE_ANI);
+                    newBug =  loadBugFromLib(BEE_ANI);
                 } else {
-                    return bees.pop();
+                    newBug =  bees.pop();
                 }
+                break;
             }
             case QUEENBEE: {
-                return queenBee;
+                newBug =  queenBee;
+                break;
             }
         }
-        return null;
+        bugsOnStage.add(newBug);
+        return newBug;
+    }
+
+    public void removeBugsFromStage (){
+        for (Entity bug : bugsOnStage){
+            release(bug);
+        }
     }
 
     private Entity loadBugFromLib(String bugLib) {

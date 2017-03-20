@@ -153,7 +153,7 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     public static void hide(Entity entity) {
-        umbrellaSpawnCounter = getNextSpawnInterval();
+        PowerupSystem.umbrellaSpawnCounter = getNextSpawnInterval();
         if (entity.getComponent(UmbrellaComponent.class) == null) {
             entity.add(new UmbrellaComponent());
         }

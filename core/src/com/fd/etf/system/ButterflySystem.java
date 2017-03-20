@@ -6,7 +6,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;

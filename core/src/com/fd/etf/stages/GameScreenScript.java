@@ -1,9 +1,7 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.Main;
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.fd.etf.entity.componets.CocoonComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.SURVIVE_N_ANGERED_MODES;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
@@ -37,9 +34,8 @@ import static com.fd.etf.utils.GlobalConstants.*;
 public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public static final CameraShaker cameraShaker = new CameraShaker();
-    private static final String TUTORIAL_LINE = "tutorial_line";
+    public static final String TUTORIAL_LINE = "tutorial_line";
     private static final String LOSE_FEEDBACK = "lose_feedback";
-    private static final String UMBRELLA_ANI = "umbrellaAni";
     private static final String DOUBLE_BJ_ICON = "double_bj_badge";
     private static final String PHOENIX_ICON = "extra_life_badge";
     private static final String LBL_SCORE = "lbl_score";
@@ -49,7 +45,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String BTN_PAUSE = "btn_pause";
     private static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
-    private static final String COCOON = "coccoon";
     private static final String BTN_BACK = "btn_back";
     private static final String BEES_MODE_ANI = "bees_mode_ani";
     private static final String CURTAIN_GAME = "curtain_game";
@@ -71,8 +66,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public GoalFeedbackScreen goalFeedbackScreen;
     public static List<Rectangle> projectileBounds;
 
-    public static float umbrellaSpawnCounter;
-    public float cocoonSpawnCounter;
     public ItemWrapper gameItem;
     public GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
@@ -94,6 +87,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity megaFlower;
     public Entity megaLeaves;
     public Entity scoreCE;
+
+    public static PowerupSystem powerupSystem;
 
     public GameScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -209,6 +204,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameItem = new ItemWrapper(item);
         projectileBounds = new LinkedList<>();
 
+        powerupSystem = new PowerupSystem(gameStage, gameItem);
+
         beesModeAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
         beesModeAni.getComponent(SpriterComponent.class).scale = 0.7f;
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
@@ -223,8 +220,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
 
         CocoonSystem.resetSpawnCoefficients();
-        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        powerupSystem.resetCounters();
 
         fpc.score = 0;
         curtainGameE = gameItem.getChild(CURTAIN_GAME).getEntity();
@@ -250,8 +246,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //        initPet();
         initDoubleBJIcon();
         initPhoenixIcon();
-        initUmbrella();
-        initCocoon();
+        powerupSystem.initUmbrella();
+        powerupSystem.initCocoon();
 
         checkTryPeriod();
 
@@ -291,12 +287,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             gameItem.getChild(BTN_BACK).getEntity().add(ac2);
         }
 
-        gameItem.getChild("tutorial_line").getEntity().getComponent(TintComponent.class).color.a = 0;
-        ActionComponent ac3 = new ActionComponent();
+        gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0;
+        ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         ac3.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
                 Actions.fadeIn(2f, Interpolation.exp5, 0.5f)));
-        gameItem.getChild("tutorial_line").getEntity().add(ac3);
+        gameItem.getChild(TUTORIAL_LINE).getEntity().add(ac3);
 
         if (!isStarted){
             setTapToPlayAnimations();
@@ -351,8 +347,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         initPhoenixIcon();
 
         CocoonSystem.resetSpawnCoefficients();
-        cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        powerupSystem.resetCounters();
 
         if (changePet) {
             hideCurrentPet();
@@ -411,7 +406,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
         gameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(gameStage));
-//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem(gameStage));
     }
 
     private void initBackButton() {
@@ -424,7 +418,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                         if (!isPause.get() && !isGameOver.get()) {
                             resetPauseDialog();
                             megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
-//                            BugPool.resetAllBugs();
+                            cleanupTheScene();
                             gameStage.initMenu();
                         }
                     }
@@ -584,18 +578,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             }
 
             if (!isPause.get() && !isGameOver.get() && isStarted) {
-                if (canUmbrellaSpawn()) {
-                    umbrellaSpawnCounter -= delta;
-                }
-                if (canCocoonSpawn()) {
-                    cocoonSpawnCounter -= delta;
-                }
-                if (umbrellaSpawnCounter <= 0) {
-                    spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
-                }
-                if (cocoonSpawnCounter <= 0) {
-                    spawnCocoon();
-                }
+                powerupSystem.update(delta);
             }
 
             if (gameOverDialog != null) {
@@ -722,6 +705,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                                 gameStage.gameScript.gameOverDialog.hide();
                                 megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
 
+                                cleanupTheScene();
                                 gameStage.initResultWithAds();
                                 gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(TransformComponent.class).y = -108;
                             }
@@ -779,95 +763,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
     }
 
-    private void initCocoon() {
-        Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
-
-        if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
-            CocoonComponent cocoonComponentc = new CocoonComponent();
-            cocoonEntity.add(cocoonComponentc);
-        }
-        cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.DEAD;
-        cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
-        cocoonEntity.add(new DebugComponent(cocoonEntity.getComponent(CocoonComponent.class).boundsRect));
-
-        Entity butEntity = gameItem.getChild(CocoonSystem.BUTTERFLY_ANI).getEntity();
-        if (butEntity.getComponent(ButterflyComponent.class) == null) {
-            ButterflyComponent dc = new ButterflyComponent();
-            butEntity.add(dc);
-        }
-        butEntity.getComponent(ButterflyComponent.class).state = ButterflyComponent.State.DEAD;
-        butEntity.add(new DebugComponent(butEntity.getComponent(ButterflyComponent.class).boundsRect));
-    }
-
-    private void initUmbrella() {
-        Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
-        if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
-            umbrellaEntity.remove(UmbrellaComponent.class);
-        }
-        UmbrellaSystem.hide(umbrellaEntity);
-    }
-
-    private void spawnUmbrella(float x, float y) {
-
-        Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
-
-        if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
-            UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
-            umbrellaComponent.setToSpawningState();
-            umbrellaEntity.add(umbrellaComponent);
-
-        } else {
-            umbrellaEntity.getComponent(UmbrellaComponent.class).setToSpawningState();
-        }
-
-        umbrellaEntity.getComponent(TransformComponent.class).x = x;
-        umbrellaEntity.getComponent(TransformComponent.class).y = y;
-
-        umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
-        umbrellaEntity.add(new DebugComponent(umbrellaEntity.getComponent(UmbrellaComponent.class).boundsRect));
-    }
-
-    private void spawnCocoon() {
-        if (canCocoonSpawn()) {
-            cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
-
-            Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
-
-            cocoonEntity.getComponent(SpriterComponent.class).scale = COCOON_SCALE;
-            cocoonEntity.getComponent(SpriterComponent.class).player.setAnimation(0);
-
-            TransformComponent tc = cocoonEntity.getComponent(TransformComponent.class);
-
-            tc.x = COCOON_X;
-            tc.y = COCOON_Y;
-            cocoonEntity.add(tc);
-
-            cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.SPAWNING;
-            cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
-        }
-    }
-
-    private boolean canCocoonSpawn() {
-        return
-                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0 ||
-                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                        gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
-                                .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y;
-    }
-
-    private boolean canUmbrellaSpawn() {
-
-        return (gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
-                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).x == FAR_FAR_AWAY_X ||
-                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).x <= 0 ||
-                gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
-                        .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y
-        );
+    private void cleanupTheScene(){
+        powerupSystem.removePowerupsFromStage();
+        BugPool.getInstance(gameStage).removeBugsFromStage();
     }
 
     @Override
