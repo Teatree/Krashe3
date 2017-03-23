@@ -8,6 +8,9 @@ public abstract class ShopItem {
     public static final  String SOFT = "SOFT";
     public static final String HARD = "HARD";
 
+    public String sku;
+    public String sku_discount;
+
     public String shopIcon;
     public String name;
     public long cost;
@@ -18,10 +21,6 @@ public abstract class ShopItem {
     public String collection;
     public String currencyType;
 
-    public String transactionId;
-    public String discountTransactionId;
-//    public String logoName;
-
     public boolean tryPeriod;
     public long tryPeriodDuration;
     public long tryPeriodStart;
@@ -31,7 +30,6 @@ public abstract class ShopItem {
     public boolean bought;
     //true when is applied now
     public boolean enabled ;
-
 
     public abstract void apply (GameStage gameStage);
 

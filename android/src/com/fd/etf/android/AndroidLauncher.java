@@ -137,8 +137,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
 
     @Override
-    public void getBirdPet(GameStage gameStage, PetComponent petComponent) {
-        iapHelper.iapGetBirdPet(gameStage,petComponent);
+    public void getPet(GameStage gameStage, PetComponent petComponent) {
+        iapHelper.iapGetPet(gameStage,petComponent);
     }
 
     @Override
@@ -154,8 +154,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
 
     @Override
-    public void getBirdPetDiscount(GameStage gameStage, PetComponent petComponent) {
-        iapHelper.iapGetBirdPetDiscount(gameStage, petComponent);
+    public void getPetDiscount(GameStage gameStage, PetComponent petComponent) {
+        iapHelper.iapGetPetDiscount(gameStage, petComponent);
     }
 
     @Override

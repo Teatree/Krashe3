@@ -468,7 +468,6 @@ public class SaveMngr {
         dummyPet.cost = 42;
         dummyPet.amountBugsBeforeCharging = 3;
         dummyPet.totalEatenBugs = 0;
-//        dummyPet.transactionId = Main.pet_bird_trans_ID;
 
         ArrayList<PetJson> allPets = new ArrayList<PetJson>();
         allPets.add(dummyPet);
@@ -673,6 +672,8 @@ public class SaveMngr {
     }
 
     public static class UpgradeStats {
+        private String sku;
+        private String sku_discount;
         public String upgradeType;
         public String name;
         public long cost;
@@ -681,8 +682,6 @@ public class SaveMngr {
         public String description;
         public String collection;
         public String currencyType;
-        public String transactionId;
-        public String discountTransactionId;
         public boolean tryPeriod;
         public long tryPeriodDuration;
         public long tryPeriodStart;
@@ -710,9 +709,8 @@ public class SaveMngr {
             this.description = us.description;
             this.collection = us.collection;
             this.currencyType = us.currencyType;
-            this.transactionId = us.transactionId;
-            this.discountTransactionId = us.discountTransactionId;
-
+            this.sku = us.sku;
+            this.sku_discount = us.sku_discount;
         }
     }
 
@@ -763,6 +761,8 @@ public class SaveMngr {
     }
 
     public static class PetJson {
+        public String sku;
+        public String sku_discount;
         public String name;
         public boolean bought;
         public boolean activated;
@@ -776,8 +776,6 @@ public class SaveMngr {
         public String shopIcon;
         public long tryPeriodTimer;
         public long tryPeriodStart;
-        public String transactionId;
-        public String discountTransactionId;
         public String petCannonName;
         public String petHeadName;
         public String logoName;
@@ -806,8 +804,8 @@ public class SaveMngr {
             this.tryPeriodDuration = petComponent.tryPeriodDuration;
             this.tryPeriodTimer = petComponent.tryPeriodTimer;
             this.tryPeriodStart = petComponent.tryPeriodStart;
-            this.transactionId = petComponent.transactionId;
-            this.discountTransactionId = petComponent.discountTransactionId;
+            this.sku = petComponent.sku;
+            this.sku_discount = petComponent.sku_discount;
 
             this.petCannonName = petComponent.petCannonName;
 //            this.petHeadName = petComponent.petHeadName;

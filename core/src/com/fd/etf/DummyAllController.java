@@ -57,7 +57,7 @@ public class DummyAllController implements AllController {
     }
 
     @Override
-    public void getBirdPet(GameStage gameStage, PetComponent pet) {
+    public void getPet(GameStage gameStage, PetComponent pet) {
         pet.buyAndUse(gameStage);
         System.out.println("pay to get pet");
     }
@@ -75,7 +75,7 @@ public class DummyAllController implements AllController {
     }
 
     @Override
-    public void getBirdPetDiscount(GameStage gameStage, PetComponent pet) {
+    public void getPetDiscount(GameStage gameStage, PetComponent pet) {
 //        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
         System.out.println("pay to get pet cheaper");
     }

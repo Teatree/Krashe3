@@ -35,8 +35,6 @@ public class Upgrade extends ShopItem{
         this.description = us.description;
         this.collection = us.collection;
         this.currencyType = us.currencyType;
-        this.transactionId = us.transactionId;
-        this.discountTransactionId = us.discountTransactionId;
     }
 
     public static List<Upgrade> getAllUpgrades(GameStage gameStage) {
@@ -44,10 +42,6 @@ public class Upgrade extends ShopItem{
         all.add(getPhoenix(gameStage));
         all.add(getBJDouble(gameStage));
         return all;
-    }
-
-    public static Upgrade getUpgrade (GameStage gameStage, UpgradeType type){
-        return type.equals(UpgradeType.PHOENIX) ? getPhoenix(gameStage) : getBJDouble(gameStage);
     }
 
     public static Upgrade getPhoenix(GameStage gameStage) {
@@ -61,9 +55,9 @@ public class Upgrade extends ShopItem{
         phoenix.description = "You will not die! ... ";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
-//        phoenix.logoName = "itemfedora";
+        phoenix.sku_discount = "phoenix";
+        phoenix.sku = "phoenix";
         phoenix.shopIcon = "itemphoenixUPGRADE";
-//        phoenix.transactionId = Main.phoenix_trans_ID;
         return phoenix;
     }
 
@@ -78,9 +72,9 @@ public class Upgrade extends ShopItem{
         bjd.description = "more juice \\0/";
         bjd.enabled = false;
         bjd.currencyType = HARD;
-//        bjd.logoName = "itemwig";
+        bjd.sku = "bj_upgrade";
+        bjd.sku_discount = "bj_upgrade";
         bjd.shopIcon = "itemdoubleUPGRDE";
-//        bjd.transactionId = Main.bj_double_trans_ID;
         return bjd;
     }
 

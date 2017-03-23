@@ -36,13 +36,13 @@ public interface AllController extends PlayServices {
 
     void getBJDouble(GameStage gameStage, Upgrade bj);
 
-    void getBirdPet(GameStage gameStage, PetComponent pet);
+    void getPet(GameStage gameStage, PetComponent pet);
 
     void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix);
 
     void getBJDoubleDiscount(GameStage gameStage, Upgrade bj);
 
-    void getBirdPetDiscount(GameStage gameStage, PetComponent pet);
+    void getPetDiscount(GameStage gameStage, PetComponent pet);
 
     void rateMyApp();
 

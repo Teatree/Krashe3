@@ -68,13 +68,12 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         this.shopIcon = petJson.shopIcon;
         this.tryPeriodTimer = petJson.tryPeriodTimer;
         this.tryPeriodStart = petJson.tryPeriodStart;
-        this.transactionId = petJson.transactionId;
         this.petCannonName = petJson.petCannonName;
 //        this.petName = petJson.petName;
 //        this.logoName = petJson.logoName;
-        this.discountTransactionId = petJson.discountTransactionId;
         this.isHardCurr = petJson.isHardCurr;
-//        init();
+        this.sku = petJson.sku;
+        this.sku_discount = petJson.sku_discount;
     }
 
     public static int getNewPositionY() {
@@ -141,7 +140,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     @Override
     public void buyHardDiscount(GameStage gameStage) {
-        Main.mainController.getBirdPetDiscount(gameStage, this);
+        Main.mainController.getPet(gameStage, this);
     }
 
     public void setOutsideStateDuration() {
