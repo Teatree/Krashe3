@@ -263,16 +263,18 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 new ImageButtonListener(btnSettings, new AtomicBoolean[]{isDialogOpen}) {
                     @Override
                     public void clicked() {
-                        if (!isDialogOpen.get()) {
-                            if (playServiceFlapIsOut) {
-                                movingFlaps = true;
+                        if (!startShopTransition) {
+                            if (!isDialogOpen.get()) {
+                                if (playServiceFlapIsOut) {
+                                    movingFlaps = true;
+                                }
+                                isDialogOpen.set(true);
+                                if (settings == null) {
+                                    settings = new Settings(gameStage, menuItem);
+                                    settings.init();
+                                }
+                                settings.show();
                             }
-                            isDialogOpen.set(true);
-                            if (settings == null) {
-                                settings = new Settings(gameStage, menuItem);
-                                settings.init();
-                            }
-                            settings.show();
                         }
                     }
                 });
@@ -292,26 +294,28 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                     @Override
                     public void clicked() {
                         if (!isDialogOpen.get()) {
-                            if (playServiceFlapIsOut) {
-                                movingFlaps = true;
-                            }
-                            isDialogOpen.set(true);
-                            showGoalNotification = false;
-                            Level.goalStatusChanged = false;
-                            Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
-                            lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                            Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
-                            if (imgGoalNotification.getComponent(ActionComponent.class) != null) {
-                                imgGoalNotification.getComponent(ActionComponent.class).reset();
-                            }
-                            imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
+                            if (!startShopTransition) {
+                                if (playServiceFlapIsOut) {
+                                    movingFlaps = true;
+                                }
+                                isDialogOpen.set(true);
+                                showGoalNotification = false;
+                                Level.goalStatusChanged = false;
+                                Entity lblGoalNotification = menuItem.getChild(LBL_GOALS_NOTIFICATION).getEntity();
+                                lblGoalNotification.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                                Entity imgGoalNotification = menuItem.getChild(IMG_GOAL_NOTIFICATION).getEntity();
+                                if (imgGoalNotification.getComponent(ActionComponent.class) != null) {
+                                    imgGoalNotification.getComponent(ActionComponent.class).reset();
+                                }
+                                imgGoalNotification.getComponent(TintComponent.class).color.a = 0;
 
-                            if (pauseDialog == null) {
-                                pauseDialog = new PauseDialog(gameStage, menuItem);
-                                pauseDialog.initGoals();
+                                if (pauseDialog == null) {
+                                    pauseDialog = new PauseDialog(gameStage, menuItem);
+                                    pauseDialog.initGoals();
+                                }
+                                pauseDialog.show();
+                                PauseDialog.goalsUpdate = false;
                             }
-                            pauseDialog.show();
-                            PauseDialog.goalsUpdate = false;
                         }
                     }
                 });

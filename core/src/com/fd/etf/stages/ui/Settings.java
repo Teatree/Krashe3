@@ -228,6 +228,7 @@ public class Settings extends AbstractDialog {
     }
 
     public void show() {
+
         isActive = true;
         addShadow();
         settingsE.getComponent(TransformComponent.class).x = SETTINGS_X;
