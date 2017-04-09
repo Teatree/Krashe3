@@ -143,7 +143,7 @@ public class BugSpawnSystem extends EntitySystem {
                 } else if (probabilityValue > curDrunkProb && probabilityValue < curDrunkProb + curSimpleProb) {
                     createBug(SIMPLE, currentMultiplier);   // Simple
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb) {
-                    createBug(BEE, currentMultiplier);  // Charger
+                    createBug(CHARGER, currentMultiplier);  // Charger
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + 1 && probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb) {
                     if (!queenBeeOnStage) {
                         createBug(QUEENBEE, currentMultiplier);    // Queen Bee, duh
