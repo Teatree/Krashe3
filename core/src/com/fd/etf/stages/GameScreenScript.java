@@ -338,6 +338,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
         curtainGameE.getComponent(TintComponent.class).color.a = 0.99f;
+        cleanupTheScene();
         if (curtainGameE.getComponent(ActionComponent.class) == null) {
             curtainGameE.add(new ActionComponent());
         }

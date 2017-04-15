@@ -72,7 +72,6 @@ public class GameStage extends Stage {
 
     public void initGame(int currentFlowerFrame) {
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
-
         sceneLoader.setScene(MAIN_SCENE, viewport);
         if (justCreated) {
             ItemWrapper root = new ItemWrapper(sceneLoader.getRoot());
@@ -85,7 +84,6 @@ public class GameStage extends Stage {
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
             sceneLoader.rm.reloadFlowerAni(changedFlowerAni, changedLeavesAni);
             sceneVO.composite.updateSpriter(sceneVO.composite);
-
             changedFlowerEntity = false;
             reloadFlower(sceneVO, gameScript);
         }
