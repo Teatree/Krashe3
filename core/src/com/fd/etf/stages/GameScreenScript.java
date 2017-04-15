@@ -51,6 +51,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String CURTAIN_GAME = "curtain_game";
     private static final String GAME_OVER_LBL = "lbl_gameover";
 
+    private static final String BUGS_SPAWNED_LBL = "bugs_spawnd";
+
     public static AtomicBoolean isPause = new AtomicBoolean(false);
     public static AtomicBoolean isGameOver = new AtomicBoolean(false);
     public static boolean isStarted;
@@ -90,6 +92,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity scoreCE;
 
     public static PowerupSystem powerupSystem;
+    private Entity bugsSpwndE;
+    private LabelComponent bugsSpwndELabel;
 
     public GameScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
@@ -235,6 +239,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         scoreLabelEsh = scoreCE.getComponent(NodeComponent.class).getChild(LBL_SCORE_SH);
         LabelComponent scoreLabelsh = scoreLabelEsh.getComponent(LabelComponent.class);
         scoreLabelsh.text.replace(0, scoreLabelsh.text.capacity(), " ");
+
+        bugsSpwndE = gameItem.getChild(BUGS_SPAWNED_LBL).getEntity();
+        bugsSpwndELabel = bugsSpwndE.getComponent(LabelComponent.class);
+        bugsSpwndELabel.text.replace(0, bugsSpwndELabel.text.capacity(), " ");
 
         Entity startLabel = gameItem.getChild(LBL_TAP_2_START).getEntity();
         startLabel.getComponent(TintComponent.class).color.a = 0;
@@ -605,6 +613,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                System.out.println("Phoenix!");
                 isPause.set(false);
             }
+
+            bugsSpwndELabel.text.replace(0, bugsSpwndELabel.text.capacity(), "bugs spawned:" + BugSpawnSystem.bugsSpawned);
+
         }
         if (BugSystem.blowUpAllBugs) {
             BugSystem.blowUpCounter -= delta;

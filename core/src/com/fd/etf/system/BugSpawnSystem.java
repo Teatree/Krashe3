@@ -76,7 +76,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static List<Multiplier> mulipliers;
     public static Multiplier currentMultiplier;
     public static boolean isFirst;
-    public int bugsSpawned;
+    public static int bugsSpawned;
 
     public static Random rand = new Random();
     private float angryBeeLinePosY = 150;
