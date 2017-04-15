@@ -273,7 +273,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                                 gameItem.getChild(BTN_PAUSE).getEntity().getComponent(TransformComponent.class).y, 2f, Interpolation.exp10))));
 
         if (gameItem.getChild(BTN_BACK) != null) {
-            gameItem.getChild(BTN_BACK).getEntity().getComponent(TransformComponent.class).x -= 200;
+            // BACK BUTTON WILL NOT RETURN UNLESS THIS
+//            gameItem.getChild(BTN_BACK).getEntity().getComponent(TransformComponent.class).x -= 200;
         }
 
         ActionComponent ac2 = new ActionComponent();
@@ -285,7 +286,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         gameItem.getChild(BTN_PAUSE).getEntity().add(ac);
         if (gameItem.getChild(BTN_BACK) != null) {
-            gameItem.getChild(BTN_BACK).getEntity().add(ac2);
+            // AND THIS
+//            gameItem.getChild(BTN_BACK).getEntity().add(ac2);
         }
 
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0;
@@ -320,7 +322,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         initPauseBtn();
         pauseDialog = null;
         gameOverDialog = null;
-        initBackButton();
+        //initBackButton();
         curtainGameE.getComponent(TintComponent.class).color.a = 0;
     }
 
