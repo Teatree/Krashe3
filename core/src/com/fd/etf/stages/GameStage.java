@@ -79,6 +79,7 @@ public class GameStage extends Stage {
             root.addScript(gameScript);
             gameScript.initButtons();
             justCreated = false;
+            gameScript.fpc.level.updateLevel(gameScript.fpc);
         }
         if (changedFlowerEntity || changedFlowerEntity2) {
             SceneVO sceneVO = sceneLoader.rm.getSceneVO(MAIN_SCENE);
