@@ -119,9 +119,9 @@ public class BugSystem extends IteratingSystem {
                     gameStage.gameScript.onBugOutOfBounds();
                 }
             }
-//            sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
-//            sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
-//                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
+            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
+            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
+                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
 
         if (isPause.get() && !blowUpAllBugs) {
@@ -211,8 +211,8 @@ public class BugSystem extends IteratingSystem {
 
         switch (bugComponent.type) {
             case SIMPLE:
-                bugComponent.boundsRect.setHeight(70);
-                bugComponent.boundsRect.setY(transformComponent.y + 90);
+//                bugComponent.boundsRect.setHeight(70);
+//                bugComponent.boundsRect.setY(transformComponent.y + 90);
                 moveSimple(deltaTime, transformComponent, bugComponent, sasc, sac);
                 break;
             case DRUNK:
@@ -325,6 +325,26 @@ public class BugSystem extends IteratingSystem {
             bc.boundsRect.y = (int) tc.y + 130;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 330;
             bc.boundsRect.height = (int) dc.height * tc.scaleY - 300;
+        } else if(bc.type.equals(SIMPLE)) {
+            bc.boundsRect.x = (int) tc.x + 210; //Nastya can not see this. I can.
+            bc.boundsRect.y = (int) tc.y + 140;
+            bc.boundsRect.width = (int) dc.width * tc.scaleX - 290;
+            bc.boundsRect.height = (int) dc.height * tc.scaleY - 200;
+        } else if(bc.type.equals(DRUNK)) {
+            bc.boundsRect.x = (int) tc.x + 250; //Nastya can not see this. I can.
+            bc.boundsRect.y = (int) tc.y + 140;
+            bc.boundsRect.width = (int) dc.width * tc.scaleX - 190;
+            bc.boundsRect.height = (int) dc.height * tc.scaleY - 100;
+        } else if(bc.type.equals(CHARGER)) {
+            bc.boundsRect.x = (int) tc.x + 210; //Nastya can not see this. I can.
+            bc.boundsRect.y = (int) tc.y + 130;
+            bc.boundsRect.width = (int) dc.width * tc.scaleX - 260;
+            bc.boundsRect.height = (int) dc.height * tc.scaleY - 180;
+        } else if(bc.type.equals(QUEENBEE)) {
+            bc.boundsRect.x = (int) tc.x + 220; //Nastya can not see this. I can.
+            bc.boundsRect.y = (int) tc.y + 120;
+            bc.boundsRect.width = (int) dc.width * tc.scaleX - 220;
+            bc.boundsRect.height = (int) dc.height * tc.scaleY - 100;
         }
     }
 

@@ -46,14 +46,17 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void updateRect(TransformComponent tc) {
-        gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
-        gameStage.gameScript.fpc.boundsRect.y = (int) tc.y + 140 * tc.scaleY;
-        gameStage.gameScript.fpc.boundsRect.width = 160 * tc.scaleX;
-        gameStage.gameScript.fpc.boundsRect.height = 180 * tc.scaleY;
+        gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 100 * tc.scaleX;
+        gameStage.gameScript.fpc.boundsRect.y = (int) tc.y + 130 * tc.scaleY;
+        gameStage.gameScript.fpc.boundsRect.width = 190 * tc.scaleX;
+        gameStage.gameScript.fpc.boundsRect.height = 150 * tc.scaleY;
         if (state.equals(IDLE) || state.equals(IDLE_BITE)) {
-            gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 40 * tc.scaleX;
-            gameStage.gameScript.fpc.boundsRect.y = (int) tc.y + 25 * tc.scaleY;
+            gameStage.gameScript.fpc.boundsRect.x = (int) tc.x - 60 * tc.scaleX;
+            gameStage.gameScript.fpc.boundsRect.y = (int) tc.y - 25 * tc.scaleY;
         }
+        gameStage.sceneLoader.renderer.drawDebugRect(gameStage.gameScript.fpc.boundsRect.x, gameStage.gameScript.fpc.boundsRect.y, gameStage.gameScript.fpc.boundsRect.width, gameStage.gameScript.fpc.boundsRect.height, "");
+//        gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
+//                bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {

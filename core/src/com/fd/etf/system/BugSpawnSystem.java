@@ -92,10 +92,10 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private void init() {
-        SPAWN_MIN_X = -300;
-        SPAWN_MIN_Y = 100;
-        SPAWN_MAX_X = -200;
-        SPAWN_MAX_Y = 650;
+        SPAWN_MIN_X = -400;
+        SPAWN_MIN_Y = 35;
+        SPAWN_MAX_X = -300;
+        SPAWN_MAX_Y = 515;
 
         BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
         BugSpawnSystem.break_counter /= 100;
