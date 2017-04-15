@@ -77,6 +77,8 @@ public class BugSpawnSystem extends EntitySystem {
     public static Multiplier currentMultiplier;
     public static boolean isFirst;
     public static int bugsSpawned;
+    public static int cocconBugsSpawned;
+    public static int umbrellaBugsSpawned;
 
     public static Random rand = new Random();
     private float angryBeeLinePosY = 150;
@@ -154,6 +156,13 @@ public class BugSpawnSystem extends EntitySystem {
                     createBug(BEE, currentMultiplier);   // Bee
                 }
                 bugsSpawned++;
+                if(PowerupSystem.canCocoonSpawn(gameStage)) {
+                    cocconBugsSpawned++;
+                }
+                if(PowerupSystem.canUmbrellaSpawn(gameStage)) {
+                    umbrellaBugsSpawned++;
+                }
+
 //                System.out.println("bugSpawned: " + bugsSpawned);
 //                System.out.println("currentMultimplierDrunkBug: " + currentMultiplier.drunkBugSpawnChance);
             }

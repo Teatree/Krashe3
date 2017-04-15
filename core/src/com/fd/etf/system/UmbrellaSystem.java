@@ -162,10 +162,10 @@ public class UmbrellaSystem extends IteratingSystem {
         entity.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
     }
 
-    public static float getNextSpawnInterval() {
+    public static int getNextSpawnInterval() {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 random.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
-        return UmbrellaComponent.SPAWN_INTERVAL_BASE * randCoefficient;
+        return (int)(UmbrellaComponent.SPAWN_INTERVAL_BASE * randCoefficient);
     }
 
     public void updateRect(UmbrellaComponent uc, TransformComponent tc, DimensionsComponent dc) {

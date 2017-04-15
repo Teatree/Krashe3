@@ -624,7 +624,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                             "\n" + "curDrunkProb " + BugSpawnSystem.curDrunkProb +
                             "\n" + "curChargerProb " + BugSpawnSystem.curChargerProb +
                             "\n" + "curQueenBeeProb " + BugSpawnSystem.curQueenBeeProb +
-                            "\n" + "curBeeProb " + BugSpawnSystem.curBeeProb
+                            "\n" + "curBeeProb " + BugSpawnSystem.curBeeProb +
+                            "\n" + "cocoonSpawnCounter " + PowerupSystem.cocoonSpawnCounter +
+                            "\n" + "cocconBugsSpawned " + BugSpawnSystem.cocconBugsSpawned +
+                            "\n" + "umbrellaSpawnCounter " + PowerupSystem.umbrellaSpawnCounter +
+                            "\n" + "umbrellaBugsSpawned " + BugSpawnSystem.umbrellaBugsSpawned
             );
 
         }

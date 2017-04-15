@@ -7,7 +7,7 @@ maxSpawnCoefficient: 0.9
 },
 {
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
-startOn: 16,
+startOn: 26,
 finishOn:35,
 minSpawnCoefficient: 0.1, 
 maxSpawnCoefficient: 0.3

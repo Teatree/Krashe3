@@ -144,11 +144,11 @@ public class CocoonSystem extends IteratingSystem {
         }
     }
 
-    public static float getNextSpawnInterval() {
+    public static int getNextSpawnInterval() {
         Random r = new Random();
         float randCoefficient = currentCocoonMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentCocoonMultiplier.maxSpawnCoefficient - currentCocoonMultiplier.minSpawnCoefficient);
-        return SPAWN_INTERVAL_BASE * randCoefficient;
+        return (int)(SPAWN_INTERVAL_BASE * randCoefficient);
     }
 
     public static void resetSpawnCoefficients() {

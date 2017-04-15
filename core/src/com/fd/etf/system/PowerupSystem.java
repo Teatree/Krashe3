@@ -90,11 +90,13 @@ public class PowerupSystem {
 
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaEntity.add(new DebugComponent(umbrellaEntity.getComponent(UmbrellaComponent.class).boundsRect));
+        BugSpawnSystem.umbrellaBugsSpawned = 0;
     }
 
     private void spawnCocoon() {
-        if (canCocoonSpawn()) {
+        if (canCocoonSpawn(gameStage)) {
             cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
+            BugSpawnSystem.cocconBugsSpawned = 0;
 
             Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
 
@@ -112,7 +114,7 @@ public class PowerupSystem {
         }
     }
 
-    private boolean canCocoonSpawn() {
+    public static boolean canCocoonSpawn(GameStage gameStage) {
         return
                 gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get()).size() == 0 ||
                         gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(CocoonComponent.class).get())
@@ -123,7 +125,7 @@ public class PowerupSystem {
                                 .get(0).getComponent(TransformComponent.class).y == FAR_FAR_AWAY_Y;
     }
 
-    private boolean canUmbrellaSpawn() {
+    public static boolean canUmbrellaSpawn(GameStage gameStage) {
 
         return (gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get()).size() == 0 ||
                 gameStage.sceneLoader.getEngine().getEntitiesFor(Family.all(UmbrellaComponent.class).get())
@@ -136,17 +138,24 @@ public class PowerupSystem {
     }
 
     public void update(float delta) {
-        if (canUmbrellaSpawn()) {
-            umbrellaSpawnCounter -= delta;
-        }
-        if (canCocoonSpawn()) {
-            cocoonSpawnCounter -= delta;
-        }
-        if (umbrellaSpawnCounter <= 0) {
-            spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
-        }
-        if (cocoonSpawnCounter <= 0) {
+//        if (canUmbrellaSpawn()) {
+//            umbrellaSpawnCounter -= delta;
+//        }
+//        if (canCocoonSpawn()) {
+//            cocoonSpawnCounter -= delta;
+//        }
+//        if (umbrellaSpawnCounter <= 0) {
+//            spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
+//        }
+//        if (cocoonSpawnCounter <= 0) {
+//            spawnCocoon();
+//        }
+
+        if(BugSpawnSystem.cocconBugsSpawned == cocoonSpawnCounter && canCocoonSpawn(gameStage)){
             spawnCocoon();
+        }
+        if(BugSpawnSystem.umbrellaBugsSpawned == umbrellaSpawnCounter && canUmbrellaSpawn(gameStage)){
+            spawnUmbrella(UmbrellaComponent.INIT_SPAWN_X, UmbrellaComponent.INIT_SPAWN_Y);
         }
     }
 
