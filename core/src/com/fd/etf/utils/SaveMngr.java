@@ -102,12 +102,14 @@ public class SaveMngr {
 
     private static void saveOtherPets(FlowerPublicComponent fc) {
         List<PetJson> pets = new ArrayList<PetJson>();
-        for (PetComponent petComp : fc.pets) {
-            PetJson pet = new PetJson(petComp);
-            pets.add(pet);
+        if (!fc.pets.isEmpty()) {
+            for (PetComponent petComp : fc.pets) {
+                PetJson pet = new PetJson(petComp);
+                pets.add(pet);
+            }
+            Json json2 = new Json();
+            writeFile(PETS_FILE, json2.toJson(pets));
         }
-        Json json2 = new Json();
-        writeFile(PETS_FILE, json2.toJson(pets));
     }
 
     public static FlowerPublicComponent loadStats() {
