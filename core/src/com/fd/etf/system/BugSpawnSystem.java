@@ -194,6 +194,7 @@ public class BugSpawnSystem extends EntitySystem {
         if (bugEntity == null) {
 //            System.out.println("temp bug type " + tempType);
         }
+        System.out.println(bc.type);
         bugEntity.add(bc);
 
         TransformComponent tc = getPos(bc);
