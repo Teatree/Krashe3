@@ -204,6 +204,7 @@ public class GameStage extends Stage {
 
         ResultScreenScript.showCaseVanity = null;
         gameScript.fpc.score = 0;
+        gameScript.fpc.settings.totalPlayedGames = 0;
         gameScript.fpc.bestScore = 0;
         gameScript.fpc.totalScore = 0;
         gameScript.fpc.curDay = 0;
