@@ -23,11 +23,11 @@ public class BugSpawnSystem extends EntitySystem {
 
     // spawn probability
     // combined has to be equal to 100
-    public static final int DRUNK_SPAWN_PROB = 20;
-    public static final int SIMPLE_SPAWN_PROB = 29;
-    public static final int CHARGER_SPAWN_PROB = 27;
-    public static final int QUEENBEE_SPAWN_PROB = 9;
-    public static final int BEE_SPAWN_PROB = 12;
+    public static final int DRUNK_SPAWN_PROB = 25;
+    public static final int SIMPLE_SPAWN_PROB = 63;
+    public static final int CHARGER_SPAWN_PROB = 10;
+    public static final int QUEENBEE_SPAWN_PROB = 1;
+    public static final int BEE_SPAWN_PROB = 1;
     public static final int ANGERED_BEE_PATTERN_1_y_1 = 32;
     public static final int ANGERED_BEE_PATTERN_1_y_2 = 500;
     public static final int ANGERED_BEE_PATTERN_2_y_1 = 300;
@@ -47,7 +47,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static int angeredBeePattern2Y2 = ANGERED_BEE_PATTERN_2_y_2;
     public static int angeredBeePattern2Y2stage = ANGERED_BEE_PATTERN_2_y_2Stage;
 
-    public static int ANGERED_BEES_MODE_DURATION = 800;
+    public static int ANGERED_BEES_MODE_DURATION = 200;
     public static boolean queenBeeOnStage = false;
     public static int angerBeePattern;
     public static int angerBeePattern1case;
@@ -61,13 +61,13 @@ public class BugSpawnSystem extends EntitySystem {
 
     private float spawner = 0;
     public static float break_counter = 0;
-    private float SPAWN_INTERVAL_BASE = 2.5f;
+    public static float SPAWN_INTERVAL_BASE = 2.5f;
     public static float BREAK_FREQ_BASE_MIN = 20;
     public static float BREAK_FREQ_BASE_MAX = 28;
     public static float BREAK_LENGTH_BASE_MIN = 2;
     public static float BREAK_LENGTH_BASE_MAX = 5;
 
-    private float curSpawnInterval = SPAWN_INTERVAL_BASE;
+    public static float curSpawnInterval = SPAWN_INTERVAL_BASE;
     public static float curBreakFreqMin = BREAK_FREQ_BASE_MIN;
     public static float curBreakFreqMax = BREAK_FREQ_BASE_MAX;
     public static float curBreakLengthMin = BREAK_LENGTH_BASE_MIN;

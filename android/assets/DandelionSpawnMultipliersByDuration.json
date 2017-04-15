@@ -1,15 +1,22 @@
 [{
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
 startOn: 0,
-finishOn: 15,
-minSpawnCoefficient: 1.5, 
-maxSpawnCoefficient: 3
+finishOn: 25,
+minSpawnCoefficient: 0.4, 
+maxSpawnCoefficient: 0.9
 },
 {
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
 startOn: 16,
-finishOn:25,
-minSpawnCoefficient: 0.2, 
-maxSpawnCoefficient: 0.8
+finishOn:35,
+minSpawnCoefficient: 0.1, 
+maxSpawnCoefficient: 0.3
+},
+{
+class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
+startOn: 36,
+finishOn:55,
+minSpawnCoefficient: 0.8, 
+maxSpawnCoefficient: 1
 }
 ]

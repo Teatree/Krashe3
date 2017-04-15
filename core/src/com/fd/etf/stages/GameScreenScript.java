@@ -614,7 +614,18 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 isPause.set(false);
             }
 
-            bugsSpwndELabel.text.replace(0, bugsSpwndELabel.text.capacity(), "bugs spawned:" + BugSpawnSystem.bugsSpawned);
+            bugsSpwndELabel.text.replace(0, bugsSpwndELabel.text.capacity(), "bugs spawned:" + BugSpawnSystem.bugsSpawned +
+                            "\n" + "spawnInterval " + BugSpawnSystem.curSpawnInterval +
+                            "\n" + "curBreakFreqMin " + BugSpawnSystem.curBreakFreqMin +
+                            "\n" + "curBreakFreqMax " + BugSpawnSystem.curBreakFreqMax +
+                            "\n" + "curBreakLengthMin " + BugSpawnSystem.curBreakLengthMin +
+                            "\n" + "curBreakLengthMax " + BugSpawnSystem.curBreakLengthMax +
+                            "\n" + "curSimpleProb " + BugSpawnSystem.curSimpleProb +
+                            "\n" + "curDrunkProb " + BugSpawnSystem.curDrunkProb +
+                            "\n" + "curChargerProb " + BugSpawnSystem.curChargerProb +
+                            "\n" + "curQueenBeeProb " + BugSpawnSystem.curQueenBeeProb +
+                            "\n" + "curBeeProb " + BugSpawnSystem.curBeeProb
+            );
 
         }
         if (BugSystem.blowUpAllBugs) {
