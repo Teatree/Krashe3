@@ -119,9 +119,9 @@ public class BugSystem extends IteratingSystem {
                     gameStage.gameScript.onBugOutOfBounds();
                 }
             }
-            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
-            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
-                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
+//            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRect.x, bc.boundsRect.y, bc.boundsRect.width, bc.boundsRect.height, entity.toString());
+//            gameStage.sceneLoader.renderer.drawDebugRect(bc.boundsRectScary.x, bc.boundsRectScary.y,
+//                    bc.boundsRectScary.width, bc.boundsRectScary.height, entity.toString());
         }
 
         if (isPause.get() && !blowUpAllBugs) {
