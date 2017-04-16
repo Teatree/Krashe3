@@ -30,6 +30,7 @@ public class Showcase {
 //    private static final String SPOTLIGHT = "spotLight";
     private static final String LBL_ITEM_COLLECTION = "lbl_item_collection";
     private static final String LBL_ITEM_PRICE = "lbl_item_price";
+    private static final String LBL_ITEM_PRICE_S = "lbl_item_price_s";
     private static final String BTN_NO = "btn_no";
     private static final String BTN_BUY = "btn_buy";
     private static final String COIN = "coin";
@@ -51,6 +52,7 @@ public class Showcase {
     public Entity lbl_nameE;
     public Entity lbl_collE;
     public Entity lbl_priceE;
+    public Entity lbl_priceEs;
     public Entity showcase_background;
     public Entity coin;
 
@@ -107,6 +109,7 @@ public class Showcase {
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
+                    lbl_priceEs.getComponent(TintComponent.class).color.a += 0.05f;
                     coin.getComponent(TintComponent.class).color.a += 0.05f;
                 }
             }
@@ -166,6 +169,7 @@ public class Showcase {
             }
 
             lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+            lbl_priceEs.getComponent(TintComponent.class).color.a = 0;
             lbl_collE.getComponent(TintComponent.class).color.a = 0;
             coin.getComponent(TintComponent.class).color.a = 0;
             lbl_nameE.getComponent(TintComponent.class).color.a = 0;
@@ -220,9 +224,13 @@ public class Showcase {
         }
 
         lbl_priceE = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE);
+        lbl_priceEs = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(NodeComponent.class).getChild(LBL_ITEM_PRICE_S);
         LabelComponent lc3 = lbl_priceE.getComponent(LabelComponent.class);
         lc3.text.replace(0, lc3.text.capacity(), Long.toString(showCaseVanity.cost));
+        LabelComponent lc3s = lbl_priceEs.getComponent(LabelComponent.class);
+        lc3s.text.replace(0, lc3s.text.capacity(), Long.toString(showCaseVanity.cost));
         lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+        lbl_priceEs.getComponent(TintComponent.class).color.a = 0;
 
         coin.getComponent(TintComponent.class).color.a = 0;
 //        spotLightE.getComponent(TintComponent.class).color.a = 0;
@@ -275,6 +283,7 @@ public class Showcase {
                     backBtn.getComponent(TintComponent.class).color.a = 0;
                     buyBtn.getComponent(TintComponent.class).color.a = 0;
                     lbl_priceE.getComponent(TintComponent.class).color.a = 0;
+                    lbl_priceEs.getComponent(TintComponent.class).color.a = 0;
                     lbl_collE.getComponent(TintComponent.class).color.a = 0;
                     coin.getComponent(TintComponent.class).color.a = 0;
                     lbl_nameE.getComponent(TintComponent.class).color.a = 0;
