@@ -50,15 +50,15 @@ public class SoundMgr {
                 if(r == 2){
                     name = EAT_SOUND_2;
                     play(name, 0.2f);
-                    System.out.println(name);
+//                    System.out.println(name);
                 }else if(r == 3){
                     name = EAT_SOUND_1;
                     play(name, 0.2f);
-                    System.out.println(name);
+//                    System.out.println(name);
                     r = 0;
                 }else{
                     play(name, 0.2f);
-                    System.out.println(name);
+//                    System.out.println(name);
                 }
             }else {
                 fx.get(name).play();
