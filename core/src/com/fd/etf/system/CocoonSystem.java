@@ -23,7 +23,7 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
 public class CocoonSystem extends IteratingSystem {
 
-    private static float SPAWN_INTERVAL_BASE = 20;
+    private static float SPAWN_INTERVAL_BASE = 25;
     private static final int COCOON_HIT_AMOUNT = 3;
 
     public static List<CocoonMultiplier> cocoonMultipliers;

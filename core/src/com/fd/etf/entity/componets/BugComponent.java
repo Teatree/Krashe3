@@ -26,14 +26,14 @@ public class BugComponent implements Component, Pool.Poolable {
     public static final String CHARGER = "CHARGER";
     public static final String BEE = "BEE";
     public static final String QUEENBEE = "QUEENBEE";
-    public static final int DRUNK_BUG_MOVE_DURATION_BASE = 24;
+    public static final int DRUNK_BUG_MOVE_DURATION_BASE = 18;
     public static final int DRUNK_BUG_AMPLITUDE_BASE = 50;
-    public static final int BEE_MOVE_DURATION_BASE = 28;
+    public static final int BEE_MOVE_DURATION_BASE = 16;
     public static final int BEE_AMPLITUDE_BASE = 0;
-    public static final int QUEENBEE_MOVE_DURATION_BASE = 24;
+    public static final int QUEENBEE_MOVE_DURATION_BASE = 18;
     public static final int QUEENBEE_AMPLITUDE_BASE = 50;
     public static final int CHARGER_BUG_MOVE_BASE = 115;
-    public static final int SIMPLE_BUG_MOVE_DURATION_BASE = 24;
+    public static final int SIMPLE_BUG_MOVE_DURATION_BASE = 16;
     public static final int SIMPLE_BUG_AMPLITUDE_BASE = 0;
 
     public String type;

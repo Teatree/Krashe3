@@ -61,11 +61,11 @@ public class BugSpawnSystem extends EntitySystem {
 
     private float spawner = 0;
     public static float break_counter = 0;
-    public static float SPAWN_INTERVAL_BASE = 2.5f;
+    public static float SPAWN_INTERVAL_BASE = 2f;
     public static float BREAK_FREQ_BASE_MIN = 20;
     public static float BREAK_FREQ_BASE_MAX = 28;
-    public static float BREAK_LENGTH_BASE_MIN = 2;
-    public static float BREAK_LENGTH_BASE_MAX = 5;
+    public static float BREAK_LENGTH_BASE_MIN = 5;
+    public static float BREAK_LENGTH_BASE_MAX = 8;
 
     public static float curSpawnInterval = SPAWN_INTERVAL_BASE;
     public static float curBreakFreqMin = BREAK_FREQ_BASE_MIN;

@@ -2,8 +2,8 @@
 class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 0,
 finishOn: 25,
-minSpawnCoefficient: 0.7, 
-maxSpawnCoefficient: 1
+minSpawnCoefficient: 1, 
+maxSpawnCoefficient: 1.4
 },
 {
 class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
@@ -13,7 +13,7 @@ minSpawnCoefficient: 0.3,
 maxSpawnCoefficient: 0.4
 },
 {
-class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
+class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 36,
 finishOn:55,
 minSpawnCoefficient: 0.3, 
