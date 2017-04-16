@@ -39,8 +39,8 @@ public class Level {
     public float queenBeeAmplitude = 1;
     public float chargerBugMove = 1;
 
-    public int maxGoalsAmount = 3;
-    public int minGoalsAmount = 5;
+    public int maxGoalsAmount = 5;
+    public int minGoalsAmount = 3;
     public int easyGoalsAmount = 1;
     public int mediumGoalsAmount = 1;
     public int hardGoalsAmount = 1;
@@ -63,7 +63,6 @@ public class Level {
     public float prob_pet_the_pet_n_times;
     public float prob_pet_eat_n_bugs;
     public float prob_pet_dash_n_times;
-
     public Map<String, Integer> rewardChanceGroups;
 
     public Level() {

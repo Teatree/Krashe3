@@ -68,6 +68,7 @@ public class GoalGenerator {
         if (probabilityValueRandom > probabilityValueCheck
                 && probabilityValueRandom <= probabilityValueCheck + fpc.level.prob_eat_n_bugs) {
             goalType = EAT_N_BUGS;
+
             return new Goal(goalType, difficulty, fpc.level.goalMultiplier);
         } else {
             probabilityValueCheck += fpc.level.prob_eat_n_bugs;

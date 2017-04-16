@@ -37,13 +37,13 @@ public class ButterflyComponent implements Component, Pool.Poolable {
 
     public ButterflyComponent() {
         state = State.SPAWN;
-        points = 3;
+        points = 150;
     }
 
     @Override
     public void reset() {
         state = State.SPAWN;
-        points = 3;
+        points = 150;
         speed = 0.15f;
         current = 0;
     }
