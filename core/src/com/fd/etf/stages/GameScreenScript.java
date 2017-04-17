@@ -205,7 +205,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void init(Entity item) {
 
         if (!fpc.isSameDay()) {
-            gameOverReviveTimesLimit = 5;
+            gameOverReviveTimesLimit = fpc.settings.reviveAd_max;
         }
 
         gameItem = new ItemWrapper(item);
