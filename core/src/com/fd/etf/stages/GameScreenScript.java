@@ -714,6 +714,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //            if (curtainGameE.getComponent(ActionComponent.class) != null) {
 //                curtainGameE.getComponent(ActionComponent.class).reset();
 //            }
+            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             ActionComponent ac = new ActionComponent();
             ac.dataArray.add(Actions.sequence(
                     Actions.fadeIn(1f, Interpolation.exp5, 0.5f),

@@ -311,8 +311,9 @@ public class GoalFeedbackScreen {
             updateLevelLabel();
             doWhenAllGoalsAchieved();
 
+            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             if (Gdx.input.justTouched() && isGoalFeedbackOpen && !isGiftShown && !isGiftShouldShow) {
-                if (!gameStage.gameScript.fpc.level.checkAllGoals() /*&& !(gameScript.giftScreen != null && gameScript.giftScreen.isGiftScreenOpen)*/) {
+                if (!gameStage.gameScript.fpc.level.checkAllGoals()) {
                     hideGoalFeedback();
                     gameStage.gameScript.gameStage.initResultWithAds();
                 }

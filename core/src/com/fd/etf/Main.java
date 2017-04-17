@@ -2,6 +2,7 @@ package com.fd.etf;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -47,6 +48,9 @@ public class Main extends Game {
         tex = new Sprite(new Texture(Gdx.files.internal("orig/loading.png")));
 //        mainController.setupPlayServices();
 //        mainController.signIn();
+
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
     }
 
     public void async() {
@@ -71,6 +75,15 @@ public class Main extends Game {
         tex.setSize(viewportWidth, viewportHeight);
         tex.draw(batch);
         batch.end();
+
+        //TODO: implement smart save
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.MENU)){
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        }
 
         if (gameStage != null) {
             gameStage.update();
@@ -107,6 +120,7 @@ public class Main extends Game {
 
     @Override
     public void resume() {
+        SaveMngr.loadStats();
     }
 
     @Override

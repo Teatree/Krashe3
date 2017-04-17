@@ -75,14 +75,14 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
         score += haveBugJuiceDouble() ? 2 * points : points;
         oldScore = score - (haveBugJuiceDouble() ? 2 * points : points);
         scoreDiff = (float)(score - oldScore)/20;
-        totalScore += haveBugJuiceDouble() ? 2 * points : points;
+       // totalScore += haveBugJuiceDouble() ? 2 * points : points;
         updateScoreGoal();
     }
 
     public void umbrellaMult(int pointsMult) {
-        totalScore -= score;
+        //totalScore -= score;
         score *= pointsMult;
-        totalScore += score;
+        //totalScore += score;
         updateScoreGoal();
     }
 
@@ -92,9 +92,9 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
             if (scoreGoal.periodType.equals(Goal.PeriodType.IN_ONE_LIFE)) {
                 scoreGoal.counter = score;
             }
-            if (scoreGoal.periodType.equals(Goal.PeriodType.TOTAL)) {
-                scoreGoal.counter = (int) totalScore;
-            }
+//            if (scoreGoal.periodType.equals(Goal.PeriodType.TOTAL)) {
+//                scoreGoal.counter = (int) totalScore;
+//            }
             scoreGoal.update();
         }
     }
