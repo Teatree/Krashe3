@@ -77,9 +77,11 @@ public class UmbrellaSystem extends IteratingSystem {
         } else {
             entity.getComponent(SpriteAnimationStateComponent.class).paused = true;
         }
+
     }
 
     private void spawn(Entity e, float deltaTime) {
+
         if (e.getComponent(UmbrellaComponent.class).state.equals(SPAWNING)) {
             e.getComponent(SpriteAnimationStateComponent.class).paused = true;
             e.getComponent(TransformComponent.class).x = UmbrellaComponent.INIT_SPAWN_X;
@@ -107,6 +109,11 @@ public class UmbrellaSystem extends IteratingSystem {
                      UmbrellaComponent uc,
                      DimensionsComponent dc,
                      TransformComponent tc) {
+
+        if (tc.x < 200){
+            uc.justSpawned = false;
+            System.out.println("setting just spawned to false!");
+        }
 
         if (uc.current >= 1 && uc.state.equals(FLY)) {
             uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
@@ -176,7 +183,7 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private boolean checkCollision(UmbrellaComponent bc) {
-        return gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect);
+        return !bc.justSpawned ? gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect) : false;
     }
 
     private void checkEatGoal(UmbrellaComponent uc) {

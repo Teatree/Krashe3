@@ -26,6 +26,7 @@ public class UmbrellaComponent implements Component, Pool.Poolable{
     public float current = 0;
     public Vector2 out;
     public Vector2[] dataSet;
+    public boolean justSpawned;
 
     public State state;
     public int pointsMult;

@@ -73,7 +73,6 @@ public class PowerupSystem {
     }
 
     private void spawnUmbrella(float x, float y) {
-
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
 
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
@@ -91,6 +90,9 @@ public class PowerupSystem {
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
         umbrellaEntity.add(new DebugComponent(umbrellaEntity.getComponent(UmbrellaComponent.class).boundsRect));
         BugSpawnSystem.umbrellaBugsSpawned = 0;
+
+        umbrellaEntity.getComponent(UmbrellaComponent.class).justSpawned = true;
+        System.out.println("just spawned is true!!");
     }
 
     private void spawnCocoon() {
