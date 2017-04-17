@@ -33,7 +33,7 @@ public class BugSystem extends IteratingSystem {
     public static float blowUpCounter;
     public static float destroyAllBugsCounter;
 
-    boolean canPlayAnimation = true;
+    public boolean canPlayAnimation = true;
 
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
 
@@ -181,6 +181,7 @@ public class BugSystem extends IteratingSystem {
 
     public void destroyBug(Entity bugE) {
         spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
+        canPlayAnimation = true;
         BugPool.getInstance(gameStage).release(bugE);
 
         if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey(FLY_ANI)) {

@@ -38,6 +38,7 @@ public class ResultScreenScript implements IScript {
     private static final String LBL_YOU_EARNED = "lbl_YOU_EARNED";
     private static final String LBL_BET_SCORE = "lbl_BET_SCORE";
     private static final String LBL_TO_UNLOCK = "lbl_TO_UNLOCK";
+    private static final String NEXT_ITEM_ICON = "next_item";
 //    private static final String TRIAL_TIMER = "timer_lbl";
 
     public static VanityComponent showCaseVanity;
@@ -172,6 +173,7 @@ public class ResultScreenScript implements IScript {
                 new ImageButtonListener(backBtn) {
                     @Override
                     public void clicked() {
+                        resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
                         if (!showcasePopup && !show) {
                             gameStage.initMenu();
                         }
@@ -188,6 +190,7 @@ public class ResultScreenScript implements IScript {
                     public void clicked() {
                         if (active) {
                             if (!show) {
+                                resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
                                 backToGame();
                             }
                         }
@@ -207,6 +210,7 @@ public class ResultScreenScript implements IScript {
                 new ImageButtonListener(shopBtn) {
                     @Override
                     public void clicked() {
+                        resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
                         if (active)
                             if (!show) {
                                 shopTransitionIsOn = true;

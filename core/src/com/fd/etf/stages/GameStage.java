@@ -10,6 +10,7 @@ import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.data.SpriterVO;
@@ -238,6 +239,7 @@ public class GameStage extends Stage {
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newFlower, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newFlower);
+                newFlower.getComponent(ZIndexComponent.class).setZIndex(13);
                 sceneLoader.getEngine().addEntity(newFlower);
                 changedFlowerAni = (changedFlowerEntity || changedFlowerEntity2);
             }
@@ -251,6 +253,7 @@ public class GameStage extends Stage {
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newLeaves, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newLeaves);
+                newLeaves.getComponent(ZIndexComponent.class).setZIndex(20);
                 sceneLoader.getEngine().addEntity(newLeaves);
                 changedLeavesAni =  (changedFlowerEntity || changedFlowerEntity2);
             }

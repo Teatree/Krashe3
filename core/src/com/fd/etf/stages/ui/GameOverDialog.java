@@ -102,6 +102,7 @@ public class GameOverDialog extends AbstractDialog {
                     public void clicked() {
                         if (Main.mainController.isWifiConnected()) {
                             playVideoAd(dialogTc);
+                            gameOverReviveTimesLimit--;
                         }
                         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
                             continueGame(dialogTc);

@@ -110,7 +110,12 @@ public class Showcase {
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceEs.getComponent(TintComponent.class).color.a += 0.05f;
-                    coin.getComponent(TintComponent.class).color.a += 0.05f;
+
+                    if(backBtn.getComponent(TintComponent.class).color.a > 0.9f){
+                        coin.getComponent(TintComponent.class).color.a = 1f;
+                    }else{
+                        coin.getComponent(TintComponent.class).color.a += 0.05f;
+                    }
                 }
             }
         }
@@ -186,7 +191,8 @@ public class Showcase {
                 tcItem = null;
             }
             tcShowCase.x = FAR_FAR_AWAY_X;
-            nextIconShine.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            nextIconShine.getComponent(TransformComponent.class).x = nextIcon.getComponent(TransformComponent.class).x;
+            nextIconShine.getComponent(TransformComponent.class).y = nextIcon.getComponent(TransformComponent.class).y;
         }
     }
 

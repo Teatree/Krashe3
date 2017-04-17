@@ -49,6 +49,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String BTN_BACK = "btn_back";
     private static final String BEES_MODE_ANI = "bees_mode_ani";
     private static final String CURTAIN_GAME = "curtain_game";
+    private static final String BACKGROUND_SHIT = "background_shit";
     private static final String GAME_OVER_LBL = "lbl_gameover";
 
     private static final String BUGS_SPAWNED_LBL = "bugs_spawnd";
@@ -64,6 +65,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity scoreLabelEsh;
     public Entity loseFeedback;
     public Entity curtainGameE;
+    public Entity backgroundShitE;
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
@@ -73,7 +75,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
     public Entity pauseBtn;
-    public int gameOverReviveTimesLimit;
+    public static int gameOverReviveTimesLimit;
     public boolean wasGameOverReviveShown;
 
     //bee mode
@@ -259,6 +261,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         powerupSystem.initCocoon();
 
         checkTryPeriod();
+
+        backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
 
         gameStage.gameScript.fpc.settings.totalPlayedGames++;
         gameStage.gameScript.fpc.settings.playedGames++;
@@ -582,6 +586,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void act(float delta) {
+        System.out.println("megaFlower Z index: " + megaFlower.getComponent(ZIndexComponent.class).getZIndex());
+        System.out.println("megaLeaves Z index: " + megaLeaves.getComponent(ZIndexComponent.class).getZIndex());
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
@@ -659,6 +665,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(),     // real look alike
                     "");
         }
+
+        backgroundShitE.getComponent(ZIndexComponent.class).setZIndex(megaFlower.getComponent(ZIndexComponent.class).getZIndex()+1);
     }
 
     private void updateTapGoal() {
@@ -715,7 +723,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                             gameStage.initResultWithAds();
                         }
                     })));
-
 
 //            ac.dataArray.add(Actions.fadeIn(1f, Interpolation.exp5, 0.5f));
 //            curtainGameE.add(ac);
@@ -784,7 +791,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             gameOverDialog = new GameOverDialog(gameStage);
             gameOverDialog.initGameOverDialog();
         }
-        gameOverReviveTimesLimit--;
         wasGameOverReviveShown = true;
         gameOverDialog.show();
     }

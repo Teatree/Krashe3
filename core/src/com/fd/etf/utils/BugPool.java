@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.system.BugSystem;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
