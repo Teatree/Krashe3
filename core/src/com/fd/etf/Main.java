@@ -76,15 +76,6 @@ public class Main extends Game {
         tex.draw(batch);
         batch.end();
 
-        //TODO: implement smart save
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            SaveMngr.saveStats(gameStage.gameScript.fpc);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.MENU)){
-            SaveMngr.saveStats(gameStage.gameScript.fpc);
-        }
-
         if (gameStage != null) {
             gameStage.update();
             gameStage.act();

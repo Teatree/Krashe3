@@ -2,6 +2,8 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
@@ -10,6 +12,7 @@ import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.utils.BackgroundMusicMgr;
+import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -159,7 +162,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         camPosX = 130;
 
         //less code!
-        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+        for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
             if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
@@ -320,8 +323,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                     }
                 });
 
-        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
-            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
+        for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
+            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
@@ -334,8 +337,17 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void act(float delta) {
 
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            Gdx.app.exit();
+        }
+
         if (menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class) != null &&
-                menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class).color.a > 0.7f){
+                menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class).color.a > 0.7f) {
             canClickPlay = true;
         }
 
@@ -368,8 +380,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (startTransitionIn) {
             curtain_mm.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP;
-            if(camPosX < 430){
-                camPosX += (430-camPosX)*(1*ALPHA_TRANSITION_STEP*4);
+            if (camPosX < 430) {
+                camPosX += (430 - camPosX) * (1 * ALPHA_TRANSITION_STEP * 4);
             }
 
             if (curtain_mm.getComponent(TintComponent.class).color.a <= 0) {
@@ -379,8 +391,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 curtain_mm.getComponent(TintComponent.class).color.a = 0;
 
                 // initial animations
-                for (Entity e2: menuItem.getComponent(NodeComponent.class).children){
-                    if (e2.getComponent(ActionComponent.class) == null){
+                for (Entity e2 : menuItem.getComponent(NodeComponent.class).children) {
+                    if (e2.getComponent(ActionComponent.class) == null) {
                         e2.add(new ActionComponent());
                     }
                 }
@@ -395,8 +407,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac = new ActionComponent();
                 ac.dataArray.add(Actions.sequence(
                         Actions.delay(1.1f), Actions.fadeIn(2f, Interpolation.exp5Out), Actions.delay(2f),
-                        Actions.parallel(Actions.scaleBy(0.1f, 0.1f, 0.4f), Actions.rotateBy(1, 0.3f), Actions.moveBy(0,1, 0.3f, Interpolation.fade)),
-                        Actions.parallel(Actions.scaleBy(-0.1f, -0.f, 0.4f), Actions.rotateBy(-1, 0.4f), Actions.moveBy(0,-1, 0.4f, Interpolation.fade))));
+                        Actions.parallel(Actions.scaleBy(0.1f, 0.1f, 0.4f), Actions.rotateBy(1, 0.3f), Actions.moveBy(0, 1, 0.3f, Interpolation.fade)),
+                        Actions.parallel(Actions.scaleBy(-0.1f, -0.f, 0.4f), Actions.rotateBy(-1, 0.4f), Actions.moveBy(0, -1, 0.4f, Interpolation.fade))));
                 menuItem.getChild(LBL_TAP2START).getEntity().add(ac);
 
 //                System.out.println("Flower x: " + menuItem.getChild("mega_flower").getComponent(TransformComponent.class).x);
@@ -409,31 +421,31 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
                             && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                         e.getComponent(TintComponent.class).color.a = 0;
-                        if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                        if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
                             if (e.getComponent(TransformComponent.class).x < wrldW) {
                                 e.getComponent(TransformComponent.class).x -= 100;
-                            }else{
+                            } else {
                                 e.getComponent(TransformComponent.class).x += 100;
                             }
-                        }else{
+                        } else {
                             e.getComponent(TransformComponent.class).y -= 100;
                         }
-                        if( gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
+                        if (gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
                             Actions.checkInit();
                             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {
                                 continue;
                             }
-                            if(!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
                                 if (e.getComponent(TransformComponent.class).x < wrldW) {
                                     e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x+100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
-                                }else{
+                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x + 100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                } else {
                                     e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x-100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                            Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x - 100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
                                 }
-                            }else{
+                            } else {
                                 e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
-                                        Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y+100, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
+                                        Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y + 100, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));
                             }
 
                         }
@@ -491,7 +503,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
             frames++;
         }
-        for (Entity e: menuItem.getComponent(NodeComponent.class).children){
+        for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
             if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg")
                     && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
                     && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
@@ -550,7 +562,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
     }
 
-    public Entity getMegaLeaves(){
+    public Entity getMegaLeaves() {
         return megaLeaves;
     }
 

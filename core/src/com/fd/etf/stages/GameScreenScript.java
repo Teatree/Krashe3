@@ -2,6 +2,7 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.Main;
@@ -435,13 +436,18 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     @Override
                     public void clicked() {
                         if (!isPause.get() && !isGameOver.get()) {
-                            resetPauseDialog();
-                            megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
-                            cleanupTheScene();
-                            gameStage.initMenu();
+                            backToMenu();
                         }
                     }
                 });
+    }
+
+    public void backToMenu() {
+        resetPauseDialog();
+        loseFeedback.getComponent(TransformComponent.class).x = -600;
+        megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
+        cleanupTheScene();
+        gameStage.initMenu();
     }
 
     public void resetPauseDialog() {
@@ -460,16 +466,20 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     @Override
                     public void clicked() {
                         if (!isGameOver.get() && isStarted && !isPause.get()) {
-                            isPause.set(true);
-                            if (pauseDialog == null) {
-                                pauseDialog = new PauseDialog(gameStage, gameItem);
-                                pauseDialog.init();
-                            }
-                            pauseDialog.show();
-                            PauseDialog.pauseUpdate = false;
+                            pauseGame();
                         }
                     }
                 });
+    }
+
+    public void pauseGame() {
+        isPause.set(true);
+        if (pauseDialog == null) {
+            pauseDialog = new PauseDialog(gameStage, gameItem);
+            pauseDialog.init();
+        }
+        pauseDialog.show();
+        PauseDialog.pauseUpdate = false;
     }
 
     private void initLeafs(Entity leaves) {
@@ -586,6 +596,16 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void act(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            backToMenu();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.MENU)) {
+//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            pauseGame();
+        }
+
         System.out.println("megaFlower Z index: " + megaFlower.getComponent(ZIndexComponent.class).getZIndex());
         System.out.println("megaLeaves Z index: " + megaLeaves.getComponent(ZIndexComponent.class).getZIndex());
         if (!GameStage.justCreated) {
@@ -666,7 +686,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     "");
         }
 
-        backgroundShitE.getComponent(ZIndexComponent.class).setZIndex(megaFlower.getComponent(ZIndexComponent.class).getZIndex()+1);
+        backgroundShitE.getComponent(ZIndexComponent.class).setZIndex(megaFlower.getComponent(ZIndexComponent.class).getZIndex() + 1);
     }
 
     private void updateTapGoal() {

@@ -2,6 +2,7 @@ package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
@@ -13,6 +14,7 @@ import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.stages.ui.Preview;
 import com.fd.etf.system.ParticleLifespanSystem;
+import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -140,7 +142,8 @@ public class ShopScreenScript implements IScript {
 
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
         scoreLblSh = shopItem.getChild(SCORE_LBL_SH).getEntity();
-        coinsImg = shopItem.getChild(COINS_IMG).getEntity();;
+        coinsImg = shopItem.getChild(COINS_IMG).getEntity();
+        ;
         lc = scoreLbl.getComponent(LabelComponent.class);
         lcsh = scoreLblSh.getComponent(LabelComponent.class);
 
@@ -388,6 +391,17 @@ public class ShopScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            startTransitionOut = true;
+        }
+
         if (!canChangeTabs && bags.get(0).getComponent(TransformComponent.class).x == firstBagTargetPos) {
             canChangeTabs = true;
         }
@@ -417,7 +431,7 @@ public class ShopScreenScript implements IScript {
 
     private void transitionOut() {
         if (startTransitionOut) {
-            curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP*2;
+            curtain_shop.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP * 2;
 //            curtain_shop.getComponent(TransformComponent.class).x = 500;
             if (curtain_shop.getComponent(TintComponent.class).color.a >= 1) {
                 startTransitionOut = false;
@@ -430,7 +444,7 @@ public class ShopScreenScript implements IScript {
 
     private void transitionIn() {
         if (startTransitionIn) {
-            curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP*2;
+            curtain_shop.getComponent(TintComponent.class).color.a -= ALPHA_TRANSITION_STEP * 2;
             if (curtain_shop.getComponent(TintComponent.class).color.a <= 0.1f) {
                 startTransitionIn = false;
                 curtain_shop.getComponent(TintComponent.class).color.a = 0;
@@ -457,7 +471,7 @@ public class ShopScreenScript implements IScript {
                 tc.y = FIRST_BAG_Y - previousDc.height + SPACE_BETWEEN_BAGS_Y;
             }
         }
-        if (firstDot){
+        if (firstDot) {
             placeTheDot(bagPageId);
         }
         if (bagPosIdY == 7 /*|| showLastDot*/) {

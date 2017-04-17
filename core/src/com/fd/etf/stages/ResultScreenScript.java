@@ -1,6 +1,8 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.VanityComponent;
@@ -10,6 +12,7 @@ import com.fd.etf.stages.ui.Showcase;
 import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -97,14 +100,14 @@ public class ResultScreenScript implements IScript {
         }
         resultScreenItem.getComponent(NodeComponent.class).addChild(timer.timerE);
 
-        for (Entity e2: resultScreenItem.getComponent(NodeComponent.class).children){
-            if (e2.getComponent(ActionComponent.class) == null){
+        for (Entity e2 : resultScreenItem.getComponent(NodeComponent.class).children) {
+            if (e2.getComponent(ActionComponent.class) == null) {
                 e2.add(new ActionComponent());
             }
             e2.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(Actions.moveBy(0, +100, 0), Actions.moveBy(0, -100, 0.5f, Interpolation.exp5)));
         }
 
-        if(resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class) == null){
+        if (resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class) == null) {
             resultScreenItem.getChild("curtain_result").getEntity().add(new ActionComponent());
         }
         resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a = 1;
@@ -222,6 +225,19 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            SaveMngr.saveStats(gameStage.gameScript.fpc);
+            resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
+            gameStage.initMenu();
+            isWasShowcase = false;
+        }
+
         if (timer != null) {
             timer.update();
             if (timer.timerE != null) {
@@ -262,7 +278,7 @@ public class ResultScreenScript implements IScript {
         if (showcase != null) {
             showcase.act(delta);
         }
-        if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 0){
+        if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 0) {
             shopTransitionIsOn = false;
             gameStage.initShopWithAds();
         }
