@@ -59,6 +59,10 @@ public class BugSystem extends IteratingSystem {
         }
 
         BugComponent bc = mapper.get(entity);
+        if(entity.getComponent(TransformComponent.class).x < -180){
+            bc.state = IDLE;
+        }
+
         if (bc.type == QUEENBEE) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
