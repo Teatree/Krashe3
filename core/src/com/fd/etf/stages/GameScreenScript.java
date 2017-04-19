@@ -265,7 +265,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
 
-        gameStage.gameScript.fpc.settings.totalPlayedGames++;
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
 

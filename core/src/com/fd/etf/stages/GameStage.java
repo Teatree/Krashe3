@@ -90,6 +90,7 @@ public class GameStage extends Stage {
             reloadFlower(sceneVO, gameScript);
         }
 
+        gameScript.fpc.settings.totalPlayedGames++;
         gameScript.reset();
 
         backgroundMusicMgr.stopMenu();

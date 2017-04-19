@@ -107,6 +107,7 @@ public class Main extends Game {
 
     @Override
     public void pause() {
+        SaveMngr.saveStats(gameStage.gameScript.fpc);
     }
 
     @Override
@@ -116,8 +117,8 @@ public class Main extends Game {
 
     @Override
     public void dispose() {
-        super.dispose();
         SaveMngr.saveStats(gameStage.gameScript.fpc);
+        super.dispose();
         mainController.signOut();
     }
 }
