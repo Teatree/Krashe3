@@ -128,7 +128,6 @@ public class SaveMngr {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
-            System.out.println("SaveMngr fc.totalScore: " + fc.totalScore);
             fc.bestScore = gameStats.bestScore;
             fc.curDay = gameStats.curDay;
 
@@ -166,7 +165,7 @@ public class SaveMngr {
             fc.settings.reviveAd_min = stats.reviveAd_min;
             fc.settings.shopAd_min = stats.shopAd_min;
 
-            if(gameStats.upgrades != null) {
+            if (gameStats.upgrades != null) {
                 for (UpgradeStats e : gameStats.upgrades) {
                     Upgrade u = new Upgrade(e);
                     fc.upgrades.put(UpgradeType.valueOf(e.upgradeType), u);
@@ -339,7 +338,10 @@ public class SaveMngr {
     private static String readFile(String fileName) {
         FileHandle file;
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-            file = Gdx.files.internal(fileName);
+            file = Gdx.files.local(fileName);
+            if (file == null || !file.exists()) {
+                file = Gdx.files.internal(fileName);
+            }
         } else {
             file = Gdx.files.local(fileName);
         }
