@@ -122,6 +122,10 @@ public class GoalFeedbackScreen {
 
         feedbackEntity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         feedbackEntity.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+
+        gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
+        System.out.println("GoalFeedbackScreen gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
+        System.out.println("GoalFeedbackScreen gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
     }
 
     public void show() {
@@ -311,7 +315,6 @@ public class GoalFeedbackScreen {
             updateLevelLabel();
             doWhenAllGoalsAchieved();
 
-            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             if (Gdx.input.justTouched() && isGoalFeedbackOpen && !isGiftShown && !isGiftShouldShow) {
                 if (!gameStage.gameScript.fpc.level.checkAllGoals()) {
                     hideGoalFeedback();

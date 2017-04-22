@@ -359,6 +359,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         BugSpawnSystem.bugsSpawned = 0;
         BugSpawnSystem.umbrellaBugsSpawned = 0;
         BugSpawnSystem.cocconBugsSpawned = 0;
+        BugSpawnSystem.resetMultipliers();
 
         wasGameOverReviveShown = false;
 
@@ -605,8 +606,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             pauseGame();
         }
 
-        System.out.println("megaFlower Z index: " + megaFlower.getComponent(ZIndexComponent.class).getZIndex());
-        System.out.println("megaLeaves Z index: " + megaLeaves.getComponent(ZIndexComponent.class).getZIndex());
         if (!GameStage.justCreated) {
             if (cameraShaker.time > 0) {
                 cameraShaker.shake(delta);
@@ -734,6 +733,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                curtainGameE.getComponent(ActionComponent.class).reset();
 //            }
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
+            System.out.println("gameScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
+            System.out.println("gameScreenScript gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
             ActionComponent ac = new ActionComponent();
             ac.dataArray.add(Actions.sequence(
                     Actions.fadeIn(1f, Interpolation.exp5, 0.5f),

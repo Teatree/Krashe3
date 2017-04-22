@@ -172,6 +172,8 @@ public class GameOverDialog extends AbstractDialog {
         if(gameStage.gameScript.curtainGameE.getComponent(TintComponent.class).color.a >= 1) {
             isGameOver.set(false);
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
+            System.out.println("gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
+            System.out.println("gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
             gameStage.initResultWithAds();
         }
     }

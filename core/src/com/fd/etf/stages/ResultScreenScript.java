@@ -379,6 +379,7 @@ public class ResultScreenScript implements IScript {
                                         public void run() {
                                             //give that money!
                                             gameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
+                                            System.out.println("ResultScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
                                             adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                                             init(resultScreenItem.getEntity());
                                         }

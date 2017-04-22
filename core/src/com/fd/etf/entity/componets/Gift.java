@@ -153,6 +153,7 @@ public class Gift {
         switch (type) {
             case (MONEY): {
                 fpc.totalScore += money;
+                System.out.println("FECK fpc.totalScore" + fpc.totalScore);
                 break;
             }
             case (PET): {

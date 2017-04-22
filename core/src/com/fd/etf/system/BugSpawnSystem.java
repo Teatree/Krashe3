@@ -82,7 +82,7 @@ public class BugSpawnSystem extends EntitySystem {
 
     public static Random rand = new Random();
     private float angryBeeLinePosY = 150;
-    private float angryBeeLinePosX = SPAWN_MAX_X;
+    private float angryBeeLinePosX = SPAWN_MIN_X;
 
     public BugSpawnSystem(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -102,6 +102,10 @@ public class BugSpawnSystem extends EntitySystem {
         BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
         BugSpawnSystem.break_counter /= 100;
 //        System.out.println("init() + break_counter: " + BugSpawnSystem.break_counter);
+        resetMultipliers();
+    }
+
+    public static void resetMultipliers(){
         currentMultiplier = mulipliers.get(0);
     }
 

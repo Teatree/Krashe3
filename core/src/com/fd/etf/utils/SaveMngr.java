@@ -128,6 +128,7 @@ public class SaveMngr {
             Json json = new Json();
             GameStats gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
+            System.out.println("SaveMngr fc.totalScore: " + fc.totalScore);
             fc.bestScore = gameStats.bestScore;
             fc.curDay = gameStats.curDay;
 

@@ -23,8 +23,8 @@ public class BasicDialog extends AbstractDialog {
 
     private static final String RESET_ALL_PROGRESS = "ARE YOU SURE YOU'D LIKE TO \n" + "RESET ALL YOUR PROGRESS?";
     private static final String RESTORE_ALL_PURCHASES = "ARE YOU SURE YOU'D LIKE TO \n" + " RESTORE ALL YOUR PURCHASES?";
-    private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE RESTORED";
-    public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS RESET";
+    private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE \n" + "RESTORED";
+    public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS \n" + "RESET";
     public static final String ERROR = "WE HAD AN ERROR :(";
 
     private static final String BASIC_DIALOG = "popup_basic_lib";
@@ -142,6 +142,7 @@ public class BasicDialog extends AbstractDialog {
     private void showRestorePurchase() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESTORE_ALL_PURCHASES);
+        text.getComponent(TransformComponent.class).x = -25;
 
         okBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
             @Override
@@ -168,6 +169,7 @@ public class BasicDialog extends AbstractDialog {
     private void showResetProgressResult() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESET_ALL_PROGRESS_RESULT);
+        text.getComponent(TransformComponent.class).x = -99;
         okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
 
         cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
@@ -196,6 +198,7 @@ public class BasicDialog extends AbstractDialog {
     private void showRestorePurchResult() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESTORE_ALL_PURCHASES_RESULT);
+        text.getComponent(TransformComponent.class).x = -99;
         okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
         okBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(okBtn) {
@@ -212,6 +215,7 @@ public class BasicDialog extends AbstractDialog {
     private void showResetPrgress() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESET_ALL_PROGRESS);
+        text.getComponent(TransformComponent.class).x = -25;
         okBtn.getComponent(ButtonComponent.class).addListener(
                 new ImageButtonListener(okBtn) {
                     @Override
