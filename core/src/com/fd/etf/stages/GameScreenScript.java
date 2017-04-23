@@ -268,6 +268,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
 
+        gameItem.getChild(PauseDialog.PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 0;
+
         changePet = true;
         BackgroundMusicMgr.getBackgroundMusicMgr().playGame();
     }
@@ -452,8 +454,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void resetPauseDialog() {
         if (pauseDialog != null) {
-            gameItem.getChild(PauseDialog.LBL_PAUSE_TIMER).getEntity()
-                    .getComponent(LabelComponent.class).text.replace(0, 1, "");
+            gameItem.getChild(PauseDialog.PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(PauseDialog.LBL_PAUSE_TIMER).getComponent(LabelComponent.class).text.replace(0, 1, "");
+            gameItem.getChild(PauseDialog.PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 1;
             pauseDialog.deleteTiles();
         }
     }

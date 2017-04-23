@@ -1,6 +1,6 @@
 [{
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 1\n"Sapling",
+	name: Level: "Beginner",
 	difficultyLevel: 1,
 	spawnInterval: 1,
 	breakFreqMin: 1,
@@ -57,7 +57,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 2\n"Asshole",
+	name: Level: "Advanced Beginner",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -114,7 +114,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 3\n"Sick fuck",
+	name: Level: "Experienced Ameture",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -171,7 +171,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 4\n"Bug Eater",
+	name: Level: "Bug Enthusiast",
 	difficultyLevel: 4,
 	spawnInterval: 1,
 	breakFreqMin: 1,

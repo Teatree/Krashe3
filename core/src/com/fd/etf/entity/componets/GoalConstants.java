@@ -131,7 +131,7 @@ public class GoalConstants {
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_MED_MAX = 2;
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MIN = 2;
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MAX = 2;
-    public static final String SURVIVE_N_ANGERED_MODES_DESC = "SURVIVE # QUEEN ATTACKS";
+    public static final String SURVIVE_N_ANGERED_MODES_DESC = "SURVIVE # BEE SWARMS";
 
     public static final int EAT_N_BEES_EASY_MIN = 10;
     public static final int EAT_N_BEES_EASY_MAX = 15;

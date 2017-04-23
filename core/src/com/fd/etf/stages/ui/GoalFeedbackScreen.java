@@ -42,7 +42,12 @@ public class GoalFeedbackScreen {
     private static final String GOAL_ANI = "goalAni";
     private static final String GOAL_PROGRESS = "goal_progress";
     private static final String TILE2_TEXT_DESC = "tile2_text_desc";
+    static final String COMPLETED = "Completed";
+    private static final String GOAL_PROGRESS_LBL = "goal_progress";
     private static final String GOAL_LBL = "goal_lbl";
+    private static final String GOAL_LBL_SPLIT_1 = "goal_lbl_split_1";
+    private static final String GOAL_LBL_SPLIT_2 = "goal_lbl_split_2";
+    private static final String TILE2_TEXT_GOAL = "tile2_text_goal";
     public static final String LBL_GIFT_SCREEN = "lbl_gift_screen";
     public static final String LBL_GIFT_SCREEN2 = "lbl_gift_screen2";
     public static final String LBL_TAP_TO_OPEN = "lbl_tap_to_open";
@@ -261,20 +266,43 @@ public class GoalFeedbackScreen {
         while (iNastya < nc.children.size) {
             Entity e = nc.children.get(iNastya);
             //set progress label
-            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(GOAL_PROGRESS)) {
-                if (goal.getCounter() >= goal.getN()) {
-                    goalProgressValue = PauseDialog.COMPLETED;
-                } else {
-                    goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
-                }
-                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                        goalProgressValue);
+            if (goal.getCounter() >= goal.getN()) {
+                goalProgressValue = COMPLETED;
+            } else {
+                goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
             }
+            if (e.getComponent(MainItemComponent.class).tags.contains(TILE2_TEXT_GOAL)) {
+                e.getComponent(NodeComponent.class).getChild(GOAL_PROGRESS_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_PROGRESS_LBL).getComponent(LabelComponent.class).text.capacity(),
+                        goalProgressValue);
+            } else if (e.getComponent(MainItemComponent.class).tags.contains(TILE2_TEXT_DESC)) {
+                if(goal.getDescription().length() > 24) {
+                    String[] words = goal.getDescription().split(" ");
+                    String split1 = "";
+                    String split2 = "";
+                    for(String s: words){
+                        if(split1.length() + s.length() < 24 && split2 == ""){
+                            split1 += s + " ";
+                        }else{
+                            split2 += s + " ";
+                        }
+                    }
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.capacity(),
+                            goal.getDescription());
 
-            //set goal desc label
-            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(TILE2_TEXT_DESC)) {
-                e.getComponent(NodeComponent.class).children.get(0).getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                        goal.getDescription());
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(TintComponent.class).color.a = 0;
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(LabelComponent.class).text.capacity(),
+                            split1);
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(LabelComponent.class).text.capacity(),
+                            split2);
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(TintComponent.class).color.a = 1;
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(TintComponent.class).color.a = 1;
+                }else{
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.capacity(),
+                            goal.getDescription());
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(TintComponent.class).color.a = 1;
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(TintComponent.class).color.a = 0;
+                    e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(TintComponent.class).color.a = 0;
+                }
             }
 
             final SpriteAnimationStateComponent sc = tile.getComponent(NodeComponent.class).getChild(GOAL_ANI).getComponent(SpriteAnimationStateComponent.class);

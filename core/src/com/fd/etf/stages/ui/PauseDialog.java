@@ -32,6 +32,8 @@ public class PauseDialog extends AbstractDialog {
     private static final String LBL_GOAL_PROGRESS = "goal_progress";
     private static final String BTN_CLOSE = "btn_close";
     public static final String LBL_PAUSE_TIMER = "lbl_timer_pause";
+    public static final String PAUSETIMER_C = "pauseTimer_C";
+    public static final String IMG_PAUSE_TIMER = "img_pause_timer";
     private static final String TILE_TAG = "tile";
     static final String COMPLETED = "Completed";
     static final String PROGRESS = "Progress: ";
@@ -50,7 +52,7 @@ public class PauseDialog extends AbstractDialog {
     private static final int GOAL_TILE_SPACE_X = 170;
     private static final float GOAL_TILE_SCALE = 2f;
     private static final int GOAL_TILE_STEP_Y = 110;
-    private static final int TAP_COOLDOWN = 30;
+    private static final int TAP_COOLDOWN = 10;
     private static final int PAUSE_COUNT = 3;
     private static final String GOALS_POPUP = "goal_popup_lib";
     private static final String ACHIEVED = "achieved";
@@ -116,10 +118,13 @@ public class PauseDialog extends AbstractDialog {
         dialogTc.y = FAR_FAR_AWAY_Y;
         initShadow();
 
-        lblPauseTimer = gameItem.getChild(LBL_PAUSE_TIMER).getEntity();
+        if(gameItem.getChild(PAUSETIMER_C).getEntity() != null) {
+            lblPauseTimer = gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(LBL_PAUSE_TIMER);
+        }
         if (lblPauseTimer != null) {
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.length, "");
+            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 0;
         }
 
         final Entity goalLabel = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_DIALOG);
@@ -241,7 +246,7 @@ public class PauseDialog extends AbstractDialog {
                         String split1 = "";
                         String split2 = "";
                         for(String s: words){
-                            if(split1.length() + s.length() < 24){
+                            if(split1.length() + s.length() < 24 && split2 == ""){
                                 split1 += s + " ";
                             }else{
                                 split2 += s + " ";
@@ -306,6 +311,7 @@ public class PauseDialog extends AbstractDialog {
 
     public void update(float delta) {
         if (pauseCounter == 0 && isPause.get() && pauseTimer >= 1 && lblPauseTimer != null) {
+            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 0;
             isPause.set(false);
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
@@ -313,6 +319,15 @@ public class PauseDialog extends AbstractDialog {
         }
         pauseTimer += delta;
         if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0) {
+
+            System.out.println("pauseTimer * pauseCounter/3: " + pauseTimer * pauseCounter/3);
+            System.out.println("scaleX: " + gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX);
+            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX -= (float)pauseCounter/6;
+            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleY -= (float)pauseCounter/6;
+
+            if(gameItem.getChild(PAUSETIMER_C).getEntity() != null) {
+                gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 1;
+            }
             if (Gdx.input.justTouched() && tapCoolDown <= 0) {
                 pauseTimer = 1;
                 tapCoolDown = TAP_COOLDOWN;
