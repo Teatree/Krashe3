@@ -81,7 +81,7 @@ public class Settings extends AbstractDialog {
 
         initInfo();
 
-        final BasicDialog dialog = new BasicDialog(gameStage,gameItem);
+        final BasicDialog dialog = new BasicDialog(gameStage, gameItem);
         dialog.init();
         dialog.parent = this;
 
@@ -202,8 +202,6 @@ public class Settings extends AbstractDialog {
                         infoE.add(acInfo);
                     }
                 });
-
-
     }
 
     private void loadSettingsFromLib() {

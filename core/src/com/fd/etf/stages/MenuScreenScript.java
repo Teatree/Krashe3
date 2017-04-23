@@ -1,13 +1,13 @@
 package com.fd.etf.stages;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
+import com.fd.etf.stages.ui.BasicDialog;
 import com.fd.etf.stages.ui.PauseDialog;
 import com.fd.etf.stages.ui.Settings;
 import com.fd.etf.stages.ui.TrialTimer;
@@ -24,9 +24,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_SCALE;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_X_POS;
-import static com.fd.etf.entity.componets.LeafsComponent.LEAFS_Y_POS;
+import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
@@ -96,7 +94,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private double transitionCoefficient;
     public Entity megaFlower;
     public Entity megaLeaves;
-    private boolean canClickPlay;
+    public static boolean canClickPlay;
+
+    private BasicDialog exitDialog;
 
     public MenuScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -154,6 +154,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             leaderboard_C.getComponent(TintComponent.class).color.a = 1f;
             achievements_C.getComponent(TintComponent.class).color.a = 1f;
         }
+
+        exitDialog = new BasicDialog(gameStage, menuItem);
+        exitDialog.init();
     }
 
     public void setupMenuScreenWorld() {
@@ -337,13 +340,12 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void act(float delta) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-//            SaveMngr.saveStats(gameStage.gameScript.fpc);
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) || Gdx.input.isKeyPressed(Input.Keys.K)) {
             SaveMngr.saveStats(gameStage.gameScript.fpc);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            SaveMngr.saveStats(gameStage.gameScript.fpc);
-            Gdx.app.exit();
+            canClickPlay = false;
+            isDialogOpen.set(true);
+            exitDialog.show(BasicDialog.TYPE_EXIT);
+//            Gdx.app.exit();
         }
 
         if (menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class) != null &&
@@ -435,7 +437,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {
                                 continue;
                             }
-                            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(BTN_RATE)) {
                                 if (e.getComponent(TransformComponent.class).x < wrldW) {
                                     e.getComponent(ActionComponent.class).dataArray.add(Actions.sequence(
                                             Actions.delay(1.3f), Actions.parallel(Actions.moveTo(e.getComponent(TransformComponent.class).x + 100, e.getComponent(TransformComponent.class).y, 1f, Interpolation.exp5), Actions.fadeIn(1.5f, Interpolation.exp5Out))));

@@ -1,6 +1,7 @@
 package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -18,6 +19,7 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.ui.Settings.SETTINGS_SCALE;
+import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 
 public class BasicDialog extends AbstractDialog {
 
@@ -26,6 +28,7 @@ public class BasicDialog extends AbstractDialog {
     private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE \n" + "RESTORED";
     public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS \n" + "RESET";
     public static final String ERROR = "WE HAD AN ERROR :(";
+    private static final String BYE_BYE_MESSAGE = "ARE YOU SURE YOU'D LIKE TO \n" + " LEAVE THE GAME? :(";
 
     private static final String BASIC_DIALOG = "popup_basic_lib";
     private static final String DIALOG_TEXT = "dialog_text";
@@ -38,6 +41,7 @@ public class BasicDialog extends AbstractDialog {
     public static final String TYPE_RESET = "reset_progress";
     public static final String TYPE_RESET_RESULT = "reset_progress_res";
     public static final String TYPE_RESTORE_PURCH_RESULT = "restore_purchases_res";
+    public static final String TYPE_EXIT = "exit";
 
     private static final int DIALOG_Y = 130;
     private static final int DIALOG_X = 630;
@@ -52,8 +56,9 @@ public class BasicDialog extends AbstractDialog {
     private Entity cancelBtn;
 
     public AbstractDialog parent;
+    public String type;
 
-    public BasicDialog(GameStage gameStage,ItemWrapper gameItem) {
+    public BasicDialog(GameStage gameStage, ItemWrapper gameItem) {
         super(gameStage);
         this.gameItem = gameItem;
     }
@@ -105,7 +110,11 @@ public class BasicDialog extends AbstractDialog {
     }
 
     public void show(String type) {
-        parent.isActive = false;
+
+        this.type = type;
+        if (parent != null) {
+            parent.isActive = false;
+        }
         this.isActive = true;
         addShadow();
         AbstractDialog.isSecondDialogOpen.set(true);
@@ -132,11 +141,42 @@ public class BasicDialog extends AbstractDialog {
                 isSecondDialogClosed.set(false);
                 break;
             }
+            case TYPE_EXIT: {
+                showExitMessage();
+                break;
+            }
         }
         ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         dialogE.add(ac);
+    }
+
+    private void showExitMessage() {
+        LabelComponent lc = text.getComponent(LabelComponent.class);
+        lc.text.replace(0, lc.text.capacity(), BYE_BYE_MESSAGE);
+        text.getComponent(TransformComponent.class).x = -25;
+
+        okBtn.getComponent(ButtonComponent.class).addListener(new ButtonComponent.ButtonListener() {
+            @Override
+            public void touchUp() {
+            }
+
+            @Override
+            public void touchDown() {
+            }
+
+            @Override
+            public void clicked() {
+                Gdx.app.exit();
+            }
+        });
+
+        okBtn.getComponent(TransformComponent.class).x = OK_BTN_X;
+        okBtn.getComponent(TransformComponent.class).y = BTN_Y;
+
+        cancelBtn.getComponent(TransformComponent.class).x = CANCEL_BTN_X;
+        cancelBtn.getComponent(TransformComponent.class).y = BTN_Y;
     }
 
     private void showRestorePurchase() {
@@ -235,9 +275,14 @@ public class BasicDialog extends AbstractDialog {
 
     @Override
     public void close(Entity e) {
-        parent.isActive = true;
-//        AbstractDialog.isDialogOpen.set(false);
-//        AbstractDialog.isSecondDialogOpen.set(false);
+        if (parent != null) {
+            parent.isActive = true;
+        }
         super.close(e);
+
+        if (type.equals(TYPE_EXIT)){
+            MenuScreenScript.canClickPlay = true;
+            isDialogOpen.set(false);
+        }
     }
 }
