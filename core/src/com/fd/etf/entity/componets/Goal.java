@@ -95,7 +95,11 @@ public class Goal {
     }
 
     public String getDescription() {
-        return description.replace("#", " " + n + " ") + " " + periodType;
+        if(periodType == periodType.TOTAL ){
+            return description.replace("#", " " + n + " ") + " " + "IN TOTAL";
+        }else {
+            return description.replace("#", " " + n + " ") + " " + "IN ONE LIFE";
+        }
     }
 
     public int getN() {

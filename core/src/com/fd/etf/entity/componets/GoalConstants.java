@@ -33,7 +33,7 @@ public class GoalConstants {
     public static final int DESTROY_N_COCOON_1LIFE_MED_MAX = 1;
     public static final int DESTROY_N_COCOON_1LIFE_HARD_MIN = 1;
     public static final int DESTROY_N_COCOON_1LIFE_HARD_MAX = 1;
-    public static final String DESTROY_N_COCOON_DESC = "DESTROY # COCOON";
+    public static final String DESTROY_N_COCOON_DESC = "DESTROY # COCOONS";
 
     public static final int EAT_N_BUTTERFLIES_EASY_MIN = 3;
     public static final int EAT_N_BUTTERFLIES_EASY_MAX = 5;
@@ -89,7 +89,7 @@ public class GoalConstants {
     public static final int EAT_N_UMBRELLA_1LIFE_MED_MAX = 1;
     public static final int EAT_N_UMBRELLA_1LIFE_HARD_MIN = 2;
     public static final int EAT_N_UMBRELLA_1LIFE_HARD_MAX = 2;
-    public static final String EAT_N_UMBRELLA_DESC = "EAT # UMBRELLA";
+    public static final String EAT_N_UMBRELLA_DESC = "EAT # UMBRELLAS";
 
     public static final int BOUNCE_UMBRELLA_N_TIMES_EASY_MIN = 10;
     public static final int BOUNCE_UMBRELLA_N_TIMES_EASY_MAX = 15;
@@ -131,7 +131,7 @@ public class GoalConstants {
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_MED_MAX = 2;
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MIN = 2;
     public static final int SURVIVE_N_ANGERED_MODES_1LIFE_HARD_MAX = 2;
-    public static final String SURVIVE_N_ANGERED_MODES_DESC = "SURVIVE # ANGERED MODES";
+    public static final String SURVIVE_N_ANGERED_MODES_DESC = "SURVIVE # QUEEN ATTACKS";
 
     public static final int EAT_N_BEES_EASY_MIN = 10;
     public static final int EAT_N_BEES_EASY_MAX = 15;
@@ -159,7 +159,7 @@ public class GoalConstants {
     public static final int EAT_N_CHARGERS_1LIFE_MED_MAX = 12;
     public static final int EAT_N_CHARGERS_1LIFE_HARD_MIN = 13;
     public static final int EAT_N_CHARGERS_1LIFE_HARD_MAX = 22;
-    public static final String EAT_N_CHARGERS_DESC = "EAT # CHARGERS";
+    public static final String EAT_N_CHARGERS_DESC = "EAT # STAG BEETLES";
 
     public static final int EAT_N_DRUNKS_EASY_MIN = 10;
     public static final int EAT_N_DRUNKS_EASY_MAX = 15;
@@ -173,7 +173,7 @@ public class GoalConstants {
     public static final int EAT_N_DRUNKS_1LIFE_MED_MAX = 12;
     public static final int EAT_N_DRUNKS_1LIFE_HARD_MIN = 13;
     public static final int EAT_N_DRUNKS_1LIFE_HARD_MAX = 22;
-    public static final String EAT_N_DRUNKS_DESC = "EAT # DRUNKS";
+    public static final String EAT_N_DRUNKS_DESC = "EAT # FLIES";
 
     public static final int EAT_N_SIMPLE_EASY_MIN = 10;
     public static final int EAT_N_SIMPLE_EASY_MAX = 15;
@@ -187,7 +187,7 @@ public class GoalConstants {
     public static final int EAT_N_SIMPLE_1LIFE_MED_MAX = 12;
     public static final int EAT_N_SIMPLE_1LIFE_HARD_MIN = 13;
     public static final int EAT_N_SIMPLE_1LIFE_HARD_MAX = 22;
-    public static final String EAT_N_SIMPLE_DESC = "EAT # SIMPLE";
+    public static final String EAT_N_SIMPLE_DESC = "EAT # MOSQUITOES";
 
     public static final int PET_EAT_N_BUGS_EASY_MIN = 20;
     public static final int PET_EAT_N_BUGS_EASY_MAX = 25;
@@ -229,7 +229,7 @@ public class GoalConstants {
     public static final int PET_CHARGE_N_TIMES_1LIFE_MED_MAX = 4;
     public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MIN = 5;
     public static final int PET_CHARGE_N_TIMES_1LIFE_HARD_MAX = 6;
-    public static final String PET_CHARGE_N_TIMES_DESC = "PET DASH # TIMES";
+    public static final String PET_CHARGE_N_TIMES_DESC = "LAUNCH PET # TIMES";
 
     public static final int TAP_EASY_MIN = 100;
     public static final int TAP_EASY_MAX = 200;

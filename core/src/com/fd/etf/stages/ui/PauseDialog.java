@@ -13,6 +13,7 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import javax.xml.soap.Node;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +36,12 @@ public class PauseDialog extends AbstractDialog {
     static final String COMPLETED = "Completed";
     static final String PROGRESS = "Progress: ";
     static final String SLASH = "/";
-    private static final String GOAL_PROGRESS_LBL = "goal_progress_lbl";
+    private static final String TILE2_TEXT_GOAL = "tile2_text_goal";
+    private static final String GOAL_PROGRESS_LBL = "goal_progress";
+    private static final String TILE2_TEXT_DESC = "tile2_text_desc";
     private static final String GOAL_LBL = "goal_lbl";
+    private static final String GOAL_LBL_SPLIT_1 = "goal_lbl_split_1";
+    private static final String GOAL_LBL_SPLIT_2 = "goal_lbl_split_2";
 
     private static final int PAUSE_Y = 50;
     private static final int PAUSE_X = 260;
@@ -227,12 +232,38 @@ public class PauseDialog extends AbstractDialog {
                 } else {
                     goalProgressValue = PROGRESS + String.valueOf(goal.getCounter() + SLASH + goal.getN());
                 }
-                if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_PROGRESS_LBL)) {
-                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+                if (e.getComponent(MainItemComponent.class).tags.contains(TILE2_TEXT_GOAL)) {
+                    e.getComponent(NodeComponent.class).getChild(GOAL_PROGRESS_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_PROGRESS_LBL).getComponent(LabelComponent.class).text.capacity(),
                             goalProgressValue);
-                } else if (e.getComponent(MainItemComponent.class).tags.contains(GOAL_LBL)) {
-                    e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
-                            goal.getDescription());
+                } else if (e.getComponent(MainItemComponent.class).tags.contains(TILE2_TEXT_DESC)) {
+                    if(goal.getDescription().length() > 24) {
+                        String[] words = goal.getDescription().split(" ");
+                        String split1 = "";
+                        String split2 = "";
+                        for(String s: words){
+                            if(split1.length() + s.length() < 24){
+                                split1 += s + " ";
+                            }else{
+                                split2 += s + " ";
+                            }
+                        }
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.capacity(),
+                                goal.getDescription());
+
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(TintComponent.class).color.a = 0;
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(LabelComponent.class).text.capacity(),
+                                split1);
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(LabelComponent.class).text.capacity(),
+                                split2);
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(TintComponent.class).color.a = 1;
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(TintComponent.class).color.a = 1;
+                    }else{
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.replace(0, e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(LabelComponent.class).text.capacity(),
+                                goal.getDescription());
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL).getComponent(TintComponent.class).color.a = 1;
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_1).getComponent(TintComponent.class).color.a = 0;
+                        e.getComponent(NodeComponent.class).getChild(GOAL_LBL_SPLIT_2).getComponent(TintComponent.class).color.a = 0;
+                    }
                 }
             }
             tile.getComponent(ZIndexComponent.class).setZIndex(160);

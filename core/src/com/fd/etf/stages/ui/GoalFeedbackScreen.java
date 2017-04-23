@@ -41,6 +41,7 @@ public class GoalFeedbackScreen {
     private static final String GOAL_LIB = GOAL_TILE;
     private static final String GOAL_ANI = "goalAni";
     private static final String GOAL_PROGRESS = "goal_progress";
+    private static final String TILE2_TEXT_DESC = "tile2_text_desc";
     private static final String GOAL_LBL = "goal_lbl";
     public static final String LBL_GIFT_SCREEN = "lbl_gift_screen";
     public static final String LBL_GIFT_SCREEN2 = "lbl_gift_screen2";
@@ -271,8 +272,8 @@ public class GoalFeedbackScreen {
             }
 
             //set goal desc label
-            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(GOAL_LBL)) {
-                e.getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
+            if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(TILE2_TEXT_DESC)) {
+                e.getComponent(NodeComponent.class).children.get(0).getComponent(LabelComponent.class).text.replace(0, e.getComponent(LabelComponent.class).text.capacity(),
                         goal.getDescription());
             }
 
