@@ -317,7 +317,7 @@ public class PauseDialog extends AbstractDialog {
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
-            
+
             ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);

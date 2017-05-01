@@ -421,8 +421,10 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_leafs")
                             && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_flower")
                             && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
-                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
+                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
+                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("popup_basic_lib")) {
                         e.getComponent(TintComponent.class).color.a = 0;
+
                         if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
                             if (e.getComponent(TransformComponent.class).x < wrldW) {
                                 e.getComponent(TransformComponent.class).x -= 100;
@@ -432,6 +434,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                         } else {
                             e.getComponent(TransformComponent.class).y -= 100;
                         }
+
                         if (gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
                             Actions.checkInit();
                             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {

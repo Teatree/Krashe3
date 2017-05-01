@@ -8,10 +8,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.MenuScreenScript;
 import com.fd.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.ActionComponent;
-import com.uwsoft.editor.renderer.components.NodeComponent;
-import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.ZIndexComponent;
+import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -120,6 +117,10 @@ public class BasicDialog extends AbstractDialog {
         AbstractDialog.isSecondDialogOpen.set(true);
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
 
+        for (Entity e : dialogE.getComponent(NodeComponent.class).children) {
+            e.getComponent(TintComponent.class).color.a = 1;
+        }
+
         okBtn.remove(ButtonComponent.class);
         okBtn.add(new ButtonComponent());
         switch (type) {
@@ -153,6 +154,7 @@ public class BasicDialog extends AbstractDialog {
     }
 
     private void showExitMessage() {
+        dialogE.getComponent(TintComponent.class).color.a = 1;
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), BYE_BYE_MESSAGE);
         text.getComponent(TransformComponent.class).x = -25;
