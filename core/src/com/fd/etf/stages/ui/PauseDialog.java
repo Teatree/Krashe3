@@ -3,6 +3,7 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
@@ -316,14 +317,20 @@ public class PauseDialog extends AbstractDialog {
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
+            
+            ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
+            shadowE.add(ac2);
         }
         pauseTimer += delta;
         if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0) {
 
-            System.out.println("pauseTimer * pauseCounter/3: " + pauseTimer * pauseCounter/3);
-            System.out.println("scaleX: " + gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX);
-            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX -= (float)pauseCounter/6;
-            gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleY -= (float)pauseCounter/6;
+//            System.out.println("pauseTimer * pauseCounter/3: " + pauseTimer * pauseCounter/3);
+//            System.out.println("scaleX: " + gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX);
+//            if(gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER) != null) {
+//                gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX -= (float) pauseCounter / 6;
+//                gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleY -= (float) pauseCounter / 6;
+//            }
 
             if(gameItem.getChild(PAUSETIMER_C).getEntity() != null) {
                 gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 1;
@@ -358,5 +365,30 @@ public class PauseDialog extends AbstractDialog {
     public static void setToUpdate (){
         pauseUpdate = true;
         goalsUpdate = true;
+    }
+
+    @Override
+    public void close (Entity e){
+        if (isActive) {
+            isActive = false;
+            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            Actions.checkInit();
+            ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
+            e.add(ac);
+
+            if(!gameStage.currentScreen.equals("Game")) {
+                ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
+                shadowE.add(ac2);
+            }else{
+                shadowE.getComponent(ZIndexComponent.class).setZIndex(gameItem.getChild(PauseDialog.PAUSETIMER_C).getEntity().getComponent(ZIndexComponent.class).getZIndex() -1);
+            }
+
+            if (isSecondDialogOpen.get()) {
+                isSecondDialogClosed.set(true);
+            } else {
+                isDialogOpen.set(false);
+            }
+        }
     }
 }

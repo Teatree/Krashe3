@@ -35,6 +35,8 @@ public class GameStage extends Stage {
     public static final String FLOWER_LEAFS_IDLE = "flower_leafs_idle";
     public static final String FLOWER_IDLE = "flower_idle";
 
+    public static String currentScreen;
+
     public static Viewport viewport;
     public ETFSceneLoader sceneLoader;
     public static boolean changedFlowerEntity;
@@ -72,6 +74,7 @@ public class GameStage extends Stage {
     }
 
     public void initGame(int currentFlowerFrame) {
+        currentScreen = "Game";
         GameScreenScript.currentFlowerFrame = currentFlowerFrame;
         sceneLoader.setScene(MAIN_SCENE, viewport);
         if (justCreated) {
@@ -102,6 +105,7 @@ public class GameStage extends Stage {
     }
 
     public void initMenu() {
+        currentScreen = "Menu";
         sceneLoader.setScene(MENU_SCENE, viewport);
         if (changedFlowerEntity || changedFlowerEntity2) {
 
@@ -140,6 +144,7 @@ public class GameStage extends Stage {
     }
 
     public void initShop() {
+        currentScreen = "Shop";
         GameStage.viewport.setWorldSize(1200, 786);
         GameStage.viewport.getCamera().translate(0, 0, 0);
 
