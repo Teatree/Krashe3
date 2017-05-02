@@ -144,7 +144,7 @@ public class GoalFeedbackScreen {
         final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
         LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
 
-        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), " \n     " + gameStage.gameScript.fpc.level.name + " \n ");
+        goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(), gameStage.gameScript.fpc.level.name);
 
         if (tiles == null || tiles.isEmpty() || !isPause.get()) {
             int y = GOAL_INIT_POS_Y;
