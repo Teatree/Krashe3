@@ -14,6 +14,8 @@ import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
+import javax.xml.soap.Node;
+
 import static com.fd.etf.stages.ResultScreenScript.show;
 import static com.fd.etf.stages.ResultScreenScript.showCaseVanity;
 import static com.fd.etf.utils.EffectUtils.fade;
@@ -105,7 +107,6 @@ public class Showcase {
                         && !isCelebrating) {
                     backBtn.getComponent(TintComponent.class).color.a += 0.05f;
                     buyBtn.getComponent(TintComponent.class).color.a += 0.05f;
-                    lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
@@ -203,6 +204,7 @@ public class Showcase {
         showcase_background = showcaseE.getComponent(NodeComponent.class).getChild(SHOWCASE_BACKGROUND);
         showcase_background.getComponent(TintComponent.class).color.a = 0;
         lbl_nameE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
+        lbl_collE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_COLLECTION);
         nextIcon = resultScreen.resultScreenItem.getChild(NEXT_ICON).getEntity();
         nextIconShine = resultScreen.resultScreenItem.getChild(NEXT_ICON_SHINE).getEntity();
         nextIconShine.getComponent(TransformComponent.class).scaleX = 1.5f;
@@ -210,6 +212,7 @@ public class Showcase {
         showcaseE.getComponent(ZIndexComponent.class).setZIndex(200);
         LabelComponent lc = lbl_nameE.getComponent(LabelComponent.class);
         lbl_nameE.getComponent(TintComponent.class).color.a = 0;
+        lbl_collE.getComponent(TintComponent.class).color.a = 0;
         nextIcon.getComponent(TintComponent.class).color.a = 1;
 
         if(showCaseVanity.name.contains(NEW_LINE_SIGN)) {
@@ -293,6 +296,7 @@ public class Showcase {
                     lbl_collE.getComponent(TintComponent.class).color.a = 0;
                     coin.getComponent(TintComponent.class).color.a = 0;
                     lbl_nameE.getComponent(TintComponent.class).color.a = 0;
+                    nextIconShine.getComponent(TintComponent.class).color.a = 0;
                 }
             }
         });
@@ -300,12 +304,32 @@ public class Showcase {
 
     private void initShowCaseBuyButton() {
         buyBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY);
+        Entity buyBtnImgE = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(NodeComponent.class).getChild("btn_buy_img");
         buyBtn.getComponent(TintComponent.class).color.a = 0;
         if (buyBtn.getComponent(ButtonComponent.class) == null) {
             buyBtn.add(new ButtonComponent());
         } else {
             buyBtn.getComponent(ButtonComponent.class).clearListeners();
         }
+
+        if(buyBtnImgE != null && showCaseVanity.cost <= 3) {
+            buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2f;
+            buyBtnImgE.getComponent(TransformComponent.class).x = 98;
+            buyBtn.getComponent(TransformComponent.class).x = 445;
+        }else if(buyBtnImgE != null && showCaseVanity.cost == 4){
+            buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2.2f;
+            buyBtnImgE.getComponent(TransformComponent.class).x = 117;
+            buyBtn.getComponent(TransformComponent.class).x = 425;
+        }else if(buyBtnImgE != null && showCaseVanity.cost == 5){
+            buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2.4f;
+            buyBtnImgE.getComponent(TransformComponent.class).x = 137;
+            buyBtn.getComponent(TransformComponent.class).x = 395;
+        }else if(buyBtnImgE != null && showCaseVanity.cost >= 6){
+            buyBtnImgE.getComponent(TransformComponent.class).scaleX = 3.3f;
+            buyBtnImgE.getComponent(TransformComponent.class).x = 215;
+            buyBtn.getComponent(TransformComponent.class).x = 335;
+        }
+
         buyBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(buyBtn) {
             @Override
             public void clicked() {
