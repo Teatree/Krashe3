@@ -227,7 +227,7 @@ public class Showcase {
         lbl_collE = showcaseE.getComponent(NodeComponent.class).getChild(LBL_ITEM_COLLECTION);
         LabelComponent lcColl = lbl_collE.getComponent(LabelComponent.class);
         if (showCaseVanity.collection != null && !"".equals(showCaseVanity.collection)) {
-            lcColl.text.replace(0, lcColl.text.capacity(), "In " + showCaseVanity.collection + " collection");
+            lcColl.text.replace(0, lcColl.text.capacity(), showCaseVanity.collection);
         } else {
             lcColl.text.replace(0, lcColl.text.capacity(), "");
         }
@@ -312,19 +312,19 @@ public class Showcase {
             buyBtn.getComponent(ButtonComponent.class).clearListeners();
         }
 
-        if(buyBtnImgE != null && showCaseVanity.cost <= 3) {
+        if(buyBtnImgE != null && Long.toString(showCaseVanity.cost).length() <= 3) {
             buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2f;
             buyBtnImgE.getComponent(TransformComponent.class).x = 98;
             buyBtn.getComponent(TransformComponent.class).x = 445;
-        }else if(buyBtnImgE != null && showCaseVanity.cost == 4){
+        }else if(buyBtnImgE != null && Long.toString(showCaseVanity.cost).length() == 4){
             buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2.2f;
             buyBtnImgE.getComponent(TransformComponent.class).x = 117;
             buyBtn.getComponent(TransformComponent.class).x = 425;
-        }else if(buyBtnImgE != null && showCaseVanity.cost == 5){
+        }else if(buyBtnImgE != null && Long.toString(showCaseVanity.cost).length() == 5){
             buyBtnImgE.getComponent(TransformComponent.class).scaleX = 2.4f;
             buyBtnImgE.getComponent(TransformComponent.class).x = 137;
             buyBtn.getComponent(TransformComponent.class).x = 395;
-        }else if(buyBtnImgE != null && showCaseVanity.cost >= 6){
+        }else if(buyBtnImgE != null && Long.toString(showCaseVanity.cost).length() >= 6){
             buyBtnImgE.getComponent(TransformComponent.class).scaleX = 3.3f;
             buyBtnImgE.getComponent(TransformComponent.class).x = 215;
             buyBtn.getComponent(TransformComponent.class).x = 335;
