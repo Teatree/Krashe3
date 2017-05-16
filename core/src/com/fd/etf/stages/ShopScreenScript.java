@@ -61,6 +61,7 @@ public class ShopScreenScript implements IScript {
     private static final String TITLE = "title";
     private static final String TITLE_2 = "title_2";
     private static final String NEW_LINE_SIGN = "~";  //this symbol is used in the name of the item to identify the place where it new line will start
+    private static final String SPACE_SIGN = "_";  //this symbol is used to identify a space (because fuck you that's why)
     private static final String BTN_SCROLL_LEFT = "btn_scroll_left";
     private static final int SCCREEN_WIDTH = 1227;
     private static final String BTN_SCROLL_RIGHT = "btn_scroll_right";
@@ -260,6 +261,13 @@ public class ShopScreenScript implements IScript {
                         hc.name);
             }
 
+            if (hc.name.contains(SPACE_SIGN)) {
+                e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
+                        SPACE_SIGN, " ");
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        SPACE_SIGN, " ");
+            }
+
             e.getComponent(ButtonComponent.class).addListener(
                     new ImageButtonListener(e, new AtomicBoolean[]{isPreviewOn}) {
                         @Override
@@ -314,6 +322,13 @@ public class ShopScreenScript implements IScript {
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         vc.name);
+            }
+
+            if (vc.name.contains(SPACE_SIGN)) {
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
+                        SPACE_SIGN, " ");
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
+                        SPACE_SIGN, " ");
             }
 
             bags.add(bagEntity);
