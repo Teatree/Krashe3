@@ -387,6 +387,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (!isStarted) {
             setTapToPlayAnimations();
         }
+
+        if(pauseDialog != null){
+            pauseDialog.reset();
+        }
     }
 
     private void initDoubleBJIcon() {

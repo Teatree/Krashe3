@@ -281,6 +281,17 @@ public class PauseDialog extends AbstractDialog {
         }
     }
 
+    public void reset() {
+        shadowE.getComponent(TintComponent.class).color.a = 0;
+        pauseCounter = 0;
+        if (isSecondDialogOpen.get()) {
+            isSecondDialogClosed.set(true);
+        } else {
+            isDialogOpen.set(false);
+        }
+
+    }
+
     private void showGoalTile(int y, Entity tile, Goal goal) {
         tile.getComponent(TransformComponent.class).x = GOAL_TILE_SPACE_X;
         tile.getComponent(TransformComponent.class).y = y;
