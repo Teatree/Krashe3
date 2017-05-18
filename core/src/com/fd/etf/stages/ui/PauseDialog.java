@@ -322,9 +322,12 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void update(float delta) {
+        System.out.println("pauseCounter " + pauseCounter);
         if (pauseCounter == 0 && isPause.get() && pauseTimer >= 1 && lblPauseTimer != null) {
             gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 0;
             isPause.set(false);
+            System.out.println("setting isPause to false! All the way from pause dialog.");
+
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
@@ -332,9 +335,10 @@ public class PauseDialog extends AbstractDialog {
             ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
+            pauseCounter = 10;
         }
         pauseTimer += delta;
-        if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0) {
+        if (pauseCounter <= PAUSE_COUNT && pauseCounter > 0 && pauseCounter < 8) {
 
 //            System.out.println("pauseTimer * pauseCounter/3: " + pauseTimer * pauseCounter/3);
 //            System.out.println("scaleX: " + gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(NodeComponent.class).getChild(IMG_PAUSE_TIMER).getComponent(TransformComponent.class).scaleX);
@@ -386,6 +390,7 @@ public class PauseDialog extends AbstractDialog {
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
             e.add(ac);
+            pauseCounter = 10;
 
             if(!gameStage.currentScreen.equals("Game")) {
                 ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);

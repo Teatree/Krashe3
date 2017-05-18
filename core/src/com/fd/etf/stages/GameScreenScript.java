@@ -607,6 +607,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             backToMenu();
         }
 
+        System.out.println("isPause " + isPause);
+
         if (Gdx.input.isKeyPressed(Input.Keys.MENU)) {
 //            SaveMngr.saveStats(gameStage.gameScript.fpc);
             pauseGame();
