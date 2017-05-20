@@ -322,11 +322,10 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void update(float delta) {
-        System.out.println("pauseCounter " + pauseCounter);
         if (pauseCounter == 0 && isPause.get() && pauseTimer >= 1 && lblPauseTimer != null) {
             gameItem.getChild(PAUSETIMER_C).getEntity().getComponent(TintComponent.class).color.a = 0;
             isPause.set(false);
-            System.out.println("setting isPause to false! All the way from pause dialog.");
+//            System.out.println("setting isPause to false! All the way from pause dialog.");
 
             lblPauseTimer.getComponent(LabelComponent.class).text.replace(0,
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
