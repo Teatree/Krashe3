@@ -401,8 +401,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                tc.x = 117;
 //                tc.y = 675;
 //            } else {
-                tc.x = 15;
-                tc.y = 675;
+                tc.x = 20;
+                tc.y = 685;
 //            }
         } else {
             bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
