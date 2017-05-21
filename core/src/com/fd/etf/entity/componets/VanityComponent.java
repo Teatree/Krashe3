@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VanityComponent extends ShopItem implements Component, Pool.Poolable{
+public class VanityComponent extends ShopItem implements Component, Pool.Poolable {
 
     public static final String DEFAULT = "_default";
     public static final String PATH_PREFIX_VANITY = "vanity\\";
@@ -93,9 +93,16 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         }
     }
 
+    public void applyOnLoad() {
+        disableSimilarVanities();
+        this.bought = true;
+        this.enabled = true;
+        overrideAnimationFiles();
+    }
+
     private void disableSimilarVanities() {
-        for (String fileName : assetsToChange.keySet()){
-            for (VanityComponent vc : vanityComponentsByChangedAssets.get(fileName)){
+        for (String fileName : assetsToChange.keySet()) {
+            for (VanityComponent vc : vanityComponentsByChangedAssets.get(fileName)) {
                 if (vc.enabled && !fileName.equals("class")) {
                     vc.enabled = false;
                 }

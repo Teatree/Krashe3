@@ -67,7 +67,13 @@ public class SaveMngr {
         for (Upgrade u : fc.upgrades.values()) {
             gameStats.upgrades.add(new UpgradeStats(u));
         }
-        saveVanities(fc);
+
+        for (VanityComponent vc : fc.vanities) {
+            if (vc.bought || vc.enabled) {
+                gameStats.boughtVanities.add(new VanityJson(vc));
+            }
+        }
+//        saveVanities(fc);
         saveOtherPets(fc);
 
         gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
@@ -90,15 +96,15 @@ public class SaveMngr {
         writeFile(DATA_FILE, json.toJson(gameStats));
     }
 
-    private static void saveVanities(FlowerPublicComponent fc) {
-        List<VanityJson> vanities = new ArrayList<VanityJson>();
-        for (VanityComponent vc : fc.vanities) {
-            VanityJson vs = new VanityJson(vc);
-            vanities.add(vs);
-        }
-        Json json2 = new Json();
-        writeFile((VANITIES_FILE), json2.toJson(vanities));
-    }
+//    private static void saveVanities(FlowerPublicComponent fc) {
+//        List<VanityJson> vanities = new ArrayList<VanityJson>();
+//        for (VanityComponent vc : fc.vanities) {
+//            VanityJson vs = new VanityJson(vc);
+//            vanities.add(vs);
+//        }
+//        Json json2 = new Json();
+//        writeFile((VANITIES_FILE), json2.toJson(vanities));
+//    }
 
     private static void saveOtherPets(FlowerPublicComponent fc) {
         List<PetJson> pets = new ArrayList<PetJson>();
@@ -124,9 +130,10 @@ public class SaveMngr {
         String saved = readFile(DATA_FILE);
         Level.goalStatusChanged = true;
 
+        GameStats gameStats = null;
         if (!"".equals(saved)) {
             Json json = new Json();
-            GameStats gameStats = json.fromJson(GameStats.class, saved);
+            gameStats = json.fromJson(GameStats.class, saved);
             fc.totalScore = gameStats.totalScore;
             fc.bestScore = gameStats.bestScore;
             fc.curDay = gameStats.curDay;
@@ -179,7 +186,9 @@ public class SaveMngr {
             Goal.init(fc);
             addGoals(fc, gameStats);
         }
-        fc.vanities = getAllVanity();
+
+        fc.vanities = getAllVanity(gameStats);
+
         fc.pets = getAllPets();
         return fc;
     }
@@ -252,7 +261,7 @@ public class SaveMngr {
 
     }
 
-    public static List<VanityComponent> getAllVanity() {
+    public static List<VanityComponent> getAllVanity(GameStats gameStats) {
         String saved = readFile(VANITIES_FILE);
         List<VanityComponent> vanComps = new ArrayList<VanityComponent>();
         vanityCollections = new HashMap<>();
@@ -266,6 +275,17 @@ public class SaveMngr {
                 vanComps.add(vc);
                 groupVanitiesByChangedAssets(vc);
                 groupVanitiesByCollection(vc);
+
+                //if it was bought or enabled
+                if (gameStats != null && gameStats.boughtVanities != null && !gameStats.boughtVanities.isEmpty())
+                    for (VanityJson savedVanity : gameStats.boughtVanities) {
+                        if (vc.name.equals(savedVanity.name)) {
+                            vc.bought = savedVanity.bought;
+                            if (savedVanity.enabled) {
+                                vc.applyOnLoad();
+                            }
+                        }
+                    }
             }
         }
         sortVanities(vanComps);
@@ -553,6 +573,8 @@ public class SaveMngr {
         public int queenAchCounter;
         public int bugAchCounter;
         public int butterflyAchCounter;
+
+        public List<VanityJson> boughtVanities = new ArrayList<>();
     }
 
     private static class DailyGoalStats {
