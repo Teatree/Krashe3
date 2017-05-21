@@ -198,7 +198,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         ActionComponent ac2 = new ActionComponent();
         ac2.dataArray.add(Actions.sequence(
                 Actions.delay(0.5f),
-                Actions.parallel(Actions.moveTo(1000, 99, 1f, Interpolation.exp5), Actions.fadeOut(1.3f))));
+                Actions.parallel(Actions.moveTo(1000, 99, 1f, Interpolation.exp5), Actions.fadeOut(1.2f))));
         phoenixIcon.add(ac2);
     }
 
@@ -397,13 +397,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
         if (gameStage.gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-//            if (gameStage.gameScript.fpc.havePhoenix()) {
-//                tc.x = 117;
-//                tc.y = 675;
-//            } else {
-                tc.x = 20;
-                tc.y = 685;
-//            }
+                tc.x = -10;
+                tc.y = 640;
+            bjIcon.getComponent(ZIndexComponent.class).setZIndex(150);
         } else {
             bjIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
@@ -420,6 +416,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 tc.x = -24;
                 tc.y = 637;
             }
+            phoenixIcon.getComponent(ZIndexComponent.class).setZIndex(150);
         } else {
             phoenixIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
@@ -645,7 +642,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
-            if (phoenixIcon.getComponent(TransformComponent.class).x >= 950 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
+            if (phoenixIcon.getComponent(TransformComponent.class).x >= 900 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
