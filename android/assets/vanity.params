@@ -8,7 +8,7 @@
 	shopIcon: itembaseballcap,
 	name: Baseball~Cap,
 	cost: 100,
-	description: Baseballisgreat!
+	description: Baseball_is_great!
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -56,7 +56,7 @@
 	shopIcon: itemwoodenpot,
 	name: Wooden~bucket,
 	cost: 320,
-	description: PartofScarecrow\ncollection,
+	description: Part_of_Scarecrow\ncollection,
 	leaves: true
 },
 {
@@ -69,7 +69,7 @@
 	shopIcon: itemscarecrowhat,
 	name: Scarecrow~hat,
 	cost: 420,
-	description: PartofScarecrow\ncollection
+	description: Part_of_Scarecrow\ncollection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -92,7 +92,7 @@
 	shopIcon: itemfedora,
 	name: Fedora,
 	cost: 900,
-	description: Melady
+	description: Me_lady
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -117,7 +117,7 @@
 	shopIcon: itemknife,
 	name: Knife!,
 	cost: 1500,
-	description: Becarefulwithit,
+	description: Be_careful\nwith_it,
 	leaves: true
 },
 {
@@ -188,7 +188,7 @@
 	shopIcon: itemafro,
 	name: Afro,
 	cost: 7000,
-	description: Lookingextrafly
+	description: Looking_extra\nfly
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -200,7 +200,7 @@
 	shopIcon: itemlifebuoy,
 	name: Life_Buoy,
 	cost: 8800,
-	description: Keepsyoufrom~drowning
+	description: Keeps_you_from\ndrowning
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -213,7 +213,7 @@
 	shopIcon: itemhoneyspoon,
 	name: Honey~Spoon,
 	cost: 10000,
-	description: PartofBee~collection,
+	description: Part_of_Bee\ncollection,
 	leaves: true
 },
 {
@@ -248,7 +248,7 @@
 	shopIcon: itembowtie,
 	name: Bowtie,
 	cost: 22000,
-	description: PartofHipster~collection
+	description: Part_of_Hipster\ncollection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -319,7 +319,7 @@
 	shopIcon: itemmasonjar,
 	name: Manson_Jar,
 	cost: 99999,
-	description: Truthbethyweapon~MasonJar~PartofHipster~collection,
+	description: Truth_be_thy_weapon\nMason_Jar\nPart_of_Hipster\ncollection,
 	leaves: true
 },
 {
@@ -332,7 +332,7 @@
 	shopIcon: itemqueenbeeneck,
 	name: Queen~Bee's_Colar,
 	cost: 150000,
-	description: PartofBee\ncollection
+	description: Part_of_Bee\ncollection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -344,7 +344,7 @@
 	shopIcon: itemhandkerchief,
 	name: Red~Bandana,
 	cost: 300000,
-	description: PartofScarecrow\ncollection
+	description: Part_of_Scarecrow\ncollection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -368,7 +368,7 @@
 	shopIcon: itemhoneyjar,
 	name: Honey~Jar,
 	cost: 550000,
-	description: PartofBee\ncollection,
+	description: Part_of_Bee\ncollection,
 	leaves: true
 },
 {
@@ -381,7 +381,7 @@
 	shopIcon: itemcatears,
 	name: Cute~Ears,
 	cost: 670000,
-	description: Soyoucan\nhearbetter
+	description: So_you_can\nhear_better
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,

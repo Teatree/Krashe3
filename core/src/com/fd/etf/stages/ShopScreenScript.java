@@ -248,6 +248,7 @@ public class ShopScreenScript implements IScript {
             if (hc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = hc.name.split(NEW_LINE_SIGN);
                 e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TransformComponent.class).y = 20;
                 e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
@@ -259,6 +260,7 @@ public class ShopScreenScript implements IScript {
                 e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         hc.name);
+                e.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TransformComponent.class).y = 44;
             }
 
             if (hc.name.contains(SPACE_SIGN)) {
@@ -311,6 +313,7 @@ public class ShopScreenScript implements IScript {
             if (vc.name.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.name.split(NEW_LINE_SIGN);
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TintComponent.class).color.a = 1;
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TransformComponent.class).y = 26;
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE).getComponent(LabelComponent.class).text.length,
                         lines[0]);
@@ -322,6 +325,7 @@ public class ShopScreenScript implements IScript {
                 bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.replace(
                         0, bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(LabelComponent.class).text.length,
                         vc.name);
+                bagEntity.getComponent(NodeComponent.class).getChild(TITLE_2).getComponent(TransformComponent.class).y = 44;
             }
 
             if (vc.name.contains(SPACE_SIGN)) {

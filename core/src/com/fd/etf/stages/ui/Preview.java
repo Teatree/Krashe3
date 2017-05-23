@@ -35,6 +35,7 @@ public class Preview extends AbstractDialog {
     private static final String BTN_DISABLE = "tag_btn_disable";
     private static final String BTN_ENABLE = "tag_btn_enable";
     private static final String TAG_INFO_LIB = "tag_info_lib";
+    private static final String SPACE_SIGN = "_";
 
     private static final String BTN_CLOSE = "btn_close_lib";
     private static final String LBL_ITEM_NAME = "tag_lbl_item_name";
@@ -187,9 +188,18 @@ public class Preview extends AbstractDialog {
     public void setLabelsValues() {
         if (vc.description != null) {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
+            if (lbl_desc.getComponent(LabelComponent.class).text.toString().contains(SPACE_SIGN)) {
+                lbl_desc.getComponent(LabelComponent.class).text.replace(SPACE_SIGN, " ");
+            }
         }
         if (vc.collection != null) {
+//            if (vc.collection.contains(SPACE_SIGN)) {
+//                lbl_desc.getComponent(LabelComponent.class).text.replace(SPACE_SIGN, " ");
+//            }
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.collection);
+            if (lbl_desc.getComponent(LabelComponent.class).text.toString().contains(SPACE_SIGN)) {
+                lbl_desc.getComponent(LabelComponent.class).text.replace(SPACE_SIGN, " ");
+            }
         }
 
 //        lblTitle.getComponent(LabelComponent.class).text.replace(0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
@@ -198,6 +208,7 @@ public class Preview extends AbstractDialog {
             String[] lines = vc.name.split(NEW_LINE_SIGN);
             lblTitle.getComponent(TintComponent.class).color.a = 1;
             lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex() + 1);
+            lblTitleLine2.getComponent(TransformComponent.class).y = 58;
             lblTitle.getComponent(LabelComponent.class).text.replace(
                     0, lblTitle.getComponent(LabelComponent.class).text.length, lines[0]);
             lblTitleLine2.getComponent(LabelComponent.class).text.replace(
@@ -207,6 +218,14 @@ public class Preview extends AbstractDialog {
             lblTitle.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
             lblTitleLine2.getComponent(LabelComponent.class).text.replace(
                     0, lblTitleLine2.getComponent(LabelComponent.class).text.length, vc.name);
+            lblTitleLine2.getComponent(TransformComponent.class).y = 85;
+        }
+
+        if (vc.name.contains(SPACE_SIGN)) {
+            lblTitle.getComponent(LabelComponent.class).text.replace(
+                    SPACE_SIGN, " ");
+            lblTitleLine2.getComponent(LabelComponent.class).text.replace(
+                    SPACE_SIGN, " ");
         }
 
         lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
