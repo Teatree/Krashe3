@@ -417,6 +417,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 tc.y = 637;
             }
             phoenixIcon.getComponent(ZIndexComponent.class).setZIndex(150);
+            phoenixIcon.getComponent(TintComponent.class).color.a = 1;
         } else {
             phoenixIcon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         }
@@ -608,8 +609,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //            SaveMngr.saveStats(gameStage.gameScript.fpc);
             backToMenu();
         }
-
-        System.out.println("isPause " + isPause);
 
         if (Gdx.input.isKeyPressed(Input.Keys.MENU)) {
 //            SaveMngr.saveStats(gameStage.gameScript.fpc);
