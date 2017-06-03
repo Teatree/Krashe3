@@ -132,11 +132,11 @@ public class BugPool {
     }
 
     private Entity loadBugFromLib(String bugLib) {
-        CompositeItemVO tempItemC = gameStage.gameScript.gameStage.sceneLoader.loadVoFromLibrary(bugLib);
-        gameStage.gameScript.gameStage.sceneLoader.rm.addSPRITEtoLoad(bugLib);
-        Entity bugE = gameStage.gameScript.gameStage.sceneLoader.entityFactory.
-                createSPRITEentity(gameStage.gameScript.gameStage.sceneLoader.getRoot(), tempItemC);
-        gameStage.gameScript.gameStage.sceneLoader.getEngine().addEntity(bugE);
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(bugLib);
+        gameStage.sceneLoader.rm.addSPRITEtoLoad(bugLib);
+        Entity bugE = gameStage.sceneLoader.entityFactory.
+                createSPRITEentity(gameStage.sceneLoader.getRoot(), tempItemC);
+        gameStage.sceneLoader.getEngine().addEntity(bugE);
         return bugE;
     }
 
