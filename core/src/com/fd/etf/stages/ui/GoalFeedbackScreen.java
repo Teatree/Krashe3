@@ -58,7 +58,7 @@ public class GoalFeedbackScreen {
     private static final int GOAL_STEP_Y = 110;
 
     private static final int GOAL_INIT_POS_X = 501;
-    private static final int GOAL_INIT_POS_Y = 570;
+    private static final int GOAL_INIT_POS_Y = 600;
     private static final float GOAL_SCALE = 1f;
 
     private static final float INITIAL_DELAY = 0.7f;
@@ -395,7 +395,7 @@ public class GoalFeedbackScreen {
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
             if (!goalsLabelComp.text.toString().equals(gameStage.gameScript.fpc.level.name)) {
-                EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabel.getComponent(TransformComponent.class).x,
+                EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabel.getComponent(TransformComponent.class).x+600,
                         goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(),
                         gameStage.gameScript.fpc.level.name);
