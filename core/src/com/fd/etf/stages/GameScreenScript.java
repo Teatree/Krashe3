@@ -410,11 +410,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (gameStage.gameScript.fpc.havePhoenix()) {
             TransformComponent tc = phoenixIcon.getComponent(TransformComponent.class);
             if (gameStage.gameScript.fpc.haveBugJuiceDouble()) {
-                tc.x = 78;
-                tc.y = 637;
+                tc.x = 95;
+                tc.y = 663;
             } else {
                 tc.x = -24;
-                tc.y = 637;
+                tc.y = 663;
             }
             phoenixIcon.getComponent(ZIndexComponent.class).setZIndex(150);
             phoenixIcon.getComponent(TintComponent.class).color.a = 1;
