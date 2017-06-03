@@ -145,6 +145,7 @@ public class Settings extends AbstractDialog {
                         checkSecondaryDialog();
                         if (!isSecondDialogOpen.get() && isActive) {
                             dialog.show(BasicDialog.TYPE_RESET);
+                            PauseDialog.goalsUpdate = true;
                         }
                     }
                 });
