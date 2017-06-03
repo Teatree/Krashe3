@@ -220,7 +220,7 @@ public class GameStage extends Stage {
         gameScript.fpc.level.resetNewInfo();
 
         gameScript.fpc.currentPet = null;
-        gameScript.fpc.upgrades = new HashMap<>();
+//        gameScript.fpc.upgrades = new HashMap<>();
 
         gameScript.fpc.level.difficultyLevel = 0;
         gameScript.fpc.level.resetNewInfo();
