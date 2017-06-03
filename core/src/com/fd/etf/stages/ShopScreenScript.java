@@ -294,7 +294,6 @@ public class ShopScreenScript implements IScript {
             Entity itemIcon = initSoftCurrencyShopItem(vc);
             itemIcon.getComponent(ZIndexComponent.class).setZIndex(200);
 
-
             final TransformComponent tc = getNextBagPos(previousTc, bagEntity.getComponent(DimensionsComponent.class), allSoftItems.indexOf(vc) == 0);
             tc.scaleX = 0.9f;
             tc.scaleY = 0.9f;
