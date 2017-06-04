@@ -161,7 +161,7 @@ public class PetSystem extends IteratingSystem {
                 e.getComponent(PetComponent.class).petCannon.remove(ActionComponent.class);
 
                 if (e.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = new ActionComponent();
                     e.add(ac);
                 }
                 Actions.checkInit();
@@ -336,7 +336,7 @@ public class PetSystem extends IteratingSystem {
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
                 if (entity.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = new ActionComponent();
                     entity.add(ac);
                 }
                 Actions.checkInit();
@@ -378,7 +378,7 @@ public class PetSystem extends IteratingSystem {
                 pc.petCannon.remove(ActionComponent.class);
 
                 if (entity.getComponent(ActionComponent.class) == null) {
-                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = new ActionComponent();
                     entity.add(ac);
                 }
                 Actions.checkInit();

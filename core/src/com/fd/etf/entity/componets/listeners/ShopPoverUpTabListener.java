@@ -80,7 +80,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
     }
 
     private static void shiftHCsections() {
-        ActionComponent ac = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(
                 Actions.moveTo(ShopScreenScript.INIT_HC_ITEMS_X, shopScreen.hcSectionE.getComponent(TransformComponent.class).y, 0.7f, Interpolation.exp10));
@@ -88,7 +88,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
     }
 
     private static void shiftTouchZone() {
-        ActionComponent acTouchZone = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent acTouchZone = new ActionComponent();
         Actions.checkInit();
 
         acTouchZone.dataArray.add(
@@ -100,7 +100,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
         ShopScreenScript.canChangeTabs = false;
         float bagsShift = 73 - shopScreen.bags.get(0).getComponent(TransformComponent.class).x;
         for (Entity bag : shopScreen.bags) {
-            ActionComponent a = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent a = new ActionComponent();
             Actions.checkInit();
 
             a.dataArray.add(
@@ -118,7 +118,7 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
         for (Entity icon : ShopScreenScript.itemIcons.values()) {
             ActionComponent a = icon.getComponent(ActionComponent.class);
             if (a == null) {
-                a = shopScreen.gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                a = new ActionComponent();
                 Actions.checkInit();
                 icon.add(a);
             }

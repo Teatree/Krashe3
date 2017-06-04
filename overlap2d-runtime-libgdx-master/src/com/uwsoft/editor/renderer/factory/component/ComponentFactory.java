@@ -20,7 +20,7 @@ package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.data.MainItemVO;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
@@ -35,7 +35,7 @@ import java.util.HashSet;
 public abstract class ComponentFactory {
 
     protected IResourceRetriever rm;
-    protected PooledEngine engine;
+    protected Engine engine;
 
     protected ComponentMapper<NodeComponent> nodeComponentMapper;
 
@@ -48,7 +48,7 @@ public abstract class ComponentFactory {
         injectDependencies( rm);
     }
 
-    public ComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+    public ComponentFactory(Engine engine, IResourceRetriever rm) {
         this();
         this.engine = engine;
         injectDependencies( rm);
@@ -70,7 +70,7 @@ public abstract class ComponentFactory {
     }
 
 	protected MainItemComponent createMainItemComponent(Entity entity, MainItemVO vo, int entityType) {
-        MainItemComponent component = engine.createComponent(MainItemComponent.class);
+        MainItemComponent component = new MainItemComponent();
         component.customVars = vo.customVars;
         component.uniqueId = vo.uniqueId;
         component.itemIdentifier = vo.itemIdentifier;
@@ -86,7 +86,7 @@ public abstract class ComponentFactory {
     }
 
     protected TransformComponent createTransformComponent(Entity entity, MainItemVO vo, DimensionsComponent dimensionsComponent) {
-        TransformComponent component = engine.createComponent(TransformComponent.class);
+        TransformComponent component = new TransformComponent();
         component.rotation = vo.rotation;
         component.scaleX = vo.scaleX;
         component.scaleY = vo.scaleY;
@@ -107,7 +107,7 @@ public abstract class ComponentFactory {
     protected abstract DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo);
 
     protected TintComponent createTintComponent(Entity entity, MainItemVO vo) {
-        TintComponent component = engine.createComponent(TintComponent.class);
+        TintComponent component = new TintComponent();
         component.color.set(vo.tint[0], vo.tint[1], vo.tint[2], vo.tint[3]);
 
         entity.add(component);
@@ -116,7 +116,7 @@ public abstract class ComponentFactory {
     }
 
     protected ZIndexComponent createZIndexComponent(Entity entity, MainItemVO vo) {
-        ZIndexComponent component = engine.createComponent(ZIndexComponent.class);
+        ZIndexComponent component = new ZIndexComponent();
 
         if(vo.layerName == "" || vo.layerName == null) vo.layerName = "Default";
 
@@ -129,13 +129,13 @@ public abstract class ComponentFactory {
     }
 
     protected ScriptComponent createScriptComponent(Entity entity, MainItemVO vo) {
-        ScriptComponent component = engine.createComponent(ScriptComponent.class);
+        ScriptComponent component = new ScriptComponent();
         entity.add(component);
         return component;
     }
 
     protected ParentNodeComponent createParentNodeComponent(Entity root, Entity entity) {
-        ParentNodeComponent component = engine.createComponent(ParentNodeComponent.class);
+        ParentNodeComponent component = new ParentNodeComponent();
         component.parentEntity = root;
         entity.add(component);
 

@@ -101,7 +101,7 @@ public class PromoWindow extends AbstractDialog {
 //        iconE.getComponent(TransformComponent.class).x = 320;
 //        iconE.getComponent(TransformComponent.class).y = 420;
 
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveBy(0, -1130, 2, Interpolation.exp10Out));
         promoWindowE.add(ac);
@@ -164,26 +164,26 @@ public class PromoWindow extends AbstractDialog {
     }
 
     public void checkAndClose(){
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(promoWindowE.getComponent(TransformComponent.class).x, PREVIEW_Y, 0.8f, Interpolation.exp10));
         promoWindowE.add(ac);
 
         if(petPromoE != null) {
-            ActionComponent acIconz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent acIconz = new ActionComponent();
             Actions.checkInit();
             acIconz.dataArray.add(Actions.moveTo(petPromoE.getComponent(TransformComponent.class).x, ICON_Y, 0.8f, Interpolation.exp10));
             petPromoE.add(acIconz);
         }
 
         if(offerIconE != null) {
-            ActionComponent acIconz2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent acIconz2 = new ActionComponent();
             Actions.checkInit();
             acIconz2.dataArray.add(Actions.moveTo(offerIconE.getComponent(TransformComponent.class).x, ICON_Y, 0.8f, Interpolation.exp10));
             offerIconE.add(acIconz2);
         }
 
-        ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac2 = new ActionComponent();
         ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
         shadowE.add(ac2);
     }

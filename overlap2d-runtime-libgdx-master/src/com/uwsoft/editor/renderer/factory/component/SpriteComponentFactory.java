@@ -18,6 +18,7 @@
 
 package com.uwsoft.editor.renderer.factory.component;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -39,7 +40,7 @@ import java.util.HashMap;
  */
 public class SpriteComponentFactory extends ComponentFactory {
 
-    public SpriteComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+    public SpriteComponentFactory(Engine engine, IResourceRetriever rm) {
         super( engine, rm);
     }
 
@@ -53,7 +54,7 @@ public class SpriteComponentFactory extends ComponentFactory {
 
     @Override
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component =  engine.createComponent(DimensionsComponent.class);
+        DimensionsComponent component =  new DimensionsComponent();
 
         SpriteAnimationVO sVo = (SpriteAnimationVO) vo;
         Array<TextureAtlas.AtlasRegion> regions = rm.getSpriteAnimation(sVo.animationName).getRegions();
@@ -104,7 +105,7 @@ public class SpriteComponentFactory extends ComponentFactory {
 
         stateComponent.set(spriteAnimationComponent);
 
-        TextureRegionComponent textureRegionComponent = engine.createComponent(TextureRegionComponent.class);
+        TextureRegionComponent textureRegionComponent = new TextureRegionComponent();
         textureRegionComponent.region = regions.get(0);
         
         entity.add(textureRegionComponent);

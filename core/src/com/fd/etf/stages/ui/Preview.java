@@ -337,25 +337,25 @@ public class Preview extends AbstractDialog {
         if (jump) {
             addShadow(0.8f);
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
-            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, INFO_TAG_Y, 1f, Interpolation.exp10Out));
             infoTag.add(ac);
 
             btnClose.getComponent(TransformComponent.class).x = BTNZ_CLOSE_X;
             btnClose.getComponent(TransformComponent.class).y = 1200;
-            ActionComponent acClose = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent acClose = new ActionComponent();
             Actions.checkInit();
             acClose.dataArray.add(Actions.moveTo(BTNZ_CLOSE_X, BTNZ_CLOSE_Y, 1f, Interpolation.exp10Out));
             btnClose.add(acClose);
 
-            ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent acButtonz = new ActionComponent();
             Actions.checkInit();
             acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, BTNZ_Y, 1f, Interpolation.exp10Out));
             buttonz.add(acButtonz);
 
         } else {
-            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(INFO_TAG_X, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
             infoTag.add(ac);
@@ -403,7 +403,7 @@ public class Preview extends AbstractDialog {
                     getChild(LBL_DESC).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
 
-            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.sequence(Actions.delay(0.5f),
                     Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveTo(434, 51, 1, Interpolation.exp5),
@@ -514,6 +514,8 @@ public class Preview extends AbstractDialog {
             Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
             gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
             TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
+            ZIndexComponent newZ = itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class);
+            iconBagClone.add(newZ);
             gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
             itemIcons.put(vc.shopIcon, iconBagClone);
             return oldTc;
@@ -617,7 +619,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (animFinished() && isPrevBtnActive(vc)) {
-                            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -690,7 +692,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (isNextBtnActive(vc) && animFinished()) {
-                            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                            ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
@@ -735,18 +737,18 @@ public class Preview extends AbstractDialog {
             float currentYpos = infoTag.getComponent(TransformComponent.class).y;
             if (currentYpos <= INFO_TAG_Y + 30 || currentYpos >= 800) {
                 if (isPreviewOn.get()) {
-                    ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac = new ActionComponent();
                     Actions.checkInit();
                     ac.dataArray.add(Actions.moveBy(0, 1800, 1f, Interpolation.exp10));
                     infoTag.add(ac);
                     btnClose.add(ac);
 
-                    ActionComponent acButtonz = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent acButtonz = new ActionComponent();
                     Actions.checkInit();
                     acButtonz.dataArray.add(Actions.moveTo(BTNZ_X, -200, 0.4f, Interpolation.exp10));
                     buttonz.add(acButtonz);
 
-                    ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                    ActionComponent ac2 = new ActionComponent();
                     ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
                     shadowE.add(ac2);
                 }

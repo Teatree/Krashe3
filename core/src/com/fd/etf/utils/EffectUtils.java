@@ -118,7 +118,7 @@ public class EffectUtils {
         petProjectileE.getComponent(ZIndexComponent.class).setZIndex(200);
 
         TransformComponent tc = petProjectileE.getComponent(TransformComponent.class);
-        petProjectileE.add(gameStage.sceneLoader.engine.createComponent(PetProjectileComponent.class));
+        petProjectileE.add(new PetProjectileComponent());
         tc.x = x;
         tc.y = y;
 

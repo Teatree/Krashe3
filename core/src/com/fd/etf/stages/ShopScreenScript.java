@@ -471,7 +471,7 @@ public class ShopScreenScript implements IScript {
     }
 
     public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc, boolean firstDot) {
-        TransformComponent tc = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+        TransformComponent tc = new TransformComponent();
 
         if (previous == null) {
             tc.x = FIRST_BAG_X;
@@ -556,7 +556,7 @@ public class ShopScreenScript implements IScript {
     public void scrollBagsOnePageLeft() {
         if (canMoveBagsLeft()) {
             for (Entity bag : bags) {
-                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = new ActionComponent();
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(bag.getComponent(TransformComponent.class).x + SCCREEN_WIDTH,
@@ -565,7 +565,7 @@ public class ShopScreenScript implements IScript {
                 bag.add(a);
             }
             for (Entity icon : itemIcons.values()) {
-                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = new ActionComponent();
                 Actions.checkInit();
 
                 a.dataArray.add(
@@ -608,7 +608,7 @@ public class ShopScreenScript implements IScript {
     public void scrollBagsOnePageRight() {
         if (canMoveBagsRight()) {
             for (Entity bag : bags) {
-                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = new ActionComponent();
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(bag.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
@@ -617,7 +617,7 @@ public class ShopScreenScript implements IScript {
                 bag.add(a);
             }
             for (Entity icon : itemIcons.values()) {
-                ActionComponent a = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent a = new ActionComponent();
                 Actions.checkInit();
                 a.dataArray.add(
                         Actions.moveTo(icon.getComponent(TransformComponent.class).x - SCCREEN_WIDTH,
@@ -681,7 +681,7 @@ public class ShopScreenScript implements IScript {
         if (shouldReload) {
             for (Map.Entry<String, Entity> entry : itemIcons.entrySet()) {
 
-                TransformComponent oldIconTC = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+                TransformComponent oldIconTC = new TransformComponent();
                 oldIconTC.x = entry.getValue().getComponent(TransformComponent.class).x;
                 oldIconTC.y = entry.getValue().getComponent(TransformComponent.class).y;
 

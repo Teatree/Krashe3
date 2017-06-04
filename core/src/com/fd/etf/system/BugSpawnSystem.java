@@ -117,7 +117,7 @@ public class BugSpawnSystem extends EntitySystem {
     }
 
     private TransformComponent getPos(BugComponent bc) {
-        TransformComponent transformComponent = gameStage.sceneLoader.engine.createComponent(TransformComponent.class);
+        TransformComponent transformComponent = new TransformComponent();
         transformComponent.x = rand.nextInt(SPAWN_MAX_X - SPAWN_MIN_X) + SPAWN_MIN_X;
         transformComponent.y = rand.nextInt(SPAWN_MAX_Y - SPAWN_MIN_Y) + SPAWN_MIN_Y;
         bc.endX = 1450;

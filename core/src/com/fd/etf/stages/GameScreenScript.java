@@ -305,7 +305,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
 
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0;
-        ActionComponent ac3 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac3 = new ActionComponent();
         ac3.dataArray.add(Actions.sequence(
                 Actions.delay(1f),
                 Actions.fadeIn(2f, Interpolation.exp5, 0.5f)));
@@ -716,7 +716,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
         if (ac == null) {
-            ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ac = new ActionComponent();
             Actions.checkInit();
             loseFeedback.add(ac);
         }

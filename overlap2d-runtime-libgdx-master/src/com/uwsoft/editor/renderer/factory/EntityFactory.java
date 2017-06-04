@@ -3,7 +3,7 @@ package com.uwsoft.editor.renderer.factory;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.commons.IExternalItemType;
@@ -41,7 +41,7 @@ public class EntityFactory {
 
     private HashMap<Integer, Entity> entities = new HashMap<Integer, Entity>();
 
-    public PooledEngine engine;
+    public Engine engine;
 
     public ComponentFactory getCompositeComponentFactory() {
         return compositeComponentFactory;
@@ -51,7 +51,7 @@ public class EntityFactory {
         return (SpriteComponentFactory) spriteComponentFactory;
     }
 
-    public EntityFactory(PooledEngine engine, IResourceRetriever rm) {
+    public EntityFactory(Engine engine, IResourceRetriever rm) {
 
         this.engine = engine;
         this.rm = rm;
@@ -81,7 +81,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, SimpleImageVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         simpleImageComponentFactory.createComponents(root, entity, vo);
 
@@ -92,7 +92,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, Image9patchVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         ninePatchComponentFactory.createComponents(root, entity, vo);
 
@@ -103,7 +103,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, LabelVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         labelComponentFactory.createComponents(root, entity, vo);
 
@@ -114,7 +114,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, ParticleEffectVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         particleEffectComponentFactory.createComponents(root, entity, vo);
 
@@ -126,7 +126,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, SpineVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         ComponentFactory factory = externalFactories.get(SPINE_TYPE);
         if (factory != null) {
@@ -139,7 +139,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, SpriteAnimationVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         spriteComponentFactory.createComponents(root, entity, vo);
 
@@ -150,7 +150,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, SpriterVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         spriterComponentFactory.createComponents(root, entity, vo);
 
@@ -161,7 +161,7 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, CompositeItemVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         compositeComponentFactory.createComponents(root, entity, vo);
 
@@ -172,7 +172,7 @@ public class EntityFactory {
 
     public Entity createSPRITERentity(Entity root, CompositeItemVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         spriterComponentFactory.createComponents(root, entity, vo.composite.sSpriterAnimations.get(0));
         postProcessEntity(entity);
@@ -181,7 +181,7 @@ public class EntityFactory {
     }
 
     public Entity createSPRITEentity(Entity root, CompositeItemVO vo) {
-        Entity entity = engine.createEntity();
+        Entity entity = new Entity();
         spriteComponentFactory.createComponents(root, entity, vo.composite.sSpriteAnimations.get(0));
         postProcessEntity(entity);
         return entity;
@@ -189,7 +189,8 @@ public class EntityFactory {
 
     public Entity createEntity(Entity root, ColorPrimitiveVO vo) {
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
+
         colorPrimitiveFactory.createComponents(root, entity, vo);
         postProcessEntity(entity);
 
@@ -201,13 +202,13 @@ public class EntityFactory {
         CompositeItemVO vo = new CompositeItemVO();
         vo.composite = compositeVo;
 
-        Entity entity = engine.createEntity();
+		Entity entity = new Entity();
 
         compositeComponentFactory.createComponents(null, entity, vo);
         CompositeTransformComponent compositeTransform = new CompositeTransformComponent();
-        TransformComponent transform = engine.createComponent(TransformComponent.class);
+		TransformComponent transform = new TransformComponent();
 
-        ViewPortComponent viewPortComponent = engine.createComponent(ViewPortComponent.class);
+		ViewPortComponent viewPortComponent = new ViewPortComponent();
         viewPortComponent.viewPort = viewport;
 
         //TODO: not sure if this line is okay

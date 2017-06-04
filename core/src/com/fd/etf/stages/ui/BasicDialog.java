@@ -147,7 +147,7 @@ public class BasicDialog extends AbstractDialog {
                 break;
             }
         }
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         dialogE.add(ac);

@@ -205,7 +205,7 @@ public class PauseDialog extends AbstractDialog {
         pauseDialogE.getComponent(TransformComponent.class).y = PAUSE_Y_UP;
         pauseDialogE.getComponent(ZIndexComponent.class).setZIndex(100);
 
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(popupX, PAUSE_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         pauseDialogE.add(ac);
@@ -331,7 +331,7 @@ public class PauseDialog extends AbstractDialog {
                     lblPauseTimer.getComponent(LabelComponent.class).text.capacity(),
                     "");
 
-            ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac2 = new ActionComponent();
             ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
             shadowE.add(ac2);
             pauseCounter = 10;
@@ -385,14 +385,14 @@ public class PauseDialog extends AbstractDialog {
     public void close (Entity e){
         if (isActive) {
             isActive = false;
-            ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+            ActionComponent ac = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.moveTo(e.getComponent(TransformComponent.class).x, HIDE_Y, 1, Interpolation.exp10));
             e.add(ac);
             pauseCounter = 10;
 
             if(!gameStage.currentScreen.equals("Game")) {
-                ActionComponent ac2 = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+                ActionComponent ac2 = new ActionComponent();
                 ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
                 shadowE.add(ac2);
             }else{

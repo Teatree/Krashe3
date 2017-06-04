@@ -1,7 +1,7 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -13,25 +13,25 @@ import com.uwsoft.editor.renderer.data.ResolutionEntryVO;
 import com.uwsoft.editor.renderer.factory.EntityFactory;
 import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 
-public class LabelComponentFactory extends ComponentFactory{
-	
-	private static int labelDefaultSize = 12;
+public class LabelComponentFactory extends ComponentFactory {
 
-	public LabelComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+    private static int labelDefaultSize = 12;
+
+    public LabelComponentFactory(Engine engine, IResourceRetriever rm) {
         super(engine, rm);
-	}
+    }
 
-	@Override
-	public void createComponents(Entity root, Entity entity, MainItemVO vo) {
-		 createCommonComponents(entity, vo, EntityFactory.LABEL_TYPE);
-		 createParentNodeComponent(root, entity);
-		 createNodeComponent(root, entity);
-		 createLabelComponent(entity, (LabelVO) vo);
-	}
+    @Override
+    public void createComponents(Entity root, Entity entity, MainItemVO vo) {
+        createCommonComponents(entity, vo, EntityFactory.LABEL_TYPE);
+        createParentNodeComponent(root, entity);
+        createNodeComponent(root, entity);
+        createLabelComponent(entity, (LabelVO) vo);
+    }
 
-	@Override
-	protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component =engine.createComponent(DimensionsComponent.class);
+    @Override
+    protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
+        DimensionsComponent component = new DimensionsComponent();
         component.height = ((LabelVO) vo).height;
         component.width = ((LabelVO) vo).width;
 
@@ -41,7 +41,7 @@ public class LabelComponentFactory extends ComponentFactory{
 
     protected LabelComponent createLabelComponent(Entity entity, LabelVO vo) {
 //    	LabelComponent component = new LabelComponent(vo.text, generateStyle(rm, vo.style, vo.size));
-    	LabelComponent component = new LabelComponent(vo.text, generateStyle(rm, vo.style, vo.size, vo.tint));
+        LabelComponent component = new LabelComponent(vo.text, generateStyle(rm, vo.style, vo.size, vo.tint));
         component.setText(vo.text);
         component.setStyle(generateStyle(rm, vo.style, vo.size, vo.tint));
         component.fontName = vo.style;
@@ -52,19 +52,19 @@ public class LabelComponentFactory extends ComponentFactory{
         ResolutionEntryVO resolutionEntryVO = rm.getLoadedResolution();
         float multiplier = resolutionEntryVO.getMultiplier(rm.getProjectVO().originalResolution);
 
-        component.setFontScale(multiplier/projectInfoVO.pixelToWorld);
+        component.setFontScale(multiplier / projectInfoVO.pixelToWorld);
 
         entity.add(component);
         return component;
     }
-    
-    
+
+
     public static LabelStyle generateStyle(IResourceRetriever rManager, String fontName, int size, float[] tint) {
 
         if (size == 0) {
             size = labelDefaultSize;
         }
-        return new LabelStyle(rManager.getBitmapFont(fontName, size), new Color(1,1,1,1));
+        return new LabelStyle(rManager.getBitmapFont(fontName, size), new Color(1, 1, 1, 1));
     }
 
 }

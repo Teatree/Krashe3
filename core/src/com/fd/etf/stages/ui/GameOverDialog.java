@@ -51,7 +51,7 @@ public class GameOverDialog extends AbstractDialog {
         isActive = true;
         isGameOver.set(true);
 
-        ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+        ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(GAME_OVER_X, GAME_OVER_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         gameOverDialogE.add(ac);
@@ -145,7 +145,7 @@ public class GameOverDialog extends AbstractDialog {
             final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
 
-//            final ActionComponent ac = gameStage.sceneLoader.engine.createComponent(ActionComponent.class);
+//            final ActionComponent ac = new ActionComponent.class);
 //            Actions.checkInit();
 //            ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
 //            gameOverTimerLbl.add(ac);

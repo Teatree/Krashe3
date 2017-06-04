@@ -245,7 +245,7 @@ public class GameStage extends Stage {
                 script.getMegaFlower().getComponent(TransformComponent.class).y = -1000;
                 sceneLoader.engine.removeEntity(script.getMegaFlower());
 
-                newFlower = sceneLoader.entityFactory.engine.createEntity();
+                newFlower = new Entity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newFlower, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newFlower);
@@ -259,7 +259,7 @@ public class GameStage extends Stage {
                 script.getMegaLeaves().getComponent(TransformComponent.class).y = -1000;
                 sceneLoader.engine.removeEntity(script.getMegaLeaves());
 
-                newLeaves = sceneLoader.entityFactory.engine.createEntity();
+                newLeaves = new Entity();
                 sceneLoader.entityFactory.getSpriterComponentFactory()
                         .createComponents(sceneLoader.getRoot(), newLeaves, sVO);
                 sceneLoader.entityFactory.postProcessEntity(newLeaves);

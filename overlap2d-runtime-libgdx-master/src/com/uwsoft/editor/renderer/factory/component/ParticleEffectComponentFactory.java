@@ -19,7 +19,7 @@
 package com.uwsoft.editor.renderer.factory.component;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Rectangle;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
@@ -36,7 +36,7 @@ import com.uwsoft.editor.renderer.resources.IResourceRetriever;
 public class ParticleEffectComponentFactory extends ComponentFactory {
 
 
-    public ParticleEffectComponentFactory(PooledEngine engine, IResourceRetriever rm) {
+    public ParticleEffectComponentFactory(Engine engine, IResourceRetriever rm) {
         super( engine, rm);
     }
 
@@ -50,7 +50,7 @@ public class ParticleEffectComponentFactory extends ComponentFactory {
 
     @Override
     protected DimensionsComponent createDimensionsComponent(Entity entity, MainItemVO vo) {
-        DimensionsComponent component = engine.createComponent(DimensionsComponent.class);
+        DimensionsComponent component = new DimensionsComponent();
 
         ProjectInfoVO projectInfoVO = rm.getProjectVO();
         float boundBoxSize = 70f;

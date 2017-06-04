@@ -36,14 +36,14 @@ public class ETFSceneLoader {
 
     public Entity rootEntity;
     public SceneVO sceneVO;
-    public PooledEngine engine = null;
+    public Engine engine = null;
 
     public EntityFactory entityFactory;
     public Overlap2dRenderer renderer;
     public ETFResourceManager rm = null;
     private float pixelsPerWU = 1;
 
-    public Map<String, PooledEngine> engineByScene = new HashMap<>();
+    public Map<String, Engine> engineByScene = new HashMap<>();
     public Map<String, Entity> rootEntityByScene = new HashMap<>();
 
 
@@ -51,7 +51,7 @@ public class ETFSceneLoader {
         this.rm = new ETFResourceManager();
         rm.initAllResources();
 
-        this.engine = new PooledEngine();
+        this.engine = new Engine();
         for (String sceneName : rm.loadedSceneVOs.keySet()) {
             if ((sceneName.equals(MENU_SCENE))) {
                 loadScene(sceneName, viewport);
@@ -83,7 +83,7 @@ public class ETFSceneLoader {
 
         this.engine = engineByScene.get(sceneName);
         if (engine == null) {
-            this.engine = new PooledEngine();
+            this.engine = new Engine();
         } else {
             engine.removeEntity(rootEntity);
         }
