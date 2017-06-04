@@ -50,9 +50,9 @@ public class Upgrade extends ShopItem{
         phoenix.cost = 13;
         phoenix.costDisc = 9;
         phoenix.disc = 0;
-        phoenix.name = "PHOENIX";
+        phoenix.name = "EXTRA~LIFE";
         phoenix.bought = false;
-        phoenix.description = "You will not die! ... ";
+        phoenix.description = "You get 1 extra life\nfor every time you play";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
         phoenix.sku_discount = "phoenix";
@@ -67,9 +67,9 @@ public class Upgrade extends ShopItem{
         bjd.cost = 13;
         bjd.costDisc = 9;
         bjd.disc = 0;
-        bjd.name = "DOUBLE~BUG JUICE";
+        bjd.name = "DOUBLE~COINS";
         bjd.bought = false;
-        bjd.description = "more juice \\0/";
+        bjd.description = "Twice the coins\nfrom eating bugs";
         bjd.enabled = false;
         bjd.currencyType = HARD;
         bjd.sku = "bj_upgrade";

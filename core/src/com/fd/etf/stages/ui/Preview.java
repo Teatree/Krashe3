@@ -253,7 +253,7 @@ public class Preview extends AbstractDialog {
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
-        if (vc.canBuy(gameStage)) {
+        if (vc.canBuy(gameStage) ) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lblNotEnough.remove(ActionComponent.class);
             lblNotEnough.getComponent(TintComponent.class).color.a = 0;
