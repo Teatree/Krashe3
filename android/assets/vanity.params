@@ -29,7 +29,7 @@
 		class: java.util.HashMap
 	},
 	shopIcon: itembricks,
-	name: Red~brickpot,
+	name: Red~brick_pot,
 	cost: 200,
 	leaves: true
 },
@@ -56,7 +56,7 @@
 	shopIcon: itemwoodenpot,
 	name: Wooden~bucket,
 	cost: 320,
-	description: Part_of_Scarecrow\ncollection,
+	description: Part_of_Scarecrow~collection,
 	leaves: true
 },
 {

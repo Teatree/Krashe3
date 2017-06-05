@@ -48,12 +48,30 @@ public class Preview extends AbstractDialog {
     private static final int HIDE_INFO_TAG_LEFT = -1000;
 
     private static final String LBL_DESC = "tag_lbl_desc";
+    private static final String LBL_DESC_21 = "tag_lbl_desc_21";
+    private static final String LBL_DESC_22 = "tag_lbl_desc_22";
+    private static final String LBL_DESC_31 = "tag_lbl_desc_31";
+    private static final String LBL_DESC_32 = "tag_lbl_desc_32";
+    private static final String LBL_DESC_33 = "tag_lbl_desc_33";
+    private static final String LBL_DESC_41 = "tag_lbl_desc_41";
+    private static final String LBL_DESC_42 = "tag_lbl_desc_42";
+    private static final String LBL_DESC_43 = "tag_lbl_desc_43";
+    private static final String LBL_DESC_44 = "tag_lbl_desc_44";
     private static final String IMG_SEC_BUBBLE = "img_sec_bubble";
     private static final float HIDE_INFO_TAG_DURATION = 0.3f;
     private static final String BTN_INACTIVE = "Gray";
     private static final String TAG_BUTTONZ_LIB = "tag_buttonz_lib";
     public static final String NEW_LINE_SIGN = "~";
     public Entity lbl_desc;
+    public Entity lbl_desc_21;
+    public Entity lbl_desc_22;
+    public Entity lbl_desc_31;
+    public Entity lbl_desc_32;
+    public Entity lbl_desc_33;
+    public Entity lbl_desc_41;
+    public Entity lbl_desc_42;
+    public Entity lbl_desc_43;
+    public Entity lbl_desc_44;
     public Entity lblPrice;
     public Entity lblPriceSh;
     public Entity lblTitle;
@@ -113,6 +131,15 @@ public class Preview extends AbstractDialog {
     public void init() {
         loadPreviewFromLib();
         lbl_desc = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC);
+        lbl_desc_21 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_21);
+        lbl_desc_22 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_22);
+        lbl_desc_31 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_31);
+        lbl_desc_32 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_32);
+        lbl_desc_33 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_33);
+        lbl_desc_41 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_41);
+        lbl_desc_42 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_42);
+        lbl_desc_43 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_43);
+        lbl_desc_44 = infoTag.getComponent(NodeComponent.class).getChild(LBL_DESC_44);
         lblTitle = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME);
         lblTitleLine2 = infoTag.getComponent(NodeComponent.class).getChild(LBL_ITEM_NAME_2);
         lblPrice = buttonz.getComponent(NodeComponent.class).getChild(LBL_PRICE);
@@ -187,9 +214,69 @@ public class Preview extends AbstractDialog {
 
     public void setLabelsValues() {
         if (vc.description != null) {
-            lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
+//            lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
             if (lbl_desc.getComponent(LabelComponent.class).text.toString().contains(SPACE_SIGN)) {
                 lbl_desc.getComponent(LabelComponent.class).text.replace(SPACE_SIGN, " ");
+            }
+
+            if (vc.description.contains(NEW_LINE_SIGN)) {
+                String[] lines = vc.description.split(NEW_LINE_SIGN);
+                if (lines.length == 2) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, lines[1]);
+                } else if (lines.length == 3) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_31.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_32.getComponent(LabelComponent.class).text.length, lines[1]);
+                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_33.getComponent(LabelComponent.class).text.length, lines[2]);
+                } else if (lines.length == 4) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_41.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_42.getComponent(LabelComponent.class).text.length, lines[1]);
+                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, lines[2]);
+                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, lines[3]);
+                }
+            }
+            else {
+                lbl_desc.getComponent(TransformComponent.class).x = 483;
+                lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
             }
         }
         if (vc.collection != null) {
@@ -199,6 +286,66 @@ public class Preview extends AbstractDialog {
             lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.collection);
             if (lbl_desc.getComponent(LabelComponent.class).text.toString().contains(SPACE_SIGN)) {
                 lbl_desc.getComponent(LabelComponent.class).text.replace(SPACE_SIGN, " ");
+            }
+
+            if (vc.collection.contains(NEW_LINE_SIGN)) {
+                String[] lines = vc.collection.split(NEW_LINE_SIGN);
+                if (lines.length == 2) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, lines[1]);
+                } else if (lines.length == 3) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_31.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_32.getComponent(LabelComponent.class).text.length, lines[1]);
+                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_33.getComponent(LabelComponent.class).text.length, lines[2]);
+                } else if (lines.length == 4) {
+                    lbl_desc.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                    lbl_desc_41.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_42.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_43.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_44.getComponent(TransformComponent.class).x = 483;
+                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_41.getComponent(LabelComponent.class).text.length, lines[0]);
+                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_42.getComponent(LabelComponent.class).text.length, lines[1]);
+                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, lines[2]);
+                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, lines[3]);
+                }
+            }
+            else if(!vc.collection.contains(NEW_LINE_SIGN)) {
+                lbl_desc.getComponent(TransformComponent.class).x = 483;
+                lbl_desc_21.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_22.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_31.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_32.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_33.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_41.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_42.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_43.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc_44.getComponent(TransformComponent.class).x = 1500;
+                lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
             }
         }
 
@@ -396,22 +543,33 @@ public class Preview extends AbstractDialog {
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TransformComponent.class).x = 100;
             infoTag.getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).getComponent(TransformComponent.class).y = 51;
-            infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(TintComponent.class).color.a = 0;
             infoTag.getComponent(NodeComponent.class).
                     getChild(LBL_DESC).getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
 
+            lbl_desc_21.getComponent(TransformComponent.class).x = 100;
+            lbl_desc_21.getComponent(TintComponent.class).color.a = 0;
+            lbl_desc_21.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
+            lbl_desc_22.getComponent(TransformComponent.class).x = 100;
+            lbl_desc_22.getComponent(TintComponent.class).color.a = 0;
+            lbl_desc_22.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(NodeComponent.class).
+                    getChild(IMG_SEC_BUBBLE).getComponent(ZIndexComponent.class).getZIndex()+1);
+
             ActionComponent ac = new ActionComponent();
+            ActionComponent ac2 = new ActionComponent();
             Actions.checkInit();
             ac.dataArray.add(Actions.sequence(Actions.delay(0.5f),
                     Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveTo(434, 51, 1, Interpolation.exp5),
                             Actions.scaleTo(1, 1, 1f, Interpolation.exp5))));
+            ac2.dataArray.add(Actions.sequence(Actions.delay(0.5f),
+                    Actions.parallel(Actions.fadeIn(1.5f, Interpolation.exp5), Actions.moveBy(734, 0, 1, Interpolation.exp5),
+                            Actions.scaleTo(1, 1, 1f, Interpolation.exp5))));
             infoTag.getComponent(NodeComponent.class).
                     getChild(IMG_SEC_BUBBLE).add(ac);
-            infoTag.getComponent(NodeComponent.class).
-                    getChild(LBL_DESC).add(ac);
+            lbl_desc_21.add(ac2);
+            lbl_desc_22.add(ac2);
             canPlayDescAni = false;
         }
     }

@@ -397,7 +397,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         Entity bjIcon = gameItem.getChild(DOUBLE_BJ_ICON).getEntity();
         if (gameStage.gameScript.fpc.haveBugJuiceDouble()) {
             TransformComponent tc = bjIcon.getComponent(TransformComponent.class);
-                tc.x = -10;
+                tc.x = 0;
                 tc.y = 640;
             bjIcon.getComponent(ZIndexComponent.class).setZIndex(150);
         } else {
@@ -410,10 +410,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (gameStage.gameScript.fpc.havePhoenix()) {
             TransformComponent tc = phoenixIcon.getComponent(TransformComponent.class);
             if (gameStage.gameScript.fpc.haveBugJuiceDouble()) {
-                tc.x = 95;
+                tc.x = 105;
                 tc.y = 663;
             } else {
-                tc.x = -24;
+                tc.x = 0;
                 tc.y = 663;
             }
             phoenixIcon.getComponent(ZIndexComponent.class).setZIndex(150);
