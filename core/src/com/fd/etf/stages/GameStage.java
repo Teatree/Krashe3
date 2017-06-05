@@ -189,11 +189,11 @@ public class GameStage extends Stage {
     }
 
     public void update() {
-        try {
+//        try {
             sceneLoader.getEngine().update(Gdx.graphics.getDeltaTime());
-        }catch (Exception e){
-            System.err.println(e);
-        }
+//        }catch (Exception e){
+//            System.err.println(e);
+//        }
     }
 
     public void resetAllProgress() {

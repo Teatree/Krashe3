@@ -338,7 +338,7 @@ public class Showcase {
                     ResultScreenScript.isWasShowcase = true;
                     ShopScreenScript.shouldReloadIcons.add(showCaseVanity);
 //                    if (gameStage.shopScript != null) {
-//                        gameStage.shopScript.preview.changeBagIcon(showCaseVanity);
+//                        gameStage.shopScript.changeBagIcon(showCaseVanity);
                         ShopScreenScript.shouldReload = true;
 //                    }
                     isCelebrating = true;
