@@ -336,9 +336,11 @@ public class Showcase {
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
                     showCaseVanity.buyAndUse(gameStage);
                     ResultScreenScript.isWasShowcase = true;
-                    if (gameStage.shopScript != null) {
-                        gameStage.shopScript.preview.changeBagIcon(showCaseVanity);
-                    }
+                    ShopScreenScript.shouldReloadIcons.add(showCaseVanity);
+//                    if (gameStage.shopScript != null) {
+//                        gameStage.shopScript.preview.changeBagIcon(showCaseVanity);
+                        ShopScreenScript.shouldReload = true;
+//                    }
                     isCelebrating = true;
                 }
             }

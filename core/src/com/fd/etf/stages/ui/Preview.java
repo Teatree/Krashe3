@@ -498,7 +498,7 @@ public class Preview extends AbstractDialog {
     }
 
     private void putInPlaceNewIconPosition() {
-        TransformComponent tc = changeBagIcon(vc);
+        TransformComponent tc = gameStage.shopScript.changeBagIcon(vc);
         gameStage.sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
         itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
                 shadowE.getComponent(ZIndexComponent.class).getZIndex() - 1);
@@ -508,20 +508,20 @@ public class Preview extends AbstractDialog {
                 ShopScreenScript.bagsZindex + 10);
     }
 
-    public TransformComponent changeBagIcon(ShopItem vc) {
-        if (vc.currencyType.equals(SOFT)) {
-            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
-            Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
-            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
-            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
-            ZIndexComponent newZ = itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class);
-            iconBagClone.add(newZ);
-            gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
-            itemIcons.put(vc.shopIcon, iconBagClone);
-            return oldTc;
-        }
-        return null;
-    }
+//    public TransformComponent changeBagIcon(ShopItem vc) {
+//        if (vc.currencyType.equals(SOFT)) {
+//            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
+//            Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+//            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+//            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
+//            ZIndexComponent newZ = itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class);
+//            iconBagClone.add(newZ);
+//            gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+//            itemIcons.put(vc.shopIcon, iconBagClone);
+//            return oldTc;
+//        }
+//        return null;
+//    }
 
     public void initEnableButton(final ShopItem vc) {
         if (vc.bought && !vc.enabled) {

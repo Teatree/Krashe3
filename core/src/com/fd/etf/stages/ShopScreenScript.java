@@ -5,10 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.fd.etf.entity.componets.FlowerPublicComponent;
-import com.fd.etf.entity.componets.PetComponent;
-import com.fd.etf.entity.componets.ShopItem;
-import com.fd.etf.entity.componets.Upgrade;
+import com.fd.etf.entity.componets.*;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
@@ -73,8 +70,10 @@ public class ShopScreenScript implements IScript {
     // Dima's fun house
     private static Entity curtain_shop;
     public static boolean shouldReload = false;
-    boolean startTransitionIn;
-    boolean startTransitionOut;
+    public static Set<VanityComponent> shouldReloadIcons = new HashSet<>();
+
+    private boolean startTransitionIn;
+    private boolean startTransitionOut;
 
     private static Entity scoreLbl;
     private static Entity scoreLblSh;
@@ -697,6 +696,16 @@ public class ShopScreenScript implements IScript {
             }
             shouldReload = false;
         }
+        if (!shouldReloadIcons.isEmpty()){
+            for (VanityComponent vc : shouldReloadIcons){
+//                for (ShopItem si : allSoftItems){
+//                    if (si.name.equals(vc.name)){
+                        changeBagIcon(vc);
+//                    }
+//                }
+            }
+            shouldReloadIcons = new HashSet<>();
+        }
     }
 
     public void resetPages() {
@@ -706,5 +715,22 @@ public class ShopScreenScript implements IScript {
                 .getComponent(LayerMapComponent.class).getLayer(BTN_DEFAULT).isVisible = false;
         touchZoneNButton.getComponent(NodeComponent.class).getChild(BTN_SCROLL_LEFT)
                 .getComponent(LayerMapComponent.class).getLayer(BTN_SCROLL_INACTIVE).isVisible = false;
+    }
+
+    public TransformComponent changeBagIcon(ShopItem vc) {
+        if (vc.currencyType.equals(VanityComponent.SOFT)) {
+            CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
+            Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+            TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
+            ZIndexComponent newZ = itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class);
+            iconBagClone.getComponent(ZIndexComponent.class).setZIndex(newZ.getZIndex()+200);
+            gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+            itemIcons.put(vc.shopIcon, iconBagClone);
+            iconBagClone.getComponent(TransformComponent.class).x = oldTc.x;
+            iconBagClone.getComponent(TransformComponent.class).y = oldTc.y;
+            return oldTc;
+        }
+        return null;
     }
 }
