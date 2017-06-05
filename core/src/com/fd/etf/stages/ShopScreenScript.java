@@ -10,6 +10,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.entity.componets.listeners.ShopClothingTabListener;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.stages.ui.Preview;
+import com.fd.etf.stages.ui.PromoWindow;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
@@ -24,6 +25,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
+import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 
@@ -41,6 +43,7 @@ public class ShopScreenScript implements IScript {
     private static final String TAB_BTN_SHOP = "tab_btn_shop";
     private static final String TAB_BTN_UPG = "tab_btn_upg";
     private static final String CURTAIN_SHOP = "curtain_shop";
+    private static final String BTN_SPECIAL_OFFER = "btn_special_offer";
 
     public static final int INIT_HC_ITEMS_X = 209;
 
@@ -96,6 +99,7 @@ public class ShopScreenScript implements IScript {
     private ItemWrapper shopItem;
     public Entity hcSectionE;
     public Entity btnClothing;
+    private Entity btnSpecialOffer;
     public Entity btnPowerUp;
     public Entity curtainShop;
     private int bagPosIdY;
@@ -185,10 +189,25 @@ public class ShopScreenScript implements IScript {
         btnPowerUp.getComponent(LayerMapComponent.class).getLayer(BTN_PRESSED).isVisible = true;
         btnPowerUp.getComponent(ButtonComponent.class).clearListeners();
         btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
+
+        btnSpecialOffer = shopItem.getChild(BTN_SPECIAL_OFFER).getEntity();
+
+        btnSpecialOffer.add(new ButtonComponent());
+        btnSpecialOffer.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(btnSpecialOffer, new AtomicBoolean[]{isDialogOpen}) {
+                    @Override
+                    public void clicked() {
+                        if (!isDialogOpen.get()) {
+                            PromoWindow promoWindow = new PromoWindow(gameStage, shopItem);
+                            promoWindow.init();
+                            promoWindow.show();
+                        }
+                    }
+                });
     }
 
     private void sortHCitemsAccordingUI() {
-        String[] names = new String[]{"RAVEN", "CAT", "DOG", "DOUBLE~BUG JUICE", "PHOENIX"};
+        String[] names = new String[]{"RAVEN", "CAT", "DOG", "DOUBLE~COINS", "EXTRA~LIFE"};
         List<ShopItem> hcsi = new ArrayList<>();
         for (String title : names) {
             hcsi.add(findCorrectHCitemByTitle(title));

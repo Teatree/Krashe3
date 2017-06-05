@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
-import com.fd.etf.stages.ui.BasicDialog;
-import com.fd.etf.stages.ui.PauseDialog;
-import com.fd.etf.stages.ui.Settings;
-import com.fd.etf.stages.ui.TrialTimer;
+import com.fd.etf.stages.ui.*;
 import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.components.*;
@@ -26,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
+import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
