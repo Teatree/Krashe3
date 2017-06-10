@@ -52,7 +52,7 @@ public class Upgrade extends ShopItem{
         phoenix.disc = 0;
         phoenix.name = "EXTRA~LIFE";
         phoenix.bought = false;
-        phoenix.description = "You get 1 extra life~for every time you play";
+        phoenix.description = "Get 1 extra life~every new game";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
         phoenix.sku_discount = "phoenix";

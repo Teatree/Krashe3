@@ -43,8 +43,7 @@
 	shopIcon: itembeard,
 	name: Beard,
 	cost: 220,
-	description: Beard++,
-	collection: PartofHipstercollection
+	description: Part_of_Hipster~collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -69,7 +68,7 @@
 	shopIcon: itemscarecrowhat,
 	name: Scarecrow~hat,
 	cost: 420,
-	description: Part_of_Scarecrow\ncollection
+	description: Part_of_Scarecrow~collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -117,7 +116,7 @@
 	shopIcon: itemknife,
 	name: Knife!,
 	cost: 1500,
-	description: Be_careful\nwith_it,
+	description: Be_careful~with_it,
 	leaves: true
 },
 {
@@ -188,7 +187,7 @@
 	shopIcon: itemafro,
 	name: Afro,
 	cost: 7000,
-	description: Looking_extra\nfly
+	description: Looking_extra~fly
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -200,7 +199,7 @@
 	shopIcon: itemlifebuoy,
 	name: Life_Buoy,
 	cost: 8800,
-	description: Keeps_you_from\ndrowning
+	description: Keeps_you_from~drowning
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -213,7 +212,7 @@
 	shopIcon: itemhoneyspoon,
 	name: Honey~Spoon,
 	cost: 10000,
-	description: Part_of_Bee\ncollection,
+	description: Part_of_Bee~collection,
 	leaves: true
 },
 {
@@ -248,7 +247,7 @@
 	shopIcon: itembowtie,
 	name: Bowtie,
 	cost: 22000,
-	description: Part_of_Hipster\ncollection
+	description: Part_of_Hipster~collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -319,7 +318,7 @@
 	shopIcon: itemmasonjar,
 	name: Manson_Jar,
 	cost: 99999,
-	description: Truth_be_thy_weapon\nMason_Jar\nPart_of_Hipster\ncollection,
+	description: Part_of_Hipster~collection,
 	leaves: true
 },
 {
@@ -332,7 +331,7 @@
 	shopIcon: itemqueenbeeneck,
 	name: Queen~Bee's_Colar,
 	cost: 150000,
-	description: Part_of_Bee\ncollection
+	description: Part_of_Bee~collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -344,7 +343,7 @@
 	shopIcon: itemhandkerchief,
 	name: Red~Bandana,
 	cost: 300000,
-	description: Part_of_Scarecrow\ncollection
+	description: Part_of_Scarecrow~collection
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -368,7 +367,7 @@
 	shopIcon: itemhoneyjar,
 	name: Honey~Jar,
 	cost: 550000,
-	description: Part_of_Bee\ncollection,
+	description: Part_of_Bee~collection,
 	leaves: true
 },
 {
@@ -381,7 +380,7 @@
 	shopIcon: itemcatears,
 	name: Cute~Ears,
 	cost: 670000,
-	description: So_you_can\nhear_better
+	description: So_you_can~hear_better
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
