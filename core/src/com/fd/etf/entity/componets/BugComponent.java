@@ -14,18 +14,19 @@ import static com.fd.etf.utils.GlobalConstants.MIN_IDLE_COUNTER;
 
 public class BugComponent implements Component, Pool.Poolable {
 
-
     public static final String IDLE = "IDLE";
     public static final String PREPARING = "PREPARING";
     public static final String CHARGING = "CHARGING";
     public static final String SCARED = "SCARED";
     public static final String DEAD = "DEAD";
+    public static final String UPDATING_BEFORE_RELEASE = "UBR";
 
     public static final String SIMPLE = "SIMPLE";
     public static final String DRUNK = "DRUNK";
     public static final String CHARGER = "CHARGER";
     public static final String BEE = "BEE";
     public static final String QUEENBEE = "QUEENBEE";
+
     public static final int DRUNK_BUG_MOVE_DURATION_BASE = 18;
     public static final int DRUNK_BUG_AMPLITUDE_BASE = 50;
     public static final int BEE_MOVE_DURATION_BASE = 16;

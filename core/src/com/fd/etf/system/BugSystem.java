@@ -53,23 +53,29 @@ public class BugSystem extends IteratingSystem {
 
         entity.getComponent(TransformComponent.class).scaleX = BUG_SCALE;
         entity.getComponent(TransformComponent.class).scaleY = BUG_SCALE;
-        if(entity.getComponent(BugComponent.class).type.equals(DRUNK)) {
+        if (entity.getComponent(BugComponent.class).type.equals(DRUNK)) {
             entity.getComponent(TransformComponent.class).scaleX = 0.5f;
             entity.getComponent(TransformComponent.class).scaleY = 0.5f;
         }
 
         BugComponent bc = mapper.get(entity);
-        if(entity.getComponent(TransformComponent.class).x < -180){
+        if (entity.getComponent(TransformComponent.class).x < -180) {
             bc.state = IDLE;
         }
 
-        if (bc.type == QUEENBEE) {
+        if (bc.type.equals(QUEENBEE)) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
         }
 
         if (blowUpAllBugs) {
             updateBlowUpAllBugs(entity, deltaTime);
+            if (entity.getComponent(BugComponent.class).state.equals(UPDATING_BEFORE_RELEASE)) {
+                canPlayAnimation = true;
+                setAnimation(FLY_ANI, Animation.PlayMode.LOOP, entity.getComponent(SpriteAnimationStateComponent.class), entity.getComponent(SpriteAnimationComponent.class));
+                entity.getComponent(BugComponent.class).state = IDLE;
+                BugPool.getInstance(gameStage).release(entity);
+            }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
 
             sasc.paused = false;
@@ -104,6 +110,7 @@ public class BugSystem extends IteratingSystem {
                     }
                     gameStage.gameScript.fpc.isScary = false;
 
+                    bc.state = UPDATING_BEFORE_RELEASE;
                     setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
                     BugPool.getInstance(gameStage).release(entity);
 
@@ -134,7 +141,8 @@ public class BugSystem extends IteratingSystem {
         if (!isStarted) {
             sasc.paused = true;
             if (!blowUpAllBugs) {
-                BugPool.getInstance(gameStage).release(entity);
+                bc.state = UPDATING_BEFORE_RELEASE;
+//                BugPool.getInstance(gameStage).release(entity);
             }
         }
 
@@ -156,7 +164,7 @@ public class BugSystem extends IteratingSystem {
         SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
         BugComponent bc = entity.getComponent(BugComponent.class);
 
-        if (sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
+        if (bc != null && sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
             canPlayAnimation = true;
             setAnimation("death", Animation.PlayMode.NORMAL, sasc, sac);
             bc.isPlayingDeathAnimation = true;
@@ -186,12 +194,7 @@ public class BugSystem extends IteratingSystem {
     public void destroyBug(Entity bugE) {
         spawnBugJuiceBubble(bugE.getComponent(BugComponent.class));
         canPlayAnimation = true;
-        BugPool.getInstance(gameStage).release(bugE);
-
-        if (bugE.getComponent(SpriteAnimationComponent.class).frameRangeMap.containsKey(FLY_ANI)) {
-            canPlayAnimation = true;
-            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, bugE.getComponent(SpriteAnimationStateComponent.class), bugE.getComponent(SpriteAnimationComponent.class));
-        }
+        bugE.getComponent(BugComponent.class).state = BugComponent.UPDATING_BEFORE_RELEASE;
     }
 
     private boolean checkCollision(BugComponent bc) {
@@ -330,22 +333,22 @@ public class BugSystem extends IteratingSystem {
             bc.boundsRect.y = (int) tc.y + 130;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 330;
             bc.boundsRect.height = (int) dc.height * tc.scaleY - 300;
-        } else if(bc.type.equals(SIMPLE)) {
+        } else if (bc.type.equals(SIMPLE)) {
             bc.boundsRect.x = (int) tc.x + 210; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 140;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 290;
             bc.boundsRect.height = (int) dc.height * tc.scaleY - 200;
-        } else if(bc.type.equals(DRUNK)) {
+        } else if (bc.type.equals(DRUNK)) {
             bc.boundsRect.x = (int) tc.x + 250; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 140;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 190;
             bc.boundsRect.height = (int) dc.height * tc.scaleY - 100;
-        } else if(bc.type.equals(CHARGER)) {
+        } else if (bc.type.equals(CHARGER)) {
             bc.boundsRect.x = (int) tc.x + 210; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 130;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 260;
             bc.boundsRect.height = (int) dc.height * tc.scaleY - 180;
-        } else if(bc.type.equals(QUEENBEE)) {
+        } else if (bc.type.equals(QUEENBEE)) {
             bc.boundsRect.x = (int) tc.x + 220; //Nastya can not see this. I can.
             bc.boundsRect.y = (int) tc.y + 120;
             bc.boundsRect.width = (int) dc.width * tc.scaleX - 220;

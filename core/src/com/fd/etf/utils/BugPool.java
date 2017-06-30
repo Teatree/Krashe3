@@ -9,9 +9,7 @@ import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class BugPool {
 
@@ -37,10 +35,10 @@ public class BugPool {
     private static final String BEE_ANI = "beeAni";
     private static BugPool instance;
     private ComponentMapper<BugComponent> mapper = ComponentMapper.getFor(BugComponent.class);
-    private static Stack<Entity> simpleBugs = new Stack<>();
-    private static Stack<Entity> bees = new Stack<>();
-    private static Stack<Entity> drunkBugs = new Stack<>();
-    private static Stack<Entity> chargerBugs = new Stack<>();
+    private static Queue<Entity> simpleBugs = new LinkedList<>();
+    private static Queue<Entity> bees = new LinkedList<>();
+    private static Queue<Entity> drunkBugs = new LinkedList<>();
+    private static Queue<Entity> chargerBugs = new LinkedList<>();
     private static Entity queenBee;
 
     public static List<Entity> bugsOnStage = new ArrayList<>();
@@ -56,11 +54,11 @@ public class BugPool {
         chargerBugs.add(root.getChild(CHARGER_ANI_1).getEntity());
         queenBee = root.getChild(QUEEN_BEE_ANI_1).getEntity();
 
-        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_2).getEntity());
-//        bees.add(root.getChild(BEE_ANI_2).getEntity());
-        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_2).getEntity());
-
-        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_3).getEntity());
+//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_2).getEntity());
+////        bees.add(root.getChild(BEE_ANI_2).getEntity());
+//        drunkBugs.add(root.getChild(DRUNK_BUG_ANI_2).getEntity());
+//
+//        simpleBugs.add(root.getChild(SIMPLE_BUG_ANI_3).getEntity());
 //        bees.add(root.getChild(BEE_ANI_3).getEntity());
     }
 
@@ -88,7 +86,7 @@ public class BugPool {
                 if (simpleBugs.isEmpty()) {
                     newBug = loadBugFromLib(SIMPLE_BUG_ANI);
                 } else {
-                    newBug =  simpleBugs.pop();
+                    newBug =  simpleBugs.poll();
                 }
                 break;
             }
@@ -96,7 +94,7 @@ public class BugPool {
                 if (drunkBugs.isEmpty()) {
                     newBug =  loadBugFromLib(DRUNK_BUG_ANI);
                 } else {
-                    newBug =  drunkBugs.pop();
+                    newBug =  drunkBugs.poll();
                 }
                 break;
             }
@@ -104,7 +102,7 @@ public class BugPool {
                 if (chargerBugs.isEmpty()) {
                     newBug =  loadBugFromLib(CHARGER_BUG_ANI);
                 } else {
-                    newBug =  chargerBugs.pop();
+                    newBug =  chargerBugs.poll();
                 }
                 break;
             }
@@ -112,7 +110,7 @@ public class BugPool {
                 if (bees.isEmpty()) {
                     newBug =  loadBugFromLib(BEE_ANI);
                 } else {
-                    newBug =  bees.pop();
+                    newBug =  bees.poll();
                 }
                 break;
             }
@@ -127,6 +125,7 @@ public class BugPool {
 
     public void removeBugsFromStage (){
         for (Entity bug : bugsOnStage){
+//            bug.getComponent(BugComponent.class).state = BugComponent.UPDATING_BEFORE_RELEASE;
             release(bug);
         }
     }
@@ -185,7 +184,7 @@ public class BugPool {
 //        }
 //    }
 
-    public static void sendFarFarAway(Stack<Entity> bugs) {
+    public static void sendFarFarAway(Collection<Entity> bugs) {
         for (Entity e : bugs) {
             if (e.getComponent(TransformComponent.class) != null) {
                 e.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
@@ -194,7 +193,7 @@ public class BugPool {
         }
     }
 
-    public static void releaseAll(Stack<Entity> bugs) {
+    public static void releaseAll(Collection<Entity> bugs) {
         for (Entity e : bugs) {
             if (e.getComponent(BugComponent.class) != null) {
                 instance.release(e);

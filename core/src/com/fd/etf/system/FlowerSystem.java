@@ -233,7 +233,7 @@ public class FlowerSystem extends IteratingSystem {
                 state = IDLE;
                 setIdleAnimation(sc);
                 BugSystem.blowUpAllBugs = false;
-                System.out.println("reviveAds(): " + BugSystem.blowUpAllBugs);
+//                System.out.println("reviveAds(): " + BugSystem.blowUpAllBugs);
             }
         }
     }
