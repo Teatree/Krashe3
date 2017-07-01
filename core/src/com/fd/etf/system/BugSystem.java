@@ -68,12 +68,19 @@ public class BugSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleY = 0.6f;
         }
 
+        if (entity.getComponent(BugComponent.class).state.equals(UPDATING_BEFORE_RELEASE)) {
+            canPlayAnimation = true;
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, entity.getComponent(SpriteAnimationStateComponent.class), entity.getComponent(SpriteAnimationComponent.class));
+//                entity.getComponent(BugComponent.class).state = UPDATING_BEFORE_RELEASE;
+            BugPool.getInstance(gameStage).release(entity);
+        }
+
         if (blowUpAllBugs) {
             updateBlowUpAllBugs(entity, deltaTime);
             if (entity.getComponent(BugComponent.class).state.equals(UPDATING_BEFORE_RELEASE)) {
                 canPlayAnimation = true;
                 setAnimation(FLY_ANI, Animation.PlayMode.LOOP, entity.getComponent(SpriteAnimationStateComponent.class), entity.getComponent(SpriteAnimationComponent.class));
-                entity.getComponent(BugComponent.class).state = IDLE;
+//                entity.getComponent(BugComponent.class).state = UPDATING_BEFORE_RELEASE;
                 BugPool.getInstance(gameStage).release(entity);
             }
         } else if (!isPause.get() && !isGameOver.get() && isStarted) {
@@ -126,7 +133,8 @@ public class BugSystem extends IteratingSystem {
                 if (isOutOfBounds(bc)) {
                     gameStage.gameScript.loseFeedback.getComponent(TransformComponent.class).y =
                             entity.getComponent(BugComponent.class).boundsRect.y;
-                    BugPool.getInstance(gameStage).release(entity);
+//                    BugPool.getInstance(gameStage).release(entity);
+                    bc.state = UPDATING_BEFORE_RELEASE;
                     gameStage.gameScript.onBugOutOfBounds();
                 }
             }
