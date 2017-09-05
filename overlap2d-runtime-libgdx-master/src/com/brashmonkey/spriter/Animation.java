@@ -168,30 +168,6 @@ public class Animation {
         return found;
     }
 
-	/*Timeline getSimilarTimeline(BoneRef ref, Collection<Timeline> coveredTimelines){
-		if(ref.parent == null) return null;
-    	for(BoneRef boneRef: this.currentKey.objectRefs){
-    		Timeline t = this.getTimeline(boneRef.timeline);
-    		if(boneRef.parent != null && boneRef.parent.id == ref.parent.id && !coveredTimelines.contains(t))
-    			return t;
-    	}
-    	return null;
-	}
-	
-	Timeline getSimilarTimeline(ObjectRef ref, Collection<Timeline> coveredTimelines){
-		if(ref.parent == null) return null;
-    	for(ObjectRef objRef: this.currentKey.objectRefs){
-    		Timeline t = this.getTimeline(objRef.timeline);
-    		if(objRef.parent != null && objRef.parent.id == ref.parent.id && !coveredTimelines.contains(t))
-    			return t;
-    	}
-    	return null;
-	}*/
-
-    /**
-     * Prepares this animation to set this animation in any time state.
-     * This method has to be called before {@link #update(int, Bone)}.
-     */
     public void prepare() {
         if (this.prepared) return;
         this.tweenedKeys = new Timeline.Key[timelines.length];
