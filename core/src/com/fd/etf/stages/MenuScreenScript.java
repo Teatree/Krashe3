@@ -10,6 +10,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.ui.*;
 import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.SaveMngr;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -129,6 +130,19 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleX = 0.3f;
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleY = 0.3f;
         BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
+
+        if(gameStage.gameScript.fpc.settings.noSound){
+            SoundMgr.soundOn = false;
+        }else{
+            SoundMgr.soundOn = true;
+        }
+
+        if(gameStage.gameScript.fpc.settings.noMusic){
+            BackgroundMusicMgr.musicOn = false;
+        }else{
+            BackgroundMusicMgr.musicOn = true;
+            BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
+        }
     }
 
     private void initGoalsNotification() {

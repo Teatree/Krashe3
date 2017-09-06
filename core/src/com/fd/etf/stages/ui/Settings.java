@@ -308,14 +308,14 @@ public class Settings extends AbstractDialog {
 
                     final ToggleButtonComponent tbc = mapper.get(musicBtn);
                     if (tbc.isOn()) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                        musicOn();
-                        tbc.setOff();
-                    } else {
                         lc.getLayer(BTN_NORMAL).isVisible = false;
                         lc.getLayer(BTN_PRESSED).isVisible = true;
                         musicOff();
+                        tbc.setOff();
+                    } else {
+                        lc.getLayer(BTN_NORMAL).isVisible = true;
+                        lc.getLayer(BTN_PRESSED).isVisible = false;
+                        musicOn();
                         tbc.setOn();
                     }
                 }
@@ -327,14 +327,14 @@ public class Settings extends AbstractDialog {
         ToggleButtonComponent musictbc = e.getComponent(ToggleButtonComponent.class);
         LayerMapComponent lc = e.getComponent(LayerMapComponent.class);
         if (gameStage.gameScript.fpc.settings.noMusic) {
-            lc.getLayer(BTN_NORMAL).isVisible = true;
-            lc.getLayer(BTN_DEFAULT).isVisible = false;
-            lc.getLayer(BTN_PRESSED).isVisible = false;
             musictbc.setOff();
+            lc.getLayer(BTN_NORMAL).isVisible = false;
+            lc.getLayer(BTN_DEFAULT).isVisible = false;
+            lc.getLayer(BTN_PRESSED).isVisible = true;
         } else {
             musictbc.setOn();
-            lc.getLayer(BTN_NORMAL).isVisible = false;
-            lc.getLayer(BTN_PRESSED).isVisible = true;
+            lc.getLayer(BTN_NORMAL).isVisible = true;
+            lc.getLayer(BTN_PRESSED).isVisible = false;
             lc.getLayer(BTN_DEFAULT).isVisible = false;
         }
     }
@@ -372,14 +372,14 @@ public class Settings extends AbstractDialog {
                 public void clicked() {
                     final ToggleButtonComponent tbc = mapper.get(soundBtn);
                     if (tbc.isOn()) {
-                        lc.getLayer(BTN_NORMAL).isVisible = true;
-                        lc.getLayer(BTN_PRESSED).isVisible = false;
-                        soundOn();
-                        tbc.setOff();
-                    } else {
                         lc.getLayer(BTN_NORMAL).isVisible = false;
                         lc.getLayer(BTN_PRESSED).isVisible = true;
                         soundOff();
+                        tbc.setOff();
+                    } else {
+                        lc.getLayer(BTN_NORMAL).isVisible = true;
+                        lc.getLayer(BTN_PRESSED).isVisible = false;
+                        soundOn();
                         tbc.setOn();
                     }
                 }
@@ -392,12 +392,12 @@ public class Settings extends AbstractDialog {
         LayerMapComponent lc8 = e.getComponent(LayerMapComponent.class);
         if (gameStage.gameScript.fpc.settings.noSound) {
             soundtbc.setOff();
-            lc8.getLayer(BTN_NORMAL).isVisible = true;
-            lc8.getLayer(BTN_PRESSED).isVisible = false;
-        } else {
-            soundtbc.setOn();
             lc8.getLayer(BTN_NORMAL).isVisible = false;
             lc8.getLayer(BTN_PRESSED).isVisible = true;
+        } else {
+            soundtbc.setOn();
+            lc8.getLayer(BTN_NORMAL).isVisible = true;
+            lc8.getLayer(BTN_PRESSED).isVisible = false;
         }
     }
 }

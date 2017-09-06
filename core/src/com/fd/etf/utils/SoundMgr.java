@@ -14,7 +14,7 @@ public class SoundMgr {
     public static final String BUTTON_TAP = "ui_button_tap";
     public static final String SPECIAL_OFFER = "special_offer";
     public static SoundMgr soundMgr;
-    public static boolean soundOn = true;
+    public static boolean soundOn = false;
 //    private Random rand;
     private int r = 0;
 
