@@ -7,6 +7,7 @@ import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -169,6 +170,12 @@ public class PauseDialog extends AbstractDialog {
 
     private void closePauseDialog() {
         close(pauseDialogE);
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.2f);
+        }
         pauseTimer = 0;
         pauseCounter = PAUSE_COUNT - 1;
         if (lblPauseTimer != null) {
@@ -180,6 +187,13 @@ public class PauseDialog extends AbstractDialog {
 
     public void show() {
         SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_OPEN);
+
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
+        }
 
         isPause.set(true);
         isActive = true;

@@ -12,6 +12,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.BugSystem;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -66,6 +67,13 @@ public class GameOverDialog extends AbstractDialog {
         LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
         gameOverLblC.text.replace(0, gameOverLblC.text.capacity(), Integer.toString(GAME_OVER_COUNT));
         gameOverTimerLbl.getComponent(ZIndexComponent.class).setZIndex(gameOverDialogE.getComponent(ZIndexComponent.class).getZIndex() + 1);
+
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
+        }
     }
 
     public void hide() {
@@ -123,6 +131,13 @@ public class GameOverDialog extends AbstractDialog {
 //        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
         BugSystem.blowUpAllBugs();
         FlowerComponent.state = FlowerComponent.State.REVIVE_ADS;
+
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.2f);
+        }
     }
 
     private void playVideoAd(final TransformComponent dialogTc) {

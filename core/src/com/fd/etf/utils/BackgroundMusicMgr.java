@@ -3,22 +3,26 @@ package com.fd.etf.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.Interpolation;
+import com.brashmonkey.spriter.Entity;
+import com.fd.etf.stages.GameStage;
+import com.uwsoft.editor.renderer.components.ActionComponent;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 
 public class BackgroundMusicMgr {
 
     public static BackgroundMusicMgr backgroundMusicMgr;
     public static boolean musicOn;
 
-    private Music musicMenu;
-    private Sound musicGame;
+    public Music musicMenu;
+    public Music musicGame;
 
     private BackgroundMusicMgr() {
         musicMenu = Gdx.audio.newMusic(Gdx.files.internal("sound/background_menu.mp3"));
         musicMenu.setLooping(true);
-        musicGame = Gdx.audio.newSound(Gdx.files.internal("sound/background_game.mp3"));
+        musicGame = Gdx.audio.newMusic(Gdx.files.internal("sound/background_game.mp3"));
 //        musicGame.setLooping(true);
 //        musicGame.setVolume(0.2f);
-        musicMenu.setVolume(0.2f);
     }
 
     public static BackgroundMusicMgr getBackgroundMusicMgr() {
@@ -34,17 +38,21 @@ public class BackgroundMusicMgr {
             if (!musicMenu.isPlaying()) {
                 stopGame();
                 musicMenu.play();
+                musicMenu.setVolume(0.2f);
+
+                musicMenu.setLooping(true);
             }
         }
     }
     public void playGame() {
         if (musicOn) {
             stopMenu();
-            long idd = musicGame.play();
+//            long idd = musicGame.play();
             //musicGame.setPitch(idd, 2.2f);
-            musicGame.setVolume(idd,0.2f);
+            musicGame.play();
+            musicGame.setVolume(0.2f);
 
-            musicGame.setLooping(idd, true);
+            musicGame.setLooping(true);
         }
     }
 

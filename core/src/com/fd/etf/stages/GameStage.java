@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.SaveMngr;
@@ -141,6 +142,14 @@ public class GameStage extends Stage {
         }
         System.gc();
         System.runFinalization();
+
+        BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
+        }
     }
 
     public void initShop() {

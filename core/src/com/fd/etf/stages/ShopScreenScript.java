@@ -12,6 +12,7 @@ import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.stages.ui.Preview;
 import com.fd.etf.stages.ui.PromoWindow;
 import com.fd.etf.system.ParticleLifespanSystem;
+import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.SaveMngr;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
@@ -173,6 +174,13 @@ public class ShopScreenScript implements IScript {
         createIconsForAllSoftItems();
         createIconsForAllHCItems();
         btnPlay.getComponent(TransformComponent.class).y = -FAR_FAR_AWAY_Y;
+
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
+        }
     }
 
     public void initTabBtns() {
@@ -411,6 +419,12 @@ public class ShopScreenScript implements IScript {
                     public void clicked() {
                         if (!isPreviewOn.get()) {
                             startTransitionOut = true;
+                            if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+                                BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
+                            }
+                            if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+                                BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.2f);
+                            }
                         }
                     }
                 });

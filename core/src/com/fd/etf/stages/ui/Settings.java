@@ -94,6 +94,12 @@ public class Settings extends AbstractDialog {
                     public void clicked() {
                         checkSecondaryDialog();
                         close(settingsE);
+                        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+                            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
+                        }
+                        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+                            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.2f);
+                        }
                     }
                 });
 
@@ -240,6 +246,13 @@ public class Settings extends AbstractDialog {
         Actions.checkInit();
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);
+
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
+        }
+        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+            BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
+        }
     }
 
 
