@@ -8,6 +8,7 @@ import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -647,6 +648,7 @@ public class Preview extends AbstractDialog {
 
                     @Override
                     public void clicked() {
+                        SoundMgr.getSoundMgr().play(SoundMgr.PAPER_FLIP_SHOP);
                         if (animFinished() && isPrevBtnActive(vc)) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
@@ -734,6 +736,7 @@ public class Preview extends AbstractDialog {
                             if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc) + 1) % 8 == 0) {
                                 gameStage.shopScript.scrollBagsOnePageRight();
                             }
+                            SoundMgr.getSoundMgr().play(SoundMgr.PAPER_FLIP_SHOP);
                         }
                     }
                 });

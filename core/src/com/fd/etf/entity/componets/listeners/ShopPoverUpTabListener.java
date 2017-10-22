@@ -3,6 +3,7 @@ package com.fd.etf.entity.componets.listeners;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -76,6 +77,8 @@ public class ShopPoverUpTabListener implements ButtonComponent.ButtonListener {
                     lc1.getLayer(BTN_PRESSED).isVisible = true;
                     lc1.getLayer(BTN_DEFAULT).isVisible = true;
                 }
+
+                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP);
             }
     }
 

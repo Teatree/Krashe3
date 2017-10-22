@@ -3,6 +3,7 @@ package com.fd.etf.entity.componets.listeners;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.LayerMapComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -68,6 +69,7 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
     public void clicked() {
         if (!isPreviewOn.get())
         if (!isPreviewOn.get() && ShopScreenScript.canChangeTabs) {
+
             if (shopScreenScript.btnPowerUp.getComponent(ButtonComponent.class).enable) {
                 changeTabBtnsLayers();
                 switchScreenToUpgrds();
@@ -77,6 +79,8 @@ public class ShopClothingTabListener implements ButtonComponent.ButtonListener {
                 lc1.getLayer(BTN_DEFAULT).isVisible = true;
                 lc1.getLayer(BTN_NORMAL).isVisible = false;
             }
+
+            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP);
         }
     }
 
