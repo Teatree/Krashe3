@@ -9,6 +9,7 @@ import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;

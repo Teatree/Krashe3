@@ -765,6 +765,8 @@ public class Preview extends AbstractDialog {
     }
 
     public void checkAndClose() {
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_CLOSE);
+
         if (infoTag != null) {
             float currentYpos = infoTag.getComponent(TransformComponent.class).y;
             if (currentYpos <= INFO_TAG_Y + 30 || currentYpos >= 800) {

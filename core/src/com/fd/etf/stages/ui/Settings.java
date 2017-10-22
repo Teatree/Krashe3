@@ -228,6 +228,8 @@ public class Settings extends AbstractDialog {
 
     public void show() {
 
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_OPEN);
+
         isActive = true;
         addShadow();
         settingsE.getComponent(TransformComponent.class).x = SETTINGS_X;

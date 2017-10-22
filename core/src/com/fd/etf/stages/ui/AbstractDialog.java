@@ -3,6 +3,7 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -66,6 +67,8 @@ public class AbstractDialog {
     }
 
     public void close (Entity e){
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_CLOSE);
+
         if (isActive) {
             isActive = false;
             ActionComponent ac = new ActionComponent();

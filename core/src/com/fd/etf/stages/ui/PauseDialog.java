@@ -7,6 +7,7 @@ import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -178,6 +179,8 @@ public class PauseDialog extends AbstractDialog {
     }
 
     public void show() {
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_OPEN);
+
         isPause.set(true);
         isActive = true;
         pauseCounter = 10;
@@ -383,6 +386,8 @@ public class PauseDialog extends AbstractDialog {
 
     @Override
     public void close (Entity e){
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_CLOSE);
+
         if (isActive) {
             isActive = false;
             ActionComponent ac = new ActionComponent();

@@ -41,7 +41,9 @@ public class BackgroundMusicMgr {
         if (musicOn) {
             stopMenu();
             long idd = musicGame.play();
-            musicGame.setPitch(idd, 2.2f);
+            //musicGame.setPitch(idd, 2.2f);
+            musicGame.setVolume(idd,0.2f);
+
             musicGame.setLooping(idd, true);
         }
     }

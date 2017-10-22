@@ -8,6 +8,7 @@ import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.MenuScreenScript;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -107,6 +108,8 @@ public class BasicDialog extends AbstractDialog {
     }
 
     public void show(String type) {
+
+        SoundMgr.getSoundMgr().play(SoundMgr.WIND_POP_UP_OPEN);
 
         this.type = type;
         if (parent != null) {

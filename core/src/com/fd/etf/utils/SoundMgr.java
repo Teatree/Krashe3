@@ -14,6 +14,8 @@ public class SoundMgr {
     public static final String BUTTON_TAP = "ui_button_tap";
     public static final String SPECIAL_OFFER = "special_offer";
     public static final String PAPER_FLIP_SHOP = "paper_flip_shop";
+    public static final String WIND_POP_UP_OPEN = "wind_01_pop_ups";
+    public static final String WIND_POP_UP_CLOSE = "wind_02_pop_ups";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -29,6 +31,8 @@ public class SoundMgr {
         loadSound(BUTTON_TAP);
         loadSound(SPECIAL_OFFER);
         loadSound(PAPER_FLIP_SHOP);
+        loadSound(WIND_POP_UP_OPEN);
+        loadSound(WIND_POP_UP_CLOSE);
      //   loadSound("tuturu");
     }
 
