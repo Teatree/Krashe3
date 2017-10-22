@@ -512,6 +512,8 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
+                        SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+
                         if (vc.currencyType.equals(HARD)) {
                             vc.buyHard(gameStage);
                         } else {

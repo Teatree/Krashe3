@@ -8,6 +8,7 @@ import com.fd.etf.stages.ResultScreenScript;
 import com.fd.etf.stages.ShopScreenScript;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -333,6 +334,8 @@ public class Showcase {
         buyBtn.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(buyBtn) {
             @Override
             public void clicked() {
+                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
                     showCaseVanity.buyAndUse(gameStage);
                     ResultScreenScript.isWasShowcase = true;
