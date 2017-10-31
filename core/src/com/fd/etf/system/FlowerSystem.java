@@ -180,6 +180,7 @@ public class FlowerSystem extends IteratingSystem {
                 gameStage.gameScript.fpc.isCollision = false;
 
                 soundMgr.play(SoundMgr.EAT_SOUND);
+
             } else {
                 setIdleAnimation(sc);
             }

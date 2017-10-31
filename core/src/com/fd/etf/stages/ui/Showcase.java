@@ -22,6 +22,7 @@ import static com.fd.etf.stages.ResultScreenScript.showCaseVanity;
 import static com.fd.etf.utils.EffectUtils.fade;
 import static com.fd.etf.utils.EffectUtils.fadeChildren;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
+import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class Showcase {
 
@@ -72,6 +73,7 @@ public class Showcase {
         initShowCaseBuyButton();
 
         tcShowCase = showcaseE.getComponent(TransformComponent.class);
+        soundMgr.play(SoundMgr.SPARKLE);
     }
 
     public void act(float delta) {

@@ -13,6 +13,7 @@ import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.system.ParticleLifespanSystem;
 import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SaveMngr;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -22,6 +23,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
+import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class ResultScreenScript implements IScript {
 
@@ -50,6 +52,7 @@ public class ResultScreenScript implements IScript {
     boolean shopTransitionIsOn;
     public static boolean isWasShowcase;
     public static boolean active = true;
+    public boolean isPlayingProgressBarSFX = false;
 
     public Entity txtNeedE;
     public Entity txtBestE;
@@ -263,6 +266,15 @@ public class ResultScreenScript implements IScript {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
 //                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
                     updateProgressBar(delta);
+
+                    if (progressBarE.getComponent(DimensionsComponent.class).width <= getProgressBarActualLength() &&
+                            progressBarE.getComponent(DimensionsComponent.class).width < MAX_PROGRESS_BAR_WIDTH && isPlayingProgressBarSFX == false) {
+                        soundMgr.play(SoundMgr.PROGRESS_BAR_COUNT, true);
+                        System.out.println("Starting the sound effect");
+
+                        isPlayingProgressBarSFX = true;
+                    }
+
                 }
             } else {
                 earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
@@ -282,7 +294,6 @@ public class ResultScreenScript implements IScript {
             shopTransitionIsOn = false;
             gameStage.initShopWithAds();
         }
-
     }
 
     private void updateProgressBar(float deltaTime) {
@@ -290,6 +301,7 @@ public class ResultScreenScript implements IScript {
 
         if (dcProgressBar.width <= getProgressBarActualLength() &&
                 dcProgressBar.width < MAX_PROGRESS_BAR_WIDTH) {
+
             dcProgressBar.width += PROGRESS_BAR_STEP * deltaTime * GlobalConstants.FPS;
         } else {
             if (!show && showCaseVanity != null && showCaseVanity.cost <= gameStage.gameScript.fpc.totalScore) {
@@ -299,6 +311,11 @@ public class ResultScreenScript implements IScript {
             }
             if (!show && gameStage.gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(gameStage, need) && adsBtn == null) {
                 initWatchAdsForMoneyBtn();
+            }
+            if(isPlayingProgressBarSFX) {
+                soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
+                isPlayingProgressBarSFX = false;
+                System.out.println("Stopping the Sound effect");
             }
         }
 
