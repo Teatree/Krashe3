@@ -23,6 +23,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
+import static com.fd.etf.utils.SoundMgr.SCORE_COUNT;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class ResultScreenScript implements IScript {
@@ -53,6 +54,7 @@ public class ResultScreenScript implements IScript {
     public static boolean isWasShowcase;
     public static boolean active = true;
     public boolean isPlayingProgressBarSFX = false;
+    public boolean isPlayingScoreCountSFX = false;
 
     public Entity txtNeedE;
     public Entity txtBestE;
@@ -262,6 +264,11 @@ public class ResultScreenScript implements IScript {
             if (!isWasShowcase) {
                 if (i <= gameStage.gameScript.fpc.score) {
                     updateScore();
+                    if(!isPlayingScoreCountSFX) {
+                        soundMgr.play(SCORE_COUNT, true); // do it in the same way as you did with progress bar, just make sure to add a new boolean variable
+                        isPlayingScoreCountSFX = true;
+                        System.out.println("Starting the sound effect");
+                    }
                 } else {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
 //                    earnedLabels.text.replace(0, earnedLabels.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
@@ -269,10 +276,13 @@ public class ResultScreenScript implements IScript {
 
                     if (progressBarE.getComponent(DimensionsComponent.class).width <= getProgressBarActualLength() &&
                             progressBarE.getComponent(DimensionsComponent.class).width < MAX_PROGRESS_BAR_WIDTH && isPlayingProgressBarSFX == false) {
-                        soundMgr.play(SoundMgr.PROGRESS_BAR_COUNT, true);
-                        System.out.println("Starting the sound effect");
+                        soundMgr.stop(SCORE_COUNT);
+                        isPlayingScoreCountSFX = true;
+                        System.out.println("Stopping the Sound effect");
 
+                        soundMgr.play(SoundMgr.PROGRESS_BAR_COUNT, true);
                         isPlayingProgressBarSFX = true;
+
                     }
 
                 }
@@ -315,7 +325,7 @@ public class ResultScreenScript implements IScript {
             if(isPlayingProgressBarSFX) {
                 soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
                 isPlayingProgressBarSFX = false;
-                System.out.println("Stopping the Sound effect");
+
             }
         }
 

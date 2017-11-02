@@ -19,6 +19,7 @@ public class SoundMgr {
     public static final String BUTTON_TAP_SHOP_BUY = "ui_button_tap_shop_buy";
     public static final String SPARKLE = "sparkle";
     public static final String PROGRESS_BAR_COUNT = "result_screen_progress_bar_count";
+    public static final String SCORE_COUNT = "result_screen_score_count";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -39,6 +40,7 @@ public class SoundMgr {
         loadSound(BUTTON_TAP_SHOP_BUY);
         loadSound(SPARKLE);
         loadSound(PROGRESS_BAR_COUNT);
+        loadSound(SCORE_COUNT);
      //   loadSound("tuturu");
     }
 
