@@ -121,7 +121,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         BugSpawnSystem.resetBreakCounter();
         BugSpawnSystem.break_counter = BugSpawnSystem.rand.nextInt((int) (BugSpawnSystem.curBreakFreqMax * 100) - (int) (BugSpawnSystem.curBreakFreqMin * 100)) + (BugSpawnSystem.curBreakFreqMin * 100);
         BugSpawnSystem.break_counter /= 100;
-        System.out.println("angerBees() + break_counter: " + BugSpawnSystem.break_counter);
+        //System.out.println("angerBees() + break_counter: " + BugSpawnSystem.break_counter);
     }
 
     private void updateAngeredBeesMode() {
@@ -645,7 +645,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
-                System.out.println("IT'S VERY UNLIKELY THAT I AM CALLED MORE THAN ONCE");
+                //System.out.println("IT'S VERY UNLIKELY THAT I AM CALLED MORE THAN ONCE");
 //                System.out.println("Phoenix!");
                 isPause.set(false);
             }
@@ -742,8 +742,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                curtainGameE.getComponent(ActionComponent.class).reset();
 //            }
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
-            System.out.println("gameScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
-            System.out.println("gameScreenScript gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
+            //System.out.println("gameScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
+            //System.out.println("gameScreenScript gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
             ActionComponent ac = new ActionComponent();
             ac.dataArray.add(Actions.sequence(
                     Actions.fadeIn(1f, Interpolation.exp5, 0.5f),

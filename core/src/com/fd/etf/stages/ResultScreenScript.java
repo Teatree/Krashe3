@@ -267,7 +267,7 @@ public class ResultScreenScript implements IScript {
                     if(!isPlayingScoreCountSFX) {
                         soundMgr.play(SCORE_COUNT, true); // do it in the same way as you did with progress bar, just make sure to add a new boolean variable
                         isPlayingScoreCountSFX = true;
-                        System.out.println("Starting the sound effect");
+                        //System.out.println("Starting the sound effect");
                     }
                 } else {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
@@ -278,7 +278,7 @@ public class ResultScreenScript implements IScript {
                             progressBarE.getComponent(DimensionsComponent.class).width < MAX_PROGRESS_BAR_WIDTH && isPlayingProgressBarSFX == false) {
                         soundMgr.stop(SCORE_COUNT);
                         isPlayingScoreCountSFX = true;
-                        System.out.println("Stopping the Sound effect");
+                        //System.out.println("Stopping the Sound effect");
 
                         soundMgr.play(SoundMgr.PROGRESS_BAR_COUNT, true);
                         isPlayingProgressBarSFX = true;
@@ -406,7 +406,7 @@ public class ResultScreenScript implements IScript {
                                         public void run() {
                                             //give that money!
                                             gameStage.gameScript.fpc.totalScore = showCaseVanity.cost;
-                                            System.out.println("ResultScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
+                                            //System.out.println("ResultScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
                                             adsBtn.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                                             init(resultScreenItem.getEntity());
                                         }

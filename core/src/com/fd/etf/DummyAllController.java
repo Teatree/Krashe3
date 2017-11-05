@@ -14,44 +14,44 @@ public class DummyAllController implements AllController {
 
     @Override
     public void showReviveVideoAd(Runnable then) {
-        System.out.println("showReviveVideoAd");
+        //System.out.println("showReviveVideoAd");
     }
 
     @Override
     public void showGetMoneyVideoAd(Runnable then) {
-        System.out.println("showGetMoneyVideoAd");
+        //System.out.println("showGetMoneyVideoAd");
     }
 
     @Override
     public void showLaunchAd(Runnable then) {
-        System.out.println("showLaunchAd");
+        //System.out.println("showLaunchAd");
     }
 
     @Override
     public void showResultScreenAd(Runnable then) {
-        System.out.println("showResultScreenAd");
+        //System.out.println("showResultScreenAd");
     }
 
     @Override
     public void showGeneralShopAd(Runnable then) {
-        System.out.println("showGeneralShopAd");
+        //System.out.println("showGeneralShopAd");
     }
 
     @Override
     public void removeAds() {
-        System.out.println("pay to remove ads");
+        //System.out.println("pay to remove ads");
     }
 
     @Override
     public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
-        System.out.println("pay to get phoenix");
+        //System.out.println("pay to get phoenix");
         // PC only
         Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
     }
 
     @Override
     public void getBJDouble(GameStage gameStage, Upgrade bj) {
-        System.out.println("pay to get bj");
+        //System.out.println("pay to get bj");
         // PC only
         Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
     }
@@ -59,25 +59,25 @@ public class DummyAllController implements AllController {
     @Override
     public void getPet(GameStage gameStage, PetComponent pet) {
         pet.buyAndUse(gameStage);
-        System.out.println("pay to get pet");
+        //System.out.println("pay to get pet");
     }
 
     @Override
     public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
-        System.out.println("pay to get phoenix cheaper");
+        //System.out.println("pay to get phoenix cheaper");
         Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
     }
 
     @Override
     public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
-        System.out.println("pay to get bj cheaper");
+        //System.out.println("pay to get bj cheaper");
         Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
     }
 
     @Override
     public void getPetDiscount(GameStage gameStage, PetComponent pet) {
 //        GameStage.gameScript.fpc.pets.get(0).buyAndUse();
-        System.out.println("pay to get pet cheaper");
+        //System.out.println("pay to get pet cheaper");
     }
 
     @Override
@@ -87,12 +87,12 @@ public class DummyAllController implements AllController {
 
     @Override
     public void openFB() {
-        System.out.println("I am at Facebook");
+        //System.out.println("I am at Facebook");
     }
 
     @Override
     public void restorePurchases(GameStage gameStage) {
-        System.out.println("restore purchases");
+        //System.out.println("restore purchases");
     }
 
     @Override

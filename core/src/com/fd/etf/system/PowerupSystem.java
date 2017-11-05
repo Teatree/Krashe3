@@ -92,7 +92,7 @@ public class PowerupSystem {
         BugSpawnSystem.umbrellaBugsSpawned = 0;
 
         umbrellaEntity.getComponent(UmbrellaComponent.class).justSpawned = true;
-        System.out.println("just spawned is true!!");
+        //System.out.println("just spawned is true!!");
     }
 
     private void spawnCocoon() {

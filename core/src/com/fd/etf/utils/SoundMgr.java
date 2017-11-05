@@ -20,6 +20,9 @@ public class SoundMgr {
     public static final String SPARKLE = "sparkle";
     public static final String PROGRESS_BAR_COUNT = "result_screen_progress_bar_count";
     public static final String SCORE_COUNT = "result_screen_score_count";
+    public static final String GOAL_STAR_1 = "goal_star_1";
+    public static final String GOAL_STAR_2 = "goal_star_2";
+    public static final String GOAL_STAR_3 = "goal_star_3";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -41,6 +44,9 @@ public class SoundMgr {
         loadSound(SPARKLE);
         loadSound(PROGRESS_BAR_COUNT);
         loadSound(SCORE_COUNT);
+        loadSound(GOAL_STAR_1);
+        loadSound(GOAL_STAR_2);
+        loadSound(GOAL_STAR_3);
      //   loadSound("tuturu");
     }
 

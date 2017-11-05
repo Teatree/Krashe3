@@ -55,6 +55,8 @@ public class GoalFeedbackScreen {
     public final String BOX_ANI = "box_ani";
     private static final int POS_X = -22;
     private static final int POS_Y = -19;
+    private int goalSoundOrder = 1;
+    private boolean canPlayGoalSound = true;
 
     private static final int GOAL_STEP_Y = 110;
 
@@ -317,10 +319,34 @@ public class GoalFeedbackScreen {
                                     Actions.run(new Runnable() {
                                         @Override
                                         public void run() {
+                                            // The sound play is strange, every 3 steps new sound is played
+                                            if(canPlayGoalSound) {
+                                                if (goalSoundOrder == 1) {
+                                                    SoundMgr.getSoundMgr().play(SoundMgr.GOAL_STAR_1);
+                                                    canPlayGoalSound = false;
+                                                } else if (goalSoundOrder == 4) {
+                                                    SoundMgr.getSoundMgr().play(SoundMgr.GOAL_STAR_2);
+                                                    canPlayGoalSound = false;
+                                                } else if (goalSoundOrder == 7) {
+                                                    SoundMgr.getSoundMgr().play(SoundMgr.GOAL_STAR_3);
+//                                                    goalSoundOrder = 1;
+                                                    canPlayGoalSound = false;
+                                                } else if (goalSoundOrder == 10) {
+                                                    SoundMgr.getSoundMgr().play(SoundMgr.GOAL_STAR_1);
+//                                                    goalSoundOrder = 1;
+                                                    canPlayGoalSound = false;
+                                                }
+                                                goalSoundOrder++;
+                                            }
                                             sc.paused = false;
                                             sc.currentAnimation.setPlayMode(Animation.PlayMode.NORMAL);
                                             goal.justAchieved = false;
                                             // gameScript.fpc.level.getGoals().get(iNastyaChild).justAchieved = false;
+                                        }
+                                    }),
+                                    Actions.run(new Runnable() {
+                                        public void run() {
+                                            canPlayGoalSound = true;
                                         }
                                     })));
 

@@ -112,7 +112,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
         if (tc.x < 200){
             uc.justSpawned = false;
-            System.out.println("setting just spawned to false!");
+            //System.out.println("setting just spawned to false!");
         }
 
         if (uc.current >= 1 && uc.state.equals(FLY)) {
