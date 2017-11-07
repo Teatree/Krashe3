@@ -98,6 +98,7 @@ public class GameStage extends Stage {
         gameScript.reset();
 
         backgroundMusicMgr.stopMenu();
+        backgroundMusicMgr.playGame();
 
         gameScript.initStartTrans();
         GameScreenScript.isPause.set(false);

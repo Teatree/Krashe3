@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
+import com.brashmonkey.spriter.Dimension;
 import com.fd.etf.entity.componets.Gift;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.stages.GameStage;
@@ -95,6 +96,7 @@ public class GoalFeedbackScreen {
     private Entity greenShadeE;
     private Entity spinnyShineE;
     private Entity giftIconE;
+    private Entity boxAniE;
     private boolean canTap;
     private boolean isShading;
     private int helpTimer;
@@ -201,6 +203,19 @@ public class GoalFeedbackScreen {
             tiles.add(newTile);
             y -= GOAL_STEP_Y;
         }
+        // Also, add scale Action to the goal label
+        final Entity goalLabel = new ItemWrapper(feedbackEntity).getChild(LBL_DIALOG).getEntity();
+
+        ActionComponent ac2 = new ActionComponent();
+        Actions.checkInit();
+
+        ac2.dataArray.add(Actions.sequence(Actions.delay(2.3f),
+                Actions.moveBy(0, 150, 0.5f),
+                Actions.delay(0.7f),
+                Actions.moveBy(0,-150, 0.5f)));
+        goalLabel.add(ac2);
+        System.out.println("SCALING SOME LABELS!!");
+        System.out.println("goalLabel.getComponent(DimensionsComponent.class).width: " + goalLabel.getComponent(DimensionsComponent.class).width);
     }
 
     private void addMoveInPrevTilesActions() {
@@ -463,11 +478,29 @@ public class GoalFeedbackScreen {
             spinnyShineE.add(ac);
             isShading = false;
 
-            Entity boxAniE = new ItemWrapper(giftE).getChild(BOX_ANI).getEntity();
+            boxAniE = new ItemWrapper(giftE).getChild(BOX_ANI).getEntity();
             saBox = boxAniE.getComponent(SpriteAnimationComponent.class);
             sasBox = boxAniE.getComponent(SpriteAnimationStateComponent.class);
+
+            //SoundMgr.getSoundMgr().play(SoundMgr.GOAL_CHEST_OPEN);
         }
+        if(helpTimer<1){
+            spinnyShineE.getComponent(TransformComponent.class).scaleX = 0;
+            spinnyShineE.getComponent(TransformComponent.class).scaleY = 0;
+            boxAniE.getComponent(TransformComponent.class).scaleX = 0;
+            boxAniE.getComponent(TransformComponent.class).scaleY = 0;
+        }
+        if(spinnyShineE.getComponent(TransformComponent.class).scaleY < 1.66){
+            spinnyShineE.getComponent(TransformComponent.class).scaleY += 0.1f;
+            spinnyShineE.getComponent(TransformComponent.class).scaleX += 0.1f;
+        }
+        if(boxAniE.getComponent(TransformComponent.class).scaleY < 1.8){
+            boxAniE.getComponent(TransformComponent.class).scaleY += 0.1f;
+            boxAniE.getComponent(TransformComponent.class).scaleX += 0.1f;
+        }
+
         helpTimer++;
+
         if (saBox.currentAnimation != "open") {
             boxIdleTimer++;
         }
@@ -483,6 +516,7 @@ public class GoalFeedbackScreen {
             setAnimation("open", Animation.PlayMode.NORMAL, sasBox, saBox);
             isOpeningBox = true;
             canTap = false;
+            SoundMgr.getSoundMgr().play(SoundMgr.GOAL_CHEST_OPEN);
         }
 
         if (saBox.currentAnimation == "open") {
