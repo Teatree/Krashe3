@@ -24,6 +24,7 @@ public class SoundMgr {
     public static final String GOAL_STAR_2 = "goal_star_2";
     public static final String GOAL_STAR_3 = "goal_star_3";
     public static final String GOAL_CHEST_OPEN = "goal_chestOpen";
+    public static final String GIFT_SHOW = "gift_show";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -49,6 +50,7 @@ public class SoundMgr {
         loadSound(GOAL_STAR_2);
         loadSound(GOAL_STAR_3);
         loadSound(GOAL_CHEST_OPEN);
+        loadSound(GIFT_SHOW);
      //   loadSound("tuturu");
     }
 

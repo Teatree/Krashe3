@@ -437,8 +437,8 @@ public class GoalFeedbackScreen {
 
             LabelComponent goalsLabelComp = goalLabel.getComponent(LabelComponent.class);
             if (!goalsLabelComp.text.toString().equals(gameStage.gameScript.fpc.level.name)) {
-                EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabel.getComponent(TransformComponent.class).x+600,
-                        goalLabel.getComponent(TransformComponent.class).y);
+                //EffectUtils.playYellowStarsParticleEffect(gameStage, goalLabel.getComponent(TransformComponent.class).x+600,
+                  //      goalLabel.getComponent(TransformComponent.class).y);
                 goalsLabelComp.text.replace(0, goalsLabelComp.text.capacity(),
                         gameStage.gameScript.fpc.level.name);
             }
@@ -485,6 +485,8 @@ public class GoalFeedbackScreen {
             //SoundMgr.getSoundMgr().play(SoundMgr.GOAL_CHEST_OPEN);
         }
         if(helpTimer<1){
+            EffectUtils.playShineParticleEffect(gameStage, boxAniE.getComponent(TransformComponent.class).x+85, boxAniE.getComponent(TransformComponent.class).y+85);
+            SoundMgr.getSoundMgr().play(SoundMgr.GIFT_SHOW);
             spinnyShineE.getComponent(TransformComponent.class).scaleX = 0;
             spinnyShineE.getComponent(TransformComponent.class).scaleY = 0;
             boxAniE.getComponent(TransformComponent.class).scaleX = 0;
