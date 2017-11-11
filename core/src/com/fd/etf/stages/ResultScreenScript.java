@@ -88,8 +88,7 @@ public class ResultScreenScript implements IScript {
 
         gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
-        i = 0;
-        j = 0;
+
         resultScreenItem = new ItemWrapper(item);
         gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
 
@@ -127,6 +126,8 @@ public class ResultScreenScript implements IScript {
 
     public void initResultScreen() {
         show = false;
+        i = 0;
+        j = 0;
 
         LabelComponent totalLabel = txtTotalE.getComponent(LabelComponent.class);
 //        LabelComponent totalLabels = txtTotalsE.getComponent(LabelComponent.class);
@@ -262,12 +263,13 @@ public class ResultScreenScript implements IScript {
 
         if (active && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a <= 0) {
             if (!isWasShowcase) {
+                System.out.println("i = " + i);
                 if (i <= gameStage.gameScript.fpc.score) {
                     updateScore();
                     if(!isPlayingScoreCountSFX) {
                         soundMgr.play(SCORE_COUNT, true); // do it in the same way as you did with progress bar, just make sure to add a new boolean variable
                         isPlayingScoreCountSFX = true;
-                        //System.out.println("Starting the sound effect");
+                        System.out.println("ACTIVATING SOUND SCORE_COUNT");
                     }
                 } else {
                     earnedLabel.text.replace(0, earnedLabel.text.capacity(), YOU_EARNED + String.valueOf(gameStage.gameScript.fpc.score));
@@ -277,12 +279,15 @@ public class ResultScreenScript implements IScript {
                     if (progressBarE.getComponent(DimensionsComponent.class).width <= getProgressBarActualLength() &&
                             progressBarE.getComponent(DimensionsComponent.class).width < MAX_PROGRESS_BAR_WIDTH && isPlayingProgressBarSFX == false) {
                         soundMgr.stop(SCORE_COUNT);
-                        isPlayingScoreCountSFX = true;
+                        System.out.println("DEACTIVATING SOUND SCORE_COUNT");
+
+                        isPlayingScoreCountSFX = false;
                         //System.out.println("Stopping the Sound effect");
 
                         soundMgr.play(SoundMgr.PROGRESS_BAR_COUNT, true);
                         isPlayingProgressBarSFX = true;
 
+                        System.out.println("ACTIVATING SOUND PROGRESS_BAR_COUNT");
                     }
 
                 }
@@ -307,6 +312,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void updateProgressBar(float deltaTime) {
+        System.out.println("updateProgressBar(): UPDATING PROGRESS BAR!");
         DimensionsComponent dcProgressBar = progressBarE.getComponent(DimensionsComponent.class);
 
         if (dcProgressBar.width <= getProgressBarActualLength() &&
@@ -324,8 +330,9 @@ public class ResultScreenScript implements IScript {
             }
             if(isPlayingProgressBarSFX) {
                 soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
-                isPlayingProgressBarSFX = false;
 
+                System.out.println("DEACTIVATING SOUND PROGRESS_BAR_COUNT");
+                isPlayingProgressBarSFX = false;
             }
         }
 
@@ -365,6 +372,7 @@ public class ResultScreenScript implements IScript {
     }
 
     private void updateScore() {
+        System.out.println("updateScore(): UPDATING SCORE!");
         j++;
         long counterStep = gameStage.gameScript.fpc.score / 48 > 1 ? gameStage.gameScript.fpc.score / 48 : 1;
         if (j == 2) {
@@ -438,6 +446,7 @@ public class ResultScreenScript implements IScript {
     }
 
     public void reset() {
+        System.out.println("RESETTING RESULT SCREEN!");
         init(resultScreenItem.getEntity());
     }
 
