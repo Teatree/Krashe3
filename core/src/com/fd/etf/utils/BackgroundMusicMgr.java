@@ -18,9 +18,9 @@ public class BackgroundMusicMgr {
     public Music musicGame;
 
     private BackgroundMusicMgr() {
-        musicMenu = Gdx.audio.newMusic(Gdx.files.internal("sound/background_menu.mp3"));
+        musicMenu = Gdx.audio.newMusic(Gdx.files.internal("sound/background_menu.ogg"));
         musicMenu.setLooping(true);
-        musicGame = Gdx.audio.newMusic(Gdx.files.internal("sound/background_game.mp3"));
+        musicGame = Gdx.audio.newMusic(Gdx.files.internal("sound/background_game.ogg"));
 //        musicGame.setLooping(true);
 //        musicGame.setVolume(0.2f);
     }

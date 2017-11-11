@@ -63,7 +63,7 @@ public class SoundMgr {
     }
 
     private void loadSound(String name) {
-        fx.put(name, Gdx.audio.newSound(Gdx.files.internal("sound/" + name + ".mp3")));
+        fx.put(name, Gdx.audio.newSound(Gdx.files.internal("sound/" + name + ".ogg")));
     }
 
     public void play(String name) {
