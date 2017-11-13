@@ -713,6 +713,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
         loseFeedback.getComponent(TransformComponent.class).x = 950;
         loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
+        SoundMgr.getSoundMgr().play(SoundMgr.AP_LOSE_SOUND);
 
         ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
         if (ac == null) {

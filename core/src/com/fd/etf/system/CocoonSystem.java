@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.entity.componets.CocoonComponent;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
@@ -71,10 +72,12 @@ public class CocoonSystem extends IteratingSystem {
 
         if (cc.state.equals(HIT)) {
             if (isAnimationFinished(entity)) {
+                SoundMgr.getSoundMgr().play(SoundMgr.COCOON_HIT);
                 if (cc.hitCounter >= COCOON_HIT_AMOUNT) {
                     cc.state = DEAD;
                     spawnButterfly();
                     checkCocoonGoal();
+                    SoundMgr.getSoundMgr().play(SoundMgr.COCOON_RELEASE_B);
                 } else {
                     cc.state = IDLE;
                     if (cc.hitCounter + 1 < 4) {

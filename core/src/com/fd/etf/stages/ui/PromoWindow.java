@@ -108,7 +108,7 @@ public class PromoWindow extends AbstractDialog {
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveBy(0, -560, 2, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveBy(0, -1130, 2, Interpolation.exp10Out)); //KEEP THE MOVEBYY -1130 THAT'S EXACTLY THE MIDDLE OF THE SCREEN
         promoWindowE.add(ac);
 
         Entity buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);

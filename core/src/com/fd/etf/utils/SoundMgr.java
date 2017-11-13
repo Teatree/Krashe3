@@ -25,6 +25,13 @@ public class SoundMgr {
     public static final String GOAL_STAR_3 = "goal_star_3";
     public static final String GOAL_CHEST_OPEN = "goal_chestOpen";
     public static final String GIFT_SHOW = "gift_show";
+    public static final String AP_LOSE_SOUND = "ap_lose_sound";
+    public static final String COCOON_APPEAR = "cocoon_appear";
+    public static final String COCOON_HIT = "cocoon_hit";
+    public static final String COCOON_RELEASE_B = "cocoon_release_b";
+    public static final String EAT_BUTTERFLY = "eat_butterfly";
+    public static final String X2_APPEAR = "x2_appear";
+    public static final String X2_EATEN = "x2_eaten";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -51,6 +58,13 @@ public class SoundMgr {
         loadSound(GOAL_STAR_3);
         loadSound(GOAL_CHEST_OPEN);
         loadSound(GIFT_SHOW);
+        loadSound(AP_LOSE_SOUND);
+        loadSound(COCOON_APPEAR);
+        loadSound(COCOON_HIT);
+        loadSound(COCOON_RELEASE_B);
+        loadSound(EAT_BUTTERFLY);
+        loadSound(X2_APPEAR);
+        loadSound(X2_EATEN);
      //   loadSound("tuturu");
     }
 
@@ -87,6 +101,7 @@ public class SoundMgr {
             }else {
                 fx.get(name).play();
             }
+            System.out.println("Playing sound: " + name);
         }
     }
 

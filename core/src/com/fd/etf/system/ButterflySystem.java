@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -74,6 +75,10 @@ public class ButterflySystem extends IteratingSystem {
             } else {
                 e.getComponent(TransformComponent.class).x -= e.getComponent(DimensionsComponent.class).width / 2;
                 e.getComponent(TransformComponent.class).scaleX = -1;
+            }
+
+            if(e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY)){
+                SoundMgr.getSoundMgr().play(SoundMgr.EAT_BUTTERFLY);
             }
 
             if (e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY) || isOutOfBounds(e.getComponent(ButterflyComponent.class))) {

@@ -56,7 +56,7 @@ public class GoalFeedbackScreen {
     public final String BOX_ANI = "box_ani";
     private static final int POS_X = -22;
     private static final int POS_Y = -19;
-    private int goalSoundOrder = 1;
+    private int goalSoundOrder;
     private boolean canPlayGoalSound = true;
 
     private static final int GOAL_STEP_Y = 110;
@@ -110,6 +110,7 @@ public class GoalFeedbackScreen {
 
     public void init(boolean isNewLevel) {
         this.isNewLevel = isNewLevel;
+        goalSoundOrder = 1;
         if (!isNewLevel) {
             if (tiles != null) {
                 for (Entity tile : tiles) {

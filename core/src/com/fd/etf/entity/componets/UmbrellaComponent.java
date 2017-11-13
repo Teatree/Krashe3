@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.fd.etf.utils.SoundMgr;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class UmbrellaComponent implements Component, Pool.Poolable{
     public void setToSpawningState(){
         state = State.SPAWNING;
         getSpawningTimeCounter = 2;
+        SoundMgr.getSoundMgr().play(SoundMgr.X2_APPEAR);
     }
 
     public static class DandelionMultiplier {

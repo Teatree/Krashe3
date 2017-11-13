@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.UmbrellaComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -66,6 +67,7 @@ public class UmbrellaSystem extends IteratingSystem {
             if (checkCollision(uc)) {
                 gameStage.gameScript.fpc.isCollision = true;
                 hide(entity);
+                SoundMgr.getSoundMgr().play(SoundMgr.X2_EATEN);
 
                 gameStage.gameScript.fpc.umbrellaMult(uc.pointsMult);
                 gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
@@ -83,6 +85,7 @@ public class UmbrellaSystem extends IteratingSystem {
     private void spawn(Entity e, float deltaTime) {
 
         if (e.getComponent(UmbrellaComponent.class).state.equals(SPAWNING)) {
+
             e.getComponent(SpriteAnimationStateComponent.class).paused = true;
             e.getComponent(TransformComponent.class).x = UmbrellaComponent.INIT_SPAWN_X;
             e.getComponent(TransformComponent.class).y = 400;
@@ -160,6 +163,7 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     public static void hide(Entity entity) {
+
         PowerupSystem.umbrellaSpawnCounter = getNextSpawnInterval();
         if (entity.getComponent(UmbrellaComponent.class) == null) {
             entity.add(new UmbrellaComponent());

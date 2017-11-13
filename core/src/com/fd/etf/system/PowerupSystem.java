@@ -7,6 +7,7 @@ import com.fd.etf.entity.componets.CocoonComponent;
 import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.entity.componets.UmbrellaComponent;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -113,6 +114,7 @@ public class PowerupSystem {
 
             cocoonEntity.getComponent(CocoonComponent.class).state = CocoonComponent.State.SPAWNING;
             cocoonEntity.getComponent(CocoonComponent.class).hitCounter = 0;
+            SoundMgr.getSoundMgr().play(SoundMgr.COCOON_APPEAR);
         }
     }
 
