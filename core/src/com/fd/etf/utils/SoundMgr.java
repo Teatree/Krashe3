@@ -101,7 +101,7 @@ public class SoundMgr {
             }else {
                 fx.get(name).play();
             }
-            System.out.println("Playing sound: " + name);
+//            System.out.println("Playing sound: " + name);
         }
     }
 

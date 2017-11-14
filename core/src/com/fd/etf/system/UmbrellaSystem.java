@@ -54,6 +54,7 @@ public class UmbrellaSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleY = UMBRELLA_SCALE;
 
             uc.current += Gdx.graphics.getDeltaTime() * uc.speed;
+//            System.out.println("UMBRELLA SYSTEM: state = " + entity.getComponent(UmbrellaComponent.class).state + " uc.current = " + uc.current);
 
             spawn(entity, deltaTime);
 
@@ -66,6 +67,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
             if (checkCollision(uc)) {
                 gameStage.gameScript.fpc.isCollision = true;
+                uc.current = 0;
                 hide(entity);
                 SoundMgr.getSoundMgr().play(SoundMgr.X2_EATEN);
 
@@ -119,6 +121,7 @@ public class UmbrellaSystem extends IteratingSystem {
         }
 
         if (uc.current >= 1 && uc.state.equals(FLY)) {
+//            System.out.println("LOOK AT ME FLY!!! uc.current = " + uc.current);
             uc.dataSet[0] = new Vector2(uc.dataSet[2].x, uc.dataSet[2].y);
             uc.dataSet[2] = new Vector2(1170, random.nextInt(700) + 100);
             uc.dataSet[1] = new Vector2(-1100, (uc.dataSet[2].y + uc.dataSet[0].y) / 2);

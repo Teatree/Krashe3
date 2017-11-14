@@ -73,7 +73,7 @@ public class Showcase {
         initShowCaseBuyButton();
 
         tcShowCase = showcaseE.getComponent(TransformComponent.class);
-        soundMgr.play(SoundMgr.SPARKLE);
+
     }
 
     public void act(float delta) {

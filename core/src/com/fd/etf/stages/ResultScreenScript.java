@@ -324,6 +324,7 @@ public class ResultScreenScript implements IScript {
             if (!show && showCaseVanity != null && showCaseVanity.cost <= gameStage.gameScript.fpc.totalScore) {
 //                System.out.println("INITING SHOWCASE!!");
                 initShowcase();
+                soundMgr.play(SoundMgr.SPARKLE);
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
             }
             if (!show && gameStage.gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(gameStage, need) && adsBtn == null) {
