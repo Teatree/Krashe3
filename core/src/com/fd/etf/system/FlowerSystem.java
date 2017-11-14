@@ -20,6 +20,7 @@ import static com.fd.etf.entity.componets.FlowerComponent.State.*;
 import static com.fd.etf.stages.GameScreenScript.isGameOver;
 import static com.fd.etf.stages.GameScreenScript.isPause;
 import static com.fd.etf.utils.GlobalConstants.FPS;
+import static com.fd.etf.utils.SoundMgr.REVIVE;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class FlowerSystem extends IteratingSystem {

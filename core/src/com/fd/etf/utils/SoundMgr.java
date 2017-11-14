@@ -32,6 +32,8 @@ public class SoundMgr {
     public static final String EAT_BUTTERFLY = "eat_butterfly";
     public static final String X2_APPEAR = "x2_appear";
     public static final String X2_EATEN = "x2_eaten";
+    public static final String REVIVE = "revive";
+    public static final String CANNON_FIRE = "cannon_fire";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -65,6 +67,8 @@ public class SoundMgr {
         loadSound(EAT_BUTTERFLY);
         loadSound(X2_APPEAR);
         loadSound(X2_EATEN);
+        loadSound(REVIVE);
+        loadSound(CANNON_FIRE);
      //   loadSound("tuturu");
     }
 

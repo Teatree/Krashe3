@@ -2,21 +2,21 @@
 class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 0,
 finishOn: 25,
-minSpawnCoefficient: 1, 
-maxSpawnCoefficient: 1.4
+minSpawnCoefficient: 0.5, 
+maxSpawnCoefficient: 1
 },
 {
 class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 26,
 finishOn:35,
-minSpawnCoefficient: 0.3, 
-maxSpawnCoefficient: 0.4
+minSpawnCoefficient: 0.7, 
+maxSpawnCoefficient: 1.4
 },
 {
 class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
 startOn: 36,
 finishOn:55,
-minSpawnCoefficient: 0.3, 
-maxSpawnCoefficient: 0.5
+minSpawnCoefficient: 0.9, 
+maxSpawnCoefficient: 1.2
 }
 ]

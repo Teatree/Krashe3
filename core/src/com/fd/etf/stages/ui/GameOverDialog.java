@@ -14,6 +14,7 @@ import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.BugSystem;
 import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -131,6 +132,7 @@ public class GameOverDialog extends AbstractDialog {
 //        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
         BugSystem.blowUpAllBugs();
         FlowerComponent.state = FlowerComponent.State.REVIVE_ADS;
+        SoundMgr.getSoundMgr().play(SoundMgr.REVIVE);
 
         if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
             BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
