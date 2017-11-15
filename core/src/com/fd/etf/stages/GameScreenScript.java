@@ -72,6 +72,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public GoalFeedbackScreen goalFeedbackScreen;
     public static List<Rectangle> projectileBounds;
 
+    private int beeSplatterOrder;
+
     public ItemWrapper gameItem;
     public GameOverDialog gameOverDialog;
     private PauseDialog pauseDialog;
@@ -103,6 +105,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void angerBees() {
+        beeSplatterOrder = 0;
         BugSpawnSystem.isFirst = true;
         isAngeredBeesMode = true;
         BugSpawnSystem.angerBeePattern = 2 /*random.nextInt(3)*/;
@@ -126,6 +129,24 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     private void updateAngeredBeesMode() {
         if (isAngeredBeesMode) {
+            beeSplatterOrder++;
+            System.out.println("beeSplatterOrder = " + beeSplatterOrder);
+            if(beeSplatterOrder == 1){
+                EffectUtils.playSplatterParticleEffect(gameStage, 1200,0);
+                EffectUtils.playSplatterParticleEffect(gameStage, 1200,800);
+            }else if(beeSplatterOrder == 15){
+                EffectUtils.playSplatterParticleEffect(gameStage, 900,0);
+                EffectUtils.playSplatterParticleEffect(gameStage, 900,800);
+            }else if(beeSplatterOrder == 30){
+                EffectUtils.playSplatterParticleEffect(gameStage, 600,0);
+                EffectUtils.playSplatterParticleEffect(gameStage, 600,800);
+            }else if(beeSplatterOrder == 45){
+                EffectUtils.playSplatterParticleEffect(gameStage, 300,0);
+                EffectUtils.playSplatterParticleEffect(gameStage, 300,800);
+            }else if(beeSplatterOrder == 60){
+                EffectUtils.playSplatterParticleEffect(gameStage, 0,0);
+                EffectUtils.playSplatterParticleEffect(gameStage, 0,800);
+            }
             angeredBeesModeTimer--;
             //stopMenu ani when it's finished
             if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&

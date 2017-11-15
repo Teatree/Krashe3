@@ -157,7 +157,7 @@ public class BugSpawnSystem extends EntitySystem {
                     }
                 } else if (probabilityValue >= curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + 1 &&
                         probabilityValue < curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + curBeeProb) {
-                    createBug(BEE, currentMultiplier);   // Bee
+                    createBug(QUEENBEE, currentMultiplier);   // Bee
                 }
                 bugsSpawned++;
                 if(PowerupSystem.canCocoonSpawn(gameStage)) {
