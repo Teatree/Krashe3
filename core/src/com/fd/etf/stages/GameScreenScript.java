@@ -67,6 +67,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity loseFeedback;
     public Entity curtainGameE;
     public Entity backgroundShitE;
+    public Entity beesAngryTextE;
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
@@ -83,7 +84,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     //bee mode
     private Entity beesModeAni;
-    private Entity beesModeEndAni;
     public static boolean isAngeredBeesMode = false;
     public static int angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
     private static boolean shouldShowGameOverDialog;
@@ -131,10 +131,19 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (isAngeredBeesMode) {
             beeSplatterOrder++;
             System.out.println("beeSplatterOrder = " + beeSplatterOrder);
+
             if(beeSplatterOrder == 1){
+
+                SoundMgr.getSoundMgr().play(SoundMgr.BEES_ACTIVATED);
                 EffectUtils.playSplatterParticleEffect(gameStage, 1200,0);
                 EffectUtils.playSplatterParticleEffect(gameStage, 1200,800);
             }else if(beeSplatterOrder == 15){
+                ActionComponent ac3 = new ActionComponent();
+                ac3.dataArray.add(Actions.sequence(
+                        Actions.delay(0.5f),
+                        Actions.moveBy(0, -100, 1f, Interpolation.exp5)));
+                beesAngryTextE.add(ac3);
+
                 EffectUtils.playSplatterParticleEffect(gameStage, 900,0);
                 EffectUtils.playSplatterParticleEffect(gameStage, 900,800);
             }else if(beeSplatterOrder == 30){
@@ -144,9 +153,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 EffectUtils.playSplatterParticleEffect(gameStage, 300,0);
                 EffectUtils.playSplatterParticleEffect(gameStage, 300,800);
             }else if(beeSplatterOrder == 60){
+                SoundMgr.getSoundMgr().play(SoundMgr.BEES, true);
                 EffectUtils.playSplatterParticleEffect(gameStage, 0,0);
                 EffectUtils.playSplatterParticleEffect(gameStage, 0,800);
             }
+//            SoundMgr.getSoundMgr().fx.get(SoundMgr.BEES).setVolume(SoundMgr.getSoundMgr().fx.get(SoundMgr.BEES).play(), 1);
             angeredBeesModeTimer--;
             //stopMenu ani when it's finished
             if (beesModeAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
@@ -158,21 +169,29 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             }
             if (angeredBeesModeTimer <= 0) {
                 isAngeredBeesMode = false;
+                SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
 
+                ActionComponent ac3 = new ActionComponent();
+                ac3.dataArray.add(Actions.sequence(
+                        Actions.delay(0.5f),
+                        Actions.moveBy(0, 100, 1f, Interpolation.exp5)));
+                beesAngryTextE.add(ac3);
+
+                // PLAY BEES MODE END!
                 GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
-                beesModeEndAni.getComponent(TransformComponent.class).y = 394;
-                beesModeEndAni.getComponent(SpriterComponent.class).player.setAnimation(0);
-                beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 26;
-                beesModeEndAni.getComponent(SpriterComponent.class).player.setTime(0);
+//                beesModeEndAni.getComponent(TransformComponent.class).y = 394;
+//                beesModeEndAni.getComponent(SpriterComponent.class).player.setAnimation(0);
+//                beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 26;
+//                beesModeEndAni.getComponent(SpriterComponent.class).player.setTime(0);
                 angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
                 checkAngeredBeesGoal();
             }
         }
-        if (beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
-                beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() %
-                        beesModeEndAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
-            beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
-        }
+//        if (beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() != 0 &&
+//                beesModeEndAni.getComponent(SpriterComponent.class).player.getTime() %
+//                        beesModeEndAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
+//            beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
+//        }
 
     }
 
@@ -240,10 +259,10 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         beesModeAni.getComponent(SpriterComponent.class).player.speed = 0;
         beesModeAni.getComponent(TransformComponent.class).y = 1800;
 
-        beesModeEndAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
-        beesModeEndAni.getComponent(SpriterComponent.class).scale = 0.7f;
-        beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
-        beesModeEndAni.getComponent(TransformComponent.class).y = 1800;
+//        beesModeEndAni = gameItem.getChild(BEES_MODE_ANI).getEntity();
+//        beesModeEndAni.getComponent(SpriterComponent.class).scale = 0.7f;
+//        beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
+//        beesModeEndAni.getComponent(TransformComponent.class).y = 1800;
 
         loseFeedback = gameItem.getChild(LOSE_FEEDBACK).getEntity();
         loseFeedback.getComponent(TintComponent.class).color.a = 0;
@@ -285,6 +304,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         checkTryPeriod();
 
         backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
+        beesAngryTextE = gameItem.getChild("bees_angry_C").getEntity();
 
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;

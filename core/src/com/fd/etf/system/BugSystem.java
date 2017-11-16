@@ -109,8 +109,6 @@ public class BugSystem extends IteratingSystem {
 
                     if (bc.type.equals(QUEENBEE)) {
                         gameStage.gameScript.angerBees();
-
-
                     }
 
                     if (sac.frameRangeMap.containsKey(FLY_ANI)) {

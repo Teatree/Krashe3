@@ -34,6 +34,8 @@ public class SoundMgr {
     public static final String X2_EATEN = "x2_eaten";
     public static final String REVIVE = "revive";
     public static final String CANNON_FIRE = "cannon_fire";
+    public static final String BEES = "bees";
+    public static final String BEES_ACTIVATED = "bees_activated";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -69,6 +71,8 @@ public class SoundMgr {
         loadSound(X2_EATEN);
         loadSound(REVIVE);
         loadSound(CANNON_FIRE);
+        loadSound(BEES);
+        loadSound(BEES_ACTIVATED);
      //   loadSound("tuturu");
     }
 
