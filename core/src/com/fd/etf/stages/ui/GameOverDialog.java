@@ -9,6 +9,7 @@ import com.fd.etf.Main;
 import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.BugSystem;
@@ -128,6 +129,14 @@ public class GameOverDialog extends AbstractDialog {
         gameOverTimer = 0;
         gameOverCounter = 0;
         isAngeredBeesMode = false;
+
+        ActionComponent ac3 = new ActionComponent();
+        ac3.dataArray.add(Actions.sequence(
+                    Actions.delay(0.5f),
+                    Actions.moveTo(257, 785, 1f, Interpolation.exp5)));
+        GameScreenScript.beesAngryTextE.add(ac3);
+        SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
+
 //        BugSystem.blowUpAllBugs = true;
 //        BugSystem.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
         BugSystem.blowUpAllBugs();

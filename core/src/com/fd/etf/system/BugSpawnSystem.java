@@ -222,7 +222,7 @@ public class BugSpawnSystem extends EntitySystem {
         Entity bugEntity = BugPool.getInstance(gameStage).get(BEE);
         BugComponent bc = new BugComponent(gameStage, BEE, currentMultiplier);
         bc.isAngeredBee = true;
-        bc.duration = bc.duration/1.2f;
+//        bc.duration = bc.duration*1.5f; //less the faster
         bc.interpolation = null;
         bugEntity.add(bc);
 

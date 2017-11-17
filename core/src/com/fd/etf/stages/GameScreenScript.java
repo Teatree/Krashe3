@@ -67,7 +67,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity loseFeedback;
     public Entity curtainGameE;
     public Entity backgroundShitE;
-    public Entity beesAngryTextE;
+    public static Entity beesAngryTextE;
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
@@ -141,7 +141,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac3 = new ActionComponent();
                 ac3.dataArray.add(Actions.sequence(
                         Actions.delay(0.5f),
-                        Actions.moveBy(0, -100, 1f, Interpolation.exp5)));
+                        Actions.moveTo(257, 684, 1f, Interpolation.exp5)));
                 beesAngryTextE.add(ac3);
 
                 EffectUtils.playSplatterParticleEffect(gameStage, 900,0);
@@ -174,7 +174,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac3 = new ActionComponent();
                 ac3.dataArray.add(Actions.sequence(
                         Actions.delay(0.5f),
-                        Actions.moveBy(0, 100, 1f, Interpolation.exp5)));
+                        Actions.moveTo(257, 785, 1f, Interpolation.exp5)));
                 beesAngryTextE.add(ac3);
 
                 // PLAY BEES MODE END!
@@ -192,7 +192,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 //                        beesModeEndAni.getComponent(SpriterComponent.class).player.getAnimation().length == 0) {
 //            beesModeEndAni.getComponent(SpriterComponent.class).player.speed = 0;
 //        }
-
     }
 
     private void checkAngeredBeesGoal() {
@@ -305,6 +304,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
         beesAngryTextE = gameItem.getChild("bees_angry_C").getEntity();
+        beesAngryTextE.getComponent(TransformComponent.class).y = 784;
 
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;
@@ -682,6 +682,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 goalFeedbackScreen.update();
             }
             updateAngeredBeesMode();
+
             if (phoenixIcon.getComponent(TransformComponent.class).x >= 900 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
                 loseFeedback.getComponent(TransformComponent.class).x = -600;

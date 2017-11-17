@@ -116,6 +116,8 @@ public class ResultScreenScript implements IScript {
         }
         resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a = 1;
         resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
+
+        SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
     }
 
     public void initButtons() {

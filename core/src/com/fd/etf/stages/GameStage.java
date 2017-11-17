@@ -104,6 +104,8 @@ public class GameStage extends Stage {
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance(this);
+
+        GameScreenScript.beesAngryTextE.getComponent(TransformComponent.class).y = 784;
     }
 
     public void initMenu() {
