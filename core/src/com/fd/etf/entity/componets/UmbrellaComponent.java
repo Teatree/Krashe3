@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class UmbrellaComponent implements Component, Pool.Poolable{
 
-    public static float SPAWN_INTERVAL_BASE = 50;
+    public static float SPAWN_INTERVAL_BASE = 100;
     public static float SPAWNING_TIME = 0.2f;
 
     public static float INIT_SPAWN_X = 1165;

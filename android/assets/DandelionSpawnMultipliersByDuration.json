@@ -2,21 +2,21 @@
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
 startOn: 0,
 finishOn: 25,
-minSpawnCoefficient: 0.3, 
-maxSpawnCoefficient: 0.4
+minSpawnCoefficient: 0.2, 
+maxSpawnCoefficient: 0.3
 },
 {
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
 startOn: 26,
 finishOn:35,
-minSpawnCoefficient: 0.9, 
-maxSpawnCoefficient: 1.1
+minSpawnCoefficient: 1.5, 
+maxSpawnCoefficient: 1.7
 },
 {
 class: com.fd.etf.entity.componets.UmbrellaComponent$DandelionMultiplier,
 startOn: 36,
 finishOn:55,
-minSpawnCoefficient: 1.8, 
-maxSpawnCoefficient: 2.9
+minSpawnCoefficient: 2.8, 
+maxSpawnCoefficient: 4
 }
 ]

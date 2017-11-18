@@ -12,6 +12,7 @@ import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
@@ -123,6 +124,7 @@ public class BugSystem extends IteratingSystem {
 
                     if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
                         gameStage.gameScript.fpc.isCollision = true;
+                        SoundMgr.getSoundMgr().play(SoundMgr.EAT_SOUND);
                         checkGoals(bc);
                     }
 
@@ -190,6 +192,7 @@ public class BugSystem extends IteratingSystem {
         if (gameStage.gameScript.fpc.petCollisionCheck(bc.boundsRect)) {
             if (gameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS) != null) {
                 gameStage.gameScript.fpc.level.getGoalByType(PET_EAT_N_BUGS).update();
+                SoundMgr.getSoundMgr().play(SoundMgr.EAT_SOUND);
             }
         }
     }

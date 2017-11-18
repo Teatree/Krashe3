@@ -152,7 +152,6 @@ public class FlowerSystem extends IteratingSystem {
                 setBiteAttackAnimation(sc);
                 gameStage.gameScript.fpc.isCollision = false;
 
-                soundMgr.play(SoundMgr.EAT_SOUND);
             } else {
                 if (tc.y < FLOWER_MAX_Y_POS || !Gdx.input.isTouched()) {
                     move(tc, delta);
@@ -180,7 +179,7 @@ public class FlowerSystem extends IteratingSystem {
                 state = IDLE_BITE;
                 gameStage.gameScript.fpc.isCollision = false;
 
-                soundMgr.play(SoundMgr.EAT_SOUND);
+//                soundMgr.play(SoundMgr.EAT_SOUND);
 
             } else {
                 setIdleAnimation(sc);

@@ -77,9 +77,9 @@ public class ButterflySystem extends IteratingSystem {
                 e.getComponent(TransformComponent.class).scaleX = -1;
             }
 
-            if(e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY)){
-                SoundMgr.getSoundMgr().play(SoundMgr.EAT_BUTTERFLY);
-            }
+           // if(e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY)){
+                //SoundMgr.getSoundMgr().play(SoundMgr.EAT_BUTTERFLY);
+           // }
 
             if (e.getComponent(ButterflyComponent.class).current >= 1 && e.getComponent(ButterflyComponent.class).state.equals(FLY) || isOutOfBounds(e.getComponent(ButterflyComponent.class))) {
                 die(e.getComponent(ButterflyComponent.class), e.getComponent(TransformComponent.class));
@@ -95,6 +95,8 @@ public class ButterflySystem extends IteratingSystem {
                 e.getComponent(ButterflyComponent.class).state = DEAD;
                 e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 e.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+
+                SoundMgr.getSoundMgr().play(SoundMgr.EAT_BUTTERFLY);
 //                gameStage.gameScript.reloadScoreLabel(gameStage.gameScript.fpc);
             }
 

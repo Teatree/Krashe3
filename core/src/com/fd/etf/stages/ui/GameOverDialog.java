@@ -24,6 +24,7 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.utils.EffectUtils.fade;
+import static com.fd.etf.utils.GlobalConstants.ANGERED_BEES_MODE_DURATION;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 
 public class GameOverDialog extends AbstractDialog {
@@ -130,10 +131,13 @@ public class GameOverDialog extends AbstractDialog {
         gameOverCounter = 0;
         isAngeredBeesMode = false;
 
+        angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
+
         ActionComponent ac3 = new ActionComponent();
         ac3.dataArray.add(Actions.sequence(
-                    Actions.delay(0.5f),
-                    Actions.moveTo(257, 785, 1f, Interpolation.exp5)));
+                Actions.delay(0.5f),
+                Actions.moveTo(257, 785, 1f, Interpolation.exp5),
+                Actions.scaleTo(1, 1, 3f)));
         GameScreenScript.beesAngryTextE.add(ac3);
         SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
 
