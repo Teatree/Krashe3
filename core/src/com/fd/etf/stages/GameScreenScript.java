@@ -791,6 +791,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         loseFeedback.getComponent(TransformComponent.class).scaleX = 0.5f;
         loseFeedback.getComponent(TransformComponent.class).x = 950;
         loseFeedback.getComponent(ZIndexComponent.class).setZIndex(1200);
+        if(loseFeedback.getComponent(ActionComponent.class) != null) {
+            loseFeedback.getComponent(ActionComponent.class).dataArray.clear();
+        }
         SoundMgr.getSoundMgr().play(SoundMgr.AP_LOSE_SOUND);
 
         ActionComponent ac = loseFeedback.getComponent(ActionComponent.class);
@@ -800,9 +803,20 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             loseFeedback.add(ac);
         }
 
-        ac.dataArray.add(Actions.fadeIn(0.2f));
-        ac.dataArray.add(Actions.scaleTo(1.5f, 1.5f, 0.2f));
-        ac.dataArray.add(Actions.moveTo(742, loseFeedback.getComponent(TransformComponent.class).y, 0.2f));
+        ac.dataArray.add(Actions.fadeIn(0.5f));
+        ac.dataArray.add(Actions.moveTo(750, loseFeedback.getComponent(TransformComponent.class).y, 0.5f));
+        ac.dataArray.add(Actions.scaleTo(2.5f, 2.5f, 1f));
+        ac.dataArray.add(Actions.sequence(Actions.delay(2f),
+                Actions.scaleTo(1.6f, 1.6f, 2f),
+                Actions.scaleTo(2.5f, 2.5f, 2f),
+                Actions.scaleTo(1.6f, 1.6f, 2f),
+                Actions.scaleTo(2.5f, 2.5f, 2f),
+                Actions.scaleTo(1.6f, 1.6f, 2f),
+                Actions.scaleTo(2.5f, 2.5f, 2f),
+                Actions.scaleTo(1.6f, 1.6f, 2f),
+                Actions.scaleTo(2.5f, 2.5f, 2f),
+                Actions.scaleTo(1.6f, 1.6f, 2f),
+                Actions.scaleTo(2.5f, 2.5f, 2f)));
 
 //            FlowerComponent.state = FlowerComponent.State.LOSING;
 //            endGame();
