@@ -30,7 +30,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public List<PetComponent> pets = new ArrayList<>();
     public Map<Upgrade.UpgradeType, Upgrade> upgrades = new HashMap<>();
     public Level level = new Level();
-    public PetComponent currentPet;
+    public static PetComponent currentPet;
 
     public boolean petAndFlowerCollisionCheck(Rectangle rectangle) {
         return boundsRect.overlaps(rectangle) || petCollisionCheck(rectangle);

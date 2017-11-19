@@ -948,11 +948,13 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             tc.x = PetComponent.X_SPAWN_POSITION;
             tc.y = PetComponent.getNewPositionY();
 
-            fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
-            fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-            fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
+            if(fpc.currentPet != null) {
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
+                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
 
-            fpc.currentPet.state = SPAWNING;
+                fpc.currentPet.state = SPAWNING;
+            }
         }
     }
 

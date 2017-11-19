@@ -16,6 +16,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 public class EffectUtils {
 
     public static final String STARS_YELLOW_BURST = "starsyellowburst";
+    public static final String HEARTS_BURST = "starsredburst.party";
     public static final String SHINE_BURST = "shine.party";
     public static final String GREEN_SPLATTER = "splatter.party";
     public static final String DEFAULT_LAYER = "Default";
@@ -80,6 +81,10 @@ public class EffectUtils {
 
     public static void playYellowStarsParticleEffect(GameStage gameStage, float x, float y) {
         playParticleEffect(gameStage, x, y, STARS_YELLOW_BURST, 1.2f);
+    }
+
+    public static void playHeartsBurstParticleEffect(GameStage gameStage, float x, float y){
+        playParticleEffect(gameStage, x, y, HEARTS_BURST, 0.8f);
     }
 
     public static void playShineParticleEffect(GameStage gameStage, float x, float y) {

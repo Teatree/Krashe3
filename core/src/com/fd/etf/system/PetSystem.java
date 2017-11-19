@@ -8,10 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
+import com.fd.etf.utils.SaveMngr;
+import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -79,6 +82,7 @@ public class PetSystem extends IteratingSystem {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
                 pc.state = DASH;
+                cannonsc.player.setTime(0);
             }
 
             e.getComponent(SpriterComponent.class).player.speed = FPS;
@@ -130,6 +134,7 @@ public class PetSystem extends IteratingSystem {
                 pc.state = DASH;
 
                 checkPetDashGoal();
+
             }
         } else {
 
@@ -190,7 +195,7 @@ public class PetSystem extends IteratingSystem {
 
     private void moveCannonWithPet(Entity entity, PetComponent pc) {
         if (pc.state == DASH) {
-            pc.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+            //pc.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
         } else {
             pc.petCannon.getComponent(TransformComponent.class).x = entity.getComponent(TransformComponent.class).x + PET_CANNON_SHIFT_X;
             pc.petCannon.getComponent(TransformComponent.class).y = entity.getComponent(TransformComponent.class).y - PET_CANNON_SHIFT_Y;
@@ -212,6 +217,7 @@ public class PetSystem extends IteratingSystem {
                 pc.totalEatenBugs++;
                 pc.duringGameEatenBugs++;
                 pc.stageCounter++;
+                SoundMgr.getSoundMgr().play(SoundMgr.EAT_SOUND);
 
                 pc.state = IDLE;
                 setIdleAnimationStage1(scPetBody);
@@ -244,6 +250,26 @@ public class PetSystem extends IteratingSystem {
             setSpawnAnimation(scPetHead);
             setSpawnAnimation(cannonsc);
             pc.velocity = 0;
+
+
+            if(cannonsc.player.getTime() == 72){
+                if(FlowerPublicComponent.currentPet.name.equals("BIRD")) {
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_BIRD);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("CAT")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_CAT);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("DOG")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_DOG);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("RAVEN")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_RAVEN);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("DRAGON")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_DRAGON);
+                }
+            }
+
             if (isAnimationFinished(scPetBody) && isAnimationFinished(scPetHead)) {
                 pc.state = IDLE;
 //                canPlayAnimation = true;
@@ -258,6 +284,7 @@ public class PetSystem extends IteratingSystem {
                     setIdleAnimationStage3(cannonsc);
                 }
             }
+
         }
     }
 
@@ -324,15 +351,21 @@ public class PetSystem extends IteratingSystem {
                       SpriterComponent scPetHead,
                       Entity entity) {
 
+
+
         if (pc.state.equals(DASH)) {
+            if(pc.stageCounter != 0) {
+                cannonsc.player.setTime(0);
+            }
             pc.stageCounter = 0;
             if (entity.getComponent(TransformComponent.class).x < 900 && cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
                 ActionComponent ac2 = entity.getComponent(ActionComponent.class);
                 Actions.checkInit();
-                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 3.6f, Interpolation.linear));
+                ac2.dataArray.add(Actions.moveTo(-320, entity.getComponent(TransformComponent.class).y, 2.6f, Interpolation.linear));
                 // spawning projectiles
 
             } else if (cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
+                System.out.print(" go!");
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
                 if (entity.getComponent(ActionComponent.class) == null) {
@@ -340,7 +373,10 @@ public class PetSystem extends IteratingSystem {
                     entity.add(ac);
                 }
                 Actions.checkInit();
-                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 4.2f, Interpolation.pow3Out));
+                entity.getComponent(ActionComponent.class).dataArray.add(Actions.moveTo(220, entity.getComponent(TransformComponent.class).y, 2.2f, Interpolation.pow3Out));
+            }
+            if(cannonsc.player.getTime() == 192){
+                SoundMgr.getSoundMgr().play(SoundMgr.CANNON_FIRE);
             }
 
             if (pc.isBiteDash) {
@@ -372,7 +408,22 @@ public class PetSystem extends IteratingSystem {
                 setTappedAnimation(pc.petHead.getComponent(SpriterComponent.class));
                 setTappedAnimation(cannonsc);
 
-                EffectUtils.playYellowStarsParticleEffect(gameStage, v.x, v.y);
+                EffectUtils.playHeartsBurstParticleEffect(gameStage, v.x, v.y);
+                if(FlowerPublicComponent.currentPet.name.equals("BIRD")) {
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_BIRD);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("CAT")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_CAT);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("DOG")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_DOG);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("RAVEN")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_RAVEN);
+                }
+                if(FlowerPublicComponent.currentPet.name.equals("DRAGON")){
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_DRAGON);
+                }
 
                 entity.remove(ActionComponent.class);
                 pc.petCannon.remove(ActionComponent.class);
