@@ -512,6 +512,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.sceneLoader.getEngine().addSystem(new PetSystem(gameStage));
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
         gameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(gameStage));
+
+        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem(gameStage));
     }
 
     private void initBackButton() {

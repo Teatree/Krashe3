@@ -2,6 +2,7 @@ package com.fd.etf.utils;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
 import com.fd.etf.entity.componets.ParticleLifespanComponent;
@@ -11,7 +12,10 @@ import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
+
+import java.util.Random;
 
 public class EffectUtils {
 
@@ -22,6 +26,8 @@ public class EffectUtils {
     public static final String DEFAULT_LAYER = "Default";
     public static final String BUG_JUICE_BUBBLE_LIB = "bug_juice_bubble_lib";
     public static final String PROJECTILE_DOG = "projctile_DOG";
+    public static final String PROJECTILE_RAVEN = "projectile_RAVEN";
+    public static final String PROJECTILE_CAT = "projectile_CAT";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -113,8 +119,8 @@ public class EffectUtils {
         bugJuiceBubbleE.add(gameStage.gameScript.fpc);
     }
 
-    public static void spawnPetProjectile(GameStage gameStage, float x, float y) {
-        CompositeItemVO petProjectileC = gameStage.sceneLoader.loadVoFromLibrary(PROJECTILE_DOG);
+    public static void spawnPetProjectile(GameStage gameStage, float x, float y, String projectileName) {
+        CompositeItemVO petProjectileC = gameStage.sceneLoader.loadVoFromLibrary(projectileName);
 
         Entity petProjectileE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), petProjectileC);
         gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petProjectileE, petProjectileC.composite);
@@ -126,6 +132,12 @@ public class EffectUtils {
         petProjectileE.add(new PetProjectileComponent());
         tc.x = x;
         tc.y = y;
+
+        Random rand = new Random();
+        tc.rotation = rand.nextInt(360);
+
+//        ActionComponent ac = new ActionComponent();
+//        ac.dataArray.add(Actions.sequence(Actions.rotateBy(360, 6f, Interpolation.bounceIn)));
 
 //        EffectUtils.playSplatterParticleEffect(tc.x, tc.y);
         petProjectileE.add(gameStage.gameScript.fpc);

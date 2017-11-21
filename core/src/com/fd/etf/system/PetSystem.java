@@ -81,8 +81,26 @@ public class PetSystem extends IteratingSystem {
             }
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+                if (!pc.state.equals(DASH)) {
+                    if(FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
+                        for (int i = 0; i < 25; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
+                        }
+                    }
+                    if(FlowerPublicComponent.currentPet.name.equals("DOG")) {
+                        for (int i = 0; i < 25; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
+                        }
+                    }
+                    if(FlowerPublicComponent.currentPet.name.equals("CAT")) {
+                        for (int i = 0; i < 25; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
+                        }
+                    }
+                }
                 pc.state = DASH;
                 cannonsc.player.setTime(0);
+
             }
 
             e.getComponent(SpriterComponent.class).player.speed = FPS;
@@ -127,8 +145,20 @@ public class PetSystem extends IteratingSystem {
                 setDashAnimation(e.getComponent(SpriterComponent.class));
                 setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
                 if (!pc.state.equals(DASH)) {
-                    for (int i = 0; i < 4; i++) {
-                        EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y);
+                    if(FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
+                        for (int i = 0; i < 4; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
+                        }
+                    }
+                    if(FlowerPublicComponent.currentPet.name.equals("DOG")) {
+                        for (int i = 0; i < 6; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
+                        }
+                    }
+                    if(FlowerPublicComponent.currentPet.name.equals("CAT")) {
+                        for (int i = 0; i < 6; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
+                        }
                     }
                 }
                 pc.state = DASH;
@@ -351,8 +381,6 @@ public class PetSystem extends IteratingSystem {
                       SpriterComponent scPetHead,
                       Entity entity) {
 
-
-
         if (pc.state.equals(DASH)) {
             if(pc.stageCounter != 0) {
                 cannonsc.player.setTime(0);
@@ -365,7 +393,6 @@ public class PetSystem extends IteratingSystem {
                 // spawning projectiles
 
             } else if (cannonsc.player.getTime() >= cannonsc.player.getAnimation().length / 2) {
-                System.out.print(" go!");
                 entity.remove(ActionComponent.class);
                 pc.petHead.remove(ActionComponent.class);
                 if (entity.getComponent(ActionComponent.class) == null) {

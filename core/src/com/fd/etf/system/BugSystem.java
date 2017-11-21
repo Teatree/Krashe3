@@ -217,8 +217,15 @@ public class BugSystem extends IteratingSystem {
         if (projectileBounds != null) {
             for (Rectangle r : projectileBounds) {
                 collides = r.overlaps(bc.boundsRect);
+                    break;
             }
+//            System.out.println("projectileBounds ");
+//            for (Rectangle r : projectileBounds) {
+//                System.out.print("r: '" + r + "' -- X: " + r.x + ", Y: " + r.y + ", Width: " + r.width +  ", Height: "  + r.height);
+//                System.out.println(" ------- ");
+//            }
         }
+        System.out.println("collides = " + collides);
         return collides;
     }
 

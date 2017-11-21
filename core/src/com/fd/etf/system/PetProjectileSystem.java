@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.fd.etf.entity.componets.DebugComponent;
 import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
@@ -26,11 +27,12 @@ public class PetProjectileSystem extends IteratingSystem {
 
         if (GameScreenScript.isGameOver.get() || !GameScreenScript.isStarted) {
             entity.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+
             ppc.complete = true;
             end(entity);
         } else {
             if (!ppc.began) {
-                begin(ppc, entity.getComponent(TransformComponent.class));
+                begin(entity, ppc, entity.getComponent(TransformComponent.class));
                 ppc.began = true;
             }
             ppc.time += deltaTime;
@@ -65,11 +67,15 @@ public class PetProjectileSystem extends IteratingSystem {
     public void update(PetProjectileComponent ppc, TransformComponent tc, float percent) {
         setPosition(tc, ppc.startX + (ppc.endX - ppc.startX) * percent, ppc.startY + (ppc.endY - ppc.startY) * percent);
         updateRect(ppc, tc);
+//        System.out.println("tc.x = " + tc.x);
+//        System.out.println("ppc.boundsRect.x = " + ppc.boundsRect.x);
     }
 
-    protected void begin(PetProjectileComponent ppc, TransformComponent tc) {
+    protected void begin(Entity entity, PetProjectileComponent ppc, TransformComponent tc) {
         ppc.startX = tc.x;
         ppc.startY = tc.y;
+
+        entity.add(new DebugComponent(ppc.boundsRect));
 
         gameStage.gameScript.projectileBounds.add(ppc.boundsRect);
     }
