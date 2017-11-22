@@ -58,10 +58,10 @@ public class PetProjectileSystem extends IteratingSystem {
     }
 
     public void updateRect(PetProjectileComponent ppc, TransformComponent tc) {
-        ppc.boundsRect.x = (int) tc.x + 50;
-        ppc.boundsRect.y = (int) tc.y + 30;
-        ppc.boundsRect.width = 100;
-        ppc.boundsRect.height = 100;
+        ppc.boundsRect.x = (int) tc.x - 40;
+        ppc.boundsRect.y = (int) tc.y - 40;
+        ppc.boundsRect.width = 60;
+        ppc.boundsRect.height = 60;
     }
 
     public void update(PetProjectileComponent ppc, TransformComponent tc, float percent) {
