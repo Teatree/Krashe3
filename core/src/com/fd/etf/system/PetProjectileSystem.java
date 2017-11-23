@@ -4,13 +4,19 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.brashmonkey.spriter.Rectangle;
 import com.fd.etf.entity.componets.DebugComponent;
+import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class PetProjectileSystem extends IteratingSystem {
     private ComponentMapper<PetProjectileComponent> mapper = ComponentMapper.getFor(PetProjectileComponent.class);
@@ -45,7 +51,7 @@ public class PetProjectileSystem extends IteratingSystem {
                 if (ppc.interpolation != null) percent = ppc.interpolation.apply(percent);
             }
             update(ppc, entity.getComponent(TransformComponent.class), ppc.reverse ? 1 - percent : percent);
-            if (ppc.complete) end(entity);
+            if (ppc.complete || entity.getComponent(PetProjectileComponent.class).isDead) end(entity);
 
             if (ppc.time <= (ppc.duration / 5)) {
                 entity.getComponent(TintComponent.class).color.a = 0;
@@ -77,7 +83,7 @@ public class PetProjectileSystem extends IteratingSystem {
 
         entity.add(new DebugComponent(ppc.boundsRect));
 
-        gameStage.gameScript.projectileBounds.add(ppc.boundsRect);
+        gameStage.gameScript.projectileBounds.put(entity, ppc.boundsRect);
     }
 
     protected void end(Entity entity) {
@@ -103,8 +109,20 @@ public class PetProjectileSystem extends IteratingSystem {
 //                        Actions.parallel(
 //                                Actions.moveBy(15*moveMulti, 0, 0.3f, Interpolation.exp5),
 //                                Actions.scaleTo(1f, 1f, 0.3f, Interpolation.fade))));
+        EffectUtils.playSplatterParticleEffect(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
+//        gameStage.gameScript.projectileBounds.remove(entity.getComponent(PetProjectileComponent.class).boundsRect);
 
-        gameStage.gameScript.projectileBounds.remove(entity.getComponent(PetProjectileComponent.class).boundsRect);
+        Iterator it = gameStage.gameScript.projectileBounds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+
+            if (gameStage.gameScript.projectileBounds.values().contains(pairs.getKey())) {
+                gameStage.gameScript.projectileBounds.remove(pairs.getKey());
+            } else {
+                it.remove();
+            }
+        }
+
         gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 

@@ -22,6 +22,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -71,7 +72,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
-    public static List<Rectangle> projectileBounds;
+    public static HashMap<Entity, Rectangle> projectileBounds;
 
     private int beeSplatterOrder;
 
@@ -285,7 +286,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
 
         gameItem = new ItemWrapper(item);
-        projectileBounds = new LinkedList<>();
+        projectileBounds = new HashMap<>();
 
         powerupSystem = new PowerupSystem(gameStage, gameItem);
 
@@ -513,7 +514,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.sceneLoader.getEngine().addSystem(new CocoonSystem(this));
         gameStage.sceneLoader.getEngine().addSystem(new BugSpawnSystem(gameStage));
 
-        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem(gameStage));
+//        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem(gameStage));
     }
 
     private void initBackButton() {
@@ -555,6 +556,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     public void clicked() {
                         if (!isGameOver.get() && isStarted && !isPause.get()) {
                             pauseGame();
+                            System.out.println("PAUSE");
                         }
                     }
                 });

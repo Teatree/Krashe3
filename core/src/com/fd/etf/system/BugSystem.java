@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.FlowerComponent;
+import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
@@ -17,6 +18,9 @@ import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationComponent;
 import com.uwsoft.editor.renderer.components.sprite.SpriteAnimationStateComponent;
+
+import java.util.Iterator;
+import java.util.Map;
 
 import static com.fd.etf.entity.componets.BugComponent.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.*;
@@ -29,7 +33,6 @@ public class BugSystem extends IteratingSystem {
     private static final String PREPARING_ANI = "PREPARING";
     public static final String FLY_ANI = "fly";
     public static final String SCARE_ANI = "scare";
-
     public static boolean blowUpAllBugs;
     public static float blowUpCounter;
     public static float destroyAllBugsCounter;
@@ -58,10 +61,18 @@ public class BugSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleX = 0.5f;
             entity.getComponent(TransformComponent.class).scaleY = 0.5f;
         }
-
+        System.out.println("sac = '" + sac +  "' sac.animationName = " + sac.animationName + ", sac.currentAnimation = " + sac.currentAnimation + ", SASC.time = " + sasc.time);
         BugComponent bc = mapper.get(entity);
         if (entity.getComponent(TransformComponent.class).x < -180) {
             bc.state = IDLE;
+//            System.out.println("before ! sac.currentAnimation = " + sac.currentAnimation);
+//            if (!sac.currentAnimation.equals("fly")){
+                canPlayAnimation = true;
+                setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
+                sasc.time = 0;
+//                System.out.println("sac.currentAnimation = " + sac.currentAnimation);
+//            }
+            //System.out.println("sasc.time = " + sasc.time);
         }
 
         if (bc.type.equals(QUEENBEE)) {
@@ -88,7 +99,7 @@ public class BugSystem extends IteratingSystem {
 
             sasc.paused = false;
 
-            if (!blowUpAllBugs && !DEAD.equals(bc.state)) {
+            if (!blowUpAllBugs && !DEAD.equals(bc.state) && !EXPLODING.equals(bc.state)) {
                 updateRect(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 updateRectScary(bc, entity.getComponent(TransformComponent.class), entity.getComponent(DimensionsComponent.class));
                 moveEntity(deltaTime, entity.getComponent(TransformComponent.class), bc, sasc, sac);
@@ -105,7 +116,11 @@ public class BugSystem extends IteratingSystem {
                     }
                 }
 
-                if (checkCollision(bc) || checkCollisionPetProjectiles(bc)) {
+                if (checkCollisionPetProjectiles(bc) && !bc.state.equals(DEAD) && !bc.state.equals(EXPLODING)){
+                   bc.state = EXPLODING;
+                }
+
+                if (checkCollision(bc) /*|| checkCollisionPetProjectiles(bc)*/) {
                     bc.state = DEAD;
 
                     if (bc.type.equals(QUEENBEE)) {
@@ -129,7 +144,6 @@ public class BugSystem extends IteratingSystem {
                     }
 
                     checkPetEatBugGoal(bc);
-
                     spawnBugJuiceBubble(bc);
                 }
                 if (isOutOfBounds(bc)) {
@@ -161,12 +175,49 @@ public class BugSystem extends IteratingSystem {
             setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
 //            System.out.println("SETTING FLY ANIMATION!!! OMG " + bc.scareCounter);
         }
+
+        // While exploding
+        if(bc.state.equals(EXPLODING)){
+            updateBlowUpBug(entity, deltaTime);
+        }
     }
 
     public static void blowUpAllBugs() {
         blowUpAllBugs = true;
         blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
 //        System.out.println("HOW MANY TIMES AM I CALLED?");
+    }
+
+    private void updateBlowUpBug(Entity entity, float deltaTime) {
+        SpriteAnimationComponent sac = entity.getComponent(SpriteAnimationComponent.class);
+        SpriteAnimationStateComponent sasc = entity.getComponent(SpriteAnimationStateComponent.class);
+        BugComponent bc = entity.getComponent(BugComponent.class);
+
+        bc.blowUpCounter -= deltaTime;
+//        System.out.println("bc.blowUpCounter = " + bc.blowUpCounter);
+        if (bc != null && sac.frameRangeMap.containsKey("death") && !bc.isPlayingDeathAnimation) {
+            canPlayAnimation = true;
+            setAnimation("death", Animation.PlayMode.NORMAL, sasc, sac);
+            bc.isPlayingDeathAnimation = true;
+            sasc.paused = false;
+        }
+        if (bc.blowUpCounter <= 0) {
+            bc.blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
+            bc.state = DEAD;
+            bc.isPlayingDeathAnimation = false;
+
+            //if charger update charger goals, etc
+            updateChargerGoals(bc);
+            updateBugGoals(bc);
+            spawnBugJuiceBubble(bc);
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
+//            sasc.time = 0;
+            System.out.println("sac.currentAnimation = " + sac.currentAnimation);
+            System.out.println("sasc.time = " + sasc.time);
+            BugPool.getInstance(gameStage).release(entity);
+
+        }
+        System.out.println("bc.state = " + bc.state);
     }
 
     private void updateBlowUpAllBugs(Entity entity, float deltaTime) {
@@ -215,17 +266,26 @@ public class BugSystem extends IteratingSystem {
     private boolean checkCollisionPetProjectiles(BugComponent bc) {
         boolean collides = false;
         if (projectileBounds != null) {
-            for (Rectangle r : projectileBounds) {
-                collides = r.overlaps(bc.boundsRect);
+
+            for (Map.Entry<Entity, Rectangle> r : projectileBounds.entrySet()) {
+                collides = r.getValue().overlaps(bc.boundsRect);
                 if(collides) {
+                    r.getKey().getComponent(PetProjectileComponent.class).isDead = true;
                     break;
                 }
             }
-//            System.out.println("projectileBounds ");
-//            for (Rectangle r : projectileBounds) {
-//                System.out.print("r: '" + r + "' -- X: " + r.x + ", Y: " + r.y + ", Width: " + r.width +  ", Height: "  + r.height);
-//                System.out.println(" ------- ");
+
+//            Iterator it = gameStage.gameScript.projectileBounds.entrySet().iterator();
+//            while (it.hasNext()) {
+//                Map.Entry pairs = (Map.Entry) it.next();
+//                collides = gameStage.gameScript.projectileBounds.get(pairs.getKey()).overlaps(bc.boundsRect);
+//
+//                if(collides) {
+//                    if(gameStage.gameScript.projectileBounds.get(pairs.getKey()));
+//                    break;
+//                }
 //            }
+
         }
         return collides;
     }
@@ -272,6 +332,7 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
+            canPlayAnimation = true;
             setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * bc.IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {
@@ -296,8 +357,12 @@ public class BugSystem extends IteratingSystem {
             bc.velocity += deltaTime * 3.4;
         }
 
+        if (checkCollisionPetProjectiles(bc) && !bc.state.equals(DEAD) && !bc.state.equals(EXPLODING)){
+            bc.state = EXPLODING;
+        }
+
         // Checking collision
-        if (checkCollision(bc) || isOutOfBounds(bc) || checkCollisionPetProjectiles(bc)) {
+        if (checkCollision(bc) || isOutOfBounds(bc) /*|| checkCollisionPetProjectiles(bc)*/) {
             bc.state = DEAD;
             canPlayAnimation = true;
             setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);

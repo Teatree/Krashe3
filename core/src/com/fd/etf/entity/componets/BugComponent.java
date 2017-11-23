@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
+import com.fd.etf.utils.GlobalConstants;
 
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class BugComponent implements Component, Pool.Poolable {
     public static final String CHARGING = "CHARGING";
     public static final String SCARED = "SCARED";
     public static final String DEAD = "DEAD";
+    public static final String EXPLODING = "EXPLODING";
     public static final String UPDATING_BEFORE_RELEASE = "UBR";
 
     public static final String SIMPLE = "SIMPLE";
@@ -36,6 +38,9 @@ public class BugComponent implements Component, Pool.Poolable {
     public static final int CHARGER_BUG_MOVE_BASE = 115;
     public static final int SIMPLE_BUG_MOVE_DURATION_BASE = 16;
     public static final int SIMPLE_BUG_AMPLITUDE_BASE = 0;
+
+    //exploding addition
+    public float blowUpCounter = GlobalConstants.BEES_MODE_BLOW_UP_LENGTH;
 
     public String type;
     public String state = IDLE;

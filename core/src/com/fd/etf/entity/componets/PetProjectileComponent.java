@@ -17,6 +17,7 @@ public class PetProjectileComponent implements Component, Pool.Poolable  {
     public Interpolation interpolation = Interpolation.fade;
     public boolean reverse, began, complete;
     public Rectangle boundsRect = new Rectangle();
+    public boolean isDead = false;
 
     public PetProjectileComponent() {
     }
