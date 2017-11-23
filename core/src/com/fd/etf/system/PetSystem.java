@@ -83,17 +83,17 @@ public class PetSystem extends IteratingSystem {
             if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
                 if (!pc.state.equals(DASH)) {
                     if(FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
-                        for (int i = 0; i < 4; i++) {
+                        for (int i = 0; i < 25; i++) {
                             EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
                         }
                     }
                     if(FlowerPublicComponent.currentPet.name.equals("DOG")) {
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < 25; i++) {
                             EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
                         }
                     }
                     if(FlowerPublicComponent.currentPet.name.equals("CAT")) {
-                        for (int i = 0; i < 6; i++) {
+                        for (int i = 0; i < 25; i++) {
                             EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
                         }
                     }

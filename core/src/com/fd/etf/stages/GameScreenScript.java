@@ -22,10 +22,8 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -72,7 +70,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
-    public static HashMap<Entity, Rectangle> projectileBounds;
+    public static ConcurrentHashMap<Entity, Rectangle> projectileBounds;
 
     private int beeSplatterOrder;
 
@@ -286,7 +284,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
 
         gameItem = new ItemWrapper(item);
-        projectileBounds = new HashMap<>();
+        projectileBounds = new ConcurrentHashMap<>();
 
         powerupSystem = new PowerupSystem(gameStage, gameItem);
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.PetProjectileComponent;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.BugPool;
 import com.fd.etf.utils.EffectUtils;
@@ -61,7 +62,7 @@ public class BugSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleX = 0.5f;
             entity.getComponent(TransformComponent.class).scaleY = 0.5f;
         }
-        System.out.println("sac = '" + sac +  "' sac.animationName = " + sac.animationName + ", sac.currentAnimation = " + sac.currentAnimation + ", SASC.time = " + sasc.time);
+//        System.out.println("sac = '" + sac +  "' sac.animationName = " + sac.animationName + ", sac.currentAnimation = " + sac.currentAnimation + ", SASC.time = " + sasc.time);
         BugComponent bc = mapper.get(entity);
         if (entity.getComponent(TransformComponent.class).x < -180) {
             bc.state = IDLE;
@@ -116,7 +117,7 @@ public class BugSystem extends IteratingSystem {
                     }
                 }
 
-                if (checkCollisionPetProjectiles(bc) && !bc.state.equals(DEAD) && !bc.state.equals(EXPLODING)){
+                if (checkCollisionPetProjectiles(bc)){
                    bc.state = EXPLODING;
                 }
 
@@ -136,6 +137,7 @@ public class BugSystem extends IteratingSystem {
                     bc.state = UPDATING_BEFORE_RELEASE;
                     setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
                     BugPool.getInstance(gameStage).release(entity);
+                    System.out.println("RELEASING BUG");
 
                     if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
                         gameStage.gameScript.fpc.isCollision = true;
@@ -215,9 +217,8 @@ public class BugSystem extends IteratingSystem {
             System.out.println("sac.currentAnimation = " + sac.currentAnimation);
             System.out.println("sasc.time = " + sasc.time);
             BugPool.getInstance(gameStage).release(entity);
-
         }
-        System.out.println("bc.state = " + bc.state);
+//        System.out.println("bc.state = " + bc.state);
     }
 
     private void updateBlowUpAllBugs(Entity entity, float deltaTime) {
@@ -266,11 +267,19 @@ public class BugSystem extends IteratingSystem {
     private boolean checkCollisionPetProjectiles(BugComponent bc) {
         boolean collides = false;
         if (projectileBounds != null) {
+//            System.out.println("projectileBounds " + projectileBounds.size());
 
             for (Map.Entry<Entity, Rectangle> r : projectileBounds.entrySet()) {
-                collides = r.getValue().overlaps(bc.boundsRect);
+                collides = r.getValue().overlaps(bc.boundsRect) && !r.getKey().getComponent(PetProjectileComponent.class).isDead;
                 if(collides) {
                     r.getKey().getComponent(PetProjectileComponent.class).isDead = true;
+
+                    EffectUtils.playProjectileHitParticleEffect(gameStage,
+                            r.getKey().getComponent(TransformComponent.class).x/*-entity.getComponent(DimensionsComponent.class).width*/,
+                            r.getKey().getComponent(TransformComponent.class).y/*-entity.getComponent(DimensionsComponent.class).height*/);
+
+                    System.out.println("BREAK THE COLLISION PET PROJECTILES CHECK");
+//                    collides = false;
                     break;
                 }
             }
@@ -357,7 +366,7 @@ public class BugSystem extends IteratingSystem {
             bc.velocity += deltaTime * 3.4;
         }
 
-        if (checkCollisionPetProjectiles(bc) && !bc.state.equals(DEAD) && !bc.state.equals(EXPLODING)){
+        if (checkCollisionPetProjectiles(bc)){
             bc.state = EXPLODING;
         }
 

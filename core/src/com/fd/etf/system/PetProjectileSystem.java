@@ -12,6 +12,7 @@ import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
+import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
@@ -87,39 +88,17 @@ public class PetProjectileSystem extends IteratingSystem {
     }
 
     protected void end(Entity entity) {
-//        isCalculatingScore = true;
-
-//        if(gameStage.gameScript.scoreCE.getComponent(ActionComponent.class) == null){
-//            gameStage.gameScript.scoreCE.add(new ActionComponent());
-//        }
-//        gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).reset();
-//        float moveMulti = (gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/3;
-//        float sizeMulti = (gameStage.gameScript.fpc.score - gameStage.gameScript.fpc.oldScore)/20+1;
-//        if (moveMulti > 5f){
-//            moveMulti = 5f;
-//        }
-//        if (sizeMulti > 2f){
-//            sizeMulti = 2f;
-//        }
-//        gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).dataArray.add(
-//                Actions.sequence(
-//                        Actions.parallel(
-//                                Actions.moveBy(-15*moveMulti, 0, 0.3f, Interpolation.exp5),
-//                                Actions.scaleTo(1.2f*sizeMulti, 1.2f*sizeMulti, 0.3f, Interpolation.exp5)),
-//                        Actions.parallel(
-//                                Actions.moveBy(15*moveMulti, 0, 0.3f, Interpolation.exp5),
-//                                Actions.scaleTo(1f, 1f, 0.3f, Interpolation.fade))));
-        EffectUtils.playSplatterParticleEffect(gameStage, entity.getComponent(TransformComponent.class).x, entity.getComponent(TransformComponent.class).y);
-//        gameStage.gameScript.projectileBounds.remove(entity.getComponent(PetProjectileComponent.class).boundsRect);
-
         Iterator it = gameStage.gameScript.projectileBounds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
 
-            if (gameStage.gameScript.projectileBounds.values().contains(pairs.getKey())) {
-                gameStage.gameScript.projectileBounds.remove(pairs.getKey());
-            } else {
+        while (it.hasNext()) {
+            Map.Entry<Entity, Rectangle> pair = (Map.Entry<Entity, Rectangle>) it.next();
+
+            if (pair.getKey().getComponent(PetProjectileComponent.class).isDead) {
+                gameStage.gameScript.projectileBounds.remove(pair.getKey());
+                System.out.println("IF gameStage.gameScript.projectileBounds.SIZE = " + gameStage.gameScript.projectileBounds.size());
+            } else if (entity.getComponent(PetProjectileComponent.class).complete) {
                 it.remove();
+                System.out.println("ELSE gameStage.gameScript.projectileBounds.SIZE = " + gameStage.gameScript.projectileBounds.size());
             }
         }
 
