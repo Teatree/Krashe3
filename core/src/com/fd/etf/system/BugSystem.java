@@ -62,19 +62,22 @@ public class BugSystem extends IteratingSystem {
             entity.getComponent(TransformComponent.class).scaleX = 0.5f;
             entity.getComponent(TransformComponent.class).scaleY = 0.5f;
         }
-//        System.out.println("sac = '" + sac +  "' sac.animationName = " + sac.animationName + ", sac.currentAnimation = " + sac.currentAnimation + ", SASC.time = " + sasc.time);
         BugComponent bc = mapper.get(entity);
-        if (entity.getComponent(TransformComponent.class).x < -180) {
+
+
+        if (!entity.getComponent(BugComponent.class).type.equals(CHARGER) && entity.getComponent(TransformComponent.class).x < -280) {
             bc.state = IDLE;
-//            System.out.println("before ! sac.currentAnimation = " + sac.currentAnimation);
-//            if (!sac.currentAnimation.equals("fly")){
-                canPlayAnimation = true;
-                setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
-                sasc.time = 0;
-//                System.out.println("sac.currentAnimation = " + sac.currentAnimation);
-//            }
-            //System.out.println("sasc.time = " + sasc.time);
+            canPlayAnimation = true;
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
         }
+
+        if (entity.getComponent(BugComponent.class).type.equals(CHARGER) && entity.getComponent(TransformComponent.class).x < -310) {
+//            System.out.println(" CHARGER?: " + entity.getComponent(BugComponent.class).type + " changing animation!  X:" + entity.getComponent(TransformComponent.class).x );
+            bc.state = IDLE;
+            canPlayAnimation = true;
+            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
+        }
+
 
         if (bc.type.equals(QUEENBEE)) {
             entity.getComponent(TransformComponent.class).scaleX = 0.6f;
@@ -137,7 +140,6 @@ public class BugSystem extends IteratingSystem {
                     bc.state = UPDATING_BEFORE_RELEASE;
                     setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
                     BugPool.getInstance(gameStage).release(entity);
-                    System.out.println("RELEASING BUG");
 
                     if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
                         gameStage.gameScript.fpc.isCollision = true;
@@ -212,10 +214,8 @@ public class BugSystem extends IteratingSystem {
             updateChargerGoals(bc);
             updateBugGoals(bc);
             spawnBugJuiceBubble(bc);
-            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
+//            setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
 //            sasc.time = 0;
-            System.out.println("sac.currentAnimation = " + sac.currentAnimation);
-            System.out.println("sasc.time = " + sasc.time);
             BugPool.getInstance(gameStage).release(entity);
         }
 //        System.out.println("bc.state = " + bc.state);
@@ -341,7 +341,7 @@ public class BugSystem extends IteratingSystem {
 
         // Idle
         if (bc.state.equals(IDLE)) {
-            canPlayAnimation = true;
+//            canPlayAnimation = true;
             setAnimation(FLY_ANI, Animation.PlayMode.LOOP, sasc, sac);
             bc.velocity = deltaTime * bc.IDLE_MVMNT_SPEED;
             if (bc.counter == 0) {

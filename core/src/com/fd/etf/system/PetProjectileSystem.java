@@ -95,10 +95,8 @@ public class PetProjectileSystem extends IteratingSystem {
 
             if (pair.getKey().getComponent(PetProjectileComponent.class).isDead) {
                 gameStage.gameScript.projectileBounds.remove(pair.getKey());
-                System.out.println("IF gameStage.gameScript.projectileBounds.SIZE = " + gameStage.gameScript.projectileBounds.size());
             } else if (entity.getComponent(PetProjectileComponent.class).complete) {
                 it.remove();
-                System.out.println("ELSE gameStage.gameScript.projectileBounds.SIZE = " + gameStage.gameScript.projectileBounds.size());
             }
         }
 

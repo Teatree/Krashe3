@@ -63,6 +63,7 @@ public class CocoonSystem extends IteratingSystem {
 
     public void act(CocoonComponent cc, Entity entity, float delta) {
         if (cc.state.equals(SPAWNING)) {
+//            entity.getComponent(SpriterComponent.class).player.setAnimation(1);
             if (isAnimationFinished(entity)) {
                 cc.state = IDLE;
                 entity.getComponent(SpriterComponent.class).player.setAnimation(1);

@@ -668,7 +668,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
         fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-        fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
+        fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
     }
 
     private void loadPetFromLib() {
@@ -953,7 +953,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             if(fpc.currentPet != null) {
                 fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
                 fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(127);
+                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
 
                 fpc.currentPet.state = SPAWNING;
             }
