@@ -1,0 +1,41 @@
+
+fireBall.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fireBall1
+  rotate: false
+  xy: 2, 146
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fireBall2
+  rotate: false
+  xy: 2, 74
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fireBall3
+  rotate: false
+  xy: 74, 146
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fireBall4
+  rotate: false
+  xy: 2, 2
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fireBall5
+  rotate: false
+  xy: 74, 74
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1

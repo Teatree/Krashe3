@@ -72,9 +72,9 @@ public class PetProjectileSystem extends IteratingSystem {
     }
 
     public void update(PetProjectileComponent ppc, TransformComponent tc, float percent) {
-        setPosition(tc, ppc.startX + (ppc.endX - ppc.startX) * percent, ppc.startY + (ppc.endY - ppc.startY) * percent);
+        setPosition(tc, ppc.startX + (ppc.endX - ppc.startX) * percent, ppc.startY + (ppc.endY - ppc.startY) * percent, ppc.startX, ppc.startY, ppc.endX, ppc.endY);
         updateRect(ppc, tc);
-//        System.out.println("tc.x = " + tc.x);
+        System.out.println("tc.rotation = " + tc.rotation + " tc.x = " + tc.x + " ppc.startX = " + ppc.startX + " ppc.endX = " + ppc.endX);
 //        System.out.println("ppc.boundsRect.x = " + ppc.boundsRect.x);
     }
 
@@ -103,9 +103,15 @@ public class PetProjectileSystem extends IteratingSystem {
         gameStage.sceneLoader.getEngine().removeEntity(entity);
     }
 
-    public void setPosition(TransformComponent tc, float x, float y) {
+    public void setPosition(TransformComponent tc, float x, float y, float startX, float startY, float endX, float endY) {
         tc.x = x;
         tc.y = y;
+
+        double angle = Math.atan2(endY - startY, endX - startX);
+        angle *= (180/Math.PI);
+        tc.rotation = (float)angle+210;
+        System.out.println("angle: " + angle);
+
     }
 
 }

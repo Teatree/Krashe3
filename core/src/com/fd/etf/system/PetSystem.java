@@ -97,6 +97,11 @@ public class PetSystem extends IteratingSystem {
                             EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
                         }
                     }
+                    if(FlowerPublicComponent.currentPet.name.equals("DRAGON")) {
+                        for (int i = 0; i < 12; i++) {
+                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DRAGON);
+                        }
+                    }
                 }
                 pc.state = DASH;
                 cannonsc.player.setTime(0);

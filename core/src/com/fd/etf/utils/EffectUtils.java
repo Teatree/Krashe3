@@ -10,6 +10,7 @@ import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameStage;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.particle.ParticleComponent;
+import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.data.ParticleEffectVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
@@ -29,6 +30,7 @@ public class EffectUtils {
     public static final String PROJECTILE_DOG = "projctile_DOG";
     public static final String PROJECTILE_RAVEN = "projectile_RAVEN";
     public static final String PROJECTILE_CAT = "projectile_CAT";
+    public static final String PROJECTILE_DRAGON = "projectile_DRAGON";
 
     public static void fadeChildren(NodeComponent nc, int fadeCoefficient) {
         if (nc != null && nc.children != null && nc.children.size != 0) {
@@ -127,19 +129,34 @@ public class EffectUtils {
     public static void spawnPetProjectile(GameStage gameStage, float x, float y, String projectileName) {
         CompositeItemVO petProjectileC = gameStage.sceneLoader.loadVoFromLibrary(projectileName);
 
-        Entity petProjectileE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), petProjectileC);
-        gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petProjectileE, petProjectileC.composite);
+        Entity petProjectileE;
+
+        if(projectileName != "projectile_DRAGON"){
+            petProjectileE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), petProjectileC);
+            gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petProjectileE, petProjectileC.composite);
+        }else{
+            gameStage.sceneLoader.rm.addSPRITEtoLoad("fireBall");
+            petProjectileE = gameStage.sceneLoader.entityFactory.createSPRITEentity(gameStage.sceneLoader.getRoot(), petProjectileC);
+//            petProjectileE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), petProjectileC);
+        }
         gameStage.sceneLoader.getEngine().addEntity(petProjectileE);
 
         petProjectileE.getComponent(ZIndexComponent.class).setZIndex(200);
+
 
         TransformComponent tc = petProjectileE.getComponent(TransformComponent.class);
         petProjectileE.add(new PetProjectileComponent());
         tc.x = x;
         tc.y = y;
 
-        Random rand = new Random();
-        tc.rotation = rand.nextInt(360);
+        //SET ROTATION
+        if(projectileName != "projectile_DRAGON") {
+            Random rand = new Random();
+            tc.rotation = rand.nextInt(360);
+        }else{
+            // set facing the direction it's moving at
+
+        }
 
 //        ActionComponent ac = new ActionComponent();
 //        ac.dataArray.add(Actions.sequence(Actions.rotateBy(360, 6f, Interpolation.bounceIn)));
