@@ -202,6 +202,8 @@ public class ResultScreenScript implements IScript {
                         if (active) {
                             if (!show) {
                                 resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
+                                soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
+                                soundMgr.stop(SoundMgr.SCORE_COUNT);
                                 backToGame();
                             }
                         }
