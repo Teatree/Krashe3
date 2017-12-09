@@ -278,7 +278,7 @@ public class BugSystem extends IteratingSystem {
                             r.getKey().getComponent(TransformComponent.class).x/*-entity.getComponent(DimensionsComponent.class).width*/,
                             r.getKey().getComponent(TransformComponent.class).y/*-entity.getComponent(DimensionsComponent.class).height*/);
 
-                    System.out.println("BREAK THE COLLISION PET PROJECTILES CHECK");
+                    SoundMgr.getSoundMgr().play(SoundMgr.PET_PROJECTILE_COLLISION);
 //                    collides = false;
                     break;
                 }

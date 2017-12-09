@@ -41,6 +41,7 @@ public class SoundMgr {
     public static final String PET_DOG = "pet_dog";
     public static final String PET_RAVEN = "pet_raven";
     public static final String PET_DRAGON = "pet_dragon";
+    public static final String PET_PROJECTILE_COLLISION = "pet_projectile_collision";
     public static SoundMgr soundMgr;
     public static boolean soundOn = false;
 //    private Random rand;
@@ -83,6 +84,7 @@ public class SoundMgr {
         loadSound(PET_DOG);
         loadSound(PET_DRAGON);
         loadSound(PET_RAVEN);
+        loadSound(PET_PROJECTILE_COLLISION);
      //   loadSound("tuturu");
     }
 
