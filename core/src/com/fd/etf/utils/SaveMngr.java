@@ -8,6 +8,7 @@ import com.fd.etf.entity.componets.*;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.CocoonSystem;
+import com.fd.etf.system.UmbrellaSystem;
 
 import java.util.*;
 
@@ -740,6 +741,7 @@ public class SaveMngr {
         String file = readFile(DANDELION_MULTIPLIERS_JSON);
         List<UmbrellaComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
         UmbrellaComponent.multipliers = multipliers;
-        UmbrellaComponent.currentMultiplier = multipliers.get(0);
+        UmbrellaComponent.currentMultiplier = multipliers.get(0); // the value has to change for fuck sake
+
     }
 }

@@ -179,6 +179,7 @@ public class UmbrellaSystem extends IteratingSystem {
     public static int getNextSpawnInterval() {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 random.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
+        System.out.println("currentMultiplier.maxSpawnCoefficient " + currentMultiplier.maxSpawnCoefficient + " currentMultiplier.minSpawnCoefficient " + currentMultiplier.minSpawnCoefficient);
         return (int)(UmbrellaComponent.SPAWN_INTERVAL_BASE * randCoefficient);
     }
 

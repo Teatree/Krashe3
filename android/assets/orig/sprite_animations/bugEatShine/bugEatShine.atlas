@@ -1,0 +1,146 @@
+
+bugEatShine.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bugEatShine01
+  rotate: false
+  xy: 2, 785
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine02
+  rotate: false
+  xy: 2, 553
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine03
+  rotate: false
+  xy: 205, 785
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine04
+  rotate: false
+  xy: 2, 321
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine05
+  rotate: false
+  xy: 205, 553
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine06
+  rotate: false
+  xy: 408, 785
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine07
+  rotate: false
+  xy: 2, 89
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine08
+  rotate: false
+  xy: 205, 321
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine09
+  rotate: false
+  xy: 408, 553
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine10
+  rotate: false
+  xy: 611, 785
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine11
+  rotate: false
+  xy: 205, 89
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine12
+  rotate: false
+  xy: 408, 321
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine13
+  rotate: false
+  xy: 611, 553
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine14
+  rotate: false
+  xy: 814, 785
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine15
+  rotate: false
+  xy: 408, 89
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine16
+  rotate: false
+  xy: 611, 321
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine17
+  rotate: false
+  xy: 814, 553
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine18
+  rotate: false
+  xy: 611, 89
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine19
+  rotate: false
+  xy: 814, 321
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1
+bugEatShine20
+  rotate: false
+  xy: 814, 89
+  size: 201, 230
+  orig: 201, 230
+  offset: 0, 0
+  index: -1

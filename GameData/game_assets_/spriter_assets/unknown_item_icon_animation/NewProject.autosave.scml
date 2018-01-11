@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0">
+        <file id="0" name="itemunknown.png" width="130" height="130" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="NewAnimation" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="614">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+                <key id="2" time="747">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                </key>
+                <key id="3" time="881">
+                    <object_ref id="0" timeline="0" key="3" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="itemunknown">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="0.007634" pivot_x="0.492366" pivot_y="0.5"/>
+                </key>
+                <key id="1" time="614" spin="0">
+                    <object folder="0" file="0" x="0.007634" pivot_x="0.492366" pivot_y="0.5"/>
+                </key>
+                <key id="2" time="747" spin="0">
+                    <object folder="0" file="0" x="0.007634" pivot_x="0.492366" pivot_y="0.5" scale_x="0.91" scale_y="0.91"/>
+                </key>
+                <key id="3" time="881" spin="0">
+                    <object folder="0" file="0" x="0.007634" pivot_x="0.492366" pivot_y="0.5" scale_x="1.1" scale_y="1.24399"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

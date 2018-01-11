@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.fd.etf.entity.componets.ShopItem.HARD;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
+import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 
 public class ShopScreenScript implements IScript {
@@ -135,6 +136,7 @@ public class ShopScreenScript implements IScript {
         gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 //        gameStage.sceneLoader.getEngine().addSystem(new DebugSystem());
 
+        soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
         // Dima's fun house
         curtain_shop = shopItem.getChild(CURTAIN_SHOP).getEntity();
         curtain_shop.getComponent(TintComponent.class).color.a = 1f;

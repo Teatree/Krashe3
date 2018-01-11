@@ -1,0 +1,146 @@
+
+unknownItem.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+unknownItem01
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem02
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem03
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem04
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem05
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem06
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem07
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem08
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem09
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem10
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem11
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem12
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem13
+  rotate: false
+  xy: 2, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem14
+  rotate: false
+  xy: 2, 212
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem15
+  rotate: false
+  xy: 80, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem16
+  rotate: false
+  xy: 2, 107
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem17
+  rotate: false
+  xy: 80, 212
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem18
+  rotate: false
+  xy: 158, 317
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem19
+  rotate: false
+  xy: 2, 2
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
+unknownItem20
+  rotate: false
+  xy: 80, 107
+  size: 76, 103
+  orig: 76, 103
+  offset: 0, 0
+  index: -1
