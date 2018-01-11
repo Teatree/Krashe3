@@ -93,6 +93,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public void showReviveVideoAd(final Runnable then) {
         adsHelper.showReviveVideoAd(then);
+        System.out.println("trying to show ads!");
     }
 
     @Override
