@@ -38,15 +38,20 @@ public class PowerupSystem {
 
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        CocoonSystem.curIndex=0;
+        UmbrellaSystem.curIndex=0;
     }
 
     public void resetCounters(){
         cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
         umbrellaSpawnCounter = UmbrellaSystem.getNextSpawnInterval();
+        CocoonSystem.curIndex=0;
+        UmbrellaSystem.curIndex=0;
     }
 
     public void initCocoon() {
         Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
+
 
         if (cocoonEntity.getComponent(CocoonComponent.class) == null) {
             CocoonComponent cocoonComponentc = new CocoonComponent();
@@ -67,6 +72,7 @@ public class PowerupSystem {
 
     public void initUmbrella() {
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
+        UmbrellaSystem.curIndex=0;
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) != null) {
             umbrellaEntity.remove(UmbrellaComponent.class);
         }
@@ -75,6 +81,7 @@ public class PowerupSystem {
 
     private void spawnUmbrella(float x, float y) {
         Entity umbrellaEntity = gameItem.getChild(UMBRELLA_ANI).getEntity();
+        UmbrellaSystem.curIndex++;
 
         if (umbrellaEntity.getComponent(UmbrellaComponent.class) == null) {
             UmbrellaComponent umbrellaComponent = new UmbrellaComponent();
@@ -100,6 +107,7 @@ public class PowerupSystem {
         if (canCocoonSpawn(gameStage)) {
             cocoonSpawnCounter = CocoonSystem.getNextSpawnInterval();
             BugSpawnSystem.cocconBugsSpawned = 0;
+            CocoonSystem.curIndex++;
 
             Entity cocoonEntity = gameItem.getChild(COCOON).getEntity();
 

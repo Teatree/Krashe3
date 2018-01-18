@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.fd.etf.entity.componets.UmbrellaComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
+import com.fd.etf.utils.SaveMngr;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
@@ -30,6 +31,7 @@ public class UmbrellaSystem extends IteratingSystem {
 
     private static final float UMBRELLA_SCALE = 2f;
     public static float umbrellaSpawnStateCounter;
+    public static int curIndex;
 
     private static Random random = new Random();
     private final GameStage gameStage;
@@ -38,6 +40,7 @@ public class UmbrellaSystem extends IteratingSystem {
     public UmbrellaSystem(GameStage gameStage) {
         super(Family.all(UmbrellaComponent.class).get());
         this.gameStage = gameStage;
+        curIndex = 0;
     }
 
     @Override
@@ -179,7 +182,8 @@ public class UmbrellaSystem extends IteratingSystem {
     public static int getNextSpawnInterval() {
         float randCoefficient = currentMultiplier.minSpawnCoefficient +
                 random.nextFloat() * (currentMultiplier.maxSpawnCoefficient - currentMultiplier.minSpawnCoefficient);
-        System.out.println("currentMultiplier.maxSpawnCoefficient " + currentMultiplier.maxSpawnCoefficient + " currentMultiplier.minSpawnCoefficient " + currentMultiplier.minSpawnCoefficient);
+        SaveMngr.initDandelionMultipliers(curIndex);
+
         return (int)(UmbrellaComponent.SPAWN_INTERVAL_BASE * randCoefficient);
     }
 

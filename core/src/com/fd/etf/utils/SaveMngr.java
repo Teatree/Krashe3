@@ -122,8 +122,8 @@ public class SaveMngr {
     public static FlowerPublicComponent loadStats() {
         initAllLevels();
         initAllMultipliers();
-        initCocoonMultipliers();
-        initDandelionMultipliers();
+        initCocoonMultipliers(0);
+        initDandelionMultipliers(0);
 
         FlowerPublicComponent fc = new FlowerPublicComponent();
         fc.upgrades = new HashMap<>();
@@ -730,18 +730,24 @@ public class SaveMngr {
         }
     }
 
-    public static void initCocoonMultipliers() {
+    public static void initCocoonMultipliers(int index) {
         String file = readFile(COCOON_MULTIPLIERS_JSON);
         List<CocoonComponent.CocoonMultiplier> multipliers = new Json().fromJson(List.class, file);
         CocoonSystem.cocoonMultipliers = multipliers;
-        CocoonSystem.currentCocoonMultiplier = multipliers.get(0);
+        CocoonSystem.currentCocoonMultiplier = multipliers.get(index);
     }
 
-    public static void initDandelionMultipliers() {
+    public static void initDandelionMultipliers(int index) {
         String file = readFile(DANDELION_MULTIPLIERS_JSON);
         List<UmbrellaComponent.DandelionMultiplier> multipliers = new Json().fromJson(List.class, file);
         UmbrellaComponent.multipliers = multipliers;
-        UmbrellaComponent.currentMultiplier = multipliers.get(0); // the value has to change for fuck sake
+        //UmbrellaComponent.currentMultiplier = multipliers.get(index); // the value has to change for fuck sake
+
+        if(index >= 0 && index < multipliers.size()) {
+            UmbrellaComponent.currentMultiplier = multipliers.get(index); // the value has to change for fuck sake
+        }else{
+            UmbrellaComponent.currentMultiplier = multipliers.get(multipliers.size()-1);
+        }
 
     }
 }

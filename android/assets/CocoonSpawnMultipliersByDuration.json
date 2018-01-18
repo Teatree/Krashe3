@@ -18,5 +18,26 @@ startOn: 36,
 finishOn:55,
 minSpawnCoefficient: 0.9, 
 maxSpawnCoefficient: 1.2
+},
+{
+class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
+startOn: 56,
+finishOn:100,
+minSpawnCoefficient: 1.5, 
+maxSpawnCoefficient: 2.5
+},
+{
+class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
+startOn: 101,
+finishOn:200,
+minSpawnCoefficient: 2, 
+maxSpawnCoefficient: 3
+},
+{
+class: com.fd.etf.entity.componets.CocoonComponent$CocoonMultiplier,
+startOn: 201,
+finishOn:500,
+minSpawnCoefficient: 3, 
+maxSpawnCoefficient: 5
 }
 ]

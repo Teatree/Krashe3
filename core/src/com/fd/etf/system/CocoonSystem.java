@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.fd.etf.entity.componets.ButterflyComponent;
 import com.fd.etf.entity.componets.CocoonComponent;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.utils.SaveMngr;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -19,6 +20,7 @@ import java.util.Random;
 import static com.fd.etf.entity.componets.CocoonComponent.CocoonMultiplier;
 import static com.fd.etf.entity.componets.CocoonComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
+import static com.fd.etf.entity.componets.UmbrellaComponent.currentMultiplier;
 import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -31,6 +33,7 @@ public class CocoonSystem extends IteratingSystem {
     public static CocoonMultiplier currentCocoonMultiplier;
 
     public static final String BUTTERFLY_ANI = "butterfly";
+    public static int curIndex;
 
     ItemWrapper gameItem;
     private GameScreenScript gameScript;
@@ -38,6 +41,7 @@ public class CocoonSystem extends IteratingSystem {
     public CocoonSystem(GameScreenScript gameScript) {
         super(Family.all(CocoonComponent.class).get());
         this.gameScript = gameScript;
+        curIndex = 0;
         this.gameItem = gameScript.gameItem;
     }
 
@@ -152,7 +156,13 @@ public class CocoonSystem extends IteratingSystem {
         Random r = new Random();
         float randCoefficient = currentCocoonMultiplier.minSpawnCoefficient +
                 r.nextFloat() * (currentCocoonMultiplier.maxSpawnCoefficient - currentCocoonMultiplier.minSpawnCoefficient);
+
+        SaveMngr.initCocoonMultipliers(curIndex);
+        System.out.println("COCCOON currentMultiplier.maxSpawnCoefficient " + currentCocoonMultiplier.maxSpawnCoefficient + " currentMultiplier.minSpawnCoefficient " + currentCocoonMultiplier.minSpawnCoefficient);
+
         return (int)(SPAWN_INTERVAL_BASE * randCoefficient);
+
+
     }
 
     public static void resetSpawnCoefficients() {
