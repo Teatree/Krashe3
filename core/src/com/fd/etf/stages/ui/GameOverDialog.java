@@ -14,7 +14,6 @@ import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.BugSystem;
 import com.fd.etf.utils.BackgroundMusicMgr;
-import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -138,7 +137,7 @@ public class GameOverDialog extends AbstractDialog {
                 Actions.delay(0.5f),
                 Actions.moveTo(257, 785, 1f, Interpolation.exp5),
                 Actions.scaleTo(1, 1, 3f)));
-        GameScreenScript.beesAngryTextE.add(ac3);
+        GameScreenScript.beesAngryFeedbackE.add(ac3);
         SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
 
 //        BugSystem.blowUpAllBugs = true;

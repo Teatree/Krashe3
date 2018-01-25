@@ -47,7 +47,7 @@ public class BugSpawnSystem extends EntitySystem {
     public static int angeredBeePattern2Y2 = ANGERED_BEE_PATTERN_2_y_2;
     public static int angeredBeePattern2Y2stage = ANGERED_BEE_PATTERN_2_y_2Stage;
 
-    public static int ANGERED_BEES_MODE_DURATION = 200;
+    public static int ANGERED_BEES_MODE_DURATION = 26;
     public static boolean queenBeeOnStage = false;
     public static int angerBeePattern;
     public static int angerBeePattern1case;

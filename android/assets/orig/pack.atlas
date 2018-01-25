@@ -18,6 +18,13 @@ progressbaremptyimage
   orig: 300, 65
   offset: 0, 0
   index: -1
+angeredBeesShine
+  rotate: false
+  xy: 473, 9
+  size: 64, 12
+  orig: 64, 12
+  offset: 0, 0
+  index: -1
 background
   rotate: false
   xy: 2, 1261

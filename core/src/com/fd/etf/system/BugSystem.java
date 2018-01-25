@@ -413,6 +413,7 @@ public class BugSystem extends IteratingSystem {
             bugComponent.scareCounter -= deltaTime;
         }
 
+        //System.out.println("Bug: " + bugComponent.type + " duration = " + bugComponent.duration);
         update(bugComponent, transformComponent, bugComponent.reverse ? 1 - percent : percent);
     }
 

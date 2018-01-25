@@ -66,7 +66,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public Entity loseFeedback;
     public Entity curtainGameE;
     public Entity backgroundShitE;
-    public static Entity beesAngryTextE;
+    public static Entity beesAngryFeedbackE;
     public LabelComponent startLabelComponent;
     public static int currentFlowerFrame;
     public GoalFeedbackScreen goalFeedbackScreen;
@@ -139,44 +139,44 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac3 = new ActionComponent();
                 ac3.dataArray.add(Actions.sequence(
                         Actions.delay(0.5f),
-                        Actions.moveTo(257, 684, 1f, Interpolation.exp5),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f)),
-                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(287,684,2f)),
-                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(257,684,2f))));
-                beesAngryTextE.add(ac3);
+                        Actions.moveTo(25, 413, 1f, Interpolation.exp5),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f)),
+                        Actions.parallel(Actions.scaleTo(0.9f, 0.9f, 2f),Actions.moveTo(35,413,2f)),
+                        Actions.parallel(Actions.scaleTo(1, 1, 2f),Actions.moveTo(15,413,2f))));
+                beesAngryFeedbackE.add(ac3);
 
                 EffectUtils.playSplatterParticleEffect(gameStage, 900,0);
                 EffectUtils.playSplatterParticleEffect(gameStage, 900,800);
@@ -208,9 +208,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 ActionComponent ac3 = new ActionComponent();
                 ac3.dataArray.add(Actions.sequence(
                         Actions.delay(0.5f),
-                        Actions.moveTo(257, 785, 1f, Interpolation.exp5),
+                        Actions.moveTo(-155, 413, 1f, Interpolation.exp5),
                         Actions.scaleTo(1, 1, 3f)));
-                beesAngryTextE.add(ac3);
+                beesAngryFeedbackE.add(ac3);
 
                 // PLAY BEES MODE END!
                 GameScreenScript.cameraShaker.initShaking(7f, 0.9f);
@@ -338,8 +338,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         checkTryPeriod();
 
         backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
-        beesAngryTextE = gameItem.getChild("bees_angry_C").getEntity();
-        beesAngryTextE.getComponent(TransformComponent.class).y = 784;
+        beesAngryFeedbackE = gameItem.getChild("bees_angry_C").getEntity();
+        beesAngryFeedbackE.getComponent(TransformComponent.class).y = 784;
 
         gameStage.gameScript.fpc.settings.playedGames++;
         isAngeredBeesMode = false;

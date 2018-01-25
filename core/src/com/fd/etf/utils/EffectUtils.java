@@ -115,7 +115,7 @@ public class EffectUtils {
         gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), bugJuiceBubbleE, bugJuiceBubbleC.composite);
         gameStage.sceneLoader.getEngine().addEntity(bugJuiceBubbleE);
 
-        bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(20);
+        bugJuiceBubbleE.getComponent(ZIndexComponent.class).setZIndex(10);
 
         TransformComponent tc = bugJuiceBubbleE.getComponent(TransformComponent.class);
         bugJuiceBubbleE.add(new BugJuiceBubbleComponent(points));

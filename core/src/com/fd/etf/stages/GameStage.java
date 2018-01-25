@@ -17,7 +17,6 @@ import com.uwsoft.editor.renderer.data.SceneVO;
 import com.uwsoft.editor.renderer.data.SpriterVO;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -105,7 +104,8 @@ public class GameStage extends Stage {
         GameScreenScript.isGameOver.set(false);
         BugPool.getInstance(this);
 
-        GameScreenScript.beesAngryTextE.getComponent(TransformComponent.class).y = 784;
+        GameScreenScript.beesAngryFeedbackE.getComponent(TransformComponent.class).y = 413;
+        GameScreenScript.beesAngryFeedbackE.getComponent(TransformComponent.class).x = -155;
     }
 
     public void initMenu() {

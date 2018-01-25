@@ -60,15 +60,15 @@
     chargerBugSpawnChance: 1.4,
     queenBeeSpawnChance: 1.2,
     beeSpawnChance: 1.2,
-	simpleBugMoveDuration: 0.9,
+	simpleBugMoveDuration: 0.8,
     simpleBugAmplitude: 1,
-    drunkBugMoveDuration: 0.9,
-    drunkBugAmplitude: 1,
-    beeMoveDuration: 0.9,
+    drunkBugMoveDuration: 0.8,
+    drunkBugAmplitude: 1.1,
+    beeMoveDuration: 0.8,
     beeAmplitude: 1,
-    queenBeeMoveDuration: 0.9,
+    queenBeeMoveDuration: 0.8,
     queenBeeAmplitude: 1.1,
-	chargerBugMove: 1.1
+	chargerBugMove: 1.2
 },
 {
 	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
@@ -84,15 +84,15 @@
     chargerBugSpawnChance: 1.5,
     queenBeeSpawnChance: 1.2,
     beeSpawnChance: 1.2,
-	simpleBugMoveDuration: 0.8,
+	simpleBugMoveDuration: 0.7,
     simpleBugAmplitude: 1,
-    drunkBugMoveDuration: 0.8,
-    drunkBugAmplitude: 1,
-    beeMoveDuration: 0.9,
+    drunkBugMoveDuration: 0.7,
+    drunkBugAmplitude: 1.1,
+    beeMoveDuration: 0.8,
     beeAmplitude: 1,
     queenBeeMoveDuration: 0.9,
     queenBeeAmplitude: 1.1,
-	chargerBugMove: 1.2
+	chargerBugMove: 1.3
 },
 {
 	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
@@ -108,15 +108,15 @@
     chargerBugSpawnChance: 1.4,
     queenBeeSpawnChance: 1.1,
     beeSpawnChance: 1.15,
-	simpleBugMoveDuration: 0.8,
+	simpleBugMoveDuration: 0.6,
     simpleBugAmplitude: 1,
-    drunkBugMoveDuration: 0.8,
-    drunkBugAmplitude: 1,
-    beeMoveDuration: 0.9,
+    drunkBugMoveDuration: 0.6,
+    drunkBugAmplitude: 1.1,
+    beeMoveDuration: 0.7,
     beeAmplitude: 1,
     queenBeeMoveDuration: 0.9,
     queenBeeAmplitude: 1.1,
-	chargerBugMove: 1.2
+	chargerBugMove: 1.4
 },
 {
 	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
@@ -135,12 +135,12 @@
 	simpleBugMoveDuration: 0.7,
     simpleBugAmplitude: 1,
     drunkBugMoveDuration: 0.7,
-    drunkBugAmplitude: 1,
-    beeMoveDuration: 0.6,
+    drunkBugAmplitude: 1.1,
+    beeMoveDuration: 0.7,
     beeAmplitude: 1,
     queenBeeMoveDuration: 0.9,
     queenBeeAmplitude: 1.1,
-	chargerBugMove: 1.2
+	chargerBugMove: 1.5
 },
 {
 	class: com.fd.etf.system.BugSpawnSystem$Multiplier,
@@ -156,13 +156,13 @@
     chargerBugSpawnChance: 2.5,
     queenBeeSpawnChance: 1.2,
     beeSpawnChance: 1.5,
-	simpleBugMoveDuration: 0.7,
+	simpleBugMoveDuration: 0.6,
     simpleBugAmplitude: 1,
-    drunkBugMoveDuration: 0.7,
-    drunkBugAmplitude: 1,
-    beeMoveDuration: 0.6,
+    drunkBugMoveDuration: 0.6,
+    drunkBugAmplitude: 1.1,
+    beeMoveDuration: 0.7,
     beeAmplitude: 1,
-    queenBeeMoveDuration: 0.9,
+    queenBeeMoveDuration: 0.8,
     queenBeeAmplitude: 1.1,
-	chargerBugMove: 1.2
+	chargerBugMove: 1.6
 }]
