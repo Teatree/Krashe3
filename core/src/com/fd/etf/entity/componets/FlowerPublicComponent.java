@@ -3,10 +3,6 @@ package com.fd.etf.entity.componets;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
-import com.fd.etf.stages.GameScreenScript;
-import com.fd.etf.stages.GameStage;
-import com.fd.etf.system.BugSystem;
-import com.fd.etf.system.FlowerSystem;
 
 import java.util.*;
 
@@ -74,7 +70,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public void addScore(int points) {
         score += haveBugJuiceDouble() ? 2 * points : points;
         oldScore = score - (haveBugJuiceDouble() ? 2 * points : points);
-        scoreDiff = (float)(score - oldScore)/20;
+        scoreDiff = (score - oldScore) / 20;
        // totalScore += haveBugJuiceDouble() ? 2 * points : points;
         updateScoreGoal();
     }

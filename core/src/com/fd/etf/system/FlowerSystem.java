@@ -8,7 +8,6 @@ import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
-import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
@@ -20,8 +19,6 @@ import static com.fd.etf.entity.componets.FlowerComponent.State.*;
 import static com.fd.etf.stages.GameScreenScript.isGameOver;
 import static com.fd.etf.stages.GameScreenScript.isPause;
 import static com.fd.etf.utils.GlobalConstants.FPS;
-import static com.fd.etf.utils.SoundMgr.REVIVE;
-import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class FlowerSystem extends IteratingSystem {
 
@@ -61,27 +58,27 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     public void act(TransformComponent tc, SpriterComponent sc, float delta) {
-        gameStage.gameScript.fpc.state = state;
+        FlowerPublicComponent.state = state;
 
 //        if(FlowerComponent.isLosing){
 //            sd
 //        }
 
         if(BugJuiceBubbleSystem.isCalculatingScore) {
-            if(gameStage.gameScript.fpc.oldScore <= (float) gameStage.gameScript.fpc.score){
-                gameStage.gameScript.fpc.oldScore += gameStage.gameScript.fpc.scoreDiff;
+            if (FlowerPublicComponent.oldScore <= (float) gameStage.gameScript.fpc.score) {
+                FlowerPublicComponent.oldScore += FlowerPublicComponent.scoreDiff;
 
                 gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                         gameStage.gameScript.scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" +
-                                "" + (int) gameStage.gameScript.fpc.oldScore);
+                                "" + (int) FlowerPublicComponent.oldScore);
                 gameStage.gameScript.scoreLabelEsh.getComponent(LabelComponent.class).text.replace(0,
                         gameStage.gameScript.scoreLabelEsh.getComponent(LabelComponent.class).text.capacity(), "" +
-                                "" + (int) gameStage.gameScript.fpc.oldScore);
+                                "" + (int) FlowerPublicComponent.oldScore);
 
             }
-            if(gameStage.gameScript.fpc.oldScore >= gameStage.gameScript.fpc.score){
+            if (FlowerPublicComponent.oldScore >= gameStage.gameScript.fpc.score) {
                 BugJuiceBubbleSystem.isCalculatingScore = false;
-                gameStage.gameScript.fpc.scoreDiff = 0;
+                FlowerPublicComponent.scoreDiff = 0;
             }
         }
 
@@ -279,8 +276,8 @@ public class FlowerSystem extends IteratingSystem {
 
     private boolean canAttackCoord() {
         return (
-                gameStage.gameScript.fpc.currentPet == null || !gameStage.gameScript.fpc.currentPet.enabled ||
-                        !gameStage.gameScript.fpc.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                FlowerPublicComponent.currentPet == null || !FlowerPublicComponent.currentPet.enabled ||
+                        !FlowerPublicComponent.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
                 && !gameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates()
         );
     }

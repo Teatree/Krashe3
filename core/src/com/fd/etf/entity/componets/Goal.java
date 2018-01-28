@@ -95,7 +95,7 @@ public class Goal {
     }
 
     public String getDescription() {
-        if(periodType == periodType.TOTAL ){
+        if (periodType == PeriodType.TOTAL) {
             return description.replace("#", " " + n + " ") + " " + "IN TOTAL";
         }else {
             return description.replace("#", " " + n + " ") + " " + "IN ONE LIFE";

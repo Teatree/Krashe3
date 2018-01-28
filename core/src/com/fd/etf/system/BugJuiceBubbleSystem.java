@@ -4,20 +4,16 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Interpolation;
-import com.fd.etf.entity.componets.BugComponent;
 import com.fd.etf.entity.componets.BugJuiceBubbleComponent;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.GlobalConstants;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
-import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-
-import javax.swing.*;
 
 public class BugJuiceBubbleSystem extends IteratingSystem {
     private ComponentMapper<BugJuiceBubbleComponent> mapper = ComponentMapper.getFor(BugJuiceBubbleComponent.class);
@@ -90,7 +86,7 @@ public class BugJuiceBubbleSystem extends IteratingSystem {
         if (sizeMulti > 2f){
             sizeMulti = 2f;
         }
-        if(gameStage.gameScript.fpc.scoreDiff > 0) {
+        if (FlowerPublicComponent.scoreDiff > 0) {
             gameStage.gameScript.scoreCE.getComponent(ActionComponent.class).dataArray.add(
                     Actions.sequence(
                             Actions.parallel(

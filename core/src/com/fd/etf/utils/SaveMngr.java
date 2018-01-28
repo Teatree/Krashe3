@@ -8,7 +8,6 @@ import com.fd.etf.entity.componets.*;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.CocoonSystem;
-import com.fd.etf.system.UmbrellaSystem;
 
 import java.util.*;
 
@@ -18,13 +17,13 @@ import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChan
 
 public class SaveMngr {
 
-    public static final String DATA_FILE = "game.sav";
-    public static final String VANITIES_FILE = "vanity.params";
-    public static final String PETS_FILE = "pets.params";
-    public static final String LEVELS_JSON = "levels.json";
-    public static final String MULTIPLIERS_JSON = "BugMultipliersByDuration.json";
-    public static final String COCOON_MULTIPLIERS_JSON = "CocoonSpawnMultipliersByDuration.json";
-    public static final String DANDELION_MULTIPLIERS_JSON = "DandelionSpawnMultipliersByDuration.json";
+    private static final String DATA_FILE = "game.sav";
+    private static final String VANITIES_FILE = "vanity.params";
+    private static final String PETS_FILE = "pets.params";
+    private static final String LEVELS_JSON = "levels.json";
+    private static final String MULTIPLIERS_JSON = "BugMultipliersByDuration.json";
+    private static final String COCOON_MULTIPLIERS_JSON = "CocoonSpawnMultipliersByDuration.json";
+    private static final String DANDELION_MULTIPLIERS_JSON = "DandelionSpawnMultipliersByDuration.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -75,7 +74,7 @@ public class SaveMngr {
 //        saveVanities(fc);
         saveOtherPets(fc);
 
-        gameStats.currentPet = fc.currentPet != null ? new PetJson(fc.currentPet) : null;
+        gameStats.currentPet = FlowerPublicComponent.currentPet != null ? new PetJson(FlowerPublicComponent.currentPet) : null;
 
         for (Goal goal : fc.level.goals.values()) {
             DailyGoalStats dgs = new DailyGoalStats();
@@ -180,7 +179,7 @@ public class SaveMngr {
 
             PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
             petComponent = checkPetsTryPeriod(petComponent);
-            fc.currentPet = petComponent;
+            FlowerPublicComponent.currentPet = petComponent;
 //            dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
@@ -214,7 +213,7 @@ public class SaveMngr {
         u.tryPeriodStart = System.currentTimeMillis();
         u.bought = true;
         u.enabled = true;
-        fc.currentPet = u;
+        FlowerPublicComponent.currentPet = u;
     }
 
     private static void dummyUpgrade(FlowerPublicComponent fc) {

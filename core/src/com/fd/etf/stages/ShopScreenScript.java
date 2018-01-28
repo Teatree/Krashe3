@@ -151,7 +151,6 @@ public class ShopScreenScript implements IScript {
         scoreLbl = shopItem.getChild(SCORE_LBL).getEntity();
         scoreLblSh = shopItem.getChild(SCORE_LBL_SH).getEntity();
         coinsImg = shopItem.getChild(COINS_IMG).getEntity();
-        ;
         lc = scoreLbl.getComponent(LabelComponent.class);
         lcsh = scoreLblSh.getComponent(LabelComponent.class);
 

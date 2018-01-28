@@ -30,8 +30,8 @@ import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 public class UmbrellaSystem extends IteratingSystem {
 
     private static final float UMBRELLA_SCALE = 2f;
-    public static float umbrellaSpawnStateCounter;
-    public static int curIndex;
+    static int curIndex;
+    private static float umbrellaSpawnStateCounter;
 
     private static Random random = new Random();
     private final GameStage gameStage;
@@ -195,7 +195,7 @@ public class UmbrellaSystem extends IteratingSystem {
     }
 
     private boolean checkCollision(UmbrellaComponent bc) {
-        return !bc.justSpawned ? gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect) : false;
+        return !bc.justSpawned && gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect);
     }
 
     private void checkEatGoal(UmbrellaComponent uc) {

@@ -6,13 +6,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.brashmonkey.spriter.Rectangle;
 import com.fd.etf.entity.componets.DebugComponent;
-import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.PetProjectileComponent;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
-import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 
@@ -84,17 +81,17 @@ public class PetProjectileSystem extends IteratingSystem {
 
         entity.add(new DebugComponent(ppc.boundsRect));
 
-        gameStage.gameScript.projectileBounds.put(entity, ppc.boundsRect);
+        GameScreenScript.projectileBounds.put(entity, ppc.boundsRect);
     }
 
     protected void end(Entity entity) {
-        Iterator it = gameStage.gameScript.projectileBounds.entrySet().iterator();
+        Iterator it = GameScreenScript.projectileBounds.entrySet().iterator();
 
         while (it.hasNext()) {
             Map.Entry<Entity, Rectangle> pair = (Map.Entry<Entity, Rectangle>) it.next();
 
             if (pair.getKey().getComponent(PetProjectileComponent.class).isDead) {
-                gameStage.gameScript.projectileBounds.remove(pair.getKey());
+                GameScreenScript.projectileBounds.remove(pair.getKey());
             } else if (entity.getComponent(PetProjectileComponent.class).complete) {
                 it.remove();
             }

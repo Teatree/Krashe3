@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.*;
@@ -236,7 +237,7 @@ public class GameStage extends Stage {
         gameScript.fpc.level.difficultyLevel = 0;
         gameScript.fpc.level.resetNewInfo();
 
-        gameScript.fpc.currentPet = null;
+        FlowerPublicComponent.currentPet = null;
 //        gameScript.fpc.upgrades = new HashMap<>();
 
         gameScript.fpc.level.difficultyLevel = 0;

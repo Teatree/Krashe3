@@ -2,8 +2,6 @@ package com.fd.etf.android.util;
 
 import com.badlogic.gdx.Gdx;
 import com.fd.etf.android.AndroidLauncher;
-import com.fd.etf.stages.GameScreenScript;
-import com.fd.etf.stages.GameStage;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -18,9 +16,8 @@ public class EtfAdsHelper {
     private static final String INTERSTITIAL_GENERAL_UNIT_ID = "ca-app-pub-4809397092315700/1061404471";
 
     public InterstitialAd interstitialVideoAd;
-    public InterstitialAd interstitialGeneralAd;
-
-    public static boolean isAdLoaded = false;
+    public volatile boolean isAdLoaded = false;
+    private InterstitialAd interstitialGeneralAd;
 
     public EtfAdsHelper(AndroidLauncher app) {
         this.app = app;
@@ -33,7 +30,6 @@ public class EtfAdsHelper {
         AdRequest.Builder builder = new AdRequest.Builder();
         AdRequest ad = builder.build();
         interstitialVideoAd.loadAd(ad);
-
         isAdLoaded = true;
 
         interstitialGeneralAd = new InterstitialAd(app);

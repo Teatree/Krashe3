@@ -3,7 +3,6 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
-import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Goal;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
@@ -16,7 +15,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import javax.xml.soap.Node;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -410,7 +408,7 @@ public class PauseDialog extends AbstractDialog {
             e.add(ac);
             pauseCounter = 10;
 
-            if(!gameStage.currentScreen.equals("Game")) {
+            if (!GameStage.currentScreen.equals("Game")) {
                 ActionComponent ac2 = new ActionComponent();
                 ac2.dataArray.add(Actions.fadeOut(0.5f, Interpolation.exp5));
                 shadowE.add(ac2);

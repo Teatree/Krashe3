@@ -7,7 +7,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
-import com.fd.etf.stages.ui.*;
+import com.fd.etf.stages.ui.BasicDialog;
+import com.fd.etf.stages.ui.PauseDialog;
+import com.fd.etf.stages.ui.Settings;
+import com.fd.etf.stages.ui.TrialTimer;
 import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.SaveMngr;
 import com.fd.etf.utils.SoundMgr;
@@ -24,7 +27,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.LeafsComponent.*;
 import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
-import static com.fd.etf.stages.ui.PromoWindow.offerPromo;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
@@ -131,11 +133,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         menuItem.getChild(IMG_LOGO).getEntity().getComponent(TransformComponent.class).scaleY = 0.3f;
         BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
 
-        if(gameStage.gameScript.fpc.settings.noSound){
-            SoundMgr.soundOn = false;
-        }else{
-            SoundMgr.soundOn = true;
-        }
+        SoundMgr.soundOn = !gameStage.gameScript.fpc.settings.noSound;
 
         if(gameStage.gameScript.fpc.settings.noMusic){
             BackgroundMusicMgr.musicOn = false;

@@ -105,7 +105,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public void apply(GameStage gameStage) {
         this.enabled = true;
         gameStage.gameScript.hideCurrentPet();
-        gameStage.gameScript.fpc.currentPet = this;
+        FlowerPublicComponent.currentPet = this;
         gameStage.gameScript.changePet = true;
         for (PetComponent petComponent : gameStage.gameScript.fpc.pets){
             if (!petComponent.equals(this)){
@@ -125,8 +125,8 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     @Override
     public void buyAndUse(GameStage gameStage) {
         this.bought = true;
-        if (gameStage.gameScript.fpc.currentPet != null) {
-            gameStage.gameScript.fpc.currentPet.tryPeriod = false;
+        if (FlowerPublicComponent.currentPet != null) {
+            FlowerPublicComponent.currentPet.tryPeriod = false;
         }
 //        gameStage.gameScript.fpc.currentPet = this;
         apply(gameStage);

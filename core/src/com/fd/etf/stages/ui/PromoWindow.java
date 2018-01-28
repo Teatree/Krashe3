@@ -2,12 +2,11 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.ShopItem;
-import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ResultScreenScript;
-import com.fd.etf.stages.ShopScreenScript;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -16,8 +15,6 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import static com.fd.etf.stages.ShopScreenScript.isPreviewOn;
-import static com.fd.etf.stages.ShopScreenScript.itemIcons;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -175,9 +172,9 @@ public class PromoWindow extends AbstractDialog {
             }
             promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.capacity(), "$ " + String.valueOf(offer.cost));
 
-            if(gameStage.gameScript.fpc.currentPet != null && offer == gameStage.gameScript.fpc.currentPet) {
-                gameStage.sceneLoader.rm.addSpriterToLoad(gameStage.gameScript.fpc.currentPet.name);
-                CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(gameStage.gameScript.fpc.currentPet.name);
+            if (FlowerPublicComponent.currentPet != null && offer == FlowerPublicComponent.currentPet) {
+                gameStage.sceneLoader.rm.addSpriterToLoad(FlowerPublicComponent.currentPet.name);
+                CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(FlowerPublicComponent.currentPet.name);
                 petPromoE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
                 gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), petPromoE, tempItemC.composite);
                 gameStage.sceneLoader.getEngine().addEntity(petPromoE);

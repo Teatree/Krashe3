@@ -81,7 +81,7 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
             this.enabled = true;
             overrideAnimationFiles();
             if (this.pet != null) {
-                gameStage.gameScript.fpc.currentPet = this.pet;
+                FlowerPublicComponent.currentPet = this.pet;
                 gameStage.gameScript.changePet = true;
             }
 
@@ -154,12 +154,12 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         if (changeFlower) GameStage.changedFlowerAni = true;
 
         if (this.pet != null) {
-            gameStage.gameScript.fpc.currentPet = this.pet;
+            FlowerPublicComponent.currentPet = this.pet;
             gameStage.gameScript.changePet = true;
         }
     }
 
-    public void backToDefaultAnimation() {
+    private void backToDefaultAnimation() {
         for (Map.Entry entry : assetsToChange.entrySet()) {
             resetOneFileTodefault(entry);
         }

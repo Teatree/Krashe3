@@ -22,7 +22,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
-import java.util.*;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -237,16 +237,16 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void checkTryPeriod() {
         long now = System.currentTimeMillis();
-        if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
-            if (now - gameStage.gameScript.fpc.currentPet.tryPeriodStart >= gameStage.gameScript.fpc.currentPet.tryPeriodDuration * 1000) {
-                gameStage.gameScript.fpc.currentPet.enabled = false;
-                gameStage.gameScript.fpc.currentPet.bought = false;
-                gameStage.gameScript.fpc.currentPet.tryPeriod = false;
-                gameStage.gameScript.fpc.currentPet.disable(gameStage);
+        if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
+            if (now - FlowerPublicComponent.currentPet.tryPeriodStart >= FlowerPublicComponent.currentPet.tryPeriodDuration * 1000) {
+                FlowerPublicComponent.currentPet.enabled = false;
+                FlowerPublicComponent.currentPet.bought = false;
+                FlowerPublicComponent.currentPet.tryPeriod = false;
+                FlowerPublicComponent.currentPet.disable(gameStage);
 
-                if (gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet) >= 0) {
-                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).bought = false;
-                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(gameStage.gameScript.fpc.currentPet)).enabled = false;
+                if (gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet) >= 0) {
+                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).bought = false;
+                    gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).enabled = false;
                 }
             }
         }
@@ -622,35 +622,35 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void hideCurrentPet() {
-        if (gameStage.gameScript.fpc.currentPet != null) {
+        if (FlowerPublicComponent.currentPet != null) {
 //            gameStage.gameScript.fpc.currentPet.disable();
             if (petE != null && petE.getComponent(TransformComponent.class) != null) {
                 petE.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 petE.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
-            if (gameStage.gameScript.fpc.currentPet.petHead != null &&
-                    gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class) != null) {
-                gameStage.gameScript.fpc.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameStage.gameScript.fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petCannon);
-                gameStage.sceneLoader.getEngine().removeEntity(gameStage.gameScript.fpc.currentPet.petHead);
+            if (FlowerPublicComponent.currentPet.petHead != null &&
+                    FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class) != null) {
+                FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petCannon);
+                gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petHead);
             }
         }
     }
 
     public void initPet() {
 //        hideCurrentPet();
-        if (fpc.currentPet != null && fpc.currentPet.enabled) {
-            fpc.currentPet.gameStage = gameStage;
+        if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.enabled) {
+            FlowerPublicComponent.currentPet.gameStage = gameStage;
             loadPetFromLib();
-            if (fpc.currentPet.enabled) {
+            if (FlowerPublicComponent.currentPet.enabled) {
                 setInitialPetState();
-                petE.add(fpc.currentPet);
+                petE.add(FlowerPublicComponent.currentPet);
             } else {
-                if (petE != null && !fpc.currentPet.enabled) {
-                    if (fpc.currentPet.petCannon != null) {
-                        fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                if (petE != null && !FlowerPublicComponent.currentPet.enabled) {
+                    if (FlowerPublicComponent.currentPet.petCannon != null) {
+                        FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                     }
                 }
             }
@@ -658,7 +658,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void setInitialPetState() {
-        fpc.currentPet.init();
+        FlowerPublicComponent.currentPet.init();
 
         TransformComponent tc = petE.getComponent(TransformComponent.class); //TODO: NPE
         tc.x = PetComponent.X_SPAWN_POSITION;
@@ -666,14 +666,14 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         tc.scaleX = 1.3f;
         tc.scaleY = 1.3f;
 
-        fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
-        fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-        fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
+        FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+        FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
+        FlowerPublicComponent.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
     }
 
     private void loadPetFromLib() {
-        gameStage.sceneLoader.rm.addSpriterToLoad(fpc.currentPet.name.toLowerCase());
-        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(fpc.currentPet.name.toLowerCase());
+        gameStage.sceneLoader.rm.addSpriterToLoad(FlowerPublicComponent.currentPet.name.toLowerCase());
+        CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(FlowerPublicComponent.currentPet.name.toLowerCase());
         petE = gameStage.sceneLoader.entityFactory.createSPRITERentity(gameStage.sceneLoader.getRoot(), tempItemC);
         gameStage.sceneLoader.getEngine().addEntity(petE);
     }
@@ -901,12 +901,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             tc.x = PetComponent.X_SPAWN_POSITION;
             tc.y = PetComponent.getNewPositionY();
 
-            if(fpc.currentPet != null) {
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
-                fpc.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
-                fpc.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
+            if (FlowerPublicComponent.currentPet != null) {
+                FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
+                FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
+                FlowerPublicComponent.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);
 
-                fpc.currentPet.state = SPAWNING;
+                FlowerPublicComponent.currentPet.state = SPAWNING;
             }
         }
     }

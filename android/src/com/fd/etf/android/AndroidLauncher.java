@@ -23,10 +23,10 @@ import com.fd.etf.stages.GameStage;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
-    EtfIAPhelper iapHelper;
-    EtfAdsHelper adsHelper;
-    EtfPlayServicesHelper psHelper;
-    Main game;
+    private EtfIAPhelper iapHelper;
+    private EtfAdsHelper adsHelper;
+    private EtfPlayServicesHelper psHelper;
+    private Main game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public boolean isAds() {
-        return adsHelper != null && adsHelper.interstitialVideoAd != null && adsHelper.isAdLoaded;
+        return adsHelper != null && adsHelper.isAdLoaded;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getPet(GameStage gameStage, PetComponent petComponent) {
-        iapHelper.iapGetPet(gameStage,petComponent);
+        iapHelper.iapGetPet(gameStage, petComponent);
     }
 
     @Override

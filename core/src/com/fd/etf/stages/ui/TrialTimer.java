@@ -1,9 +1,9 @@
 package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
+import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
-import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
@@ -55,10 +55,10 @@ public class TrialTimer {
 
     public boolean ifShouldShowTimer() {
         boolean showTimer = false;
-        if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
+        if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
             showTimer = true;
-            TrialTimer.trialTimerLogoName = gameStage.gameScript.fpc.currentPet.shopIcon;
-            PromoWindow.offer = gameStage.gameScript.fpc.currentPet;
+            TrialTimer.trialTimerLogoName = FlowerPublicComponent.currentPet.shopIcon;
+            PromoWindow.offer = FlowerPublicComponent.currentPet;
             PromoWindow.offerPromo = true;
         } else {
             for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
@@ -76,8 +76,8 @@ public class TrialTimer {
     private void showTimer() {
         if (timerE != null) {
             LabelComponent lc = timerE.getComponent(LabelComponent.class);
-            if (gameStage.gameScript.fpc.currentPet != null && gameStage.gameScript.fpc.currentPet.tryPeriod) {
-                lc.text.replace(0, lc.text.length, gameStage.gameScript.fpc.currentPet.updateTryPeriodTimer());
+            if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
+                lc.text.replace(0, lc.text.length, FlowerPublicComponent.currentPet.updateTryPeriodTimer());
             }
             for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
                 if (u.tryPeriod) {

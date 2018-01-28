@@ -12,13 +12,13 @@ import static com.fd.etf.utils.SaveMngr.LevelInfo.*;
 
 public class Gift {
 
-    public static final String MONEY = "MONEY";
+    private static final String MONEY = "MONEY";
 
-    public static final int ONE_HOUR = 60;
+    private static final int ONE_HOUR = 60;
 
     private static Random random = new Random();
 
-    static List<Integer> moneySums;
+    private static List<Integer> moneySums;
     static {
         moneySums = new ArrayList<>();
         moneySums.add(50);
@@ -157,15 +157,15 @@ public class Gift {
                 break;
             }
             case (PET): {
-                fpc.currentPet = pet;
+                FlowerPublicComponent.currentPet = pet;
                 gameStage.gameScript.changePet = true;
-                fpc.currentPet.tryPeriod = true;
+                FlowerPublicComponent.currentPet.tryPeriod = true;
 //                fpc.currentPet.tryPeriodDuration = 1 * 60;
-                fpc.currentPet.tryPeriodStart = System.currentTimeMillis();
-                fpc.currentPet.bought = true;
-                fpc.currentPet.enabled = true;
+                FlowerPublicComponent.currentPet.tryPeriodStart = System.currentTimeMillis();
+                FlowerPublicComponent.currentPet.bought = true;
+                FlowerPublicComponent.currentPet.enabled = true;
 
-                TrialTimer.trialTimerLogoName = fpc.currentPet.shopIcon;
+                TrialTimer.trialTimerLogoName = FlowerPublicComponent.currentPet.shopIcon;
                 break;
             }
             case (PHOENIX): {
