@@ -7,7 +7,7 @@
 	},
 	shopIcon: itembaseballcap,
 	name: Baseball~Cap,
-	cost: 100,
+	cost: 50,
 	description: Baseball_is_great!
 },
 {
@@ -19,7 +19,7 @@
 	},
 	shopIcon: itemsunflower,
 	name: Sunflower~neck,
-	cost: 140
+	cost: 75
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -30,7 +30,7 @@
 	},
 	shopIcon: itembricks,
 	name: Red~brick_pot,
-	cost: 200,
+	cost: 100,
 	leaves: true
 },
 {
@@ -42,7 +42,7 @@
 	},
 	shopIcon: itembeard,
 	name: Beard,
-	cost: 220,
+	cost: 125,
 	description: Part_of_Hipster~collection
 },
 {
@@ -54,7 +54,7 @@
 	},
 	shopIcon: itemwoodenpot,
 	name: Wooden~bucket,
-	cost: 320,
+	cost: 160,
 	description: Part_of_Scarecrow~collection,
 	leaves: true
 },
@@ -67,7 +67,7 @@
 	},
 	shopIcon: itemscarecrowhat,
 	name: Scarecrow~hat,
-	cost: 420,
+	cost: 210,
 	description: Part_of_Scarecrow~collection
 },
 {
@@ -79,7 +79,7 @@
 	},
 	shopIcon: itempartyhat,
 	name: Party~hat,
-	cost: 650
+	cost: 330
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -90,7 +90,7 @@
 	},
 	shopIcon: itemfedora,
 	name: Fedora,
-	cost: 900,
+	cost: 450,
 	description: Me_lady
 },
 {
@@ -102,7 +102,7 @@
 	},
 	shopIcon: itemteacup,
 	name: Teacup,
-	cost: 1200,
+	cost: 600,
 	leaves: true
 },
 {
@@ -115,7 +115,7 @@
 	},
 	shopIcon: itemknife,
 	name: Knife!,
-	cost: 1500,
+	cost: 750,
 	description: Be_careful~with_it,
 	leaves: true
 },
@@ -128,7 +128,7 @@
 	},
 	shopIcon: itemshoe,
 	name: Shoe,
-	cost: 2000,
+	cost: 1000,
 	leaves: true
 },
 {
@@ -140,7 +140,7 @@
 	},
 	shopIcon: itemmonknecklace,
 	name: Monk's~Necklace,
-	cost: 2500
+	cost: 1200
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -151,7 +151,7 @@
 	},
 	shopIcon: itemscarf,
 	name: Scarf,
-	cost: 3333
+	cost: 1670
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -163,7 +163,7 @@
 	},
 	shopIcon: itemcoffeecup,
 	name: Starbugz~Coffee,
-	cost: 4300,
+	cost: 2150,
 	leaves: true
 },
 {
@@ -175,7 +175,7 @@
 	},
 	shopIcon: itemunicorn,
 	name: A_Unicorn~Cap,
-	cost: 5500
+	cost: 2750
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -186,7 +186,7 @@
 	},
 	shopIcon: itemafro,
 	name: Afro,
-	cost: 7000,
+	cost: 3500,
 	description: Looking_extra~fly
 },
 {
@@ -198,7 +198,7 @@
 	},
 	shopIcon: itemlifebuoy,
 	name: Life_Buoy,
-	cost: 8800,
+	cost: 4400,
 	description: Keeps_you_from~drowning
 },
 {
@@ -211,7 +211,7 @@
 	},
 	shopIcon: itemhoneyspoon,
 	name: Honey~Spoon,
-	cost: 10000,
+	cost: 5000,
 	description: Part_of_Bee~collection,
 	leaves: true
 },
@@ -224,7 +224,7 @@
 	},
 	shopIcon: itemsheephorn,
 	name: Horns,
-	cost: 13000
+	cost: 6500
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -235,7 +235,7 @@
 	},
 	shopIcon: itemiceycrown,
 	name: Icey~crown,
-	cost: 17000
+	cost: 8500
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -246,7 +246,7 @@
 	},
 	shopIcon: itembowtie,
 	name: Bowtie,
-	cost: 22000,
+	cost: 11000,
 	description: Part_of_Hipster~collection
 },
 {
@@ -258,7 +258,7 @@
 	},
 	shopIcon: itemwig,
 	name: Wig,
-	cost: 28000
+	cost: 14000
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -269,7 +269,7 @@
 	},
 	shopIcon: itembones,
 	name: Bone~necklace,
-	cost: 35000
+	cost: 17500
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -280,7 +280,7 @@
 	},
 	shopIcon: itemhelm,
 	name: Viking~helmet,
-	cost: 53000
+	cost: 21500
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -292,7 +292,7 @@
 	},
 	shopIcon: itembugcocktail,
 	name: Bugito,
-	cost: 66000,
+	cost: 26500,
 	leaves: true
 },
 {
@@ -305,7 +305,7 @@
 	},
 	shopIcon: itemshowel,
 	name: Shovel,
-	cost: 81000,
+	cost: 33000,
 	leaves: true
 },
 {
@@ -317,7 +317,7 @@
 	},
 	shopIcon: itemmasonjar,
 	name: Manson_Jar,
-	cost: 99999,
+	cost: 40500,
 	description: Part_of_Hipster~collection,
 	leaves: true
 },
@@ -330,7 +330,7 @@
 	},
 	shopIcon: itemqueenbeeneck,
 	name: Queen~Bee's_Colar,
-	cost: 150000,
+	cost: 50000,
 	description: Part_of_Bee~collection
 },
 {
@@ -342,7 +342,7 @@
 	},
 	shopIcon: itemhandkerchief,
 	name: Red~Bandana,
-	cost: 300000,
+	cost: 75000,
 	description: Part_of_Scarecrow~collection
 },
 {
@@ -354,7 +354,7 @@
 	},
 	shopIcon: itemcouldron,
 	name: Couldron,
-	cost: 450000,
+	cost: 150000,
 	leaves: true
 },
 {
@@ -366,7 +366,7 @@
 	},
 	shopIcon: itemhoneyjar,
 	name: Honey~Jar,
-	cost: 550000,
+	cost: 225000,
 	description: Part_of_Bee~collection,
 	leaves: true
 },
@@ -379,7 +379,7 @@
 	},
 	shopIcon: itemcatears,
 	name: Cute~Ears,
-	cost: 670000,
+	cost: 275000,
 	description: So_you_can~hear_better
 },
 {
@@ -391,7 +391,7 @@
 	},
 	shopIcon: itemamulet,
 	name: Red~Amulet,
-	cost: 800000
+	cost: 335000
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -402,7 +402,7 @@
 	},
 	shopIcon: itemqueenbeecrown,
 	name: Queen~Bee_Crown,
-	cost: 999999
+	cost: 400000
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -413,7 +413,7 @@
 	},
 	shopIcon: itemboa,
 	name: Rainbow~Boa,
-	cost: 1140000
+	cost: 500000
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -424,5 +424,5 @@
 	},
 	shopIcon: itemfez,
 	name: Fez,
-	cost: 1350000
+	cost: 570000
 }]

@@ -39,6 +39,8 @@ public class Showcase {
     private static final String BTN_BUY = "btn_buy";
     private static final String COIN = "coin";
     public static final String NEW_LINE_SIGN = "~";
+    public static final String SPACE_SIGN = "_";
+
     private final GameStage gameStage;
     public TransformComponent tcShowCase;
     private ResultScreenScript resultScreen;
@@ -218,9 +220,11 @@ public class Showcase {
         lbl_collE.getComponent(TintComponent.class).color.a = 0;
         nextIcon.getComponent(TintComponent.class).color.a = 1;
 
-        if(showCaseVanity.name.contains(NEW_LINE_SIGN)) {
+
+
+        if(showCaseVanity.name.contains(NEW_LINE_SIGN) || showCaseVanity.name.contains(SPACE_SIGN)) {
             String name = showCaseVanity.name.replace(NEW_LINE_SIGN, " ");
-            lc.text.replace(0, lc.text.capacity(), name);
+            lc.text.replace(0, lc.text.capacity(), name.replace(SPACE_SIGN, " "));
         }else{
             lc.text.replace(0, lc.text.capacity(), showCaseVanity.name);
         }
@@ -340,11 +344,15 @@ public class Showcase {
 
                 if (btn.getComponent(TintComponent.class).color.a > 0) {
                     showCaseVanity.buyAndUse(gameStage);
+
                     ResultScreenScript.isWasShowcase = true;
+
                     ShopScreenScript.shouldReloadIcons.add(showCaseVanity);
 //                    if (gameStage.shopScript != null) {
 //                        gameStage.shopScript.changeBagIcon(showCaseVanity);
-                        ShopScreenScript.shouldReload = true;
+
+                       // ShopScreenScript.shouldReload = true;
+
 //                    }
                     isCelebrating = true;
                 }

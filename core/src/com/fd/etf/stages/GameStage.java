@@ -6,10 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
-import com.fd.etf.utils.BackgroundMusicMgr;
-import com.fd.etf.utils.BugPool;
-import com.fd.etf.utils.ETFSceneLoader;
-import com.fd.etf.utils.SaveMngr;
+import com.fd.etf.utils.*;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -25,6 +22,7 @@ import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.fd.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.fd.etf.utils.GlobalConstants.BUTTON_TAG;
 import static com.fd.etf.utils.SoundMgr.getSoundMgr;
+import static com.fd.etf.utils.SoundMgr.soundMgr;
 
 public class GameStage extends Stage {
 
@@ -168,7 +166,10 @@ public class GameStage extends Stage {
         }
         ShopScreenScript.isPreviewOn.set(false);
         ShopPoverUpTabListener.reset();
+
         shopScript.checkIfChanged();
+        soundMgr.stop(SoundMgr.SCORE_COUNT);
+
         System.gc();
         System.runFinalization();
         ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = -300;

@@ -82,17 +82,17 @@ public class BugComponent implements Component, Pool.Poolable {
             case DRUNK: {
                 duration = DRUNK_BUG_MOVE_DURATION_BASE * m.drunkBugMoveDuration * gameStage.gameScript.fpc.level.drunkBugMoveDuration;
                 amplitude = DRUNK_BUG_AMPLITUDE_BASE * m.drunkBugAmplitude * gameStage.gameScript.fpc.level.drunkBugAmplitude;
-                points = 4;
+                points = 2;
                 break;
             }
             case BEE: {
                 duration = BEE_MOVE_DURATION_BASE * m.beeMoveDuration * gameStage.gameScript.fpc.level.beeMoveDuration;
                 amplitude = BEE_AMPLITUDE_BASE * m.beeAmplitude * gameStage.gameScript.fpc.level.beeAmplitude;
-                points = 6;
+                points = 2;
                 break;
             }
             case CHARGER: {
-                points = 10;
+                points = 3;
                 IDLE_MVMNT_SPEED = CHARGER_BUG_MOVE_BASE * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
                 PREPARING_MVMNT_SPEED = 40 * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
                 CHARGING_MVMNT_SPEED = 505 * m.chargerBugMove * gameStage.gameScript.fpc.level.chargerBugMove;
@@ -101,13 +101,13 @@ public class BugComponent implements Component, Pool.Poolable {
             case QUEENBEE: {
                 duration = QUEENBEE_MOVE_DURATION_BASE * m.queenBeeMoveDuration * gameStage.gameScript.fpc.level.queenBeeMoveDuration;
                 amplitude = QUEENBEE_AMPLITUDE_BASE * m.queenBeeAmplitude * gameStage.gameScript.fpc.level.queenBeeAmplitude;
-                points = 12;
+                points = 3;
                 break;
             }
             default: {
                 duration = SIMPLE_BUG_MOVE_DURATION_BASE * m.simpleBugMoveDuration * gameStage.gameScript.fpc.level.simpleBugMoveDuration;
                 amplitude = SIMPLE_BUG_AMPLITUDE_BASE * m.simpleBugAmplitude * gameStage.gameScript.fpc.level.simpleBugAmplitude;
-                points = 3;
+                points = 1;
                 break;
             }
         }

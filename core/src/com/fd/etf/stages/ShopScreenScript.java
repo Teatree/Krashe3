@@ -738,7 +738,14 @@ public class ShopScreenScript implements IScript {
             for (VanityComponent vc : shouldReloadIcons){
 //                for (ShopItem si : allSoftItems){
 //                    if (si.name.equals(vc.name)){
-                        changeBagIcon(vc);
+                TransformComponent tc = gameStage.shopScript.changeBagIcon(vc);
+                gameStage.sceneLoader.getEngine().addEntity(itemIcons.get(vc.shopIcon));
+
+                itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).x = tc.x;
+                itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class).y = tc.y;
+
+                itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class).setZIndex(
+                        ShopScreenScript.bagsZindex + 10);
 //                    }
 //                }
             }
@@ -760,11 +767,16 @@ public class ShopScreenScript implements IScript {
             CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
             Entity iconBagClone = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
             gameStage.sceneLoader.entityFactory.initAllChildren(gameStage.sceneLoader.getEngine(), iconBagClone, tempItemC.composite);
+
             TransformComponent oldTc = itemIcons.get(vc.shopIcon).getComponent(TransformComponent.class);
             ZIndexComponent newZ = itemIcons.get(vc.shopIcon).getComponent(ZIndexComponent.class);
+
             iconBagClone.getComponent(ZIndexComponent.class).setZIndex(newZ.getZIndex()+200);
+
             gameStage.sceneLoader.getEngine().removeEntity(itemIcons.get(vc.shopIcon));
+
             itemIcons.put(vc.shopIcon, iconBagClone);
+
             iconBagClone.getComponent(TransformComponent.class).x = oldTc.x;
             iconBagClone.getComponent(TransformComponent.class).y = oldTc.y;
             return oldTc;
