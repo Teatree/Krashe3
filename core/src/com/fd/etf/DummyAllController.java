@@ -18,6 +18,11 @@ public class DummyAllController implements AllController {
     }
 
     @Override
+    public boolean isAds() {
+        return false;
+    }
+
+    @Override
     public void showGetMoneyVideoAd(Runnable then) {
         //System.out.println("showGetMoneyVideoAd");
     }

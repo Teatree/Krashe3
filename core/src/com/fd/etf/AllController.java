@@ -12,6 +12,8 @@ public interface AllController extends PlayServices {
 
     void showReviveVideoAd(Runnable then);
 
+    boolean isAds();
+
     void showGetMoneyVideoAd(Runnable then);
 
     void showLaunchAd(Runnable then);

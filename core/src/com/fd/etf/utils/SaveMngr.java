@@ -25,7 +25,6 @@ public class SaveMngr {
     public static final String MULTIPLIERS_JSON = "BugMultipliersByDuration.json";
     public static final String COCOON_MULTIPLIERS_JSON = "CocoonSpawnMultipliersByDuration.json";
     public static final String DANDELION_MULTIPLIERS_JSON = "DandelionSpawnMultipliersByDuration.json";
-    public static final String ADS_SETTINGS_JSON = "adssettings.json";
 
     public static void saveStats(FlowerPublicComponent fc) {
         GameStats gameStats = new GameStats();
@@ -63,7 +62,6 @@ public class SaveMngr {
         gameStats.reviveAd_min = fc.settings.reviveAd_min;
         gameStats.shopAd_min = fc.settings.shopAd_min;
 
-        writeFile(ADS_SETTINGS_JSON, new Json().toJson(gameStats));
         gameStats.upgrades = new ArrayList<>();
         for (Upgrade u : fc.upgrades.values()) {
             gameStats.upgrades.add(new UpgradeStats(u));

@@ -280,7 +280,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void init(Entity item) {
 
         if (!fpc.isSameDay()) {
-            gameOverReviveTimesLimit = fpc.settings.reviveAd_max;
+            gameOverReviveTimesLimit = 1; //>>
         }
 
         gameItem = new ItemWrapper(item);
@@ -826,20 +826,16 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void endGame() {
-        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown;
+        shouldShowGameOverDialog = Main.mainController.isAds() && !wasGameOverReviveShown;
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
-//            isGameOver.set(false);
-
-//            if (curtainGameE.getComponent(ActionComponent.class) != null) {
-//                curtainGameE.getComponent(ActionComponent.class).reset();
-//            }
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             //System.out.println("gameScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
             //System.out.println("gameScreenScript gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
             ActionComponent ac = new ActionComponent();
+            Actions.checkInit();
             ac.dataArray.add(Actions.sequence(
                     Actions.fadeIn(1f, Interpolation.exp5, 0.5f),
                     Actions.run(new Runnable() {
@@ -848,52 +844,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                             gameStage.initResultWithAds();
                         }
                     })));
-
-//            ac.dataArray.add(Actions.fadeIn(1f, Interpolation.exp5, 0.5f));
-//            curtainGameE.add(ac);
-//            curtainGameE.getComponent(ZIndexComponent.class).setZIndex(150);
-//            ActionComponent ac2 = new ActionComponent();
-//            ac2.dataArray.add(Actions.sequence(
-//                    Actions.parallel(Actions.moveTo(305, 352, 0.7f, Interpolation.exp5), Actions.fadeIn(0.7f)),
-//                    Actions.delay(1.5f),
-//                    Actions.run(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (curtainGameE.getComponent(ActionComponent.class) != null) {
-//                                curtainGameE.getComponent(ActionComponent.class).reset();
-//                            }
-//                            gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ZIndexComponent.class).setZIndex(curtainGameE.getComponent(ZIndexComponent.class).getZIndex() - 1);
-//                            ActionComponent ac3 = new ActionComponent();
-//                            ac3.dataArray.add(Actions.fadeIn(0.3f));
-//                            curtainGameE.add(ac3);
-//                        }
-//                    }),
-//                    Actions.delay(0.3f),
-//                    Actions.run(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (GoalFeedbackScreen.shouldShow && !GoalFeedbackScreen.isGoalFeedbackOpen) {
-//                                showGoalFeedback();
-//                                isGameOver.set(true);
-//                            } else if ((gameStage.gameScript.goalFeedbackScreen == null || !GoalFeedbackScreen.isGoalFeedbackOpen)) {
-//                                isGameOver.set(false);
-//                                gameStage.gameScript.resetPauseDialog();
-//                                submitScoreToGooglePlay();
-//                                gameStage.gameScript.gameOverDialog.hide();
-//                                megaFlower.getComponent(SpriterComponent.class).player.setTime(0);
-//
-//                                cleanupTheScene();
-//                                gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(TransformComponent.class).y = -108;
-//                            }
-//                        }
-//                    })));
-//            if (gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class) != null) {
-//                gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ActionComponent.class).reset();
-//            }
-//            gameItem.getChild(GAME_OVER_LBL).getEntity().add(ac2);
-//            gameItem.getChild(GAME_OVER_LBL).getEntity().getComponent(ZIndexComponent.class).setZIndex(curtainGameE.getComponent(ZIndexComponent.class).getZIndex() + 1);
-
-
+            curtainGameE.add(ac);
         }
     }
 

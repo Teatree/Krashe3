@@ -33,6 +33,7 @@ public class Main extends Game {
         if (controller != null) {
             Main.mainController = controller;
             Main.playServices = controller;
+
         } else {
             Main.mainController = new DummyAllController();
         }

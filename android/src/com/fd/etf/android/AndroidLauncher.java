@@ -97,6 +97,11 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     @Override
+    public boolean isAds() {
+        return adsHelper != null && adsHelper.interstitialVideoAd != null && adsHelper.isAdLoaded;
+    }
+
+    @Override
     public void showGetMoneyVideoAd(final Runnable then) {
         adsHelper.showGetMoneyVideoAd(then);
     }
