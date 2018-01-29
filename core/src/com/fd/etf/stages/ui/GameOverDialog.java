@@ -110,9 +110,9 @@ public class GameOverDialog extends AbstractDialog {
                 new ImageButtonListener(reviveBtn) {
                     @Override
                     public void clicked() {
+                        gameOverReviveTimesLimit--;
                         if (Main.mainController.isWifiConnected()) {
                             playVideoAd(dialogTc);
-                            gameOverReviveTimesLimit--;
                         }
                         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
                             continueGame(dialogTc);

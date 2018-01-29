@@ -331,9 +331,9 @@ public class ResultScreenScript implements IScript {
                 soundMgr.play(SoundMgr.SPARKLE);
                 progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
             }
-            if (!show && gameStage.gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(gameStage, need) && adsBtn == null) {
-                initWatchAdsForMoneyBtn();
-            }
+//            if (!show && gameStage.gameScript.fpc.settings.shouldShowGetMoneyVideoBtnAd(gameStage, need) && adsBtn == null) {
+//                initWatchAdsForMoneyBtn();
+//            }
             if(isPlayingProgressBarSFX) {
                 soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
 

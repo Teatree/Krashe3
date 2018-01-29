@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.fd.etf.entity.componets.*;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.CocoonSystem;
@@ -35,12 +36,6 @@ public class SaveMngr {
         gameStats.goalStatusChanged = Level.goalStatusChanged;
         gameStats.totalPlayedGames = fc.settings.totalPlayedGames;
 
-        gameStats.start_resultScreenAd = fc.settings.start_resultScreenAd;
-        gameStats.start_getMoneyAd = fc.settings.start_getMoneyAd;
-        gameStats.start_launchAd = fc.settings.start_launchAd;
-        gameStats.start_reviveAd = fc.settings.start_reviveAd;
-        gameStats.start_shopAd = fc.settings.start_shopAd;
-
         //achievements
         gameStats.bugAchCounter = AchievementSystem.bugAchCounter;
         gameStats.queenAchCounter = AchievementSystem.queenAchCounter;
@@ -49,17 +44,9 @@ public class SaveMngr {
         gameStats.bugAchGoal = AchievementSystem.bugAchGoal;
         gameStats.butterflyAchGoal = AchievementSystem.butterflyAchGoal;
 
-        gameStats.launchAd_max = fc.settings.launchAd_max;
-        gameStats.resultScreenAd_max = fc.settings.resultScreenAd_max;
-        gameStats.getMoneyAd_max = fc.settings.getMoneyAd_max;
-        gameStats.reviveAd_max = fc.settings.reviveAd_max;
-        gameStats.shopAd_max = fc.settings.shopAd_max;
-
-        gameStats.launchAd_min = fc.settings.launchAd_min;
-        gameStats.resultScreenAd_min = fc.settings.resultScreenAd_min;
-        gameStats.getMoneyAd_min = fc.settings.getMoneyAd_min;
-        gameStats.reviveAd_min = fc.settings.reviveAd_min;
-        gameStats.shopAd_min = fc.settings.shopAd_min;
+        gameStats.reviveAd_max = fc.reviveAdsMaxNastya;
+        gameStats.gameOverReviveTimesLimit = GameScreenScript.gameOverReviveTimesLimit;
+        gameStats.curDay = fc.curDay;
 
         gameStats.upgrades = new ArrayList<>();
         for (Upgrade u : fc.upgrades.values()) {
@@ -152,23 +139,8 @@ public class SaveMngr {
             AchievementSystem.bugAchGoal = stats.bugAchGoal;
             AchievementSystem.bugAchGoal = stats.bugAchGoal;
 
-            fc.settings.start_resultScreenAd = stats.start_resultScreenAd;
-            fc.settings.start_getMoneyAd = stats.start_getMoneyAd;
-            fc.settings.start_launchAd = stats.start_launchAd;
-            fc.settings.start_reviveAd = stats.start_reviveAd;
-            fc.settings.start_shopAd = stats.start_shopAd;
-
-            fc.settings.launchAd_max = stats.launchAd_max;
-            fc.settings.resultScreenAd_max = stats.resultScreenAd_max;
-            fc.settings.getMoneyAd_max = stats.getMoneyAd_max;
-            fc.settings.reviveAd_max = stats.reviveAd_max;
-            fc.settings.shopAd_max = stats.shopAd_max;
-
-            fc.settings.launchAd_min = stats.launchAd_min;
-            fc.settings.resultScreenAd_min = stats.resultScreenAd_min;
-            fc.settings.getMoneyAd_min = stats.getMoneyAd_min;
-            fc.settings.reviveAd_min = stats.reviveAd_min;
-            fc.settings.shopAd_min = stats.shopAd_min;
+            fc.reviveAdsMaxNastya = stats.reviveAd_max;
+            GameScreenScript.gameOverReviveTimesLimit =  stats.gameOverReviveTimesLimit;
 
             if (gameStats.upgrades != null) {
                 for (UpgradeStats e : gameStats.upgrades) {
@@ -545,23 +517,8 @@ public class SaveMngr {
         public List<UpgradeStats> upgrades;
         public int totalPlayedGames;
 
-        public int shopAd_max = 4;
-        public int resultScreenAd_max = 4;
-        public int launchAd_max = 4;
-        public int getMoneyAd_max = 4;
-        public int reviveAd_max = 4;
-
-        public int shopAd_min = 2;
-        public int resultScreenAd_min = 2;
-        public int launchAd_min = 2;
-        public int getMoneyAd_min = 2;
-        public int reviveAd_min = 2;
-
-        public int start_resultScreenAd = 1;
-        public int start_shopAd = 1;
-        public int start_getMoneyAd = 1;
-        public int start_launchAd = 1;
-        public int start_reviveAd = 1;
+        public int reviveAd_max;
+        public int gameOverReviveTimesLimit;
 
         //achievements
         public int queenAchGoal;

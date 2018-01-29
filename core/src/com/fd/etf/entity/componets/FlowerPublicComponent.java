@@ -20,6 +20,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public static float oldScore;
     public static float scoreDiff;
     public int score;
+    public int reviveAdsMaxNastya;
     public static FlowerComponent.State state = FlowerComponent.State.IDLE;
 
     public List<VanityComponent> vanities = new ArrayList<>();

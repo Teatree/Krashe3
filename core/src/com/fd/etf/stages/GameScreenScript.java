@@ -280,7 +280,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void init(Entity item) {
 
         if (!fpc.isSameDay()) {
-            gameOverReviveTimesLimit = 1; //>>
+            gameOverReviveTimesLimit = fpc.reviveAdsMaxNastya; //>>
         }
 
         gameItem = new ItemWrapper(item);
@@ -826,7 +826,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void endGame() {
-        shouldShowGameOverDialog = Main.mainController.isAds() && !wasGameOverReviveShown;
+        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown;
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
