@@ -22,6 +22,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.util.Calendar;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -281,6 +282,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         if (!fpc.isSameDay()) {
             gameOverReviveTimesLimit = fpc.reviveAdsMaxNastya; //>>
+            fpc.curDay = Calendar.getInstance().getTimeInMillis();
+            System.out.println("chaning date yo");
         }
 
         gameItem = new ItemWrapper(item);

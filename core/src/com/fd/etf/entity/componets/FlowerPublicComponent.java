@@ -13,6 +13,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     public Rectangle boundsRect = new Rectangle();
     public boolean isCollision;
     public boolean isScary;
+    Calendar c = Calendar.getInstance();
 
     public long bestScore;
     public long totalScore;
@@ -102,14 +103,30 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
     }
 
     public boolean isSameDay(){
-        Date d = new Date();
+        Date d = c.getTime();
 
-        if(d.getTime() - curDay > 86400000){
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        Calendar cc = Calendar.getInstance();
+        cc.setTimeInMillis(curDay);
+
+        cc.set(Calendar.HOUR_OF_DAY, 0);
+        cc.set(Calendar.MINUTE, 0);
+        cc.set(Calendar.SECOND, 0);
+        cc.set(Calendar.MILLISECOND, 0);
+
+        if(cc.getTime().equals(c.getTime())){
             curDay = d.getTime();
-            return false;
-        }else{
+            System.out.println("c = " + c.getTime() + " cc = " + cc.getTime() + " true ");
             return true;
+        }else{
+            System.out.println("c = " + c.getTime() + " cc = " + cc.getTime() + " false ");
+            return false;
         }
+
     }
 
 //

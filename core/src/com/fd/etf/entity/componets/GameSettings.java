@@ -15,7 +15,7 @@ public class GameSettings {
     public int reviveAd_max;
 
     public boolean shouldShowLaunchAd() {
-        return false;
+        return true;
     }
 
 

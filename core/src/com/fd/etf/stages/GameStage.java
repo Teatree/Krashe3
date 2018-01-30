@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.fd.etf.Main;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
@@ -60,12 +61,12 @@ public class GameStage extends Stage {
         justCreated = true;
 
         if (gameScript.fpc.settings.shouldShowLaunchAd()) {
-//            Main.mainController.showLaunchAd(new Runnable() {
-//                @Override
-//                public void run() {
-            initMenu();
-//                }
-//            });
+            Main.mainController.showLaunchAd(new Runnable() {
+                @Override
+                public void run() {
+                    initMenu();
+                }
+            });
         } else {
             initMenu();
         }

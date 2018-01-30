@@ -91,21 +91,20 @@ public class EtfAdsHelper {
     }
 
     public void showLaunchAd(final Runnable then) {
-
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                interstitialVideoAd.setAdListener(new AdListener() {
+                interstitialGeneralAd.setAdListener(new AdListener() {
                     @Override
                     public void onAdClosed() {
                         Gdx.app.postRunnable(then);
                         AdRequest.Builder builder = new AdRequest.Builder();
                         AdRequest ad = builder.build();
-                        interstitialVideoAd.loadAd(ad);
+                        interstitialGeneralAd.loadAd(ad);
                     }
                 });
 
-                interstitialVideoAd.show();
+                interstitialGeneralAd.show();
             }
         });
     }

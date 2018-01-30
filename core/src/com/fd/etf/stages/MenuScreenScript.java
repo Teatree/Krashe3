@@ -108,6 +108,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void init(Entity item) {
 
+
+
         frames = 0;
         canClickPlay = false;
         menuItem = new ItemWrapper(item);
