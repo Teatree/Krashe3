@@ -1,6 +1,8 @@
 package com.fd.etf.entity.componets;
 
 
+import com.fd.etf.Main;
+
 import java.util.Date;
 
 public class GameSettings {
@@ -15,7 +17,10 @@ public class GameSettings {
     public int reviveAd_max;
 
     public boolean shouldShowLaunchAd() {
-        return true;
+        if(Main.mainController.isWifiConnected()) {
+            return true;
+        }
+        return false;
     }
 
 

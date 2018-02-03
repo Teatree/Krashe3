@@ -421,7 +421,15 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void reset() {
         fpc.score = 0;
+
+        angeredBeesModeTimer = ANGERED_BEES_MODE_DURATION;
         isAngeredBeesMode = false;
+        if (beesAngryFeedbackE.getComponent(ActionComponent.class) != null) {
+            beesAngryFeedbackE.getComponent(ActionComponent.class).reset();
+        }
+        beesAngryFeedbackE.getComponent(TransformComponent.class).y = 413;
+        beesAngryFeedbackE.getComponent(TransformComponent.class).x = -155;
+
         scoreLabelE.getComponent(LabelComponent.class).text.replace(0,
                 scoreLabelE.getComponent(LabelComponent.class).text.capacity(), "" + fpc.score);
         scoreLabelE.getComponent(TintComponent.class).color.a = 0;
@@ -470,6 +478,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if(pauseDialog != null){
             pauseDialog.reset();
         }
+
+
     }
 
     private void initDoubleBJIcon() {
@@ -581,6 +591,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         tcL.y = LEAFS_Y_POS;
         tcL.scaleX = LEAFS_SCALE;
         tcL.scaleY = LEAFS_SCALE;
+        ZIndexComponent zL = megaLeaves.getComponent(ZIndexComponent.class);
+
+        zL.setZIndex(megaFlower.getComponent(ZIndexComponent.class).getZIndex() + 1);
 
         megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
 
@@ -619,6 +632,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0.6f;
         gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TransformComponent.class).x = 975;
+        gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(ZIndexComponent.class).setZIndex(megaFlower.getComponent(ZIndexComponent.class).getZIndex()-1);
 
         megaFlower.add(fc);
         megaFlower.add(fpc);
@@ -834,20 +848,18 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
-            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
-            //System.out.println("gameScreenScript gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
-            //System.out.println("gameScreenScript gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
-            ActionComponent ac = new ActionComponent();
-            Actions.checkInit();
-            ac.dataArray.add(Actions.sequence(
-                    Actions.fadeIn(1f, Interpolation.exp5, 0.5f),
-                    Actions.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            gameStage.initResultWithAds();
-                        }
-                    })));
-            curtainGameE.add(ac);
+//            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
+//            ActionComponent ac = new ActionComponent();
+//            Actions.checkInit();
+//            ac.dataArray.add(Actions.sequence(
+//                    Actions.fadeIn(1f, Interpolation.exp5, 0.5f),
+//                    Actions.run(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            gameStage.initResultWithAds();
+//                        }
+//                    })));
+//            curtainGameE.add(ac);
         }
     }
 

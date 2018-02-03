@@ -4,15 +4,19 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.FlowerComponent;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.EffectUtils;
+import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TintComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
+import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
 import static com.fd.etf.entity.componets.FlowerComponent.State.*;
@@ -144,6 +148,9 @@ public class FlowerSystem extends IteratingSystem {
     private void attackAndRetreat(TransformComponent tc, SpriterComponent sc, float delta) {
         if (state.equals(ATTACK) || state.equals(RETREAT)) {
 
+//            if(tc.y >= FLOWER_MAX_Y_POS-400 && tc.y <= FLOWER_MAX_Y_POS-380){
+//                hideTutorialLine();
+//            }
             if (gameStage.gameScript.fpc.isCollision) {
                 state = ATTACK_BITE;
                 setBiteAttackAnimation(sc);
@@ -284,7 +291,14 @@ public class FlowerSystem extends IteratingSystem {
 
     private void hideTutorialLine() {
         if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.1f) {
-            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.25f;
+            if(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(ActionComponent.class) != null){
+                gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(ActionComponent.class).reset();
+            }
+            ActionComponent ac_9 = new ActionComponent();
+            ac_9.dataArray.add(Actions.alpha(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a-0.15f, 0.5f, Interpolation.exp5));
+            gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().add(ac_9);
+
+            //gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.15f;
         }else{
             gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a = 0;
         }

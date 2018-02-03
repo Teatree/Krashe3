@@ -1,7 +1,7 @@
 package com.fd.etf.utils;
 
 public abstract class GlobalConstants {
-    public static final int ANGERED_BEES_MODE_DURATION = 2000;
+    public static final int ANGERED_BEES_MODE_DURATION = 750;
 
     public static final int MAX_IDLE_COUNT = 240;
     public static final int MIN_IDLE_COUNTER = 100;

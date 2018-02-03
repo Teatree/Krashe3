@@ -133,17 +133,17 @@ public class BugSpawnSystem extends EntitySystem {
         if (spawner <= 0 && !BugSystem.blowUpAllBugs) {
             if (isAngeredBeesMode) {
                 if(angerBeePattern == 0) {
-                    curSpawnInterval = 0.3f;
+                    curSpawnInterval = 0.2f;
                 }else if (angerBeePattern == 1){
-                    curSpawnInterval = 0.6f;
+                    curSpawnInterval = 0.5f;
                 }else{
-                    curSpawnInterval = 0.6f;
+                    curSpawnInterval = 0.5f;
                 }
                 resetBreakCounter();
 //                createBug(BEE, currentMultiplier);
                 createAngryBee(currentMultiplier);
             } else {
-                int probabilityValue = rand.nextInt(100);
+                int probabilityValue = rand.nextInt(curDrunkProb + curSimpleProb + curChargerProb + curQueenBeeProb + curBeeProb); // or 100, I dono
                 if (probabilityValue <= curDrunkProb) {
                     createBug(DRUNK, currentMultiplier);  // Drunk
                 } else if (probabilityValue > curDrunkProb && probabilityValue < curDrunkProb + curSimpleProb) {

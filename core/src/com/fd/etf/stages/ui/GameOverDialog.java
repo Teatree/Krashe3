@@ -135,7 +135,7 @@ public class GameOverDialog extends AbstractDialog {
         ActionComponent ac3 = new ActionComponent();
         ac3.dataArray.add(Actions.sequence(
                 Actions.delay(0.5f),
-                Actions.moveTo(257, 785, 1f, Interpolation.exp5),
+                Actions.moveTo(-155, 413, 1f, Interpolation.exp5),
                 Actions.scaleTo(1, 1, 3f)));
         GameScreenScript.beesAngryFeedbackE.add(ac3);
         SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
@@ -173,13 +173,6 @@ public class GameOverDialog extends AbstractDialog {
         if (isGameOver.get()) {
             final Entity gameOverTimerLbl = gameOverDialogE.getComponent(NodeComponent.class).getChild(TIMER).getComponent(NodeComponent.class).getChild(LABEL_TIMER_GAMEOVER);
             final LabelComponent gameOverLblC = gameOverTimerLbl.getComponent(LabelComponent.class);
-
-//            final ActionComponent ac = new ActionComponent.class);
-//            Actions.checkInit();
-//            ac.dataArray.add(Actions.scaleTo(99, 99, 48, Interpolation.elastic));
-//            gameOverTimerLbl.add(ac);
-//            gameOverTimerLblsh.add(ac);
-
 
             if (Gdx.input.justTouched() && tapCoolDown <= 0) {
                 gameOverTimer = 1;
