@@ -119,7 +119,9 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public void disable(GameStage gameStage) {
         this.enabled = false;
         gameStage.gameScript.changePet = true;
-//        fpc.currentPet = null;
+
+        FlowerPublicComponent.currentPet.petCannon = null;
+        FlowerPublicComponent.currentPet = null;
     }
 
     @Override

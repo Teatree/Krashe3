@@ -650,7 +650,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                     FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class) != null) {
                 FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-                gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petCannon);
+                //gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petCannon);
                 gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petHead);
             }
         }
@@ -916,7 +916,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             tc.x = PetComponent.X_SPAWN_POSITION;
             tc.y = PetComponent.getNewPositionY();
 
-            if (FlowerPublicComponent.currentPet != null) {
+            if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.petCannon != null) {
                 FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = tc.x + 64;
                 FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).y = tc.y - 9;
                 FlowerPublicComponent.currentPet.petCannon.getComponent(ZIndexComponent.class).setZIndex(12);

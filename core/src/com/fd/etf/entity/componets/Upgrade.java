@@ -47,8 +47,8 @@ public class Upgrade extends ShopItem{
     public static Upgrade getPhoenix(GameStage gameStage) {
         Upgrade phoenix = new Upgrade(gameStage);
         phoenix.upgradeType = UpgradeType.PHOENIX;
-        phoenix.cost = 13;
-        phoenix.costDisc = 9;
+        phoenix.cost = 199;
+        phoenix.costDisc = 100;
         phoenix.disc = 0;
         phoenix.name = "EXTRA~LIFE";
         phoenix.bought = false;
@@ -64,8 +64,8 @@ public class Upgrade extends ShopItem{
     public static Upgrade getBJDouble(GameStage gameStage) {
         Upgrade bjd = new Upgrade(gameStage);
         bjd.upgradeType = UpgradeType.BJ_DOUBLE;
-        bjd.cost = 13;
-        bjd.costDisc = 9;
+        bjd.cost = 349;
+        bjd.costDisc = 175;
         bjd.disc = 0;
         bjd.name = "DOUBLE~COINS";
         bjd.bought = false;

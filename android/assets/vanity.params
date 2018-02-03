@@ -19,6 +19,7 @@
 	},
 	shopIcon: itemsunflower,
 	name: Sunflower~neck,
+	description: Follow_the~sun,
 	cost: 75
 },
 {
@@ -79,6 +80,7 @@
 	},
 	shopIcon: itempartyhat,
 	name: Party~hat,
+	description: Party_on!,
 	cost: 330
 },
 {
@@ -140,6 +142,7 @@
 	},
 	shopIcon: itemmonknecklace,
 	name: Monk's~Necklace,
+	description: Peace_comes~from_within,
 	cost: 1200
 },
 {
@@ -175,6 +178,7 @@
 	},
 	shopIcon: itemunicorn,
 	name: A_Unicorn~Cap,
+	description: Fabulous!,
 	cost: 2750
 },
 {
@@ -234,7 +238,8 @@
 		class: java.util.HashMap
 	},
 	shopIcon: itemiceycrown,
-	name: Icey~crown,
+	name: Icy~crown,
+	description: The_power~of_frost,
 	cost: 8500
 },
 {
@@ -280,6 +285,7 @@
 	},
 	shopIcon: itemhelm,
 	name: Viking~helmet,
+	description: Fus_Ro_Fly,
 	cost: 21500
 },
 {
@@ -305,6 +311,7 @@
 	},
 	shopIcon: itemshowel,
 	name: Shovel,
+	description: You_migh~need_it,
 	cost: 33000,
 	leaves: true
 },
@@ -329,7 +336,7 @@
 		class: java.util.HashMap
 	},
 	shopIcon: itemqueenbeeneck,
-	name: Queen~Bee's_Colar,
+	name: Queen's~Collar,
 	cost: 50000,
 	description: Part_of_Bee~collection
 },
@@ -353,7 +360,7 @@
 		class: java.util.HashMap
 	},
 	shopIcon: itemcouldron,
-	name: Couldron,
+	name: Cauldron,
 	cost: 150000,
 	leaves: true
 },
@@ -391,6 +398,7 @@
 	},
 	shopIcon: itemamulet,
 	name: Red~Amulet,
+	description: 100%_Curse~Free
 	cost: 335000
 },
 {
@@ -401,7 +409,8 @@
 		class: java.util.HashMap
 	},
 	shopIcon: itemqueenbeecrown,
-	name: Queen~Bee_Crown,
+	name: Queen's~Crown,
+	description: Part_of_Bee~collection,
 	cost: 400000
 },
 {
@@ -414,6 +423,20 @@
 	shopIcon: itemboa,
 	name: Rainbow~Boa,
 	cost: 500000
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	shopIcon: itemdogPET,
+	name: Just_Some~Dog,
+	description: Likes_To~Eat_Cat~Shit,
+	pet:{
+		class: com.fd.etf.utils.SaveMngr$PetJson,
+		name: DOG,
+		amountBugsBeforeCharging: 3,
+		totalEatenBugs: 49,
+		petCannonName: pet_cannon
+	},
+	cost: 500001
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,

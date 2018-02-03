@@ -229,7 +229,7 @@ public class Preview extends AbstractDialog {
 
     public void setLabelsValues() {
 //        lblTitle.getComponent(LabelComponent.class).text.replace(0, lblTitle.getComponent(LabelComponent.class).text.length, vc.name);
-        if (vc.name.contains(NEW_LINE_SIGN)){
+        if (vc.name.contains(NEW_LINE_SIGN)) {
             String[] lines = vc.name.split(NEW_LINE_SIGN);
             lblTitle.getComponent(TintComponent.class).color.a = 1;
             lblTitleLine2.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex() + 1);
@@ -238,9 +238,9 @@ public class Preview extends AbstractDialog {
                     0, lblTitle.getComponent(LabelComponent.class).text.length, lines[0]);
             lblTitleLine2.getComponent(LabelComponent.class).text.replace(
                     0, lblTitleLine2.getComponent(LabelComponent.class).text.length, lines[1]);
-        }else {
+        } else {
             lblTitle.getComponent(TintComponent.class).color.a = 0;
-            lblTitle.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex()+1);
+            lblTitle.getComponent(ZIndexComponent.class).setZIndex(lblTitle.getComponent(ZIndexComponent.class).getZIndex() + 1);
             lblTitleLine2.getComponent(LabelComponent.class).text.replace(
                     0, lblTitleLine2.getComponent(LabelComponent.class).text.length, vc.name);
             lblTitleLine2.getComponent(TransformComponent.class).y = 85;
@@ -253,10 +253,19 @@ public class Preview extends AbstractDialog {
                     SPACE_SIGN, " ");
         }
 
-        lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
-                String.valueOf(vc.cost));
-        lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
-                String.valueOf(vc.cost));
+        if (vc.currencyType.equals(HARD)) {
+            float price = (float)vc.cost/100;
+            lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
+                    String.valueOf(price));
+            lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
+                    String.valueOf(price));
+        }else{
+            lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
+                    String.valueOf(vc.cost));
+            lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
+                    String.valueOf(vc.cost));
+        }
+
         lblPrice.getComponent(LabelComponent.class).fontScaleX = 0.7f;
         lblPrice.getComponent(LabelComponent.class).fontScaleY = 0.7f;
         lblPriceSh.getComponent(LabelComponent.class).fontScaleX = 0.7f;
@@ -861,22 +870,23 @@ public class Preview extends AbstractDialog {
 
             if (vc.description.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.description.split(NEW_LINE_SIGN);
+                int i = 0;
                 for(String s : lines){
                     if (s.contains(SPACE_SIGN)) {
-                        s = s.replace(SPACE_SIGN, " ");
+                        lines[i++] = s.replace(SPACE_SIGN, " ");
                     }
                 }
                 if (lines.length == 2) {
                     lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                     lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, lines[0]);
                     lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, lines[1]);
-                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_31.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_32.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_33.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_41.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_42.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, "Error");
                 } else if (lines.length == 3) {
                     lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                     lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
@@ -884,17 +894,17 @@ public class Preview extends AbstractDialog {
                     lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_31.getComponent(LabelComponent.class).text.length, lines[0]);
                     lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_32.getComponent(LabelComponent.class).text.length, lines[1]);
                     lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_33.getComponent(LabelComponent.class).text.length, lines[2]);
-                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_41.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_42.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, "Error");
                 } else if (lines.length == 4) {
                     lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                     lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                     lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
-                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_31.getComponent(LabelComponent.class).text.replace(0, lbl_desc_31.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_32.getComponent(LabelComponent.class).text.replace(0, lbl_desc_32.getComponent(LabelComponent.class).text.length, "Error");
+                    lbl_desc_33.getComponent(LabelComponent.class).text.replace(0, lbl_desc_33.getComponent(LabelComponent.class).text.length, "Error");
                     lbl_desc_41.getComponent(LabelComponent.class).text.replace(0, lbl_desc_41.getComponent(LabelComponent.class).text.length, lines[0]);
                     lbl_desc_42.getComponent(LabelComponent.class).text.replace(0, lbl_desc_42.getComponent(LabelComponent.class).text.length, lines[1]);
                     lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, lines[2]);
