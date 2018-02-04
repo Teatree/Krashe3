@@ -11,7 +11,7 @@ public class GameSettings {
     public boolean noAds = false;
     public boolean noSound;
     public boolean noMusic;
-    Random random;
+    //Random random;
 
     public int totalPlayedGames;
     public int playedGames;
@@ -19,21 +19,21 @@ public class GameSettings {
     public int reviveAd_max;
 
     public boolean shouldShowLaunchAd() {
-        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 50) {
+        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
             return true;
         }
         return false;
     }
 
     public boolean shouldShowShopAd() {
-        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 50) {
+        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
             return true;
         }
         return false;
     }
 
     public boolean shouldShowGameAd() {
-        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 75) {
+        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 75*/) {
             return true;
         }
         return false;

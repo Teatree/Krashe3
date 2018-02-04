@@ -478,8 +478,8 @@ public class ShopScreenScript implements IScript {
             }
         }
 
-        scoreLbl.getComponent(TransformComponent.class).x = 1150 - scoreLbl.getComponent(LabelComponent.class).text.length * 40;
-        scoreLblSh.getComponent(TransformComponent.class).x = 1153 - scoreLblSh.getComponent(LabelComponent.class).text.length * 40;
+        scoreLbl.getComponent(TransformComponent.class).x = 1150 - scoreLbl.getComponent(LabelComponent.class).text.length * 50;
+        scoreLblSh.getComponent(TransformComponent.class).x = 1153 - scoreLblSh.getComponent(LabelComponent.class).text.length * 50;
         coinsImg.getComponent(TransformComponent.class).x = scoreLbl.getComponent(TransformComponent.class).x - 60;
     }
 

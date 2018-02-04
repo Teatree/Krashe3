@@ -112,6 +112,7 @@ public class Showcase {
                         && !isCelebrating) {
                     backBtn.getComponent(TintComponent.class).color.a += 0.05f;
                     buyBtn.getComponent(TintComponent.class).color.a += 0.05f;
+                    System.out.println("buyBtn.getComponent(TintComponent.class).color.a --- changing value: " + buyBtn.getComponent(TintComponent.class).color.a);
                     lbl_nameE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_collE.getComponent(TintComponent.class).color.a += 0.05f;
                     lbl_priceE.getComponent(TintComponent.class).color.a += 0.05f;
@@ -150,6 +151,7 @@ public class Showcase {
                     ResultScreenScript.isWasShowcase = true;
                     showCaseVanity = null;
                     counter = 0;
+
                     resultScreen.initResultScreen();
                 }
             }
@@ -298,6 +300,7 @@ public class Showcase {
 
                     backBtn.getComponent(TintComponent.class).color.a = 0;
                     buyBtn.getComponent(TintComponent.class).color.a = 0;
+                    System.out.println("buyBtn.getComponent(TintComponent.class).color.a --- resetting value again: " + buyBtn.getComponent(TintComponent.class).color.a);
                     lbl_priceE.getComponent(TintComponent.class).color.a = 0;
                     lbl_priceEs.getComponent(TintComponent.class).color.a = 0;
                     lbl_collE.getComponent(TintComponent.class).color.a = 0;
@@ -313,6 +316,7 @@ public class Showcase {
         buyBtn = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY);
         Entity buyBtnImgE = showcaseE.getComponent(NodeComponent.class).getChild(BTN_BUY).getComponent(NodeComponent.class).getChild("btn_buy_img");
         buyBtn.getComponent(TintComponent.class).color.a = 0;
+        System.out.println("buyBtn.getComponent(TintComponent.class).color.a --- resetting value: " + buyBtn.getComponent(TintComponent.class).color.a);
         if (buyBtn.getComponent(ButtonComponent.class) == null) {
             buyBtn.add(new ButtonComponent());
         } else {
@@ -348,7 +352,10 @@ public class Showcase {
                     ResultScreenScript.isWasShowcase = true;
 
                     ShopScreenScript.shouldReloadIcons.add(showCaseVanity);
-//                    if (gameStage.shopScript != null) {
+
+
+
+//                    if (gameStage.shopScript != null) {asd
 //                        gameStage.shopScript.changeBagIcon(showCaseVanity);
 
                        // ShopScreenScript.shouldReload = true;
