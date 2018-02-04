@@ -41,6 +41,24 @@ public abstract class ShopItem {
 
     public abstract void buyHardDiscount(GameStage gameStage);
 
+    public abstract boolean hasPet();
+
+    protected void disablePetItems(GameStage gameStage) {
+        //Disable pet items
+        if (this.hasPet()) {
+            for (ShopItem si : gameStage.shopScript.allHCItems) {
+                if (si.bought && si.hasPet() && si != this) {
+                    si.disable(gameStage);
+                }
+            }
+
+            for (ShopItem si : gameStage.shopScript.allSoftItems) {
+                if (si.bought && si.hasPet()) {
+                    si.disable(gameStage);
+                }
+            }
+        }
+    }
 
     public String updateTryPeriodTimer() {
         tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;

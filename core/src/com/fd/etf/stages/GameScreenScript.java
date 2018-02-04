@@ -647,7 +647,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 gameStage.sceneLoader.getEngine().removeEntity(petE);
             }
             if (FlowerPublicComponent.currentPet.petHead != null &&
-                    FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class) != null) {
+                    FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class) != null
+                    && FlowerPublicComponent.currentPet.petCannon != null) {
                 FlowerPublicComponent.currentPet.petHead.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 FlowerPublicComponent.currentPet.petCannon.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
                 //gameStage.sceneLoader.getEngine().removeEntity(FlowerPublicComponent.currentPet.petCannon);
@@ -845,22 +846,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void endGame() {
         shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown;
 
-        if (shouldShowGameOverDialog) {
+//        if (shouldShowGameOverDialog) {
             showGameOverDialog();
-        } else {
-//            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
-//            ActionComponent ac = new ActionComponent();
-//            Actions.checkInit();
-//            ac.dataArray.add(Actions.sequence(
-//                    Actions.fadeIn(1f, Interpolation.exp5, 0.5f),
-//                    Actions.run(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            gameStage.initResultWithAds();
-//                        }
-//                    })));
-//            curtainGameE.add(ac);
-        }
+//        }
     }
 
     private void submitScoreToGooglePlay() {

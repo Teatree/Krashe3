@@ -20,7 +20,6 @@ import java.util.Random;
 import static com.fd.etf.entity.componets.CocoonComponent.CocoonMultiplier;
 import static com.fd.etf.entity.componets.CocoonComponent.State.*;
 import static com.fd.etf.entity.componets.Goal.GoalType.DESTROY_N_COCOON;
-import static com.fd.etf.entity.componets.UmbrellaComponent.currentMultiplier;
 import static com.fd.etf.stages.GameScreenScript.*;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
 
@@ -158,7 +157,7 @@ public class CocoonSystem extends IteratingSystem {
                 r.nextFloat() * (currentCocoonMultiplier.maxSpawnCoefficient - currentCocoonMultiplier.minSpawnCoefficient);
 
         SaveMngr.initCocoonMultipliers(curIndex);
-        System.out.println("COCCOON currentMultiplier.maxSpawnCoefficient " + currentCocoonMultiplier.maxSpawnCoefficient + " currentMultiplier.minSpawnCoefficient " + currentCocoonMultiplier.minSpawnCoefficient);
+//        System.out.println("COCCOON currentMultiplier.maxSpawnCoefficient " + currentCocoonMultiplier.maxSpawnCoefficient + " currentMultiplier.minSpawnCoefficient " + currentCocoonMultiplier.minSpawnCoefficient);
 
         return (int)(SPAWN_INTERVAL_BASE * randCoefficient);
 

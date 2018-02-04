@@ -81,6 +81,8 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
             this.enabled = true;
             overrideAnimationFiles();
             if (this.pet != null) {
+                gameStage.gameScript.hideCurrentPet();
+                disablePetItems(gameStage);
                 FlowerPublicComponent.currentPet = this.pet;
                 FlowerPublicComponent.currentPet.bought = true;
                 FlowerPublicComponent.currentPet.enabled = true;
@@ -103,6 +105,10 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         overrideAnimationFiles();
     }
 
+    public boolean hasPet() {
+        return this.pet != null;
+    }
+
     private void disableSimilarVanities() {
         for (String fileName : assetsToChange.keySet()) {
             for (VanityComponent vc : vanityComponentsByChangedAssets.get(fileName)) {
@@ -110,7 +116,6 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
                     vc.enabled = false;
                 }
             }
-
         }
     }
 
@@ -158,7 +163,9 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
         if (changeFlower) GameStage.changedFlowerAni = true;
 
         if (this.pet != null) {
-            FlowerPublicComponent.currentPet.disable(gameStage);
+            if (FlowerPublicComponent.currentPet != null) {
+                FlowerPublicComponent.currentPet.disable(gameStage);
+            }
             gameStage.gameScript.changePet = true;
         }
     }

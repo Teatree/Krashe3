@@ -31,7 +31,6 @@ import static com.fd.etf.stages.ui.AbstractDialog.isDialogOpen;
 import static com.fd.etf.utils.GlobalConstants.*;
 import static com.fd.etf.utils.SoundMgr.soundMgr;
 
-
 public class ShopScreenScript implements IScript {
 
     public static final String BTN_PLAY = "btn_play";
@@ -91,24 +90,22 @@ public class ShopScreenScript implements IScript {
     public Entity touchZoneNButton;
     public Entity coinsImg;
     public LabelComponent lc;
-    public LabelComponent lcsh;
-    public Vector2 tempGdx = new Vector2();
+    private LabelComponent lcsh;
+    private Vector2 tempGdx = new Vector2();
     public List<Entity> bags = new ArrayList<>();
-    public ButtonComponent touchZoneBtn;
+    private ButtonComponent touchZoneBtn;
     public static int bagsZindex;
-    public int bagPosIdX;
-    public Preview preview;
+    private int bagPosIdX;
+    private Preview preview;
 
     private ItemWrapper shopItem;
     public Entity hcSectionE;
     public Entity btnClothing;
-    private Entity btnSpecialOffer;
     public Entity btnPowerUp;
-    public Entity curtainShop;
     private int bagPosIdY;
     private int bagPageId;
 
-    public boolean isAllowedMoving;
+    private boolean isAllowedMoving;
 
     private List<Entity> pageDots = new ArrayList<>();
     public int currentPageIndex = 0;
@@ -118,9 +115,9 @@ public class ShopScreenScript implements IScript {
     public GameStage gameStage;
     public static Entity btnPlay;
 
-    public ShopScreenScript(GameStage gamestage) {
+    ShopScreenScript(GameStage gamestage) {
         this.gameStage = gamestage;
-        getAllAllVanities();
+        initAllAllVanities();
     }
 
     public static void reloadScoreLabel(FlowerPublicComponent fcc) {
@@ -184,7 +181,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public void initTabBtns() {
+    private void initTabBtns() {
         btnClothing = shopItem.getChild(TAB_BTN_SHOP).getEntity();
         btnClothing.getComponent(ButtonComponent.class).enable = false;
         btnClothing.getComponent(LayerMapComponent.class).getLayer(BTN_NORMAL).isVisible = true;
@@ -200,7 +197,7 @@ public class ShopScreenScript implements IScript {
         btnPowerUp.getComponent(ButtonComponent.class).clearListeners();
         btnPowerUp.getComponent(ButtonComponent.class).addListener(new ShopClothingTabListener(this));
 
-        btnSpecialOffer = shopItem.getChild(BTN_SPECIAL_OFFER).getEntity();
+        Entity btnSpecialOffer = shopItem.getChild(BTN_SPECIAL_OFFER).getEntity();
 
         btnSpecialOffer.add(new ButtonComponent());
         btnSpecialOffer.getComponent(ButtonComponent.class).addListener(
@@ -225,7 +222,7 @@ public class ShopScreenScript implements IScript {
         allHCItems = hcsi;
     }
 
-    public void getAllAllVanities() {
+    private void initAllAllVanities() {
         if (allSoftItems.isEmpty()) {
             for (PetComponent pet : gameStage.gameScript.fpc.pets) {
                 if (pet.isHardCurr) {
@@ -247,7 +244,7 @@ public class ShopScreenScript implements IScript {
                 }
             }
 
-            public int compareByCost(ShopItem o1, ShopItem o2) {
+            int compareByCost(ShopItem o1, ShopItem o2) {
                 if (o1.cost == o2.cost) {
                     return 0;
                 } else {
@@ -312,7 +309,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public void createIconsForAllSoftItems() {
+    private void createIconsForAllSoftItems() {
         TransformComponent previousTc = null;
         for (final ShopItem vc : allSoftItems) {
             CompositeItemVO tempC = gameStage.sceneLoader.loadVoFromLibrary(BTN_IMG_SHOP_ICON_LIB).clone();
@@ -381,7 +378,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public List<Upgrade> getAllUpgrades() {
+    private List<Upgrade> getAllUpgrades() {
         List<Upgrade> upgrades = new ArrayList<Upgrade>(gameStage.gameScript.fpc.upgrades.values());
         for (Upgrade u : Upgrade.getAllUpgrades(gameStage)) {
             if (!upgrades.contains(u)) {
@@ -399,7 +396,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public Entity getIconFromLib(String name) {
+    private Entity getIconFromLib(String name) {
         try {
             CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(name).clone();
             Entity itemIcon = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
@@ -506,7 +503,7 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc, boolean firstDot) {
+    private TransformComponent getNextBagPos(TransformComponent previous, DimensionsComponent previousDc, boolean firstDot) {
         TransformComponent tc = new TransformComponent();
 
         if (previous == null) {
@@ -549,7 +546,7 @@ public class ShopScreenScript implements IScript {
         dotEntity.getComponent(TransformComponent.class).y = 10;
     }
 
-    public void setDotActive(int pagIndex) {
+    private void setDotActive(int pagIndex) {
 
         for (int i = 0; i < pageDots.size(); i++) {
             if (i != pagIndex) {
@@ -693,11 +690,11 @@ public class ShopScreenScript implements IScript {
         }
     }
 
-    public boolean canMoveBagsLeft() {
+    private boolean canMoveBagsLeft() {
         return bags.get(0).getComponent(TransformComponent.class).x <= 0;
     }
 
-    public boolean canMoveBagsRight() {
+    private boolean canMoveBagsRight() {
         return !(bags.get(bags.size() - 1).getComponent(TransformComponent.class).x <= SCCREEN_WIDTH &&
                 bags.get(bags.size() - 1).getComponent(TransformComponent.class).x >= 0);
     }

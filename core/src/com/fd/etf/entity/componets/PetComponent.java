@@ -105,6 +105,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public void apply(GameStage gameStage) {
         this.enabled = true;
         gameStage.gameScript.hideCurrentPet();
+        disablePetItems(gameStage);
         FlowerPublicComponent.currentPet = this;
         gameStage.gameScript.changePet = true;
         for (PetComponent petComponent : gameStage.gameScript.fpc.pets){
@@ -112,7 +113,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
                 petComponent.enabled = false;
             }
         }
-//        gameStage.gameScript.initPet();
+
     }
 
     @Override
@@ -120,8 +121,10 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         this.enabled = false;
         gameStage.gameScript.changePet = true;
 
-        FlowerPublicComponent.currentPet.petCannon = null;
-        FlowerPublicComponent.currentPet = null;
+        if (FlowerPublicComponent.currentPet != null) {
+            FlowerPublicComponent.currentPet.petCannon = null;
+            FlowerPublicComponent.currentPet = null;
+        }
     }
 
     @Override
@@ -153,20 +156,10 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public void reset() {
 
     }
-//
-//    public String updateTryPeriodTimer() {
-//        float deltaTime = Gdx.graphics.getDeltaTime();
-//
-//        tryPeriodTimer = (tryPeriodStart / 1000 + tryPeriodDuration) - System.currentTimeMillis() / 1000;
-//
-//        int minutes = ((int) tryPeriodTimer) / 60;
-//        int seconds = ((int) tryPeriodTimer) % 60;
-//        String result =  "" + minutes + " : " + seconds;
-//        if (tryPeriodTimer < 0 ){
-//            result = TrialTimer.TIMER_LBL_TIME_UP;
-//        }
-//        return result;
-//    }
+
+    public boolean hasPet() {
+        return true;
+    }
 
     public enum State {
         SPAWNING,

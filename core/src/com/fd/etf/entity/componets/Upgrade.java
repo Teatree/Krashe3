@@ -120,6 +120,10 @@ public class Upgrade extends ShopItem{
         }
     }
 
+    public boolean hasPet() {
+        return false;
+    }
+
     public void usePhoenix() {
 //        BugSystem.blowUpAllBugs = true;
         BugSystem.blowUpAllBugs();
