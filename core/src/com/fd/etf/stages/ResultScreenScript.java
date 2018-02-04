@@ -211,7 +211,23 @@ public class ResultScreenScript implements IScript {
 
                     private void backToGame() {
                         GameScreenScript.isStarted = false;
-                        gameStage.initGame(0);
+
+                        // used to be just gameStage.initGame
+                        if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
+                                !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                                !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
+                                !gameStage.gameScript.fpc.level.name.contains("Junior") &&
+                                !gameStage.gameScript.fpc.level.name.contains("Rookie")) {
+                            Main.mainController.showLaunchAd(new Runnable() {
+                                @Override
+                                public void run() {
+                                    gameStage.initGame(0);
+                                }
+                            });
+                        } else {
+                            gameStage.initGame(0);
+                        }
+
                         isWasShowcase = false;
                     }
                 });
@@ -244,7 +260,22 @@ public class ResultScreenScript implements IScript {
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             SaveMngr.saveStats(gameStage.gameScript.fpc);
             resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
-            gameStage.initMenu();
+
+            // used to be just gameStage.initMenu(), now there is more
+            if (gameStage.gameScript.fpc.settings.shouldShowLaunchAd() &&
+                    !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                    !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
+                    !gameStage.gameScript.fpc.level.name.contains("Junior")) {
+                Main.mainController.showLaunchAd(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameStage.initMenu();
+                    }
+                });
+            } else {
+                gameStage.initMenu();
+            }
+
             isWasShowcase = false;
         }
 

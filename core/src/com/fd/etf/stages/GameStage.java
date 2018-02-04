@@ -18,6 +18,7 @@ import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
@@ -60,7 +61,11 @@ public class GameStage extends Stage {
         gameScript.fpc = SaveMngr.loadStats();
         justCreated = true;
 
-        if (gameScript.fpc.settings.shouldShowLaunchAd()) {
+        // checking if player should show launch add and or not he has reached higher level than 3 and whether a random value is true;
+        if (gameScript.fpc.settings.shouldShowLaunchAd() &&
+                !gameScript.fpc.level.name.contains("Learner") &&
+                !gameScript.fpc.level.name.contains("Beginner") &&
+                !gameScript.fpc.level.name.contains("Junior")) {
             Main.mainController.showLaunchAd(new Runnable() {
                 @Override
                 public void run() {
@@ -176,16 +181,18 @@ public class GameStage extends Stage {
     }
 
     public void initShopWithAds() {
-//        if (gameScript.fpc.settings.shouldShowShopAd()) {
-//            mainController.showGeneralShopAd(new Runnable() {
-//                @Override
-//                public void run() {
-//                    initShop();
-//                }
-//            });
-//        } else {
-        initShop();
-//        }
+        if (gameScript.fpc.settings.shouldShowShopAd() &&
+                !gameScript.fpc.level.name.contains("Learner") &&
+                !gameScript.fpc.level.name.contains("Beginner")) {
+            Main.mainController.showGeneralShopAd(new Runnable() {
+                @Override
+                public void run() {
+                    initShop();
+                }
+            });
+        } else {
+            initShop();
+        }
     }
 
     public void initResultWithAds() {

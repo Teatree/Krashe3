@@ -1,6 +1,6 @@
 [{
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 1"Beginner",
+	name: Level: 1"Learner",
 	difficultyLevel: 1,
 	spawnInterval: 1,
 	breakFreqMin: 1,
@@ -56,7 +56,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 2"Advanced Beginner",
+	name: Level: 2"Beginner",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -112,7 +112,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 3"Experienced Ameture",
+	name: Level: 3"Junior",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -168,7 +168,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 4"Bug Enthusiast",
+	name: Level: 4"Rookie",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -224,7 +224,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 5"Bug Enthusiast2",
+	name: Level: 5"Novice",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -280,7 +280,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 6"Bug Enthusiast",
+	name: Level: 6"Amateur",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -336,7 +336,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 7"Bug Enthusiast2",
+	name: Level: 7"Graduate",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -392,7 +392,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 8"Bug Enthusiast",
+	name: Level: 8"Skilled",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -448,7 +448,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 9"Bug Enthusiast2",
+	name: Level: 9"Adept",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -504,7 +504,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 10"Bug Enthusiast",
+	name: Level: 10"Experienced",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -560,7 +560,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 11"Bug Enthusiast2",
+	name: Level: 11"Seasoned",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -616,7 +616,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 12"Bug Enthusiast",
+	name: Level: 12"Natural",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -672,7 +672,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 13"Bug Enthusiast2",
+	name: Level: 13"Professional",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -728,7 +728,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 14"Bug Enthusiast",
+	name: Level: 14"Expert",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -784,7 +784,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 15"Bug Enthusiast2",
+	name: Level: 15"Master",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -840,7 +840,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 16"Bug Enthusiast",
+	name: Level: 16"Hardboiled",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -896,7 +896,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 17"Bug Enthusiast2",
+	name: Level: 17"Sensei",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -952,7 +952,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 18"Bug Enthusiast",
+	name: Level: 18"Predator",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1008,7 +1008,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 19"Bug Enthusiast2",
+	name: Level: 19"Carnivore",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1064,7 +1064,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 20"Bug Enthusiast",
+	name: Level: 20"Notorious",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1120,7 +1120,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 21"Bug Enthusiast2",
+	name: Level: 21"Wizard",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1176,7 +1176,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 22"Bug Enthusiast",
+	name: Level: 22"Nasty",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1232,7 +1232,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 23"Bug Enthusiast2",
+	name: Level: 23"Super Star",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1288,7 +1288,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 24"Bug Enthusiast",
+	name: Level: 24"Foodie",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1344,7 +1344,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 25"Bug Enthusiast2",
+	name: Level: 25"Epicure",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1400,7 +1400,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 26"Bug Enthusiast",
+	name: Level: 26"Gourmet",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1456,7 +1456,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 27"Bug Enthusiast2",
+	name: Level: 27"Connoisseur",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1512,7 +1512,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 28"Bug Enthusiast",
+	name: Level: 28"Gluttony",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1568,7 +1568,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 29"Bug Enthusiast2",
+	name: Level: 29"Bon Vivant",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1624,7 +1624,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 30"Bug Enthusiast",
+	name: Level: 30"Entomologist",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1680,7 +1680,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 31"Bug Enthusiast2",
+	name: Level: 31"Bug Hunter",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1736,7 +1736,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 32"Bug Enthusiast",
+	name: Level: 32"Devourer",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1792,7 +1792,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 33"Bug Enthusiast2",
+	name: Level: 33"Maverick",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1848,7 +1848,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 34"Bug Enthusiast",
+	name: Level: 34"Free Spirit",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -1904,7 +1904,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 35"Bug Enthusiast2",
+	name: Level: 35"King of Soil",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
@@ -1960,7 +1960,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 36"Bug Enthusiast",
+	name: Level: 36"Lord of the Sky",
 	difficultyLevel: 2,
 	spawnInterval: 0.9,
 	breakFreqMin: 0.9,
@@ -2016,7 +2016,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$LevelInfo,
-	name: Level: 37"Bug Enthusiast2",
+	name: Level: 37"Krynoid",
 	difficultyLevel: 3,
 	spawnInterval: 0.9,
 	breakFreqMin: 1,
