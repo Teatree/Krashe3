@@ -184,7 +184,7 @@ public class GameStage extends Stage {
         if (gameScript.fpc.settings.shouldShowShopAd() &&
                 !gameScript.fpc.level.name.contains("Learner") &&
                 !gameScript.fpc.level.name.contains("Beginner")) {
-            Main.mainController.showGeneralShopAd(new Runnable() {
+            Main.mainController.showLaunchAd(new Runnable() {
                 @Override
                 public void run() {
                     initShop();

@@ -36,6 +36,6 @@ public class GameSettings {
         if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 75*/) {
             return true;
         }
-        return false;
+        return true;
     }
 }

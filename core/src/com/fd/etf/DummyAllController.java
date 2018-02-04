@@ -14,7 +14,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public void showReviveVideoAd(Runnable then) {
-        //System.out.println("showReviveVideoAd");
+        System.out.println("showReviveVideoAd");
     }
 
     @Override
@@ -34,12 +34,12 @@ public class DummyAllController implements AllController {
 
     @Override
     public void showResultScreenAd(Runnable then) {
-        //System.out.println("showResultScreenAd");
+        System.out.println("showResultScreenAd");
     }
 
     @Override
     public void showGeneralShopAd(Runnable then) {
-        //System.out.println("showGeneralShopAd");
+        System.out.println("showGeneralShopAd");
     }
 
     @Override

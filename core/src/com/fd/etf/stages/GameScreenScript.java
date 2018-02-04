@@ -844,11 +844,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void endGame() {
-        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown;
+        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown /*&& Main.mainController.isWifiConnected()*/; // PC: need to remove this part
 
-//        if (shouldShowGameOverDialog) {
+        if (shouldShowGameOverDialog) {
             showGameOverDialog();
-//        }
+        }
     }
 
     private void submitScoreToGooglePlay() {

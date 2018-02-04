@@ -91,22 +91,22 @@ public class EtfAdsHelper {
     }
 
     public void showLaunchAd(final Runnable then) {
-        app.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                interstitialGeneralAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        Gdx.app.postRunnable(then);
-                        AdRequest.Builder builder = new AdRequest.Builder();
-                        AdRequest ad = builder.build();
-                        interstitialGeneralAd.loadAd(ad);
-                    }
-                });
+            app.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    interstitialGeneralAd.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            Gdx.app.postRunnable(then);
+                            AdRequest.Builder builder = new AdRequest.Builder();
+                            AdRequest ad = builder.build();
+                            interstitialGeneralAd.loadAd(ad);
+                        }
+                    });
 
-                interstitialGeneralAd.show();
-            }
-        });
+                    interstitialGeneralAd.show();
+                }
+            });
     }
 
     public void showResultScreenAd(final Runnable then) {
