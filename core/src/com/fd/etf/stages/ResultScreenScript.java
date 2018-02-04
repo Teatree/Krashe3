@@ -218,7 +218,7 @@ public class ResultScreenScript implements IScript {
                                 !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
                                 !gameStage.gameScript.fpc.level.name.contains("Junior") &&
                                 !gameStage.gameScript.fpc.level.name.contains("Rookie")) {
-                            Main.mainController.showLaunchAd(new Runnable() {
+                            Main.mainController.showResultScreenAd(new Runnable() {
                                 @Override
                                 public void run() {
                                     gameStage.initGame(0);
@@ -266,7 +266,7 @@ public class ResultScreenScript implements IScript {
                     !gameStage.gameScript.fpc.level.name.contains("Learner") &&
                     !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
                     !gameStage.gameScript.fpc.level.name.contains("Junior")) {
-                Main.mainController.showLaunchAd(new Runnable() {
+                Main.mainController.showGeneralShopAd(new Runnable() {
                     @Override
                     public void run() {
                         gameStage.initMenu();
