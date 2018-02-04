@@ -53,7 +53,7 @@ public abstract class ShopItem {
             }
 
             for (ShopItem si : gameStage.shopScript.allSoftItems) {
-                if (si.bought && si.hasPet()) {
+                if (si.bought && si.hasPet() && si != this) {
                     si.disable(gameStage);
                 }
             }
