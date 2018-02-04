@@ -37,6 +37,7 @@ public class Gift {
         Gift gift = new Gift();
 //        gift = getPhoenixGift(gameStage);
         int i = random.nextInt(100);
+        System.out.println("radnom i is: " + i);
         if (i > 0 && i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET)) {
             gift = getPetGift(gameStage);
         } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET) &&
