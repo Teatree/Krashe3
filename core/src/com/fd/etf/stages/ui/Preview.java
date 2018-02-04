@@ -2,7 +2,6 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -14,9 +13,7 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
-//import com.badlogic.gdx.scenes.scene2d.actions.A
 
-import javax.xml.soap.Node;
 import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
@@ -27,6 +24,8 @@ import static com.fd.etf.utils.EffectUtils.DEFAULT_LAYER;
 import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_X;
 import static com.fd.etf.utils.GlobalConstants.FAR_FAR_AWAY_Y;
+
+//import com.badlogic.gdx.scenes.scene2d.actions.A
 
 public class Preview extends AbstractDialog {
 
@@ -573,6 +572,7 @@ public class Preview extends AbstractDialog {
             buttonz.getComponent(NodeComponent.class).getChild(COINZ_ICON).getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
             lblPrice.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
             lblPriceSh.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+
 
             Entity enableBtn = buttonz.getComponent(NodeComponent.class).getChild(BTN_DISABLE);
             enableBtn.getComponent(ZIndexComponent.class).setZIndex(101);
