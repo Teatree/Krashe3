@@ -76,6 +76,9 @@ public class ResultScreenScript implements IScript {
     private Showcase showcase;
     private TrialTimer timer;
     private PromoWindow promoWindow;
+    boolean isNextStepTransiotionToGameShouldShowPleaseAYesLongName;
+    boolean isNextStepTransiotionToShopShouldShowShopShop;
+    boolean isNextStepTransiotionToMenuShouldShowOrShouldNot;
 
     private GameStage gameStage;
 
@@ -88,6 +91,10 @@ public class ResultScreenScript implements IScript {
 
         gameStage.sceneLoader.getEngine().addSystem(new ParticleLifespanSystem());
 
+        // weird booleans meant for transition methods
+        isNextStepTransiotionToGameShouldShowPleaseAYesLongName = true;
+        isNextStepTransiotionToShopShouldShowShopShop = true;
+        isNextStepTransiotionToMenuShouldShowOrShouldNot = true;
 
         resultScreenItem = new ItemWrapper(item);
         gameStage.sceneLoader.addComponentsByTagName(BUTTON_TAG, ButtonComponent.class);
@@ -95,6 +102,11 @@ public class ResultScreenScript implements IScript {
         txtTotalE = resultScreenItem.getChild(LBL_TOTAL).getEntity();
         txtEarnedE = resultScreenItem.getChild(LBL_YOU_EARNED).getEntity();
         progressBarE = resultScreenItem.getChild(IMG_PROGRESS_BAR).getEntity();
+        if(progressBarE.getComponent(ActionComponent.class) != null) { // weird, I know, but try if this works in stopping the initGame to be recalled tice if transitionToGame()
+            progressBarE.remove(ActionComponent.class);
+        }
+        progressBarE.add(new ActionComponent());
+
         txtBestE = resultScreenItem.getChild(LBL_BET_SCORE).getEntity();
         txtNeedE = resultScreenItem.getChild(LBL_TO_UNLOCK).getEntity();
 
@@ -186,7 +198,7 @@ public class ResultScreenScript implements IScript {
                     public void clicked() {
                         resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
                         if (!showcasePopup && !show) {
-                            gameStage.initMenu();
+                            transitionToMenu();
                         }
                         isWasShowcase = false;
                     }
@@ -213,25 +225,141 @@ public class ResultScreenScript implements IScript {
                         GameScreenScript.isStarted = false;
 
                         // used to be just gameStage.initGame
-                        if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
-                                !gameStage.gameScript.fpc.level.name.contains("Learner") &&
-                                !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
-                                !gameStage.gameScript.fpc.level.name.contains("Junior") &&
-                                !gameStage.gameScript.fpc.level.name.contains("Rookie")) {
-                            Main.mainController.showLaunchAd(new Runnable() {
-                                @Override
-                                public void run() {
-                                    gameStage.initGame(0);
-                                }
-                            });
-                        } else {
-                            gameStage.initGame(0);
-                        }
+                        transitionToGame();
 
                         isWasShowcase = false;
                     }
                 });
     }
+
+
+    private void transitionToGame(){
+        if(progressBarE.getComponent(ActionComponent.class) != null) {
+            progressBarE.getComponent(ActionComponent.class).reset();
+        }else{
+            progressBarE.add(new ActionComponent());
+        }
+
+        progressBarE.getComponent(ActionComponent.class).dataArray.add(
+                Actions.sequence(
+                        Actions.delay(.3f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Junior") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Rookie")) { // place for random ad
+                                    Main.mainController.showLaunchAd(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            isNextStepTransiotionToGameShouldShowPleaseAYesLongName = false;
+                                            gameStage.initGame(0);
+                                        }
+                                    });
+
+                                    // gameScript.fpc.level.getGoals().get(iNastyaChild).justAchieved = false;
+                                }
+//                                System.out.println("transitionOver");
+                            }
+                        }),
+                        Actions.delay(.3f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(isNextStepTransiotionToGameShouldShowPleaseAYesLongName) {
+                                    gameStage.initGame(0);
+                                }else{
+                                    isNextStepTransiotionToGameShouldShowPleaseAYesLongName = true;
+                                }
+                            }
+                        })));
+    }
+    private void transitionToMenu(){
+        if(progressBarE.getComponent(ActionComponent.class) != null) {
+            progressBarE.getComponent(ActionComponent.class).reset();
+        }else{
+            progressBarE.add(new ActionComponent());
+        }
+
+        progressBarE.getComponent(ActionComponent.class).dataArray.add(
+                Actions.sequence(
+                        Actions.delay(.3f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Junior")) { // place for random ad
+                                    Main.mainController.showLaunchAd(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            isNextStepTransiotionToMenuShouldShowOrShouldNot = false;
+                                            gameStage.initMenu();
+                                        }
+                                    });
+
+                                    // gameScript.fpc.level.getGoals().get(iNastyaChild).justAchieved = false;
+                                }
+//                                System.out.println("transitionOver");
+                            }
+                        }),
+                        Actions.delay(.3f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(isNextStepTransiotionToMenuShouldShowOrShouldNot) {
+                                    gameStage.initMenu();
+                                }else{
+                                    isNextStepTransiotionToMenuShouldShowOrShouldNot = true;
+                                }
+                            }
+                        })));
+    }
+    private void transitionToShop(){
+        if(progressBarE.getComponent(ActionComponent.class) != null) {
+            progressBarE.getComponent(ActionComponent.class).reset();
+        }else{
+            progressBarE.add(new ActionComponent());
+        }
+
+        progressBarE.getComponent(ActionComponent.class).dataArray.add(
+                Actions.sequence(
+                        Actions.delay(.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Beginner")) { // place for random ad
+                                    Main.mainController.showLaunchAd(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            isNextStepTransiotionToShopShouldShowShopShop = false;
+                                            gameStage.initShop();
+                                        }
+                                    });
+
+                                    // gameScript.fpc.level.getGoals().get(iNastyaChild).justAchieved = false;
+                                }
+//                                System.out.println("transitionOver");
+                            }
+                        }),
+                        Actions.delay(.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(isNextStepTransiotionToShopShouldShowShopShop) {
+                                    gameStage.initShop();
+                                }else{
+                                    isNextStepTransiotionToShopShouldShowShopShop = true;
+                                }
+                            }
+                        })));
+    }
+
 
     private void initShopBtn() {
         Entity shopBtn = resultScreenItem.getChild(BTN_SHOP).getEntity();
@@ -251,7 +379,6 @@ public class ResultScreenScript implements IScript {
 
     @Override
     public void act(float delta) {
-
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
 //            SaveMngr.saveStats(gameStage.gameScript.fpc);
             SaveMngr.saveStats(gameStage.gameScript.fpc);
@@ -261,20 +388,7 @@ public class ResultScreenScript implements IScript {
             SaveMngr.saveStats(gameStage.gameScript.fpc);
             resultScreenItem.getChild(NEXT_ITEM_ICON).getEntity().getComponent(TintComponent.class).color.a = 1;
 
-            // used to be just gameStage.initMenu(), now there is more
-            if (gameStage.gameScript.fpc.settings.shouldShowLaunchAd() &&
-                    !gameStage.gameScript.fpc.level.name.contains("Learner") &&
-                    !gameStage.gameScript.fpc.level.name.contains("Beginner") &&
-                    !gameStage.gameScript.fpc.level.name.contains("Junior")) {
-                Main.mainController.showLaunchAd(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameStage.initMenu();
-                    }
-                });
-            } else {
-                gameStage.initMenu();
-            }
+
 
             isWasShowcase = false;
         }
@@ -343,7 +457,7 @@ public class ResultScreenScript implements IScript {
         }
         if (shopTransitionIsOn && resultScreenItem.getChild("curtain_result").getEntity().getComponent(TintComponent.class).color.a >= 0) {
             shopTransitionIsOn = false;
-            gameStage.initShopWithAds();
+            transitionToShop();
         }
     }
 

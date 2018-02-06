@@ -115,7 +115,7 @@ public class GameOverDialog extends AbstractDialog {
                             gameOverReviveTimesLimit--;
                         }
                         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
-                            continueGame(dialogTc);
+//                            continueGame(dialogTc);
                         }
                         gameStage.gameScript.loseFeedback.getComponent(TintComponent.class).color.a = 0;
                         close(gameOverDialogE);
@@ -168,6 +168,8 @@ public class GameOverDialog extends AbstractDialog {
     }
 
     public void update(float deltaTime) {
+
+//        System.out.println("gameOverCounter: " + gameOverCounter + " -- gameOverTimer: " + gameOverTimer);
 
         fade(gameOverDialogE, isGameOver.get());
         if (isGameOver.get()) {

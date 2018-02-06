@@ -22,7 +22,7 @@ public class GameSettings {
         if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
             return true;
         }
-        return false;
+        return true;
     }
 
     public boolean shouldShowShopAd() {

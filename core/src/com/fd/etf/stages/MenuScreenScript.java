@@ -98,6 +98,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     public static boolean canClickPlay;
 
     private BasicDialog exitDialog;
+    private boolean isNextStepTransiotionToShopShouldShowShopShop;
 
     public MenuScreenScript(GameStage gameStage) {
         this.gameStage = gameStage;
@@ -108,7 +109,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     @Override
     public void init(Entity item) {
 
-
+        isNextStepTransiotionToShopShouldShowShopShop = true;
 
         frames = 0;
         canClickPlay = false;
@@ -143,6 +144,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             BackgroundMusicMgr.musicOn = true;
             BackgroundMusicMgr.getBackgroundMusicMgr().playMenu();
         }
+
     }
 
     private void initGoalsNotification() {
@@ -161,6 +163,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         }
 
         if (achievements_C != null) {
+
             achievements_C.getComponent(TransformComponent.class).y = 330f;
             leaderboard_C.getComponent(TransformComponent.class).y = 330f;
             leaderboard_C.getComponent(TintComponent.class).color.a = 1f;
@@ -343,6 +346,11 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
+
+        if(menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class) != null) { // weird, I know, but try if this works in stopping the initGame to be recalled tice if transitionToGame()
+            menuItem.getChild(MEGA_FLOWER).getEntity().remove(ActionComponent.class);
+        }
+        menuItem.getChild(MEGA_FLOWER).getEntity().add(new ActionComponent());
     }
 
     @Override
@@ -387,7 +395,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
             curtain_mm.getComponent(TintComponent.class).color.a += ALPHA_TRANSITION_STEP;
             if (curtain_mm.getComponent(TintComponent.class).color.a >= 1) {
                 startShopTransition = false;
-                gameStage.initShopWithAds();
+                //gameStage.initShopWithAds();//
+                transitionToShop();
                 curtain_mm.getComponent(TintComponent.class).color.a = 1;
             }
         }
@@ -470,6 +479,48 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 }
             }
         }
+    }
+
+    private void transitionToShop(){
+        if(menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class) != null) {
+            menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class).reset();
+        }else{
+            menuItem.getChild(MEGA_FLOWER).getEntity().add(new ActionComponent());
+        }
+
+        menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class).dataArray.add(
+                Actions.sequence(
+                        Actions.delay(.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (gameStage.gameScript.fpc.settings.shouldShowGameAd() &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Learner") &&
+                                        !gameStage.gameScript.fpc.level.name.contains("Beginner")) { // place for random ad
+                                    Main.mainController.showLaunchAd(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            isNextStepTransiotionToShopShouldShowShopShop = false;
+                                            gameStage.initShop();
+                                        }
+                                    });
+
+                                    // gameScript.fpc.level.getGoals().get(iNastyaChild).justAchieved = false;
+                                }
+//                                System.out.println("transitionOver");
+                            }
+                        }),
+                        Actions.delay(.2f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(isNextStepTransiotionToShopShouldShowShopShop) {
+                                    gameStage.initShop();
+                                }else{
+                                    isNextStepTransiotionToShopShouldShowShopShop = true;
+                                }
+                            }
+                        })));
     }
 
     private void moveDaFlaps() {

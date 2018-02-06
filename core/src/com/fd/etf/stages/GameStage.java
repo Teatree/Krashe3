@@ -9,6 +9,7 @@ import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ShopPoverUpTabListener;
 import com.fd.etf.utils.*;
+import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
 import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -46,6 +47,7 @@ public class GameStage extends Stage {
     public static boolean changedFlowerAni;
 
     public static boolean justCreated;
+    boolean isLaunchTime;
 
     public GameScreenScript gameScript;
 
@@ -60,21 +62,12 @@ public class GameStage extends Stage {
         gameScript = new GameScreenScript(this);
         gameScript.fpc = SaveMngr.loadStats();
         justCreated = true;
+        isLaunchTime = true;
 
         // checking if player should show launch add and or not he has reached higher level than 3 and whether a random value is true;
-        if (gameScript.fpc.settings.shouldShowLaunchAd() &&
-                !gameScript.fpc.level.name.contains("Learner") &&
-                !gameScript.fpc.level.name.contains("Beginner") &&
-                !gameScript.fpc.level.name.contains("Junior")) {
-            Main.mainController.showLaunchAd(new Runnable() {
-                @Override
-                public void run() {
-                    initMenu();
-                }
-            });
-        } else {
-            initMenu();
-        }
+        initMenu();
+
+//
 
     }
 
@@ -134,6 +127,21 @@ public class GameStage extends Stage {
         }
         System.gc();
         System.runFinalization();
+
+        if (gameScript.fpc.settings.shouldShowLaunchAd() &&
+                !gameScript.fpc.level.name.contains("Learner") &&
+                !gameScript.fpc.level.name.contains("Beginner") &&
+                !gameScript.fpc.level.name.contains("Junior") &&
+                isLaunchTime) {  // place for random ad
+            System.out.println("boom");
+            Main.mainController.showLaunchAd(new Runnable() {
+                @Override
+                public void run() {
+                    initMenu();
+                    isLaunchTime = false;
+                }
+            });
+        }
     }
 
     private void initResult() {
@@ -181,18 +189,18 @@ public class GameStage extends Stage {
     }
 
     public void initShopWithAds() {
-        if (gameScript.fpc.settings.shouldShowShopAd() &&
-                !gameScript.fpc.level.name.contains("Learner") &&
-                !gameScript.fpc.level.name.contains("Beginner")) {
-            Main.mainController.showLaunchAd(new Runnable() {
-                @Override
-                public void run() {
-                    initShop();
-                }
-            });
-        } else {
+//        if (gameScript.fpc.settings.shouldShowShopAd() &&
+//                !gameScript.fpc.level.name.contains("Learner") &&
+//                !gameScript.fpc.level.name.contains("Beginner")) {
+//            Main.mainController.showLaunchAd(new Runnable() {
+//                @Override
+//                public void run() {
+//                    initShop();
+//                }
+//            });
+//        } else {
             initShop();
-        }
+//        }
     }
 
     public void initResultWithAds() {
