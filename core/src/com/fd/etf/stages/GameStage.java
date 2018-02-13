@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.brashmonkey.spriter.Curve;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.VanityComponent;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import static com.fd.etf.stages.MenuScreenScript.MEGA_FLOWER;
 import static com.fd.etf.utils.BackgroundMusicMgr.backgroundMusicMgr;
 import static com.fd.etf.utils.BackgroundMusicMgr.getBackgroundMusicMgr;
 import static com.fd.etf.utils.GlobalConstants.BUTTON_TAG;
@@ -127,6 +129,12 @@ public class GameStage extends Stage {
         }
         System.gc();
         System.runFinalization();
+
+        if(root.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class) != null) {
+            root.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class).reset();
+        }else{
+            root.getChild(MEGA_FLOWER).getEntity().add(new ActionComponent());
+        }
 
         if (gameScript.fpc.settings.shouldShowLaunchAd() &&
                 !gameScript.fpc.level.name.contains("Learner") &&

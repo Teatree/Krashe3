@@ -45,7 +45,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String BTN_ACHIEVEMENTS = "btn_achievements";
     private static final String ACHIEVEMENTS_C = "achievements_composite";
     private static final String BTN_PLAY_SERVICES = "btn_playServices";
-    private static final String MEGA_FLOWER = "mega_flower";
+    public static final String MEGA_FLOWER = "mega_flower";
     private static final String MEGA_LEAVES = "mega_leafs";
 
     private static final int TIMER_X = 1064;
@@ -397,6 +397,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 startShopTransition = false;
                 //gameStage.initShopWithAds();//
                 transitionToShop();
+
                 curtain_mm.getComponent(TintComponent.class).color.a = 1;
             }
         }
@@ -482,6 +483,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void transitionToShop(){
+        System.out.println("transitionToShop");
         if(menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class) != null) {
             menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class).reset();
         }else{
@@ -502,6 +504,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                                         public void run() {
                                             isNextStepTransiotionToShopShouldShowShopShop = false;
                                             gameStage.initShop();
+                                            System.out.println("isNextStepTransiotionToShopShouldShowShopShop fales");
                                         }
                                     });
 
@@ -515,9 +518,11 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                             @Override
                             public void run() {
                                 if(isNextStepTransiotionToShopShouldShowShopShop) {
+                                    System.out.println("isNextStepTransiotionToShopShouldShowShopShop fales 2");
                                     gameStage.initShop();
                                 }else{
                                     isNextStepTransiotionToShopShouldShowShopShop = true;
+                                    System.out.println("isNextStepTransiotionToShopShouldShowShopShop true");
                                 }
                             }
                         })));
