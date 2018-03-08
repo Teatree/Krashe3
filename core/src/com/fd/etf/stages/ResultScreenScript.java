@@ -242,7 +242,7 @@ public class ResultScreenScript implements IScript {
 
         progressBarE.getComponent(ActionComponent.class).dataArray.add(
                 Actions.sequence(
-                        Actions.delay(.3f),
+                        //Actions.delay(.3f),
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
@@ -264,7 +264,7 @@ public class ResultScreenScript implements IScript {
 //                                System.out.println("transitionOver");
                             }
                         }),
-                        Actions.delay(.3f),
+                        //Actions.delay(.3f),
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {

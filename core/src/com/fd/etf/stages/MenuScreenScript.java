@@ -3,7 +3,11 @@ package com.fd.etf.stages;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.Level;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -22,6 +26,7 @@ import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.fd.etf.entity.componets.FlowerComponent.*;
@@ -40,6 +45,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private static final String IMG_GOAL_NOTIFICATION = "goal_notification_img";
     private static final String CURTAIN = "curtain_mm";
     private static final String BTN_FB = "btn_fb";
+//    private static final String BTN_SHARE = "btn_SHARE";
     private static final String BTN_LEADERBOARD = "btn_leaderboard";
     private static final String LEADERBOARD_C = "lederboard_composite";
     private static final String BTN_ACHIEVEMENTS = "btn_achievements";
@@ -79,6 +85,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
     private Entity rateAppBtn;
     private Entity btnChalenges;
     private Entity btnFB;
+    private Entity btnSHARE;
     private Entity btnLB;
     private Entity btnAchievements;
     private Entity btnPlayServices;
@@ -199,6 +206,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         rateAppBtn = menuItem.getChild(BTN_RATE).getEntity();
         btnPlayServices = menuItem.getChild(BTN_PLAY_SERVICES).getEntity();
         btnFB = menuItem.getChild(BTN_FB).getEntity();
+//        btnSHARE = menuItem.getChild(BTN_SHARE).getEntity();
         btnChalenges = menuItem.getChild(BTN_GOALS).getEntity();
 
         leaderboard_C = menuItem.getChild(LEADERBOARD_C).getEntity();
@@ -219,6 +227,25 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                         }
                     }
                 });
+
+//        btnSHARE.add(new ButtonComponent());
+//        btnSHARE.getComponent(ButtonComponent.class).addListener(
+//                new ImageButtonListener(btnFB, new AtomicBoolean[]{isDialogOpen}) {
+//                    @Override
+//                    public void clicked() {
+//                        float prevX = menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TransformComponent.class).x;
+//                        menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//
+//                        if (!isDialogOpen.get()) {
+//                            movingFlaps = playServiceFlapIsOut;
+//
+//                            //saveScreenshot();
+//                        }
+//                        menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TransformComponent.class).x = prevX;
+//                    }
+//
+//
+//                });
 
         btnAchievements.add(new ButtonComponent());
         btnAchievements.getComponent(ButtonComponent.class).addListener(
@@ -352,6 +379,49 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         }
         menuItem.getChild(MEGA_FLOWER).getEntity().add(new ActionComponent());
     }
+
+//    private void saveScreenshot() {
+//        System.out.println("Gdx.files.local(\"share.png\").file(): " + Gdx.files.local("share.png").file());
+//        if(Gdx.files.local("share.png").file()!= null){Gdx.files.local("share.png").delete();}
+//
+//        try{
+//            FileHandle fh;
+//            do{
+//                fh = new FileHandle(Gdx.files.getLocalStoragePath() + "share" + ".png");
+//            }while(fh.exists());
+//
+//            Pixmap pixmap = getScreenshot(Gdx.graphics.getWidth()-333, 25, 233, 249, true);
+//
+//            PixmapIO.writePNG(fh, pixmap);
+//            pixmap.dispose();
+//            System.out.println(fh.toString());
+//            //Gdx.app.exit();
+////            break;
+//            Main.mainController.sharePic();
+//        } catch(Exception e) {
+//
+//        }
+//        menuItem.getChild(LBL_TAP2START).getEntity().getComponent(TintComponent.class).color.a = 1;
+//    }
+
+//    private Pixmap getScreenshot(int x, int y, int w, int h, boolean yDown){
+//        final Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, w, h);
+//
+//        if(yDown) {
+//            ByteBuffer pixels = pixmap.getPixels();
+//            int numBytes = w * h * 4;
+//            byte[] lines = new byte[numBytes];
+//            int numBytesPerLine = w * 4;
+//            for (int i = 0; i < h; i++) {
+//                pixels.position((h - i - 1) * numBytesPerLine);
+//                pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
+//            }
+//
+//            pixels.clear();
+//            pixels.put(lines);
+//        }
+//        return pixmap;
+//    }
 
     @Override
     public void dispose() {
@@ -633,6 +703,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         tcL.scaleY = LEAFS_SCALE;
 
         megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
+
+//        megaLeaves.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+//        megaFlower.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
     }
 
     public Entity getMegaLeaves() {

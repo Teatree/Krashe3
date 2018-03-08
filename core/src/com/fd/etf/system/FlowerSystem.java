@@ -290,12 +290,16 @@ public class FlowerSystem extends IteratingSystem {
     }
 
     private void hideTutorialLine() {
-        if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.1f) {
+        if (gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.1f && gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a < 0.8f ) {
             if(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(ActionComponent.class) != null){
                 gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(ActionComponent.class).reset();
             }
             ActionComponent ac_9 = new ActionComponent();
-            ac_9.dataArray.add(Actions.alpha(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a-0.15f, 0.5f, Interpolation.exp5));
+            if(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a > 0.2f) {
+                ac_9.dataArray.add(Actions.alpha(gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a - 0.15f, 0.5f, Interpolation.exp5));
+            }else{
+                ac_9.dataArray.add(Actions.alpha(0, 0.5f, Interpolation.exp5));
+            }
             gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().add(ac_9);
 
             //gameStage.gameScript.gameItem.getChild(TUTORIAL_LINE).getEntity().getComponent(TintComponent.class).color.a -= 0.15f;

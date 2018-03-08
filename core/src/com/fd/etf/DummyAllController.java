@@ -33,6 +33,11 @@ public class DummyAllController implements AllController {
     }
 
     @Override
+    public void sharePic() {
+        System.out.println("Share pic");
+    }
+
+    @Override
     public void showResultScreenAd(Runnable then) {
         System.out.println("showResultScreenAd");
     }

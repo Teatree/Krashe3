@@ -99,6 +99,10 @@ public class GameStage extends Stage {
         backgroundMusicMgr.stopMenu();
         backgroundMusicMgr.playGame();
 
+        // filthy fix for a filthy bug
+        soundMgr.stop(SoundMgr.SCORE_COUNT);
+        soundMgr.stop(SoundMgr.PROGRESS_BAR_COUNT);
+
         gameScript.initStartTrans();
         GameScreenScript.isPause.set(false);
         GameScreenScript.isGameOver.set(false);

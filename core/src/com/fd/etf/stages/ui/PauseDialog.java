@@ -205,7 +205,7 @@ public class PauseDialog extends AbstractDialog {
 
         int y = GOAL_TILE_START_Y;
         LabelComponent levelLabelsComp = pauseDialogE.getComponent(NodeComponent.class).getChild(LBL_LEVEL_INDICATOR).getComponent(LabelComponent.class);
-        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf(LEVEL + gameStage.gameScript.fpc.level.difficultyLevel));
+        levelLabelsComp.text.replace(0, levelLabelsComp.text.capacity(), String.valueOf(LEVEL + gameStage.gameScript.fpc.level.difficultyLevel + " "));
 
         if (goalsUpdate || pauseUpdate){
             createGoalTiles();

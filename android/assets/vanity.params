@@ -38,11 +38,11 @@
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
 	assetsToChange: {
 		class: java.util.HashMap,
-		head_bottom: head_bottom_beard,
+		middle_leafs: middle_leafs_bowtie_2,
 		class: java.util.HashMap
 	},
-	shopIcon: itembeard,
-	name: Beard,
+	shopIcon: itembowtie,
+	name: Bowtie,
 	cost: 125,
 	description: Part_of_Hipster~collection
 },
@@ -246,11 +246,11 @@
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
 	assetsToChange: {
 		class: java.util.HashMap,
-		middle_leafs: middle_leafs_bowtie_2,
+		head_bottom: head_bottom_beard,
 		class: java.util.HashMap
 	},
-	shopIcon: itembowtie,
-	name: Bowtie,
+	shopIcon: itembeard,
+	name: Beard,
 	cost: 11000,
 	description: Part_of_Hipster~collection
 },

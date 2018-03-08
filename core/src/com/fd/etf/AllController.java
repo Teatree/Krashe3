@@ -18,6 +18,8 @@ public interface AllController extends PlayServices {
 
     void showLaunchAd(Runnable then);
 
+    void sharePic();
+
     void showResultScreenAd(Runnable then);
 
     void showGeneralShopAd(Runnable then);

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
 import com.fd.etf.AllController;
 import com.fd.etf.Main;
 import com.fd.etf.android.util.EtfAdsHelper;
@@ -20,6 +21,8 @@ import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
+
+import java.io.File;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
@@ -54,6 +57,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         iapHelper = new EtfIAPhelper(this);
         iapHelper.setupIAP();
     }
+
 
     @Override
     protected void onStop() {
@@ -109,6 +113,24 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     public void showLaunchAd(final Runnable then) {
         adsHelper.showLaunchAd(then);
+    }
+
+    @Override
+    public void sharePic() {
+        String filePath = new FileHandle(Gdx.files.getLocalStoragePath() + "shareIMG.png").toString(); //external storage required
+        File file = new File(filePath);
+
+        String text = "Look at my awesome picture";
+        Uri pictureUri = Uri.fromFile(file);
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+
+        shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, pictureUri);
+
+        startActivity(Intent.createChooser(shareIntent, "Share images..."));
     }
 
     @Override
