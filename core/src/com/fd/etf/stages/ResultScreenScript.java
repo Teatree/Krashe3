@@ -54,7 +54,7 @@ public class ResultScreenScript implements IScript {
     public static boolean isWasShowcase;
     public static boolean active = true;
     public boolean isPlayingProgressBarSFX = false;
-    public boolean isPlayingScoreCountSFX = false;
+    public boolean isPlayingScoreCountSFX;
 
     public Entity txtNeedE;
     public Entity txtBestE;
@@ -130,6 +130,8 @@ public class ResultScreenScript implements IScript {
         resultScreenItem.getChild("curtain_result").getEntity().getComponent(ActionComponent.class).dataArray.add(Actions.fadeOut(0.4f));
 
         SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
+
+        isPlayingScoreCountSFX = false;
     }
 
     public void initButtons() {

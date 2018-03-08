@@ -562,7 +562,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         menuItem.getChild(MEGA_FLOWER).getEntity().getComponent(ActionComponent.class).dataArray.add(
                 Actions.sequence(
-                        Actions.delay(.2f),
+                       // Actions.delay(.2f),
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
@@ -583,7 +583,7 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 //                                System.out.println("transitionOver");
                             }
                         }),
-                        Actions.delay(.2f),
+                       // Actions.delay(.2f),
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
@@ -701,6 +701,8 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
         tcL.y = LEAFS_Y_POS;
         tcL.scaleX = LEAFS_SCALE;
         tcL.scaleY = LEAFS_SCALE;
+
+        megaLeaves.getComponent(ZIndexComponent.class).setZIndex(curtain_mm.getComponent(ZIndexComponent.class).getZIndex()-1);
 
         megaLeaves.getComponent(SpriterComponent.class).scale = LEAFS_SCALE;
 
