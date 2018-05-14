@@ -11,10 +11,10 @@ buildscript {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.google.android.gms:play-services-games:9.4.0'
-    compile 'com.google.android.gms:play-services-plus:9.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.google.android.gms:play-services-games:11.0.4'
+    compile 'com.google.android.gms:play-services-plus:11.0.4'
 }
 
 android {
@@ -27,7 +27,7 @@ android {
     }
 
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '28.0.0 rc2'
 
     lintOptions {
         abortOnError false

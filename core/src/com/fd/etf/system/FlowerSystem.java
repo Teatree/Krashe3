@@ -183,7 +183,7 @@ public class FlowerSystem extends IteratingSystem {
                 state = IDLE_BITE;
                 gameStage.gameScript.fpc.isCollision = false;
 
-//                soundMgr.play(SoundMgr.EAT_SOUND);
+//                \Mgr.play(SoundMgr.EAT_SOUND);
 
             } else {
                 setIdleAnimation(sc);
@@ -269,7 +269,7 @@ public class FlowerSystem extends IteratingSystem {
         if (state.equals(TRANSITION_BACK)) {
             setTransitionBackAnimation(sc);
 
-            if (Gdx.input.justTouched() && canAttackCoord()) {  // This is added for quick breaking of an animation
+            if (Gdx.input.justTouched() && canAttackCoord() && FlowerPublicComponent.currentPet.boundsRect != null) {  // This is added for quick breaking of an animation
                 setAttackAnimation(sc);
                 state = ATTACK;
             }
@@ -284,7 +284,7 @@ public class FlowerSystem extends IteratingSystem {
     private boolean canAttackCoord() {
         return (
                 FlowerPublicComponent.currentPet == null || !FlowerPublicComponent.currentPet.enabled ||
-                        !FlowerPublicComponent.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
+                        FlowerPublicComponent.currentPet.boundsRect!= null && !FlowerPublicComponent.currentPet.boundsRect.contains(EffectUtils.getTouchCoordinates()))
                 && !gameStage.gameScript.pauseBtn.getComponent(DimensionsComponent.class).boundBox.contains(EffectUtils.getTouchCoordinates()
         );
     }

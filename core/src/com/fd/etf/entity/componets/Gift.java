@@ -83,12 +83,19 @@ public class Gift {
 
     public static Gift getPetGift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = gameStage.gameScript.fpc.pets.get(0);
+        PetComponent pet = null;
+        for(PetComponent p : gameStage.gameScript.fpc.pets){
+            if(p.name.equalsIgnoreCase(PET)){
+                pet = p;
+                break;
+            }
+        }
+        System.out.println("TRYING TO GET PET GIFT!");
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
             gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = PET;
+            gift.type = pet.name.toUpperCase();
             return gift;
         } else {
             return getRandomMoneyGift();
@@ -97,12 +104,19 @@ public class Gift {
 
     public static Gift getPet2Gift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = gameStage.gameScript.fpc.pets.get(1);
+        PetComponent pet = null;
+        for(PetComponent p : gameStage.gameScript.fpc.pets){
+            if(p.name.equalsIgnoreCase(PET_2)){
+                pet = p;
+                break;
+            }
+        }
+        System.out.println("TRYING TO GET PET GIFT!");
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
             gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = PET;
+            gift.type = pet.name.toUpperCase();
             return gift;
         } else {
             return getRandomMoneyGift();
@@ -111,12 +125,19 @@ public class Gift {
 
     public static Gift getPet3Gift(GameStage gameStage) {
         Gift gift = new Gift();
-        PetComponent pet = gameStage.gameScript.fpc.pets.get(2);
+        PetComponent pet = null;
+        for(PetComponent p : gameStage.gameScript.fpc.pets){
+            if(p.name.equalsIgnoreCase(PET_3)){
+                pet = p;
+                break;
+            }
+        }
+        System.out.println("TRYING TO GET PET GIFT!");
         if (!pet.bought) {
             gift.pet = pet;
             gift.pet.tryPeriod = true;
             gift.pet.tryPeriodDuration = ONE_HOUR;
-            gift.type = PET;
+            gift.type = pet.name.toUpperCase();
             return gift;
         } else {
             return getRandomMoneyGift();
@@ -124,6 +145,7 @@ public class Gift {
     }
 
     public static Gift getPhoenixGift(GameStage gameStage) {
+        System.out.println("TRYING TO GET PET GIFT!");
         if (!Upgrade.getPhoenix(gameStage).enabled && !Upgrade.getPhoenix(gameStage).bought) {
             Gift gift = new Gift();
             gift.upgrade = Upgrade.getPhoenix(gameStage);
@@ -137,6 +159,7 @@ public class Gift {
     }
 
     public static Gift getDoubleJuiceGift(GameStage gameStage) {
+        System.out.println("TRYING TO GET PET GIFT!");
         if (!Upgrade.getBJDouble(gameStage).enabled && !Upgrade.getBJDouble(gameStage).bought) {
             Gift gift = new Gift();
             gift.upgrade = Upgrade.getBJDouble(gameStage);

@@ -428,7 +428,7 @@
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
 	shopIcon: itemdogPET,
 	name: Just_Some~Dog,
-	description: Likes_To~Eat_Cat~Shit,
+	description: Likes_To~Eat_Cats,
 	pet:{
 		class: com.fd.etf.utils.SaveMngr$PetJson,
 		name: DOG,
@@ -436,7 +436,7 @@
 		totalEatenBugs: 49,
 		petCannonName: pet_cannon
 	},
-	cost: 500001
+	cost: 540000
 },
 {
 	class: com.fd.etf.utils.SaveMngr$VanityJson,
@@ -447,5 +447,5 @@
 	},
 	shopIcon: itemfez,
 	name: Fez,
-	cost: 570000
+	cost: 600000
 }]

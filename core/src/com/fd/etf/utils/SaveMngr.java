@@ -474,16 +474,16 @@ public class SaveMngr {
         public float prob_pet_eat_n_bugs;
         public float prob_pet_dash_n_times;
 
-        public int chanceMONEY_50 = 2;
-        public int chanceMONEY_100 = 2;
+        public int chanceMONEY_50 = 5;
+        public int chanceMONEY_100 = 3;
         public int chanceMONEY_150 = 2;
-        public int chanceMONEY_200 = 2;
-        public int chanceMONEY_250 = 2;
-        public int chancePHOENIX = 2;
-        public int chancePET1 = 30;
-        public int chancePET2 = 30;
-        public int chancePET3 = 26;
-        public int chanceBJ_DOUBLE = 2;
+        public int chanceMONEY_200 = 0;
+        public int chanceMONEY_250 = 0;
+        public int chancePHOENIX = 0;
+        public int chancePET1 = 60;
+        public int chancePET2 = 20;
+        public int chancePET3 = 10;
+        public int chanceBJ_DOUBLE = 0;
 
         public LevelInfo() {
         }
@@ -491,15 +491,15 @@ public class SaveMngr {
         public Map<String, Integer> getRewardChanceGroups() {
             Map<String, Integer> rewardChanceGroups = new HashMap<>();
             rewardChanceGroups.put(MONEY_50, chanceMONEY_50);
-            rewardChanceGroups.put(MONEY_100, chanceMONEY_100);
-            rewardChanceGroups.put(MONEY_150, chanceMONEY_150);
-            rewardChanceGroups.put(MONEY_200, chanceMONEY_200);
-            rewardChanceGroups.put(MONEY_250, chanceMONEY_250);
-            rewardChanceGroups.put(PHOENIX, chancePHOENIX);
-            rewardChanceGroups.put(PET, chancePET1);
-            rewardChanceGroups.put(PET_2, chancePET2);
-            rewardChanceGroups.put(PET_3, chancePET3);
-            rewardChanceGroups.put(BJ_DOUBLE, chanceBJ_DOUBLE);
+            rewardChanceGroups.put(MONEY_100, chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(MONEY_150, chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(MONEY_200, chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(MONEY_250, chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(PHOENIX, chancePHOENIX + chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(PET, chancePET1 + chancePHOENIX + chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(PET_2, chancePET2 + chancePET1 + chancePHOENIX + chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(PET_3, chancePET3 + chancePET2 + chancePET1 + chancePHOENIX + chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
+            rewardChanceGroups.put(BJ_DOUBLE, chanceBJ_DOUBLE + chancePET3 + chancePET2 + chancePET1 + chancePHOENIX + chanceMONEY_250 + chanceMONEY_200 + chanceMONEY_150 + chanceMONEY_100 + chanceMONEY_50);
             return rewardChanceGroups;
         }
     }

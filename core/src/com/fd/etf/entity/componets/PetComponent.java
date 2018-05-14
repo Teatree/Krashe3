@@ -81,7 +81,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     }
 
     public static void eatThatBug(PetComponent pet, Rectangle bugRectangle) {
-        if (pet.boundsRect.overlaps(bugRectangle)) {
+        if (pet.boundsRect != null && pet.boundsRect.overlaps(bugRectangle)) {
 
             if (!pet.state.equals(State.DASH) && !pet.state.equals(State.TAPPED)) {
                 pet.state = State.BITE;

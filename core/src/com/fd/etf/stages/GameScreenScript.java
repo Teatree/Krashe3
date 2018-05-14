@@ -241,11 +241,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
             if (now - FlowerPublicComponent.currentPet.tryPeriodStart >= FlowerPublicComponent.currentPet.tryPeriodDuration * 1000) {
                 FlowerPublicComponent.currentPet.enabled = false;
+
                 FlowerPublicComponent.currentPet.bought = false;
                 FlowerPublicComponent.currentPet.tryPeriod = false;
                 FlowerPublicComponent.currentPet.disable(gameStage);
 
-                if (gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet) >= 0) {
+                if (gameStage.shopScript.allSoftItems != null && gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet) >= 0) {
                     gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).bought = false;
                     gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).enabled = false;
                 }
@@ -279,7 +280,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void init(Entity item) {
-
         if (!fpc.isSameDay()) {
             gameOverReviveTimesLimit = fpc.reviveAdsMaxNastya; //>>
             fpc.curDay = Calendar.getInstance().getTimeInMillis();

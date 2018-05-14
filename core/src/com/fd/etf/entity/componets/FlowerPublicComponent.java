@@ -26,6 +26,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
 
     public List<VanityComponent> vanities = new ArrayList<>();
     public List<PetComponent> pets = new ArrayList<>();
+    //public Map<PetComponent> pets = new ArrayList<>();
     public Map<Upgrade.UpgradeType, Upgrade> upgrades = new HashMap<>();
     public Level level = new Level();
     public static PetComponent currentPet;
@@ -38,7 +39,7 @@ public class FlowerPublicComponent implements Component, Pool.Poolable{
         if (currentPet != null && currentPet.enabled) {
             PetComponent.eatThatBug(currentPet, rectangle);
 
-            return boundsRect.overlaps(rectangle) ||
+            return boundsRect.overlaps(rectangle) || currentPet.boundsRect != null &&
                     currentPet.boundsRect.overlaps(rectangle);
         }
         return false;

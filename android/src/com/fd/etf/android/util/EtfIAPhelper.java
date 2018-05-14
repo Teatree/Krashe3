@@ -18,6 +18,15 @@ public class EtfIAPhelper {
     static final String SKU_NO_ADS = "no_ads";
     static final String SKU_BJ = "bj";
     static final String SKU_PHOENIX = "phoenix";
+
+    // pets
+    static final String SKU_CAT_PET = "cat_pet";
+    static final String SKU_CAT_PET_DISCOUNT = "cat_pet_discount";
+    static final String SKU_RAVEN_PET = "raven_pet";
+    static final String SKU_RAVEN_PET_DISCOUNT = "raven_pet_discount";
+    static final String SKU_DRAGON_PET = "dragon_pet";
+    static final String SKU_DRAGON_PET_DISCOUNT = "dragon_pet_discount";
+
 //    static final String SKU_PET = "Revive";
 
     static final String SKU_DISCOUNT_BJ = "bj_promo";
@@ -124,6 +133,7 @@ public class EtfIAPhelper {
                     }
 
                     if (purchase.getSku().equals(petComponent.sku)) {
+
                         petComponent.buyAndUse(gameStage);
                     }
                 }
