@@ -42,7 +42,6 @@ public class GoalFeedbackScreen {
     public static final String GOAL_TILE = "goalTile";
     private static final String GOAL_LIB = GOAL_TILE;
     private static final String GOAL_ANI = "goalAni";
-    private static final String GOAL_PROGRESS = "goal_progress";
     private static final String TILE2_TEXT_DESC = "tile2_text_desc";
     static final String COMPLETED = "Completed";
     private static final String GOAL_PROGRESS_LBL = "goal_progress";
@@ -587,18 +586,18 @@ public class GoalFeedbackScreen {
             if (gift.pet != null) {
                 lbl2.getComponent(LabelComponent.class).text.replace(0,
                         lbl2.getComponent(LabelComponent.class).text.capacity(),
-                        "IT EXPIRES IN " + gift.pet.getTimerTimeTime() + " !!!");
+                        "EXPIRES IN " + gift.pet.getTimerTimeTime() + "");
             }
             if (gift.upgrade != null) {
                 lbl2.getComponent(LabelComponent.class).text.replace(0,
                         lbl2.getComponent(LabelComponent.class).text.capacity(),
-                        "IT EXPIRES IN " + gift.upgrade.getTimerTimeTime() + " !!!");
+                        "EXPIRES IN " + gift.upgrade.getTimerTimeTime() + "");
             }
 
         } else {
             lbl.getComponent(LabelComponent.class).text.replace(0,
                     lbl.getComponent(LabelComponent.class).text.capacity(),
-                    "YOU GOT " + gift.money + " " + gift.type + " !!!");
+                    "YOU GOT " + gift.money + " " + gift.type + "!");
         }
 
         if (gift.pet != null) {
@@ -631,7 +630,7 @@ public class GoalFeedbackScreen {
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(435, 439, 2f, Interpolation.exp5));
+        ac.dataArray.add(Actions.moveTo(435, 439, 1f, Interpolation.exp5));
         giftIconE.add(ac);
         isShading = true;
     }

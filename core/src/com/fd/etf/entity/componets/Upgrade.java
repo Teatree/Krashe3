@@ -56,7 +56,7 @@ public class Upgrade extends ShopItem{
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
         phoenix.sku_discount = "phoenix";
-        phoenix.sku = "phoenix";
+        phoenix.sku = "phoenix_discount";
         phoenix.shopIcon = "itemphoenixUPGRADE";
         return phoenix;
     }
@@ -73,7 +73,7 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = HARD;
         bjd.sku = "bj_upgrade";
-        bjd.sku_discount = "bj_upgrade";
+        bjd.sku_discount = "bj_upgrade_discount";
         bjd.shopIcon = "itemdoubleUPGRDE";
         return bjd;
     }
@@ -97,9 +97,6 @@ public class Upgrade extends ShopItem{
 
     @Override
     public void buyHard(GameStage gameStage) {
-        this.bought = true;
-        this.enabled = true;
-
         if (upgradeType.equals(UpgradeType.PHOENIX)){
             Main.mainController.getPhoenix(gameStage, this);
         }

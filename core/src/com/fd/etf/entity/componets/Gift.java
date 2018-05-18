@@ -14,7 +14,7 @@ public class Gift {
 
     private static final String MONEY = "MONEY";
 
-    private static final int ONE_HOUR = 60;
+    private static final int ONE_HOUR = 10; // it's supposed to be 60, and it's not a hour, it's a MINUTE
 
     private static Random random = new Random();
 
@@ -38,7 +38,7 @@ public class Gift {
 //        gift = getPhoenixGift(gameStage);
         int i = random.nextInt(100);
         System.out.println("radnom i is: " + i);
-        if (i > 0 && i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET)) {
+        if (i >= 0 && i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET)) {
             gift = getPetGift(gameStage);
         } else if (i > gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET) &&
                 i <= gameStage.gameScript.fpc.level.rewardChanceGroups.get(PET_2)) {
@@ -181,15 +181,15 @@ public class Gift {
                 break;
             }
             case (PET): {
-                FlowerPublicComponent.currentPet = pet;
-                gameStage.gameScript.changePet = true;
-                FlowerPublicComponent.currentPet.tryPeriod = true;
-//                fpc.currentPet.tryPeriodDuration = 1 * 60;
-                FlowerPublicComponent.currentPet.tryPeriodStart = System.currentTimeMillis();
-                FlowerPublicComponent.currentPet.bought = true;
-                FlowerPublicComponent.currentPet.enabled = true;
-
-                TrialTimer.trialTimerLogoName = FlowerPublicComponent.currentPet.shopIcon;
+                applyPetGiftNastya(gameStage);
+                break;
+            }
+            case (PET_2): {
+                applyPetGiftNastya(gameStage);
+                break;
+            }
+            case (PET_3): {
+                applyPetGiftNastya(gameStage);
                 break;
             }
             case (PHOENIX): {
@@ -214,5 +214,17 @@ public class Gift {
             }
         }
         fpc.level.updateLevel(gameStage.gameScript.fpc);
+    }
+
+    private void applyPetGiftNastya(GameStage gameStage) {
+        FlowerPublicComponent.currentPet = pet;
+        gameStage.gameScript.changePet = true;
+        FlowerPublicComponent.currentPet.tryPeriod = true;
+//                fpc.currentPet.tryPeriodDuration = 1 * 60;
+        FlowerPublicComponent.currentPet.tryPeriodStart = System.currentTimeMillis();
+        FlowerPublicComponent.currentPet.bought = true;
+        FlowerPublicComponent.currentPet.enabled = true;
+
+        TrialTimer.trialTimerLogoName = FlowerPublicComponent.currentPet.shopIcon;
     }
 }

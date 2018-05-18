@@ -76,9 +76,14 @@ public class EtfIAPhelper {
                     Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
                 }
 
-//                if (sku.equals(SKU_PET) || sku.equals(SKU_PROMO_PET)) {
-//                    gameStage.gameScript.fpc.pets.get(0).buyAndUse(gameStage);
-//                }
+                if (gameStage.gameScript != null && gameStage.gameScript.fpc != null && gameStage.gameScript.fpc.pets != null) {
+                    for (PetComponent p : gameStage.gameScript.fpc.pets) {
+                        if(p.sku == sku || p.sku_discount == sku){
+                            p.buyAndUse(gameStage);
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -138,7 +143,7 @@ public class EtfIAPhelper {
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, petComponent.sku, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
@@ -158,12 +163,12 @@ public class EtfIAPhelper {
                     }
 
                     Log.d("IAB", "Purchase successful.");
-                    if (purchase.getSku().equals(SKU_BJ)) {
+                    if (purchase.getSku().equals(bj.sku)) {
                         bj.buyAndUse(gameStage);
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, bj.sku, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
@@ -178,17 +183,18 @@ public class EtfIAPhelper {
                     Log.d("IAB", "Purchase finished: " + result + ", purchase: " + purchase);
 
                     if (mHelper == null) return;
+                    
                     if (result.isFailure()) {
                         return;
                     }
 
                     Log.d("IAB", "Purchase successful.");
-                    if (purchase.getSku().equals(SKU_PHOENIX)) {
+                    if (purchase.getSku().equals(phoenix.sku)) {
                         phoenix.buyAndUse(gameStage);
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, phoenix.sku, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
@@ -209,11 +215,11 @@ public class EtfIAPhelper {
                     }
 
                     if (purchase.getSku().equals(petComponent.sku_discount)) {
-                        petComponent.buyAndUse(gameStage);
+                        petComponent.buyAndUse(gameStage); // This isn't called
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, petComponent.sku_discount, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
@@ -233,12 +239,12 @@ public class EtfIAPhelper {
                     }
 
                     Log.d("IAB", "Purchase successful.");
-                    if (purchase.getSku().equals(SKU_BJ)) {
+                    if (purchase.getSku().equals(bj.sku_discount)) {
                         bj.buyAndUse(gameStage);
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_NO_ADS, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, bj.sku_discount, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
@@ -258,12 +264,12 @@ public class EtfIAPhelper {
                     }
 
                     Log.d("IAB", "Purchase successful.");
-                    if (purchase.getSku().equals(SKU_PHOENIX)) {
+                    if (purchase.getSku().equals(phoenix.sku_discount)) {
                         phoenix.buyAndUse(gameStage);
                     }
                 }
             };
-            mHelper.launchPurchaseFlow(app, SKU_PHOENIX, RC_REQUEST,
+            mHelper.launchPurchaseFlow(app, phoenix.sku_discount, RC_REQUEST,
                     mPurchaseFinishedListener);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();

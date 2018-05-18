@@ -128,7 +128,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void updateAngeredBeesMode() {
-        if (isAngeredBeesMode) {
+        if (isAngeredBeesMode && isPause.get() == false) {
             beeSplatterOrder++;
 
             if(beeSplatterOrder == 1){
@@ -241,15 +241,15 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
             if (now - FlowerPublicComponent.currentPet.tryPeriodStart >= FlowerPublicComponent.currentPet.tryPeriodDuration * 1000) {
                 FlowerPublicComponent.currentPet.enabled = false;
-
                 FlowerPublicComponent.currentPet.bought = false;
                 FlowerPublicComponent.currentPet.tryPeriod = false;
-                FlowerPublicComponent.currentPet.disable(gameStage);
 
-                if (gameStage.shopScript.allSoftItems != null && gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet) >= 0) {
+                if (gameStage.shopScript != null && gameStage.shopScript.allSoftItems != null && gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet) >= 0) {
                     gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).bought = false;
                     gameStage.shopScript.allSoftItems.get(gameStage.shopScript.allSoftItems.indexOf(FlowerPublicComponent.currentPet)).enabled = false;
                 }
+
+                FlowerPublicComponent.currentPet.disable(gameStage);
             }
         }
         if (gameStage.gameScript.fpc.upgrades != null && !gameStage.gameScript.fpc.upgrades.isEmpty()) {
@@ -741,7 +741,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
             if (phoenixIcon.getComponent(TransformComponent.class).x >= 900 && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).enabled) {
                 phoenixIcon.getComponent(TransformComponent.class).x = -200;
-                loseFeedback.getComponent(TransformComponent.class).x = -600;
+                loseFeedback.getComponent(TransformComponent.class).x = -800;
                 gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).usePhoenix();
                 //System.out.println("IT'S VERY UNLIKELY THAT I AM CALLED MORE THAN ONCE");
 //                System.out.println("Phoenix!");

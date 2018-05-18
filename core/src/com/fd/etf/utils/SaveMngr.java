@@ -416,9 +416,9 @@ public class SaveMngr {
         public static final String MONEY_250 = "MONEY_250";
         public static final String MONEY_300 = "MONEY_300";
 
-        public static final String PET = "DOG";
+        public static final String PET = "RAVEN";
         public static final String PET_2 = "CAT";
-        public static final String PET_3 = "RAVEN";
+        public static final String PET_3 = "DRAGON";
 
         public static final String PHOENIX = "PHOENIX";
         public static final String BJ_DOUBLE = "BJ_DOUBLE";
@@ -544,8 +544,8 @@ public class SaveMngr {
     }
 
     public static class UpgradeStats {
-        private String sku;
-        private String sku_discount;
+        public String sku;
+        public String sku_discount;
         public String upgradeType;
         public String name;
         public long cost;
@@ -636,6 +636,7 @@ public class SaveMngr {
         public String sku;
         public String sku_discount;
         public String name;
+        public String description;
         public boolean bought;
         public boolean activated;
         public long cost;
@@ -659,6 +660,7 @@ public class SaveMngr {
 
         public PetJson(PetComponent petComponent) {
             this.name = petComponent.name;
+            this.description = petComponent.description;
             this.activated = petComponent.enabled;
             this.bought = petComponent.bought;
             this.cost = petComponent.cost;

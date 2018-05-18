@@ -105,6 +105,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Request code we use when invoking other Activities to complete the
     // sign-in flow.
     final static int RC_RESOLVE = 9001;
+    final static int RC_RESOLVE_IAP = 10001;
 
     // Request code when invoking Activities whose result we don't care about.
     final static int RC_UNUSED = 9002;
@@ -565,7 +566,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
                 + (requestCode == RC_RESOLVE ? "RC_RESOLVE" : String
                 .valueOf(requestCode)) + ", resp="
                 + GameHelperUtils.activityResponseCodeToString(responseCode));
-        if (requestCode != RC_RESOLVE) {
+        if (requestCode != RC_RESOLVE && requestCode != RC_RESOLVE_IAP) {
             debugLog("onActivityResult: request code not meant for us. Ignoring.");
             return;
         }

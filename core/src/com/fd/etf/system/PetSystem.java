@@ -18,6 +18,7 @@ import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.ActionComponent;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.ZIndexComponent;
 import com.uwsoft.editor.renderer.components.spriter.SpriterComponent;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.systems.action.data.ActionData;
@@ -51,145 +52,149 @@ public class PetSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity e, float deltaTime) {
-        counter++;
         PetComponent pc = mapper.get(e);
 
-        DimensionsComponent cannondc = e.getComponent(DimensionsComponent.class);
-        TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
-        SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
+        if(FlowerPublicComponent.currentPet != null && pc.petCannon != null) {
+            counter++;
 
-        pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
-        pc.petHead.getComponent(TransformComponent.class).y = e.getComponent(TransformComponent.class).y;
-        SpriterComponent scPetHead = pc.petHead.getComponent(SpriterComponent.class);
+            DimensionsComponent cannondc = e.getComponent(DimensionsComponent.class);
+            TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
+            SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
 
-        e.getComponent(DimensionsComponent.class).width = 56;
-        e.getComponent(DimensionsComponent.class).height = 100;
-        updateRect(pc, e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class), cannontc, cannondc);
-        moveCannonWithPet(e, pc);
+            pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
+            pc.petHead.getComponent(TransformComponent.class).y = e.getComponent(TransformComponent.class).y;
+            SpriterComponent scPetHead = pc.petHead.getComponent(SpriterComponent.class);
+
+            e.getComponent(DimensionsComponent.class).width = 56;
+            e.getComponent(DimensionsComponent.class).height = 100;
+            updateRect(pc, e.getComponent(TransformComponent.class), e.getComponent(DimensionsComponent.class), cannontc, cannondc);
+            pc.petCannon.getComponent(ZIndexComponent.class).setZIndex(e.getComponent(ZIndexComponent.class).getZIndex()+1); // Nastya
+            moveCannonWithPet(e, pc);
 
 //        if (isGameOver.get() && e.getComponent(ActionComponent.class) != null){
 //            e.getComponent(ActionComponent.class).reset();
 //            e.getComponent(PetComponent.class).state = SPAWNING;
 //        }
 
-        if (!isPause.get() && !isGameOver.get()) {
+            if (!isPause.get() && !isGameOver.get()) {
 
-            if (e.getComponent(ActionComponent.class) != null) {
-                for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
-                    ad.paused = false;
-                }
-            }
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-                if (!pc.state.equals(DASH)) {
-                    if(FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
-                        for (int i = 0; i < 4; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
-                        }
-                    }
-                    if(FlowerPublicComponent.currentPet.name.equals("DOG")) {
-                        for (int i = 0; i < 6; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
-                        }
-                    }
-                    if(FlowerPublicComponent.currentPet.name.equals("CAT")) {
-                        for (int i = 0; i < 6; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
-                        }
-                    }
-                    if(FlowerPublicComponent.currentPet.name.equals("DRAGON")) {
-                        for (int i = 0; i < 12; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DRAGON);
-                        }
+                if (e.getComponent(ActionComponent.class) != null) {
+                    for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
+                        ad.paused = false;
                     }
                 }
-                pc.state = DASH;
-                cannonsc.player.setTime(0);
 
-            }
+                if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+                    if (!pc.state.equals(DASH)) {
+                        if (FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
+                            for (int i = 0; i < 4; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("DOG")) {
+                            for (int i = 0; i < 6; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("CAT")) {
+                            for (int i = 0; i < 6; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("DRAGON")) {
+                            for (int i = 0; i < 12; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DRAGON);
+                            }
+                        }
+                    }
+                    pc.state = DASH;
+                    cannonsc.player.setTime(0);
 
-            e.getComponent(SpriterComponent.class).player.speed = FPS;
-            scPetHead.player.speed = FPS;
-            cannonsc.player.speed = FPS;
+                }
 
-            tapped(e,
-                    cannonsc,
-                    scPetHead,
-                    pc.petHead.getComponent(TransformComponent.class));
+                e.getComponent(SpriterComponent.class).player.speed = FPS;
+                scPetHead.player.speed = FPS;
+                cannonsc.player.speed = FPS;
 
-            bite(pc,
-                    e.getComponent(SpriterComponent.class),
-                    cannonsc,
-                    scPetHead);
+                tapped(e,
+                        cannonsc,
+                        scPetHead,
+                        pc.petHead.getComponent(TransformComponent.class));
 
-            spawn(pc,
-                    e.getComponent(TransformComponent.class),
-                    e.getComponent(SpriterComponent.class),
-                    cannonsc,
-                    scPetHead,
-                    pc.petHead.getComponent(TransformComponent.class));
+                bite(pc,
+                        e.getComponent(SpriterComponent.class),
+                        cannonsc,
+                        scPetHead);
 
-            dash(deltaTime,
-                    pc,
-                    cannonsc,
-                    scPetHead,
-                    e);
+                spawn(pc,
+                        e.getComponent(TransformComponent.class),
+                        e.getComponent(SpriterComponent.class),
+                        cannonsc,
+                        scPetHead,
+                        pc.petHead.getComponent(TransformComponent.class));
 
-            outside(pc,
-                    cannonsc,
-                    scPetHead,
-                    pc.petHead.getComponent(TransformComponent.class),
-                    e);
+                dash(deltaTime,
+                        pc,
+                        cannonsc,
+                        scPetHead,
+                        e);
 
-            tap(e, cannonsc);
+                outside(pc,
+                        cannonsc,
+                        scPetHead,
+                        pc.petHead.getComponent(TransformComponent.class),
+                        e);
 
-            if (pc.eatenBugsCounter >= pc.amountBugsBeforeCharging || Gdx.input.isKeyPressed(Input.Keys.A)) {
+                tap(e, cannonsc);
+
+                if (pc.eatenBugsCounter >= pc.amountBugsBeforeCharging || Gdx.input.isKeyPressed(Input.Keys.A)) {
 
 //                canPlayAnimation = true;
-                setDashAnimation(cannonsc);
-                setDashAnimation(e.getComponent(SpriterComponent.class));
-                setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
-                if (!pc.state.equals(DASH)) {
-                    if(FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
-                        for (int i = 0; i < 4; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
+                    setDashAnimation(cannonsc);
+                    setDashAnimation(e.getComponent(SpriterComponent.class));
+                    setDashAnimation(pc.petHead.getComponent(SpriterComponent.class));
+                    if (!pc.state.equals(DASH)) {
+                        if (FlowerPublicComponent.currentPet.name.equals("RAVEN")) {
+                            for (int i = 0; i < 4; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_RAVEN);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("DOG")) {
+                            for (int i = 0; i < 6; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("CAT")) {
+                            for (int i = 0; i < 6; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
+                            }
+                        }
+                        if (FlowerPublicComponent.currentPet.name.equals("DRAGON")) {
+                            for (int i = 0; i < 12; i++) {
+                                EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DRAGON);
+                            }
                         }
                     }
-                    if(FlowerPublicComponent.currentPet.name.equals("DOG")) {
-                        for (int i = 0; i < 6; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DOG);
-                        }
-                    }
-                    if(FlowerPublicComponent.currentPet.name.equals("CAT")) {
-                        for (int i = 0; i < 6; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_CAT);
-                        }
-                    }
-                    if(FlowerPublicComponent.currentPet.name.equals("DRAGON")) {
-                        for (int i = 0; i < 12; i++) {
-                            EffectUtils.spawnPetProjectile(gameStage, e.getComponent(TransformComponent.class).x, e.getComponent(TransformComponent.class).y, EffectUtils.PROJECTILE_DRAGON);
-                        }
+                    pc.state = DASH;
+
+                    checkPetDashGoal();
+
+                }
+            } else {
+
+                pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class),
+                        cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
+
+                if (e.getComponent(ActionComponent.class) != null) {
+                    for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
+                        ad.paused = true;
                     }
                 }
-                pc.state = DASH;
-
-                checkPetDashGoal();
-
             }
-        } else {
-
-            pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class),
-                    cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
-
-            if (e.getComponent(ActionComponent.class) != null) {
-                for (ActionData ad : e.getComponent(ActionComponent.class).dataArray) {
-                    ad.paused = true;
-                }
+            if (!pc.enabled) {
+                e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
+                pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
             }
-        }
-        if (!pc.enabled) {
-            e.getComponent(TransformComponent.class).x = FAR_FAR_AWAY_X;
-            pc.petHead.getComponent(TransformComponent.class).x = e.getComponent(TransformComponent.class).x;
         }
     }
 

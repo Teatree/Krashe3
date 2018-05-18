@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.Main;
+import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
@@ -55,6 +56,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
     public PetComponent(SaveMngr.PetJson petJson) {
         currencyType = HARD;
         this.name = petJson.name;
+        this.description = petJson.description;
         this.enabled = petJson.activated;
         this.bought = petJson.bought;
         this.cost = petJson.cost;
@@ -121,6 +123,8 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         this.enabled = false;
         gameStage.gameScript.changePet = true;
 
+        gameStage.gameScript.hideCurrentPet();
+
         if (FlowerPublicComponent.currentPet != null) {
             FlowerPublicComponent.currentPet.petCannon = null;
             FlowerPublicComponent.currentPet = null;
@@ -139,13 +143,12 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     @Override
     public void buyHard(GameStage gameStage) {
-        this.buyAndUse(gameStage);
-//        Main.mainController.getBirdPet(gameStage, this);
+        Main.mainController.getPet(gameStage, this);
     }
 
     @Override
     public void buyHardDiscount(GameStage gameStage) {
-        Main.mainController.getPet(gameStage, this);
+        Main.mainController.getPetDiscount(gameStage, this);
     }
 
     public void setOutsideStateDuration() {

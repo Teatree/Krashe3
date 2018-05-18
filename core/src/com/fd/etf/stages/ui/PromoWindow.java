@@ -3,7 +3,9 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
+import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.ShopItem;
+import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ResultScreenScript;
@@ -131,8 +133,8 @@ public class PromoWindow extends AbstractDialog {
 //            lc.text.replace(0, lc.text.capacity(),  "$ " + String.valueOf(offer.cost));
 //            lc_sh.text.replace(0, lc_sh.text.capacity(),  "$ " + String.valueOf(offer.cost));
 
-            buyBtn.getComponent(NodeComponent.class).getChild("lbl1").getComponent(LabelComponent.class).text.replace(0, buyBtn.getComponent(NodeComponent.class).getChild("lbl1").getComponent(LabelComponent.class).text.capacity(),  "$ " + String.valueOf(offer.costDisc));
-            buyBtn.getComponent(NodeComponent.class).getChild("lbl1_s").getComponent(LabelComponent.class).text.replace(0, buyBtn.getComponent(NodeComponent.class).getChild("lbl1_s").getComponent(LabelComponent.class).text.capacity(),  "$ " + String.valueOf(offer.costDisc));
+            buyBtn.getComponent(NodeComponent.class).getChild("lbl1").getComponent(LabelComponent.class).text.replace(0, buyBtn.getComponent(NodeComponent.class).getChild("lbl1").getComponent(LabelComponent.class).text.capacity(),  "$ " + String.valueOf((float)offer.costDisc/100));
+            buyBtn.getComponent(NodeComponent.class).getChild("lbl1_s").getComponent(LabelComponent.class).text.replace(0, buyBtn.getComponent(NodeComponent.class).getChild("lbl1_s").getComponent(LabelComponent.class).text.capacity(),  "$ " + String.valueOf((float)offer.costDisc/100));
 
 //            promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL).getComponent(LabelComponent.class).text.capacity(), offer.description);
 //            promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL_SH).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(DESCRIPTION_LBL_SH).getComponent(LabelComponent.class).text.capacity(), offer.description);
@@ -170,7 +172,7 @@ public class PromoWindow extends AbstractDialog {
                 promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL).getComponent(LabelComponent.class).text.capacity(), offer.name);
                 promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(HEADER_LBL_SH).getComponent(LabelComponent.class).text.capacity(), offer.name);
             }
-            promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.capacity(), "$ " + String.valueOf(offer.cost));
+            promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.replace(0, promoWindowE.getComponent(NodeComponent.class).getChild(PRICE_CROSS_LBL).getComponent(LabelComponent.class).text.capacity(), "$ " + String.valueOf((float)offer.cost/100));
 
             if (FlowerPublicComponent.currentPet != null && offer == FlowerPublicComponent.currentPet) {
                 gameStage.sceneLoader.rm.addSpriterToLoad(FlowerPublicComponent.currentPet.name);
@@ -215,6 +217,23 @@ public class PromoWindow extends AbstractDialog {
             Actions.checkInit();
             acIconz2.dataArray.add(Actions.moveTo(offerIconE.getComponent(TransformComponent.class).x, ICON_Y, 0.8f, Interpolation.exp10));
             offerIconE.add(acIconz2);
+        }
+
+        if(offer instanceof PetComponent) {
+            // go thorough all pet and remove by nae
+            for (PetComponent p : gameStage.gameScript.fpc.pets) {
+                if(offer.name.equalsIgnoreCase(p.name)){
+                    p.disable(gameStage);
+                }
+            }
+        }
+
+        if(gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX) != null && offer instanceof Upgrade && ((Upgrade) offer).upgradeType == Upgrade.UpgradeType.PHOENIX){
+            gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).disable(gameStage);
+        }
+
+        if(gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE) != null && offer instanceof Upgrade && ((Upgrade) offer).upgradeType == Upgrade.UpgradeType.BJ_DOUBLE){
+            gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE).disable(gameStage);
         }
 
         ActionComponent ac2 = new ActionComponent();

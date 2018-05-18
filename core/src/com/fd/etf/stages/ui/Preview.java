@@ -524,6 +524,13 @@ public class Preview extends AbstractDialog {
 
                         if (vc.currencyType.equals(HARD)) {
                             vc.buyHard(gameStage);
+
+                            if (!vc.bought) {
+                                initBuyButton(vc);
+                            } else {
+                                initEnableButton(vc);
+                                initDisableButton(vc);
+                            }
                         } else {
                             vc.buyAndUse(gameStage);
                             putInPlaceNewIconPosition();
