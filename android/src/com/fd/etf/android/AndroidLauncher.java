@@ -21,6 +21,7 @@ import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.utils.GooglePlayResolver;
 
 import java.io.File;
 
@@ -34,7 +35,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupIAP();
+        //setupIAP();
 
         game = new Main(this);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
@@ -47,6 +48,9 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         setContentView(layout);
+
+        game.setPlatformResolver(new GooglePlayResolver(game));
+        game.getPlatformResolver().installIAP();
     }
 
     public void setupPlayServices() {
@@ -166,7 +170,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void getPet(GameStage gameStage, PetComponent petComponent) {
-        iapHelper.iapGetPet(gameStage, petComponent);
+//        iapHelper.iapGetPet(gameStage, petComponent);
+        game.getPlatformResolver().requestPurchase("cat_pet_2");
     }
 
     @Override

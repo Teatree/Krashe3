@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.pay.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.ETFSceneLoader;
+import com.fd.etf.utils.PlatformResolver;
 import com.fd.etf.utils.SaveMngr;
 
 public class Main extends Game {
@@ -28,6 +32,8 @@ public class Main extends Game {
 
     public static AllController mainController;
     public static PlayServices playServices;
+    static PlatformResolver m_platformResolver;
+    public PurchaseManagerConfig purchaseManagerConfig;
 
     public Main(AllController controller) {
         if (controller != null) {
@@ -37,6 +43,10 @@ public class Main extends Game {
         } else {
             Main.mainController = new DummyAllController();
         }
+
+        // ---- IAP: define products ---------------------
+        purchaseManagerConfig = new PurchaseManagerConfig();
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_2"));
     }
 
     @Override
@@ -52,6 +62,64 @@ public class Main extends Game {
 
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setCatchMenuKey(true);
+    }
+
+    public PurchaseObserver purchaseObserver = new PurchaseObserver() {
+        @Override
+        public void handleRestore (Transaction[] transactions) {
+            for (int i = 0; i < transactions.length; i++) {
+                if (checkTransaction(transactions[i].getIdentifier(), true) == true) break;
+            }
+        }
+        @Override
+        public void handleRestoreError (Throwable e) {
+            throw new GdxRuntimeException(e);
+        }
+        @Override
+        public void handleInstall () {	}
+
+        @Override
+        public void handleInstallError (Throwable e) {
+            Gdx.app.log("ERROR", "PurchaseObserver: handleInstallError!: " + e.getMessage());
+            throw new GdxRuntimeException(e);
+        }
+        @Override
+        public void handlePurchase (Transaction transaction) {
+            checkTransaction(transaction.getIdentifier(), false);
+        }
+
+        @Override
+        public void handlePurchaseError (Throwable e) {	//--- Amazon IAP: this will be called for cancelled
+            throw new GdxRuntimeException(e);
+        }
+        @Override
+        public void handlePurchaseCanceled () {	//--- will not be called by amazonIAP
+        }
+    };
+
+    protected boolean checkTransaction (String ID, boolean isRestore) {
+        boolean returnbool = false;
+
+        if ("cat_pet_2".equals(ID)) {
+            Gdx.app.log("checkTransaction", "full version found!");
+
+            //----- put your logic for full version here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            // is petComponent real?
+
+            // get pet
+            for (PetComponent p: gameStage.gameScript.fpc.pets) {
+                if(p.sku.equalsIgnoreCase("cat_pet"))
+                    p.buyAndUse(gameStage);
+            }
+            returnbool = true;
+        }
+
+        // there are gogn to be checks for different skus here
+        // and we can ever reuse outr pet an buy methods , but first we need to have a MAP with each sku and each purachase
+        //
+
+        return returnbool;
     }
 
     public void async() {
@@ -121,5 +189,12 @@ public class Main extends Game {
         SaveMngr.saveStats(gameStage.gameScript.fpc);
         super.dispose();
         mainController.signOut();
+    }
+
+    public static void setPlatformResolver (PlatformResolver platformResolver) {
+        m_platformResolver = platformResolver;
+    }
+    public static PlatformResolver getPlatformResolver () {
+        return m_platformResolver;
     }
 }
