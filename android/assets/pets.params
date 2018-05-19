@@ -28,7 +28,7 @@
 },
 {
 	class: com.fd.etf.utils.SaveMngr$PetJson,
-	sku: cat_pet_2,
+	sku: cat_pet_5,
 	sku_discount: cat_pet_discount,
 	name: CAT,
 	description: Likestoeatfur,

@@ -46,7 +46,7 @@ public class Main extends Game {
 
         // ---- IAP: define products ---------------------
         purchaseManagerConfig = new PurchaseManagerConfig();
-        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_5"));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Main extends Game {
     protected boolean checkTransaction (String ID, boolean isRestore) {
         boolean returnbool = false;
 
-        if ("cat_pet_2".equals(ID)) {
+        if ("cat_pet_5".equals(ID)) {
             Gdx.app.log("checkTransaction", "full version found!");
 
             //----- put your logic for full version here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
