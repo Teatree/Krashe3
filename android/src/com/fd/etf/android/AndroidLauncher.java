@@ -27,7 +27,7 @@ import java.io.File;
 
 public class AndroidLauncher extends AndroidApplication implements AllController {
 
-    private EtfIAPhelper iapHelper;
+//    private EtfIAPhelper iapHelper;
     private EtfAdsHelper adsHelper;
     private EtfPlayServicesHelper psHelper;
     private Main game;
@@ -57,10 +57,10 @@ public class AndroidLauncher extends AndroidApplication implements AllController
         psHelper.setupPlayServices();
     }
 
-    private void setupIAP() {
-        iapHelper = new EtfIAPhelper(this);
-        iapHelper.setupIAP();
-    }
+//    private void setupIAP() {
+//        iapHelper = new EtfIAPhelper(this);
+//        iapHelper.setupIAP();
+//    }
 
 
     @Override
@@ -150,45 +150,42 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        iapHelper.onDestroy();
+//        iapHelper.onDestroy();
     }
 
     public void removeAds() {
-        iapHelper.iapRemoveAds();
+        game.getPlatformResolver().requestPurchase("no_ads______2");
     }
 
     @Override
     public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
-        iapHelper.iapGetPhoenix(gameStage, phoenix);
+        game.getPlatformResolver().requestPurchase(phoenix.sku);
     }
 
     @Override
     public void getBJDouble(GameStage gameStage, Upgrade bj) {
-        iapHelper.iapGetBj(gameStage, bj);
+        game.getPlatformResolver().requestPurchase(bj.sku);
     }
-
 
     @Override
     public void getPet(GameStage gameStage, PetComponent petComponent) {
 //        iapHelper.iapGetPet(gameStage, petComponent);
-        game.getPlatformResolver().requestPurchase("cat_pet_5");
+        game.getPlatformResolver().requestPurchase(petComponent.sku);
     }
 
     @Override
     public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
-        iapHelper.iapGetPhoenixDiscount(gameStage, phoenix);
-
+        game.getPlatformResolver().requestPurchase(phoenix.sku_discount);
     }
 
     @Override
     public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
-        iapHelper.iapGetBjDiscount(gameStage, bj);
+        game.getPlatformResolver().requestPurchase(bj.sku_discount);
     }
-
 
     @Override
     public void getPetDiscount(GameStage gameStage, PetComponent petComponent) {
-        iapHelper.iapGetPetDiscount(gameStage, petComponent);
+        game.getPlatformResolver().requestPurchase(petComponent.sku_discount);
     }
 
     @Override
@@ -198,14 +195,18 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void restorePurchases(GameStage gameStage) throws Exception {
-        iapHelper.restorePurchases(gameStage);
+        game.getPlatformResolver().requestPurchaseRestore();
     }
 
     //--------------------------PLAY SERVICES -----------------------------------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        psHelper.onActivityResult(requestCode, resultCode, data);
+//        try{
+            super.onActivityResult(requestCode, resultCode, data);
+            psHelper.onActivityResult(requestCode, resultCode, data);
+//        }catch (Exception e){
+//            System.err.println(e + "I'm a happy error!");
+//        }
     }
 
     @Override
@@ -263,4 +264,17 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public void openFB() {
         Gdx.net.openURI("https://www.facebook.com/Eat-The-Fly-2121200318165116/");
     }
+
+    public boolean receivedResponse;
+
+    @Override
+    public void setReceivedResponse(boolean b) {
+        receivedResponse = b;
+    }
+
+    @Override
+    public boolean getReceivedResponse() {
+        return receivedResponse;
+    }
+
 }

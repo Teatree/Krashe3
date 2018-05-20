@@ -54,4 +54,7 @@ public interface AllController extends PlayServices {
 
     void openFB();
 
+    void setReceivedResponse(boolean b);
+
+    boolean getReceivedResponse();
 }

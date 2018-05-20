@@ -54,6 +54,10 @@ public class PetSystem extends IteratingSystem {
     protected void processEntity(Entity e, float deltaTime) {
         PetComponent pc = mapper.get(e);
 
+        System.err.println("PS - pc.name: " + pc.name);
+        System.err.println("PS - pc.bought: " + pc.bought);
+        System.err.println("PS - pc.enabled: " + pc.enabled);
+
         if(FlowerPublicComponent.currentPet != null && pc.petCannon != null) {
             counter++;
 

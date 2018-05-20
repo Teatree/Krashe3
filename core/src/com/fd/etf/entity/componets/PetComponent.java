@@ -105,6 +105,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     @Override
     public void apply(GameStage gameStage) {
+        System.out.println(">>> apply >> " + this.name + " sku: " + this.sku);
         this.enabled = true;
         gameStage.gameScript.hideCurrentPet();
         disablePetItems(gameStage);
@@ -115,7 +116,6 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
                 petComponent.enabled = false;
             }
         }
-
     }
 
     @Override
@@ -133,17 +133,20 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     @Override
     public void buyAndUse(GameStage gameStage) {
+        System.out.println(">>> buy and use pet > " + this.name + " sku: " + this.sku);
         this.bought = true;
         if (FlowerPublicComponent.currentPet != null) {
-            FlowerPublicComponent.currentPet.tryPeriod = false;
-        }
+            FlowerPublicComponent.currentPet.tryPeriod = false; // Seriously? Any current pet you just turn try period to false?
+        }                                                       // What if I changed my current pet while having a try period
 //        gameStage.gameScript.fpc.currentPet = this;
         apply(gameStage);
     }
 
     @Override
     public void buyHard(GameStage gameStage) {
-        Main.mainController.getPet(gameStage, this);
+        if(Main.mainController.isWifiConnected()) {
+            Main.mainController.getPet(gameStage, this);
+        }
     }
 
     @Override

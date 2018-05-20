@@ -15,9 +15,9 @@ public class EtfIAPhelper {
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10001;
-    static final String SKU_NO_ADS = "no_ads";
-    static final String SKU_BJ = "bj";
-    static final String SKU_PHOENIX = "phoenix";
+    static final String SKU_NO_ADS = "no_ads______2";
+    static final String SKU_BJ = "bj_upgrade";
+    static final String SKU_PHOENIX = "phoenix_____2";
 
     // pets
     static final String SKU_CAT_PET = "cat_pet";
@@ -29,8 +29,8 @@ public class EtfIAPhelper {
 
 //    static final String SKU_PET = "Revive";
 
-    static final String SKU_DISCOUNT_BJ = "bj_promo";
-    static final String SKU_DISCOUNT_PHOENIX = "phoenix_promo";
+    static final String SKU_DISCOUNT_BJ = "bj_upgrade_discount______2";
+    static final String SKU_DISCOUNT_PHOENIX = "phoenix_discount";
 
 
     IabHelper mHelper;

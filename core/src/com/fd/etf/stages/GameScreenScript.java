@@ -659,6 +659,9 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     public void initPet() {
 //        hideCurrentPet();
+        if(FlowerPublicComponent.currentPet != null)
+            System.out.println(" -- currentPet enabled?: " + FlowerPublicComponent.currentPet.enabled);
+
         if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.enabled) {
             FlowerPublicComponent.currentPet.gameStage = gameStage;
             loadPetFromLib();

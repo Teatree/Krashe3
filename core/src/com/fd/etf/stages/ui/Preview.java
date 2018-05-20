@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.Main;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
@@ -13,7 +14,9 @@ import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
 import com.uwsoft.editor.renderer.components.label.LabelComponent;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
+import com.uwsoft.editor.renderer.systems.action.data.ActionData;
 
+import javax.swing.*;
 import java.util.List;
 
 import static com.fd.etf.entity.componets.ShopItem.HARD;
@@ -520,22 +523,111 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
-                        SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
 
                         if (vc.currencyType.equals(HARD)) {
                             vc.buyHard(gameStage);
 
-                            if (!vc.bought) {
-                                initBuyButton(vc);
-                            } else {
-                                initEnableButton(vc);
-                                initDisableButton(vc);
-                            }
+                            // HARD CURRENCY then do lots of checks on whether android purchcase was successful
+                            ActionComponent ac = new ActionComponent();
+                            Actions.checkInit();
+                            ac.dataArray.add(Actions.sequence(
+                                    Actions.delay(1f),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(Main.mainController.getReceivedResponse() == true){
+                                                //add component that cheks every 10 seconds for 2 minutes
+
+                                                // buy stuff
+                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                                                vc.apply(gameStage);
+                                                // renew graphics
+                                                showPreview(vc, false, true);
+
+                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                                                // get out of shitty loop
+                                                btnBuy.remove(ActionComponent.class);
+                                            }
+                                        }
+                                    }),
+                                    Actions.delay(10f),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(Main.mainController.getReceivedResponse() == true){
+                                                //add component that cheks every 10 seconds for 2 minutes
+
+                                                // buy stuff
+                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                                                vc.apply(gameStage);
+                                                // renew graphics
+                                                showPreview(vc, false, true);
+
+                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                                                // get out of shitty loop
+                                                btnBuy.remove(ActionComponent.class);
+                                            }
+                                        }
+                                    }),
+                                    Actions.delay(10f),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(Main.mainController.getReceivedResponse() == true){
+                                                //add component that cheks every 10 seconds for 2 minutes
+
+                                                // buy stuff
+                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                                                vc.apply(gameStage);
+                                                // renew graphics
+                                                showPreview(vc, false, true);
+
+                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                                                // get out of shitty loop
+                                                btnBuy.remove(ActionComponent.class);
+                                            }
+                                        }
+                                    }),
+                                    Actions.delay(10f),
+                                    Actions.run(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(Main.mainController.getReceivedResponse() == true){
+                                                //add component that cheks every 10 seconds for 2 minutes
+
+                                                // buy stuff
+                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                                                vc.apply(gameStage);
+                                                // renew graphics
+                                                showPreview(vc, false, true);
+
+                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                                                // get out of shitty loop
+                                                btnBuy.remove(ActionComponent.class);
+                                            }
+                                        }
+                                    })));
+
+                            btnBuy.add(ac);
                         } else {
+                            // if SOFT CURRENCY, then just play some sound and buys and Use
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+
                             vc.buyAndUse(gameStage);
                             putInPlaceNewIconPosition();
                         }
+
+                        //after all checks do the reload anyway
                         showPreview(vc, false, true);
+
                         ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
                         ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
                     }

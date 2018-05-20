@@ -55,8 +55,8 @@ public class Upgrade extends ShopItem{
         phoenix.description = "Get 1 extra life~every new game";
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
-        phoenix.sku_discount = "phoenix";
-        phoenix.sku = "phoenix_discount";
+        phoenix.sku_discount = "phoenix_discount";
+        phoenix.sku = "phoenix_____2";
         phoenix.shopIcon = "itemphoenixUPGRADE";
         return phoenix;
     }
@@ -73,7 +73,7 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = HARD;
         bjd.sku = "bj_upgrade";
-        bjd.sku_discount = "bj_upgrade_discount";
+        bjd.sku_discount = "bj_discount______2";
         bjd.shopIcon = "itemdoubleUPGRDE";
         return bjd;
     }
@@ -97,12 +97,14 @@ public class Upgrade extends ShopItem{
 
     @Override
     public void buyHard(GameStage gameStage) {
-        if (upgradeType.equals(UpgradeType.PHOENIX)){
-            Main.mainController.getPhoenix(gameStage, this);
-        }
+        if(Main.mainController.isWifiConnected()) {
+            if (upgradeType.equals(UpgradeType.PHOENIX)) {
+                Main.mainController.getPhoenix(gameStage, this);
+            }
 
-        if (upgradeType.equals(UpgradeType.BJ_DOUBLE)){
-            Main.mainController.getBJDouble(gameStage, this);
+            if (upgradeType.equals(UpgradeType.BJ_DOUBLE)) {
+                Main.mainController.getBJDouble(gameStage, this);
+            }
         }
     }
 

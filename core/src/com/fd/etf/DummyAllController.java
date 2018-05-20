@@ -161,4 +161,16 @@ public class DummyAllController implements AllController {
     public void getAchievements() {
 
     }
+
+    public boolean receivedResponse;
+
+    @Override
+    public void setReceivedResponse(boolean b) {
+        receivedResponse = b;
+    }
+
+    @Override
+    public boolean getReceivedResponse() {
+        return true;
+    }
 }

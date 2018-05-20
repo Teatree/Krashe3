@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fd.etf.entity.componets.PetComponent;
+import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.PlatformResolver;
@@ -46,7 +47,22 @@ public class Main extends Game {
 
         // ---- IAP: define products ---------------------
         purchaseManagerConfig = new PurchaseManagerConfig();
-        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_5"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("raven_pet"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("raven_pet_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("raven_pet_discount______2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("dragon_pet"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("dragon_pet______2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("dragon_pet_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix_____2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_discount______2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("no_ads"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("no_ads______2"));
     }
 
     @Override
@@ -100,25 +116,41 @@ public class Main extends Game {
     protected boolean checkTransaction (String ID, boolean isRestore) {
         boolean returnbool = false;
 
-        if ("cat_pet_5".equals(ID)) {
-            Gdx.app.log("checkTransaction", "full version found!");
+        Gdx.app.log("checkTransaction", "cat was found!");
 
-            //----- put your logic for full version here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //----- put your logic for full version here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-            // is petComponent real?
+        // get pet
+        for (PetComponent p: gameStage.gameScript.fpc.pets) {
 
-            // get pet
-            for (PetComponent p: gameStage.gameScript.fpc.pets) {
-                if(p.sku.equalsIgnoreCase("cat_pet"))
-                    p.buyAndUse(gameStage);
+            if(ID.equalsIgnoreCase(p.sku) || ID.equalsIgnoreCase(p.sku_discount)) {
+                Gdx.app.log("checkTransaction", "we've got a pet!");
+                p.buyAndUse(gameStage);
             }
-            returnbool = true;
         }
+
+        //get upgrade
+        if (ID.equalsIgnoreCase("phoenix") || ID.equalsIgnoreCase("phoenix_discount")){
+            Gdx.app.log("checkTransaction", "we've got a extra life!");
+            gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).buyAndUse(gameStage);
+        }
+        if (ID.equalsIgnoreCase("bj") || ID.equalsIgnoreCase("bj_discount")){
+            Gdx.app.log("checkTransaction", "we've got a double coins!");
+            gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE).buyAndUse(gameStage);
+        }
+
+        if (ID.equalsIgnoreCase("no_ads")){
+            gameStage.gameScript.fpc.settings.noAds = true;
+        }
+
+        returnbool = true;
+
 
         // there are gogn to be checks for different skus here
         // and we can ever reuse outr pet an buy methods , but first we need to have a MAP with each sku and each purachase
         //
 
+        mainController.setReceivedResponse(true);
         return returnbool;
     }
 

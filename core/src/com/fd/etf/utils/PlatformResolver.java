@@ -1,10 +1,7 @@
 package com.fd.etf.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.pay.PurchaseManager;
-import com.badlogic.gdx.pay.PurchaseManagerConfig;
-import com.badlogic.gdx.pay.PurchaseObserver;
-import com.badlogic.gdx.pay.PurchaseSystem;
+import com.badlogic.gdx.pay.*;
 import com.fd.etf.Main;
 
 public abstract class PlatformResolver {
@@ -44,6 +41,7 @@ public abstract class PlatformResolver {
     }
 
     public void requestPurchase (String productString) {
+        game.mainController.setReceivedResponse(false);
         if (mgr != null) {
             mgr.purchase(productString);	// dont call PurchaseSystem... because it may bind openIAB!
             Gdx.app.log("gdx-pay", "calls purchasemanager.purchase()");
@@ -54,7 +52,7 @@ public abstract class PlatformResolver {
 
     public void requestPurchaseRestore () {
         if (mgr != null) {
-            mgr.purchaseRestore();	// dont call PurchaseSystem.purchaseRestore(); because it may bind openIAB!
+            mgr.purchaseRestore();	// donat call PurchaseSystem.purchaseRestore(); because it may bind openIAB!
             Gdx.app.log("gdx-pay", "calls purchasemanager.purchaseRestore()");
         } else {
             Gdx.app.log("gdx-pay", "ERROR: requestPurchaseRestore(): purchaseManager == null");
@@ -72,4 +70,5 @@ public abstract class PlatformResolver {
             mgr = null;
         }
     }
+
 }
