@@ -198,6 +198,7 @@ public class GameOverDialog extends AbstractDialog {
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             //System.out.println("gameStage.gameScript.fpc.totalScore: " + gameStage.gameScript.fpc.totalScore);
             //System.out.println("gameStage.gameScript.fpc.score: " + gameStage.gameScript.fpc.score);
+            gameStage.gameScript.submitScoreToGooglePlay();
             gameStage.initResultWithAds();
         }
     }

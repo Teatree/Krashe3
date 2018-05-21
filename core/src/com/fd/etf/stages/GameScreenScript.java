@@ -854,12 +854,12 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         } else {
             isGameOver.set(false);
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
+            submitScoreToGooglePlay();
             gameStage.initResultWithAds();
         }
     }
 
-    //TODO: Call it
-    private void submitScoreToGooglePlay() {
+    public void submitScoreToGooglePlay() {
         if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
             Main.mainController.submitScore(fpc.score);
         }
