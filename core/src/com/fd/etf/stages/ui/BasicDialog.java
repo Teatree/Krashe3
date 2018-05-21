@@ -42,6 +42,7 @@ public class BasicDialog extends AbstractDialog {
     public static final String TYPE_RESTORE_PURCH_RESULT = "restore_purchases_res";
     public static final String TYPE_EXIT = "exit";
     public static final String TYPE_ERROR = "error";
+    public static final String TYPE_ERROR_SETTINGS = "error_settings";
 
     private static final int DIALOG_Y = 130;
     private static final int DIALOG_X = 630;
@@ -153,8 +154,13 @@ public class BasicDialog extends AbstractDialog {
             }
             case TYPE_ERROR : {
                 addShadow(0.7f, 259);
-
                 showErrorResult();
+                isSecondDialogClosed.set(false);
+                break;
+            }
+            case TYPE_ERROR_SETTINGS : {
+                addShadow(0.7f, 259);
+                showErrorSettings();
                 isSecondDialogClosed.set(false);
                 break;
             }
@@ -262,6 +268,27 @@ public class BasicDialog extends AbstractDialog {
                     }
                 });
 
+        cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        cancelBtn.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+    }
+
+    private void showErrorSettings() {
+        dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+        LabelComponent lc = text.getComponent(LabelComponent.class);
+        if(Main.mainController.isWifiConnected() == false) {
+            lc.text.replace(0, lc.text.capacity(), "INTERNET CONNECTION \n" + "NOT FOUND");
+        }else{
+            lc.text.replace(0, lc.text.capacity(), ERROR);
+        }
+        text.getComponent(TransformComponent.class).x = -99;
+        okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
+        okBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(okBtn) {
+                    @Override
+                    public void clicked() {
+                        close(dialogE);
+                    }
+                });
         cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
         cancelBtn.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
     }

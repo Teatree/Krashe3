@@ -94,10 +94,10 @@ public class Settings extends AbstractDialog {
                     public void clicked() {
                         checkSecondaryDialog();
                         close(settingsE);
-                        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+                        if (BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()) {
                             BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.2f);
                         }
-                        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+                        if (BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()) {
                             BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.2f);
                         }
                     }
@@ -162,11 +162,15 @@ public class Settings extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (!isSecondDialogOpen.get() && isActive) {
-                            try {
-                                Main.mainController.restorePurchases(gameStage);
-                                dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
-                            } catch (Exception e) {
-                                dialog.show(BasicDialog.ERROR);
+                            if (Main.mainController.isWifiConnected()) {
+                                try {
+                                    Main.mainController.restorePurchases(gameStage);
+                                    dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
+                                } catch (Exception e) {
+                                    dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
+                                }
+                            } else {
+                                dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
                             }
                         }
                         checkSecondaryDialog();
@@ -247,10 +251,10 @@ public class Settings extends AbstractDialog {
         ac.dataArray.add(Actions.moveTo(SETTINGS_X, SETTINGS_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         settingsE.add(ac);
 
-        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()){
+        if (BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.isPlaying()) {
             BackgroundMusicMgr.getBackgroundMusicMgr().musicMenu.setVolume(0.05f);
         }
-        if(BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()){
+        if (BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()) {
             BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
         }
     }
