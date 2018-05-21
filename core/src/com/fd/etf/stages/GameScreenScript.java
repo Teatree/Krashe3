@@ -847,13 +847,17 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void endGame() {
-        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown /*&& Main.mainController.isWifiConnected()*/; // PC: need to remove this part
+        shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown && Main.mainController.isWifiConnected(); // PC: need to remove this part
 
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
+        } else {
+            //TODO delay?
+            gameStage.initResultWithAds();
         }
     }
 
+    //TODO: Call it
     private void submitScoreToGooglePlay() {
         if (Main.mainController.isWifiConnected() && Main.mainController.isSignedIn()) {
             Main.mainController.submitScore(fpc.score);
