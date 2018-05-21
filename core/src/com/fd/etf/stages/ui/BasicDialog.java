@@ -3,6 +3,7 @@ package com.fd.etf.stages.ui;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.Main;
 import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
@@ -25,7 +26,7 @@ public class BasicDialog extends AbstractDialog {
     private static final String RESTORE_ALL_PURCHASES = "ARE YOU SURE YOU'D LIKE TO \n" + " RESTORE ALL YOUR PURCHASES?";
     private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE \n" + "RESTORED";
     public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS \n" + "RESET";
-    public static final String ERROR = "Woops! an error";
+    public static final String ERROR = "UNEXPECTED ERROR \n" + "OCCURRED!";
     private static final String BYE_BYE_MESSAGE = "ARE YOU SURE YOU'D LIKE TO \n" + " LEAVE THE GAME? :(";
 
     private static final String BASIC_DIALOG = "popup_basic_lib";
@@ -151,6 +152,8 @@ public class BasicDialog extends AbstractDialog {
                 break;
             }
             case TYPE_ERROR : {
+                addShadow(0.7f, 259);
+
                 showErrorResult();
                 isSecondDialogClosed.set(false);
                 break;
@@ -158,7 +161,7 @@ public class BasicDialog extends AbstractDialog {
         }
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
-        ac.dataArray.add(Actions.moveTo(DIALOG_X, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
+        ac.dataArray.add(Actions.moveTo(dialogE.getComponent(TransformComponent.class).x, DIALOG_Y, POPUP_MOVE_DURATION, Interpolation.exp10Out));
         dialogE.add(ac);
     }
 
@@ -240,7 +243,7 @@ public class BasicDialog extends AbstractDialog {
                         GameStage.changedFlowerAni = true;
                         GameStage.changedLeavesAni = true;
 //                        AbstractDialog.isDialogOpen.set(false);
-//                        AbstractDialog.isSecondDialogOpen.set(false);
+                        isSecondDialogOpen.set(true);
                         gameStage.initMenu();
                     }
                 });
@@ -265,8 +268,18 @@ public class BasicDialog extends AbstractDialog {
 
     private void showErrorResult() {
         dialogE.getComponent(ZIndexComponent.class).setZIndex(170);
+        dialogE.getComponent(TransformComponent.class).x = 300;
+        dialogE.getComponent(TransformComponent.class).scaleX = 1f;
+        dialogE.getComponent(TransformComponent.class).scaleY = 1f;
+        dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
         LabelComponent lc = text.getComponent(LabelComponent.class);
-        lc.text.replace(0, lc.text.capacity(), ERROR);
+        if(Main.mainController.isWifiConnected() == false) {
+            lc.text.replace(0, lc.text.capacity(), "INTERNET CONNECTION \n" + "NOT FOUND");
+        }else if(Main.mainController.getReceivedErrorResponse() == true){
+            lc.text.replace(0, lc.text.capacity(), "CAN'T PURCHASE THIS ITEM. \n" + "YOU ALREADY HAVE IT!");
+        }else{
+            lc.text.replace(0, lc.text.capacity(), ERROR);
+        }
         text.getComponent(TransformComponent.class).x = -99;
         okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
         okBtn.getComponent(ButtonComponent.class).addListener(
@@ -274,6 +287,8 @@ public class BasicDialog extends AbstractDialog {
                     @Override
                     public void clicked() {
                         close(dialogE);
+
+                        checkSecondaryDialog();
                     }
                 });
 

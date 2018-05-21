@@ -57,4 +57,8 @@ public interface AllController extends PlayServices {
     void setReceivedResponse(boolean b);
 
     boolean getReceivedResponse();
+
+    void setReceivedErrorResponse(boolean b);
+
+    boolean getReceivedErrorResponse();
 }

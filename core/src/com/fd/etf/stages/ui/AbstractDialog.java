@@ -51,13 +51,13 @@ public class AbstractDialog {
     }
 
     protected void addShadow(){
-        addShadow(0.7f);
+        addShadow(0.7f, 59);
     }
 
-    protected void addShadow(float alpha) {
+    protected void addShadow(float alpha, int zIndex) {
         shadowE.getComponent(TransformComponent.class).x = 0;
         shadowE.getComponent(TransformComponent.class).y = 0;
-        shadowE.getComponent(ZIndexComponent.class).setZIndex(59);
+        shadowE.getComponent(ZIndexComponent.class).setZIndex(zIndex);
         shadowE.getComponent(TintComponent.class).color.a = 0;
 
         ActionComponent ac = new ActionComponent();

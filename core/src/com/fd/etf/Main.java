@@ -106,7 +106,8 @@ public class Main extends Game {
 
         @Override
         public void handlePurchaseError (Throwable e) {	//--- Amazon IAP: this will be called for cancelled
-            throw new GdxRuntimeException(e);
+//            throw new GdxRuntimeException(e);
+            mainController.setReceivedErrorResponse(true);
         }
         @Override
         public void handlePurchaseCanceled () {	//--- will not be called by amazonIAP

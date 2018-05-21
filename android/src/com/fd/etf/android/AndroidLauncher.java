@@ -84,8 +84,14 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public boolean isWifiConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo i = cm.getActiveNetworkInfo();
-        return i != null && i.isConnected() && i.isAvailable();
-//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (i == null) {
+            return false;
+        }
+        if (!i.isConnected()) {
+            return false;
+        }
+        return i.isAvailable();
+        //        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //        NetworkInfo mobileInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 //
 //        return (wifiInfo != null && wifiInfo.isConnected());
@@ -259,6 +265,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     public boolean receivedResponse;
+    public boolean receivedErrorResponse;
 
     @Override
     public void setReceivedResponse(boolean b) {
@@ -269,5 +276,13 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public boolean getReceivedResponse() {
         return receivedResponse;
     }
+
+    @Override
+    public boolean getReceivedErrorResponse() {
+        return receivedErrorResponse;
+    }
+
+    @Override
+    public void setReceivedErrorResponse(boolean a){receivedErrorResponse = a;};
 
 }

@@ -1,1 +1,38 @@
-{"projectName":"Krashe_Overlap2d_prj2","projectVersion":"0.0.9","projectMainExportPath":"C:\\Project\\Krashe3\\android\\assets","lastOpenScene":"MainScene","texturepackerWidth":"2048","texturepackerHeight":"2048","sceneConfigs":[{"sceneName":"MainScene","cameraPosition":[1314.5994,-24.468155]},{"sceneName":"ShopScene","cameraPosition":[2233.3608,-596.3112]},{"sceneName":"MenuScene","cameraPosition":[1029.0715,4.6469116]},{"sceneName":"ResultScene","cameraPosition":[1559.822,-1131.9226]},{"sceneName":"ShowcaseScene","cameraPosition":[763.1793,467.02026]},{"sceneName":"LoadingScene","cameraPosition":[561,491]}]}
+{
+	"projectName": "Krashe_Overlap2d_prj2",
+	"projectVersion": "0.0.9",
+	"projectMainExportPath": "C:\\Project\\Krashe_reimported\\Krashe3\\android\\assets",
+	"lastOpenScene": "MainScene",
+	"texturepackerWidth": "2048",
+	"texturepackerHeight": "2048",
+	"sceneConfigs": [{
+		"sceneName": "MainScene",
+		"cameraPosition": [1314.5994,
+		-24.468155]
+	},
+	{
+		"sceneName": "ShopScene",
+		"cameraPosition": [2233.3608,
+		-596.3112]
+	},
+	{
+		"sceneName": "MenuScene",
+		"cameraPosition": [1029.0715,
+		4.6469116]
+	},
+	{
+		"sceneName": "ResultScene",
+		"cameraPosition": [1559.822,
+		-1131.9226]
+	},
+	{
+		"sceneName": "ShowcaseScene",
+		"cameraPosition": [763.1793,
+		467.02026]
+	},
+	{
+		"sceneName": "LoadingScene",
+		"cameraPosition": [561,
+		491]
+	}]
+}

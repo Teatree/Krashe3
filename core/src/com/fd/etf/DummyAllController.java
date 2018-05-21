@@ -174,4 +174,12 @@ public class DummyAllController implements AllController {
     public boolean getReceivedResponse() {
         return true;
     }
+
+    @Override
+    public void setReceivedErrorResponse(boolean a){};
+
+    @Override
+    public boolean getReceivedErrorResponse() {
+        return false;
+    }
 }

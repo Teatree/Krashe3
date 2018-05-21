@@ -42,6 +42,7 @@ public abstract class PlatformResolver {
 
     public void requestPurchase (String productString) {
         Main.mainController.setReceivedResponse(false);
+        Main.mainController.setReceivedErrorResponse(false);
         if (mgr != null) {
             mgr.purchase(productString);	// dont call PurchaseSystem... because it may bind openIAB!
             Gdx.app.log("gdx-pay", "calls purchasemanager.purchase()");

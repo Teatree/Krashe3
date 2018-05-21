@@ -208,7 +208,8 @@ public class Preview extends AbstractDialog {
                 addListener(new ImageButtonListener(btnClose) {
                     @Override
                     public void clicked() {
-                        checkAndClose();
+                        if(isSecondDialogOpen.get() == false)
+                            checkAndClose();
                     }
                 });
     }
@@ -225,7 +226,6 @@ public class Preview extends AbstractDialog {
             iconE.getComponent(TransformComponent.class).x = infoTag.getComponent(TransformComponent.class).x + 20;
             iconE.getComponent(TransformComponent.class).y = UNKNOWN_ICON_Y;
             iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
-            playYellowStarsParticleEffect(gameStage, 544, 467);
         } else {
             iconE.getComponent(TransformComponent.class).x = INFO_TAG_X + ICON_X_RELATIVE;
             iconE.getComponent(TransformComponent.class).y = INFO_TAG_Y + ICON_Y_RELATIVE;
@@ -377,7 +377,7 @@ public class Preview extends AbstractDialog {
         iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
-            addShadow(0.8f);
+            addShadow(0.8f, 59);
             infoTag.getComponent(TransformComponent.class).y = INFO_TAG_HIDE_Y - 10;
             ActionComponent ac = new ActionComponent();
             Actions.checkInit();
@@ -529,7 +529,7 @@ public class Preview extends AbstractDialog {
                 @Override
                 public void clicked() {
                     try {
-                        if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
+                        if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished() && isSecondDialogOpen.get() == false) {
                             if (vc.currencyType.equals(HARD)) {
 
                                 if (!Main.mainController.isWifiConnected()) {
@@ -540,7 +540,6 @@ public class Preview extends AbstractDialog {
                                     // HARD CURRENClnY then do lots of checks on whether android purchcase was successful
                                     btnBuy.add(getActionForHardCurrency(vc));
                                 }
-
 
                             } else {
                                 // if SOFT CURRENCY, then just play some sound and buys and Use
@@ -569,7 +568,7 @@ public class Preview extends AbstractDialog {
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
         ac.dataArray.add(Actions.sequence(
-                Actions.delay(1f),
+                Actions.delay(0.5f),
                 Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -578,6 +577,7 @@ public class Preview extends AbstractDialog {
 
                             // buy stuff
                             SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
                             vc.apply(gameStage);
                             // renew graphics
                             showPreview(vc, false, true);
@@ -587,10 +587,14 @@ public class Preview extends AbstractDialog {
 
                             // get out of shitty loop
                             btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
                         }
                     }
                 }),
-                Actions.delay(10f),
+                Actions.delay(0.5f),
                 Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -599,6 +603,8 @@ public class Preview extends AbstractDialog {
 
                             // buy stuff
                             SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
+
                             vc.apply(gameStage);
                             // renew graphics
                             showPreview(vc, false, true);
@@ -608,10 +614,14 @@ public class Preview extends AbstractDialog {
 
                             // get out of shitty loop
                             btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
                         }
                     }
                 }),
-                Actions.delay(10f),
+                Actions.delay(0.5f),
                 Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -620,6 +630,8 @@ public class Preview extends AbstractDialog {
 
                             // buy stuff
                             SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
+
                             vc.apply(gameStage);
                             // renew graphics
                             showPreview(vc, false, true);
@@ -629,10 +641,14 @@ public class Preview extends AbstractDialog {
 
                             // get out of shitty loop
                             btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
                         }
                     }
                 }),
-                Actions.delay(10f),
+                Actions.delay(0.5f),
                 Actions.run(new Runnable() {
                     @Override
                     public void run() {
@@ -641,6 +657,8 @@ public class Preview extends AbstractDialog {
 
                             // buy stuff
                             SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
+
                             vc.apply(gameStage);
                             // renew graphics
                             showPreview(vc, false, true);
@@ -649,6 +667,68 @@ public class Preview extends AbstractDialog {
                             ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
 
                             // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
+
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            playYellowStarsParticleEffect(gameStage, 544, 467);
+
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            btnBuy.remove(ActionComponent.class);
+                        }else{
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
                             btnBuy.remove(ActionComponent.class);
                         }
                     }
@@ -706,7 +786,7 @@ public class Preview extends AbstractDialog {
                     .addListener(new ImageButtonListener(enableBtn) {
                         @Override
                         public void clicked() {
-                            if (animFinished()) {
+                            if (animFinished() && isSecondDialogOpen.get() == false) {
                                 vc.apply(gameStage);
                                 showPreview(vc, false, false);
                                 ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
@@ -738,7 +818,7 @@ public class Preview extends AbstractDialog {
                     .addListener(new ImageButtonListener(disableBtn) {
                         @Override
                         public void clicked() {
-                            if (animFinished()) {
+                            if (animFinished() && isSecondDialogOpen.get() == false) {
                                 vc.disable(gameStage);
                                 showPreview(vc, false, false);
                                 ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
@@ -780,7 +860,7 @@ public class Preview extends AbstractDialog {
                     @Override
                     public void clicked() {
                         SoundMgr.getSoundMgr().play(SoundMgr.PAPER_FLIP_SHOP);
-                        if (animFinished() && isPrevBtnActive(vc)) {
+                        if (animFinished() && isPrevBtnActive(vc) && isSecondDialogOpen.get() == false) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_RIGHT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
@@ -795,6 +875,7 @@ public class Preview extends AbstractDialog {
                             if (vc.currencyType.equals(SOFT) && (gameStage.shopScript.allSoftItems.indexOf(vc)) % 8 == 0) {
                                 gameStage.shopScript.scrollBagsOnePageLeft();
                             }
+
                         }
                     }
                 });
@@ -853,7 +934,7 @@ public class Preview extends AbstractDialog {
 
                     @Override
                     public void clicked() {
-                        if (isNextBtnActive(vc) && animFinished()) {
+                        if (isNextBtnActive(vc) && animFinished() && isSecondDialogOpen.get() == false) {
                             ActionComponent ac = new ActionComponent();
                             Actions.checkInit();
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));

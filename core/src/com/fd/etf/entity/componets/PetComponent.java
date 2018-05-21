@@ -144,9 +144,7 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
 
     @Override
     public void buyHard(GameStage gameStage) {
-        if(Main.mainController.isWifiConnected()) {
-            Main.mainController.getPet(gameStage, this);
-        }
+        Main.mainController.getPet(gameStage, this);
     }
 
     @Override

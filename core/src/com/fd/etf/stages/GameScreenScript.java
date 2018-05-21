@@ -853,6 +853,8 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
             showGameOverDialog();
         } else {
             //TODO delay?
+            isGameOver.set(false);
+            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             gameStage.initResultWithAds();
         }
     }
