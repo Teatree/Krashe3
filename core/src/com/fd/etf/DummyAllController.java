@@ -10,7 +10,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public boolean isWifiConnected() {
-        return false;
+        return true;
     }
 
     @Override

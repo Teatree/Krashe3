@@ -122,7 +122,7 @@ public class BasicDialog extends AbstractDialog {
         addShadow();
         AbstractDialog.isSecondDialogOpen.set(true);
         dialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
-
+        dialogE.getComponent(TintComponent.class).color.a = 1;
         for (Entity e : dialogE.getComponent(NodeComponent.class).children) {
             e.getComponent(TintComponent.class).color.a = 1;
         }

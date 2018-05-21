@@ -56,7 +56,7 @@ public class Upgrade extends ShopItem{
         phoenix.enabled = false;
         phoenix.currencyType = HARD;
         phoenix.sku_discount = "phoenix_discount";
-        phoenix.sku = "phoenix_____2";
+        phoenix.sku = "phoenix";
         phoenix.shopIcon = "itemphoenixUPGRADE";
         return phoenix;
     }

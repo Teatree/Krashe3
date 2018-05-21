@@ -215,7 +215,6 @@ public class Preview extends AbstractDialog {
     }
 
     public void initBoughtPreviewIcon(boolean playAni) {
-
         removeIconE();
         CompositeItemVO tempItemC = gameStage.sceneLoader.loadVoFromLibrary(vc.shopIcon);
         iconE = gameStage.sceneLoader.entityFactory.createEntity(gameStage.sceneLoader.getRoot(), tempItemC);
@@ -374,7 +373,6 @@ public class Preview extends AbstractDialog {
         initNextButton(vc);
 
         initIcon(vc, jump, justBoughtAni);
-        iconE.getComponent(ZIndexComponent.class).setZIndex(101);
 
         if (jump) {
             addShadow(0.8f, 59);
@@ -411,6 +409,7 @@ public class Preview extends AbstractDialog {
         }
         infoTag.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
         buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
+        iconE.getComponent(ZIndexComponent.class).setZIndex(infoTag.getComponent(ZIndexComponent.class).getZIndex() + 10);
     }
 
     private void setDescription(ShopItem vc, boolean jump, boolean justBoughtAni) {
@@ -561,7 +560,6 @@ public class Preview extends AbstractDialog {
 
             });
         }
-
     }
 
     private ActionComponent getActionForHardCurrency(final ShopItem vc) {

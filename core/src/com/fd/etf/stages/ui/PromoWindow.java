@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.Main;
 import com.fd.etf.entity.componets.FlowerPublicComponent;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.ShopItem;
@@ -53,6 +54,9 @@ public class PromoWindow extends AbstractDialog {
     private Entity offerIconE;
     private Entity petPromoE;
 
+    private Entity buyBtn;
+    private BasicDialog dialog;
+
     public PromoWindow(GameStage gameStage, ItemWrapper gameItem) {
         super(gameStage);
         this.gameItem = gameItem;
@@ -88,6 +92,10 @@ public class PromoWindow extends AbstractDialog {
         final TransformComponent settingsTc = promoWindowE.getComponent(TransformComponent.class);
         settingsTc.x = FAR_FAR_AWAY_X;
         settingsTc.y = FAR_FAR_AWAY_Y;
+
+        dialog = new BasicDialog(gameStage, gameItem);
+        dialog.init();
+        dialog.parent = this;
     }
 
     public void show() {
@@ -110,7 +118,7 @@ public class PromoWindow extends AbstractDialog {
         ac.dataArray.add(Actions.moveBy(0, -1130, 2, Interpolation.exp10Out)); //KEEP THE MOVEBYY -1130 THAT'S EXACTLY THE MIDDLE OF THE SCREEN
         promoWindowE.add(ac);
 
-        Entity buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);
+        buyBtn = promoWindowE.getComponent(NodeComponent.class).getChild(BUY_DISC_BTN);
 //        buyBtn.getComponent(NodeComponent.class).getChild("lbl1");
         if (buyBtn.getComponent(ButtonComponent.class) == null){
             buyBtn.add(new ButtonComponent());
@@ -121,9 +129,8 @@ public class PromoWindow extends AbstractDialog {
                     @Override
                     public void clicked() {
                         PromoWindow.offer.buyHardDiscount(gameStage);
-                        checkAndClose();
-//                        close(promoWindowE);
-                        ResultScreenScript.active = true;
+
+                        buyBtn.add(getActionForHardCurrency());
                     }
                 });
 
@@ -239,5 +246,113 @@ public class PromoWindow extends AbstractDialog {
         ActionComponent ac2 = new ActionComponent();
         ac2.dataArray.add(Actions.fadeOut(0.8f, Interpolation.exp5));
         shadowE.add(ac2);
+    }
+
+    private ActionComponent getActionForHardCurrency() {
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.sequence(
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            // action component stuff here
+                            checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                             checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            checkAndClose();
+                            ResultScreenScript.active = true;
+                            // get out of shitty loop
+                            buyBtn.remove(ActionComponent.class);
+                        }else if(Main.mainController.getReceivedErrorResponse() == true){
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }else{
+                            dialog.show(BasicDialog.TYPE_ERROR);
+
+                            buyBtn.remove(ActionComponent.class);
+                        }
+                    }
+                })));
+        return ac;
     }
 }

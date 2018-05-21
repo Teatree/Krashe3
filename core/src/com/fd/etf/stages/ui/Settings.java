@@ -257,6 +257,9 @@ public class Settings extends AbstractDialog {
         if (BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.isPlaying()) {
             BackgroundMusicMgr.getBackgroundMusicMgr().musicGame.setVolume(0.05f);
         }
+
+        settingsE.getComponent(TintComponent.class).color.a = 1;
+
     }
 
 
