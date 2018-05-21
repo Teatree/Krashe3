@@ -18,10 +18,11 @@ public class GameSettings {
 
     public int reviveAd_max;
 
+    //TODO: ??????
     public boolean shouldShowLaunchAd() {
-        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
-            return true;
-        }
+//        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
+//            return true;
+//        }
         return true;
     }
 

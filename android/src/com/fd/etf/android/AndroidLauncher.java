@@ -16,7 +16,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.fd.etf.AllController;
 import com.fd.etf.Main;
 import com.fd.etf.android.util.EtfAdsHelper;
-import com.fd.etf.android.util.EtfIAPhelper;
 import com.fd.etf.android.util.EtfPlayServicesHelper;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
@@ -49,8 +48,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
                 ViewGroup.LayoutParams.MATCH_PARENT);
         setContentView(layout);
 
-        game.setPlatformResolver(new GooglePlayResolver(game));
-        game.getPlatformResolver().installIAP();
+        Main.setPlatformResolver(new GooglePlayResolver(game));
+        Main.getPlatformResolver().installIAP();
     }
 
     public void setupPlayServices() {
@@ -85,14 +84,8 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     public boolean isWifiConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo i = cm.getActiveNetworkInfo();
-        if (i == null) {
-            return false;
-        }
-        if (!i.isConnected()) {
-            return false;
-        }
-        return i.isAvailable();
-        //        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return i != null && i.isConnected() && i.isAvailable();
+//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 //        NetworkInfo mobileInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 //
 //        return (wifiInfo != null && wifiInfo.isConnected());
@@ -154,38 +147,38 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     public void removeAds() {
-        game.getPlatformResolver().requestPurchase("no_ads______2");
+        Main.getPlatformResolver().requestPurchase("no_ads______2");
     }
 
     @Override
     public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
-        game.getPlatformResolver().requestPurchase(phoenix.sku);
+        Main.getPlatformResolver().requestPurchase(phoenix.sku);
     }
 
     @Override
     public void getBJDouble(GameStage gameStage, Upgrade bj) {
-        game.getPlatformResolver().requestPurchase(bj.sku);
+        Main.getPlatformResolver().requestPurchase(bj.sku);
     }
 
     @Override
     public void getPet(GameStage gameStage, PetComponent petComponent) {
 //        iapHelper.iapGetPet(gameStage, petComponent);
-        game.getPlatformResolver().requestPurchase(petComponent.sku);
+        Main.getPlatformResolver().requestPurchase(petComponent.sku);
     }
 
     @Override
     public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
-        game.getPlatformResolver().requestPurchase(phoenix.sku_discount);
+        Main.getPlatformResolver().requestPurchase(phoenix.sku_discount);
     }
 
     @Override
     public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
-        game.getPlatformResolver().requestPurchase(bj.sku_discount);
+        Main.getPlatformResolver().requestPurchase(bj.sku_discount);
     }
 
     @Override
     public void getPetDiscount(GameStage gameStage, PetComponent petComponent) {
-        game.getPlatformResolver().requestPurchase(petComponent.sku_discount);
+        Main.getPlatformResolver().requestPurchase(petComponent.sku_discount);
     }
 
     @Override
@@ -195,7 +188,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
 
     @Override
     public void restorePurchases(GameStage gameStage) throws Exception {
-        game.getPlatformResolver().requestPurchaseRestore();
+        Main.getPlatformResolver().requestPurchaseRestore();
     }
 
     //--------------------------PLAY SERVICES -----------------------------------------------------

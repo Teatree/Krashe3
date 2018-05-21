@@ -25,7 +25,7 @@ public class BasicDialog extends AbstractDialog {
     private static final String RESTORE_ALL_PURCHASES = "ARE YOU SURE YOU'D LIKE TO \n" + " RESTORE ALL YOUR PURCHASES?";
     private static final String RESTORE_ALL_PURCHASES_RESULT = "ALL PURCHASES WERE \n" + "RESTORED";
     public static final String RESET_ALL_PROGRESS_RESULT = "YOUR PROGRESS WAS \n" + "RESET";
-    public static final String ERROR = "WE HAD AN ERROR :(";
+    public static final String ERROR = "Woops! an error";
     private static final String BYE_BYE_MESSAGE = "ARE YOU SURE YOU'D LIKE TO \n" + " LEAVE THE GAME? :(";
 
     private static final String BASIC_DIALOG = "popup_basic_lib";
@@ -40,6 +40,7 @@ public class BasicDialog extends AbstractDialog {
     public static final String TYPE_RESET_RESULT = "reset_progress_res";
     public static final String TYPE_RESTORE_PURCH_RESULT = "restore_purchases_res";
     public static final String TYPE_EXIT = "exit";
+    public static final String TYPE_ERROR = "error";
 
     private static final int DIALOG_Y = 130;
     private static final int DIALOG_X = 630;
@@ -149,6 +150,11 @@ public class BasicDialog extends AbstractDialog {
                 showExitMessage();
                 break;
             }
+            case TYPE_ERROR : {
+                showErrorResult();
+                isSecondDialogClosed.set(false);
+                break;
+            }
         }
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();
@@ -240,9 +246,27 @@ public class BasicDialog extends AbstractDialog {
                 });
     }
 
-    private void showRestorePurchResult() {
+     private void showRestorePurchResult() {
         LabelComponent lc = text.getComponent(LabelComponent.class);
         lc.text.replace(0, lc.text.capacity(), RESTORE_ALL_PURCHASES_RESULT);
+        text.getComponent(TransformComponent.class).x = -99;
+        okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
+        okBtn.getComponent(ButtonComponent.class).addListener(
+                new ImageButtonListener(okBtn) {
+                    @Override
+                    public void clicked() {
+                        close(dialogE);
+                    }
+                });
+
+        cancelBtn.getComponent(TransformComponent.class).x = GlobalConstants.FAR_FAR_AWAY_X;
+        cancelBtn.getComponent(TransformComponent.class).y = GlobalConstants.FAR_FAR_AWAY_Y;
+    }
+
+    private void showErrorResult() {
+        dialogE.getComponent(ZIndexComponent.class).setZIndex(170);
+        LabelComponent lc = text.getComponent(LabelComponent.class);
+        lc.text.replace(0, lc.text.capacity(), ERROR);
         text.getComponent(TransformComponent.class).x = -99;
         okBtn.getComponent(TransformComponent.class).x = OK_CENTER;
         okBtn.getComponent(ButtonComponent.class).addListener(

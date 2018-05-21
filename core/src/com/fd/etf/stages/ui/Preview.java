@@ -2,6 +2,7 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fd.etf.Main;
 import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.VanityComponent;
@@ -115,6 +116,7 @@ public class Preview extends AbstractDialog {
     private ShopItem vc;
     private int movedTo;
     public boolean canPlayDescAni;
+    private BasicDialog dialog;
 
     private void loadPreviewFromLib() {
         CompositeItemVO infoTempItemC = gameStage.sceneLoader.loadVoFromLibrary(TAG_INFO_LIB).clone();
@@ -182,9 +184,13 @@ public class Preview extends AbstractDialog {
                 getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class).setZIndex(20);
         ZIndexComponent z1 = infoTag.getComponent(NodeComponent.class).
                 getChild(LBL_PAPER_PIECE).getComponent(ZIndexComponent.class);
-        btnClose.getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+100);
+        btnClose.getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex() + 100);
         infoTag.getComponent(NodeComponent.class).
-                getChild(LBL_ITEM_NAME).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex()+1);
+                getChild(LBL_ITEM_NAME).getComponent(ZIndexComponent.class).setZIndex(z1.getZIndex() + 1);
+
+        dialog = new BasicDialog(gameStage, gameItem);
+        dialog.init();
+        dialog.parent = this;
 
         initShadow();
     }
@@ -256,12 +262,12 @@ public class Preview extends AbstractDialog {
         }
 
         if (vc.currencyType.equals(HARD)) {
-            float price = (float)vc.cost/100;
+            float price = (float) vc.cost / 100;
             lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
                     String.valueOf(price));
             lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
                     String.valueOf(price));
-        }else{
+        } else {
             lblPrice.getComponent(LabelComponent.class).text.replace(0, lblPrice.getComponent(LabelComponent.class).text.length,
                     String.valueOf(vc.cost));
             lblPriceSh.getComponent(LabelComponent.class).text.replace(0, lblPriceSh.getComponent(LabelComponent.class).text.length,
@@ -273,23 +279,23 @@ public class Preview extends AbstractDialog {
         lblPriceSh.getComponent(LabelComponent.class).fontScaleX = 0.7f;
         lblPriceSh.getComponent(LabelComponent.class).fontScaleY = 0.7f;
 
-        if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
+        if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
             btnBuy.getComponent(TransformComponent.class).scaleX = 0.9f;
             btnBuy.getComponent(TransformComponent.class).x = 140;
-        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4){
+        } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4) {
             btnBuy.getComponent(TransformComponent.class).scaleX = 1f;
             btnBuy.getComponent(TransformComponent.class).x = 130;
-        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
+        } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5) {
             btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
             btnBuy.getComponent(TransformComponent.class).x = 115;
-        }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6){
+        } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6) {
             btnBuy.getComponent(TransformComponent.class).scaleX = 1.2f;
             btnBuy.getComponent(TransformComponent.class).x = 110;
         }
     }
 
     public boolean canBuyCheck(VanityComponent vc, Entity btn_buy) {
-        if (vc.canBuy(gameStage) ) {
+        if (vc.canBuy(gameStage)) {
             btn_buy.getComponent(ZIndexComponent.class).setZIndex(100);
             lblNotEnough.remove(ActionComponent.class);
             lblNotEnough.getComponent(TintComponent.class).color.a = 0;
@@ -399,9 +405,9 @@ public class Preview extends AbstractDialog {
 
         setDescription(vc, jump, justBoughtAni);
 
-        for (Entity e: ShopScreenScript.itemIcons.values()){
+        for (Entity e : ShopScreenScript.itemIcons.values()) {
             e.getComponent(ZIndexComponent.class).
-                    setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex()-2);
+                    setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() - 2);
         }
         infoTag.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
         buttonz.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 10);
@@ -419,7 +425,7 @@ public class Preview extends AbstractDialog {
 
         if (vc.description == null) {
             bubble.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
-        } else if (vc.description != null && canPlayDescAni){
+        } else if (vc.description != null && canPlayDescAni) {
 
             bubble.getComponent(TransformComponent.class).x = 100;
             bubble.getComponent(TransformComponent.class).y = 51;
@@ -428,7 +434,7 @@ public class Preview extends AbstractDialog {
             bubble.getComponent(TintComponent.class).color.a = 0;
             bubble.getComponent(ZIndexComponent.class).setZIndex(18);
 
-            if(bubble.getComponent(ActionComponent.class) != null) {
+            if (bubble.getComponent(ActionComponent.class) != null) {
                 bubble.remove(ActionComponent.class);
             }
 
@@ -441,14 +447,14 @@ public class Preview extends AbstractDialog {
             ac2.dataArray.add(Actions.sequence(Actions.delay(0.5f),
                     Actions.fadeIn(1.5f, Interpolation.exp5)));
             bubble.add(ac);
-            for(Entity e : bubble.getComponent(NodeComponent.class).children){
-                if(e.getComponent(MainItemComponent.class).itemIdentifier != IMG_SEC_BUBBLE &&
+            for (Entity e : bubble.getComponent(NodeComponent.class).children) {
+                if (e.getComponent(MainItemComponent.class).itemIdentifier != IMG_SEC_BUBBLE &&
                         e.getComponent(LabelComponent.class) != null &&
-                        !e.getComponent(LabelComponent.class).text.toString().contains("Error")){
+                        !e.getComponent(LabelComponent.class).text.toString().contains("Error")) {
                     e.add(ac2);
                 }
-                if(e.getComponent(LabelComponent.class) != null &&
-                        e.getComponent(LabelComponent.class).text.toString().contains("Error")){
+                if (e.getComponent(LabelComponent.class) != null &&
+                        e.getComponent(LabelComponent.class).text.toString().contains("Error")) {
                     e.getComponent(TintComponent.class).color.a = 0;
                 }
 //                e.getComponent(ZIndexComponent.class).setZIndex(100);
@@ -475,16 +481,16 @@ public class Preview extends AbstractDialog {
         if (!vc.bought && (vc.currencyType.equals(HARD) || canBuyCheck((VanityComponent) vc, btnBuy))) {
             btnBuy.getComponent(ZIndexComponent.class).setZIndex(61);
 
-            if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
+            if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length <= 3) {
                 btnBuy.getComponent(TransformComponent.class).scaleX = 0.9f;
                 btnBuy.getComponent(TransformComponent.class).x = 140;
-            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4){
+            } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 4) {
                 btnBuy.getComponent(TransformComponent.class).scaleX = 1f;
                 btnBuy.getComponent(TransformComponent.class).x = 130;
-            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5){
+            } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 5) {
                 btnBuy.getComponent(TransformComponent.class).scaleX = 1.1f;
                 btnBuy.getComponent(TransformComponent.class).x = 115;
-            }else if(btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6){
+            } else if (btnBuy != null && lblPriceSh.getComponent(LabelComponent.class).text.length == 6) {
                 btnBuy.getComponent(TransformComponent.class).scaleX = 1.2f;
                 btnBuy.getComponent(TransformComponent.class).x = 108;
             }
@@ -506,7 +512,7 @@ public class Preview extends AbstractDialog {
             int base = 282; // x pos
             if (vc.currencyType.equals(SOFT)) {
                 lblPrice.getComponent(TransformComponent.class).x = base - 10 * wordCount;
-                lblPriceSh.getComponent(TransformComponent.class).x = lblPrice.getComponent(TransformComponent.class).x +3;
+                lblPriceSh.getComponent(TransformComponent.class).x = lblPrice.getComponent(TransformComponent.class).x + 3;
                 coinzE.getComponent(TransformComponent.class).x = lblPrice.getComponent(TransformComponent.class).x - coinzE.getComponent(DimensionsComponent.class).width - 8;
             } else {
                 lblPrice.getComponent(TransformComponent.class).x = base - 15 * wordCount;
@@ -522,118 +528,132 @@ public class Preview extends AbstractDialog {
             btnBuy.getComponent(ButtonComponent.class).addListener(new ImageButtonListener(btnBuy) {
                 @Override
                 public void clicked() {
-                    if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
+                    try {
+                        if (btnBuy.getComponent(ZIndexComponent.class).getZIndex() > 2 && animFinished()) {
+                            if (vc.currencyType.equals(HARD)) {
 
-                        if (vc.currencyType.equals(HARD)) {
-                            vc.buyHard(gameStage);
+                                if (!Main.mainController.isWifiConnected()) {
+                                    throw new GdxRuntimeException("No internet connection");
+                                } else {
+                                    vc.buyHard(gameStage);
+                                    System.out.println("Try to buy without wifi");
+                                    // HARD CURRENClnY then do lots of checks on whether android purchcase was successful
+                                    btnBuy.add(getActionForHardCurrency(vc));
+                                }
 
-                            // HARD CURRENCY then do lots of checks on whether android purchcase was successful
-                            ActionComponent ac = new ActionComponent();
-                            Actions.checkInit();
-                            ac.dataArray.add(Actions.sequence(
-                                    Actions.delay(1f),
-                                    Actions.run(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(Main.mainController.getReceivedResponse() == true){
-                                                //add component that cheks every 10 seconds for 2 minutes
 
-                                                // buy stuff
-                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
-                                                vc.apply(gameStage);
-                                                // renew graphics
-                                                showPreview(vc, false, true);
+                            } else {
+                                // if SOFT CURRENCY, then just play some sound and buys and Use
+                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                                vc.buyAndUse(gameStage);
+                                putInPlaceNewIconPosition();
+                            }
 
-                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
-                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+                            //after all checks do the reload anyway
+                            showPreview(vc, false, true);
 
-                                                // get out of shitty loop
-                                                btnBuy.remove(ActionComponent.class);
-                                            }
-                                        }
-                                    }),
-                                    Actions.delay(10f),
-                                    Actions.run(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(Main.mainController.getReceivedResponse() == true){
-                                                //add component that cheks every 10 seconds for 2 minutes
-
-                                                // buy stuff
-                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
-                                                vc.apply(gameStage);
-                                                // renew graphics
-                                                showPreview(vc, false, true);
-
-                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
-                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
-
-                                                // get out of shitty loop
-                                                btnBuy.remove(ActionComponent.class);
-                                            }
-                                        }
-                                    }),
-                                    Actions.delay(10f),
-                                    Actions.run(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(Main.mainController.getReceivedResponse() == true){
-                                                //add component that cheks every 10 seconds for 2 minutes
-
-                                                // buy stuff
-                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
-                                                vc.apply(gameStage);
-                                                // renew graphics
-                                                showPreview(vc, false, true);
-
-                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
-                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
-
-                                                // get out of shitty loop
-                                                btnBuy.remove(ActionComponent.class);
-                                            }
-                                        }
-                                    }),
-                                    Actions.delay(10f),
-                                    Actions.run(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(Main.mainController.getReceivedResponse() == true){
-                                                //add component that cheks every 10 seconds for 2 minutes
-
-                                                // buy stuff
-                                                SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
-                                                vc.apply(gameStage);
-                                                // renew graphics
-                                                showPreview(vc, false, true);
-
-                                                ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
-                                                ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
-
-                                                // get out of shitty loop
-                                                btnBuy.remove(ActionComponent.class);
-                                            }
-                                        }
-                                    })));
-
-                            btnBuy.add(ac);
-                        } else {
-                            // if SOFT CURRENCY, then just play some sound and buys and Use
-                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
-
-                            vc.buyAndUse(gameStage);
-                            putInPlaceNewIconPosition();
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
                         }
-
-                        //after all checks do the reload anyway
-                        showPreview(vc, false, true);
-
-                        ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
-                        ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+                    } catch (Exception e) {
+                        dialog.show(BasicDialog.TYPE_ERROR);
                     }
                 }
+
             });
         }
+
+    }
+
+    private ActionComponent getActionForHardCurrency(final ShopItem vc) {
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.sequence(
+                Actions.delay(1f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(10f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(10f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(10f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Main.mainController.getReceivedResponse() == true) {
+                            //add component that cheks every 10 seconds for 2 minutes
+
+                            // buy stuff
+                            SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
+                            vc.apply(gameStage);
+                            // renew graphics
+                            showPreview(vc, false, true);
+
+                            ShopScreenScript.btnPlay.getComponent(TransformComponent.class).y = 22;
+                            ShopScreenScript.reloadScoreLabel(gameStage.gameScript.fpc);
+
+                            // get out of shitty loop
+                            btnBuy.remove(ActionComponent.class);
+                        }
+                    }
+                })));
+        return ac;
     }
 
     private void putInPlaceNewIconPosition() {
@@ -767,7 +787,7 @@ public class Preview extends AbstractDialog {
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_RIGHT;
 
-                            if(lblNotEnough.getComponent(ActionComponent.class) != null) {
+                            if (lblNotEnough.getComponent(ActionComponent.class) != null) {
                                 lblNotEnough.getComponent(ActionComponent.class).reset();
                                 lblNotEnough.getComponent(TintComponent.class).color.a = 0;
                             }
@@ -839,7 +859,7 @@ public class Preview extends AbstractDialog {
                             ac.dataArray.add(Actions.moveTo(HIDE_INFO_TAG_LEFT, infoTag.getComponent(TransformComponent.class).y, HIDE_INFO_TAG_DURATION));
                             infoTag.add(ac);
                             movedTo = HIDE_INFO_TAG_LEFT;
-                            if(lblNotEnough.getComponent(ActionComponent.class) != null) {
+                            if (lblNotEnough.getComponent(ActionComponent.class) != null) {
                                 lblNotEnough.getComponent(ActionComponent.class).reset();
                                 lblNotEnough.getComponent(TintComponent.class).color.a = 0;
                             }
@@ -953,14 +973,15 @@ public class Preview extends AbstractDialog {
         return infoTag.getComponent(TransformComponent.class).y <= INFO_TAG_Y + 30
                 && infoTag.getComponent(TransformComponent.class).x == INFO_TAG_X;
     }
-    String getTextWithoutSpaces(String s){
+
+    String getTextWithoutSpaces(String s) {
         if (s.contains(SPACE_SIGN)) {
             return s.replace(SPACE_SIGN, " ");
         }
         return s;
     }
 
-    private void setDesciptionLabels(){
+    private void setDesciptionLabels() {
         if (vc.description != null) {
 //            lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, vc.description);
             if (vc.description.contains(SPACE_SIGN)) {
@@ -970,7 +991,7 @@ public class Preview extends AbstractDialog {
             if (vc.description.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.description.split(NEW_LINE_SIGN);
                 int i = 0;
-                for(String s : lines){
+                for (String s : lines) {
                     if (s.contains(SPACE_SIGN)) {
                         lines[i++] = s.replace(SPACE_SIGN, " ");
                     }
@@ -1009,8 +1030,7 @@ public class Preview extends AbstractDialog {
                     lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, lines[2]);
                     lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, lines[3]);
                 }
-            }
-            else {
+            } else {
                 lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, getTextWithoutSpaces(vc.description));
                 lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                 lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, "Error");
@@ -1033,7 +1053,7 @@ public class Preview extends AbstractDialog {
 
             if (vc.collection.contains(NEW_LINE_SIGN)) {
                 String[] lines = vc.collection.split(NEW_LINE_SIGN);
-                for(String s : lines){
+                for (String s : lines) {
                     if (s.contains(SPACE_SIGN)) {
                         s = s.replace(SPACE_SIGN, " ");
                     }
@@ -1072,8 +1092,7 @@ public class Preview extends AbstractDialog {
                     lbl_desc_43.getComponent(LabelComponent.class).text.replace(0, lbl_desc_43.getComponent(LabelComponent.class).text.length, lines[2]);
                     lbl_desc_44.getComponent(LabelComponent.class).text.replace(0, lbl_desc_44.getComponent(LabelComponent.class).text.length, lines[3]);
                 }
-            }
-            else if(!vc.collection.contains(NEW_LINE_SIGN)) {
+            } else if (!vc.collection.contains(NEW_LINE_SIGN)) {
                 lbl_desc.getComponent(LabelComponent.class).text.replace(0, lbl_desc.getComponent(LabelComponent.class).text.length, getTextWithoutSpaces(vc.collection));
                 lbl_desc_21.getComponent(LabelComponent.class).text.replace(0, lbl_desc_21.getComponent(LabelComponent.class).text.length, "Error");
                 lbl_desc_22.getComponent(LabelComponent.class).text.replace(0, lbl_desc_22.getComponent(LabelComponent.class).text.length, "Error");

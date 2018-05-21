@@ -8,7 +8,7 @@ import com.fd.etf.android.R;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 
-public class EtfPlayServicesHelper {
+public class  EtfPlayServicesHelper {
     private GameHelper gameHelper;
 
     AndroidLauncher app;

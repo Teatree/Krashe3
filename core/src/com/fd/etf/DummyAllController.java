@@ -1,6 +1,7 @@
 package com.fd.etf;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fd.etf.entity.componets.PetComponent;
 import com.fd.etf.entity.componets.Upgrade;
 import com.fd.etf.stages.GameStage;
