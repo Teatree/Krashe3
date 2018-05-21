@@ -146,9 +146,9 @@ public class Gift {
 
     public static Gift getPhoenixGift(GameStage gameStage) {
         System.out.println("TRYING TO GET PET GIFT!");
-        if (!Upgrade.getPhoenix(gameStage).enabled && !Upgrade.getPhoenix(gameStage).bought) {
+        if (!Upgrade.getPhoenix().enabled && !Upgrade.getPhoenix().bought) {
             Gift gift = new Gift();
-            gift.upgrade = Upgrade.getPhoenix(gameStage);
+            gift.upgrade = Upgrade.getPhoenix();
             gift.upgrade.tryPeriod = true;
             gift.upgrade.tryPeriodDuration = ONE_HOUR;
             gift.type = PHOENIX;
@@ -160,9 +160,9 @@ public class Gift {
 
     public static Gift getDoubleJuiceGift(GameStage gameStage) {
         System.out.println("TRYING TO GET PET GIFT!");
-        if (!Upgrade.getBJDouble(gameStage).enabled && !Upgrade.getBJDouble(gameStage).bought) {
+        if (!Upgrade.getBJDouble().enabled && !Upgrade.getBJDouble().bought) {
             Gift gift = new Gift();
-            gift.upgrade = Upgrade.getBJDouble(gameStage);
+            gift.upgrade = Upgrade.getBJDouble();
             gift.upgrade.tryPeriod = true;
             gift.upgrade.tryPeriodDuration = ONE_HOUR;
             gift.type = BJ_DOUBLE;

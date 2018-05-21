@@ -69,11 +69,11 @@ public class EtfIAPhelper {
         if (skus.isEmpty()) {
             for (String sku : skus) {
                 if (sku.equals(SKU_BJ) || sku.equals(SKU_DISCOUNT_BJ)) {
-                    Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
+                    Upgrade.getBJDouble().buyAndUse(gameStage);
                 }
 
                 if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_DISCOUNT_PHOENIX)) {
-                    Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
+                    Upgrade.getPhoenix().buyAndUse(gameStage);
                 }
 
                 if (gameStage.gameScript != null && gameStage.gameScript.fpc != null && gameStage.gameScript.fpc.pets != null) {

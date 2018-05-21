@@ -19,6 +19,8 @@ import com.fd.etf.utils.ETFSceneLoader;
 import com.fd.etf.utils.PlatformResolver;
 import com.fd.etf.utils.SaveMngr;
 
+import java.util.List;
+
 public class Main extends Game {
     private static final int WORLD_WIDTH = 1200;
     private static final int WORLD_HEIGHT = 786;
@@ -58,11 +60,39 @@ public class Main extends Game {
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix"));
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix_____2"));
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("phoenix_discount"));
-        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj"));
-        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_discount"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_upgrade"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_upgrade_discount"));
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("bj_discount______2"));
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("no_ads"));
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("no_ads______2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_2"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_3"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_4"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_5"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_6"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_7"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_8"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_9"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_10"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_11"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_12"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_13"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_14"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_14"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_15"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_16"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_17"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_18"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_19"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_20"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_21"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_22"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("cat_pet_23"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("nastya_pet"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("nastya_cake"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("nastya_or_nastya"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("b"));
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.ENTITLEMENT).setIdentifier("n"));
     }
 
     @Override
@@ -84,8 +114,30 @@ public class Main extends Game {
         @Override
         public void handleRestore (Transaction[] transactions) {
             for (int i = 0; i < transactions.length; i++) {
-                if (checkTransaction(transactions[i].getIdentifier(), true) == true) break;
+                if (checkTransaction(transactions[i].getIdentifier(), true) == true);
             }
+
+
+//            if (skus.isEmpty()) {
+//                for (String sku : skus) {
+//                    if (sku.equals(SKU_BJ) || sku.equals(SKU_DISCOUNT_BJ)) {
+//                        Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
+//                    }
+//
+//                    if (sku.equals(SKU_PHOENIX) || sku.equals(SKU_DISCOUNT_PHOENIX)) {
+//                        Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
+//                    }
+//
+//                    if (gameStage.gameScript != null && gameStage.gameScript.fpc != null && gameStage.gameScript.fpc.pets != null) {
+//                        for (PetComponent p : gameStage.gameScript.fpc.pets) {
+//                            if(p.sku == sku || p.sku_discount == sku){
+//                                p.buyAndUse(gameStage);
+//                            }
+//                        }
+//                    }
+//
+//                }
+//            }
         }
         @Override
         public void handleRestoreError (Throwable e) {
@@ -117,9 +169,9 @@ public class Main extends Game {
     protected boolean checkTransaction (String ID, boolean isRestore) {
         boolean returnbool = false;
 
-        Gdx.app.log("checkTransaction", "cat was found!");
-
         //----- put your logic for full version here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        Gdx.app.log("ID: ", " --- " + ID);
 
         // get pet
         for (PetComponent p: gameStage.gameScript.fpc.pets) {
@@ -135,7 +187,7 @@ public class Main extends Game {
             Gdx.app.log("checkTransaction", "we've got a extra life!");
             gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.PHOENIX).buyAndUse(gameStage);
         }
-        if (ID.equalsIgnoreCase("bj") || ID.equalsIgnoreCase("bj_discount")){
+        if (ID.equalsIgnoreCase("bj_upgrade") || ID.equalsIgnoreCase("bj_upgrade_discount")){
             Gdx.app.log("checkTransaction", "we've got a double coins!");
             gameStage.gameScript.fpc.upgrades.get(Upgrade.UpgradeType.BJ_DOUBLE).buyAndUse(gameStage);
         }

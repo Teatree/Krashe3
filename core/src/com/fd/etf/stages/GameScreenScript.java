@@ -254,7 +254,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         }
         if (gameStage.gameScript.fpc.upgrades != null && !gameStage.gameScript.fpc.upgrades.isEmpty()) {
             for (Upgrade u : gameStage.gameScript.fpc.upgrades.values()) {
-                u.gameStage = gameStage;
+//                u.gameStage = gameStage;
                 if (u.tryPeriod && now - u.tryPeriodStart >= u.tryPeriodDuration * 1000) {
                     u.enabled = false;
                     u.bought = false;
@@ -852,7 +852,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         if (shouldShowGameOverDialog) {
             showGameOverDialog();
         } else {
-            //TODO delay?
             isGameOver.set(false);
             gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
             gameStage.initResultWithAds();

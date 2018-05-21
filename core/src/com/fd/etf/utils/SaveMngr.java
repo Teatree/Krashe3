@@ -149,6 +149,15 @@ public class SaveMngr {
                 }
             }
 
+            if(fc.upgrades.size() < 2){
+                if(fc.upgrades.get(UpgradeType.PHOENIX) == null){
+                    fc.upgrades.put(UpgradeType.PHOENIX, Upgrade.getPhoenix());
+                }
+                if(fc.upgrades.get(UpgradeType.BJ_DOUBLE) == null){
+                    fc.upgrades.put(UpgradeType.BJ_DOUBLE, Upgrade.getBJDouble());
+                }
+            }
+
             PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
             petComponent = checkPetsTryPeriod(petComponent);
             FlowerPublicComponent.currentPet = petComponent;
@@ -189,7 +198,7 @@ public class SaveMngr {
     }
 
     private static void dummyUpgrade(FlowerPublicComponent fc) {
-        Upgrade u = Upgrade.getBJDouble(null);
+        Upgrade u = Upgrade.getBJDouble();
         u.tryPeriod = true;
 //        fc.currentPet.tryPeriod = true;
 //        fc.currentPet.enabled = true;

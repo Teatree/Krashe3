@@ -45,7 +45,7 @@ public abstract class ShopItem {
 
     protected void disablePetItems(GameStage gameStage) {
         //Disable pet items
-        if (this.hasPet()) {
+        if (this.hasPet() && gameStage.shopScript != null) {
             for (ShopItem si : gameStage.shopScript.allHCItems) {
                 if (si.bought && si.hasPet() && si != this) {
                     si.disable(gameStage);

@@ -12,11 +12,11 @@ public class Upgrade extends ShopItem{
 
     public UpgradeType upgradeType;
     public int counter;
-    public GameStage gameStage;
+//    public GameStage gameStage;
 
-    public Upgrade(){}
-    public Upgrade(GameStage gameStage) {
-        this.gameStage = gameStage;
+//    public Upgrade(){}
+    public Upgrade() {
+
     }
 
     public Upgrade(SaveMngr.UpgradeStats us) {
@@ -39,13 +39,13 @@ public class Upgrade extends ShopItem{
 
     public static List<Upgrade> getAllUpgrades(GameStage gameStage) {
         List<Upgrade> all = new ArrayList<>();
-        all.add(getPhoenix(gameStage));
-        all.add(getBJDouble(gameStage));
+        all.add(getPhoenix());
+        all.add(getBJDouble());
         return all;
     }
 
-    public static Upgrade getPhoenix(GameStage gameStage) {
-        Upgrade phoenix = new Upgrade(gameStage);
+    public static Upgrade getPhoenix() {
+        Upgrade phoenix = new Upgrade();
         phoenix.upgradeType = UpgradeType.PHOENIX;
         phoenix.cost = 199;
         phoenix.costDisc = 100;
@@ -61,8 +61,8 @@ public class Upgrade extends ShopItem{
         return phoenix;
     }
 
-    public static Upgrade getBJDouble(GameStage gameStage) {
-        Upgrade bjd = new Upgrade(gameStage);
+    public static Upgrade getBJDouble() {
+        Upgrade bjd = new Upgrade();
         bjd.upgradeType = UpgradeType.BJ_DOUBLE;
         bjd.cost = 349;
         bjd.costDisc = 175;
@@ -73,7 +73,7 @@ public class Upgrade extends ShopItem{
         bjd.enabled = false;
         bjd.currencyType = HARD;
         bjd.sku = "bj_upgrade";
-        bjd.sku_discount = "bj_discount______2";
+        bjd.sku_discount = "bj_upgrade_discount";
         bjd.shopIcon = "itemdoubleUPGRDE";
         return bjd;
     }

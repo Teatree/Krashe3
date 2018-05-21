@@ -10,7 +10,7 @@ public class DummyAllController implements AllController {
 
     @Override
     public boolean isWifiConnected() {
-        return false;
+        return true;
     }
 
     @Override
@@ -57,14 +57,14 @@ public class DummyAllController implements AllController {
     public void getPhoenix(GameStage gameStage, Upgrade phoenix) {
         //System.out.println("pay to get phoenix");
         // PC only
-        Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
+        Upgrade.getPhoenix().buyAndUse(gameStage);
     }
 
     @Override
     public void getBJDouble(GameStage gameStage, Upgrade bj) {
         //System.out.println("pay to get bj");
         // PC only
-        Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
+        Upgrade.getBJDouble().buyAndUse(gameStage);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class DummyAllController implements AllController {
     @Override
     public void getPhoenixDiscount(GameStage gameStage, Upgrade phoenix) {
         //System.out.println("pay to get phoenix cheaper");
-        Upgrade.getPhoenix(gameStage).buyAndUse(gameStage);
+        Upgrade.getPhoenix().buyAndUse(gameStage);
     }
 
     @Override
     public void getBJDoubleDiscount(GameStage gameStage, Upgrade bj) {
         //System.out.println("pay to get bj cheaper");
-        Upgrade.getBJDouble(gameStage).buyAndUse(gameStage);
+        Upgrade.getBJDouble().buyAndUse(gameStage);
     }
 
     @Override
