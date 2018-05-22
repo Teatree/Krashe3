@@ -153,7 +153,7 @@ public class AndroidLauncher extends AndroidApplication implements AllController
     }
 
     public void removeAds() {
-        Main.getPlatformResolver().requestPurchase("no_ads______2");
+        Main.getPlatformResolver().requestPurchase("no_ads");
     }
 
     @Override

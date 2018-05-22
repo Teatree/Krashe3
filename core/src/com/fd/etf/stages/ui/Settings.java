@@ -4,9 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
 import com.fd.etf.Main;
+import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.ToggleButtonComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.stages.ShopScreenScript;
 import com.fd.etf.utils.BackgroundMusicMgr;
 import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SoundMgr;
@@ -18,6 +20,7 @@ import com.uwsoft.editor.renderer.systems.action.Actions;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
 
+import static com.fd.etf.utils.EffectUtils.playYellowStarsParticleEffect;
 import static com.fd.etf.utils.GlobalConstants.*;
 
 /**
@@ -47,6 +50,9 @@ public class Settings extends AbstractDialog {
     public Entity settingsE;
     private Entity infoE;
 
+    Entity btnNoAds;
+    BasicDialog dialog;
+
     public Settings(GameStage gameStage, ItemWrapper gameItem) {
         super(gameStage);
         this.gameItem = gameItem;
@@ -57,11 +63,10 @@ public class Settings extends AbstractDialog {
         loadInfoFromLib();
 
         Entity closeSettingsBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_CLOSE_SETTINGS);
-        Entity btnNoAds = settingsE.getComponent(NodeComponent.class).getChild(BTN_NO_ADS);
+        btnNoAds = settingsE.getComponent(NodeComponent.class).getChild(BTN_NO_ADS);
         Entity nextInfoBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_NEXT_INFO);
         Entity restorePurchasesBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESTORE);
         Entity resetProgressBtn = settingsE.getComponent(NodeComponent.class).getChild(BTN_RESET);
-
 
         settingsE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleX = 0.7f;
         settingsE.getComponent(NodeComponent.class).getChild("settings_title").getComponent(LabelComponent.class).fontScaleY = 0.7f;
@@ -81,7 +86,7 @@ public class Settings extends AbstractDialog {
 
         initInfo();
 
-        final BasicDialog dialog = new BasicDialog(gameStage, gameItem);
+        dialog = new BasicDialog(gameStage, gameItem);
         dialog.init();
         dialog.parent = this;
 
@@ -102,17 +107,22 @@ public class Settings extends AbstractDialog {
                         }
                     }
                 });
+        if(gameStage.gameScript.fpc.settings.noAds) {
+            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+        }else {
+            btnNoAds.add(new ButtonComponent());
+            btnNoAds.getComponent(ButtonComponent.class).addListener(
+                    new ImageButtonListener(btnNoAds) {
+                        @Override
+                        public void clicked() {
+                            if (!isSecondDialogOpen.get()) {
+                                Main.mainController.removeAds();
 
-        btnNoAds.add(new ButtonComponent());
-        btnNoAds.getComponent(ButtonComponent.class).addListener(
-                new ImageButtonListener(btnNoAds) {
-                    @Override
-                    public void clicked() {
-                        if (!isSecondDialogOpen.get()) {
-                            Main.mainController.removeAds();
+                                btnNoAds.add(getActionForHardCurrency());
+                            }
                         }
-                    }
-                });
+                    });
+        }
 
         nextInfoBtn.add(new ButtonComponent());
         nextInfoBtn.getComponent(ButtonComponent.class).addListener(
@@ -166,6 +176,8 @@ public class Settings extends AbstractDialog {
                                 try {
                                     Main.mainController.restorePurchases(gameStage);
                                     dialog.show(BasicDialog.TYPE_RESTORE_PURCH_RESULT);
+                                    if(gameStage.gameScript.fpc.settings.noAds)
+                                        btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
                                 } catch (Exception e) {
                                     dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
                                 }
@@ -181,6 +193,154 @@ public class Settings extends AbstractDialog {
         settingsTc.x = FAR_FAR_AWAY_X;
         settingsTc.y = FAR_FAR_AWAY_Y;
     }
+
+    private ActionComponent getActionForHardCurrency2() {
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.sequence(
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya();
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya();
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya();
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya();
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya();
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya(true);
+                    }
+                })));
+        return ac;
+    }
+
+    private ActionComponent getActionForHardCurrency() {
+        ActionComponent ac = new ActionComponent();
+        Actions.checkInit();
+        ac.dataArray.add(Actions.sequence(
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(gameStage.gameScript.fpc.settings.noAds) {
+                            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                            btnNoAds.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(gameStage.gameScript.fpc.settings.noAds) {
+                            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                            btnNoAds.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(gameStage.gameScript.fpc.settings.noAds) {
+                            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                            btnNoAds.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(gameStage.gameScript.fpc.settings.noAds) {
+                            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                            btnNoAds.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(gameStage.gameScript.fpc.settings.noAds) {
+                            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+                            btnNoAds.remove(ActionComponent.class);
+                        }else{
+                            btnNoAds.remove(ActionComponent.class);
+                        }
+                    }
+                }),
+                Actions.delay(0.5f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkIfNastya(true);
+                    }
+                })));
+        return ac;
+    }
+
+    private void checkIfNastya() {
+        if (Main.mainController.getReceivedResponse() == true) {
+            //add component that checks every 10 seconds for 2 minutes
+            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+
+            btnNoAds.remove(ActionComponent.class);
+        }else if(Main.mainController.getReceivedErrorResponse() == true){
+            dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
+
+            btnNoAds.remove(ActionComponent.class);
+        }
+    }
+
+    private void checkIfNastya(boolean i) {
+        if(i) {
+            if (Main.mainController.getReceivedResponse() == true) {
+                //add component that checks every 10 seconds for 2 minutes
+                btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
+
+                btnNoAds.remove(ActionComponent.class);
+            } else if (Main.mainController.getReceivedErrorResponse() == true) {
+                dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
+
+                btnNoAds.remove(ActionComponent.class);
+            }else{
+                dialog.show(BasicDialog.TYPE_ERROR_SETTINGS);
+
+                btnNoAds.remove(ActionComponent.class);
+            }
+        }
+    }
+
 
     private void initInfo() {
         infoE.getComponent(TransformComponent.class).x = INFO_HIDDEN_X;
@@ -245,6 +405,9 @@ public class Settings extends AbstractDialog {
         settingsE.getComponent(TransformComponent.class).x = SETTINGS_X;
         settingsE.getComponent(TransformComponent.class).y = 460;
         settingsE.getComponent(ZIndexComponent.class).setZIndex(100);
+
+        if(gameStage.gameScript.fpc.settings.noAds)
+            btnNoAds.getComponent(TransformComponent.class).y = FAR_FAR_AWAY_Y;
 
         ActionComponent ac = new ActionComponent();
         Actions.checkInit();

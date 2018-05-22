@@ -483,13 +483,13 @@ public class SaveMngr {
         public float prob_pet_eat_n_bugs;
         public float prob_pet_dash_n_times;
 
-        public int chanceMONEY_50 = 5;
-        public int chanceMONEY_100 = 3;
+        public int chanceMONEY_50 = 10;
+        public int chanceMONEY_100 = 8;
         public int chanceMONEY_150 = 2;
         public int chanceMONEY_200 = 0;
         public int chanceMONEY_250 = 0;
         public int chancePHOENIX = 0;
-        public int chancePET1 = 60;
+        public int chancePET1 = 50;
         public int chancePET2 = 20;
         public int chancePET3 = 10;
         public int chanceBJ_DOUBLE = 0;
