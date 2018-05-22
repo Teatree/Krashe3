@@ -97,10 +97,10 @@ public class GameOverDialog extends AbstractDialog {
         hide();
 
         gameOverDialogE.getComponent(ZIndexComponent.class).setZIndex(shadowE.getComponent(ZIndexComponent.class).getZIndex() + 1);
-        initReviveBtn(gameOverDialogE.getComponent(TransformComponent.class));
+        initReviveBtn();
     }
 
-    private void initReviveBtn(final TransformComponent dialogTc) {
+    private void initReviveBtn() {
         final Entity reviveBtn = gameOverDialogE.getComponent(NodeComponent.class).getChild(BTN_WATCH_VIDEO);
 //        if (gameScript.fpc.settings.shouldShowReviveVideoBtnAd()) {
 //        reviveBtn.getComponent(TransformComponent.class).x = 240;
@@ -111,7 +111,7 @@ public class GameOverDialog extends AbstractDialog {
                     @Override
                     public void clicked() {
                         if (Main.mainController.isWifiConnected()) {
-                            playVideoAd(dialogTc);
+                            playVideoAd();
                             gameOverReviveTimesLimit--;
                         }
                         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)){
@@ -123,7 +123,7 @@ public class GameOverDialog extends AbstractDialog {
                 });
     }
 
-    public void continueGame(TransformComponent dialogTc) {
+    public void continueGame() {
         isGameOver.set(false);
         isPause.set(false);
         gameOverTimer = 0;
@@ -154,12 +154,12 @@ public class GameOverDialog extends AbstractDialog {
         }
     }
 
-    private void playVideoAd(final TransformComponent dialogTc) {
+    private void playVideoAd() {
         if (Main.mainController.isWifiConnected()) {
             Main.mainController.showReviveVideoAd(new Runnable() {
                 @Override
                 public void run() {
-                    continueGame(dialogTc);
+                    continueGame();
                 }
             });
         } else {

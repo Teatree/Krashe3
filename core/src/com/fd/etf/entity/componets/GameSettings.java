@@ -11,30 +11,28 @@ public class GameSettings {
     public boolean noAds = false;
     public boolean noSound;
     public boolean noMusic;
-    //Random random;
+    Random random = new Random();
 
     public int totalPlayedGames;
     public int playedGames;
 
-    public int reviveAd_max;
-
     //TODO: ??????
     public boolean shouldShowLaunchAd() {
-//        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
-//            return true;
-//        }
+        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 50) {
+            return true;
+        }
         return true;
     }
 
     public boolean shouldShowShopAd() {
-        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 50*/) {
+        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 50) {
             return true;
         }
         return false;
     }
 
     public boolean shouldShowGameAd() {
-        if(Main.mainController.isWifiConnected() /*&& random.nextInt(100) > 75*/) {
+        if(Main.mainController.isWifiConnected() && random.nextInt(100) > 75) {
             return true;
         }
         return true;

@@ -200,31 +200,31 @@ public class GameStage extends Stage {
     }
 
     public void initShopWithAds() {
-//        if (gameScript.fpc.settings.shouldShowShopAd() &&
-//                !gameScript.fpc.level.name.contains("Learner") &&
-//                !gameScript.fpc.level.name.contains("Beginner")) {
-//            Main.mainController.showLaunchAd(new Runnable() {
-//                @Override
-//                public void run() {
-//                    initShop();
-//                }
-//            });
-//        } else {
+        if (gameScript.fpc.settings.shouldShowShopAd() &&
+                !gameScript.fpc.level.name.contains("Learner") &&
+                !gameScript.fpc.level.name.contains("Beginner")) {
+            Main.mainController.showLaunchAd(new Runnable() {
+                @Override
+                public void run() {
+                    initShop();
+                }
+            });
+        } else {
             initShop();
-//        }
+        }
     }
 
     public void initResultWithAds() {
-//        if (gameScript.fpc.settings.shouldShowResultAd()) {
-//            mainController.showResultScreenAd(new Runnable() {
-//                @Override
-//                public void run() {
-//                    initResult();
-//                }
-//            });
-//        } else {
-        initResult();
-//        }
+        if (gameScript.fpc.settings.shouldShowShopAd()) {
+            Main.mainController.showResultScreenAd(new Runnable() {
+                @Override
+                public void run() {
+                    initResult();
+                }
+            });
+        } else {
+            initResult();
+        }
     }
 
     public void update() {

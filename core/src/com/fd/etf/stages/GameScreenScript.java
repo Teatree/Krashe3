@@ -849,14 +849,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     public void endGame() {
         shouldShowGameOverDialog = gameOverReviveTimesLimit > 0 && !wasGameOverReviveShown && Main.mainController.isWifiConnected(); // PC: need to remove this part
 
-        if (shouldShowGameOverDialog) {
-            showGameOverDialog();
-        } else {
-            isGameOver.set(false);
-            gameStage.gameScript.fpc.totalScore += gameStage.gameScript.fpc.score;
-            submitScoreToGooglePlay();
-            gameStage.initResultWithAds();
-        }
+        checkAndShowGameOverDialog();
     }
 
     public void submitScoreToGooglePlay() {
@@ -873,13 +866,21 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         gameStage.gameScript.goalFeedbackScreen.show();
     }
 
-    private void showGameOverDialog() {
-        if (gameOverDialog == null) {
-            gameOverDialog = new GameOverDialog(gameStage);
-            gameOverDialog.initGameOverDialog();
+    private void checkAndShowGameOverDialog() {
+        if(shouldShowGameOverDialog) {
+            if (gameOverDialog == null) {
+                gameOverDialog = new GameOverDialog(gameStage);
+                gameOverDialog.initGameOverDialog();
+            }
+            wasGameOverReviveShown = true;
+            gameOverDialog.show();
+        }else{
+            if (gameOverDialog == null) {
+                gameOverDialog = new GameOverDialog(gameStage);
+                gameOverDialog.initGameOverDialog();
+            }
+            gameOverDialog.finishGame();
         }
-        wasGameOverReviveShown = true;
-        gameOverDialog.show();
     }
 
     public void reloadScoreLabel(FlowerPublicComponent fcc) {
