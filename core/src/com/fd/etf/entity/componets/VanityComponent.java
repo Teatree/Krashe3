@@ -132,23 +132,11 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     public void buy(GameStage gameStage) {
         gameStage.gameScript.fpc.totalScore -= this.cost;
         this.bought = true;
-
-        AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems));
     }
 
     public void buyAndUse(GameStage gameStage) {
         buy(gameStage);
         apply(gameStage);
-
-        AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems));
-    }
-
-    public static boolean areAllBough(List<ShopItem> shopItems) {
-        for(ShopItem s : shopItems) {
-            if (s.bought == false)
-                return false;
-        }
-        return true;
     }
 
     @Override

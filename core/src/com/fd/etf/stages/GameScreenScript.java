@@ -867,7 +867,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     private void checkAndShowGameOverDialog() {
-        if(shouldShowGameOverDialog) {
+        if(shouldShowGameOverDialog) { //shouldShowGameOverDialog
             if (gameOverDialog == null) {
                 gameOverDialog = new GameOverDialog(gameStage);
                 gameOverDialog.initGameOverDialog();
@@ -879,6 +879,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
                 gameOverDialog = new GameOverDialog(gameStage);
                 gameOverDialog.initGameOverDialog();
             }
+            gameOverDialog.gameOverTimer = -1;
             gameOverDialog.finishGame();
         }
     }

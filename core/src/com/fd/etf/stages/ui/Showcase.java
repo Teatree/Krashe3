@@ -2,10 +2,12 @@ package com.fd.etf.stages.ui;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Interpolation;
+import com.fd.etf.entity.componets.ShopItem;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ResultScreenScript;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.utils.EffectUtils;
 import com.fd.etf.utils.GlobalConstants;
 import com.fd.etf.utils.SoundMgr;
@@ -16,6 +18,8 @@ import com.uwsoft.editor.renderer.data.CompositeItemVO;
 import com.uwsoft.editor.renderer.systems.action.Actions;
 
 import javax.xml.soap.Node;
+
+import java.util.List;
 
 import static com.fd.etf.stages.ResultScreenScript.show;
 import static com.fd.etf.stages.ResultScreenScript.showCaseVanity;
@@ -353,17 +357,19 @@ public class Showcase {
 
                     ShopScreenScript.shouldReloadIcons.add(showCaseVanity);
 
+//                    AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems)); //there was once a time when I thought that I would not accept not
 
-
-//                    if (gameStage.shopScript != null) {asd
-//                        gameStage.shopScript.changeBagIcon(showCaseVanity);
-
-                       // ShopScreenScript.shouldReload = true;
-
-//                    }
                     isCelebrating = true;
                 }
             }
         });
     }
+
+//    public boolean areAllBough(List<ShopItem> shopItems) {
+//        for(ShopItem s : shopItems) {
+//            if (s.bought == false)
+//                return false;
+//        }
+//        return true;
+//    }
 }

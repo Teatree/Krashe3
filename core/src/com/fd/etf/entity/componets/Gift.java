@@ -14,7 +14,7 @@ public class Gift {
 
     private static final String MONEY = "MONEY";
 
-    private static final int ONE_HOUR = 10; // it's supposed to be 60, and it's not a hour, it's a MINUTE
+    private static final int ONE_HOUR = 90; // it's supposed to be 60, and it's not a hour, it's a MINUTE
 
     private static Random random = new Random();
 

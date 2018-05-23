@@ -9,6 +9,7 @@ import com.fd.etf.entity.componets.VanityComponent;
 import com.fd.etf.entity.componets.listeners.ImageButtonListener;
 import com.fd.etf.stages.GameStage;
 import com.fd.etf.stages.ShopScreenScript;
+import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.utils.SoundMgr;
 import com.uwsoft.editor.renderer.components.*;
 import com.uwsoft.editor.renderer.components.additional.ButtonComponent;
@@ -544,6 +545,9 @@ public class Preview extends AbstractDialog {
                                 // if SOFT CURRENCY, then just play some sound and buys and Use
                                 SoundMgr.getSoundMgr().play(SoundMgr.BUTTON_TAP_SHOP_BUY);
                                 vc.buyAndUse(gameStage);
+
+                                AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems));
+
                                 putInPlaceNewIconPosition();
                             }
 
@@ -732,6 +736,13 @@ public class Preview extends AbstractDialog {
                     }
                 })));
         return ac;
+    }
+    public boolean areAllBough(List<ShopItem> shopItems) {
+        for(ShopItem s : shopItems) {
+            if (s.bought == false)
+                return false;
+        }
+        return true;
     }
 
     private void putInPlaceNewIconPosition() {
