@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.utils.SaveMngr;
 
 import java.util.ArrayList;
@@ -131,11 +132,23 @@ public class VanityComponent extends ShopItem implements Component, Pool.Poolabl
     public void buy(GameStage gameStage) {
         gameStage.gameScript.fpc.totalScore -= this.cost;
         this.bought = true;
+
+        AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems));
     }
 
     public void buyAndUse(GameStage gameStage) {
         buy(gameStage);
         apply(gameStage);
+
+        AchievementSystem.checkVanityAchCollectGoal(areAllBough(gameStage.shopScript.allSoftItems));
+    }
+
+    public static boolean areAllBough(List<ShopItem> shopItems) {
+        for(ShopItem s : shopItems) {
+            if (s.bought == false)
+                return false;
+        }
+        return true;
     }
 
     @Override

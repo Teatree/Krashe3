@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.fd.etf.Main;
 import com.fd.etf.stages.GameScreenScript;
 import com.fd.etf.stages.GameStage;
+import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.utils.SaveMngr;
 import com.uwsoft.editor.renderer.data.CompositeItemVO;
 
@@ -138,6 +139,9 @@ public class PetComponent extends ShopItem implements Component, Pool.Poolable{
         if (FlowerPublicComponent.currentPet != null) {
             FlowerPublicComponent.currentPet.tryPeriod = false; // Seriously? Any current pet you just turn try period to false?
         }                                                       // What if I changed my current pet while having a try period
+
+        AchievementSystem.checkDogBuyAchGoal(this.name == "DOG");
+
 //        gameStage.gameScript.fpc.currentPet = this;
         apply(gameStage);
     }

@@ -137,7 +137,7 @@ public class SaveMngr {
             AchievementSystem.butterflyAchCounter = stats.butterflyAchCounter;
             AchievementSystem.queenAchGoal = stats.queenAchGoal;
             AchievementSystem.bugAchGoal = stats.bugAchGoal;
-            AchievementSystem.bugAchGoal = stats.bugAchGoal;
+            AchievementSystem.butterflyAchGoal = stats.butterflyAchGoal;
 
             fc.reviveAdsMaxNastya = stats.reviveAd_max;
             GameScreenScript.gameOverReviveTimesLimit =  stats.gameOverReviveTimesLimit;
@@ -533,6 +533,8 @@ public class SaveMngr {
         public int queenAchGoal;
         public int bugAchGoal;
         public int butterflyAchGoal;
+        public boolean dogBuyAchGoal;
+        public boolean vanityAchCollectGoal;
 
         public int queenAchCounter;
         public int bugAchCounter;

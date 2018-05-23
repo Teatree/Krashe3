@@ -5,10 +5,10 @@ package com.fd.etf;
  */
 public interface PlayServices {
 
-    String ACH_HUNGER_STRIKE = "Hunger Strike";
-    String ACH_BUTTEFLY_EATER = "Buttefly Eater";
-    String ACH_COLLECTOR = "Collector";
-    String ACH_DOG_PERSONE = "Dog persone";
+    String ACH_HUNGER_STRIKE = "Hunger Strike!";
+    String ACH_BUTTEFLY_EATER = "Butterfly Eater!";
+    String ACH_COLLECTOR = "The Great Collector!";
+    String ACH_DOG_PERSONE = "Dog Person";
     String ACH_QUEEN_SLAYER = "Queen Slayer";
 
     void signIn();

@@ -492,18 +492,22 @@ public class BugSystem extends IteratingSystem {
 
         if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES) != null && bc.type.equals(BEE)) {
             gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BEES).update();
+            AchievementSystem.checkBugsAchievement();
         }
         if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS) != null && bc.type.equals(DRUNK)) {
             gameStage.gameScript.fpc.level.getGoalByType(EAT_N_DRUNKS).update();
+            AchievementSystem.checkBugsAchievement();
         }
         if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE) != null && bc.type.equals(SIMPLE)) {
             gameStage.gameScript.fpc.level.getGoalByType(EAT_N_SIMPLE).update();
+            AchievementSystem.checkBugsAchievement();
         }
         if (bc.type.equals(QUEENBEE)) {
             if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS) != null) {
                 gameStage.gameScript.fpc.level.getGoalByType(EAT_N_QUEENS).update();
             }
             AchievementSystem.checkQueenSlayerAchievement();
+            AchievementSystem.checkBugsAchievement();
         }
     }
 }

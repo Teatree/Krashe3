@@ -146,6 +146,7 @@ public class ButterflySystem extends IteratingSystem {
         if (gameStage.gameScript.fpc.flowerCollisionCheck(bc.boundsRect)) {
             if (gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES) != null) {
                 gameStage.gameScript.fpc.level.getGoalByType(EAT_N_BUTTERFLIES).update();
+                AchievementSystem.checkButterfliesAchievement();
             }
         }
     }

@@ -5,7 +5,7 @@ import com.fd.etf.PlayServices;
 
 public class AchievementSystem {
 
-    public static int queenAchGoal = 1;
+    public static int queenAchGoal = 15;
     public static int bugAchGoal = 1000;
     public static int butterflyAchGoal = 20;
 
@@ -31,6 +31,18 @@ public class AchievementSystem {
         butterflyAchCounter++;
         if (butterflyAchCounter == butterflyAchGoal) {
             Main.mainController.unlockAchievement(PlayServices.ACH_BUTTEFLY_EATER);
+        }
+    }
+
+    public static void checkVanityAchCollectGoal(boolean achievementComplete) {
+        if (achievementComplete == true) {
+            Main.mainController.unlockAchievement(PlayServices.ACH_COLLECTOR);
+        }
+    }
+
+    public static void checkDogBuyAchGoal(boolean achievementComplete) {
+        if (achievementComplete == true) {
+            Main.mainController.unlockAchievement(PlayServices.ACH_DOG_PERSONE);
         }
     }
 }
