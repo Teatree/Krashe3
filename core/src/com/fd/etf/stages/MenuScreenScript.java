@@ -115,7 +115,6 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void init(Entity item) {
-
         isNextStepTransiotionToShopShouldShowShopShop = true;
 
         frames = 0;
@@ -188,7 +187,9 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
 
         //less code!
         for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
-            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
+            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg") &&
+                    !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm") &&
+                    !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")) {
                 e.getComponent(TintComponent.class).color.a = 0;
             }
         }
@@ -506,28 +507,29 @@ public class MenuScreenScript implements IScript, GameStage.IhaveFlower {
                 menuItem.getChild(LBL_TAP2START).getEntity().add(ac);
 
 //                System.out.println("Flower x: " + menuItem.getChild("mega_flower").getComponent(TransformComponent.class).x);
-                for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
-                    if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO)
-                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(LBL_TAP2START)
-                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg")
-                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_leafs")
-                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_flower")
-                            && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
-                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
-                            && !e.getComponent(MainItemComponent.class).libraryLink.equals("popup_basic_lib")) {
-                        e.getComponent(TintComponent.class).color.a = 0;
+                if (gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
+                    for (Entity e : menuItem.getComponent(NodeComponent.class).children) {
+                        if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_LOGO)
+                                && !e.getComponent(MainItemComponent.class).itemIdentifier.equals(LBL_TAP2START)
+                                && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("bg")
+                                && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_leafs")
+                                && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("mega_flower")
+                                && !e.getComponent(MainItemComponent.class).itemIdentifier.equals("curtain_mm")
+                                && !e.getComponent(MainItemComponent.class).libraryLink.equals("lib_shadow")
+                                && !e.getComponent(MainItemComponent.class).libraryLink.equals("popup_basic_lib")) {
+                            e.getComponent(TintComponent.class).color.a = 0;
 
-                        if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
-                            if (e.getComponent(TransformComponent.class).x < wrldW) {
-                                e.getComponent(TransformComponent.class).x -= 100;
+                            if (!e.getComponent(MainItemComponent.class).itemIdentifier.equals("btn_rate")) {
+                                if (e.getComponent(TransformComponent.class).x < wrldW) {
+                                    e.getComponent(TransformComponent.class).x -= 100;
+                                } else {
+                                    e.getComponent(TransformComponent.class).x += 100;
+                                }
                             } else {
-                                e.getComponent(TransformComponent.class).x += 100;
+                                e.getComponent(TransformComponent.class).y -= 100;
                             }
-                        } else {
-                            e.getComponent(TransformComponent.class).y -= 100;
-                        }
 
-                        if (gameStage.gameScript.fpc.settings.totalPlayedGames >= 1) {
+
                             Actions.checkInit();
                             if (e.getComponent(MainItemComponent.class).itemIdentifier.equals(IMG_GOAL_NOTIFICATION) && !showGoalNotification) {
                                 continue;

@@ -30,7 +30,6 @@ public class  EtfPlayServicesHelper {
                 gameHelper.showFailureDialog();
             }
 
-
             @Override
             public void onSignInSucceeded() {
                 Log.e("PS", "onSignInSucceeded");
