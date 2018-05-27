@@ -8,6 +8,8 @@ import com.fd.etf.android.R;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 
+import static com.fd.etf.PlayServices.ACH_QUEEN_SLAYER;
+
 public class  EtfPlayServicesHelper {
     private GameHelper gameHelper;
 
@@ -98,8 +100,27 @@ public class  EtfPlayServicesHelper {
     }
 
     public void unlockAchievement(String achievementId) {
-        Games.Achievements.unlock(gameHelper.getApiClient(),
-                app.getString(R.string.achievement_queens_slayer));
+        if ("Queen Slayer".equalsIgnoreCase(achievementId)) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    app.getString(R.string.achievement_queens_slayer));
+        } else
+        if ("Dog Person".equalsIgnoreCase(achievementId)) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    app.getString(R.string.achievement_dog_person));
+        } else
+        if ("The Great Collector!".equalsIgnoreCase(achievementId)) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    app.getString(R.string.achievement_the_great_collector));
+        } else
+        if ("Butterfly Eater!".equalsIgnoreCase(achievementId)) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    app.getString(R.string.achievement_butterfly_eater));
+        } else
+        if ("Hunger Strike!".equalsIgnoreCase(achievementId)) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    app.getString(R.string.achievement_hunger_strike));
+        }
+
     }
 
     public void getLeaderboard() {
