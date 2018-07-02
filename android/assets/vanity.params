@@ -448,4 +448,16 @@
 	shopIcon: itemfez,
 	name: Fez,
 	cost: 600000
+},
+{
+	class: com.fd.etf.utils.SaveMngr$VanityJson,
+	assetsToChange: {
+		class: java.util.HashMap,
+		head_top: head_top_4july_hat,
+		class: java.util.HashMap
+	},
+	shopIcon: item4julyhat,
+	name: 4th_of_July~Hat,
+	description: Have_a_Happy~Independence_Day!,
+	cost: 700000
 }]

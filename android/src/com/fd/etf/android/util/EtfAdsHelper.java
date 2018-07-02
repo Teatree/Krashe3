@@ -69,8 +69,6 @@ public class EtfAdsHelper {
 
                             isAdLoaded = true;
                         }
-
-
                     });
                 }
                 interstitialVideoAd.show();

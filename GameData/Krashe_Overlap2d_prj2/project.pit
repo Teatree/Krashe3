@@ -1,4 +1,4 @@
-{
+[{
 	"projectName": "Krashe_Overlap2d_prj2",
 	"projectVersion": "0.0.9",
 	"projectMainExportPath": "C:\\Project\\Krashe_reimported\\Krashe3\\android\\assets",
@@ -35,4 +35,3 @@
 		"cameraPosition": [561,
 		491]
 	}]
-}

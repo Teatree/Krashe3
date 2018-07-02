@@ -40,7 +40,6 @@ public class PetSystem extends IteratingSystem {
     private static final int PET_CANNON_SHIFT_Y = 10;
     private static final int PET_CANNON_SHIFT_X = 62;
     private final GameStage gameStage;
-    private int counter = 0;
 //    private boolean canPlayAnimation = true;
 
     private ComponentMapper<PetComponent> mapper = ComponentMapper.getFor(PetComponent.class);
@@ -54,13 +53,7 @@ public class PetSystem extends IteratingSystem {
     protected void processEntity(Entity e, float deltaTime) {
         PetComponent pc = mapper.get(e);
 
-        System.err.println("PS - pc.name: " + pc.name);
-        System.err.println("PS - pc.bought: " + pc.bought);
-        System.err.println("PS - pc.enabled: " + pc.enabled);
-
         if(FlowerPublicComponent.currentPet != null && pc.petCannon != null) {
-            counter++;
-
             DimensionsComponent cannondc = e.getComponent(DimensionsComponent.class);
             TransformComponent cannontc = pc.petCannon.getComponent(TransformComponent.class);
             SpriterComponent cannonsc = pc.petCannon.getComponent(SpriterComponent.class);
@@ -79,7 +72,6 @@ public class PetSystem extends IteratingSystem {
 //            e.getComponent(ActionComponent.class).reset();
 //            e.getComponent(PetComponent.class).state = SPAWNING;
 //        }
-
             if (!isPause.get() && !isGameOver.get()) {
 
                 if (e.getComponent(ActionComponent.class) != null) {
@@ -182,10 +174,8 @@ public class PetSystem extends IteratingSystem {
                     pc.state = DASH;
 
                     checkPetDashGoal();
-
                 }
             } else {
-
                 pausedState(pc, e.getComponent(TransformComponent.class), e.getComponent(SpriterComponent.class),
                         cannonsc, scPetHead, pc.petHead.getComponent(TransformComponent.class));
 

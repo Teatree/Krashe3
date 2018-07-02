@@ -132,6 +132,7 @@ public class ResultScreenScript implements IScript {
         SoundMgr.getSoundMgr().stop(SoundMgr.BEES);
 
         isPlayingScoreCountSFX = false;
+        gameStage.gameScript.isSameSession = false;
     }
 
     public void initButtons() {

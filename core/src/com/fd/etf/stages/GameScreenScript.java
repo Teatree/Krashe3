@@ -91,6 +91,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     private Entity petE;
     private Entity phoenixIcon;
     public boolean changePet;
+    public boolean isSameSession = false;
 
     public Entity megaFlower;
     public Entity megaLeaves;
@@ -237,6 +238,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void checkTryPeriod() {
+        System.out.println(" -- checkTryPeriod()");
         long now = System.currentTimeMillis();
         if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
             if (now - FlowerPublicComponent.currentPet.tryPeriodStart >= FlowerPublicComponent.currentPet.tryPeriodDuration * 1000) {
@@ -338,7 +340,11 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
         powerupSystem.initUmbrella();
         powerupSystem.initCocoon();
 
-        checkTryPeriod();
+        System.err.println("isSameSession is" + isSameSession);
+        if(!isSameSession) {
+            System.err.println("Checking Try Period!");
+            checkTryPeriod();
+        }
 
         backgroundShitE = gameItem.getChild(BACKGROUND_SHIT).getEntity();
         beesAngryFeedbackE = gameItem.getChild("bees_angry_C").getEntity();
@@ -705,6 +711,7 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
 
     @Override
     public void act(float delta) {
+
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
 //            SaveMngr.saveStats(gameStage.gameScript.fpc);
             backToMenu();

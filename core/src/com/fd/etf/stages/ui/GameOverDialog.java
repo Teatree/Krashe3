@@ -110,6 +110,7 @@ public class GameOverDialog extends AbstractDialog {
                 new ImageButtonListener(reviveBtn) {
                     @Override
                     public void clicked() {
+                        gameStage.gameScript.isSameSession = true;
                         if (Main.mainController.isWifiConnected()) {
                             playVideoAd();
                             gameOverReviveTimesLimit--;

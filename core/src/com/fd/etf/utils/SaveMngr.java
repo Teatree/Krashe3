@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.fd.etf.entity.componets.*;
 import com.fd.etf.stages.GameScreenScript;
+import com.fd.etf.stages.GameStage;
 import com.fd.etf.system.AchievementSystem;
 import com.fd.etf.system.BugSpawnSystem;
 import com.fd.etf.system.CocoonSystem;
@@ -15,6 +16,7 @@ import java.util.*;
 import static com.fd.etf.entity.componets.Upgrade.UpgradeType;
 import static com.fd.etf.entity.componets.VanityComponent.vanityCollections;
 import static com.fd.etf.entity.componets.VanityComponent.vanityComponentsByChangedAssets;
+import static com.fd.etf.stages.GameScreenScript.isStarted;
 
 public class SaveMngr {
 
@@ -140,7 +142,7 @@ public class SaveMngr {
             AchievementSystem.butterflyAchGoal = stats.butterflyAchGoal;
 
             fc.reviveAdsMaxNastya = stats.reviveAd_max;
-            GameScreenScript.gameOverReviveTimesLimit =  stats.gameOverReviveTimesLimit;
+            GameScreenScript.gameOverReviveTimesLimit = stats.gameOverReviveTimesLimit;
 
             if (gameStats.upgrades != null) {
                 for (UpgradeStats e : gameStats.upgrades) {
@@ -149,18 +151,20 @@ public class SaveMngr {
                 }
             }
 
-            if(fc.upgrades.size() < 2){
-                if(fc.upgrades.get(UpgradeType.PHOENIX) == null){
+            if (fc.upgrades.size() < 2) {
+                if (fc.upgrades.get(UpgradeType.PHOENIX) == null) {
                     fc.upgrades.put(UpgradeType.PHOENIX, Upgrade.getPhoenix());
                 }
-                if(fc.upgrades.get(UpgradeType.BJ_DOUBLE) == null){
+                if (fc.upgrades.get(UpgradeType.BJ_DOUBLE) == null) {
                     fc.upgrades.put(UpgradeType.BJ_DOUBLE, Upgrade.getBJDouble());
                 }
             }
 
-            PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
-            petComponent = checkPetsTryPeriod(petComponent);
-            FlowerPublicComponent.currentPet = petComponent;
+            if(!isStarted){
+                PetComponent petComponent = gameStats.currentPet != null ? new PetComponent(gameStats.currentPet) : null;
+                petComponent = checkPetsTryPeriod(petComponent);
+                FlowerPublicComponent.currentPet = petComponent;
+            }
 //            dummyPet(fc);
             Goal.init(fc);
             addGoals(fc, gameStats);
