@@ -238,7 +238,6 @@ public class GameScreenScript implements IScript, GameStage.IhaveFlower {
     }
 
     public void checkTryPeriod() {
-        System.out.println(" -- checkTryPeriod()");
         long now = System.currentTimeMillis();
         if (FlowerPublicComponent.currentPet != null && FlowerPublicComponent.currentPet.tryPeriod) {
             if (now - FlowerPublicComponent.currentPet.tryPeriodStart >= FlowerPublicComponent.currentPet.tryPeriodDuration * 1000) {
